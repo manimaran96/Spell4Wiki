@@ -29,5 +29,14 @@ dependencies {
     compile 'com.android.support:design:27.1.1'
     compile 'com.android.support:recyclerview-v7:27.1.0'
 
+    // retrofit, gson
+    compile 'com.google.code.gson:gson:2.6.2'
+    compile 'com.squareup.retrofit2:retrofit:2.3.0'
+    compile 'com.squareup.retrofit2:converter-gson:2.0.2'
+
+
+    // Java wiki library
+    //compile 'fastily:jwiki:1.7.0'
+
     testCompile 'junit:junit:4.12'
 }

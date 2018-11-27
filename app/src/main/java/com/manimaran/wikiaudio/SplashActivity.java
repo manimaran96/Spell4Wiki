@@ -23,7 +23,7 @@ public class SplashActivity extends Activity {
             @Override
             public void run() {
                 // Todo : If login go MainActivity else Ask for login
-                Intent mainIntent = new Intent(SplashActivity.this, MainActivity.class);
+                Intent mainIntent = new Intent(SplashActivity.this, LoginActivity.class);
                 startActivity(mainIntent);
                 finish();
             }
