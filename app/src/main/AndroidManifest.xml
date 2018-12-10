@@ -29,6 +29,7 @@
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:name=".LoginActivity"/>
         <activity android:name=".MainActivity"/>
+        <activity android:name=".ViewPagerActivity"/>
     </application>
 
 </manifest>

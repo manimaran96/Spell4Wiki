@@ -30,10 +30,15 @@ dependencies {
     compile 'com.android.support:recyclerview-v7:27.1.0'
 
     // retrofit, gson
-    compile 'com.google.code.gson:gson:2.6.2'
+    compile 'com.google.code.gson:gson:2.7'
     compile 'com.squareup.retrofit2:retrofit:2.3.0'
     compile 'com.squareup.retrofit2:converter-gson:2.0.2'
 
+    compile 'com.squareup.okhttp3:okhttp:3.9.0'
+    compile 'com.squareup.okhttp3:logging-interceptor:3.9.1'
+    compile 'com.github.franmontiel:PersistentCookieJar:v1.0.1'
+
+    compile 'br.com.simplepass:loading-button-android:1.14.0'
 
     // Java wiki library
     //compile 'fastily:jwiki:1.7.0'

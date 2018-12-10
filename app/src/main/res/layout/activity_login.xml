@@ -53,14 +53,17 @@
                 android:hint="Password"/>
         </android.support.design.widget.TextInputLayout>
 
-        <android.support.v7.widget.AppCompatButton
+        <br.com.simplepass.loading_button_lib.customViews.CircularProgressButton
             android:id="@+id/btn_login"
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="20dp"
-            android:padding="12dp"
-            style="@style/Widget.AppCompat.Button.Colored"
-            android:text="Login"/>
+            android:background="@color/colorAccent"
+            android:layout_margin="10dp"
+            android:text="@string/login"
+            android:textColor="@android:color/white"
+            app:spinning_bar_width="4dp"
+            app:spinning_bar_color="#FFF"
+            app:spinning_bar_padding="6dp"/>
 
     </LinearLayout>
     </ScrollView>
