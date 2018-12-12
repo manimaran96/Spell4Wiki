@@ -30,6 +30,8 @@
             android:name=".LoginActivity"/>
         <activity android:name=".MainActivity"/>
         <activity android:name=".ViewPagerActivity"/>
+        <activity android:name=".acticity.SearchActivity"/>
+        <activity android:name=".WebWikiActivity"/>
     </application>
 
 </manifest>

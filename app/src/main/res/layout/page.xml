@@ -63,15 +63,24 @@
 
     </LinearLayout>
 
+
     <ImageView
         android:id="@+id/record"
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:clickable="true"
-        android:src="@drawable/ic_record"
+        android:src="@drawable/icon"
         android:layout_below="@+id/linearLayoutPlay"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="40dp" />
+    <TextView
+        android:id="@+id/sec"
+        android:layout_centerInParent="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:layout_marginTop="10dp"
+        android:textSize="14sp" />
 
     <ImageView
         android:id="@+id/send"

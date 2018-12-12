@@ -7,6 +7,7 @@ import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Query;
 
 public interface MediaWikiClient {
 
@@ -23,6 +24,12 @@ public interface MediaWikiClient {
             @Field("logintoken") String token,
             @Field("username") String username,
             @Field("password") String password
+    );
+
+    @GET("https://ta.wiktionary.org/w/api.php?action=query&list=search&utf8=&format=json")
+    Call<ResponseBody> fetchRecords(
+            @Query("srsearch") String searchString,
+            @Query("sroffset") Integer offSet
     );
 
 }

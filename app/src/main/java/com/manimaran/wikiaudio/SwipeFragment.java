@@ -8,6 +8,7 @@ import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
@@ -15,9 +16,9 @@ import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
@@ -64,11 +65,28 @@ public class SwipeFragment extends Fragment {
         layoutPlayControl.setVisibility(View.INVISIBLE);
 
         imgRecord = (ImageView) view.findViewById(R.id.record);
-        imgRecord.setColorFilter(Color.BLACK);
         imgSend = (ImageView) view.findViewById(R.id.send);
         imgPlay = (ImageView) view.findViewById(R.id.imagePlay);
         seekBar = (SeekBar) view.findViewById(R.id.seekBar);
+        final TextView txtSec = view.findViewById(R.id.sec);
 
+        txtSec.setText("\nTouch to record");
+        // Set 10 sec only for recording
+        final CountDownTimer countDowntimer = new CountDownTimer(10000, 1000) {
+            public void onTick(long millisUntilFinished) {
+                long sec = millisUntilFinished/1000;
+                txtSec.setText(sec > 0 ? (sec +" sec" + "\nTouch to stop") : "\nTouch to retry");
+            }
+
+
+            public void onFinish() {
+                if(isRecording)
+                {
+                    stopRec();
+                    txtSec.setText("\nTouch to retry");
+                }
+            }
+        };
 
         imgRecord.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -76,16 +94,15 @@ public class SwipeFragment extends Fragment {
                 if(!checkPermission())
                 {
                     if(!isRecording) {
+                        imgRecord.setImageResource(R.drawable.stop);
+                        countDowntimer.start();
                         isRecording = true;
                         prepareForRecording();
                         startRecording();
-                        imgRecord.setImageResource(R.drawable.ic_recording);
-                    }else
-                    {
-                        isRecording = false;
-                        imgRecord.setImageResource(R.drawable.ic_retry);
-                        prepareForStop();
-                        stopRecording();
+                    }else {
+                        stopRec();
+                        txtSec.setText("\nTouch to retry");
+                        countDowntimer.cancel();
                     }
                 }else
                 {
@@ -95,6 +112,33 @@ public class SwipeFragment extends Fragment {
                 }
             }
         });
+
+        /*imgRecord.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if(!checkPermission()) {
+                    if (event.getAction() == MotionEvent.ACTION_DOWN && !isRecording) {
+                        Log.d("TAG", "Start Recording");
+                        imgRecord.setScaleX(2);
+                        imgRecord.setScaleY(2);
+                        countDowntimer.start();
+                        isRecording = true;
+                        prepareForRecording();
+                        startRecording();
+                    } else if (event.getAction() == MotionEvent.ACTION_UP && isRecording) {
+                        Log.d("TAG", "Stop Recording");
+                        stopRec();
+                        countDowntimer.cancel();
+                    }
+                }else
+                {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                        getPermissionToRecordAudio();
+                    }
+                }
+                return false;
+            }
+        });*/
 
         imgPlay.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -116,6 +160,13 @@ public class SwipeFragment extends Fragment {
         existAudioFileToLoad();
 
         return view;
+    }
+
+    private void stopRec() {
+        isRecording = false;
+        imgRecord.setImageResource(R.drawable.icon);
+        prepareForStop();
+        stopRecording();
     }
 
     public void setWord(String s) {
@@ -172,13 +223,13 @@ public class SwipeFragment extends Fragment {
     }
 
     private void prepareForStop() {
-        imgRecord.setColorFilter(Color.BLACK);
+        //imgRecord.setColorFilter(Color.BLACK);
         layoutPlayControl.setVisibility(View.VISIBLE);
     }
 
 
     private void prepareForRecording() {
-        imgRecord.setColorFilter(Color.MAGENTA);
+        //imgRecord.setColorFilter(Color.MAGENTA);
         layoutPlayControl.setVisibility(View.INVISIBLE);
     }
 
@@ -202,7 +253,7 @@ public class SwipeFragment extends Fragment {
                 if(file.exists()) {
                     fileName = file.getAbsolutePath();
                     layoutPlayControl.setVisibility(fileName != null ? View.VISIBLE : View.INVISIBLE);
-                    imgRecord.setImageResource(R.drawable.ic_retry);
+                    imgRecord.setImageResource(R.drawable.icon);
                     /*lastProgress = 0;
                     seekBar.setProgress(0);
                     stopPlaying();*/
@@ -253,7 +304,12 @@ public class SwipeFragment extends Fragment {
             e.printStackTrace();
         }
         mRecorder = null;
-        Toast.makeText(getContext(), "Recording saved successfully.", Toast.LENGTH_SHORT).show();
+        try {
+            Toast.makeText(getContext(), "Recording saved successfully.", Toast.LENGTH_SHORT).show();
+        }catch (Exception e)
+        {
+            e.printStackTrace();
+        }
     }
 
 

@@ -3,6 +3,7 @@
     <string name="pref_file_key">wiki_pref</string>
     <string name="pref_is_logged_in">is_login</string>
     <string name="login">Login</string>
+    <string name="search_here">தேடு</string>
 
     <array name="words">
         <item>அகங்காரம்</item>

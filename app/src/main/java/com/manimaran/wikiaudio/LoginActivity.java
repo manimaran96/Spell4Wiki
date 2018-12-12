@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
@@ -145,7 +146,13 @@ public class LoginActivity extends AppCompatActivity {
                                 Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.ic_done_white_48dp);
                                 btnLogin.doneLoadingAnimation(R.color.green, bitmap);
 
-                                startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                                new Handler().postDelayed(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                                    }
+                                }, 2000);
+
 
                             } else if (result.equals("FAIL")) {
                                 showMsg(loginJSONObject.getString("message"));

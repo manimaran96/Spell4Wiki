@@ -13,6 +13,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.manimaran.wikiaudio.acticity.SearchActivity;
 import com.manimaran.wikiaudio.model.Words;
 
 import java.util.ArrayList;
@@ -50,8 +51,8 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             // action with ID action_refresh was selected
-            case R.id.action_refresh:
-                Toast.makeText(this, "Words selected", Toast.LENGTH_SHORT).show();
+            case R.id.action_wiktionary:
+                startActivity(new Intent(getApplicationContext(), SearchActivity.class));
                 break;
             // action with ID action_logout was selected
             case R.id.action_logout:
