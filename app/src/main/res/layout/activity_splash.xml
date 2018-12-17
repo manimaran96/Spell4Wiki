@@ -4,24 +4,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/white"
-    tools:context=".MainActivity">
+    tools:context=".acticity.MainActivity">
 
     <ImageView
         android:layout_width="200dp"
-        android:layout_height="200dp"
+        android:layout_height="250dp"
         android:scaleType="fitXY"
         android:layout_centerInParent="true"
-        android:src="@drawable/logo"
+        android:src="@drawable/wiktionary_logo"
         android:id="@+id/imageView2" />
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/imageView2"
-        android:layout_marginTop="50dp"
-        android:textSize="24sp"
-        android:textColor="@android:color/black"
-        android:layout_centerHorizontal="true"
-        android:text="@string/app_name" />
 </RelativeLayout>

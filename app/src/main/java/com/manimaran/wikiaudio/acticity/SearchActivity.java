@@ -15,10 +15,9 @@ import android.widget.SearchView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
-import com.manimaran.wikiaudio.LoginActivity;
-import com.manimaran.wikiaudio.MediaWikiClient;
+import com.manimaran.wikiaudio.wiki.MediaWikiClient;
 import com.manimaran.wikiaudio.R;
-import com.manimaran.wikiaudio.ServiceGenerator;
+import com.manimaran.wikiaudio.wiki.ServiceGenerator;
 import com.manimaran.wikiaudio.view.EndlessAdapter;
 import com.manimaran.wikiaudio.view.EndlessListView;
 
@@ -74,13 +73,13 @@ public class SearchActivity extends AppCompatActivity implements EndlessListView
 
         resultListView = (EndlessListView) findViewById(R.id.search_result_list);
         resultListView.setLoadingView(R.layout.loading_row);
-        resultListView.setAdapter(new EndlessAdapter(this, new ArrayList<String>(), R.layout.search_result_row));
+        resultListView.setAdapter(new EndlessAdapter(this, new ArrayList<String>(), R.layout.search_result_row, false));
         //
         resultListView.setListener(this);
         resultListView.setVisibility(View.INVISIBLE);
-        SharedPreferences sharedPref = getApplicationContext().getSharedPreferences(getString(R.string.pref_file_key), Context.MODE_PRIVATE);
-        String username = sharedPref.getString("username",null);
-        setTitle("Wiki Audio " + (username != null ? " - " + username : ""));
+
+
+        setTitle("Wiktionary");
     }
 
     @Override

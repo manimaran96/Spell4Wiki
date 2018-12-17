@@ -4,6 +4,8 @@
     <string name="pref_is_logged_in">is_login</string>
     <string name="login">Login</string>
     <string name="search_here">தேடு</string>
+    <string name="upload">Upload</string>
+    <string name="hint_before_record">Holding to record</string>
 
     <array name="words">
         <item>அகங்காரம்</item>

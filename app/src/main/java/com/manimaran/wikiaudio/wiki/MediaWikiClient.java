@@ -1,4 +1,4 @@
-package com.manimaran.wikiaudio;
+package com.manimaran.wikiaudio.wiki;
 
 
 import okhttp3.ResponseBody;
@@ -32,4 +32,8 @@ public interface MediaWikiClient {
             @Query("sroffset") Integer offSet
     );
 
+
+    @GET("https://ta.wiktionary.org/w/api.php?action=query&format=json&list=categorymembers&utf8=1" +
+            "&cmtitle=பகுப்பு:அறுபட்ட_கோப்பு_இணைப்புகள்_உள்ள_பக்கங்கள்&cmlimit=50&cmsort=timestamp&cmdir=desc")
+    Call<ResponseBody> fetchUnAudioRecords();
 }

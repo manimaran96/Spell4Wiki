@@ -1,4 +1,4 @@
-package com.manimaran.wikiaudio;
+package com.manimaran.wikiaudio.wiki;
 
 import android.content.Context;
 

@@ -1,4 +1,4 @@
-package com.manimaran.wikiaudio;
+package com.manimaran.wikiaudio.adpter;
 
 import android.content.Context;
 import android.content.Intent;
@@ -9,6 +9,8 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.manimaran.wikiaudio.R;
+import com.manimaran.wikiaudio.acticity.ViewPagerActivity;
 import com.manimaran.wikiaudio.model.Words;
 
 import java.util.List;

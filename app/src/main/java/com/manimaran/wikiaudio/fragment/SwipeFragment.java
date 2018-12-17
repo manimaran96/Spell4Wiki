@@ -1,9 +1,8 @@
-package com.manimaran.wikiaudio;
+package com.manimaran.wikiaudio.fragment;
 
 
 import android.Manifest;
 import android.content.pm.PackageManager;
-import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 import android.os.Build;
@@ -16,7 +15,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -24,6 +22,8 @@ import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.manimaran.wikiaudio.R;
 
 import java.io.File;
 import java.io.IOException;
@@ -42,7 +42,7 @@ public class SwipeFragment extends Fragment {
     private int RECORD_AUDIO_REQUEST_CODE =123 ;
     private boolean isPlaying = false, isRecording = false;
 
-    static SwipeFragment newInstance(int position) {
+    public static SwipeFragment newInstance(int position) {
         SwipeFragment swipeFragment = new SwipeFragment();
         Bundle bundle = new Bundle();
         bundle.putInt("position", position);

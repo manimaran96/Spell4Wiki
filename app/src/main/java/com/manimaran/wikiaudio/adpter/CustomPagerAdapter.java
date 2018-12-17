@@ -1,4 +1,4 @@
-package com.manimaran.wikiaudio;
+package com.manimaran.wikiaudio.adpter;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.util.Log;
 import android.view.ViewGroup;
 
+import com.manimaran.wikiaudio.fragment.SwipeFragment;
 import com.manimaran.wikiaudio.model.Words;
 
 import java.util.List;
@@ -14,7 +15,7 @@ public class CustomPagerAdapter extends FragmentStatePagerAdapter {
 
     List<Words> list;
     SwipeFragment fragment;
-    CustomPagerAdapter(FragmentManager fm, List<Words> list) {
+    public CustomPagerAdapter(FragmentManager fm, List<Words> list) {
         super(fm);
         this.list = list;
     }

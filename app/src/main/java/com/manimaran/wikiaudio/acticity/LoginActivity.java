@@ -1,4 +1,4 @@
-package com.manimaran.wikiaudio;
+package com.manimaran.wikiaudio.acticity;
 
 import android.content.Context;
 import android.content.Intent;
@@ -16,6 +16,9 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.manimaran.wikiaudio.wiki.MediaWikiClient;
+import com.manimaran.wikiaudio.R;
+import com.manimaran.wikiaudio.wiki.ServiceGenerator;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -50,6 +53,7 @@ public class LoginActivity extends AppCompatActivity {
         if(pref.getBoolean(getString(R.string.pref_is_logged_in), false))
         {
             // Todo : start home screen
+            finish();
             startActivity(new Intent(getApplicationContext(), MainActivity.class));
         }
 
@@ -149,6 +153,7 @@ public class LoginActivity extends AppCompatActivity {
                                 new Handler().postDelayed(new Runnable() {
                                     @Override
                                     public void run() {
+                                        finish();
                                         startActivity(new Intent(getApplicationContext(), MainActivity.class));
                                     }
                                 }, 2000);

@@ -3,6 +3,8 @@ package com.manimaran.wikiaudio.util;
 import android.media.MediaPlayer;
 import android.util.Log;
 
+import com.manimaran.wikiaudio.R;
+
 import java.io.IOException;
 import java.util.concurrent.Callable;
 
@@ -36,5 +38,20 @@ public class WAVPlayer {
             mPlayer.release();
             mPlayer = null;
         }
+    }
+
+    public void seekTo(Integer val)
+    {
+        if(mPlayer != null)
+            mPlayer.seekTo(val);
+    }
+    public Integer getCurrentPosition()
+    {
+        return mPlayer!=null ? mPlayer.getCurrentPosition() : 0;
+    }
+
+    public Integer getDuration()
+    {
+        return mPlayer!=null ? mPlayer.getDuration() : 0;
     }
 }

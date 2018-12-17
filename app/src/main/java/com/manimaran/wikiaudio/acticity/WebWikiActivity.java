@@ -1,4 +1,4 @@
-package com.manimaran.wikiaudio;
+package com.manimaran.wikiaudio.acticity;
 
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -8,6 +8,8 @@ import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+
+import com.manimaran.wikiaudio.R;
 
 public class WebWikiActivity extends AppCompatActivity {
 

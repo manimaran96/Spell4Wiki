@@ -1,9 +1,11 @@
-package com.manimaran.wikiaudio;
+package com.manimaran.wikiaudio.acticity;
 
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 
+import com.manimaran.wikiaudio.adpter.CustomPagerAdapter;
+import com.manimaran.wikiaudio.R;
 import com.manimaran.wikiaudio.model.Words;
 
 import java.util.ArrayList;

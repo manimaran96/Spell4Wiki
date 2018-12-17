@@ -15,7 +15,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".SplashActivity"
+            android:name=".acticity.SplashActivity"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.NoTitleBar"
             android:label="@string/app_name">
@@ -27,11 +27,11 @@
         </activity>
         <activity
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
-            android:name=".LoginActivity"/>
-        <activity android:name=".MainActivity"/>
-        <activity android:name=".ViewPagerActivity"/>
+            android:name=".acticity.LoginActivity"/>
+        <activity android:name=".acticity.MainActivity"/>
+        <activity android:name=".acticity.ViewPagerActivity"/>
         <activity android:name=".acticity.SearchActivity"/>
-        <activity android:name=".WebWikiActivity"/>
+        <activity android:name=".acticity.WebWikiActivity"/>
     </application>
 
 </manifest>
