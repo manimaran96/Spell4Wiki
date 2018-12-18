@@ -28,10 +28,16 @@
         <activity
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:name=".acticity.LoginActivity"/>
-        <activity android:name=".acticity.MainActivity"/>
-        <activity android:name=".acticity.ViewPagerActivity"/>
-        <activity android:name=".acticity.SearchActivity"/>
-        <activity android:name=".acticity.WebWikiActivity"/>
+        <activity
+            android:theme="@style/ActionBar"
+            android:name=".acticity.MainActivity"
+        />
+        <activity
+            android:theme="@style/ActionBar"
+            android:name=".acticity.SearchActivity"/>
+        <activity
+            android:theme="@style/ActionBar"
+            android:name=".acticity.WebWikiActivity"/>
     </application>
 
 </manifest>

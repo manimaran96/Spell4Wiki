@@ -86,6 +86,8 @@ public class SearchActivity extends AppCompatActivity implements EndlessListView
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.main_menu, menu);
+        MenuItem item = menu.findItem(R.id.action_wiktionary);
+        item.setIcon(R.drawable.ic_record);
         return true;
     }
 
@@ -93,6 +95,10 @@ public class SearchActivity extends AppCompatActivity implements EndlessListView
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection
         switch (item.getItemId()) {
+            case R.id.action_wiktionary:
+                startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                finish();
+                return true;
             case R.id.action_logout:
                 logout();
                 return true;

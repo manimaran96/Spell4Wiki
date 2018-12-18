@@ -160,6 +160,7 @@ public class MainActivity extends AppCompatActivity implements EndlessListView.E
             // action with ID action_refresh was selected
             case R.id.action_wiktionary:
                 startActivity(new Intent(getApplicationContext(), SearchActivity.class));
+                finish();
                 break;
             // action with ID action_logout was selected
             case R.id.action_logout:

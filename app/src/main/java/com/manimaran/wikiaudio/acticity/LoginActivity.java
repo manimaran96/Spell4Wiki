@@ -8,16 +8,18 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.Snackbar;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
-import com.manimaran.wikiaudio.wiki.MediaWikiClient;
 import com.manimaran.wikiaudio.R;
+import com.manimaran.wikiaudio.wiki.MediaWikiClient;
 import com.manimaran.wikiaudio.wiki.ServiceGenerator;
 
 import org.json.JSONException;
@@ -56,28 +58,27 @@ public class LoginActivity extends AppCompatActivity {
             finish();
             startActivity(new Intent(getApplicationContext(), MainActivity.class));
         }
+        else {
+            init();
+            hideKeyboard();
+            api = ServiceGenerator.createService(MediaWikiClient.class, getApplicationContext());
 
-        api = ServiceGenerator.createService(MediaWikiClient.class, getApplicationContext());
-
-
-        init();
-
-        btnLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(!TextUtils.isEmpty(editUserName.getText()) && !TextUtils.isEmpty(editPassword.getText()))
-                {
+            btnLogin.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (!TextUtils.isEmpty(editUserName.getText()) && !TextUtils.isEmpty(editPassword.getText())) {
                     /*Wiki wiki = new Wiki("https://en.wikipedia.org/w/api.php");
                     Boolean res = wiki.login(editUserName.getText().toString(), editPassword.getText().toString());
                     Log.w("Login", "Res " + res);*/
+                        hideKeyboard();
+                        btnLogin.startAnimation();
+                        callToken(editUserName.getText().toString(), editPassword.getText().toString());
 
-                    btnLogin.startAnimation();
-                    callToken(editUserName.getText().toString(), editPassword.getText().toString());
-
-                }else
-                    Snackbar.make(btnLogin, "Provide Valid Username & Password", Snackbar.LENGTH_SHORT).show();
-            }
-        });
+                    } else
+                        Snackbar.make(btnLogin, "Provide Valid Username & Password", Snackbar.LENGTH_SHORT).show();
+                }
+            });
+        }
     }
 
     private void callToken(final String username, final String password)
@@ -122,6 +123,19 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
+    private void hideKeyboard()
+    {
+        try {
+            View focus = LoginActivity.this.getCurrentFocus();
+            if (focus != null) {
+                InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+            }
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
+    }
+
     private void completeLogin(String username, String password, String lgToken) {
 
         Call<ResponseBody> call = api.clientLogin ("clientlogin", "json", "https://www.google.com/", lgToken, username, password);
@@ -145,14 +159,16 @@ public class LoginActivity extends AppCompatActivity {
                                 editor.putString("username", loginJSONObject.getString("username"));
                                 editor.putBoolean(getString(R.string.pref_is_logged_in), true);
                                 editor.apply();
-                                // Move to new activity
-                                //launchSearchActivity();
-                                Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.ic_done_white_48dp);
-                                btnLogin.doneLoadingAnimation(R.color.green, bitmap);
+
+                                btnLogin.doneLoadingAnimation(
+                                        ContextCompat.getColor(LoginActivity.this, R.color.green),
+                                BitmapFactory.decodeResource(getResources(), R.drawable.ic_action_name));
 
                                 new Handler().postDelayed(new Runnable() {
                                     @Override
                                     public void run() {
+                                        // Move to new activity
+                                        //launchSearchActivity();
                                         finish();
                                         startActivity(new Intent(getApplicationContext(), MainActivity.class));
                                     }
@@ -199,6 +215,7 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        btnLogin.dispose();
+        if(btnLogin != null)
+            btnLogin.dispose();
     }
 }

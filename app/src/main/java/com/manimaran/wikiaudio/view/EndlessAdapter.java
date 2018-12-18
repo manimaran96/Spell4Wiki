@@ -33,6 +33,9 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationSet;
+import android.view.animation.ScaleAnimation;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -43,9 +46,9 @@ import android.widget.Toast;
 
 import com.manimaran.wikiaudio.R;
 import com.manimaran.wikiaudio.acticity.WebWikiActivity;
+import com.manimaran.wikiaudio.util.GeneralUtils;
 import com.manimaran.wikiaudio.util.WAVPlayer;
 import com.manimaran.wikiaudio.util.WAVRecorder;
-import com.manimaran.wikiaudio.util.GeneralUtils;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -67,20 +70,20 @@ public class EndlessAdapter extends ArrayAdapter<String> {
     private Boolean isAudioMode = true;
     private String TAG = "Record";
 
-    WAVRecorder recorder = new WAVRecorder();
-    WAVPlayer player = new WAVPlayer();
-    Boolean isPlaying = false;
-    Dialog myDialog;
+    private WAVRecorder recorder = new WAVRecorder();
+    private WAVPlayer player = new WAVPlayer();
+    private Boolean isPlaying = false, isRecorded = false;
+    private Dialog myDialog;
 
-    ImageView btnClose, btnRecord, btnPlayPause;
-    Button btnUpload;
-    TextView txtWord, txtSec;
-    SeekBar seekBar;
-    LinearLayout layoutPlayer;
+    private ImageView btnClose, btnRecord, btnPlayPause;
+    private Button btnUpload;
+    private TextView txtWord, txtSec;
+    private SeekBar seekBar;
+    private LinearLayout layoutPlayer;
 
-    Integer lastProgress = 0;
-    Runnable runnable;
-    Handler mHandler = new Handler();
+    private Integer lastProgress = 0;
+    private Runnable runnable;
+    private Handler mHandler = new Handler();
 
     public EndlessAdapter(Context ctx, List<String> itemList, int layoutId, Boolean isAudioMode) {
         super(ctx, layoutId, itemList);
@@ -179,7 +182,7 @@ public class EndlessAdapter extends ArrayAdapter<String> {
 
         // Dialog init
         myDialog = new Dialog(activity);
-        myDialog.setContentView(R.layout.pop_up_ui);
+        myDialog.setContentView(R.layout.pop_up_record_ui);
         myDialog.setCancelable(false);
 
         // View init
@@ -193,6 +196,9 @@ public class EndlessAdapter extends ArrayAdapter<String> {
         layoutPlayer = (LinearLayout) myDialog.findViewById(R.id.linearLayoutPlay);
         seekBar = (SeekBar) myDialog.findViewById(R.id.seekBar);
 
+        myDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        myDialog.show();
+
         // Set values
         txtWord.setText(itemList.get(pos));
         btnClose.setOnClickListener(new View.OnClickListener() {
@@ -200,6 +206,7 @@ public class EndlessAdapter extends ArrayAdapter<String> {
             public void onClick(View v) {
                 myDialog.dismiss();
                 isPlaying = false;
+                player.stopPlaying();
             }
         });
 
@@ -215,9 +222,14 @@ public class EndlessAdapter extends ArrayAdapter<String> {
                 {
                     player.stopPlaying();
                     txtSec.setText("00:10");
-                    layoutPlayer.setVisibility(View.VISIBLE);
-                    btnRecord.setImageResource(R.drawable.icon);
                     recorder.stopRecording(getFilename());
+
+                    // Reverse animation
+                    btnRecord.animate()
+                            .setDuration(100)
+                            .scaleX(1.0f)
+                            .scaleY(1.0f);
+                    isRecorded = true;
                     cancel();
                 }
             }
@@ -234,8 +246,13 @@ public class EndlessAdapter extends ArrayAdapter<String> {
                         countDowntimer.start();
                         //btnPlayPause.setImageResource(R.drawable.play_button_start); hide play control
                         recorder.startRecording();
-                        btnRecord.setImageResource(R.drawable.stop);
-                        layoutPlayer.setVisibility(View.INVISIBLE);
+
+                        // Animation for scale
+                        btnRecord.animate()
+                                .setDuration(100)
+                                .scaleX(1.4f)
+                                .scaleY(1.4f);
+
                         //recordText.setText(R.string.now_recording);
                     } else if (event.getAction() == MotionEvent.ACTION_UP) {
                         Log.d(TAG, "Stop Recording");
@@ -244,7 +261,7 @@ public class EndlessAdapter extends ArrayAdapter<String> {
                         countDowntimer.onFinish();
                         /*txtSec.setText("00.10");
                         layoutPlayer.setVisibility(View.VISIBLE);
-                        btnRecord.setImageResource(R.drawable.icon);
+                        btnRecord.setImageResource(R.drawable.ic_record);
                         recorder.stopRecording(getFilename());*/
                     }
                 }else
@@ -256,7 +273,10 @@ public class EndlessAdapter extends ArrayAdapter<String> {
         btnPlayPause.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                player();
+                if(isRecorded)
+                    player();
+                else
+                    showMsg("Please record audio first");
             }
 
             private void player() {
@@ -322,8 +342,20 @@ public class EndlessAdapter extends ArrayAdapter<String> {
             }
         };
 
-        myDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        myDialog.show();
+
+    }
+
+    private void animateView(View view) {
+        AnimationSet animationSet = new AnimationSet(true);
+
+        ScaleAnimation growAnimation = new ScaleAnimation(1.0f, 3.0f, 1.0f, 3.0f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+        ScaleAnimation shrinkAnimation = new ScaleAnimation(3.0f, 1.0f, 3.0f, 1.0f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+
+        animationSet.addAnimation(growAnimation);
+        animationSet.addAnimation(shrinkAnimation);
+        animationSet.setDuration(200);
+
+        view.startAnimation(animationSet);
     }
 
     private void seekUpdation() {

@@ -61,7 +61,7 @@
             android:layout_margin="10dp"
             android:text="@string/login"
             android:textColor="@android:color/white"
-            app:spinning_bar_width="4dp"
+            app:spinning_bar_width="3dp"
             app:spinning_bar_color="#FFF"
             app:spinning_bar_padding="6dp"/>
 

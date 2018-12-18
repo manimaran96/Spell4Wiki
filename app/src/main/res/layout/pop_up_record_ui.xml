@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:minWidth="300dp"
     android:elevation="8dp"
     android:layout_margin="50dp"
     android:layout_height="wrap_content"
-    android:background="@drawable/dialog_bg"
+    android:background="@drawable/bg_dialog"
     android:padding="5dp"
     android:layout_gravity="center">
 
@@ -25,13 +26,14 @@
         android:layout_marginTop="30dp"
         android:textColor="@color/white"
         android:layout_gravity="center"
+        android:gravity="center"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="24sp" />
+        android:textSize="22sp" />
 
     <!--Player control-->
     <LinearLayout
-        android:visibility="invisible"
+        android:visibility="visible"
         android:id="@+id/linearLayoutPlay"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -77,13 +79,19 @@
         android:textSize="14sp" />
 
     <!--Record button-->
+    <LinearLayout
+        android:layout_gravity="center"
+        android:layout_width="80dp"
+        android:gravity="center"
+        android:layout_height="80dp">
     <ImageView
         android:id="@+id/btnRecord"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
+        android:layout_width="55dp"
+        android:layout_height="55dp"
         android:clickable="true"
-        android:src="@drawable/icon"
+        android:src="@drawable/ic_record"
         android:layout_gravity="center"/>
+    </LinearLayout>
 
     <!--Hint-->
     <TextView
@@ -106,7 +114,7 @@
         android:layout_marginTop="20dp"
         android:layout_gravity="center"
         android:layout_marginBottom="25dp"
-        android:background="@drawable/button_bg"
+        android:background="@drawable/bg_button"
         android:layout_height="wrap_content"
         android:text="@string/upload"
         android:textAllCaps="false"
