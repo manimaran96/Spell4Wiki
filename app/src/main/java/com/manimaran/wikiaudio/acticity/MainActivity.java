@@ -1,9 +1,12 @@
 package com.manimaran.wikiaudio.acticity;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
@@ -14,11 +17,12 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
-import com.manimaran.wikiaudio.wiki.MediaWikiClient;
 import com.manimaran.wikiaudio.R;
-import com.manimaran.wikiaudio.wiki.ServiceGenerator;
+import com.manimaran.wikiaudio.util.GeneralUtils;
 import com.manimaran.wikiaudio.view.EndlessAdapter;
 import com.manimaran.wikiaudio.view.EndlessListView;
+import com.manimaran.wikiaudio.wiki.MediaWikiClient;
+import com.manimaran.wikiaudio.wiki.ServiceGenerator;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -36,8 +40,10 @@ import retrofit2.Response;
 public class MainActivity extends AppCompatActivity implements EndlessListView.EndlessListener{
 
     private EndlessListView resultListView;
+    private EndlessAdapter adapter;
     private ProgressBar progressBar;
     private Integer nextOffset;
+    private boolean doubleBackToExitPressedOnce = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +53,8 @@ public class MainActivity extends AppCompatActivity implements EndlessListView.E
         progressBar = (ProgressBar) findViewById(R.id.pb);
         resultListView = (EndlessListView) findViewById(R.id.search_result_list);
         resultListView.setLoadingView(R.layout.loading_row);
-        resultListView.setAdapter(new EndlessAdapter(this, new ArrayList<String>(), R.layout.search_result_row, true));
+        adapter = new EndlessAdapter(this, new ArrayList<String>(), R.layout.search_result_row, true);
+        resultListView.setAdapter(adapter);
         //
         resultListView.setListener(this);
         resultListView.setVisibility(View.VISIBLE);
@@ -164,8 +171,7 @@ public class MainActivity extends AppCompatActivity implements EndlessListView.E
                 break;
             // action with ID action_logout was selected
             case R.id.action_logout:
-                Toast.makeText(this, "Logout selected", Toast.LENGTH_SHORT).show();
-                logout();
+                GeneralUtils.logoutAlert(MainActivity.this);
                 break;
             // action with ID action_settings was selected
             case R.id.action_settings:
@@ -178,24 +184,6 @@ public class MainActivity extends AppCompatActivity implements EndlessListView.E
         return true;
     }
 
-    private void logout() {
-        //  Write to shared preferences
-        SharedPreferences sharedPref = getApplicationContext().getSharedPreferences(
-                getString(R.string.pref_file_key),
-                Context.MODE_PRIVATE
-        );
-        SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putBoolean(getString(R.string.pref_is_logged_in), false);
-        editor.apply();
-
-        ServiceGenerator.clearCookies();
-
-        Intent intent = new Intent(getApplicationContext(),
-                LoginActivity.class);
-        startActivity(intent);
-        finish();
-    }
-
     @Override
     public boolean loadData() {
         // Triggered only when new data needs to be appended to the list
@@ -205,5 +193,32 @@ public class MainActivity extends AppCompatActivity implements EndlessListView.E
             return true;
         } else
             return false;
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if(adapter != null)
+            adapter.destroyView();
+    }
+
+    @Override
+    public void onBackPressed() {
+
+        if (doubleBackToExitPressedOnce) {
+            //super.onBackPressed();
+            //overridePendingTransition(R.anim.trans_right_in, R.anim.trans_right_out);
+            GeneralUtils.exitAlert(MainActivity.this);
+        }
+
+        this.doubleBackToExitPressedOnce = true;
+        GeneralUtils.showToast(getApplicationContext(), "Again click back to exit");
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                doubleBackToExitPressedOnce = false;
+            }
+        }, 2000);
     }
 }

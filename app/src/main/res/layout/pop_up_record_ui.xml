@@ -20,16 +20,39 @@
         android:gravity="center"
         android:src="@drawable/ic_cancel" />
 
-    <!--Word-->
-    <TextView
-        android:id="@+id/txtWord"
-        android:layout_marginTop="30dp"
-        android:textColor="@color/white"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="22sp" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <!--Word-->
+
+
+        <jaygoo.widget.wlv.WaveLineView
+            android:visibility="gone"
+            android:layout_centerInParent="true"
+            android:id="@+id/waveLineView"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            app:wlvBackgroundColor="@color/w_blue"
+            app:wlvLineColor="@color/w_green"
+            app:wlvSamplingSize="200"
+            app:wlvThickLineWidth="2dp"
+            app:wlvFineLineWidth="1dp"
+            app:wlvMoveSpeed="290"
+            />
+
+        <TextView
+            android:id="@+id/txtWord"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="30dp"
+            android:textColor="@color/white"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="22sp" />
+
+    </RelativeLayout>
+
 
     <!--Player control-->
     <LinearLayout
@@ -81,13 +104,13 @@
     <!--Record button-->
     <LinearLayout
         android:layout_gravity="center"
-        android:layout_width="80dp"
+        android:layout_width="100dp"
         android:gravity="center"
-        android:layout_height="80dp">
+        android:layout_height="100dp">
     <ImageView
         android:id="@+id/btnRecord"
-        android:layout_width="55dp"
-        android:layout_height="55dp"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
         android:clickable="true"
         android:src="@drawable/ic_record"
         android:layout_gravity="center"/>

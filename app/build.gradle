@@ -40,6 +40,8 @@ dependencies {
 
     compile 'br.com.simplepass:loading-button-android:1.14.0'
 
+    compile 'com.github.Jay-Goo:WaveLineView:v1.0.3'
+
     // Java wiki library
     //compile 'fastily:jwiki:1.7.0'
 

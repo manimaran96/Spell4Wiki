@@ -1,9 +1,10 @@
 package com.manimaran.wikiaudio.acticity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.MotionEvent;
 import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -12,7 +13,7 @@ import android.webkit.WebViewClient;
 import com.manimaran.wikiaudio.R;
 
 public class WebWikiActivity extends AppCompatActivity {
-
+    private WebView mWebView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,12 +24,12 @@ public class WebWikiActivity extends AppCompatActivity {
         {
             String str = bundle.getString("word");
             setTitle(str);
-            WebView mWebView = findViewById(R.id.webview);
+            mWebView = findViewById(R.id.webview);
             mWebView.loadUrl("https://ta.wiktionary.org/wiki/" + str);
 
             // Enable Javascript
             WebSettings webSettings = mWebView.getSettings();
-            webSettings.setJavaScriptEnabled(true);
+            //webSettings.setJavaScriptEnabled(true);
 
             mWebView.setWebViewClient(new WebViewClient());
             // Force links and redirects to open in the WebView instead of in a browser

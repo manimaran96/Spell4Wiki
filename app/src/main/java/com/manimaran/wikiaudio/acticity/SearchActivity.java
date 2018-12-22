@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
@@ -15,6 +16,7 @@ import android.widget.SearchView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.manimaran.wikiaudio.util.GeneralUtils;
 import com.manimaran.wikiaudio.wiki.MediaWikiClient;
 import com.manimaran.wikiaudio.R;
 import com.manimaran.wikiaudio.wiki.ServiceGenerator;
@@ -40,6 +42,7 @@ public class SearchActivity extends AppCompatActivity implements EndlessListView
 
     private String queryString;
     private Integer nextOffset;
+    private boolean doubleBackToExitPressedOnce = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,27 +103,11 @@ public class SearchActivity extends AppCompatActivity implements EndlessListView
                 finish();
                 return true;
             case R.id.action_logout:
-                logout();
+                GeneralUtils.logoutAlert(SearchActivity.this);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
-    }
-
-    private void logout() {
-        //  Write to shared preferences
-        SharedPreferences sharedPref = getApplicationContext().getSharedPreferences(
-                getString(R.string.pref_file_key),
-                Context.MODE_PRIVATE
-        );
-        SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putBoolean(getString(R.string.pref_is_logged_in), false);
-        editor.apply();
-
-        ServiceGenerator.clearCookies();
-
-        Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-        startActivity(intent);
     }
 
     private void search(String query) {
@@ -193,6 +180,26 @@ public class SearchActivity extends AppCompatActivity implements EndlessListView
             return true;
         } else
             return false;
+    }
+
+    @Override
+    public void onBackPressed() {
+
+        if (doubleBackToExitPressedOnce) {
+            //super.onBackPressed();
+            //overridePendingTransition(R.anim.trans_right_in, R.anim.trans_right_out);
+            GeneralUtils.exitAlert(SearchActivity.this);
+        }
+
+        this.doubleBackToExitPressedOnce = true;
+        GeneralUtils.showToast(getApplicationContext(), "Again click back to exit");
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                doubleBackToExitPressedOnce = false;
+            }
+        }, 2000);
     }
 }
 

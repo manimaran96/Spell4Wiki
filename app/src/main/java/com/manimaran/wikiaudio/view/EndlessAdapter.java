@@ -33,9 +33,6 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationSet;
-import android.view.animation.ScaleAnimation;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -58,6 +55,8 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
+
+import jaygoo.widget.wlv.WaveLineView;
 
 public class EndlessAdapter extends ArrayAdapter<String> {
 
@@ -199,6 +198,9 @@ public class EndlessAdapter extends ArrayAdapter<String> {
         myDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         myDialog.show();
 
+        WaveLineView waveLineView = (WaveLineView) myDialog.findViewById(R.id.waveLineView);
+        waveLineView.startAnim();
+
         // Set values
         txtWord.setText(itemList.get(pos));
         btnClose.setOnClickListener(new View.OnClickListener() {
@@ -244,25 +246,15 @@ public class EndlessAdapter extends ArrayAdapter<String> {
                         Log.d(TAG, "Start Recording");
                         player.stopPlaying();
                         countDowntimer.start();
-                        //btnPlayPause.setImageResource(R.drawable.play_button_start); hide play control
                         recorder.startRecording();
 
                         // Animation for scale
                         btnRecord.animate()
-                                .setDuration(100)
                                 .scaleX(1.4f)
                                 .scaleY(1.4f);
-
-                        //recordText.setText(R.string.now_recording);
                     } else if (event.getAction() == MotionEvent.ACTION_UP) {
                         Log.d(TAG, "Stop Recording");
-                        //recordText.setText("");
-                        //isPlaying[0] = true;
                         countDowntimer.onFinish();
-                        /*txtSec.setText("00.10");
-                        layoutPlayer.setVisibility(View.VISIBLE);
-                        btnRecord.setImageResource(R.drawable.ic_record);
-                        recorder.stopRecording(getFilename());*/
                     }
                 }else
                     showMsg("Please give require permissions");
@@ -274,43 +266,9 @@ public class EndlessAdapter extends ArrayAdapter<String> {
             @Override
             public void onClick(View view) {
                 if(isRecorded)
-                    player();
+                    onPlayStatusChanged();
                 else
                     showMsg("Please record audio first");
-            }
-
-            private void player() {
-                onPlayStatusChanged();
-            }
-
-            private void onPlayStatusChanged() {
-                if (isPlaying) {
-                    player.stopPlaying();
-                    btnPlayPause.setImageResource(R.drawable.ic_play);
-                } else {
-                    player.startPlaying(getFilename(), new Callable() {
-                        @Override
-                        public Object call() throws Exception {
-                            onPlayStatusChanged();
-                            // Play Done
-                            btnPlayPause.setImageResource(R.drawable.ic_play);
-                            isPlaying = false;
-                            lastProgress = 0;
-                            seekBar.setProgress(0);
-                            player.seekTo(0);
-                            return null;
-                        }
-                    });
-
-                    // Play
-                    seekBar.setProgress(lastProgress);
-                    player.seekTo(lastProgress);
-                    seekBar.setMax(player.getDuration());
-                    seekUpdation();
-                    btnPlayPause.setImageResource(R.drawable.ic_pause);
-                }
-
-                isPlaying = !isPlaying;
             }
 
         });
@@ -345,17 +303,35 @@ public class EndlessAdapter extends ArrayAdapter<String> {
 
     }
 
-    private void animateView(View view) {
-        AnimationSet animationSet = new AnimationSet(true);
+    private void onPlayStatusChanged() {
+        Toast.makeText(ctx,"destroy", Toast.LENGTH_LONG).show();
+        if (isPlaying) {
+            player.stopPlaying();
+            btnPlayPause.setImageResource(R.drawable.ic_play);
+        } else {
+            player.startPlaying(getFilename(), new Callable() {
+                @Override
+                public Object call() throws Exception {
+                    onPlayStatusChanged();
+                    // Play Done
+                    btnPlayPause.setImageResource(R.drawable.ic_play);
+                    isPlaying = false;
+                    lastProgress = 0;
+                    seekBar.setProgress(0);
+                    player.seekTo(0);
+                    return null;
+                }
+            });
 
-        ScaleAnimation growAnimation = new ScaleAnimation(1.0f, 3.0f, 1.0f, 3.0f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
-        ScaleAnimation shrinkAnimation = new ScaleAnimation(3.0f, 1.0f, 3.0f, 1.0f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+            // Play
+            seekBar.setProgress(lastProgress);
+            player.seekTo(lastProgress);
+            seekBar.setMax(player.getDuration());
+            seekUpdation();
+            btnPlayPause.setImageResource(R.drawable.ic_pause);
+        }
 
-        animationSet.addAnimation(growAnimation);
-        animationSet.addAnimation(shrinkAnimation);
-        animationSet.setDuration(200);
-
-        view.startAnimation(animationSet);
+        isPlaying = !isPlaying;
     }
 
     private void seekUpdation() {
@@ -365,6 +341,23 @@ public class EndlessAdapter extends ArrayAdapter<String> {
             lastProgress = mCurrentPosition;
         }
         mHandler.postDelayed(runnable, 100);
+
+    }
+
+    public void destroyView()
+    {
+        /*
+        if(player != null)
+        {
+            player.stopPlaying();
+        }*/
+
+       /* btnPlayPause.performClick();
+        if(isPlaying && btnPlayPause !=null)
+        {
+            btnPlayPause.performClick();
+            btnPlayPause.callOnClick();
+        }*/
 
     }
 
