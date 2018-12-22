@@ -19,6 +19,7 @@ package com.manimaran.wikiaudio.view;
 import android.Manifest;
 import android.app.Activity;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -33,6 +34,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.MimeTypeMap;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -46,17 +48,25 @@ import com.manimaran.wikiaudio.acticity.WebWikiActivity;
 import com.manimaran.wikiaudio.util.GeneralUtils;
 import com.manimaran.wikiaudio.util.WAVPlayer;
 import com.manimaran.wikiaudio.util.WAVRecorder;
+import com.manimaran.wikiaudio.wiki.MediaWikiClient;
+import com.manimaran.wikiaudio.wiki.ServiceGenerator;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
-import java.util.ArrayList;
+import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.Callable;
 
 import jaygoo.widget.wlv.WaveLineView;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class EndlessAdapter extends ArrayAdapter<String> {
 
@@ -83,6 +93,8 @@ public class EndlessAdapter extends ArrayAdapter<String> {
     private Integer lastProgress = 0;
     private Runnable runnable;
     private Handler mHandler = new Handler();
+
+    private ProgressDialog progressDialog;
 
     public EndlessAdapter(Context ctx, List<String> itemList, int layoutId, Boolean isAudioMode) {
         super(ctx, layoutId, itemList);
@@ -300,11 +312,152 @@ public class EndlessAdapter extends ArrayAdapter<String> {
             }
         };
 
+        btnUpload.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(isRecorded)
+                {
+                    uploadAudioToWikiServer();
+                }else
+                    GeneralUtils.showToast(ctx, "Please record audio first");
+            }
+        });
 
     }
 
+    private void uploadAudioToWikiServer() {
+        MediaWikiClient mediaWikiClient = ServiceGenerator.createService(MediaWikiClient.class, ctx);
+        Call<ResponseBody> call = mediaWikiClient.getEditToken();
+        progressDialog = ProgressDialog.show(activity, "Upload Audio", "Uploading your file...", true);
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.isSuccessful()) {
+                    try {
+                        String responseStr = response.body().string();
+                        String editToken;
+                        JSONObject reader;
+                        JSONObject tokenJSONObject;
+                        try {
+                            reader = new JSONObject(responseStr);
+                            tokenJSONObject = reader.getJSONObject("query").getJSONObject("tokens");
+                            //noinspection SpellCheckingInspection
+                            Log.w(TAG, " Res " + tokenJSONObject);
+                            editToken = tokenJSONObject.getString("csrftoken");
+                            if (editToken.equals("+\\")) {
+                                dismissDialog("You are not logged in! \nPlease login to continue.");
+                                GeneralUtils.logoutAlert(activity);
+                            } else {
+                                completeUpload(editToken);
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            dismissDialog("Server misbehaved! \nPlease try again later.");
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                        dismissDialog("Please check your connection!");
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                dismissDialog("Please check your connection!");
+            }
+        });
+
+
+    }
+    public static String getMimeType(String url) {
+        String type = null;
+        String extension = MimeTypeMap.getFileExtensionFromUrl(url);
+        if (extension != null) {
+            type = MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension);
+        }
+        return type;
+    }
+
+
+    private void completeUpload(String editToken) {
+
+        String title = RECORDED_FILENAME;
+        String filePath = getFilename();
+
+        // create upload service client
+        MediaWikiClient service = ServiceGenerator.createService(MediaWikiClient.class, ctx);
+
+        File file = new File(filePath);
+        // create RequestBody instance from file
+        RequestBody requestFile =
+                RequestBody.create(
+                        MediaType.parse(getMimeType(filePath)),
+                        file
+                );
+
+        // MultipartBody.Part is used to send also the actual file name
+        MultipartBody.Part body =
+                MultipartBody.Part.createFormData("file", title, requestFile);
+
+        // finally, execute the request
+        Call<ResponseBody> call = service.uploadFile(
+                RequestBody.create(MultipartBody.FORM, "upload"),
+                RequestBody.create(MultipartBody.FORM, title),
+                RequestBody.create(MultipartBody.FORM, editToken),
+                body,
+                RequestBody.create(MultipartBody.FORM, "{{PD-self}}")
+        );
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                try {
+                    String responseStr = response.body().string();
+                    JSONObject reader;
+                    JSONObject uploadJSONObject;
+                    try {
+                        reader = new JSONObject(responseStr);
+                        if(!reader.has("error"))
+                        {
+                            uploadJSONObject = reader.getJSONObject("upload");
+                            String result = uploadJSONObject.getString("result");
+                            dismissDialog("Upload: " + result);
+                        }else
+                        {
+                            if(reader.has("error"))
+                            {
+                                String errMsg = reader.getJSONObject("error").getString("info");
+                                dismissDialog(errMsg);
+                            }
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                        dismissDialog("Server misbehaved! Please try again later.");
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    dismissDialog("Please check your connection!");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                dismissDialog("Please check your connection!");
+                Log.e("Upload error:", t.getMessage());
+            }
+        });
+    }
+
+    private void dismissDialog(String msg) {
+        if (progressDialog != null)
+            progressDialog.dismiss();
+        if (msg != null)
+        {
+            Log.e(TAG, "Wiki Res Msg " + msg);
+            Toast.makeText(ctx, msg, Toast.LENGTH_LONG).show();
+        }
+    }
+
     private void onPlayStatusChanged() {
-        Toast.makeText(ctx,"destroy", Toast.LENGTH_LONG).show();
         if (isPlaying) {
             player.stopPlaying();
             btnPlayPause.setImageResource(R.drawable.ic_play);
@@ -366,6 +519,7 @@ public class EndlessAdapter extends ArrayAdapter<String> {
         Toast.makeText(ctx, msg, Toast.LENGTH_LONG).show();
     }
 
+    // Get record file name
     private String getFilename() {
         String filePath = Environment.getExternalStorageDirectory().getPath();
         File file = new File(filePath, "/Wiki/Audios");
@@ -374,26 +528,6 @@ public class EndlessAdapter extends ArrayAdapter<String> {
                 Log.d(TAG, "Not create directory!");
         }
         return file.getAbsolutePath() + "/" +RECORDED_FILENAME;
-    }
-
-    private void processResult(String responseStr) throws JSONException {
-        JSONObject reader = new JSONObject(responseStr);
-
-        try {
-            Toast.makeText(ctx, responseStr, Toast.LENGTH_SHORT).show();
-            ArrayList<String> titleList = new ArrayList<>();
-            Log.w("TAG", "WIKI api " + reader.toString());
-            JSONArray searchResults = reader.getJSONObject("query").optJSONArray("categorymembers");
-            for (int ii = 0; ii < searchResults.length(); ii++) {
-                titleList.add(
-                        searchResults.getJSONObject(ii).getString("title")
-                        //+ " --> " + searchResults.getJSONObject(ii).getString("pageid")
-                );
-            }
-        }catch (Exception e)
-        {
-            e.printStackTrace();
-        }
     }
 
 }

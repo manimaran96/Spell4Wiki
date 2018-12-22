@@ -83,7 +83,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private void callToken(final String username, final String password)
     {
-        Call<ResponseBody> call =  api.getToken();
+        Call<ResponseBody> call =  api.getLoginToken();
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
