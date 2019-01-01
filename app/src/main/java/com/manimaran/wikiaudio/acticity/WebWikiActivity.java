@@ -1,7 +1,5 @@
 package com.manimaran.wikiaudio.acticity;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -25,7 +23,9 @@ public class WebWikiActivity extends AppCompatActivity {
             String str = bundle.getString("word");
             setTitle(str);
             mWebView = findViewById(R.id.webview);
-            mWebView.loadUrl("https://ta.wiktionary.org/wiki/" + str);
+            String printUrl =  String.format("https://ta.wiktionary.org/w/index.php?title=%s&printable=yes#p-search",str);
+            String wikiUrl = "https://ta.wiktionary.org/wiki/" + str;
+            mWebView.loadUrl(wikiUrl);
 
             // Enable Javascript
             WebSettings webSettings = mWebView.getSettings();

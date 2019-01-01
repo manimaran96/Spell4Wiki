@@ -1,10 +1,13 @@
 package com.manimaran.wikiaudio.wiki;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
+import android.util.Log;
 
 import com.franmontiel.persistentcookiejar.PersistentCookieJar;
 import com.franmontiel.persistentcookiejar.cache.SetCookieCache;
 import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersistor;
+import com.google.gson.Gson;
 
 import java.io.IOException;
 
@@ -18,48 +21,51 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ServiceGenerator {
-    private static final String BASE_URL = "https://en.wiktionary.org/w/api.php/";
+
+    // Base Wiki Api Url
+    public static final String BASE_URL = "https://en.wiktionary.org/w/api.php/";
 
     private static Retrofit retrofit;
 
-    private static Retrofit.Builder builder =
-            new Retrofit.Builder()
-                    .baseUrl(BASE_URL)
-                    .addConverterFactory(GsonConverterFactory.create());
+    // Retrofit builder init with api url
+    private static Retrofit.Builder builder = new Retrofit.Builder()
+            .baseUrl(BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create());
 
-    private static HttpLoggingInterceptor logging =
-            new HttpLoggingInterceptor()
-                    .setLevel(HttpLoggingInterceptor.Level.BODY);
+    // Logging method
+    private static HttpLoggingInterceptor logging = new HttpLoggingInterceptor()
+            .setLevel(HttpLoggingInterceptor.Level.BODY); // Log the response body
 
     private static Interceptor queryParamInterceptor = new Interceptor() {
         @Override
-        public Response intercept(Chain chain) throws IOException {
+        public Response intercept(@NonNull Chain chain) throws IOException {
             Request original = chain.request();
             HttpUrl originalHttpUrl = original.url();
 
-            HttpUrl url = originalHttpUrl.newBuilder()
-                    .addQueryParameter("format", "json")
-                    .build();
+            HttpUrl url = originalHttpUrl.newBuilder().addQueryParameter("format", "json").build();
 
             // Request customization: add request headers
-            Request.Builder requestBuilder = original.newBuilder()
-                    .url(url);
+            Request.Builder requestBuilder = original.newBuilder().url(url);
 
             Request request = requestBuilder.build();
             return chain.proceed(request);
         }
     };
 
+    /**
+     * A persistent CookieJar implementation for OkHttp 3 based on SharedPreferences.
+     * OkHttp 2/HTTPUrlConnection persistent CookieStore
+     */
     private static PersistentCookieJar cookieJar = null;
 
-    private static OkHttpClient.Builder httpClient =
-            new OkHttpClient.Builder();
+    // OkHTTP Client builder init
+    private static OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
 
-    public static <S> S createService(
-            Class<S> serviceClass, Context context) {
+    // Create service
+    public static <S> S createService(Class<S> serviceClass, Context context) {
+        // Setting cookie
         if (cookieJar == null) {
-            cookieJar = new PersistentCookieJar(new SetCookieCache(),
-                    new SharedPrefsCookiePersistor(context));
+            cookieJar = new PersistentCookieJar(new SetCookieCache(), new SharedPrefsCookiePersistor(context));
             httpClient.cookieJar(cookieJar);
         }
         boolean rebuild = false;
@@ -80,8 +86,17 @@ public class ServiceGenerator {
         return retrofit.create(serviceClass);
     }
 
+    // Clear cookies after logout
     public static void clearCookies() {
         if (cookieJar != null)
             cookieJar.clear();
+    }
+
+    public static void checkCookies()
+    {
+        if(cookieJar != null)
+        {
+            Log.e("TAG", "Wiki log cookie " + new Gson().toJson(cookieJar));
+        }
     }
 }

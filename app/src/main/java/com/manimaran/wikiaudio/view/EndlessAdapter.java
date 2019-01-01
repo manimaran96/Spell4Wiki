@@ -38,7 +38,6 @@ import android.webkit.MimeTypeMap;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -59,7 +58,6 @@ import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.Callable;
 
-import jaygoo.widget.wlv.WaveLineView;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -88,7 +86,6 @@ public class EndlessAdapter extends ArrayAdapter<String> {
     private Button btnUpload;
     private TextView txtWord, txtSec;
     private SeekBar seekBar;
-    private LinearLayout layoutPlayer;
 
     private Integer lastProgress = 0;
     private Runnable runnable;
@@ -204,14 +201,10 @@ public class EndlessAdapter extends ArrayAdapter<String> {
 
         txtWord = myDialog.findViewById(R.id.txtWord);
         txtSec = myDialog.findViewById(R.id.txtSec);
-        layoutPlayer = (LinearLayout) myDialog.findViewById(R.id.linearLayoutPlay);
         seekBar = (SeekBar) myDialog.findViewById(R.id.seekBar);
 
         myDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         myDialog.show();
-
-        WaveLineView waveLineView = (WaveLineView) myDialog.findViewById(R.id.waveLineView);
-        waveLineView.startAnim();
 
         // Set values
         txtWord.setText(itemList.get(pos));
@@ -342,8 +335,8 @@ public class EndlessAdapter extends ArrayAdapter<String> {
                             reader = new JSONObject(responseStr);
                             tokenJSONObject = reader.getJSONObject("query").getJSONObject("tokens");
                             //noinspection SpellCheckingInspection
-                            Log.w(TAG, " Res " + tokenJSONObject);
                             editToken = tokenJSONObject.getString("csrftoken");
+                            Log.w(TAG, " Res Edit token " + editToken + "\n" + tokenJSONObject);
                             if (editToken.equals("+\\")) {
                                 dismissDialog("You are not logged in! \nPlease login to continue.");
                                 GeneralUtils.logoutAlert(activity);
@@ -364,6 +357,7 @@ public class EndlessAdapter extends ArrayAdapter<String> {
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
                 dismissDialog("Please check your connection!");
+                t.printStackTrace();
             }
         });
 
@@ -396,15 +390,14 @@ public class EndlessAdapter extends ArrayAdapter<String> {
                 );
 
         // MultipartBody.Part is used to send also the actual file name
-        MultipartBody.Part body =
-                MultipartBody.Part.createFormData("file", title, requestFile);
+        MultipartBody.Part body = MultipartBody.Part.createFormData("file", title, requestFile);
 
         // finally, execute the request
         Call<ResponseBody> call = service.uploadFile(
-                RequestBody.create(MultipartBody.FORM, "upload"),
-                RequestBody.create(MultipartBody.FORM, title),
-                RequestBody.create(MultipartBody.FORM, editToken),
-                body,
+                RequestBody.create(MultipartBody.FORM, "upload"), // action
+                RequestBody.create(MultipartBody.FORM, title), // filename
+                RequestBody.create(MultipartBody.FORM, editToken), // token
+                body, // Body file
                 RequestBody.create(MultipartBody.FORM, "{{PD-self}}")
         );
         call.enqueue(new Callback<ResponseBody>() {
@@ -442,6 +435,7 @@ public class EndlessAdapter extends ArrayAdapter<String> {
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
                 dismissDialog("Please check your connection!");
+                t.printStackTrace();
                 Log.e("Upload error:", t.getMessage());
             }
         });

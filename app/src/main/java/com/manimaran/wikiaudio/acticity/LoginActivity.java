@@ -3,7 +3,6 @@ package com.manimaran.wikiaudio.acticity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Handler;
@@ -11,13 +10,11 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.google.gson.Gson;
 import com.manimaran.wikiaudio.R;
 import com.manimaran.wikiaudio.wiki.MediaWikiClient;
 import com.manimaran.wikiaudio.wiki.ServiceGenerator;
@@ -47,16 +44,11 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        pref = getApplicationContext().getSharedPreferences(
-                getString(R.string.pref_file_key),
-                Context.MODE_PRIVATE
-        );
+        pref = getApplicationContext().getSharedPreferences(getString(R.string.pref_file_key), Context.MODE_PRIVATE);
 
         if(pref.getBoolean(getString(R.string.pref_is_logged_in), false))
         {
-            // Todo : start home screen
-            finish();
-            startActivity(new Intent(getApplicationContext(), MainActivity.class));
+            launchActivity();
         }
         else {
             init();
@@ -67,13 +59,9 @@ public class LoginActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
                     if (!TextUtils.isEmpty(editUserName.getText()) && !TextUtils.isEmpty(editPassword.getText())) {
-                    /*Wiki wiki = new Wiki("https://en.wikipedia.org/w/api.php");
-                    Boolean res = wiki.login(editUserName.getText().toString(), editPassword.getText().toString());
-                    Log.w("Login", "Res " + res);*/
                         hideKeyboard();
                         btnLogin.startAnimation();
                         callToken(editUserName.getText().toString(), editPassword.getText().toString());
-
                     } else
                         Snackbar.make(btnLogin, "Provide Valid Username & Password", Snackbar.LENGTH_SHORT).show();
                 }
@@ -93,20 +81,14 @@ public class LoginActivity extends AppCompatActivity {
                         String lgToken;
                         JSONObject reader;
                         JSONObject tokenJSONObject;
-                        try {
-                            reader = new JSONObject(responseStr);
-                            tokenJSONObject = reader.getJSONObject("query").getJSONObject("tokens");
-                            //noinspection SpellCheckingInspection
-                            lgToken = tokenJSONObject.getString("logintoken");
 
-                            //Log.w("Wiki", " Token " + lgToken);
-                            //Toast.makeText(getApplicationContext(), "Token " + lgToken , Toast.LENGTH_LONG).show();
-                            completeLogin(username, password, lgToken);
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                            //loginFailed("Server misbehaved! Please try again later.");
-                        }
-                    } catch (IOException e) {
+                        reader = new JSONObject(responseStr);
+                        tokenJSONObject = reader.getJSONObject("query").getJSONObject("tokens");
+                        //noinspection SpellCheckingInspection
+                        lgToken = tokenJSONObject.getString("logintoken");
+                        completeLogin(username, password, lgToken);
+
+                    } catch (JSONException | IOException e) {
                         e.printStackTrace();
                         showMsg("Please check your connection!");
                         btnLogin.revertAnimation();
@@ -132,13 +114,13 @@ public class LoginActivity extends AppCompatActivity {
                 imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
             }
         } catch (Exception e) {
-            // TODO: handle exception
+            e.printStackTrace();
         }
     }
 
     private void completeLogin(String username, String password, String lgToken) {
 
-        Call<ResponseBody> call = api.clientLogin ("clientlogin", "json", "https://www.google.com/", lgToken, username, password);
+        Call<ResponseBody> call = api.clientLogin ("clientlogin", "json", ServiceGenerator.BASE_URL, lgToken, username, password);
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -149,7 +131,6 @@ public class LoginActivity extends AppCompatActivity {
                         JSONObject loginJSONObject;
                         try {
                             reader = new JSONObject(responseStr);
-                            Log.w("Log", "Val " + new Gson().toJson(reader));
                             loginJSONObject = reader.getJSONObject("clientlogin");
                             String result = loginJSONObject.getString("status");
                             if (result.equals("PASS")) {
@@ -161,16 +142,14 @@ public class LoginActivity extends AppCompatActivity {
                                 editor.apply();
 
                                 btnLogin.doneLoadingAnimation(
-                                        ContextCompat.getColor(LoginActivity.this, R.color.green),
-                                BitmapFactory.decodeResource(getResources(), R.drawable.ic_action_name));
+                                        ContextCompat.getColor(LoginActivity.this, R.color.w_green),
+                                        BitmapFactory.decodeResource(getResources(), R.drawable.ic_done));
 
                                 new Handler().postDelayed(new Runnable() {
                                     @Override
                                     public void run() {
                                         // Move to new activity
-                                        //launchSearchActivity();
-                                        finish();
-                                        startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                                        launchActivity();
                                     }
                                 }, 2000);
 
@@ -199,6 +178,12 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void launchActivity() {
+        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+        startActivity(intent);
+        finish();
     }
 
     private void showMsg(String msg)

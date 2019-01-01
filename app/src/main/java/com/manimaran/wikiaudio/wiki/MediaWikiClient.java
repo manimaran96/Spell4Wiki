@@ -19,6 +19,14 @@ public interface MediaWikiClient {
     @GET("https://en.wikipedia.org/w/api.php?action=query&meta=tokens&format=json&type=login")
     Call<ResponseBody> getLoginToken();
 
+    @FormUrlEncoded
+    @POST("./")
+    Call<ResponseBody> getToken(
+            @Field("action") String action,
+            @Field("meta") String meta,
+            @Field("type") String type
+    );
+
     @GET("https://en.wikipedia.org/w/api.php?action=query&meta=tokens&format=json&type=csrf")
     Call<ResponseBody> getEditToken();
 
@@ -44,8 +52,12 @@ public interface MediaWikiClient {
             "&cmtitle=பகுப்பு:அறுபட்ட_கோப்பு_இணைப்புகள்_உள்ள_பக்கங்கள்&cmlimit=50&cmsort=timestamp&cmdir=desc")
     Call<ResponseBody> fetchUnAudioRecords();
 
+    @GET("https://en.wikipedia.org/w/api.php?action=query&meta=userinfo&uiprop=rights|Chasmsg")
+    Call<ResponseBody> accez();
+
+
     @Multipart
-    @POST("https://en.wikipedia.org/w/api.php")
+    @POST("https://en.wikipedia.org/w/api.php?")
     Call<ResponseBody> uploadFile(
             @Part("action") RequestBody action,
             @Part("filename") RequestBody filename,

@@ -13,7 +13,7 @@ android {
     }
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
@@ -24,26 +24,29 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
+
+    /**
+     * UI related libraries -Recycler view, Constraint layout
+     */
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'com.android.support:appcompat-v7:27.1.0'
     compile 'com.android.support:design:27.1.1'
     compile 'com.android.support:recyclerview-v7:27.1.0'
 
-    // retrofit, gson
-    compile 'com.google.code.gson:gson:2.7'
+    /**
+     * Networking libraries - Retrofit, OkHTTP, Gson, Cookie
+     */
     compile 'com.squareup.retrofit2:retrofit:2.3.0'
     compile 'com.squareup.retrofit2:converter-gson:2.0.2'
-
+    compile 'com.google.code.gson:gson:2.7'
     compile 'com.squareup.okhttp3:okhttp:3.9.0'
     compile 'com.squareup.okhttp3:logging-interceptor:3.9.1'
     compile 'com.github.franmontiel:PersistentCookieJar:v1.0.1'
 
+    /**
+     * Animation libraries -
+     */
     compile 'br.com.simplepass:loading-button-android:1.14.0'
-
-    compile 'com.github.Jay-Goo:WaveLineView:v1.0.3'
-
-    // Java wiki library
-    //compile 'fastily:jwiki:1.7.0'
 
     testCompile 'junit:junit:4.12'
 }

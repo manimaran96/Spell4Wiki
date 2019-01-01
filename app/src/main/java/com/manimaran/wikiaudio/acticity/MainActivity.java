@@ -1,12 +1,11 @@
 package com.manimaran.wikiaudio.acticity;
 
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
@@ -16,7 +15,6 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.google.gson.Gson;
 import com.manimaran.wikiaudio.R;
 import com.manimaran.wikiaudio.util.GeneralUtils;
 import com.manimaran.wikiaudio.view.EndlessAdapter;
@@ -43,7 +41,9 @@ public class MainActivity extends AppCompatActivity implements EndlessListView.E
     private EndlessAdapter adapter;
     private ProgressBar progressBar;
     private Integer nextOffset;
+    private JSONObject nextOffsetObj;
     private boolean doubleBackToExitPressedOnce = false;
+    private SwipeRefreshLayout refreshLayout = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +52,7 @@ public class MainActivity extends AppCompatActivity implements EndlessListView.E
 
         progressBar = (ProgressBar) findViewById(R.id.pb);
         resultListView = (EndlessListView) findViewById(R.id.search_result_list);
+        refreshLayout = (SwipeRefreshLayout) findViewById(R.id.layout_swipe);
         resultListView.setLoadingView(R.layout.loading_row);
         adapter = new EndlessAdapter(this, new ArrayList<String>(), R.layout.search_result_row, true);
         resultListView.setAdapter(adapter);
@@ -65,12 +66,18 @@ public class MainActivity extends AppCompatActivity implements EndlessListView.E
         String username = sharedPref.getString("username",null);
         setTitle("Wiki Audio " + (username != null ? " - " + username : ""));
 
+        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                loadDataFromServer();
+            }
+        });
+
     }
 
     private void loadDataFromServer() {
         progressBar.setVisibility(View.VISIBLE);
-        MediaWikiClient mediaWikiClient = ServiceGenerator.createService(MediaWikiClient.class,
-                getApplicationContext());
+        MediaWikiClient mediaWikiClient = ServiceGenerator.createService(MediaWikiClient.class, getApplicationContext());
         Call<ResponseBody> call = mediaWikiClient.fetchUnAudioRecords();
 
         call.enqueue(new Callback<ResponseBody>() {
@@ -106,40 +113,22 @@ public class MainActivity extends AppCompatActivity implements EndlessListView.E
         try {
             ArrayList<String> titleList = new ArrayList<>();
             JSONArray searchResults = reader.getJSONObject("query").optJSONArray("categorymembers");
+            Log.e("WIKI ", "Res " + reader.toString());
+            if(nextOffsetObj == null)
+                resultListView.reset();
             for (int ii = 0; ii < searchResults.length(); ii++) {
                 titleList.add(
                         searchResults.getJSONObject(ii).getString("title")
                         //+ " --> " + searchResults.getJSONObject(ii).getString("pageid")
                 );
             }
-            if (reader.has("continue") && false)
-                nextOffset = reader.getJSONObject("continue").getInt("sroffset");
+            if (reader.has("continue")&& false)
+                nextOffsetObj = reader.getJSONObject("continue");
             else
-                nextOffset = null;
+                nextOffsetObj = null;
             progressBar.setVisibility(View.GONE);
-            resultListView.addNewData(titleList);
-        }catch (Exception e)
-        {
-            e.printStackTrace();
-            resultListView.addNewData(Collections.singletonList("Error accrued"));
-        }
-    }
-
-
-    private void processSearchResult(String responseStr) throws JSONException {
-        JSONObject reader = new JSONObject(responseStr);
-
-        try {
-            ArrayList<String> titleList = new ArrayList<>();
-            Log.w("TAG", "Wiki " + new Gson().toJson(reader));
-            JSONArray searchResults = reader.getJSONObject("query").optJSONArray("search");
-            for (int ii = 0; ii < searchResults.length(); ii++) {
-                titleList.add(searchResults.getJSONObject(ii).getString("title"));
-            }
-            if (reader.has("continue"))
-                nextOffset = reader.getJSONObject("continue").getInt("sroffset");
-            else
-                nextOffset = null;
+            if(refreshLayout.isRefreshing())
+                refreshLayout.setRefreshing(false);
             resultListView.addNewData(titleList);
         }catch (Exception e)
         {
@@ -151,6 +140,8 @@ public class MainActivity extends AppCompatActivity implements EndlessListView.E
     private void searchFailed(String s) {
         resultListView.loadLaterOnScroll();
         progressBar.setVisibility(View.GONE);
+        if(refreshLayout.isRefreshing())
+            refreshLayout.setRefreshing(false);
         Toast.makeText(this, "Search failed!\n" + s, Toast.LENGTH_LONG).show();
     }
 
@@ -176,6 +167,7 @@ public class MainActivity extends AppCompatActivity implements EndlessListView.E
             // action with ID action_settings was selected
             case R.id.action_settings:
                 Toast.makeText(this, "Settings selected", Toast.LENGTH_SHORT).show();
+                ServiceGenerator.checkCookies();
                 break;
             default:
                 break;

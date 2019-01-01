@@ -10,11 +10,16 @@
 
 
 
-    <com.manimaran.wikiaudio.view.EndlessListView
-        android:id="@+id/search_result_list"
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/layout_swipe"
         android:layout_width="match_parent"
-        android:divider="@null"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent">
+        <com.manimaran.wikiaudio.view.EndlessListView
+            android:id="@+id/search_result_list"
+            android:layout_width="match_parent"
+            android:divider="@null"
+            android:layout_height="match_parent"/>
+    </android.support.v4.widget.SwipeRefreshLayout>
 
     <ProgressBar
         android:id="@+id/pb"
