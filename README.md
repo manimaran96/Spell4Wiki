@@ -1,7 +1,7 @@
 # Spell4Wiki – Spell For Wiktionary
 Spell4Wiki is an mobile application to record and upload audio for Wiktionary.
 
-## Detail info
+## Detail Info
 [Blog - https://manimaran96.wordpress.com/2019/01/06/spell4wiki-mobile-app-to-record-upload-audio-for-wiktionary/](https://manimaran96.wordpress.com/2019/01/06/spell4wiki-mobile-app-to-record-upload-audio-for-wiktionary/)
 
 ## TODO List
