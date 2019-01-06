@@ -49,7 +49,7 @@ public interface MediaWikiClient {
 
 
     @GET("https://ta.wiktionary.org/w/api.php?action=query&format=json&list=categorymembers&utf8=1" +
-            "&cmtitle=பகுப்பு:அறுபட்ட_கோப்பு_இணைப்புகள்_உள்ள_பக்கங்கள்&cmlimit=50&cmsort=timestamp&cmdir=desc")
+            "&cmtitle=பகுப்பு:அறுபட்ட_கோப்பு_இணைப்புகள்_உள்ள_பக்கங்கள்&lang=ta&cmlimit=50&cmsort=timestamp&cmdir=desc")
     Call<ResponseBody> fetchUnAudioRecords();
 
     @GET("https://en.wikipedia.org/w/api.php?action=query&meta=userinfo&uiprop=rights|Chasmsg")
@@ -65,4 +65,11 @@ public interface MediaWikiClient {
             @Part MultipartBody.Part file,
             @Part("text") RequestBody text
     );
+
+    /*{{Listen
+            | filename    = Accordion chords-01.ogg
+            | title       = Accordion chords
+            | description = Chords being played on an accordion
+    }}
+*/
 }
