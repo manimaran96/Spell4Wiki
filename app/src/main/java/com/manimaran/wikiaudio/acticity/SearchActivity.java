@@ -185,15 +185,13 @@ public class SearchActivity extends AppCompatActivity implements EndlessListView
     @Override
     public void onBackPressed() {
 
-        if (doubleBackToExitPressedOnce) {
-            //super.onBackPressed();
-            //overridePendingTransition(R.anim.trans_right_in, R.anim.trans_right_out);
-            GeneralUtils.exitAlert(SearchActivity.this);
+        if (doubleBackToExitPressedOnce)
+            super.onBackPressed();
+        else
+        {
+            this.doubleBackToExitPressedOnce = true;
+            GeneralUtils.showToast(getApplicationContext(), getString(R.string.alert_to_exit));
         }
-
-        this.doubleBackToExitPressedOnce = true;
-        GeneralUtils.showToast(getApplicationContext(), "Again click back to exit");
-
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {

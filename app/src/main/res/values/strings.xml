@@ -6,6 +6,7 @@
     <string name="search_here">தேடு</string>
     <string name="upload">Upload</string>
     <string name="hint_before_record">Holding to record</string>
+    <string name="alert_to_exit">Again click back to Exit</string>
 
     <array name="words">
         <item>அகங்காரம்</item>

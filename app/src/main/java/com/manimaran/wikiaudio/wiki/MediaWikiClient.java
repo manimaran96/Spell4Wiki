@@ -57,7 +57,7 @@ public interface MediaWikiClient {
 
 
     @Multipart
-    @POST("https://en.wikipedia.org/w/api.php?")
+    @POST("https://commons.wikimedia.org/w/api.php?")
     Call<ResponseBody> uploadFile(
             @Part("action") RequestBody action,
             @Part("filename") RequestBody filename,
