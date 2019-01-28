@@ -7,52 +7,7 @@
     <string name="upload">Upload</string>
     <string name="hint_before_record">Holding to record</string>
     <string name="alert_to_exit">Again click back to Exit</string>
-
-    <array name="words">
-        <item>அகங்காரம்</item>
-        <item>அகதி</item>
-        <item>அகரமுதலி</item>
-        <item>அகரவரிசை</item>
-        <item>அகராதி</item>
-        <item>அகலமான</item>
-        <item>அகாடமி</item>
-        <item>அக்கம்</item>
-        <item>அக்கறை</item>
-        <item>அக்கினி</item>
-        <item>அக்குள்</item>
-        <item>அக்டோபர்</item>
-        <item>அக்டோபர்</item>
-        <item>அங்கம்</item>
-        <item>அங்காடி</item>
-        <item>அங்கீகரிக்கப்பட்ட</item>
-        <item>அங்குல</item>
-        <item>அங்குலம்</item>
-        <item>அங்கே</item>
-        <item>அங்கேலா</item>
-        <item>அசமடம்</item>
-        <item>அசலான</item>
-        <item>அசாதாரண</item>
-        <item>அசாம்</item>
-        <item>அசாரி</item>
-        <item>அசிங்கமான</item>
-        <item>அசுரன்</item>
-        <item>அசை</item>
-        <item>அச்சடி</item>
-        <item>அச்சம்</item>
-        <item>அச்சு</item>
-        <item>அச்சுறுத்தலுக்குள்ளான</item>
-        <item>அச்சுறுத்தல்</item>
-        <item>அச்சுறுத்தி</item>
-        <item>அடக்கம்</item>
-        <item>அடங்கியுள்ள</item>
-        <item>அடங்கிறது</item>
-        <item>அடமானம்</item>
-        <item>அடரியம்</item>
-        <item>அடவி</item>
-        <item>அடி</item>
-        <item>அடி மானம்</item>
-        <item>அடிக்கடி</item>
-        <item>அடிச்சுவடு</item>
-        <item>அடிச்சுவட்டை</item>
-    </array>
+    <string name="check_internet">Please check your internet connection!</string>
+    <string name="invalid_credential">Provide Valid Username &amp; Password</string>
+    <string name="select_language">Select Language</string>
 </resources>

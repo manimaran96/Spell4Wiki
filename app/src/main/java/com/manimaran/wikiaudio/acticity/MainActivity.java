@@ -1,13 +1,11 @@
 package com.manimaran.wikiaudio.acticity;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -16,7 +14,9 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.manimaran.wikiaudio.R;
+import com.manimaran.wikiaudio.fragment.BottomSheetFragment;
 import com.manimaran.wikiaudio.util.GeneralUtils;
+import com.manimaran.wikiaudio.util.PrefManager;
 import com.manimaran.wikiaudio.view.EndlessAdapter;
 import com.manimaran.wikiaudio.view.EndlessListView;
 import com.manimaran.wikiaudio.wiki.MediaWikiClient;
@@ -44,11 +44,16 @@ public class MainActivity extends AppCompatActivity implements EndlessListView.E
     private JSONObject nextOffsetObj;
     private boolean doubleBackToExitPressedOnce = false;
     private SwipeRefreshLayout refreshLayout = null;
+    private PrefManager pref;
+    private MediaWikiClient api;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        api = ServiceGenerator.createService(MediaWikiClient.class, getApplicationContext());
+        pref = new PrefManager(getApplicationContext());
 
         progressBar = (ProgressBar) findViewById(R.id.pb);
         resultListView = (EndlessListView) findViewById(R.id.search_result_list);
@@ -56,15 +61,12 @@ public class MainActivity extends AppCompatActivity implements EndlessListView.E
         resultListView.setLoadingView(R.layout.loading_row);
         adapter = new EndlessAdapter(this, new ArrayList<String>(), R.layout.search_result_row, true);
         resultListView.setAdapter(adapter);
-        //
         resultListView.setListener(this);
         resultListView.setVisibility(View.VISIBLE);
 
         loadDataFromServer();
 
-        SharedPreferences sharedPref = getApplicationContext().getSharedPreferences(getString(R.string.pref_file_key), Context.MODE_PRIVATE);
-        String username = sharedPref.getString("username",null);
-        setTitle("Wiki Audio " + (username != null ? " - " + username : ""));
+        setTitle("Wiki Audio - " + pref.getName());
 
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -77,16 +79,14 @@ public class MainActivity extends AppCompatActivity implements EndlessListView.E
 
     private void loadDataFromServer() {
         progressBar.setVisibility(View.VISIBLE);
-        MediaWikiClient mediaWikiClient = ServiceGenerator.createService(MediaWikiClient.class, getApplicationContext());
-        Call<ResponseBody> call = mediaWikiClient.fetchUnAudioRecords();
+        Call<ResponseBody> call = api.fetchUnAudioRecords();
 
         call.enqueue(new Callback<ResponseBody>() {
             @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                if (response.isSuccessful()) {
+            public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
+                if (response.isSuccessful() && response.body() !=null) {
                     try {
                         String responseStr = response.body().string();
-                        Log.i("TAG","Res " + responseStr);
                         try {
                             processSearchResultAudio(responseStr);
                         } catch (JSONException e) {
@@ -101,19 +101,17 @@ public class MainActivity extends AppCompatActivity implements EndlessListView.E
             }
 
             @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
+            public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
                 searchFailed("Please check your connection!\nScroll to try again!");
             }
         });
     }
 
     private void processSearchResultAudio(String responseStr) throws JSONException {
-        JSONObject reader = new JSONObject(responseStr);
-
         try {
+            JSONObject reader = new JSONObject(responseStr);
             ArrayList<String> titleList = new ArrayList<>();
             JSONArray searchResults = reader.getJSONObject("query").optJSONArray("categorymembers");
-            Log.e("WIKI ", "Res " + reader.toString());
             if(nextOffsetObj == null)
                 resultListView.reset();
             for (int ii = 0; ii < searchResults.length(); ii++) {
@@ -166,8 +164,11 @@ public class MainActivity extends AppCompatActivity implements EndlessListView.E
                 break;
             // action with ID action_settings was selected
             case R.id.action_settings:
-                Toast.makeText(this, "Settings selected", Toast.LENGTH_SHORT).show();
-                ServiceGenerator.checkCookies();
+                break;
+            case R.id.action_lang_change:
+                BottomSheetFragment bottomSheetFragment = new BottomSheetFragment();
+                bottomSheetFragment.show(getSupportFragmentManager(), bottomSheetFragment.getTag());
+                bottomSheetFragment.setCancelable(false);
                 break;
             default:
                 break;

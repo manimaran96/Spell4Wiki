@@ -2,7 +2,7 @@ package com.manimaran.wikiaudio.model;
 
 public class Language {
     private String code, name, local;
-    private Boolean isLeftDirection;
+    private Boolean isLeftDirection, isSelected;
 
     public Language() {
     }

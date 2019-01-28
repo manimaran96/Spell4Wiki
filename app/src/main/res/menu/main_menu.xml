@@ -1,22 +1,38 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".activities.BaseActivity">
+
+
 
     <item
         android:id="@+id/action_wiktionary"
-        android:orderInCategory="100"
+        android:orderInCategory="1"
         app:showAsAction="always"
         android:icon="@drawable/logo"
         android:title="Refresh"/>
 
     <item
+        android:id="@+id/action_lang_change"
+        android:orderInCategory="2"
+        android:icon="@drawable/ic_language"
+        app:showAsAction="always"
+        android:title="@string/select_language">
+    </item>
+
+
+
+    <item
         android:id="@+id/action_settings"
         android:icon="@drawable/ic_logout"
+        app:showAsAction="never"
         android:title="Settings">
     </item>
 
     <item
         android:id="@+id/action_logout"
         android:icon="@drawable/ic_logout"
+        app:showAsAction="withText"
         android:title="Logout">
     </item>
 

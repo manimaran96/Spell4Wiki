@@ -1,8 +1,6 @@
 package com.manimaran.wikiaudio.acticity;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
@@ -16,12 +14,14 @@ import android.widget.SearchView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
-import com.manimaran.wikiaudio.util.GeneralUtils;
-import com.manimaran.wikiaudio.wiki.MediaWikiClient;
 import com.manimaran.wikiaudio.R;
-import com.manimaran.wikiaudio.wiki.ServiceGenerator;
+import com.manimaran.wikiaudio.fragment.BottomSheetFragment;
+import com.manimaran.wikiaudio.util.GeneralUtils;
+import com.manimaran.wikiaudio.util.PrefManager;
 import com.manimaran.wikiaudio.view.EndlessAdapter;
 import com.manimaran.wikiaudio.view.EndlessListView;
+import com.manimaran.wikiaudio.wiki.MediaWikiClient;
+import com.manimaran.wikiaudio.wiki.ServiceGenerator;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -43,11 +43,14 @@ public class SearchActivity extends AppCompatActivity implements EndlessListView
     private String queryString;
     private Integer nextOffset;
     private boolean doubleBackToExitPressedOnce = false;
+    private PrefManager pref;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
+
+        pref = new PrefManager(getApplicationContext());
 
         SearchView searchBar = (SearchView) findViewById(R.id.search_bar);
         searchBar.requestFocus();
@@ -89,8 +92,10 @@ public class SearchActivity extends AppCompatActivity implements EndlessListView
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.main_menu, menu);
-        MenuItem item = menu.findItem(R.id.action_wiktionary);
-        item.setIcon(R.drawable.ic_record);
+        menu.findItem(R.id.action_wiktionary).setIcon(R.drawable.ic_record);
+        menu.findItem(R.id.action_settings).setIcon(R.drawable.ic_cancel);
+        if(pref.getIsAnonymous())
+            menu.findItem(R.id.action_wiktionary).setVisible(false);
         return true;
     }
 
@@ -104,6 +109,11 @@ public class SearchActivity extends AppCompatActivity implements EndlessListView
                 return true;
             case R.id.action_logout:
                 GeneralUtils.logoutAlert(SearchActivity.this);
+                return true;
+            case R.id.action_lang_change:
+                BottomSheetFragment bottomSheetFragment = new BottomSheetFragment();
+                bottomSheetFragment.show(getSupportFragmentManager(), bottomSheetFragment.getTag());
+                bottomSheetFragment.setCancelable(false);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

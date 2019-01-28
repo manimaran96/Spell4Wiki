@@ -1,11 +1,10 @@
 package com.manimaran.wikiaudio.acticity;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -16,6 +15,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.manimaran.wikiaudio.R;
+import com.manimaran.wikiaudio.util.PrefManager;
 import com.manimaran.wikiaudio.wiki.MediaWikiClient;
 import com.manimaran.wikiaudio.wiki.ServiceGenerator;
 
@@ -37,16 +37,17 @@ public class LoginActivity extends AppCompatActivity {
     EditText editUserName, editPassword;
     CircularProgressButton btnLogin;
 
-    SharedPreferences pref;
+    PrefManager pref;
     MediaWikiClient api;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        pref = getApplicationContext().getSharedPreferences(getString(R.string.pref_file_key), Context.MODE_PRIVATE);
+        pref = new PrefManager(getApplicationContext());
 
-        if(pref.getBoolean(getString(R.string.pref_is_logged_in), false))
+        if(pref.isIsLogin())
         {
             launchActivity();
         }
@@ -63,7 +64,7 @@ public class LoginActivity extends AppCompatActivity {
                         btnLogin.startAnimation();
                         callToken(editUserName.getText().toString(), editPassword.getText().toString());
                     } else
-                        Snackbar.make(btnLogin, "Provide Valid Username & Password", Snackbar.LENGTH_SHORT).show();
+                        Snackbar.make(btnLogin, getString(R.string.invalid_credential), Snackbar.LENGTH_SHORT).show();
                 }
             });
         }
@@ -74,8 +75,8 @@ public class LoginActivity extends AppCompatActivity {
         Call<ResponseBody> call =  api.getLoginToken();
         call.enqueue(new Callback<ResponseBody>() {
             @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                if (response.isSuccessful()) {
+            public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
+                if (response.isSuccessful() && response.body() != null) {
                     try {
                         String responseStr = response.body().string();
                         String lgToken;
@@ -84,7 +85,6 @@ public class LoginActivity extends AppCompatActivity {
 
                         reader = new JSONObject(responseStr);
                         tokenJSONObject = reader.getJSONObject("query").getJSONObject("tokens");
-                        //noinspection SpellCheckingInspection
                         lgToken = tokenJSONObject.getString("logintoken");
                         completeLogin(username, password, lgToken);
 
@@ -97,16 +97,15 @@ public class LoginActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
+            public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
                 t.printStackTrace();
                 btnLogin.revertAnimation();
-                showMsg("Please check your connection!.. out");
+                showMsg(getString(R.string.check_internet));
             }
         });
     }
 
-    private void hideKeyboard()
-    {
+    private void hideKeyboard() {
         try {
             View focus = LoginActivity.this.getCurrentFocus();
             if (focus != null) {
@@ -123,8 +122,8 @@ public class LoginActivity extends AppCompatActivity {
         Call<ResponseBody> call = api.clientLogin ("clientlogin", "json", ServiceGenerator.BASE_URL, lgToken, username, password);
         call.enqueue(new Callback<ResponseBody>() {
             @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                if (response.isSuccessful()) {
+            public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
+                if (response.isSuccessful() && response.body() != null) {
                     try {
                         String responseStr = response.body().string();
                         JSONObject reader;
@@ -134,12 +133,11 @@ public class LoginActivity extends AppCompatActivity {
                             loginJSONObject = reader.getJSONObject("clientlogin");
                             String result = loginJSONObject.getString("status");
                             if (result.equals("PASS")) {
-                                //  Write to shared preferences
+
                                 showMsg("Welcome " + loginJSONObject.getString("username"));
-                                SharedPreferences.Editor editor = pref.edit();
-                                editor.putString("username", loginJSONObject.getString("username"));
-                                editor.putBoolean(getString(R.string.pref_is_logged_in), true);
-                                editor.apply();
+
+                                //  Write to shared preferences
+                                pref.setSession(loginJSONObject.getString("username"), true);
 
                                 btnLogin.doneLoadingAnimation(
                                         ContextCompat.getColor(LoginActivity.this, R.color.w_green),
@@ -152,7 +150,6 @@ public class LoginActivity extends AppCompatActivity {
                                         launchActivity();
                                     }
                                 }, 2000);
-
 
                             } else if (result.equals("FAIL")) {
                                 showMsg(loginJSONObject.getString("message"));

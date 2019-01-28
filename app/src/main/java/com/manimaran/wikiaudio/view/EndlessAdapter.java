@@ -45,6 +45,7 @@ import android.widget.Toast;
 import com.manimaran.wikiaudio.R;
 import com.manimaran.wikiaudio.acticity.WebWikiActivity;
 import com.manimaran.wikiaudio.util.GeneralUtils;
+import com.manimaran.wikiaudio.util.PrefManager;
 import com.manimaran.wikiaudio.util.WAVPlayer;
 import com.manimaran.wikiaudio.util.WAVRecorder;
 import com.manimaran.wikiaudio.wiki.MediaWikiClient;
@@ -92,6 +93,7 @@ public class EndlessAdapter extends ArrayAdapter<String> {
     private Handler mHandler = new Handler();
 
     private ProgressDialog progressDialog;
+    private PrefManager pref;
 
     public EndlessAdapter(Context ctx, List<String> itemList, int layoutId, Boolean isAudioMode) {
         super(ctx, layoutId, itemList);
@@ -100,7 +102,7 @@ public class EndlessAdapter extends ArrayAdapter<String> {
         this.activity = (Activity) ctx;
         this.layoutId = layoutId;
         this.isAudioMode = isAudioMode;
-
+        this.pref = new PrefManager(ctx);
     }
 
     @Override
@@ -161,7 +163,7 @@ public class EndlessAdapter extends ArrayAdapter<String> {
 
     }
     @RequiresApi(api = Build.VERSION_CODES.M)
-    public void getPermissionToRecordAudio() {
+    private void getPermissionToRecordAudio() {
         // 1) Use the support library version ContextCompat.checkSelfPermission(...) to avoid
         // checking the build version since Context.checkSelfPermission(...) is only available
         // in Marshmallow
@@ -186,7 +188,7 @@ public class EndlessAdapter extends ArrayAdapter<String> {
         }
     }
 
-    public void showPopup(final Activity activity, int pos) {
+    private void showPopup(final Activity activity, int pos) {
 
         // Dialog init
         myDialog = new Dialog(activity);
@@ -319,51 +321,58 @@ public class EndlessAdapter extends ArrayAdapter<String> {
     }
 
     private void uploadAudioToWikiServer() {
-        MediaWikiClient mediaWikiClient = ServiceGenerator.createService(MediaWikiClient.class, ctx);
-        Call<ResponseBody> call = mediaWikiClient.getEditToken();
+
         progressDialog = ProgressDialog.show(activity, "Upload Audio", "Uploading your file...", true);
-        call.enqueue(new Callback<ResponseBody>() {
-            @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                if (response.isSuccessful()) {
-                    try {
-                        String responseStr = response.body().string();
-                        String editToken;
-                        JSONObject reader;
-                        JSONObject tokenJSONObject;
+        if(pref.getCsrfToken() == null) {
+            MediaWikiClient mediaWikiClient = ServiceGenerator.createService(MediaWikiClient.class, ctx);
+            Call<ResponseBody> call = mediaWikiClient.getEditToken();
+            call.enqueue(new Callback<ResponseBody>() {
+                @Override
+                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                    if (response.isSuccessful()) {
                         try {
-                            reader = new JSONObject(responseStr);
-                            tokenJSONObject = reader.getJSONObject("query").getJSONObject("tokens");
-                            //noinspection SpellCheckingInspection
-                            editToken = tokenJSONObject.getString("csrftoken");
-                            Log.w(TAG, " Res Edit token " + editToken + "\n" + tokenJSONObject);
-                            if (editToken.equals("+\\")) {
-                                dismissDialog("You are not logged in! \nPlease login to continue.");
-                                GeneralUtils.logoutAlert(activity);
-                            } else {
-                                completeUpload(editToken);
+                            String responseStr = response.body().string();
+                            String editToken;
+                            JSONObject reader;
+                            JSONObject tokenJSONObject;
+                            try {
+                                reader = new JSONObject(responseStr);
+                                tokenJSONObject = reader.getJSONObject("query").getJSONObject("tokens");
+                                //noinspection SpellCheckingInspection
+                                editToken = tokenJSONObject.getString("csrftoken");
+                                Log.w(TAG, " Res Edit token " + editToken + "\n" + tokenJSONObject);
+                                if (editToken.equals("+\\")) {
+                                    dismissDialog("You are not logged in! \nPlease login to continue.");
+                                    if (myDialog != null && myDialog.isShowing())
+                                        myDialog.dismiss();
+                                    GeneralUtils.logoutAlert(activity);
+                                } else {
+                                    pref.setCsrfToken(editToken);
+                                    completeUpload(editToken);
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                                dismissDialog("Server misbehaved! \nPlease try again later.");
                             }
-                        } catch (JSONException e) {
+                        } catch (IOException e) {
                             e.printStackTrace();
-                            dismissDialog("Server misbehaved! \nPlease try again later.");
+                            dismissDialog("Please check your connection!");
                         }
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                        dismissDialog("Please check your connection!");
                     }
                 }
-            }
 
-            @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
-                dismissDialog("Please check your connection!");
-                t.printStackTrace();
-            }
-        });
+                @Override
+                public void onFailure(Call<ResponseBody> call, Throwable t) {
+                    dismissDialog("Please check your connection!");
+                    t.printStackTrace();
+                }
+            });
+        }else
+            completeUpload(pref.getCsrfToken());
 
 
     }
-    public static String getMimeType(String url) {
+    private static String getMimeType(String url) {
         String type = null;
         String extension = MimeTypeMap.getFileExtensionFromUrl(url);
         if (extension != null) {
@@ -375,6 +384,7 @@ public class EndlessAdapter extends ArrayAdapter<String> {
 
     private void completeUpload(String editToken) {
 
+        GeneralUtils.showToast(ctx, editToken);
         String title = RECORDED_FILENAME;
         String filePath = getFilename();
 

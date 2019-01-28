@@ -10,6 +10,7 @@ import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersisto
 import com.google.gson.Gson;
 
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
 import okhttp3.HttpUrl;
 import okhttp3.Interceptor;
@@ -67,6 +68,8 @@ public class ServiceGenerator {
         if (cookieJar == null) {
             cookieJar = new PersistentCookieJar(new SetCookieCache(), new SharedPrefsCookiePersistor(context));
             httpClient.cookieJar(cookieJar);
+            httpClient.connectTimeout(30, TimeUnit.SECONDS);
+            httpClient.readTimeout(30, TimeUnit.SECONDS);
         }
         boolean rebuild = false;
         if (!httpClient.interceptors().contains(logging)) {

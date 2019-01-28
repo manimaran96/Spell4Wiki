@@ -5,16 +5,12 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.support.v4.content.ContextCompat;
 import android.widget.Toast;
 
 import com.manimaran.wikiaudio.R;
-import com.manimaran.wikiaudio.acticity.LoginActivity;
 import com.manimaran.wikiaudio.model.Language;
-import com.manimaran.wikiaudio.wiki.ServiceGenerator;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -63,22 +59,15 @@ public class GeneralUtils {
     public static void logoutAlert(final Activity activity) {
 
         new AlertDialog.Builder(activity)
-                .setIcon(R.drawable.ic_logout)
+                //.setIcon(R.drawable.ic_logout)
                 .setTitle("Confirm to Logout")
                 .setMessage("Are you sure you want to logout?")
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener()
                 {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        //  Write to shared preferences
-                        SharedPreferences sharedPref = activity.getSharedPreferences(activity.getString(R.string.pref_file_key), Context.MODE_PRIVATE);
-                        SharedPreferences.Editor editor = sharedPref.edit();
-                        editor.putBoolean(activity.getString(R.string.pref_is_logged_in), false);
-                        editor.apply();
-                        ServiceGenerator.clearCookies();
-                        Intent intent = new Intent(activity.getApplicationContext(), LoginActivity.class);
-                        activity.startActivity(intent);
-                        activity.finish();
+                        // Logout user
+                        new PrefManager(activity).logoutUser();
                     }
 
                 })
@@ -106,7 +95,7 @@ public class GeneralUtils {
                     Language lang = new Language();
                     lang.setCode(obj.getString("code"));
                     lang.setName(obj.getString("lang"));
-                    lang.setIsLeftDirection(obj.getString("dir").equals("ltl"));
+                    lang.setIsLeftDirection(obj.getString("dir").equals("ltr"));
                     lang.setLocal(obj.getString("local_lang"));
                     langList.add(lang);
                 }
@@ -114,6 +103,9 @@ public class GeneralUtils {
         } catch (IOException | JSONException ex) {
             ex.printStackTrace();
         }
+
+        // Todo : Order by name
+
         return langList;
 
     }

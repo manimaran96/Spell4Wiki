@@ -16,7 +16,7 @@ import retrofit2.http.Query;
 public interface MediaWikiClient {
 
     //@GET("action=query&meta=tokens&format=json&type=login")
-    @GET("https://en.wikipedia.org/w/api.php?action=query&meta=tokens&format=json&type=login")
+    @GET("https://commons.wikimedia.org/w/api.php?action=query&meta=tokens&format=json&type=login")
     Call<ResponseBody> getLoginToken();
 
     @FormUrlEncoded
@@ -27,11 +27,11 @@ public interface MediaWikiClient {
             @Field("type") String type
     );
 
-    @GET("https://en.wikipedia.org/w/api.php?action=query&meta=tokens&format=json&type=csrf")
+    @GET("https://commons.wikimedia.org/w/api.php?action=query&meta=tokens&format=json&type=csrf")
     Call<ResponseBody> getEditToken();
 
     @FormUrlEncoded
-    @POST("https://en.wikipedia.org/w/api.php?")
+    @POST("https://commons.wikimedia.org/w/api.php?")
     Call<ResponseBody> clientLogin(
             @Field("action") String action,
             @Field("format") String format,
@@ -66,7 +66,10 @@ public interface MediaWikiClient {
             @Part("text") RequestBody text
     );
 
-    /*{{Listen
+    /*
+
+    errorformat=plaintext --> show error as plain text format
+    {{Listen
             | filename    = Accordion chords-01.ogg
             | title       = Accordion chords
             | description = Chords being played on an accordion
