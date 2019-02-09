@@ -10,4 +10,5 @@
     <string name="check_internet">Please check your internet connection!</string>
     <string name="invalid_credential">Provide Valid Username &amp; Password</string>
     <string name="select_language">Select Language</string>
+    <string name="select_language_response_msg">Know Your Language is %s</string>
 </resources>

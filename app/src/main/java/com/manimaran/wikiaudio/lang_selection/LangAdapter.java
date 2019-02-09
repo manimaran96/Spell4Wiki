@@ -12,6 +12,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.manimaran.wikiaudio.R;
+import com.manimaran.wikiaudio.listerner.OnItemClickListener;
 import com.manimaran.wikiaudio.model.Language;
 import com.manimaran.wikiaudio.util.PrefManager;
 
@@ -26,12 +27,14 @@ public class LangAdapter extends BaseAdapter implements Filterable{
     private List<Language> mBackUpList;
     private FilterVal valueFilter;
     private String existLangCode = "en";
+    private OnItemClickListener mListener;
 
-    public LangAdapter(Activity activity, List<Language> list) {
+    public LangAdapter(Activity activity, List<Language> list, OnItemClickListener listener) {
         this.mActivity = activity;
         this.mList = list;
         this.mBackUpList = list;
         this.existLangCode = new PrefManager(mActivity).getLangCode();
+        this.mListener = listener;
     }
 
     @Override
@@ -75,6 +78,7 @@ public class LangAdapter extends BaseAdapter implements Filterable{
             @Override
             public void onClick(View view) {
                 finalHolder.radioSelect.setChecked(true);
+                mListener.OnClickListener(model.getCode(), model.getName());
             }
         });
 

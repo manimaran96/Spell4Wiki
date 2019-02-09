@@ -1,6 +1,7 @@
 package com.manimaran.wikiaudio.fragment;
 
 import android.app.Dialog;
+import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -10,15 +11,18 @@ import android.support.design.widget.BottomSheetDialogFragment;
 import android.support.v7.widget.SearchView;
 import android.util.DisplayMetrics;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ListView;
 
 import com.manimaran.wikiaudio.R;
 import com.manimaran.wikiaudio.lang_selection.LangAdapter;
+import com.manimaran.wikiaudio.listerner.OnItemClickListener;
+import com.manimaran.wikiaudio.model.Language;
 import com.manimaran.wikiaudio.util.GeneralUtils;
 import com.manimaran.wikiaudio.util.PrefManager;
+
+import java.util.List;
 
 public class BottomSheetFragment extends BottomSheetDialogFragment {
 
@@ -47,19 +51,20 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
             ImageView btnClose = dialog.findViewById(R.id.btn_close);
             final SearchView searchView = dialog.findViewById(R.id.search_view);
 
-            final LangAdapter adapter = new LangAdapter(getActivity(), GeneralUtils.getLanguageListFromJson(getContext()));
+            List<Language> languageList = GeneralUtils.getLanguageListFromJson(getContext());
+
+            OnItemClickListener listener = new OnItemClickListener() {
+                @Override
+                public void OnClickListener(String langCode, String lang) {
+                    pref.setLangCode(langCode);
+                    GeneralUtils.showToast(getContext(), String.format(getString(R.string.select_language_response_msg), lang));
+                    dismiss();
+                }
+            };
+
+            final LangAdapter adapter = new LangAdapter(getActivity(), languageList, listener);
             if (listView != null) {
                 listView.setAdapter(adapter);
-
-                listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                        GeneralUtils.showToast(getContext(), "Click");
-                        pref.setLangCode(adapter.getItem(i).getCode());
-                        GeneralUtils.showToast(getContext(), "Code " + pref.getLangCode());
-                        dismiss();
-                    }
-                });
             }
 
             if(btnClose != null) {
