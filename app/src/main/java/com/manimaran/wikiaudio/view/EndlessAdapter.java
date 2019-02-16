@@ -17,6 +17,7 @@ package com.manimaran.wikiaudio.view;
  */
 
 import android.Manifest;
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
@@ -29,6 +30,8 @@ import android.os.CountDownTimer;
 import android.os.Environment;
 import android.os.Handler;
 import android.support.annotation.RequiresApi;
+import android.text.BidiFormatter;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -188,8 +191,9 @@ public class EndlessAdapter extends ArrayAdapter<String> {
         }
     }
 
-    private void showPopup(final Activity activity, int pos) {
+    private void showPopup(final Activity activity, final int pos) {
 
+        isRecorded = false;
         // Dialog init
         myDialog = new Dialog(activity);
         myDialog.setContentView(R.layout.pop_up_record_ui);
@@ -231,7 +235,7 @@ public class EndlessAdapter extends ArrayAdapter<String> {
                 {
                     player.stopPlaying();
                     txtSec.setText("00:10");
-                    recorder.stopRecording(getFilename());
+                    recorder.stopRecording(getFilename(RECORDED_FILENAME));
 
                     // Reverse animation
                     btnRecord.animate()
@@ -312,7 +316,10 @@ public class EndlessAdapter extends ArrayAdapter<String> {
             public void onClick(View view) {
                 if(isRecorded)
                 {
-                    uploadAudioToWikiServer();
+                    String uploadName = "ta-"+ itemList.get(pos)+ ".wav";
+                    //String uploadName = "ta-mani123.wav";
+                    getRecordedFilename(uploadName);
+                    uploadAudioToWikiServer(uploadName);
                 }else
                     GeneralUtils.showToast(ctx, "Please record audio first");
             }
@@ -320,7 +327,7 @@ public class EndlessAdapter extends ArrayAdapter<String> {
 
     }
 
-    private void uploadAudioToWikiServer() {
+    private void uploadAudioToWikiServer(final String uploadFileName) {
 
         progressDialog = ProgressDialog.show(activity, "Upload Audio", "Uploading your file...", true);
         if(pref.getCsrfToken() == null) {
@@ -348,7 +355,7 @@ public class EndlessAdapter extends ArrayAdapter<String> {
                                     GeneralUtils.logoutAlert(activity);
                                 } else {
                                     pref.setCsrfToken(editToken);
-                                    completeUpload(editToken);
+                                    completeUpload(editToken, uploadFileName);
                                 }
                             } catch (JSONException e) {
                                 e.printStackTrace();
@@ -365,28 +372,30 @@ public class EndlessAdapter extends ArrayAdapter<String> {
                 public void onFailure(Call<ResponseBody> call, Throwable t) {
                     dismissDialog("Please check your connection!");
                     t.printStackTrace();
+
                 }
             });
         }else
-            completeUpload(pref.getCsrfToken());
+            completeUpload(pref.getCsrfToken(), uploadFileName);
 
 
     }
     private static String getMimeType(String url) {
         String type = null;
-        String extension = MimeTypeMap.getFileExtensionFromUrl(url);
-        if (extension != null) {
+        String extension = url.substring(url.lastIndexOf(".")+1);
+        if (!TextUtils.isEmpty(extension)) {
             type = MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension);
         }
         return type;
     }
 
 
-    private void completeUpload(String editToken) {
+    private void completeUpload(String editToken , String uploadFileName) {
 
         GeneralUtils.showToast(ctx, editToken);
-        String title = RECORDED_FILENAME;
-        String filePath = getFilename();
+        String title = uploadFileName;
+        String filePath = getUplaodFilename(uploadFileName);
+        Log.e("NAME OF FILE ", "Filename " + filePath);
 
         // create upload service client
         MediaWikiClient service = ServiceGenerator.createService(MediaWikiClient.class, ctx);
@@ -423,12 +432,27 @@ public class EndlessAdapter extends ArrayAdapter<String> {
                         {
                             uploadJSONObject = reader.getJSONObject("upload");
                             String result = uploadJSONObject.getString("result");
-                            dismissDialog("Upload: " + result);
+                            if(result.toLowerCase().contains("warning"))
+                            {
+                                String errMsg = "File name already exist";
+                                dismissDialog(errMsg);
+                            }else
+                            {
+                                dismissDialog("Upload: " + result);
+                                if(myDialog != null && myDialog.isShowing())
+                                    myDialog.dismiss();
+                            }
                         }else
                         {
                             if(reader.has("error"))
                             {
                                 String errMsg = reader.getJSONObject("error").getString("info");
+                                dismissDialog(errMsg);
+                            }else if(reader.has("warnings"))
+                            {
+                                uploadJSONObject = reader.getJSONObject("upload");
+                                String result = uploadJSONObject.getString("result");
+                                String errMsg = "File name already exist";
                                 dismissDialog(errMsg);
                             }
                         }
@@ -466,7 +490,7 @@ public class EndlessAdapter extends ArrayAdapter<String> {
             player.stopPlaying();
             btnPlayPause.setImageResource(R.drawable.ic_play);
         } else {
-            player.startPlaying(getFilename(), new Callable() {
+            player.startPlaying(getFilename(RECORDED_FILENAME), new Callable() {
                 @Override
                 public Object call() throws Exception {
                     onPlayStatusChanged();
@@ -524,14 +548,43 @@ public class EndlessAdapter extends ArrayAdapter<String> {
     }
 
     // Get record file name
-    private String getFilename() {
+    private String getFilename(String fileName) {
         String filePath = Environment.getExternalStorageDirectory().getPath();
         File file = new File(filePath, "/Wiki/Audios");
         if (!file.exists()) {
             if(!file.mkdirs())
                 Log.d(TAG, "Not create directory!");
         }
-        return file.getAbsolutePath() + "/" +RECORDED_FILENAME;
+        return file.getAbsolutePath() + "/" + fileName;
     }
 
+
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR2)
+    private String getUplaodFilename(String fileName) {
+
+        BidiFormatter myBidiFormatter = BidiFormatter.getInstance();
+        String filePath = Environment.getExternalStorageDirectory().getPath();
+        File file = new File(filePath, "/Wiki/Audios/Upload");
+        if (!file.exists()) {
+            if(!file.mkdirs())
+                Log.d(TAG, "Not create directory!");
+        }
+        return myBidiFormatter.unicodeWrap(file.getAbsolutePath() + "/" + fileName);
+    }
+
+    private String getRecordedFilename(String newName)
+    {
+        String filePath = Environment.getExternalStorageDirectory().getPath() + "/Wiki/Audios";
+        File fileFrom = new File(filePath, RECORDED_FILENAME);
+        File fileToFolder = new File(filePath , "/Upload");
+        if (!fileToFolder.exists()) {
+            if(!fileToFolder.mkdirs())
+                Log.d(TAG, "Not create directory!");
+        }
+
+        File fileTo = new File(filePath + "/Upload", newName);
+        fileFrom.renameTo(fileTo);
+
+        return fileTo.getAbsolutePath();
+    }
 }

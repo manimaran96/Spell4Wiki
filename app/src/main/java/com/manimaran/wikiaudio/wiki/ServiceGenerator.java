@@ -24,7 +24,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class ServiceGenerator {
 
     // Base Wiki Api Url
-    public static final String BASE_URL = "https://en.wiktionary.org/w/api.php/";
+    public static final String BASE_URL = "https://ta.wiktionary.org/";
 
     private static Retrofit retrofit;
 

@@ -48,7 +48,7 @@ public interface MediaWikiClient {
     );
 
 
-    @GET("https://ta.wiktionary.org/w/api.php?action=query&format=json&list=categorymembers&utf8=1" +
+    @GET("w/api.php?action=query&format=json&list=categorymembers&utf8=1" +
             "&cmtitle=பகுப்பு:அறுபட்ட_கோப்பு_இணைப்புகள்_உள்ள_பக்கங்கள்&lang=ta&cmlimit=50&cmsort=timestamp&cmdir=desc")
     Call<ResponseBody> fetchUnAudioRecords();
 
@@ -67,6 +67,8 @@ public interface MediaWikiClient {
     );
 
     /*
+
+    https://commons.wikimedia.org/wiki/Commons:API/MediaWiki
 
     errorformat=plaintext --> show error as plain text format
     {{Listen
