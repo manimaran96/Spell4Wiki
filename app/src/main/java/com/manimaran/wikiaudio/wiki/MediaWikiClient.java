@@ -15,23 +15,16 @@ import retrofit2.http.Query;
 
 public interface MediaWikiClient {
 
-    //@GET("action=query&meta=tokens&format=json&type=login")
-    @GET("https://commons.wikimedia.org/w/api.php?action=query&meta=tokens&format=json&type=login")
+    // Login token
+    @GET("w/api.php?action=query&meta=tokens&format=json&type=login")
     Call<ResponseBody> getLoginToken();
 
-    @FormUrlEncoded
-    @POST("./")
-    Call<ResponseBody> getToken(
-            @Field("action") String action,
-            @Field("meta") String meta,
-            @Field("type") String type
-    );
-
-    @GET("https://commons.wikimedia.org/w/api.php?action=query&meta=tokens&format=json&type=csrf")
+    // Edit Token
+    @GET("w/api.php?action=query&meta=tokens&format=json&type=csrf")
     Call<ResponseBody> getEditToken();
 
     @FormUrlEncoded
-    @POST("https://commons.wikimedia.org/w/api.php?")
+    @POST("w/api.php?")
     Call<ResponseBody> clientLogin(
             @Field("action") String action,
             @Field("format") String format,
@@ -41,7 +34,8 @@ public interface MediaWikiClient {
             @Field("password") String password
     );
 
-    @GET("https://ta.wiktionary.org/w/api.php?action=query&list=search&utf8=&format=json")
+    // Search Query
+    @GET("w/api.php?action=query&list=search&utf8=&format=json")
     Call<ResponseBody> fetchRecords(
             @Query("srsearch") String searchString,
             @Query("sroffset") Integer offSet
@@ -52,12 +46,8 @@ public interface MediaWikiClient {
             "&cmtitle=பகுப்பு:அறுபட்ட_கோப்பு_இணைப்புகள்_உள்ள_பக்கங்கள்&lang=ta&cmlimit=50&cmsort=timestamp&cmdir=desc")
     Call<ResponseBody> fetchUnAudioRecords();
 
-    @GET("https://en.wikipedia.org/w/api.php?action=query&meta=userinfo&uiprop=rights|Chasmsg")
-    Call<ResponseBody> accez();
-
-
     @Multipart
-    @POST("https://commons.wikimedia.org/w/api.php?")
+    @POST("w/api.php?")
     Call<ResponseBody> uploadFile(
             @Part("action") RequestBody action,
             @Part("filename") RequestBody filename,

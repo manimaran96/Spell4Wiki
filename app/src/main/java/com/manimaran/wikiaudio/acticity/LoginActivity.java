@@ -54,7 +54,7 @@ public class LoginActivity extends AppCompatActivity {
         else {
             init();
             hideKeyboard();
-            api = ServiceGenerator.createService(MediaWikiClient.class, getApplicationContext());
+            api = ServiceGenerator.createService(MediaWikiClient.class, getApplicationContext(), ServiceGenerator.COMMONS_URL);
 
             btnLogin.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -119,7 +119,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private void completeLogin(String username, String password, String lgToken) {
 
-        Call<ResponseBody> call = api.clientLogin ("clientlogin", "json", ServiceGenerator.BASE_URL, lgToken, username, password);
+        Call<ResponseBody> call = api.clientLogin ("clientlogin", "json", ServiceGenerator.COMMONS_URL, lgToken, username, password);
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {

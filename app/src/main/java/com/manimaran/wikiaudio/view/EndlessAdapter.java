@@ -97,6 +97,7 @@ public class EndlessAdapter extends ArrayAdapter<String> {
 
     private ProgressDialog progressDialog;
     private PrefManager pref;
+    private MediaWikiClient api;
 
     public EndlessAdapter(Context ctx, List<String> itemList, int layoutId, Boolean isAudioMode) {
         super(ctx, layoutId, itemList);
@@ -106,6 +107,8 @@ public class EndlessAdapter extends ArrayAdapter<String> {
         this.layoutId = layoutId;
         this.isAudioMode = isAudioMode;
         this.pref = new PrefManager(ctx);
+        this.api = ServiceGenerator.createService(MediaWikiClient.class, ctx,
+               ServiceGenerator.COMMONS_URL);
     }
 
     @Override
@@ -331,8 +334,7 @@ public class EndlessAdapter extends ArrayAdapter<String> {
 
         progressDialog = ProgressDialog.show(activity, "Upload Audio", "Uploading your file...", true);
         if(pref.getCsrfToken() == null) {
-            MediaWikiClient mediaWikiClient = ServiceGenerator.createService(MediaWikiClient.class, ctx);
-            Call<ResponseBody> call = mediaWikiClient.getEditToken();
+            Call<ResponseBody> call = api.getEditToken();
             call.enqueue(new Callback<ResponseBody>() {
                 @Override
                 public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -397,9 +399,6 @@ public class EndlessAdapter extends ArrayAdapter<String> {
         String filePath = getUplaodFilename(uploadFileName);
         Log.e("NAME OF FILE ", "Filename " + filePath);
 
-        // create upload service client
-        MediaWikiClient service = ServiceGenerator.createService(MediaWikiClient.class, ctx);
-
         File file = new File(filePath);
         // create RequestBody instance from file
         RequestBody requestFile =
@@ -412,7 +411,7 @@ public class EndlessAdapter extends ArrayAdapter<String> {
         MultipartBody.Part body = MultipartBody.Part.createFormData("file", title, requestFile);
 
         // finally, execute the request
-        Call<ResponseBody> call = service.uploadFile(
+        Call<ResponseBody> call = api.uploadFile(
                 RequestBody.create(MultipartBody.FORM, "upload"), // action
                 RequestBody.create(MultipartBody.FORM, title), // filename
                 RequestBody.create(MultipartBody.FORM, editToken), // token

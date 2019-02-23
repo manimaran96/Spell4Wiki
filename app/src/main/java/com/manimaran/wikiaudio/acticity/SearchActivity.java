@@ -122,7 +122,7 @@ public class SearchActivity extends AppCompatActivity implements EndlessListView
 
     private void search(String query) {
         MediaWikiClient mediaWikiClient = ServiceGenerator.createService(MediaWikiClient.class,
-                getApplicationContext());
+                getApplicationContext(), String.format(ServiceGenerator.WIKTIONARY_URL, pref.getLangCode()));
         Call<ResponseBody> call = mediaWikiClient.fetchRecords(query, nextOffset);
 
         call.enqueue(new Callback<ResponseBody>() {

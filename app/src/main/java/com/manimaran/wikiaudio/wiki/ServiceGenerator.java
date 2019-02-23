@@ -24,13 +24,13 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class ServiceGenerator {
 
     // Base Wiki Api Url
-    public static final String BASE_URL = "https://ta.wiktionary.org/";
+    public static String WIKTIONARY_URL = "https://%s.wiktionary.org/";
+    public static String COMMONS_URL = "https://commons.wikimedia.org/";
 
     private static Retrofit retrofit;
 
     // Retrofit builder init with api url
     private static Retrofit.Builder builder = new Retrofit.Builder()
-            .baseUrl(BASE_URL)
             .addConverterFactory(GsonConverterFactory.create());
 
     // Logging method
@@ -63,7 +63,11 @@ public class ServiceGenerator {
     private static OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
 
     // Create service
-    public static <S> S createService(Class<S> serviceClass, Context context) {
+    public static <S> S createService(Class<S> serviceClass, Context context, String urlEndPoint) {
+
+        Log.e("VALUE ", "URL " + urlEndPoint);
+        builder.baseUrl(urlEndPoint);
+
         // Setting cookie
         if (cookieJar == null) {
             cookieJar = new PersistentCookieJar(new SetCookieCache(), new SharedPrefsCookiePersistor(context));

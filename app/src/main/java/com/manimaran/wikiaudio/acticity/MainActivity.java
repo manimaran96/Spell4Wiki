@@ -52,8 +52,9 @@ public class MainActivity extends AppCompatActivity implements EndlessListView.E
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        api = ServiceGenerator.createService(MediaWikiClient.class, getApplicationContext());
         pref = new PrefManager(getApplicationContext());
+        api = ServiceGenerator.createService(MediaWikiClient.class, getApplicationContext(),
+                String.format(ServiceGenerator.WIKTIONARY_URL, pref.getLangCode()));
 
         progressBar = (ProgressBar) findViewById(R.id.pb);
         resultListView = (EndlessListView) findViewById(R.id.search_result_list);

@@ -9,6 +9,8 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import com.manimaran.wikiaudio.R;
+import com.manimaran.wikiaudio.util.PrefManager;
+import com.manimaran.wikiaudio.wiki.ServiceGenerator;
 
 public class WebWikiActivity extends AppCompatActivity {
     private WebView mWebView;
@@ -23,8 +25,8 @@ public class WebWikiActivity extends AppCompatActivity {
             String str = bundle.getString("word");
             setTitle(str);
             mWebView = findViewById(R.id.webview);
-            String printUrl =  String.format("https://ta.wiktionary.org/w/index.php?title=%s&printable=yes#p-search",str);
-            String wikiUrl = "https://ta.wiktionary.org/wiki/" + str;
+            PrefManager pref = new PrefManager(getApplicationContext());
+            String wikiUrl = String.format(ServiceGenerator.WIKTIONARY_URL, pref.getLangCode()) +"/wiki/" + str;
             mWebView.loadUrl(wikiUrl);
 
             // Enable Javascript
