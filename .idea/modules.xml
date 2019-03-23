@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/Spell4Wiki.iml" filepath="$PROJECT_DIR$/Spell4Wiki.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Wiki-Spell.iml" filepath="$PROJECT_DIR$/Wiki-Spell.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>

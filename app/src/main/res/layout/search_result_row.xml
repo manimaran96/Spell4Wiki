@@ -1,20 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    android:orientation="vertical">
+    >
 
     <TextView
         android:id="@+id/txt1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_toStartOf="@+id/btn_info"
         android:padding="20dp" />
+
+    <ImageView
+        android:id="@+id/btn_info"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:visibility="gone"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
+        app:srcCompat="@drawable/ic_information"
+        android:layout_centerVertical="true"/>
+
     <View
         android:layout_width="match_parent"
         android:layout_marginRight="10dp"
         android:layout_marginLeft="10dp"
         android:background="@color/black"
+        android:layout_alignBottom="@+id/txt1"
         android:layout_height="0.001dp"/>
 
-</LinearLayout>
+</RelativeLayout>

@@ -74,7 +74,7 @@ public class PrefManager {
         editor.commit();
     }
 
-    public String getLangCode() { return pref.getString(LANG_CODE,"en"); }
+    public String getLangCode() { return pref.getString(LANG_CODE,"ta"); }
 
     public void setIsAnonymous(Boolean isAnonymous)
     {
@@ -92,7 +92,7 @@ public class PrefManager {
      * If false it will redirect user to login page
      * Else won't do anything
      */
-    public void checkLogin() {
+    private void checkLogin() {
         // Check login status
         if (!isIsLogin()) {
             // user is not logged in redirect him to Login Activity

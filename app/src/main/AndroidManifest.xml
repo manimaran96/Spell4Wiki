@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.manimaran.wikiaudio">
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
@@ -13,7 +14,8 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        tools:ignore="GoogleAppIndexingWarning">
         <activity
             android:name=".acticity.SplashActivity"
             android:screenOrientation="portrait"
@@ -38,6 +40,9 @@
         <activity
             android:theme="@style/ActionBar"
             android:name=".acticity.WebWikiActivity"/>
+        <activity
+            android:theme="@style/ActionBar"
+            android:name=".acticity.AboutActivity"/>
     </application>
 
 </manifest>

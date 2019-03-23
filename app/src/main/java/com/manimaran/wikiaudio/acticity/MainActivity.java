@@ -1,11 +1,16 @@
 package com.manimaran.wikiaudio.acticity;
 
+import android.annotation.TargetApi;
+import android.app.ActionBar;
 import android.content.Intent;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -15,8 +20,11 @@ import android.widget.Toast;
 
 import com.manimaran.wikiaudio.R;
 import com.manimaran.wikiaudio.fragment.BottomSheetFragment;
+import com.manimaran.wikiaudio.listerner.CallBackListener;
+import com.manimaran.wikiaudio.listerner.OnItemClickListener;
 import com.manimaran.wikiaudio.util.GeneralUtils;
 import com.manimaran.wikiaudio.util.PrefManager;
+import com.manimaran.wikiaudio.util.UrlType;
 import com.manimaran.wikiaudio.view.EndlessAdapter;
 import com.manimaran.wikiaudio.view.EndlessListView;
 import com.manimaran.wikiaudio.wiki.MediaWikiClient;
@@ -53,21 +61,37 @@ public class MainActivity extends AppCompatActivity implements EndlessListView.E
         setContentView(R.layout.activity_main);
 
         pref = new PrefManager(getApplicationContext());
-        api = ServiceGenerator.createService(MediaWikiClient.class, getApplicationContext(),
-                String.format(ServiceGenerator.WIKTIONARY_URL, pref.getLangCode()));
+
+
 
         progressBar = (ProgressBar) findViewById(R.id.pb);
         resultListView = (EndlessListView) findViewById(R.id.search_result_list);
         refreshLayout = (SwipeRefreshLayout) findViewById(R.id.layout_swipe);
         resultListView.setLoadingView(R.layout.loading_row);
         adapter = new EndlessAdapter(this, new ArrayList<String>(), R.layout.search_result_row, true);
+        CallBackListener listener = new CallBackListener() {
+            @Override
+            public void OnCallBackListener() {
+
+            }
+
+            @Override
+            public void OnCallBackListener(Integer pos) {
+
+            }
+        };
+        adapter.setCallbackListener(listener);
         resultListView.setAdapter(adapter);
         resultListView.setListener(this);
         resultListView.setVisibility(View.VISIBLE);
 
         loadDataFromServer();
 
-        setTitle("Wiki Audio - " + pref.getName());
+        // Title & Sub title
+        if(getSupportActionBar() != null) {
+            getSupportActionBar().setTitle(getString(R.string.app_name));
+            getSupportActionBar().setSubtitle(String.format(getString(R.string.welcome_user), pref.getName()));
+        }
 
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -80,7 +104,9 @@ public class MainActivity extends AppCompatActivity implements EndlessListView.E
 
     private void loadDataFromServer() {
         progressBar.setVisibility(View.VISIBLE);
-        Call<ResponseBody> call = api.fetchUnAudioRecords();
+        api = ServiceGenerator.createService(MediaWikiClient.class, getApplicationContext(), UrlType.WIKTIONARY);
+        String noAudioTitle = "பகுப்பு:தமிழ்-ஒலிக்கோப்புகளில்லை";
+        Call<ResponseBody> call = api.fetchUnAudioRecords(noAudioTitle);
 
         call.enqueue(new Callback<ResponseBody>() {
             @Override
@@ -88,12 +114,7 @@ public class MainActivity extends AppCompatActivity implements EndlessListView.E
                 if (response.isSuccessful() && response.body() !=null) {
                     try {
                         String responseStr = response.body().string();
-                        try {
-                            processSearchResultAudio(responseStr);
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                            searchFailed("Server misbehaved! Please try again later.");
-                        }
+                        processSearchResultAudio(responseStr);
                     } catch (IOException e) {
                         e.printStackTrace();
                         searchFailed("Please check your connection!\nScroll to try again!");
@@ -108,7 +129,7 @@ public class MainActivity extends AppCompatActivity implements EndlessListView.E
         });
     }
 
-    private void processSearchResultAudio(String responseStr) throws JSONException {
+    private void processSearchResultAudio(String responseStr) {
         try {
             JSONObject reader = new JSONObject(responseStr);
             ArrayList<String> titleList = new ArrayList<>();
@@ -121,7 +142,7 @@ public class MainActivity extends AppCompatActivity implements EndlessListView.E
                         //+ " --> " + searchResults.getJSONObject(ii).getString("pageid")
                 );
             }
-            if (reader.has("continue")&& false)
+            if (reader.has("continue"))
                 nextOffsetObj = reader.getJSONObject("continue");
             else
                 nextOffsetObj = null;
@@ -166,8 +187,23 @@ public class MainActivity extends AppCompatActivity implements EndlessListView.E
             // action with ID action_settings was selected
             case R.id.action_settings:
                 break;
+            case R.id.action_about :
+                startActivity(new Intent(getApplicationContext(), AboutActivity.class));
+                break;
             case R.id.action_lang_change:
                 BottomSheetFragment bottomSheetFragment = new BottomSheetFragment();
+                CallBackListener callback = new CallBackListener() {
+                    @Override
+                    public void OnCallBackListener() {
+                        loadDataFromServer();
+                    }
+
+                    @Override
+                    public void OnCallBackListener(Integer pos) {
+
+                    }
+                };
+                bottomSheetFragment.setCalBack(callback);
                 bottomSheetFragment.show(getSupportFragmentManager(), bottomSheetFragment.getTag());
                 bottomSheetFragment.setCancelable(false);
                 break;

@@ -1,7 +1,6 @@
 package com.manimaran.wikiaudio.fragment;
 
 import android.app.Dialog;
-import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -17,8 +16,9 @@ import android.widget.ListView;
 
 import com.manimaran.wikiaudio.R;
 import com.manimaran.wikiaudio.lang_selection.LangAdapter;
+import com.manimaran.wikiaudio.listerner.CallBackListener;
 import com.manimaran.wikiaudio.listerner.OnItemClickListener;
-import com.manimaran.wikiaudio.model.Language;
+import com.manimaran.wikiaudio.model.WikiLanguage;
 import com.manimaran.wikiaudio.util.GeneralUtils;
 import com.manimaran.wikiaudio.util.PrefManager;
 
@@ -27,6 +27,7 @@ import java.util.List;
 public class BottomSheetFragment extends BottomSheetDialogFragment {
 
     PrefManager pref;
+    CallBackListener callback;
     public BottomSheetFragment() {
         // Required empty public constructor
     }
@@ -51,13 +52,15 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
             ImageView btnClose = dialog.findViewById(R.id.btn_close);
             final SearchView searchView = dialog.findViewById(R.id.search_view);
 
-            List<Language> languageList = GeneralUtils.getLanguageListFromJson(getContext());
+            List<WikiLanguage> languageList = GeneralUtils.getLanguageListFromJson(getContext());
 
             OnItemClickListener listener = new OnItemClickListener() {
                 @Override
                 public void OnClickListener(String langCode, String lang) {
                     pref.setLangCode(langCode);
                     GeneralUtils.showToast(getContext(), String.format(getString(R.string.select_language_response_msg), lang));
+                    if(callback !=null)
+                        callback.OnCallBackListener();
                     dismiss();
                 }
             };
@@ -81,7 +84,7 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
                 public void onShow(DialogInterface dialog) {
                     BottomSheetDialog d = (BottomSheetDialog) dialog;
 
-                    FrameLayout bottomSheet = (FrameLayout) d.findViewById(android.support.design.R.id.design_bottom_sheet);
+                    FrameLayout bottomSheet = (FrameLayout) d.findViewById(R.id.design_bottom_sheet);
                     if (bottomSheet != null) {
                         BottomSheetBehavior behavior = BottomSheetBehavior.from(bottomSheet);
                         behavior.setHideable(false);
@@ -124,5 +127,9 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
     public void onCancel(DialogInterface dialog) {
         super.onCancel(dialog);
 
+    }
+
+    public void setCalBack(CallBackListener listener) {
+        this.callback = listener;
     }
 }

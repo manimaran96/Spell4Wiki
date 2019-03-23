@@ -25,7 +25,7 @@
     </style>
 
     <style name="ActionBarSubTitleText" parent="@style/TextAppearance.AppCompat.Widget.ActionBar.Subtitle">
-        <item name="android:textColor">@color/black</item>
+        <item name="android:textColor">@color/light_gray</item>
         <item name="android:textSize">12sp</item>
     </style>
 </resources>

@@ -3,11 +3,14 @@ package com.manimaran.wikiaudio.wiki;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.franmontiel.persistentcookiejar.PersistentCookieJar;
 import com.franmontiel.persistentcookiejar.cache.SetCookieCache;
 import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersistor;
 import com.google.gson.Gson;
+import com.manimaran.wikiaudio.util.PrefManager;
+import com.manimaran.wikiaudio.util.UrlType;
 
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
@@ -23,11 +26,9 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ServiceGenerator {
 
-    // Base Wiki Api Url
-    public static String WIKTIONARY_URL = "https://%s.wiktionary.org/";
-    public static String COMMONS_URL = "https://commons.wikimedia.org/";
-
     private static Retrofit retrofit;
+
+    private static PrefManager pref;
 
     // Retrofit builder init with api url
     private static Retrofit.Builder builder = new Retrofit.Builder()
@@ -63,10 +64,11 @@ public class ServiceGenerator {
     private static OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
 
     // Create service
-    public static <S> S createService(Class<S> serviceClass, Context context, String urlEndPoint) {
+    public static <S> S createService(Class<S> serviceClass, Context context, int urlType) {
 
-        Log.e("VALUE ", "URL " + urlEndPoint);
-        builder.baseUrl(urlEndPoint);
+
+
+        builder.baseUrl(getUrl(urlType, context));
 
         // Setting cookie
         if (cookieJar == null) {
@@ -85,12 +87,35 @@ public class ServiceGenerator {
             rebuild = true;
         }
 
-        if (rebuild) {
+        //if (rebuild) {
             builder.client(httpClient.build());
             retrofit = builder.build();
-        }
+        //}
 
         return retrofit.create(serviceClass);
+    }
+
+    /*public void setBaseUrl(String url) {
+        retrofit.baseUrl(url).build();
+    }*/
+
+    public static String getUrl(int urlType, Context context) {
+
+        String url = "";
+        switch (urlType)
+        {
+            case UrlType.COMMONS :
+                url = "https://commons.wikimedia.org/";
+                break;
+            case UrlType.WIKTIONARY:
+                pref = new PrefManager(context);
+                url = String.format("https://%s.wiktionary.org/", pref.getLangCode());
+                break;
+            default:
+                url = "https://commons.wikimedia.org/";
+        }
+
+        return url;
     }
 
     // Clear cookies after logout

@@ -10,7 +10,7 @@ import android.support.v4.content.ContextCompat;
 import android.widget.Toast;
 
 import com.manimaran.wikiaudio.R;
-import com.manimaran.wikiaudio.model.Language;
+import com.manimaran.wikiaudio.model.WikiLanguage;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -75,8 +75,8 @@ public class GeneralUtils {
                 .show();
     }
 
-    public static List<Language> getLanguageListFromJson(Context context) {
-        List<Language> langList = new ArrayList<>();
+    public static List<WikiLanguage> getLanguageListFromJson(Context context) {
+        List<WikiLanguage> langList = new ArrayList<>();
         try {
             InputStream is = context.getResources().openRawResource(R.raw.language);
             int size = is.available();
@@ -92,12 +92,16 @@ public class GeneralUtils {
                 for(i=0;i<len;i++)
                 {
                     JSONObject obj = array.getJSONObject(i);
-                    Language lang = new Language();
+                    WikiLanguage lang = new WikiLanguage();
                     lang.setCode(obj.getString("code"));
                     lang.setName(obj.getString("lang"));
                     lang.setIsLeftDirection(obj.getString("dir").equals("ltr"));
                     lang.setLocal(obj.getString("local_lang"));
-                    langList.add(lang);
+                    if(obj.has("title_words_no_audio"))
+                    {
+                        lang.setTitleWordsNoAudio(obj.getString("title_words_no_audio"));
+                        langList.add(lang);
+                    }
                 }
             }
         } catch (IOException | JSONException ex) {

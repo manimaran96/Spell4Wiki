@@ -13,7 +13,7 @@ import android.widget.TextView;
 
 import com.manimaran.wikiaudio.R;
 import com.manimaran.wikiaudio.listerner.OnItemClickListener;
-import com.manimaran.wikiaudio.model.Language;
+import com.manimaran.wikiaudio.model.WikiLanguage;
 import com.manimaran.wikiaudio.util.PrefManager;
 
 import java.util.ArrayList;
@@ -23,13 +23,13 @@ import java.util.Objects;
 public class LangAdapter extends BaseAdapter implements Filterable{
 
     private Activity mActivity;
-    private List<Language> mList;
-    private List<Language> mBackUpList;
+    private List<WikiLanguage> mList;
+    private List<WikiLanguage> mBackUpList;
     private FilterVal valueFilter;
     private String existLangCode = "en";
     private OnItemClickListener mListener;
 
-    public LangAdapter(Activity activity, List<Language> list, OnItemClickListener listener) {
+    public LangAdapter(Activity activity, List<WikiLanguage> list, OnItemClickListener listener) {
         this.mActivity = activity;
         this.mList = list;
         this.mBackUpList = list;
@@ -43,7 +43,7 @@ public class LangAdapter extends BaseAdapter implements Filterable{
     }
 
     @Override
-    public Language getItem(int i) {
+    public WikiLanguage getItem(int i) {
         return mList.get(i);
     }
 
@@ -66,7 +66,7 @@ public class LangAdapter extends BaseAdapter implements Filterable{
         }else
             holder = (ViewHolder)view.getTag();
 
-        final Language model = mList.get(i);
+        final WikiLanguage model = mList.get(i);
 
         holder.textLangName.setText(model.getName());
         holder.textLocalName.setText(model.getLocal());
@@ -108,8 +108,8 @@ public class LangAdapter extends BaseAdapter implements Filterable{
             FilterResults results = new FilterResults();
 
             if (constraint != null && constraint.length() > 0) {
-                List<Language> filterList = new ArrayList<>();
-                for (Language l : mBackUpList) {
+                List<WikiLanguage> filterList = new ArrayList<>();
+                for (WikiLanguage l : mBackUpList) {
                     if ((l.getName().toLowerCase() + " " + l.getLocal().toLowerCase()).contains(constraint.toString().toLowerCase())) {
                         filterList.add(l);
                     }
@@ -126,7 +126,7 @@ public class LangAdapter extends BaseAdapter implements Filterable{
 
         @Override
         protected void publishResults(CharSequence constraint, FilterResults results) {
-            mList = (List<Language>) results.values;
+            mList = (List<WikiLanguage>) results.values;
             notifyDataSetChanged();
         }
     }

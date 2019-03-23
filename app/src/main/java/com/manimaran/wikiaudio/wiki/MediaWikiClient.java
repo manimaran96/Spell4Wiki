@@ -15,14 +15,15 @@ import retrofit2.http.Query;
 
 public interface MediaWikiClient {
 
-    // Login token
+    // Login token - Commons
     @GET("w/api.php?action=query&meta=tokens&format=json&type=login")
     Call<ResponseBody> getLoginToken();
 
-    // Edit Token
+    // Edit Token - Commons
     @GET("w/api.php?action=query&meta=tokens&format=json&type=csrf")
     Call<ResponseBody> getEditToken();
 
+    // Login - Commons
     @FormUrlEncoded
     @POST("w/api.php?")
     Call<ResponseBody> clientLogin(
@@ -34,7 +35,7 @@ public interface MediaWikiClient {
             @Field("password") String password
     );
 
-    // Search Query
+    // Search Query - Wiktionary
     @GET("w/api.php?action=query&list=search&utf8=&format=json")
     Call<ResponseBody> fetchRecords(
             @Query("srsearch") String searchString,
@@ -42,10 +43,13 @@ public interface MediaWikiClient {
     );
 
 
-    @GET("w/api.php?action=query&format=json&list=categorymembers&utf8=1" +
-            "&cmtitle=பகுப்பு:அறுபட்ட_கோப்பு_இணைப்புகள்_உள்ள_பக்கங்கள்&lang=ta&cmlimit=50&cmsort=timestamp&cmdir=desc")
-    Call<ResponseBody> fetchUnAudioRecords();
+    // Fetch un audio records - Wiktionary
+    @GET("w/api.php?action=query&format=json&list=categorymembers&utf8=1&cmlimit=50&cmsort=timestamp&cmdir=desc")
+    Call<ResponseBody> fetchUnAudioRecords(
+            @Query("cmtitle") String noAudioTitle
+    );
 
+    // Upload - commons
     @Multipart
     @POST("w/api.php?")
     Call<ResponseBody> uploadFile(
@@ -53,7 +57,8 @@ public interface MediaWikiClient {
             @Part("filename") RequestBody filename,
             @Part("token") RequestBody token,
             @Part MultipartBody.Part file,
-            @Part("text") RequestBody text
+            @Part("text") RequestBody text,
+            @Part("comment") RequestBody comment
     );
 
     /*

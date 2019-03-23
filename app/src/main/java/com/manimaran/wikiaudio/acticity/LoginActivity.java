@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.manimaran.wikiaudio.R;
 import com.manimaran.wikiaudio.util.PrefManager;
+import com.manimaran.wikiaudio.util.UrlType;
 import com.manimaran.wikiaudio.wiki.MediaWikiClient;
 import com.manimaran.wikiaudio.wiki.ServiceGenerator;
 
@@ -54,7 +55,7 @@ public class LoginActivity extends AppCompatActivity {
         else {
             init();
             hideKeyboard();
-            api = ServiceGenerator.createService(MediaWikiClient.class, getApplicationContext(), ServiceGenerator.COMMONS_URL);
+            api = ServiceGenerator.createService(MediaWikiClient.class, getApplicationContext(), UrlType.COMMONS);
 
             btnLogin.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -119,7 +120,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private void completeLogin(String username, String password, String lgToken) {
 
-        Call<ResponseBody> call = api.clientLogin ("clientlogin", "json", ServiceGenerator.COMMONS_URL, lgToken, username, password);
+        Call<ResponseBody> call = api.clientLogin ("clientlogin", "json", ServiceGenerator.getUrl(UrlType.COMMONS, getApplicationContext()), lgToken, username, password);
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {

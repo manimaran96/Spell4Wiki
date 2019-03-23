@@ -1,13 +1,15 @@
 package com.manimaran.wikiaudio.model;
 
-public class Language {
-    private String code, name, local;
-    private Boolean isLeftDirection, isSelected;
+import org.jetbrains.annotations.NotNull;
 
-    public Language() {
+public class WikiLanguage {
+    private String code, name, local, titleWordsNoAudio;
+    private Boolean isLeftDirection;
+
+    public WikiLanguage() {
     }
 
-    public Language(String code, String name, String local, Boolean isLeftDirection) {
+    public WikiLanguage(String code, String name, String local, Boolean isLeftDirection) {
         this.code = code;
         this.name = name;
         this.local = local;
@@ -46,9 +48,18 @@ public class Language {
         isLeftDirection = leftDirection;
     }
 
+    public String getTitleWordsNoAudio() {
+        return titleWordsNoAudio;
+    }
+
+    public void setTitleWordsNoAudio(String titleWordsNoAudio) {
+        this.titleWordsNoAudio = titleWordsNoAudio;
+    }
+
+    @NotNull
     @Override
     public String toString() {
-        return "Language{" +
+        return "WikiLanguage{" +
                 "code='" + code + '\'' +
                 ", name='" + name + '\'' +
                 ", local='" + local + '\'' +

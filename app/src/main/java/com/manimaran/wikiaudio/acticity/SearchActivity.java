@@ -18,6 +18,7 @@ import com.manimaran.wikiaudio.R;
 import com.manimaran.wikiaudio.fragment.BottomSheetFragment;
 import com.manimaran.wikiaudio.util.GeneralUtils;
 import com.manimaran.wikiaudio.util.PrefManager;
+import com.manimaran.wikiaudio.util.UrlType;
 import com.manimaran.wikiaudio.view.EndlessAdapter;
 import com.manimaran.wikiaudio.view.EndlessListView;
 import com.manimaran.wikiaudio.wiki.MediaWikiClient;
@@ -44,6 +45,7 @@ public class SearchActivity extends AppCompatActivity implements EndlessListView
     private Integer nextOffset;
     private boolean doubleBackToExitPressedOnce = false;
     private PrefManager pref;
+    private MediaWikiClient api;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +53,7 @@ public class SearchActivity extends AppCompatActivity implements EndlessListView
         setContentView(R.layout.activity_search);
 
         pref = new PrefManager(getApplicationContext());
+        api = ServiceGenerator.createService(MediaWikiClient.class, getApplicationContext(), UrlType.WIKTIONARY);
 
         SearchView searchBar = (SearchView) findViewById(R.id.search_bar);
         searchBar.requestFocus();
@@ -110,6 +113,9 @@ public class SearchActivity extends AppCompatActivity implements EndlessListView
             case R.id.action_logout:
                 GeneralUtils.logoutAlert(SearchActivity.this);
                 return true;
+            case R.id.action_about :
+                startActivity(new Intent(getApplicationContext(), AboutActivity.class));
+                return true;
             case R.id.action_lang_change:
                 BottomSheetFragment bottomSheetFragment = new BottomSheetFragment();
                 bottomSheetFragment.show(getSupportFragmentManager(), bottomSheetFragment.getTag());
@@ -121,9 +127,7 @@ public class SearchActivity extends AppCompatActivity implements EndlessListView
     }
 
     private void search(String query) {
-        MediaWikiClient mediaWikiClient = ServiceGenerator.createService(MediaWikiClient.class,
-                getApplicationContext(), String.format(ServiceGenerator.WIKTIONARY_URL, pref.getLangCode()));
-        Call<ResponseBody> call = mediaWikiClient.fetchRecords(query, nextOffset);
+        Call<ResponseBody> call = api.fetchRecords(query, nextOffset);
 
         call.enqueue(new Callback<ResponseBody>() {
             @Override
