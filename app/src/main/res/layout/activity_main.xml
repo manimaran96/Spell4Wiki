@@ -19,12 +19,5 @@
             android:layout_height="match_parent"/>
     </android.support.v4.widget.SwipeRefreshLayout>
 
-    <ProgressBar
-        android:id="@+id/pb"
-        style="?android:attr/progressBarStyle"
-        android:layout_centerInParent="true"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
 
 </RelativeLayout>

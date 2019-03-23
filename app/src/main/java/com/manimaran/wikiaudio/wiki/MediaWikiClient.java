@@ -46,7 +46,8 @@ public interface MediaWikiClient {
     // Fetch un audio records - Wiktionary
     @GET("w/api.php?action=query&format=json&list=categorymembers&utf8=1&cmlimit=50&cmsort=timestamp&cmdir=desc")
     Call<ResponseBody> fetchUnAudioRecords(
-            @Query("cmtitle") String noAudioTitle
+            @Query("cmtitle") String noAudioTitle,
+            @Query("cmcontinue") String offsetContinue
     );
 
     // Upload - commons

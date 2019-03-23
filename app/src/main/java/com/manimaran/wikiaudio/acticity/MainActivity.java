@@ -47,9 +47,8 @@ public class MainActivity extends AppCompatActivity implements EndlessListView.E
 
     private EndlessListView resultListView;
     private EndlessAdapter adapter;
-    private ProgressBar progressBar;
-    private Integer nextOffset;
-    private JSONObject nextOffsetObj;
+
+    private String nextOffsetObj;
     private boolean doubleBackToExitPressedOnce = false;
     private SwipeRefreshLayout refreshLayout = null;
     private PrefManager pref;
@@ -63,10 +62,8 @@ public class MainActivity extends AppCompatActivity implements EndlessListView.E
         pref = new PrefManager(getApplicationContext());
 
 
-
-        progressBar = (ProgressBar) findViewById(R.id.pb);
-        resultListView = (EndlessListView) findViewById(R.id.search_result_list);
-        refreshLayout = (SwipeRefreshLayout) findViewById(R.id.layout_swipe);
+        resultListView = findViewById(R.id.search_result_list);
+        refreshLayout = findViewById(R.id.layout_swipe);
         resultListView.setLoadingView(R.layout.loading_row);
         adapter = new EndlessAdapter(this, new ArrayList<String>(), R.layout.search_result_row, true);
         CallBackListener listener = new CallBackListener() {
@@ -103,10 +100,9 @@ public class MainActivity extends AppCompatActivity implements EndlessListView.E
     }
 
     private void loadDataFromServer() {
-        progressBar.setVisibility(View.VISIBLE);
         api = ServiceGenerator.createService(MediaWikiClient.class, getApplicationContext(), UrlType.WIKTIONARY);
         String noAudioTitle = "பகுப்பு:தமிழ்-ஒலிக்கோப்புகளில்லை";
-        Call<ResponseBody> call = api.fetchUnAudioRecords(noAudioTitle);
+        Call<ResponseBody> call = api.fetchUnAudioRecords(noAudioTitle, nextOffsetObj);
 
         call.enqueue(new Callback<ResponseBody>() {
             @Override
@@ -143,10 +139,13 @@ public class MainActivity extends AppCompatActivity implements EndlessListView.E
                 );
             }
             if (reader.has("continue"))
-                nextOffsetObj = reader.getJSONObject("continue");
+            {
+                JSONObject jsonObject = reader.getJSONObject("continue");
+                if(jsonObject.has("cmcontinue"))
+                    nextOffsetObj = jsonObject.getString("cmcontinue");
+            }
             else
                 nextOffsetObj = null;
-            progressBar.setVisibility(View.GONE);
             if(refreshLayout.isRefreshing())
                 refreshLayout.setRefreshing(false);
             resultListView.addNewData(titleList);
@@ -159,7 +158,6 @@ public class MainActivity extends AppCompatActivity implements EndlessListView.E
 
     private void searchFailed(String s) {
         resultListView.loadLaterOnScroll();
-        progressBar.setVisibility(View.GONE);
         if(refreshLayout.isRefreshing())
             refreshLayout.setRefreshing(false);
         Toast.makeText(this, "Search failed!\n" + s, Toast.LENGTH_LONG).show();
@@ -218,7 +216,7 @@ public class MainActivity extends AppCompatActivity implements EndlessListView.E
     public boolean loadData() {
         // Triggered only when new data needs to be appended to the list
         // Return true if loading is in progress, false if there is no more data to load
-        if (nextOffset != null) {
+        if (nextOffsetObj != null) {
             loadDataFromServer();
             return true;
         } else
