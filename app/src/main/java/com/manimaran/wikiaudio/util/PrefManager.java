@@ -19,7 +19,9 @@ public class PrefManager {
     // Kay values
     private static final String KEY_NAME = "name";
     private static final String IS_LOGIN = "is_login";
-    private static final String LANG_CODE = "lang_code";
+    private static final String CONTRIBUTION_LANG_CODE = "contribution_lang_code";
+    private static final String WIKTIONARY_LANG_CODE = "wiktionary_lang_code";
+    private static final String TITLE_WORDS_WITHOUT_AUDIO = "title_words_without_audio";
     private static final String CSRF_TOKEN = "csrf_token";
     private static final String IS_FIRST_TIME_LAUNCH = "is_first_time_launch";
     private static final String IS_ANONYMOUS = "is_anonymous"; // Only wiktionay use
@@ -68,13 +70,29 @@ public class PrefManager {
     public String getCsrfToken() { return pref.getString(CSRF_TOKEN,null); }
 
 
-    public void setLangCode(String code)
+    public void setContributionLangCode(String code)
     {
-        editor.putString(LANG_CODE, code);
+        editor.putString(CONTRIBUTION_LANG_CODE, code);
         editor.commit();
     }
 
-    public String getLangCode() { return pref.getString(LANG_CODE,"ta"); }
+    public String getContributionLangCode() { return pref.getString(CONTRIBUTION_LANG_CODE,"ta"); }
+
+    public void setWiktionaryLangCode(String code)
+    {
+        editor.putString(WIKTIONARY_LANG_CODE, code);
+        editor.commit();
+    }
+
+    public String getWiktionaryLangCode() { return pref.getString(WIKTIONARY_LANG_CODE,"ta"); }
+
+    public void setTitleWordsWithoutAudio(String titleWordsWithoutAudio)
+    {
+        editor.putString(TITLE_WORDS_WITHOUT_AUDIO, titleWordsWithoutAudio);
+        editor.commit();
+    }
+
+    public String getTitleWordsWithoutAudio() { return pref.getString(TITLE_WORDS_WITHOUT_AUDIO,"பகுப்பு:தமிழ்-ஒலிக்கோப்புகளில்லை"); }
 
     public void setIsAnonymous(Boolean isAnonymous)
     {

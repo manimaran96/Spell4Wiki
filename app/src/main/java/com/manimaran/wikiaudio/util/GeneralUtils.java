@@ -74,43 +74,4 @@ public class GeneralUtils {
                 .setNegativeButton("No", null)
                 .show();
     }
-
-    public static List<WikiLanguage> getLanguageListFromJson(Context context) {
-        List<WikiLanguage> langList = new ArrayList<>();
-        try {
-            InputStream is = context.getResources().openRawResource(R.raw.language);
-            int size = is.available();
-            byte[] buffer = new byte[size];
-            is.read(buffer);
-            is.close();
-            String json = new String(buffer, "UTF-8");
-            JSONArray array = new JSONArray(json);
-            int len = array.length();
-            if(len > 0)
-            {
-                int i;
-                for(i=0;i<len;i++)
-                {
-                    JSONObject obj = array.getJSONObject(i);
-                    WikiLanguage lang = new WikiLanguage();
-                    lang.setCode(obj.getString("code"));
-                    lang.setName(obj.getString("lang"));
-                    lang.setIsLeftDirection(obj.getString("dir").equals("ltr"));
-                    lang.setLocal(obj.getString("local_lang"));
-                    if(obj.has("title_words_no_audio"))
-                    {
-                        lang.setTitleWordsNoAudio(obj.getString("title_words_no_audio"));
-                        langList.add(lang);
-                    }
-                }
-            }
-        } catch (IOException | JSONException ex) {
-            ex.printStackTrace();
-        }
-
-        // Todo : Order by name
-
-        return langList;
-
-    }
 }

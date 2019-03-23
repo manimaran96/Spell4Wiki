@@ -62,6 +62,10 @@ public interface MediaWikiClient {
             @Part("comment") RequestBody comment
     );
 
+    // Get Wikipedia language list
+    @GET("https://raw.githubusercontent.com/manimaran96/Spell4Wiki/master/files/lang-json/language.json")
+    Call<ResponseBody> fetchWikiLangList();
+
     /*
 
     https://commons.wikimedia.org/wiki/Commons:API/MediaWiki

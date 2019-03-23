@@ -12,7 +12,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.manimaran.wikiaudio.R;
-import com.manimaran.wikiaudio.listerner.OnItemClickListener;
+import com.manimaran.wikiaudio.listerner.OnLangSelectListener;
 import com.manimaran.wikiaudio.model.WikiLanguage;
 import com.manimaran.wikiaudio.util.PrefManager;
 
@@ -26,14 +26,14 @@ public class LangAdapter extends BaseAdapter implements Filterable{
     private List<WikiLanguage> mList;
     private List<WikiLanguage> mBackUpList;
     private FilterVal valueFilter;
-    private String existLangCode = "en";
-    private OnItemClickListener mListener;
+    private String existLangCode;
+    private OnLangSelectListener mListener;
 
-    public LangAdapter(Activity activity, List<WikiLanguage> list, OnItemClickListener listener) {
+    public LangAdapter(Activity activity, List<WikiLanguage> list, OnLangSelectListener listener, String existLangCode) {
         this.mActivity = activity;
         this.mList = list;
         this.mBackUpList = list;
-        this.existLangCode = new PrefManager(mActivity).getLangCode();
+        this.existLangCode = existLangCode;
         this.mListener = listener;
     }
 
@@ -70,15 +70,17 @@ public class LangAdapter extends BaseAdapter implements Filterable{
 
         holder.textLangName.setText(model.getName());
         holder.textLocalName.setText(model.getLocal());
+        /*if(model.getTitleWordsNoAudio() != null && model.getTitleWordsNoAudio().length() > 0)
+            holder.textLocalName.append(" - " + model.getTitleWordsNoAudio());*/
         holder.textLocalName.setGravity(model.getIsLeftDirection() ? Gravity.START : Gravity.END);
-        holder.radioSelect.setChecked(Objects.equals(existLangCode, model.getCode()));
+        holder.radioSelect.setChecked(existLangCode.equals(model.getCode()));
 
         final ViewHolder finalHolder = holder;
         holder.layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 finalHolder.radioSelect.setChecked(true);
-                mListener.OnClickListener(model.getCode(), model.getName());
+                mListener.OnClickListener(model.getCode(), model.getName(), model.getTitleWordsNoAudio());
             }
         });
 

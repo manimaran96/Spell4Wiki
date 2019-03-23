@@ -37,32 +37,37 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class WebWikiActivity extends AppCompatActivity {
-    private WebView mWebView;
-    private PrefManager pref;
-    private MediaWikiClient api;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_web_wiki);
 
-        pref = new PrefManager(getApplicationContext());
-        api = ServiceGenerator.createService(MediaWikiClient.class, getApplicationContext(), UrlType.WIKTIONARY);
+        PrefManager pref = new PrefManager(getApplicationContext());
 
         Bundle bundle = getIntent().getExtras();
         if(bundle != null)
         {
             String word = bundle.getString("word");
-            setTitle(word);
-            loadPage(word);
+            boolean isContributionMode = false;
+            if(bundle.containsKey("is_contribution_mode"))
+            {
+                isContributionMode = bundle.getBoolean("is_contribution_mode");
+            }
+            if(getSupportActionBar() != null)
+            {
+                getSupportActionBar().setTitle(word);
+                getSupportActionBar().setSubtitle(ServiceGenerator.getUrl(UrlType.WIKTIONARY_PAGE, getApplicationContext()));
+            }
+            String wikiUrl = String.format("https://%s.m.wiktionary.org//wiki/%s", isContributionMode ? pref.getContributionLangCode() : pref.getWiktionaryLangCode(), word);
+            loadPage(wikiUrl);
         }
 
     }
 
     @SuppressLint("SetJavaScriptEnabled")
-    private void loadPage(String word) {
-        mWebView = findViewById(R.id.webview);
-        String wikiUrl = String.format("https://%s.m.wiktionary.org//wiki/%s", pref.getLangCode(), word);
+    private void loadPage(String wikiUrl) {
+        WebView mWebView = findViewById(R.id.webview);
 
         mWebView.loadUrl(wikiUrl);
 

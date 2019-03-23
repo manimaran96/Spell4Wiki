@@ -83,7 +83,7 @@ public class EndlessAdapter extends ArrayAdapter<String> {
     private Context ctx;
     private Activity activity;
     private int layoutId;
-    private Boolean isAudioMode = true;
+    private Boolean isContributionMode = true;
     private String TAG = "Record";
 
     private WAVRecorder recorder = new WAVRecorder();
@@ -107,13 +107,13 @@ public class EndlessAdapter extends ArrayAdapter<String> {
     private String uploadName = null;
     private CallBackListener listener;
 
-    public EndlessAdapter(Context ctx, List<String> itemList, int layoutId, Boolean isAudioMode) {
+    public EndlessAdapter(Context ctx, List<String> itemList, int layoutId, Boolean isContributionMode) {
         super(ctx, layoutId, itemList);
         this.itemList = itemList;
         this.ctx = ctx;
         this.activity = (Activity) ctx;
         this.layoutId = layoutId;
-        this.isAudioMode = isAudioMode;
+        this.isContributionMode = isContributionMode;
         this.pref = new PrefManager(ctx);
         this.api = ServiceGenerator.createService(MediaWikiClient.class, ctx, UrlType.COMMONS);
     }
@@ -158,7 +158,7 @@ public class EndlessAdapter extends ArrayAdapter<String> {
 
                 Activity activity1 = (Activity) ctx;
 
-                if(isAudioMode)
+                if(isContributionMode)
                 {
 
                     if(GeneralUtils.checkPermissionGranted(activity1))
@@ -173,7 +173,7 @@ public class EndlessAdapter extends ArrayAdapter<String> {
             }
         });
 
-        if(isAudioMode)
+        if(isContributionMode)
         {
             ImageView btnWiki = mView.findViewById(R.id.btn_info);
             btnWiki.setVisibility(View.GONE);
@@ -193,8 +193,7 @@ public class EndlessAdapter extends ArrayAdapter<String> {
     private void openWiktionaryWebView(int position) {
         Activity activity1 = (Activity) ctx;
         Intent intent = new Intent(ctx, WebWikiActivity.class);
-        if(isAudioMode)
-            intent.putExtra("pos", position);
+        intent.putExtra("is_contribution_mode", isContributionMode);
         intent.putExtra("word", itemList.get(position));
         activity1.startActivity(intent);
     }
@@ -353,7 +352,7 @@ public class EndlessAdapter extends ArrayAdapter<String> {
             public void onClick(View view) {
                 if(isRecorded)
                 {
-                    uploadName = pref.getLangCode() + "-" + itemList.get(pos)+ ".wav";
+                    uploadName = pref.getContributionLangCode() + "-" + itemList.get(pos)+ ".wav";
                     uploadAudioToWikiServer(false);
                 }else
                     GeneralUtils.showToast(ctx, "Please record audio first");

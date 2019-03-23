@@ -1,27 +1,21 @@
 package com.manimaran.wikiaudio.acticity;
 
-import android.annotation.TargetApi;
-import android.app.ActionBar;
 import android.content.Intent;
-import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.manimaran.wikiaudio.R;
 import com.manimaran.wikiaudio.fragment.BottomSheetFragment;
 import com.manimaran.wikiaudio.listerner.CallBackListener;
-import com.manimaran.wikiaudio.listerner.OnItemClickListener;
+import com.manimaran.wikiaudio.model.WikiLanguage;
 import com.manimaran.wikiaudio.util.GeneralUtils;
 import com.manimaran.wikiaudio.util.PrefManager;
 import com.manimaran.wikiaudio.util.UrlType;
@@ -31,12 +25,12 @@ import com.manimaran.wikiaudio.wiki.MediaWikiClient;
 import com.manimaran.wikiaudio.wiki.ServiceGenerator;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -71,11 +65,6 @@ public class MainActivity extends AppCompatActivity implements EndlessListView.E
             public void OnCallBackListener() {
 
             }
-
-            @Override
-            public void OnCallBackListener(Integer pos) {
-
-            }
         };
         adapter.setCallbackListener(listener);
         resultListView.setAdapter(adapter);
@@ -100,8 +89,12 @@ public class MainActivity extends AppCompatActivity implements EndlessListView.E
     }
 
     private void loadDataFromServer() {
-        api = ServiceGenerator.createService(MediaWikiClient.class, getApplicationContext(), UrlType.WIKTIONARY);
-        String noAudioTitle = "பகுப்பு:தமிழ்-ஒலிக்கோப்புகளில்லை";
+
+        if(nextOffsetObj == null)
+            refreshLayout.setRefreshing(true);
+
+        api = ServiceGenerator.createService(MediaWikiClient.class, getApplicationContext(), UrlType.WIKTIONARY_CONTRIBUTION);
+        String noAudioTitle = pref.getTitleWordsWithoutAudio();
         Call<ResponseBody> call = api.fetchUnAudioRecords(noAudioTitle, nextOffsetObj);
 
         call.enqueue(new Callback<ResponseBody>() {
@@ -134,8 +127,7 @@ public class MainActivity extends AppCompatActivity implements EndlessListView.E
                 resultListView.reset();
             for (int ii = 0; ii < searchResults.length(); ii++) {
                 titleList.add(
-                        searchResults.getJSONObject(ii).getString("title")
-                        //+ " --> " + searchResults.getJSONObject(ii).getString("pageid")
+                        searchResults.getJSONObject(ii).getString("title")//+ " --> " + searchResults.getJSONObject(ii).getString("pageid")
                 );
             }
             if (reader.has("continue"))
@@ -194,11 +186,6 @@ public class MainActivity extends AppCompatActivity implements EndlessListView.E
                     @Override
                     public void OnCallBackListener() {
                         loadDataFromServer();
-                    }
-
-                    @Override
-                    public void OnCallBackListener(Integer pos) {
-
                     }
                 };
                 bottomSheetFragment.setCalBack(callback);

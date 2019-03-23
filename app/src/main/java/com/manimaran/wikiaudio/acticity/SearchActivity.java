@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.manimaran.wikiaudio.R;
 import com.manimaran.wikiaudio.fragment.BottomSheetFragment;
+import com.manimaran.wikiaudio.listerner.CallBackListener;
 import com.manimaran.wikiaudio.util.GeneralUtils;
 import com.manimaran.wikiaudio.util.PrefManager;
 import com.manimaran.wikiaudio.util.UrlType;
@@ -53,7 +54,7 @@ public class SearchActivity extends AppCompatActivity implements EndlessListView
         setContentView(R.layout.activity_search);
 
         pref = new PrefManager(getApplicationContext());
-        api = ServiceGenerator.createService(MediaWikiClient.class, getApplicationContext(), UrlType.WIKTIONARY);
+        api = ServiceGenerator.createService(MediaWikiClient.class, getApplicationContext(), UrlType.WIKTIONARY_PAGE);
 
         SearchView searchBar = (SearchView) findViewById(R.id.search_bar);
         searchBar.requestFocus();
@@ -87,8 +88,16 @@ public class SearchActivity extends AppCompatActivity implements EndlessListView
         resultListView.setListener(this);
         resultListView.setVisibility(View.INVISIBLE);
 
+        setTitle();
+    }
 
-        setTitle("Wiktionary");
+    private void setTitle()
+    {
+        if(getSupportActionBar() != null)
+        {
+            getSupportActionBar().setTitle(getString(R.string.wiktionary));
+            getSupportActionBar().setSubtitle(ServiceGenerator.getUrl(UrlType.WIKTIONARY_PAGE, getApplicationContext()));
+        }
     }
 
     @Override
@@ -118,6 +127,15 @@ public class SearchActivity extends AppCompatActivity implements EndlessListView
                 return true;
             case R.id.action_lang_change:
                 BottomSheetFragment bottomSheetFragment = new BottomSheetFragment();
+                CallBackListener callback = new CallBackListener() {
+                    @Override
+                    public void OnCallBackListener() {
+                        resultListView.reset();
+                        setTitle();
+                    }
+                };
+                bottomSheetFragment.setCalBack(callback);
+                bottomSheetFragment.setIsWiktionaryMode(true);
                 bottomSheetFragment.show(getSupportFragmentManager(), bottomSheetFragment.getTag());
                 bottomSheetFragment.setCancelable(false);
                 return true;

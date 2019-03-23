@@ -107,9 +107,13 @@ public class ServiceGenerator {
             case UrlType.COMMONS :
                 url = "https://commons.wikimedia.org/";
                 break;
-            case UrlType.WIKTIONARY:
+            case UrlType.WIKTIONARY_CONTRIBUTION:
                 pref = new PrefManager(context);
-                url = String.format("https://%s.wiktionary.org/", pref.getLangCode());
+                url = String.format("https://%s.wiktionary.org/", pref.getContributionLangCode());
+                break;
+            case UrlType.WIKTIONARY_PAGE:
+                pref = new PrefManager(context);
+                url = String.format("https://%s.wiktionary.org/", pref.getWiktionaryLangCode());
                 break;
             default:
                 url = "https://commons.wikimedia.org/";

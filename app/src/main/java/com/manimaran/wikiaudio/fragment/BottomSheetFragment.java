@@ -9,25 +9,44 @@ import android.support.design.widget.BottomSheetDialog;
 import android.support.design.widget.BottomSheetDialogFragment;
 import android.support.v7.widget.SearchView;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 
 import com.manimaran.wikiaudio.R;
 import com.manimaran.wikiaudio.lang_selection.LangAdapter;
 import com.manimaran.wikiaudio.listerner.CallBackListener;
-import com.manimaran.wikiaudio.listerner.OnItemClickListener;
+import com.manimaran.wikiaudio.listerner.OnLangSelectListener;
 import com.manimaran.wikiaudio.model.WikiLanguage;
 import com.manimaran.wikiaudio.util.GeneralUtils;
 import com.manimaran.wikiaudio.util.PrefManager;
+import com.manimaran.wikiaudio.util.UrlType;
+import com.manimaran.wikiaudio.wiki.MediaWikiClient;
+import com.manimaran.wikiaudio.wiki.ServiceGenerator;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
+
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class BottomSheetFragment extends BottomSheetDialogFragment {
 
-    PrefManager pref;
-    CallBackListener callback;
+    private PrefManager pref;
+    private CallBackListener callback;
+    private List<WikiLanguage> wikiLanguageList = new ArrayList<>();
+    private LangAdapter adapter;
+    private Boolean isWiktionaryMode = false;
+
     public BottomSheetFragment() {
         // Required empty public constructor
     }
@@ -48,27 +67,102 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
 
             dialog.setContentView(R.layout.bottom_sheet_language_selection);
 
-            ListView listView = dialog.findViewById(R.id.list_view_lang);
+            final ProgressBar progressBar = dialog.findViewById(R.id.pb);
+            final ListView listView = dialog.findViewById(R.id.list_view_lang);
             ImageView btnClose = dialog.findViewById(R.id.btn_close);
             final SearchView searchView = dialog.findViewById(R.id.search_view);
 
-            List<WikiLanguage> languageList = GeneralUtils.getLanguageListFromJson(getContext());
 
-            OnItemClickListener listener = new OnItemClickListener() {
+            if (progressBar != null)
+                progressBar.setVisibility(View.VISIBLE);
+            if (listView != null)
+                listView.setVisibility(View.GONE);
+
+            MediaWikiClient api = ServiceGenerator.createService(MediaWikiClient.class, getContext(), UrlType.WIKTIONARY_CONTRIBUTION);
+            Call<ResponseBody> call = api.fetchWikiLangList();
+            call.enqueue(new Callback<ResponseBody>() {
                 @Override
-                public void OnClickListener(String langCode, String lang) {
-                    pref.setLangCode(langCode);
-                    GeneralUtils.showToast(getContext(), String.format(getString(R.string.select_language_response_msg), lang));
-                    if(callback !=null)
-                        callback.OnCallBackListener();
-                    dismiss();
-                }
-            };
+                public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
+                    if (response.isSuccessful() && response.body() !=null) {
+                        try {
+                            String responseStr = response.body().string();
+                            List<WikiLanguage> langList = new ArrayList<>();
+                            try {
+                                JSONArray array = new JSONArray(responseStr);
+                                int len = array.length();
+                                int i;
+                                for(i=0;i<len;i++)
+                                {
+                                    JSONObject obj = array.getJSONObject(i);
+                                    WikiLanguage lang = new WikiLanguage();
+                                    lang.setCode(obj.getString("code"));
+                                    lang.setName(obj.getString("lang"));
+                                    lang.setIsLeftDirection(obj.getString("dir").equals("ltr"));
+                                    lang.setLocal(obj.getString("local_lang"));
 
-            final LangAdapter adapter = new LangAdapter(getActivity(), languageList, listener);
-            if (listView != null) {
-                listView.setAdapter(adapter);
-            }
+                                    if(getIsWiktionaryMode())
+                                    {
+                                        langList.add(lang);
+                                    }else
+                                    {
+                                        if(obj.has("title_words_without_audio"))
+                                        {
+                                            lang.setTitleWordsNoAudio(obj.getString("title_words_without_audio"));
+                                            langList.add(lang);
+                                        }
+                                    }
+                                }
+
+                                OnLangSelectListener listener = new OnLangSelectListener() {
+                                    @Override
+                                    public void OnClickListener(String langCode, String lang, String titleWordsWithoutAudio) {
+                                        if(getIsWiktionaryMode())
+                                            pref.setWiktionaryLangCode(langCode);
+                                        else
+                                        {
+                                            pref.setContributionLangCode(langCode);
+                                            if(titleWordsWithoutAudio != null)
+                                                pref.setTitleWordsWithoutAudio(titleWordsWithoutAudio);
+                                        }
+                                        GeneralUtils.showToast(getContext(), String.format(getString(R.string.select_language_response_msg), lang));
+                                        if(callback !=null)
+                                            callback.OnCallBackListener();
+                                        dismiss();
+                                    }
+                                };
+
+                                wikiLanguageList = langList;
+                                String existLangCode = getIsWiktionaryMode() ? pref.getWiktionaryLangCode() : pref.getContributionLangCode();
+                                adapter = new LangAdapter(getActivity(), wikiLanguageList, listener, existLangCode);
+                                if (listView != null) {
+                                    listView.setAdapter(adapter);
+                                }
+
+                            }catch (Exception e)
+                            {
+                                e.printStackTrace();
+                            }
+
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    if (progressBar != null)
+                        progressBar.setVisibility(View.GONE);
+                    if (listView != null)
+                        listView.setVisibility(View.VISIBLE);
+
+                }
+
+                @Override
+                public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
+                    t.printStackTrace();
+                }
+            });
+
+
+
 
             if(btnClose != null) {
                 btnClose.setOnClickListener(new View.OnClickListener() {
@@ -112,7 +206,8 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
 
                     @Override
                     public boolean onQueryTextChange(String newText) {
-                        adapter.getFilter().filter(newText);
+                        if(newText.length() > 0 && adapter != null)
+                            adapter.getFilter().filter(newText);
                         return false;
                     }
                 });
@@ -131,5 +226,13 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
 
     public void setCalBack(CallBackListener listener) {
         this.callback = listener;
+    }
+
+    public Boolean getIsWiktionaryMode() {
+        return isWiktionaryMode;
+    }
+
+    public void setIsWiktionaryMode(Boolean wiktionary) {
+        isWiktionaryMode = wiktionary;
     }
 }
