@@ -1,4 +1,4 @@
-package com.manimaran.wikiaudio.util;
+package com.manimaran.wikiaudio.record.wav;
 
 import android.media.AudioFormat;
 import android.media.AudioRecord;

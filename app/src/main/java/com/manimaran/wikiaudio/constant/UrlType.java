@@ -1,4 +1,4 @@
-package com.manimaran.wikiaudio.util;
+package com.manimaran.wikiaudio.constant;
 
 import android.support.annotation.IntDef;
 

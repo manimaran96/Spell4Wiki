@@ -1,16 +1,16 @@
-package com.manimaran.wikiaudio.wiki;
+package com.manimaran.wikiaudio.wiki_api;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.franmontiel.persistentcookiejar.PersistentCookieJar;
 import com.franmontiel.persistentcookiejar.cache.SetCookieCache;
 import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersistor;
 import com.google.gson.Gson;
-import com.manimaran.wikiaudio.util.PrefManager;
-import com.manimaran.wikiaudio.util.UrlType;
+import com.manimaran.wikiaudio.R;
+import com.manimaran.wikiaudio.utils.PrefManager;
+import com.manimaran.wikiaudio.constant.UrlType;
 
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
@@ -77,6 +77,7 @@ public class ServiceGenerator {
             httpClient.connectTimeout(30, TimeUnit.SECONDS);
             httpClient.readTimeout(30, TimeUnit.SECONDS);
         }
+
         boolean rebuild = false;
         if (!httpClient.interceptors().contains(logging)) {
             httpClient.addInterceptor(logging);
@@ -105,18 +106,18 @@ public class ServiceGenerator {
         switch (urlType)
         {
             case UrlType.COMMONS :
-                url = "https://commons.wikimedia.org/";
+                url = context.getString(R.string.url_commons);
                 break;
             case UrlType.WIKTIONARY_CONTRIBUTION:
                 pref = new PrefManager(context);
-                url = String.format("https://%s.wiktionary.org/", pref.getContributionLangCode());
+                url = String.format(context.getString(R.string.url_wiktionary), pref.getContributionLangCode());
                 break;
             case UrlType.WIKTIONARY_PAGE:
                 pref = new PrefManager(context);
-                url = String.format("https://%s.wiktionary.org/", pref.getWiktionaryLangCode());
+                url = String.format(context.getString(R.string.url_wiktionary), pref.getWiktionaryLangCode());
                 break;
             default:
-                url = "https://commons.wikimedia.org/";
+                url = context.getString(R.string.url_commons);
         }
 
         return url;
@@ -132,7 +133,7 @@ public class ServiceGenerator {
     {
         if(cookieJar != null)
         {
-            Log.e("TAG", "Wiki log cookie " + new Gson().toJson(cookieJar));
+            Log.e("TAG", "Wiki cookie " + new Gson().toJson(cookieJar));
         }
     }
 }

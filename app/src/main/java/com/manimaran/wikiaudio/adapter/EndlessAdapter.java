@@ -1,24 +1,7 @@
-package com.manimaran.wikiaudio.view;
-
-/*
- * Copyright (C) 2012 Surviving with Android (http://www.survivingwithandroid.com)
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
+package com.manimaran.wikiaudio.adapter;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
-import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
@@ -30,8 +13,8 @@ import android.os.Build;
 import android.os.CountDownTimer;
 import android.os.Environment;
 import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
-import android.text.BidiFormatter;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -42,20 +25,21 @@ import android.webkit.MimeTypeMap;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.manimaran.wikiaudio.R;
-import com.manimaran.wikiaudio.acticity.WebWikiActivity;
+import com.manimaran.wikiaudio.acticity.WiktionaryWebActivity;
 import com.manimaran.wikiaudio.listerner.CallBackListener;
-import com.manimaran.wikiaudio.util.GeneralUtils;
-import com.manimaran.wikiaudio.util.PrefManager;
-import com.manimaran.wikiaudio.util.UrlType;
-import com.manimaran.wikiaudio.util.WAVPlayer;
-import com.manimaran.wikiaudio.util.WAVRecorder;
-import com.manimaran.wikiaudio.wiki.MediaWikiClient;
-import com.manimaran.wikiaudio.wiki.ServiceGenerator;
+import com.manimaran.wikiaudio.utils.GeneralUtils;
+import com.manimaran.wikiaudio.utils.PrefManager;
+import com.manimaran.wikiaudio.constant.UrlType;
+import com.manimaran.wikiaudio.record.wav.WAVPlayer;
+import com.manimaran.wikiaudio.record.wav.WAVRecorder;
+import com.manimaran.wikiaudio.wiki_api.MediaWikiClient;
+import com.manimaran.wikiaudio.wiki_api.ServiceGenerator;
 
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONException;
@@ -83,7 +67,7 @@ public class EndlessAdapter extends ArrayAdapter<String> {
     private Context ctx;
     private Activity activity;
     private int layoutId;
-    private Boolean isContributionMode = true;
+    private Boolean isContributionMode;
     private String TAG = "Record";
 
     private WAVRecorder recorder = new WAVRecorder();
@@ -94,6 +78,7 @@ public class EndlessAdapter extends ArrayAdapter<String> {
     private ImageView btnClose, btnRecord, btnPlayPause;
     private Button btnUpload;
     private TextView txtWord, txtSec;
+
     private SeekBar seekBar;
 
     private Integer lastProgress = 0;
@@ -138,8 +123,9 @@ public class EndlessAdapter extends ArrayAdapter<String> {
         return itemList.get(position).hashCode();
     }
 
+    @NotNull
     @Override
-    public View getView(final int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, @NotNull ViewGroup parent) {
         View mView = convertView;
 
         if (mView == null) {
@@ -148,7 +134,7 @@ public class EndlessAdapter extends ArrayAdapter<String> {
         }
 
         // We should use class holder pattern
-        TextView tv = (TextView) mView.findViewById(R.id.txt1);
+        TextView tv = mView.findViewById(R.id.txt1);
         tv.setText(itemList.get(position));
 
         tv.setOnClickListener(new View.OnClickListener() {
@@ -175,8 +161,8 @@ public class EndlessAdapter extends ArrayAdapter<String> {
 
         if(isContributionMode)
         {
-            ImageView btnWiki = mView.findViewById(R.id.btn_info);
-            btnWiki.setVisibility(View.GONE);
+            LinearLayout btnWiki = mView.findViewById(R.id.btn_wiki_meaning);
+            btnWiki.setVisibility(View.VISIBLE);
             btnWiki.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -192,7 +178,7 @@ public class EndlessAdapter extends ArrayAdapter<String> {
 
     private void openWiktionaryWebView(int position) {
         Activity activity1 = (Activity) ctx;
-        Intent intent = new Intent(ctx, WebWikiActivity.class);
+        Intent intent = new Intent(ctx, WiktionaryWebActivity.class);
         intent.putExtra("is_contribution_mode", isContributionMode);
         intent.putExtra("word", itemList.get(position));
         activity1.startActivity(intent);
@@ -206,8 +192,8 @@ public class EndlessAdapter extends ArrayAdapter<String> {
         // 2) Always check for permission (even if permission has already been granted)
         // since the user can revoke permissions at any time through Settings
         Activity activity = (Activity) ctx;
-        showMsg("Must need Microphone and Storage permissions.\nPlease grant those permissions");
         if (!GeneralUtils.checkPermissionGranted((activity))) {
+            showMsg("Must need Microphone and Storage permissions.\nPlease grant those permissions");
 
             // The permission is NOT already granted.
             // Check if the user has been asked about this permission already and denied
@@ -381,7 +367,6 @@ public class EndlessAdapter extends ArrayAdapter<String> {
                                 tokenJSONObject = reader.getJSONObject("query").getJSONObject("tokens");
                                 //noinspection SpellCheckingInspection
                                 editToken = tokenJSONObject.getString("csrftoken");
-                                Log.w(TAG, " Res Edit token " + editToken + "\n" + tokenJSONObject);
                                 if (editToken.equals("+\\")) {
                                     dismissDialog("You are not logged in! \nPlease login to continue.");
                                     if (myDialog != null && myDialog.isShowing())
@@ -426,9 +411,7 @@ public class EndlessAdapter extends ArrayAdapter<String> {
 
     private void completeUpload(String editToken) {
 
-        GeneralUtils.showToast(ctx, editToken);
         String filePath = getFilePath();
-        Log.e("NAME OF FILE ", "Filename " + filePath);
         String uploadFileName = uploadName;
         File file = new File(filePath);
         // create RequestBody instance from file
@@ -448,7 +431,7 @@ public class EndlessAdapter extends ArrayAdapter<String> {
                 RequestBody.create(MultipartBody.FORM, editToken), // edit token
                 body, // Body file
                 RequestBody.create(MultipartBody.FORM, "{{PD-self}}"), // License type - /* PD-self, CC-Zero, CC-BY-SA-4.0, CC-BY-SA-3.0*/
-                RequestBody.create(MultipartBody.FORM, uploadFileName + " Uploaded by using Spell4Wiki app.") // Comment
+                RequestBody.create(MultipartBody.FORM,  String.format(ctx.getString(R.string.upload_comment), uploadFileName)) // Comment
 
         );
         call.enqueue(new Callback<ResponseBody>() {
@@ -500,10 +483,9 @@ public class EndlessAdapter extends ArrayAdapter<String> {
             }
 
             @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
+            public void onFailure(@NotNull Call<ResponseBody> call, @NotNull Throwable t) {
                 dismissDialog("Please check your connection!");
                 t.printStackTrace();
-                Log.e("Upload error:", t.getMessage());
             }
         });
     }
@@ -517,15 +499,11 @@ public class EndlessAdapter extends ArrayAdapter<String> {
         {
             if(msg.contains("CSRF"))
             {
-                reLoginReq();
+                //reLoginReq();
                 msg += "\nPlease Logout & Login Once";
             }
             Toast.makeText(ctx, msg, Toast.LENGTH_LONG).show();
         }
-    }
-
-    private void reLoginReq() {
-        uploadAudioToWikiServer(true);
     }
 
     private void onPlayStatusChanged() {

@@ -1,19 +1,11 @@
 package com.manimaran.wikiaudio.acticity;
 
-import android.annotation.SuppressLint;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
-import android.webkit.WebSettings;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
+import android.util.Log;
 
 import com.manimaran.wikiaudio.R;
-import com.manimaran.wikiaudio.util.PrefManager;
-import com.manimaran.wikiaudio.util.UrlType;
-import com.manimaran.wikiaudio.wiki.MediaWikiClient;
-import com.manimaran.wikiaudio.wiki.ServiceGenerator;
+import com.manimaran.wikiaudio.wiki_api.ServiceGenerator;
 
 import org.billthefarmer.markdown.MarkdownView;
 
@@ -24,7 +16,11 @@ public class AboutActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about);
         setTitle(getString(R.string.about));
-        MarkdownView markdownView = (MarkdownView) findViewById(R.id.markdown);
-        markdownView.loadMarkdownFile("https://raw.githubusercontent.com/manimaran96/Spell4Wiki/master/README.md");
+
+        /*
+         * Load about markdown file from  - https://raw.githubusercontent.com/manimaran96/Spell4Wiki/master/README.md
+         */
+        MarkdownView markdownView = findViewById(R.id.markdown);
+        markdownView.loadMarkdownFile(getString(R.string.url_about));
     }
 }

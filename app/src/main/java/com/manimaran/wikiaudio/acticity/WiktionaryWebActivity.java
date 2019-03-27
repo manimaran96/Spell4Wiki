@@ -2,46 +2,27 @@ package com.manimaran.wikiaudio.acticity;
 
 import android.annotation.SuppressLint;
 import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.text.TextUtils;
-import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.Toast;
 
 import com.manimaran.wikiaudio.R;
-import com.manimaran.wikiaudio.util.PrefManager;
-import com.manimaran.wikiaudio.util.UrlType;
-import com.manimaran.wikiaudio.wiki.MediaWikiClient;
-import com.manimaran.wikiaudio.wiki.ServiceGenerator;
+import com.manimaran.wikiaudio.utils.PrefManager;
+import com.manimaran.wikiaudio.constant.UrlType;
+import com.manimaran.wikiaudio.wiki_api.ServiceGenerator;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import okhttp3.ResponseBody;
-import okhttp3.internal.http.StatusLine;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-
-public class WebWikiActivity extends AppCompatActivity {
+public class WiktionaryWebActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_web_wiki);
+
+
 
         PrefManager pref = new PrefManager(getApplicationContext());
 
@@ -58,8 +39,10 @@ public class WebWikiActivity extends AppCompatActivity {
             {
                 getSupportActionBar().setTitle(word);
                 getSupportActionBar().setSubtitle(ServiceGenerator.getUrl(UrlType.WIKTIONARY_PAGE, getApplicationContext()));
+                getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_close);
+                getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             }
-            String wikiUrl = String.format("https://%s.m.wiktionary.org//wiki/%s", isContributionMode ? pref.getContributionLangCode() : pref.getWiktionaryLangCode(), word);
+            String wikiUrl = String.format(getString(R.string.url_wiktionary_web), isContributionMode ? pref.getContributionLangCode() : pref.getWiktionaryLangCode(), word);
             loadPage(wikiUrl);
         }
 
@@ -90,6 +73,16 @@ public class WebWikiActivity extends AppCompatActivity {
                 findViewById(R.id.pb).setVisibility(View.GONE);
             }
         });
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem menuItem) {
+        switch (menuItem.getItemId()) {
+            case android.R.id.home:
+                finish();
+                return true;
+        }
+        return (super.onOptionsItemSelected(menuItem));
     }
 
 }

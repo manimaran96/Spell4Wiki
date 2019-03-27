@@ -1,9 +1,7 @@
-package com.manimaran.wikiaudio.util;
+package com.manimaran.wikiaudio.record.wav;
 
 import android.media.MediaPlayer;
 import android.util.Log;
-
-import com.manimaran.wikiaudio.R;
 
 import java.io.IOException;
 import java.util.concurrent.Callable;
@@ -29,7 +27,6 @@ public class WAVPlayer {
             mPlayer.start();
         } catch (IOException e) {
             e.printStackTrace();
-            Log.e("error", "prepare() failed");
         }
     }
 

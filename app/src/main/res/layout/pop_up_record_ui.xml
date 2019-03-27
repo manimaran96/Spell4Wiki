@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_gravity="center"
     android:layout_height="wrap_content">
@@ -23,12 +24,11 @@
         android:layout_height="30dp"
         android:layout_gravity="end"
         android:gravity="center"
-        android:src="@drawable/ic_cancel" />
+        app:srcCompat="@drawable/ic_cancel" />
 
     <!--Word-->
     <TextView
         android:id="@+id/txtWord"
-        android:layout_centerInParent="true"
         android:layout_marginTop="30dp"
         android:textColor="@color/white"
         android:layout_gravity="center"
@@ -59,7 +59,7 @@
             android:tint="@android:color/holo_blue_bright"
             android:focusable="true"
             android:background="?android:attr/selectableItemBackground"
-            android:contentDescription="player" />
+            android:contentDescription="@string/player" />
 
         <SeekBar
             android:id="@+id/seekBar"
@@ -97,7 +97,8 @@
         android:layout_height="70dp"
         android:clickable="true"
         android:src="@drawable/ic_record"
-        android:layout_gravity="center"/>
+        android:layout_gravity="center"
+        android:focusable="true" />
     </LinearLayout>
 
     <!--Hint-->

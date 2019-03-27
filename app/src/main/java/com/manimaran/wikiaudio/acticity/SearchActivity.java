@@ -17,13 +17,13 @@ import com.google.gson.Gson;
 import com.manimaran.wikiaudio.R;
 import com.manimaran.wikiaudio.fragment.BottomSheetFragment;
 import com.manimaran.wikiaudio.listerner.CallBackListener;
-import com.manimaran.wikiaudio.util.GeneralUtils;
-import com.manimaran.wikiaudio.util.PrefManager;
-import com.manimaran.wikiaudio.util.UrlType;
-import com.manimaran.wikiaudio.view.EndlessAdapter;
+import com.manimaran.wikiaudio.utils.GeneralUtils;
+import com.manimaran.wikiaudio.utils.PrefManager;
+import com.manimaran.wikiaudio.constant.UrlType;
+import com.manimaran.wikiaudio.adapter.EndlessAdapter;
 import com.manimaran.wikiaudio.view.EndlessListView;
-import com.manimaran.wikiaudio.wiki.MediaWikiClient;
-import com.manimaran.wikiaudio.wiki.ServiceGenerator;
+import com.manimaran.wikiaudio.wiki_api.MediaWikiClient;
+import com.manimaran.wikiaudio.wiki_api.ServiceGenerator;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -56,7 +56,7 @@ public class SearchActivity extends AppCompatActivity implements EndlessListView
         pref = new PrefManager(getApplicationContext());
         api = ServiceGenerator.createService(MediaWikiClient.class, getApplicationContext(), UrlType.WIKTIONARY_PAGE);
 
-        SearchView searchBar = (SearchView) findViewById(R.id.search_bar);
+        SearchView searchBar = findViewById(R.id.search_bar);
         searchBar.requestFocus();
         searchBar.setIconifiedByDefault(false);
         searchBar.setQueryHint(getResources().getString(R.string.search_here));
@@ -81,7 +81,7 @@ public class SearchActivity extends AppCompatActivity implements EndlessListView
             }
         });
 
-        resultListView = (EndlessListView) findViewById(R.id.search_result_list);
+        resultListView = findViewById(R.id.search_result_list);
         resultListView.setLoadingView(R.layout.loading_row);
         resultListView.setAdapter(new EndlessAdapter(this, new ArrayList<String>(), R.layout.search_result_row, false));
         //
@@ -107,7 +107,11 @@ public class SearchActivity extends AppCompatActivity implements EndlessListView
         menu.findItem(R.id.action_wiktionary).setIcon(R.drawable.ic_record);
         menu.findItem(R.id.action_settings).setIcon(R.drawable.ic_cancel);
         if(pref.getIsAnonymous())
+        {
             menu.findItem(R.id.action_wiktionary).setVisible(false);
+            menu.findItem(R.id.action_logout).setVisible(false);
+            menu.findItem(R.id.action_login).setVisible(true);
+        }
         return true;
     }
 
@@ -138,6 +142,9 @@ public class SearchActivity extends AppCompatActivity implements EndlessListView
                 bottomSheetFragment.setIsWiktionaryMode(true);
                 bottomSheetFragment.show(getSupportFragmentManager(), bottomSheetFragment.getTag());
                 bottomSheetFragment.setCancelable(false);
+                return true;
+            case R.id.action_login:
+                pref.logoutUser();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -183,12 +190,10 @@ public class SearchActivity extends AppCompatActivity implements EndlessListView
 
         try {
             ArrayList<String> titleList = new ArrayList<>();
-            Log.w("TAG", "Wiki " + new Gson().toJson(reader));
             JSONArray searchResults = reader.getJSONObject("query").optJSONArray("search");
             for (int ii = 0; ii < searchResults.length(); ii++) {
                 titleList.add(
-                        searchResults.getJSONObject(ii).getString("title")
-                        //+ " --> " + searchResults.getJSONObject(ii).getString("pageid")
+                        searchResults.getJSONObject(ii).getString("title")  //+ " --> " + searchResults.getJSONObject(ii).getString("pageid")
                 );
             }
             if (reader.has("continue"))

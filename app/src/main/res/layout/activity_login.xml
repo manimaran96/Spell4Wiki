@@ -3,42 +3,45 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:fitsSystemWindows="true">
-<LinearLayout android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:gravity="center_horizontal"
-    android:padding="42dp"
-    android:layout_marginTop="50dp"
-    android:fitsSystemWindows="true"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:fitsSystemWindows="true"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:padding="42dp">
 
         <ImageView
             android:layout_width="100dp"
             android:layout_height="100dp"
-            app:srcCompat="@drawable/logo"
-            android:contentDescription="@string/app_name" />
+            android:contentDescription="@string/app_name"
+            app:srcCompat="@drawable/spell4wiki" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
             android:fontFamily="serif"
-            android:text="Wiki Login"
+            android:text="@string/wiki_login"
             android:textAlignment="center"
             android:textColor="@android:color/background_dark"
-            android:textSize="18sp"/>
+            android:textSize="18sp" />
 
         <!--  Email Label -->
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp">
-            <EditText android:id="@+id/edit_username"
+
+            <EditText
+                android:id="@+id/edit_username"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textPersonName"
-                android:hint="User name" />
+                android:hint="@string/user_name"
+                android:inputType="textPersonName" />
         </android.support.design.widget.TextInputLayout>
 
         <!--  Password Label -->
@@ -47,24 +50,36 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             app:passwordToggleEnabled="true">
-            <EditText android:id="@+id/edit_password"
+
+            <EditText
+                android:id="@+id/edit_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textPassword"
-                android:hint="Password"/>
+                android:hint="@string/password"
+                android:inputType="textPassword" />
         </android.support.design.widget.TextInputLayout>
 
         <br.com.simplepass.loading_button_lib.customViews.CircularProgressButton
             android:id="@+id/btn_login"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/colorAccent"
             android:layout_margin="10dp"
+            android:background="@color/colorAccent"
             android:text="@string/login"
             android:textColor="@android:color/white"
-            app:spinning_bar_width="3dp"
             app:spinning_bar_color="#FFF"
-            app:spinning_bar_padding="6dp"/>
+            app:spinning_bar_padding="6dp"
+            app:spinning_bar_width="3dp" />
+
+        <TextView
+            android:id="@+id/btn_skip_login"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/skip"
+            android:textSize="@dimen/text_normal"
+            android:textStyle="bold"
+            android:layout_marginTop="5dp"/>
 
     </LinearLayout>
-    </ScrollView>
+</ScrollView>

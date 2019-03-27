@@ -1,4 +1,4 @@
-package com.manimaran.wikiaudio.wiki;
+package com.manimaran.wikiaudio.wiki_api;
 
 
 import okhttp3.MultipartBody;
@@ -13,6 +13,10 @@ import retrofit2.http.POST;
 import retrofit2.http.Part;
 import retrofit2.http.Query;
 
+
+/**
+ * Media wiki API - https://mediawiki.org/wiki/API
+ */
 public interface MediaWikiClient {
 
     // Login token - Commons
@@ -62,19 +66,7 @@ public interface MediaWikiClient {
             @Part("comment") RequestBody comment
     );
 
-    // Get Wikipedia language list
+    // Get Wikipedia language list JSON
     @GET("https://raw.githubusercontent.com/manimaran96/Spell4Wiki/master/files/lang-json/language.json")
     Call<ResponseBody> fetchWikiLangList();
-
-    /*
-
-    https://commons.wikimedia.org/wiki/Commons:API/MediaWiki
-
-    errorformat=plaintext --> show error as plain text format
-    {{Listen
-            | filename    = Accordion chords-01.ogg
-            | title       = Accordion chords
-            | description = Chords being played on an accordion
-    }}
-*/
 }

@@ -1,4 +1,4 @@
-package com.manimaran.wikiaudio.lang_selection;
+package com.manimaran.wikiaudio.adapter;
 
 import android.app.Activity;
 import android.view.Gravity;
@@ -14,11 +14,9 @@ import android.widget.TextView;
 import com.manimaran.wikiaudio.R;
 import com.manimaran.wikiaudio.listerner.OnLangSelectListener;
 import com.manimaran.wikiaudio.model.WikiLanguage;
-import com.manimaran.wikiaudio.util.PrefManager;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class LangAdapter extends BaseAdapter implements Filterable{
 

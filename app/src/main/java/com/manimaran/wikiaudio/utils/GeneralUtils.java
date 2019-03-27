@@ -1,4 +1,4 @@
-package com.manimaran.wikiaudio.util;
+package com.manimaran.wikiaudio.utils;
 
 import android.Manifest;
 import android.app.Activity;
@@ -10,16 +10,6 @@ import android.support.v4.content.ContextCompat;
 import android.widget.Toast;
 
 import com.manimaran.wikiaudio.R;
-import com.manimaran.wikiaudio.model.WikiLanguage;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.List;
 
 public class GeneralUtils {
 

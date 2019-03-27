@@ -9,7 +9,6 @@ import android.support.design.widget.BottomSheetDialog;
 import android.support.design.widget.BottomSheetDialogFragment;
 import android.support.v7.widget.SearchView;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -17,15 +16,15 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 
 import com.manimaran.wikiaudio.R;
-import com.manimaran.wikiaudio.lang_selection.LangAdapter;
+import com.manimaran.wikiaudio.adapter.LangAdapter;
 import com.manimaran.wikiaudio.listerner.CallBackListener;
 import com.manimaran.wikiaudio.listerner.OnLangSelectListener;
 import com.manimaran.wikiaudio.model.WikiLanguage;
-import com.manimaran.wikiaudio.util.GeneralUtils;
-import com.manimaran.wikiaudio.util.PrefManager;
-import com.manimaran.wikiaudio.util.UrlType;
-import com.manimaran.wikiaudio.wiki.MediaWikiClient;
-import com.manimaran.wikiaudio.wiki.ServiceGenerator;
+import com.manimaran.wikiaudio.utils.GeneralUtils;
+import com.manimaran.wikiaudio.utils.PrefManager;
+import com.manimaran.wikiaudio.constant.UrlType;
+import com.manimaran.wikiaudio.wiki_api.MediaWikiClient;
+import com.manimaran.wikiaudio.wiki_api.ServiceGenerator;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -100,6 +99,12 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
                                     lang.setIsLeftDirection(obj.getString("dir").equals("ltr"));
                                     lang.setLocal(obj.getString("local_lang"));
 
+                                    /*
+                                     * Check Wiktionary mode or not
+                                     * If wiktionary mode show all languages
+                                     * If Contribution mode show only language have "title_words_without_audio" key-value
+                                     * "title_words_without_audio" - category of words without audio in wiktionary
+                                     */
                                     if(getIsWiktionaryMode())
                                     {
                                         langList.add(lang);

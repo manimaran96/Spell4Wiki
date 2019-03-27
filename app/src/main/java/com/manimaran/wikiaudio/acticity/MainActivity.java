@@ -15,14 +15,13 @@ import android.widget.Toast;
 import com.manimaran.wikiaudio.R;
 import com.manimaran.wikiaudio.fragment.BottomSheetFragment;
 import com.manimaran.wikiaudio.listerner.CallBackListener;
-import com.manimaran.wikiaudio.model.WikiLanguage;
-import com.manimaran.wikiaudio.util.GeneralUtils;
-import com.manimaran.wikiaudio.util.PrefManager;
-import com.manimaran.wikiaudio.util.UrlType;
-import com.manimaran.wikiaudio.view.EndlessAdapter;
+import com.manimaran.wikiaudio.utils.GeneralUtils;
+import com.manimaran.wikiaudio.utils.PrefManager;
+import com.manimaran.wikiaudio.constant.UrlType;
+import com.manimaran.wikiaudio.adapter.EndlessAdapter;
 import com.manimaran.wikiaudio.view.EndlessListView;
-import com.manimaran.wikiaudio.wiki.MediaWikiClient;
-import com.manimaran.wikiaudio.wiki.ServiceGenerator;
+import com.manimaran.wikiaudio.wiki_api.MediaWikiClient;
+import com.manimaran.wikiaudio.wiki_api.ServiceGenerator;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -30,7 +29,6 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -39,14 +37,14 @@ import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity implements EndlessListView.EndlessListener{
 
+    // Views
     private EndlessListView resultListView;
     private EndlessAdapter adapter;
+    private SwipeRefreshLayout refreshLayout = null;
 
     private String nextOffsetObj;
     private boolean doubleBackToExitPressedOnce = false;
-    private SwipeRefreshLayout refreshLayout = null;
     private PrefManager pref;
-    private MediaWikiClient api;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,10 +53,8 @@ public class MainActivity extends AppCompatActivity implements EndlessListView.E
 
         pref = new PrefManager(getApplicationContext());
 
+        init();
 
-        resultListView = findViewById(R.id.search_result_list);
-        refreshLayout = findViewById(R.id.layout_swipe);
-        resultListView.setLoadingView(R.layout.loading_row);
         adapter = new EndlessAdapter(this, new ArrayList<String>(), R.layout.search_result_row, true);
         CallBackListener listener = new CallBackListener() {
             @Override
@@ -88,12 +84,24 @@ public class MainActivity extends AppCompatActivity implements EndlessListView.E
 
     }
 
+    /**
+     * Init views
+     */
+    private void init() {
+        resultListView = findViewById(R.id.search_result_list);
+        refreshLayout = findViewById(R.id.layout_swipe);
+        resultListView.setLoadingView(R.layout.loading_row);
+    }
+
+    /**
+     * Getting words from wiktionary without audio
+     */
     private void loadDataFromServer() {
 
         if(nextOffsetObj == null)
             refreshLayout.setRefreshing(true);
 
-        api = ServiceGenerator.createService(MediaWikiClient.class, getApplicationContext(), UrlType.WIKTIONARY_CONTRIBUTION);
+        MediaWikiClient api = ServiceGenerator.createService(MediaWikiClient.class, getApplicationContext(), UrlType.WIKTIONARY_CONTRIBUTION);
         String noAudioTitle = pref.getTitleWordsWithoutAudio();
         Call<ResponseBody> call = api.fetchUnAudioRecords(noAudioTitle, nextOffsetObj);
 
@@ -106,14 +114,14 @@ public class MainActivity extends AppCompatActivity implements EndlessListView.E
                         processSearchResultAudio(responseStr);
                     } catch (IOException e) {
                         e.printStackTrace();
-                        searchFailed("Please check your connection!\nScroll to try again!");
+                        searchFailed();
                     }
                 }
             }
 
             @Override
             public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
-                searchFailed("Please check your connection!\nScroll to try again!");
+                searchFailed();
             }
         });
     }
@@ -148,11 +156,11 @@ public class MainActivity extends AppCompatActivity implements EndlessListView.E
         }
     }
 
-    private void searchFailed(String s) {
+    private void searchFailed() {
         resultListView.loadLaterOnScroll();
         if(refreshLayout.isRefreshing())
             refreshLayout.setRefreshing(false);
-        Toast.makeText(this, "Search failed!\n" + s, Toast.LENGTH_LONG).show();
+        Toast.makeText(this, "Please check your connection!\nScroll to try again!", Toast.LENGTH_LONG).show();
     }
 
     @Override

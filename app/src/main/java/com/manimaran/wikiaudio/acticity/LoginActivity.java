@@ -12,14 +12,16 @@ import android.text.TextUtils;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.manimaran.wikiaudio.R;
-import com.manimaran.wikiaudio.util.PrefManager;
-import com.manimaran.wikiaudio.util.UrlType;
-import com.manimaran.wikiaudio.wiki.MediaWikiClient;
-import com.manimaran.wikiaudio.wiki.ServiceGenerator;
+import com.manimaran.wikiaudio.utils.PrefManager;
+import com.manimaran.wikiaudio.constant.UrlType;
+import com.manimaran.wikiaudio.wiki_api.MediaWikiClient;
+import com.manimaran.wikiaudio.wiki_api.ServiceGenerator;
 
+import org.jetbrains.annotations.NotNull;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -37,6 +39,7 @@ public class LoginActivity extends AppCompatActivity {
     // Views
     EditText editUserName, editPassword;
     CircularProgressButton btnLogin;
+    TextView btnSkipLogin;
 
     PrefManager pref;
     MediaWikiClient api;
@@ -48,7 +51,12 @@ public class LoginActivity extends AppCompatActivity {
 
         pref = new PrefManager(getApplicationContext());
 
-        if(pref.isIsLogin())
+        /*
+         * Check Already login or not
+         * If yes - Open Main screen
+         * Else - Ask to login
+         */
+        if(pref.isIsLogin() || pref.getIsAnonymous())
         {
             launchActivity();
         }
@@ -57,6 +65,9 @@ public class LoginActivity extends AppCompatActivity {
             hideKeyboard();
             api = ServiceGenerator.createService(MediaWikiClient.class, getApplicationContext(), UrlType.COMMONS);
 
+            /*
+             * Hit Login Button
+             */
             btnLogin.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -68,9 +79,25 @@ public class LoginActivity extends AppCompatActivity {
                         Snackbar.make(btnLogin, getString(R.string.invalid_credential), Snackbar.LENGTH_SHORT).show();
                 }
             });
+
+            /*
+             *  Hit Skip Button
+             */
+            btnSkipLogin.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    pref.setIsAnonymous(true);
+                    launchActivity();
+                }
+            });
         }
     }
 
+    /**
+     * Getting Token from wiki server before login
+     * @param username - username of the user
+     * @param password - password of the user
+     */
     private void callToken(final String username, final String password)
     {
         Call<ResponseBody> call =  api.getLoginToken();
@@ -87,6 +114,10 @@ public class LoginActivity extends AppCompatActivity {
                         reader = new JSONObject(responseStr);
                         tokenJSONObject = reader.getJSONObject("query").getJSONObject("tokens");
                         lgToken = tokenJSONObject.getString("logintoken");
+
+                        /*
+                         * Once getting login token then call client login api
+                         */
                         completeLogin(username, password, lgToken);
 
                     } catch (JSONException | IOException e) {
@@ -118,9 +149,15 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    private void completeLogin(String username, String password, String lgToken) {
+    /**
+     * Call client login api after getting login token
+     * @param username - username of the user
+     * @param password - password of the user
+     * @param loginToken - Login token
+     */
+    private void completeLogin(String username, String password, String loginToken) {
 
-        Call<ResponseBody> call = api.clientLogin ("clientlogin", "json", ServiceGenerator.getUrl(UrlType.COMMONS, getApplicationContext()), lgToken, username, password);
+        Call<ResponseBody> call = api.clientLogin ("clientlogin", "json", ServiceGenerator.getUrl(UrlType.COMMONS, getApplicationContext()), loginToken, username, password);
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
@@ -170,7 +207,7 @@ public class LoginActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
+            public void onFailure(@NotNull Call<ResponseBody> call, @NotNull Throwable t) {
                 showMsg("Please check your connection!");
                 btnLogin.revertAnimation();
             }
@@ -178,8 +215,11 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Launch activity
+     */
     private void launchActivity() {
-        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+        Intent intent = new Intent(getApplicationContext(), pref.getIsAnonymous() ? SearchActivity.class : MainActivity.class);
         startActivity(intent);
         finish();
     }
@@ -193,6 +233,7 @@ public class LoginActivity extends AppCompatActivity {
         editUserName = findViewById(R.id.edit_username);
         editPassword = findViewById(R.id.edit_password);
         btnLogin = findViewById(R.id.btn_login);
+        btnSkipLogin = findViewById(R.id.btn_skip_login);
     }
 
     @Override

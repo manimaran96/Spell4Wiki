@@ -7,12 +7,19 @@
         android:id="@+id/action_wiktionary"
         android:orderInCategory="1"
         app:showAsAction="ifRoom"
-        android:icon="@drawable/logo"
+        android:icon="@drawable/wiktionary"
         android:title="@string/wiktionary"/>
 
     <item
-        android:id="@+id/action_lang_change"
+        android:id="@+id/action_login"
         android:orderInCategory="2"
+        app:showAsAction="ifRoom"
+        android:visible="false"
+        android:title="@string/login"/>
+
+    <item
+        android:id="@+id/action_lang_change"
+        android:orderInCategory="3"
         android:icon="@drawable/ic_language"
         app:showAsAction="always"
         android:title="@string/select_language">
@@ -21,6 +28,7 @@
     <item
         android:id="@+id/action_settings"
         android:icon="@drawable/ic_logout"
+        android:visible="false"
         app:showAsAction="never"
         android:title="@string/settings">
     </item>

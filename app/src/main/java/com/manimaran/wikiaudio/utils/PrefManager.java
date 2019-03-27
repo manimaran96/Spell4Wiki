@@ -1,4 +1,4 @@
-package com.manimaran.wikiaudio.util;
+package com.manimaran.wikiaudio.utils;
 
 import android.content.Context;
 import android.content.Intent;
@@ -6,7 +6,7 @@ import android.content.SharedPreferences;
 
 import com.manimaran.wikiaudio.R;
 import com.manimaran.wikiaudio.acticity.LoginActivity;
-import com.manimaran.wikiaudio.wiki.ServiceGenerator;
+import com.manimaran.wikiaudio.wiki_api.ServiceGenerator;
 
 public class PrefManager {
     private SharedPreferences pref;
@@ -38,6 +38,7 @@ public class PrefManager {
     public void setSession(String name, boolean isLogin) {
         editor.putString(KEY_NAME, name);
         editor.putBoolean(IS_LOGIN, isLogin);
+        editor.putBoolean(IS_ANONYMOUS, false);
         editor.commit();
     }
 
@@ -130,7 +131,7 @@ public class PrefManager {
     /**
      * Clear session details when click logout
      */
-    void logoutUser() {
+    public void logoutUser() {
         // Clearing all data from Shared Preferences
         editor.clear();
         setFirstTimeLaunch(true); // Already done

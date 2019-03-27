@@ -12,15 +12,14 @@ import com.manimaran.wikiaudio.R;
  */
 public class SplashActivity extends Activity {
 
-    /** Duration of wait **/
-    private final int SPLASH_DISPLAY_LENGTH = 800; //splash screen will be shown for 1.5 seconds
-
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
         setContentView(R.layout.activity_splash);
 
+        //splash screen will be shown for 1.5 seconds
+        int SPLASH_DISPLAY_LENGTH = 800;
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {

@@ -16,4 +16,19 @@
     <string name="settings">Settings</string>
     <string name="logout">Logout</string>
     <string name="about">About</string>
+    <string name="wiki_login">Wiki Login</string>
+    <string name="user_name">User name</string>
+    <string name="password">Password</string>
+    <string name="skip">SKIP</string>
+    <string name="player">player</string>
+    <string name="upload_comment">%s Uploaded by using Spell4Wiki app.</string>
+
+
+
+    //URL links - Don't translate
+    <string name="url_commons">https://commons.wikimedia.org/</string>
+    <string name="url_wiktionary">https://%s.wiktionary.org/</string>
+    <string name="url_wiktionary_web">https://%s.m.wiktionary.org//wiki/%s</string>
+    <string name="url_about">https://raw.githubusercontent.com/manimaran96/Spell4Wiki/master/README.md</string>
+
 </resources>
