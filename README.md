@@ -1,26 +1,33 @@
-# Spell4Wiki > Spell For Wiktionary
+<h2 align="center">
+ Spell4Wiki > Spell For Wiktionary
+</h2>
+
+<p align="center">
+  <img width="250" height="250" src="https://github.com/manimaran96/Spell4Wiki/blob/master/app/src/main/res/drawable/spell4wiki.png">
+</p>
+
 - Spell4Wiki is an mobile application to record and upload audio for Wiktionary words.
 - Spell4Wiki also act as dictionary. Words meanings are come from wiktionary.
 
 
 ## How is it works
- - [https://manimaran96.wordpress.com/2019/01/06/spell4wiki-mobile-app-to-record-upload-audio-for-wiktionary/](https://manimaran96.wordpress.com/2019/01/06/spell4wiki-mobile-app-to-record-upload-audio-for-wiktionary/)
+ - Visit this [link](https://manimaran96.wordpress.com/2019/01/06/spell4wiki-mobile-app-to-record-upload-audio-for-wiktionary/)
 
 ## Credits To
-### Initiator
+### Initiate By
 - [Kaniyam](http://www.kaniyam.com/) Foundation - [Project idea](https://github.com/KaniyamFoundation/ProjectIdeas/wiki/Project-Ideas)
 
 ### Inspired By
 - [WikiAudio](https://github.com/Atul22/wikiAudio)
 
 ### Contributors
-- [Irmodesgh](https://github.com/lrmodesgh)
+* [Irmodesgh](https://github.com/lrmodesgh)
 
 ### Thanks for Guiding and Supporting
-- [Shrinivasan](https://github.com/tshrinivasan)
-- [Khaleel Jageer](https://github.com/jskcse4)
-- [Info farmer](https://www.mediawiki.org/wiki/User:Info-farmer)
-- [Sivaraam](https://github.com/sivaraam)
+* [Shrinivasan](https://github.com/tshrinivasan)
+* [Khaleel Jageer](https://github.com/jskcse4)
+* [Info farmer](https://www.mediawiki.org/wiki/User:Info-farmer)
+* [Sivaraam](https://github.com/sivaraam)
 
 
 
