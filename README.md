@@ -2,6 +2,8 @@
  Spell4Wiki > Spell For Wiktionary
 </h2>
 
+
+![alt text](https://github.com/manimaran96/Spell4Wiki/blob/master/app/src/main/res/drawable/spell4wiki.png)
 <p align="center">
   <img width="150" height="150" src="https://github.com/manimaran96/Spell4Wiki/blob/master/app/src/main/res/drawable/spell4wiki.png" alt="">
 </p>
