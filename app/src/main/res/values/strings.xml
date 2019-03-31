@@ -21,6 +21,8 @@
     <string name="password">Password</string>
     <string name="skip">SKIP</string>
     <string name="player">player</string>
+    <string name="title_upload_audio">Upload Audio</string>
+    <string name="message_upload_info">Uploading \n\"%s\" file…</string>
     <string name="upload_comment">%s Uploaded by using Spell4Wiki app.</string>
 
 
@@ -30,5 +32,7 @@
     <string name="url_wiktionary">https://%s.wiktionary.org/</string>
     <string name="url_wiktionary_web">https://%s.m.wiktionary.org//wiki/%s</string>
     <string name="url_about">https://raw.githubusercontent.com/manimaran96/Spell4Wiki/master/README.md</string>
+    <string name="format_file_name_words_already_have_audio">%s-words_already_have_audio</string>
+
 
 </resources>

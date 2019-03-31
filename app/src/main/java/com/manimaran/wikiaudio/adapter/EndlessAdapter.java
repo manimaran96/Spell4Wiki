@@ -47,6 +47,7 @@ import org.json.JSONObject;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.Callable;
@@ -339,7 +340,7 @@ public class EndlessAdapter extends ArrayAdapter<String> {
                 if(isRecorded)
                 {
                     uploadName = pref.getContributionLangCode() + "-" + itemList.get(pos)+ ".wav";
-                    uploadAudioToWikiServer(false);
+                    uploadAudioToWikiServer(false, pos);
                 }else
                     GeneralUtils.showToast(ctx, "Please record audio first");
             }
@@ -347,9 +348,9 @@ public class EndlessAdapter extends ArrayAdapter<String> {
 
     }
 
-    private void uploadAudioToWikiServer(Boolean recreateEditToken) {
+    private void uploadAudioToWikiServer(Boolean recreateEditToken , final int pos) {
 
-        progressDialog = ProgressDialog.show(activity, "Upload Audio", "Uploading your file...", true);
+        progressDialog = ProgressDialog.show(activity, ctx.getString(R.string.title_upload_audio), String.format(ctx.getString(R.string.message_upload_info), uploadName), true);
         if(pref.getCsrfToken() == null || recreateEditToken) {
 
             Call<ResponseBody> call = api.getEditToken();
@@ -374,7 +375,7 @@ public class EndlessAdapter extends ArrayAdapter<String> {
                                     //GeneralUtils.logoutAlert(activity);
                                 } else {
                                     pref.setCsrfToken(editToken);
-                                    completeUpload(editToken);
+                                    completeUpload(editToken, pos);
                                 }
                             } catch (JSONException e) {
                                 e.printStackTrace();
@@ -395,7 +396,7 @@ public class EndlessAdapter extends ArrayAdapter<String> {
                 }
             });
         }else
-            completeUpload(pref.getCsrfToken());
+            completeUpload(pref.getCsrfToken(), pos);
 
 
     }
@@ -409,7 +410,7 @@ public class EndlessAdapter extends ArrayAdapter<String> {
     }
 
 
-    private void completeUpload(String editToken) {
+    private void completeUpload(String editToken, final int pos) {
 
         String filePath = getFilePath();
         String uploadFileName = uploadName;
@@ -452,11 +453,11 @@ public class EndlessAdapter extends ArrayAdapter<String> {
                             {
                                 String errMsg = "File name already exist";
                                 dismissDialog(errMsg);
+                                writeWordToFile(pos);
                             }else
                             {
                                 dismissDialog("Upload: " + result);
-                                if(myDialog != null && myDialog.isShowing())
-                                    myDialog.dismiss();
+                                writeWordToFile(pos);
                             }
                         }else
                         {
@@ -470,6 +471,7 @@ public class EndlessAdapter extends ArrayAdapter<String> {
                                 String result = uploadJSONObject.getString("result");
                                 String errMsg = "File name already exist";
                                 dismissDialog(errMsg);
+                                writeWordToFile(pos);
                             }
                         }
                     } catch (JSONException e) {
@@ -488,6 +490,22 @@ public class EndlessAdapter extends ArrayAdapter<String> {
                 t.printStackTrace();
             }
         });
+    }
+
+    private void writeWordToFile(int pos) {
+        /*
+         * Word already have audio
+         * Add to text file
+         * Then remove from list
+         */
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            GeneralUtils.writeAudioWordsToFile(String.format(ctx.getString(R.string.format_file_name_words_already_have_audio), pref.getContributionLangCode()), Collections.singletonList(itemList.get(pos)));
+            itemList.remove(pos);
+            notifyDataSetChanged();
+        }
+
+        if(myDialog != null && myDialog.isShowing())
+            myDialog.dismiss();
     }
 
     private void dismissDialog(String msg) {
@@ -571,7 +589,7 @@ public class EndlessAdapter extends ArrayAdapter<String> {
     // Get record file name
     private String getFilePath() {
         String filePath = Environment.getExternalStorageDirectory().getPath();
-        File file = new File(filePath, "/Wiki/Audios");
+        File file = new File(filePath, "/Spell4Wiki/Audios");
         if (!file.exists()) {
             if(!file.mkdirs())
                 Log.d(TAG, "Not create directory!");

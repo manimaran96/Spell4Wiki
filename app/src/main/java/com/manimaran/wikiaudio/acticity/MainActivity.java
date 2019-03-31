@@ -29,6 +29,7 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -148,7 +149,12 @@ public class MainActivity extends AppCompatActivity implements EndlessListView.E
                 nextOffsetObj = null;
             if(refreshLayout.isRefreshing())
                 refreshLayout.setRefreshing(false);
-            resultListView.addNewData(titleList);
+            List<String> wordsList = GeneralUtils.getWordsWithoutAudioListOnly(String.format(getString(R.string.format_file_name_words_already_have_audio), pref.getContributionLangCode()), titleList);
+            resultListView.addNewData(wordsList);
+            if(wordsList.size() == 0)
+            {
+                loadDataFromServer(); // Get more words if no words without audio
+            }
         }catch (Exception e)
         {
             e.printStackTrace();
