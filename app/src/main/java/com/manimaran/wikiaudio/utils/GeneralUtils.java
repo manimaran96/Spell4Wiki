@@ -104,7 +104,7 @@ public class GeneralUtils {
 
     public static List<String> getWordsWithoutAudioListOnly(String fileName, ArrayList<String> wordsList) {
 
-        final File dir = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/fSpell4Wiki/WordsWithAudio");
+        final File dir = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/Spell4Wiki/WordsWithAudio");
         //Get the text file
         File file = new File(dir,  fileName + ".txt");
 
