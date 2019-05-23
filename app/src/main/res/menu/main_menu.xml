@@ -25,6 +25,14 @@
         android:title="@string/select_language">
     </item>
 
+
+    <item
+        android:id="@+id/action_upload_commons"
+        android:icon="@drawable/ic_info"
+        app:showAsAction="never"
+        android:title="@string/upload_to_commons">
+    </item>
+
     <item
         android:id="@+id/action_settings"
         android:icon="@drawable/ic_logout"

@@ -8,6 +8,8 @@ import com.manimaran.wikiaudio.R;
 import com.manimaran.wikiaudio.acticity.LoginActivity;
 import com.manimaran.wikiaudio.wiki_api.ServiceGenerator;
 
+import java.util.Objects;
+
 public class PrefManager {
     private SharedPreferences pref;
     private SharedPreferences.Editor editor;
@@ -18,6 +20,7 @@ public class PrefManager {
 
     // Kay values
     private static final String KEY_NAME = "name";
+    private static final String KEY_COOKIE = "cookie";
     private static final String IS_LOGIN = "is_login";
     private static final String CONTRIBUTION_LANG_CODE = "contribution_lang_code";
     private static final String WIKTIONARY_LANG_CODE = "wiktionary_lang_code";
@@ -140,6 +143,17 @@ public class PrefManager {
 
         // After logout redirect user to Login Activity
         checkLogin();
+    }
+
+    public void setCookie(String cookie)
+    {
+        editor.putString(KEY_COOKIE, cookie);
+        editor.commit();
+    }
+
+    public String getCookie()
+    {
+        return pref.getString(KEY_COOKIE, null);
     }
 
 }

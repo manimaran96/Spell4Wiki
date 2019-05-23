@@ -191,6 +191,9 @@ public class MainActivity extends AppCompatActivity implements EndlessListView.E
             // action with ID action_settings was selected
             case R.id.action_settings:
                 break;
+            case R.id.action_upload_commons :
+                startActivity(new Intent(getApplicationContext(), UploadToCommonsActivity.class));
+                break;
             case R.id.action_about :
                 startActivity(new Intent(getApplicationContext(), AboutActivity.class));
                 break;

@@ -125,8 +125,8 @@ public class ServiceGenerator {
 
     // Clear cookies after logout
     public static void clearCookies() {
-        if (cookieJar != null)
-            cookieJar.clear();
+        /*if (cookieJar != null)
+            cookieJar.clear();*/
     }
 
     public static void checkCookies()

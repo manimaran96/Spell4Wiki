@@ -43,6 +43,10 @@
         <activity
             android:theme="@style/ActionBar"
             android:name=".acticity.AboutActivity"/>
+
+        <activity
+            android:theme="@style/ActionBar"
+            android:name=".acticity.UploadToCommonsActivity"/>
     </application>
 
 </manifest>
