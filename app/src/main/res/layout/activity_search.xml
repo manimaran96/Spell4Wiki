@@ -21,17 +21,17 @@
         android:id="@+id/search_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/activity_horizontal_margin"
         android:layout_below="@+id/wiktionary_logo"
         android:layout_centerHorizontal="true"
-        app:iconifiedByDefault="false"
-        android:orientation="horizontal" />
+        android:layout_margin="@dimen/activity_horizontal_margin"
+        android:orientation="horizontal"
+        app:iconifiedByDefault="false" />
 
     <com.manimaran.wikiaudio.view.EndlessListView
         android:id="@+id/search_result_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:divider="@null"
-        android:layout_below="@+id/search_bar" />
+        android:layout_below="@+id/search_bar"
+        android:divider="@null" />
 
 </RelativeLayout>

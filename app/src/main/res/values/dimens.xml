@@ -6,4 +6,10 @@
     <dimen name="text_normal">16sp</dimen>
     <dimen name="text_small">12sp</dimen>
     <dimen name="logo_large">150dp</dimen>
+    <dimen name="card_radius">4dp</dimen>
+    <dimen name="card_elevation">8dp</dimen>
+    <dimen name="card_margin">4dp</dimen>
+    <dimen name="card_content_padding">5dp</dimen>
+    <dimen name="option_icon_size">100dp</dimen>
+    <dimen name="text_large">20sp</dimen>
 </resources>

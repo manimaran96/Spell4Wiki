@@ -13,7 +13,6 @@ import android.os.Build;
 import android.os.CountDownTimer;
 import android.os.Environment;
 import android.os.Handler;
-import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.text.TextUtils;
 import android.util.Log;
@@ -32,12 +31,12 @@ import android.widget.Toast;
 
 import com.manimaran.wikiaudio.R;
 import com.manimaran.wikiaudio.acticity.WiktionaryWebActivity;
-import com.manimaran.wikiaudio.listerner.CallBackListener;
-import com.manimaran.wikiaudio.utils.GeneralUtils;
-import com.manimaran.wikiaudio.utils.PrefManager;
 import com.manimaran.wikiaudio.constant.UrlType;
+import com.manimaran.wikiaudio.listerner.CallBackListener;
 import com.manimaran.wikiaudio.record.wav.WAVPlayer;
 import com.manimaran.wikiaudio.record.wav.WAVRecorder;
+import com.manimaran.wikiaudio.utils.GeneralUtils;
+import com.manimaran.wikiaudio.utils.PrefManager;
 import com.manimaran.wikiaudio.wiki_api.MediaWikiClient;
 import com.manimaran.wikiaudio.wiki_api.ServiceGenerator;
 
@@ -104,8 +103,16 @@ public class EndlessAdapter extends ArrayAdapter<String> {
         this.api = ServiceGenerator.createService(MediaWikiClient.class, ctx, UrlType.COMMONS);
     }
 
-    public void setCallbackListener(CallBackListener listener)
-    {
+    private static String getMimeType(String url) {
+        String type = null;
+        String extension = url.substring(url.lastIndexOf(".") + 1);
+        if (!TextUtils.isEmpty(extension)) {
+            type = MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension);
+        }
+        return type;
+    }
+
+    public void setCallbackListener(CallBackListener listener) {
         this.listener = listener;
     }
 
@@ -145,23 +152,19 @@ public class EndlessAdapter extends ArrayAdapter<String> {
 
                 Activity activity1 = (Activity) ctx;
 
-                if(isContributionMode)
-                {
+                if (isContributionMode) {
 
-                    if(GeneralUtils.checkPermissionGranted(activity1))
-                    {
+                    if (GeneralUtils.checkPermissionGranted(activity1)) {
                         showPopup(activity1, position);
-                    }else
+                    } else
                         getPermissionToRecordAudio();
-                }else
-                {
+                } else {
                     openWiktionaryWebView(position);
                 }
             }
         });
 
-        if(isContributionMode)
-        {
+        if (isContributionMode) {
             LinearLayout btnWiki = mView.findViewById(R.id.btn_wiki_meaning);
             btnWiki.setVisibility(View.VISIBLE);
             btnWiki.setOnClickListener(new View.OnClickListener() {
@@ -207,7 +210,7 @@ public class EndlessAdapter extends ArrayAdapter<String> {
                                     Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.RECORD_AUDIO,
                                     Manifest.permission.WRITE_EXTERNAL_STORAGE
                             }
-                            , RECORD_AUDIO_REQUEST_CODE);
+                    , RECORD_AUDIO_REQUEST_CODE);
         }
     }
 
@@ -248,14 +251,13 @@ public class EndlessAdapter extends ArrayAdapter<String> {
         // Set 10 sec only for recording
         final CountDownTimer countDowntimer = new CountDownTimer(10000, 1000) {
             public void onTick(long millisUntilFinished) {
-                long sec = millisUntilFinished/1000;
-                txtSec.setText(("00:"+ ((sec +"").length() == 2 ? sec : "0" +sec)));
+                long sec = millisUntilFinished / 1000;
+                txtSec.setText(("00:" + ((sec + "").length() == 2 ? sec : "0" + sec)));
             }
 
             @SuppressLint("SetTextI18n")
             public void onFinish() {
-                if(recorder.isRecording())
-                {
+                if (recorder.isRecording()) {
                     player.stopPlaying();
                     txtSec.setText("00:10");
                     recorder.stopRecording(getFilePath());
@@ -275,7 +277,7 @@ public class EndlessAdapter extends ArrayAdapter<String> {
         btnRecord.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                if(GeneralUtils.checkPermissionGranted(activity)) {
+                if (GeneralUtils.checkPermissionGranted(activity)) {
                     if (event.getAction() == MotionEvent.ACTION_DOWN) {
                         Log.d(TAG, "Start Recording");
                         player.stopPlaying();
@@ -290,7 +292,7 @@ public class EndlessAdapter extends ArrayAdapter<String> {
                         Log.d(TAG, "Stop Recording");
                         countDowntimer.onFinish();
                     }
-                }else
+                } else
                     showMsg("Please give require permissions");
                 return false;
             }
@@ -299,7 +301,7 @@ public class EndlessAdapter extends ArrayAdapter<String> {
         btnPlayPause.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(isRecorded)
+                if (isRecorded)
                     onPlayStatusChanged();
                 else
                     showMsg("Please record audio first");
@@ -310,7 +312,7 @@ public class EndlessAdapter extends ArrayAdapter<String> {
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                if( player!=null && fromUser){
+                if (player != null && fromUser) {
                     player.seekTo(progress);
                     lastProgress = progress;
                 }
@@ -337,21 +339,20 @@ public class EndlessAdapter extends ArrayAdapter<String> {
         btnUpload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(isRecorded)
-                {
-                    uploadName = pref.getContributionLangCode() + "-" + itemList.get(pos)+ ".wav";
+                if (isRecorded) {
+                    uploadName = pref.getContributionLangCode() + "-" + itemList.get(pos) + ".wav";
                     uploadAudioToWikiServer(false, pos);
-                }else
+                } else
                     GeneralUtils.showToast(ctx, "Please record audio first");
             }
         });
 
     }
 
-    private void uploadAudioToWikiServer(Boolean recreateEditToken , final int pos) {
+    private void uploadAudioToWikiServer(Boolean recreateEditToken, final int pos) {
 
         progressDialog = ProgressDialog.show(activity, ctx.getString(R.string.title_upload_audio), String.format(ctx.getString(R.string.message_upload_info), uploadName), true);
-        if(pref.getCsrfToken() == null || recreateEditToken) {
+        if (pref.getCsrfToken() == null || recreateEditToken) {
 
             Call<ResponseBody> call = api.getEditToken();
             call.enqueue(new Callback<ResponseBody>() {
@@ -395,20 +396,11 @@ public class EndlessAdapter extends ArrayAdapter<String> {
 
                 }
             });
-        }else
+        } else
             completeUpload(pref.getCsrfToken(), pos);
 
 
     }
-    private static String getMimeType(String url) {
-        String type = null;
-        String extension = url.substring(url.lastIndexOf(".")+1);
-        if (!TextUtils.isEmpty(extension)) {
-            type = MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension);
-        }
-        return type;
-    }
-
 
     private void completeUpload(String editToken, final int pos) {
 
@@ -432,7 +424,7 @@ public class EndlessAdapter extends ArrayAdapter<String> {
                 RequestBody.create(MultipartBody.FORM, editToken), // edit token
                 body, // Body file
                 RequestBody.create(MultipartBody.FORM, "{{PD-self}}"), // License type - /* PD-self, CC-Zero, CC-BY-SA-4.0, CC-BY-SA-3.0*/
-                RequestBody.create(MultipartBody.FORM,  String.format(ctx.getString(R.string.upload_comment), uploadFileName)) // Comment
+                RequestBody.create(MultipartBody.FORM, String.format(ctx.getString(R.string.upload_comment), uploadFileName)) // Comment
 
         );
         call.enqueue(new Callback<ResponseBody>() {
@@ -445,28 +437,22 @@ public class EndlessAdapter extends ArrayAdapter<String> {
                     JSONObject uploadJSONObject;
                     try {
                         reader = new JSONObject(responseStr);
-                        if(!reader.has("error"))
-                        {
+                        if (!reader.has("error")) {
                             uploadJSONObject = reader.getJSONObject("upload");
                             String result = uploadJSONObject.getString("result");
-                            if(result.toLowerCase().contains("warning"))
-                            {
+                            if (result.toLowerCase().contains("warning")) {
                                 String errMsg = "File name already exist";
                                 dismissDialog(errMsg);
                                 writeWordToFile(pos);
-                            }else
-                            {
+                            } else {
                                 dismissDialog("Upload: " + result);
                                 writeWordToFile(pos);
                             }
-                        }else
-                        {
-                            if(reader.has("error"))
-                            {
+                        } else {
+                            if (reader.has("error")) {
                                 String errMsg = reader.getJSONObject("error").getString("info");
                                 dismissDialog(errMsg);
-                            }else if(reader.has("warnings"))
-                            {
+                            } else if (reader.has("warnings")) {
                                 uploadJSONObject = reader.getJSONObject("upload");
                                 String result = uploadJSONObject.getString("result");
                                 String errMsg = "File name already exist";
@@ -504,7 +490,7 @@ public class EndlessAdapter extends ArrayAdapter<String> {
             notifyDataSetChanged();
         }
 
-        if(myDialog != null && myDialog.isShowing())
+        if (myDialog != null && myDialog.isShowing())
             myDialog.dismiss();
     }
 
@@ -513,10 +499,8 @@ public class EndlessAdapter extends ArrayAdapter<String> {
         if (progressDialog != null)
             progressDialog.dismiss();
 
-        if (msg != null)
-        {
-            if(msg.contains("CSRF"))
-            {
+        if (msg != null) {
+            if (msg.contains("CSRF")) {
                 //reLoginReq();
                 msg += "\nPlease Logout & Login Once";
             }
@@ -555,8 +539,8 @@ public class EndlessAdapter extends ArrayAdapter<String> {
     }
 
     private void seekUpdation() {
-        if(player != null){
-            int mCurrentPosition = player.getCurrentPosition() ;
+        if (player != null) {
+            int mCurrentPosition = player.getCurrentPosition();
             seekBar.setProgress(mCurrentPosition);
             lastProgress = mCurrentPosition;
         }
@@ -564,8 +548,7 @@ public class EndlessAdapter extends ArrayAdapter<String> {
 
     }
 
-    public void destroyView()
-    {
+    public void destroyView() {
         /*
         if(player != null)
         {
@@ -581,8 +564,7 @@ public class EndlessAdapter extends ArrayAdapter<String> {
 
     }
 
-    private void showMsg(String msg)
-    {
+    private void showMsg(String msg) {
         Toast.makeText(ctx, msg, Toast.LENGTH_LONG).show();
     }
 
@@ -591,7 +573,7 @@ public class EndlessAdapter extends ArrayAdapter<String> {
         String filePath = Environment.getExternalStorageDirectory().getPath();
         File file = new File(filePath, "/Spell4Wiki/Audios");
         if (!file.exists()) {
-            if(!file.mkdirs())
+            if (!file.mkdirs())
                 Log.d(TAG, "Not create directory!");
         }
         return file.getAbsolutePath() + "/" + EndlessAdapter.RECORDED_FILENAME;

@@ -18,7 +18,7 @@ import com.manimaran.wikiaudio.model.WikiLanguage;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LangAdapter extends BaseAdapter implements Filterable{
+public class LangAdapter extends BaseAdapter implements Filterable {
 
     private Activity mActivity;
     private List<WikiLanguage> mList;
@@ -53,16 +53,16 @@ public class LangAdapter extends BaseAdapter implements Filterable{
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
         ViewHolder holder = null;
-        if (view == null){
+        if (view == null) {
             view = mActivity.getLayoutInflater().inflate(R.layout.lang_list_item, viewGroup, false);
             holder = new ViewHolder();
             holder.layout = (RelativeLayout) view.findViewById(R.id.layout_lang_item);
-            holder.textLangName = (TextView)view.findViewById(R.id.txt_lang_name);
-            holder.textLocalName = (TextView)view.findViewById(R.id.txt_local_name);
+            holder.textLangName = (TextView) view.findViewById(R.id.txt_lang_name);
+            holder.textLocalName = (TextView) view.findViewById(R.id.txt_local_name);
             holder.radioSelect = (RadioButton) view.findViewById(R.id.radio_select);
             view.setTag(holder);
-        }else
-            holder = (ViewHolder)view.getTag();
+        } else
+            holder = (ViewHolder) view.getTag();
 
         final WikiLanguage model = mList.get(i);
 
@@ -86,12 +86,6 @@ public class LangAdapter extends BaseAdapter implements Filterable{
 
     }
 
-    private class ViewHolder{
-        TextView textLangName, textLocalName;
-        RadioButton radioSelect;
-        RelativeLayout layout;
-    }
-
     @Override
     public Filter getFilter() {
         if (valueFilter == null) {
@@ -100,8 +94,13 @@ public class LangAdapter extends BaseAdapter implements Filterable{
         return valueFilter;
     }
 
-    private class FilterVal extends Filter
-    {
+    private class ViewHolder {
+        TextView textLangName, textLocalName;
+        RadioButton radioSelect;
+        RelativeLayout layout;
+    }
+
+    private class FilterVal extends Filter {
 
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {

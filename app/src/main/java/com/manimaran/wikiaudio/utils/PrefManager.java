@@ -8,16 +8,9 @@ import com.manimaran.wikiaudio.R;
 import com.manimaran.wikiaudio.acticity.LoginActivity;
 import com.manimaran.wikiaudio.wiki_api.ServiceGenerator;
 
-import java.util.Objects;
-
 public class PrefManager {
-    private SharedPreferences pref;
-    private SharedPreferences.Editor editor;
-    private Context mContext;
-
     // shared pref mode
     private static final int PRIVATE_MODE = 0;
-
     // Kay values
     private static final String KEY_NAME = "name";
     private static final String KEY_COOKIE = "cookie";
@@ -28,8 +21,11 @@ public class PrefManager {
     private static final String CSRF_TOKEN = "csrf_token";
     private static final String IS_FIRST_TIME_LAUNCH = "is_first_time_launch";
     private static final String IS_ANONYMOUS = "is_anonymous"; // Only wiktionay use
+    private SharedPreferences pref;
+    private SharedPreferences.Editor editor;
+    private Context mContext;
 
- 
+
     public PrefManager(Context context) {
         this.mContext = context;
         pref = mContext.getSharedPreferences(mContext.getString(R.string.pref_file_key), PRIVATE_MODE);
@@ -45,8 +41,7 @@ public class PrefManager {
         editor.commit();
     }
 
-    public String getName()
-    {
+    public String getName() {
         return pref.getString(KEY_NAME, null);
     }
 
@@ -54,59 +49,59 @@ public class PrefManager {
         return pref.getBoolean(IS_LOGIN, false);
     }
 
+    public boolean isFirstTimeLaunch() {
+        return pref.getBoolean(IS_FIRST_TIME_LAUNCH, true);
+    }
 
     // First time launch
     public void setFirstTimeLaunch(boolean isFirstTime) {
         editor.putBoolean(IS_FIRST_TIME_LAUNCH, isFirstTime);
         editor.commit();
     }
- 
-    public boolean isFirstTimeLaunch() {
-        return pref.getBoolean(IS_FIRST_TIME_LAUNCH, true);
+
+    public String getCsrfToken() {
+        return pref.getString(CSRF_TOKEN, null);
     }
 
-    public void setCsrfToken(String editToken)
-    {
+    public void setCsrfToken(String editToken) {
         editor.putString(CSRF_TOKEN, editToken);
         editor.commit();
     }
 
-    public String getCsrfToken() { return pref.getString(CSRF_TOKEN,null); }
+    public String getContributionLangCode() {
+        return pref.getString(CONTRIBUTION_LANG_CODE, "ta");
+    }
 
-
-    public void setContributionLangCode(String code)
-    {
+    public void setContributionLangCode(String code) {
         editor.putString(CONTRIBUTION_LANG_CODE, code);
         editor.commit();
     }
 
-    public String getContributionLangCode() { return pref.getString(CONTRIBUTION_LANG_CODE,"ta"); }
+    public String getWiktionaryLangCode() {
+        return pref.getString(WIKTIONARY_LANG_CODE, "ta");
+    }
 
-    public void setWiktionaryLangCode(String code)
-    {
+    public void setWiktionaryLangCode(String code) {
         editor.putString(WIKTIONARY_LANG_CODE, code);
         editor.commit();
     }
 
-    public String getWiktionaryLangCode() { return pref.getString(WIKTIONARY_LANG_CODE,"ta"); }
+    public String getTitleWordsWithoutAudio() {
+        return pref.getString(TITLE_WORDS_WITHOUT_AUDIO, "பகுப்பு:தமிழ்-ஒலிக்கோப்புகளில்லை");
+    }
 
-    public void setTitleWordsWithoutAudio(String titleWordsWithoutAudio)
-    {
+    public void setTitleWordsWithoutAudio(String titleWordsWithoutAudio) {
         editor.putString(TITLE_WORDS_WITHOUT_AUDIO, titleWordsWithoutAudio);
         editor.commit();
     }
 
-    public String getTitleWordsWithoutAudio() { return pref.getString(TITLE_WORDS_WITHOUT_AUDIO,"பகுப்பு:தமிழ்-ஒலிக்கோப்புகளில்லை"); }
-
-    public void setIsAnonymous(Boolean isAnonymous)
-    {
-        editor.putBoolean(IS_ANONYMOUS, isAnonymous);
-        editor.commit();
+    public Boolean getIsAnonymous() {
+        return pref.getBoolean(IS_ANONYMOUS, false);
     }
 
-    public Boolean getIsAnonymous()
-    {
-        return pref.getBoolean(IS_ANONYMOUS, false);
+    public void setIsAnonymous(Boolean isAnonymous) {
+        editor.putBoolean(IS_ANONYMOUS, isAnonymous);
+        editor.commit();
     }
 
     /**
@@ -145,15 +140,13 @@ public class PrefManager {
         checkLogin();
     }
 
-    public void setCookie(String cookie)
-    {
-        editor.putString(KEY_COOKIE, cookie);
-        editor.commit();
+    public String getCookie() {
+        return pref.getString(KEY_COOKIE, null);
     }
 
-    public String getCookie()
-    {
-        return pref.getString(KEY_COOKIE, null);
+    public void setCookie(String cookie) {
+        editor.putString(KEY_COOKIE, cookie);
+        editor.commit();
     }
 
 }

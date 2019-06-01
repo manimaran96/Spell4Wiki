@@ -3,20 +3,12 @@ package com.manimaran.wikiaudio.acticity;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.webkit.DownloadListener;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
 import com.manimaran.wikiaudio.R;
-import com.manimaran.wikiaudio.utils.GeneralUtils;
-import com.manimaran.wikiaudio.wiki_api.ServiceGenerator;
-
-import org.billthefarmer.markdown.MarkdownView;
-
-import java.io.File;
 
 import br.tiagohm.markdownview.css.styles.Github;
 
@@ -28,8 +20,7 @@ public class AboutActivity extends AppCompatActivity {
         setContentView(R.layout.activity_about);
         setTitle(getString(R.string.about));
 
-        if(getSupportActionBar() != null)
-        {
+        if (getSupportActionBar() != null) {
             getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_close);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
@@ -39,7 +30,7 @@ public class AboutActivity extends AppCompatActivity {
          */
         br.tiagohm.markdownview.MarkdownView mMarkdownView = findViewById(R.id.markdown_view);
         Github style = new Github();
-        style.addRule("img", "width:0px" , "height:0px"); // Markdown view not load images so view make 0px.
+        style.addRule("img", "width:0px", "height:0px"); // Markdown view not load images so view make 0px.
         mMarkdownView.addStyleSheet(style);
         mMarkdownView.loadMarkdownFromUrl(getString(R.string.url_about));
 

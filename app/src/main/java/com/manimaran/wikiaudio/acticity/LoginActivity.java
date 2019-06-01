@@ -16,8 +16,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.manimaran.wikiaudio.R;
-import com.manimaran.wikiaudio.utils.PrefManager;
 import com.manimaran.wikiaudio.constant.UrlType;
+import com.manimaran.wikiaudio.utils.PrefManager;
 import com.manimaran.wikiaudio.wiki_api.MediaWikiClient;
 import com.manimaran.wikiaudio.wiki_api.ServiceGenerator;
 
@@ -56,11 +56,9 @@ public class LoginActivity extends AppCompatActivity {
          * If yes - Open Main screen
          * Else - Ask to login
          */
-        if(pref.isIsLogin() || pref.getIsAnonymous())
-        {
+        if (pref.isIsLogin() || pref.getIsAnonymous()) {
             launchActivity();
-        }
-        else {
+        } else {
             init();
             hideKeyboard();
             api = ServiceGenerator.createService(MediaWikiClient.class, getApplicationContext(), UrlType.COMMONS);
@@ -95,12 +93,12 @@ public class LoginActivity extends AppCompatActivity {
 
     /**
      * Getting Token from wiki server before login
+     *
      * @param username - username of the user
      * @param password - password of the user
      */
-    private void callToken(final String username, final String password)
-    {
-        Call<ResponseBody> call =  api.getLoginToken();
+    private void callToken(final String username, final String password) {
+        Call<ResponseBody> call = api.getLoginToken();
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
@@ -151,13 +149,14 @@ public class LoginActivity extends AppCompatActivity {
 
     /**
      * Call client login api after getting login token
-     * @param username - username of the user
-     * @param password - password of the user
+     *
+     * @param username   - username of the user
+     * @param password   - password of the user
      * @param loginToken - Login token
      */
     private void completeLogin(String username, String password, String loginToken) {
 
-        Call<ResponseBody> call = api.clientLogin ("clientlogin", "json", ServiceGenerator.getUrl(UrlType.COMMONS, getApplicationContext()), loginToken, username, password);
+        Call<ResponseBody> call = api.clientLogin("clientlogin", "json", ServiceGenerator.getUrl(UrlType.COMMONS, getApplicationContext()), loginToken, username, password);
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
@@ -224,9 +223,8 @@ public class LoginActivity extends AppCompatActivity {
         finish();
     }
 
-    private void showMsg(String msg)
-    {
-        Toast.makeText(getApplicationContext(),msg, Toast.LENGTH_LONG).show();
+    private void showMsg(String msg) {
+        Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
     }
 
     private void init() {
@@ -239,7 +237,7 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if(btnLogin != null)
+        if (btnLogin != null)
             btnLogin.dispose();
     }
 }

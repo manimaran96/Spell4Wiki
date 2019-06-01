@@ -5,55 +5,50 @@
 
     <item
         android:id="@+id/action_wiktionary"
-        android:orderInCategory="1"
-        app:showAsAction="ifRoom"
         android:icon="@drawable/wiktionary"
-        android:title="@string/wiktionary"/>
+        android:orderInCategory="1"
+        android:title="@string/wiktionary"
+        app:showAsAction="ifRoom" />
 
     <item
         android:id="@+id/action_login"
         android:orderInCategory="2"
-        app:showAsAction="ifRoom"
+        android:title="@string/login"
         android:visible="false"
-        android:title="@string/login"/>
+        app:showAsAction="ifRoom" />
 
     <item
         android:id="@+id/action_lang_change"
-        android:orderInCategory="3"
         android:icon="@drawable/ic_language"
-        app:showAsAction="always"
-        android:title="@string/select_language">
-    </item>
+        android:orderInCategory="3"
+        android:title="@string/select_language"
+        app:showAsAction="always"></item>
 
 
     <item
         android:id="@+id/action_upload_commons"
         android:icon="@drawable/ic_info"
-        app:showAsAction="never"
-        android:title="@string/upload_to_commons">
-    </item>
+        android:title="@string/upload_to_commons"
+        app:showAsAction="never"></item>
 
     <item
         android:id="@+id/action_settings"
         android:icon="@drawable/ic_logout"
+        android:title="@string/settings"
         android:visible="false"
-        app:showAsAction="never"
-        android:title="@string/settings">
-    </item>
+        app:showAsAction="never"></item>
 
     <item
         android:id="@+id/action_about"
         android:icon="@drawable/ic_logout"
-        app:showAsAction="never"
-        android:title="@string/about">
-    </item>
+        android:title="@string/about"
+        app:showAsAction="never"></item>
 
     <item
         android:id="@+id/action_logout"
         android:icon="@drawable/ic_logout"
-        app:showAsAction="withText"
-        android:title="@string/logout">
-    </item>
+        android:title="@string/logout"
+        app:showAsAction="withText"></item>
 
 </menu>
 

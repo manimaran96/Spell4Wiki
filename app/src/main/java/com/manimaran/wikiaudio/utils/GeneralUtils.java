@@ -7,11 +7,13 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
+import android.graphics.Point;
 import android.os.Build;
 import android.os.Environment;
-import android.support.annotation.RequiresApi;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
+import android.view.Display;
+import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.manimaran.wikiaudio.R;
@@ -106,7 +108,7 @@ public class GeneralUtils {
 
         final File dir = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/Spell4Wiki/WordsWithAudio");
         //Get the text file
-        File file = new File(dir,  fileName + ".txt");
+        File file = new File(dir, fileName + ".txt");
 
         //Read text from file
         List<String> tempList = new ArrayList<>();
@@ -125,5 +127,21 @@ public class GeneralUtils {
         }
         wordsList.removeAll(tempList);
         return wordsList;
+    }
+
+    public Integer getScreenWidth(Context context) {
+        WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        Display display = wm.getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
+        return size.x;
+    }
+
+    public Integer getScreenHeight(Context context) {
+        WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        Display display = wm.getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
+        return size.y;
     }
 }

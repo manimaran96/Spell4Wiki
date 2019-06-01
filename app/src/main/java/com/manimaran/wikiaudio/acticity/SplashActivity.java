@@ -12,7 +12,9 @@ import com.manimaran.wikiaudio.R;
  */
 public class SplashActivity extends Activity {
 
-    /** Called when the activity is first created. */
+    /**
+     * Called when the activity is first created.
+     */
     @Override
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
@@ -23,7 +25,7 @@ public class SplashActivity extends Activity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                // Todo : If login go MainActivity else Ask for login
+                // Todo : If login go Spell4Wiktionary else Ask for login
                 Intent mainIntent = new Intent(SplashActivity.this, LoginActivity.class);
                 startActivity(mainIntent);
                 finish();

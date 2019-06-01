@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -13,14 +12,13 @@ import android.widget.ImageView;
 import android.widget.SearchView;
 import android.widget.Toast;
 
-import com.google.gson.Gson;
 import com.manimaran.wikiaudio.R;
+import com.manimaran.wikiaudio.adapter.EndlessAdapter;
+import com.manimaran.wikiaudio.constant.UrlType;
 import com.manimaran.wikiaudio.fragment.BottomSheetFragment;
 import com.manimaran.wikiaudio.listerner.CallBackListener;
 import com.manimaran.wikiaudio.utils.GeneralUtils;
 import com.manimaran.wikiaudio.utils.PrefManager;
-import com.manimaran.wikiaudio.constant.UrlType;
-import com.manimaran.wikiaudio.adapter.EndlessAdapter;
 import com.manimaran.wikiaudio.view.EndlessListView;
 import com.manimaran.wikiaudio.wiki_api.MediaWikiClient;
 import com.manimaran.wikiaudio.wiki_api.ServiceGenerator;
@@ -91,10 +89,8 @@ public class SearchActivity extends AppCompatActivity implements EndlessListView
         setTitle();
     }
 
-    private void setTitle()
-    {
-        if(getSupportActionBar() != null)
-        {
+    private void setTitle() {
+        if (getSupportActionBar() != null) {
             getSupportActionBar().setTitle(getString(R.string.wiktionary));
             getSupportActionBar().setSubtitle(ServiceGenerator.getUrl(UrlType.WIKTIONARY_PAGE, getApplicationContext()));
         }
@@ -106,8 +102,7 @@ public class SearchActivity extends AppCompatActivity implements EndlessListView
         inflater.inflate(R.menu.main_menu, menu);
         menu.findItem(R.id.action_wiktionary).setIcon(R.drawable.ic_record);
         menu.findItem(R.id.action_settings).setIcon(R.drawable.ic_cancel);
-        if(pref.getIsAnonymous())
-        {
+        if (pref.getIsAnonymous()) {
             menu.findItem(R.id.action_wiktionary).setVisible(false);
             menu.findItem(R.id.action_logout).setVisible(false);
             menu.findItem(R.id.action_login).setVisible(true);
@@ -120,13 +115,13 @@ public class SearchActivity extends AppCompatActivity implements EndlessListView
         // Handle item selection
         switch (item.getItemId()) {
             case R.id.action_wiktionary:
-                startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                startActivity(new Intent(getApplicationContext(), Spell4Wiktionary.class));
                 finish();
                 return true;
             case R.id.action_logout:
                 GeneralUtils.logoutAlert(SearchActivity.this);
                 return true;
-            case R.id.action_about :
+            case R.id.action_about:
                 startActivity(new Intent(getApplicationContext(), AboutActivity.class));
                 return true;
             case R.id.action_lang_change:
@@ -201,8 +196,7 @@ public class SearchActivity extends AppCompatActivity implements EndlessListView
             else
                 nextOffset = null;
             resultListView.addNewData(titleList);
-        }catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
             resultListView.addNewData(Collections.singletonList("Error accrued"));
         }
@@ -224,8 +218,7 @@ public class SearchActivity extends AppCompatActivity implements EndlessListView
 
         if (doubleBackToExitPressedOnce)
             super.onBackPressed();
-        else
-        {
+        else {
             this.doubleBackToExitPressedOnce = true;
             GeneralUtils.showToast(getApplicationContext(), getString(R.string.alert_to_exit));
         }

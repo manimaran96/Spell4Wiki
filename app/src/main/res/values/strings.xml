@@ -26,7 +26,6 @@
     <string name="upload_comment">%s Uploaded by using Spell4Wiki app.</string>
 
 
-
     //URL links - Don't translate
     <string name="url_commons">https://commons.wikimedia.org/</string>
     <string name="url_wiktionary">https://%s.wiktionary.org/</string>
@@ -34,6 +33,10 @@
     <string name="url_about">https://raw.githubusercontent.com/manimaran96/Spell4Wiki/master/README.md</string>
     <string name="format_file_name_words_already_have_audio">%s-words_already_have_audio</string>
     <string name="upload_to_commons">Upload To Commons</string>
+    <string name="spell4explore">Explore</string>
+    <string name="spell4wiktionary">Spell for Wiktionary</string>
+    <string name="spell4word">Spell for Word</string>
+    <string name="spell4wordlist">Spell for WordList</string>
 
 
 </resources>

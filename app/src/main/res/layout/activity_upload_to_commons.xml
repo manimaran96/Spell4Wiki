@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -11,28 +10,27 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:gravity="center_horizontal">
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
 
 
         <Button
             android:id="@+id/btn_pick_file"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="select file"
-            android:textSize="16sp"
             android:layout_margin="10dp"
-            android:gravity="center"/>
+            android:gravity="center"
+            android:text="select file"
+            android:textSize="16sp" />
 
         <com.manimaran.wikiaudio.view.EndlessListView
             android:id="@+id/search_result_list"
             android:layout_width="match_parent"
-            android:divider="@null"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent"
+            android:divider="@null" />
 
 
     </LinearLayout>
-
 
 
 </android.support.constraint.ConstraintLayout>

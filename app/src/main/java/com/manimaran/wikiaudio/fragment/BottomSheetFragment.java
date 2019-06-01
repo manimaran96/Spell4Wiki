@@ -17,12 +17,12 @@ import android.widget.ProgressBar;
 
 import com.manimaran.wikiaudio.R;
 import com.manimaran.wikiaudio.adapter.LangAdapter;
+import com.manimaran.wikiaudio.constant.UrlType;
 import com.manimaran.wikiaudio.listerner.CallBackListener;
 import com.manimaran.wikiaudio.listerner.OnLangSelectListener;
 import com.manimaran.wikiaudio.model.WikiLanguage;
 import com.manimaran.wikiaudio.utils.GeneralUtils;
 import com.manimaran.wikiaudio.utils.PrefManager;
-import com.manimaran.wikiaudio.constant.UrlType;
 import com.manimaran.wikiaudio.wiki_api.MediaWikiClient;
 import com.manimaran.wikiaudio.wiki_api.ServiceGenerator;
 
@@ -49,7 +49,7 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
     public BottomSheetFragment() {
         // Required empty public constructor
     }
- 
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,7 +58,7 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        if(getActivity() != null) {
+        if (getActivity() != null) {
             pref = new PrefManager(getContext());
 
 
@@ -82,7 +82,7 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
             call.enqueue(new Callback<ResponseBody>() {
                 @Override
                 public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
-                    if (response.isSuccessful() && response.body() !=null) {
+                    if (response.isSuccessful() && response.body() != null) {
                         try {
                             String responseStr = response.body().string();
                             List<WikiLanguage> langList = new ArrayList<>();
@@ -90,8 +90,7 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
                                 JSONArray array = new JSONArray(responseStr);
                                 int len = array.length();
                                 int i;
-                                for(i=0;i<len;i++)
-                                {
+                                for (i = 0; i < len; i++) {
                                     JSONObject obj = array.getJSONObject(i);
                                     WikiLanguage lang = new WikiLanguage();
                                     lang.setCode(obj.getString("code"));
@@ -105,13 +104,10 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
                                      * If Contribution mode show only language have "title_words_without_audio" key-value
                                      * "title_words_without_audio" - category of words without audio in wiktionary
                                      */
-                                    if(getIsWiktionaryMode())
-                                    {
+                                    if (getIsWiktionaryMode()) {
                                         langList.add(lang);
-                                    }else
-                                    {
-                                        if(obj.has("title_words_without_audio"))
-                                        {
+                                    } else {
+                                        if (obj.has("title_words_without_audio")) {
                                             lang.setTitleWordsNoAudio(obj.getString("title_words_without_audio"));
                                             langList.add(lang);
                                         }
@@ -121,16 +117,15 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
                                 OnLangSelectListener listener = new OnLangSelectListener() {
                                     @Override
                                     public void OnClickListener(String langCode, String lang, String titleWordsWithoutAudio) {
-                                        if(getIsWiktionaryMode())
+                                        if (getIsWiktionaryMode())
                                             pref.setWiktionaryLangCode(langCode);
-                                        else
-                                        {
+                                        else {
                                             pref.setContributionLangCode(langCode);
-                                            if(titleWordsWithoutAudio != null)
+                                            if (titleWordsWithoutAudio != null)
                                                 pref.setTitleWordsWithoutAudio(titleWordsWithoutAudio);
                                         }
                                         GeneralUtils.showToast(getContext(), String.format(getString(R.string.select_language_response_msg), lang));
-                                        if(callback !=null)
+                                        if (callback != null)
                                             callback.OnCallBackListener();
                                         dismiss();
                                     }
@@ -143,8 +138,7 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
                                     listView.setAdapter(adapter);
                                 }
 
-                            }catch (Exception e)
-                            {
+                            } catch (Exception e) {
                                 e.printStackTrace();
                             }
 
@@ -167,9 +161,7 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
             });
 
 
-
-
-            if(btnClose != null) {
+            if (btnClose != null) {
                 btnClose.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -199,8 +191,7 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
                 }
             });
 
-            if(searchView != null)
-            {
+            if (searchView != null) {
                 searchView.setQueryHint(getString(R.string.search_here));
                 searchView.setQueryRefinementEnabled(true);
                 searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -211,7 +202,7 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
 
                     @Override
                     public boolean onQueryTextChange(String newText) {
-                        if(newText.length() > 0 && adapter != null)
+                        if (newText.length() > 0 && adapter != null)
                             adapter.getFilter().filter(newText);
                         return false;
                     }
@@ -219,7 +210,7 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
             }
 
             return dialog;
-        }else
+        } else
             return null;
     }
 

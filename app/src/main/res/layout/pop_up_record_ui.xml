@@ -1,133 +1,132 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_gravity="center"
-    android:layout_height="wrap_content">
-
-<LinearLayout
-    android:layout_width="match_parent"
-    android:minWidth="300dp"
-    android:elevation="8dp"
-    android:orientation="vertical"
-    android:layout_margin="20dp"
     android:layout_height="wrap_content"
-    android:background="@drawable/bg_dialog"
-    android:padding="5dp"
     android:layout_gravity="center">
 
-    <!--Close view-->
-    <ImageView
-        android:id="@+id/btnClose"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_gravity="end"
-        android:gravity="center"
-        app:srcCompat="@drawable/ic_cancel" />
-
-    <!--Word-->
-    <TextView
-        android:id="@+id/txtWord"
-        android:layout_marginTop="30dp"
-        android:textColor="@color/white"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="22sp" />
-
-
-    <!--Player control-->
     <LinearLayout
-        android:visibility="visible"
-        android:id="@+id/linearLayoutPlay"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:paddingStart="10dp"
-        android:paddingEnd="10dp"
-        android:layout_marginTop="30dp">
+        android:layout_gravity="center"
+        android:layout_margin="20dp"
+        android:background="@drawable/bg_dialog"
+        android:elevation="8dp"
+        android:minWidth="300dp"
+        android:orientation="vertical"
+        android:padding="5dp">
 
+        <!--Close view-->
         <ImageView
-            android:id="@+id/btnPlayPause"
+            android:id="@+id/btnClose"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:src="@drawable/ic_play"
-            android:layout_gravity="center_vertical"
-            android:clickable="true"
-            android:tint="@android:color/holo_blue_bright"
-            android:focusable="true"
-            android:background="?android:attr/selectableItemBackground"
-            android:contentDescription="@string/player" />
+            android:layout_gravity="end"
+            android:gravity="center"
+            app:srcCompat="@drawable/ic_cancel" />
 
-        <SeekBar
-            android:id="@+id/seekBar"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_gravity="center_vertical"
+        <!--Word-->
+        <TextView
+            android:id="@+id/txtWord"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:progressBackgroundTint="@android:color/white"
-            />
+            android:layout_gravity="center"
+            android:layout_marginTop="30dp"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:textSize="22sp" />
+
+
+        <!--Player control-->
+        <LinearLayout
+            android:id="@+id/linearLayoutPlay"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:orientation="horizontal"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:visibility="visible">
+
+            <ImageView
+                android:id="@+id/btnPlayPause"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center_vertical"
+                android:background="?android:attr/selectableItemBackground"
+                android:clickable="true"
+                android:contentDescription="@string/player"
+                android:focusable="true"
+                android:src="@drawable/ic_play"
+                android:tint="@android:color/holo_blue_bright" />
+
+            <SeekBar
+                android:id="@+id/seekBar"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:progressBackgroundTint="@android:color/white" />
+
+        </LinearLayout>
+
+        <!--Timer-->
+        <TextView
+            android:id="@+id/txtSec"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="5dp"
+            android:text="00:10"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="14sp" />
+
+        <!--Record button-->
+        <LinearLayout
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/btnRecord"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_gravity="center"
+                android:clickable="true"
+                android:focusable="true"
+                android:src="@drawable/ic_record" />
+        </LinearLayout>
+
+        <!--Hint-->
+        <TextView
+            android:id="@+id/hint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:text="@string/hint_before_record"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="14sp" />
+
+        <!--Upload button-->
+
+        <Button
+            android:id="@+id/upload_button"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="25dp"
+            android:background="@drawable/bg_button"
+            android:text="@string/upload"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textStyle="bold" />
 
     </LinearLayout>
-
-    <!--Timer-->
-    <TextView
-        android:id="@+id/txtSec"
-        android:layout_gravity="center"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAlignment="center"
-        android:textColor="@color/white"
-        android:text="00:10"
-        android:layout_marginTop="15dp"
-        android:layout_marginBottom="5dp"
-        android:textSize="14sp" />
-
-    <!--Record button-->
-    <LinearLayout
-        android:layout_gravity="center"
-        android:layout_width="100dp"
-        android:gravity="center"
-        android:layout_height="100dp">
-    <ImageView
-        android:id="@+id/btnRecord"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
-        android:clickable="true"
-        android:src="@drawable/ic_record"
-        android:layout_gravity="center"
-        android:focusable="true" />
-    </LinearLayout>
-
-    <!--Hint-->
-    <TextView
-        android:id="@+id/hint"
-        android:layout_gravity="center"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAlignment="center"
-        android:textColor="@color/white"
-        android:text="@string/hint_before_record"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="5dp"
-        android:textSize="14sp" />
-
-    <!--Upload button-->
-
-    <Button
-        android:id="@+id/upload_button"
-        android:layout_width="120dp"
-        android:layout_marginTop="20dp"
-        android:layout_gravity="center"
-        android:layout_marginBottom="25dp"
-        android:background="@drawable/bg_button"
-        android:layout_height="wrap_content"
-        android:text="@string/upload"
-        android:textAllCaps="false"
-        android:textColor="@color/white"
-        android:textStyle="bold" />
-
-</LinearLayout>
 </LinearLayout>

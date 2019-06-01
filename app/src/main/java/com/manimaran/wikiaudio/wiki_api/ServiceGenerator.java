@@ -9,8 +9,8 @@ import com.franmontiel.persistentcookiejar.cache.SetCookieCache;
 import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersistor;
 import com.google.gson.Gson;
 import com.manimaran.wikiaudio.R;
-import com.manimaran.wikiaudio.utils.PrefManager;
 import com.manimaran.wikiaudio.constant.UrlType;
+import com.manimaran.wikiaudio.utils.PrefManager;
 
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
@@ -67,7 +67,6 @@ public class ServiceGenerator {
     public static <S> S createService(Class<S> serviceClass, Context context, int urlType) {
 
 
-
         builder.baseUrl(getUrl(urlType, context));
 
         // Setting cookie
@@ -89,8 +88,8 @@ public class ServiceGenerator {
         }
 
         //if (rebuild) {
-            builder.client(httpClient.build());
-            retrofit = builder.build();
+        builder.client(httpClient.build());
+        retrofit = builder.build();
         //}
 
         return retrofit.create(serviceClass);
@@ -103,9 +102,8 @@ public class ServiceGenerator {
     public static String getUrl(int urlType, Context context) {
 
         String url = "";
-        switch (urlType)
-        {
-            case UrlType.COMMONS :
+        switch (urlType) {
+            case UrlType.COMMONS:
                 url = context.getString(R.string.url_commons);
                 break;
             case UrlType.WIKTIONARY_CONTRIBUTION:
@@ -129,10 +127,8 @@ public class ServiceGenerator {
             cookieJar.clear();*/
     }
 
-    public static void checkCookies()
-    {
-        if(cookieJar != null)
-        {
+    public static void checkCookies() {
+        if (cookieJar != null) {
             Log.e("TAG", "Wiki cookie " + new Gson().toJson(cookieJar));
         }
     }

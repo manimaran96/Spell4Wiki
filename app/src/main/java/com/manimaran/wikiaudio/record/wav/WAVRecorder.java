@@ -204,8 +204,7 @@ public class WAVRecorder {
         return (file.getAbsolutePath() + "/" + AUDIO_RECORDER_TEMP_FILE);
     }
 
-    public Boolean isRecording()
-    {
-        return  isRecording;
+    public Boolean isRecording() {
+        return isRecording;
     }
 }

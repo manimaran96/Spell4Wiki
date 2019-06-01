@@ -1,48 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    app:layout_behavior="android.support.design.widget.BottomSheetBehavior"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/layout_bottom_sheet"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
     android:background="@color/white"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:orientation="vertical"
+    app:layout_behavior="android.support.design.widget.BottomSheetBehavior">
 
     <RelativeLayout
         android:id="@+id/layout_title"
         android:layout_width="match_parent"
-        android:padding="5dp"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:padding="5dp">
 
         <TextView
             android:id="@+id/text_select_lang"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/black"
-            android:textStyle="bold"
-            android:textSize="@dimen/text_heading"
-            android:text="@string/select_language"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
             android:layout_marginTop="5dp"
             android:layout_marginBottom="5dp"
-            android:layout_centerVertical="true"
-            android:layout_alignParentStart="true" />
+            android:text="@string/select_language"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_heading"
+            android:textStyle="bold" />
 
         <ImageView
             android:id="@+id/btn_close"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:layout_centerVertical="true"
-            app:srcCompat="@drawable/ic_cancel"
             android:layout_alignParentEnd="true"
-            android:tint="@color/black"/>
+            android:layout_centerVertical="true"
+            android:tint="@color/black"
+            app:srcCompat="@drawable/ic_cancel" />
 
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@android:color/background_dark"
+            android:layout_below="@+id/text_select_lang"
             android:layout_marginTop="10dp"
-            android:layout_below="@+id/text_select_lang"/>
+            android:background="@android:color/background_dark" />
 
     </RelativeLayout>
 
@@ -51,23 +50,23 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/layout_title"
-        app:iconifiedByDefault="false"
-        />
+        app:iconifiedByDefault="false" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/search_view"
-        android:orientation="vertical"
-        android:descendantFocusability="blocksDescendants">
+        android:descendantFocusability="blocksDescendants"
+        android:orientation="vertical">
+
         <ProgressBar
             android:id="@+id/pb"
             style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_margin="10dp"
-            android:visibility="gone"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:visibility="gone" />
 
         <ListView
             android:id="@+id/list_view_lang"
@@ -76,7 +75,7 @@
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content" />
 
     </LinearLayout>
 

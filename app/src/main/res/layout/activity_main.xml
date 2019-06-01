@@ -1,23 +1,20 @@
-<?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/white"
-    tools:context="com.manimaran.wikiaudio.acticity.MainActivity">
+    android:layout_height="fill_parent"
+    android:background="@drawable/ic_spell4wiki_bg"
+    android:orientation="vertical">
 
-
-
-    <android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/layout_swipe"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <com.manimaran.wikiaudio.view.EndlessListView
-            android:id="@+id/search_result_list"
+        android:layout_height="match_parent"
+        android:layout_marginTop="100dp">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler_view"
             android:layout_width="match_parent"
-            android:divider="@null"
-            android:layout_height="match_parent"/>
-    </android.support.v4.widget.SwipeRefreshLayout>
+            android:layout_height="match_parent" />
+
+    </LinearLayout>
 
 
-</RelativeLayout>
+</LinearLayout>

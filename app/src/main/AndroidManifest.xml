@@ -6,7 +6,7 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -18,9 +18,9 @@
         tools:ignore="GoogleAppIndexingWarning">
         <activity
             android:name=".acticity.SplashActivity"
+            android:label="@string/app_name"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.NoTitleBar"
-            android:label="@string/app_name">
+            android:theme="@android:style/Theme.NoTitleBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -28,25 +28,27 @@
             </intent-filter>
         </activity>
         <activity
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
-            android:name=".acticity.LoginActivity"/>
+            android:name=".acticity.LoginActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
-            android:theme="@style/ActionBar"
+            android:name=".acticity.Spell4Wiktionary"
+            android:theme="@style/ActionBar" />
+        <activity
+            android:name=".acticity.SearchActivity"
+            android:theme="@style/ActionBar" />
+        <activity
             android:name=".acticity.MainActivity"
-        />
+            android:theme="@style/ActionBar" />
         <activity
-            android:theme="@style/ActionBar"
-            android:name=".acticity.SearchActivity"/>
+            android:name=".acticity.WiktionaryWebActivity"
+            android:theme="@style/ActionBar" />
         <activity
-            android:theme="@style/ActionBar"
-            android:name=".acticity.WiktionaryWebActivity"/>
-        <activity
-            android:theme="@style/ActionBar"
-            android:name=".acticity.AboutActivity"/>
+            android:name=".acticity.AboutActivity"
+            android:theme="@style/ActionBar" />
 
         <activity
-            android:theme="@style/ActionBar"
-            android:name=".acticity.UploadToCommonsActivity"/>
+            android:name=".acticity.UploadToCommonsActivity"
+            android:theme="@style/ActionBar" />
     </application>
 
 </manifest>

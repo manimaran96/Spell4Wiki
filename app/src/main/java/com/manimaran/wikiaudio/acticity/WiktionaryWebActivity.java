@@ -11,8 +11,8 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import com.manimaran.wikiaudio.R;
-import com.manimaran.wikiaudio.utils.PrefManager;
 import com.manimaran.wikiaudio.constant.UrlType;
+import com.manimaran.wikiaudio.utils.PrefManager;
 import com.manimaran.wikiaudio.wiki_api.ServiceGenerator;
 
 public class WiktionaryWebActivity extends AppCompatActivity {
@@ -23,20 +23,16 @@ public class WiktionaryWebActivity extends AppCompatActivity {
         setContentView(R.layout.activity_web_wiki);
 
 
-
         PrefManager pref = new PrefManager(getApplicationContext());
 
         Bundle bundle = getIntent().getExtras();
-        if(bundle != null)
-        {
+        if (bundle != null) {
             String word = bundle.getString("word");
             boolean isContributionMode = false;
-            if(bundle.containsKey("is_contribution_mode"))
-            {
+            if (bundle.containsKey("is_contribution_mode")) {
                 isContributionMode = bundle.getBoolean("is_contribution_mode");
             }
-            if(getSupportActionBar() != null)
-            {
+            if (getSupportActionBar() != null) {
                 getSupportActionBar().setTitle(word);
                 getSupportActionBar().setSubtitle(ServiceGenerator.getUrl(UrlType.WIKTIONARY_PAGE, getApplicationContext()));
                 getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_close);
@@ -61,7 +57,7 @@ public class WiktionaryWebActivity extends AppCompatActivity {
 
         mWebView.setWebViewClient(new WebViewClient());
         // Force links and redirects to open in the WebView instead of in a browser
-        mWebView.setWebViewClient(new WebViewClient(){
+        mWebView.setWebViewClient(new WebViewClient() {
             @Override
             public void onPageStarted(WebView view, String url, Bitmap favicon) {
                 super.onPageStarted(view, url, favicon);

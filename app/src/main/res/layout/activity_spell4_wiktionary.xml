@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context="com.manimaran.wikiaudio.acticity.Spell4Wiktionary">
+
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/layout_swipe"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.manimaran.wikiaudio.view.EndlessListView
+            android:id="@+id/search_result_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:divider="@null" />
+    </android.support.v4.widget.SwipeRefreshLayout>
+
+
+</RelativeLayout>
