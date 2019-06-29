@@ -16,38 +16,47 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
+
         <activity
-            android:name=".acticity.SplashActivity"
+            android:name=".activity.SplashActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.NoTitleBar">
+            android:theme="@style/AppTheme.FullScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".acticity.LoginActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-        <activity
-            android:name=".acticity.Spell4Wiktionary"
-            android:theme="@style/ActionBar" />
-        <activity
-            android:name=".acticity.SearchActivity"
-            android:theme="@style/ActionBar" />
-        <activity
-            android:name=".acticity.MainActivity"
-            android:theme="@style/ActionBar" />
-        <activity
-            android:name=".acticity.WiktionaryWebActivity"
-            android:theme="@style/ActionBar" />
-        <activity
-            android:name=".acticity.AboutActivity"
-            android:theme="@style/ActionBar" />
+
+        <activity android:name=".activity.AppIntroActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.FullScreen">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
 
         <activity
-            android:name=".acticity.UploadToCommonsActivity"
+            android:name=".activity.LoginActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity
+            android:name=".activity.Spell4Wiktionary"
+            android:theme="@style/ActionBar" />
+        <activity
+            android:name=".activity.SearchActivity"
+            android:theme="@style/ActionBar" />
+        <activity
+            android:name=".activity.MainActivity"
+            android:theme="@style/ActionBar" />
+        <activity
+            android:name=".activity.WiktionaryWebActivity"
+            android:theme="@style/ActionBar" />
+        <activity
+            android:name=".activity.AboutActivity"
+            android:theme="@style/ActionBar" />
+        <activity
+            android:name=".activity.UploadToCommonsActivity"
             android:theme="@style/ActionBar" />
     </application>
 

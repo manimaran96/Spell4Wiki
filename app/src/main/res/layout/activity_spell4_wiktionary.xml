@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context="com.manimaran.wikiaudio.acticity.Spell4Wiktionary">
+    tools:context="com.manimaran.wikiaudio.activity.Spell4Wiktionary">
 
 
     <android.support.v4.widget.SwipeRefreshLayout

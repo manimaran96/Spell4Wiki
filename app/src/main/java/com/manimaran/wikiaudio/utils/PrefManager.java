@@ -5,7 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 
 import com.manimaran.wikiaudio.R;
-import com.manimaran.wikiaudio.acticity.LoginActivity;
+import com.manimaran.wikiaudio.activity.LoginActivity;
 import com.manimaran.wikiaudio.wiki_api.ServiceGenerator;
 
 public class PrefManager {

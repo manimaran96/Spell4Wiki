@@ -1,4 +1,4 @@
-package com.manimaran.wikiaudio.acticity;
+package com.manimaran.wikiaudio.activity;
 
 import android.app.Activity;
 import android.content.Intent;

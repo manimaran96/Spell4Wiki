@@ -8,6 +8,11 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="AppTheme.FullScreen" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+    </style>
+
     <style name="ActionBar" parent="@style/Theme.AppCompat.Light">
         <item name="actionBarStyle">@style/Widget.Styled.ActionBar</item>
         <item name="actionMenuTextColor">@color/black</item>

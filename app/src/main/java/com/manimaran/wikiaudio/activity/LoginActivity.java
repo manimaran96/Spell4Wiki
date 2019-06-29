@@ -1,4 +1,4 @@
-package com.manimaran.wikiaudio.acticity;
+package com.manimaran.wikiaudio.activity;
 
 import android.content.Intent;
 import android.graphics.BitmapFactory;

@@ -30,7 +30,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.manimaran.wikiaudio.R;
-import com.manimaran.wikiaudio.acticity.WiktionaryWebActivity;
+import com.manimaran.wikiaudio.activity.WiktionaryWebActivity;
 import com.manimaran.wikiaudio.constant.UrlType;
 import com.manimaran.wikiaudio.listerner.CallBackListener;
 import com.manimaran.wikiaudio.record.wav.WAVPlayer;
