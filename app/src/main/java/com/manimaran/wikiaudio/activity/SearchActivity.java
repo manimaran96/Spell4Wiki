@@ -42,7 +42,6 @@ public class SearchActivity extends AppCompatActivity implements EndlessListView
 
     private String queryString;
     private Integer nextOffset;
-    private boolean doubleBackToExitPressedOnce = false;
     private PrefManager pref;
     private MediaWikiClient api;
 
@@ -100,10 +99,8 @@ public class SearchActivity extends AppCompatActivity implements EndlessListView
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.main_menu, menu);
-        menu.findItem(R.id.action_wiktionary).setIcon(R.drawable.ic_record);
         menu.findItem(R.id.action_settings).setIcon(R.drawable.ic_cancel);
         if (pref.getIsAnonymous()) {
-            menu.findItem(R.id.action_wiktionary).setVisible(false);
             menu.findItem(R.id.action_logout).setVisible(false);
             menu.findItem(R.id.action_login).setVisible(true);
         }
@@ -114,10 +111,6 @@ public class SearchActivity extends AppCompatActivity implements EndlessListView
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection
         switch (item.getItemId()) {
-            case R.id.action_wiktionary:
-                startActivity(new Intent(getApplicationContext(), Spell4Wiktionary.class));
-                finish();
-                return true;
             case R.id.action_logout:
                 GeneralUtils.logoutAlert(SearchActivity.this);
                 return true;
@@ -211,23 +204,6 @@ public class SearchActivity extends AppCompatActivity implements EndlessListView
             return true;
         } else
             return false;
-    }
-
-    @Override
-    public void onBackPressed() {
-
-        if (doubleBackToExitPressedOnce)
-            super.onBackPressed();
-        else {
-            this.doubleBackToExitPressedOnce = true;
-            GeneralUtils.showToast(getApplicationContext(), getString(R.string.alert_to_exit));
-        }
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                doubleBackToExitPressedOnce = false;
-            }
-        }, 2000);
     }
 }
 

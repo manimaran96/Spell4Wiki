@@ -4,13 +4,6 @@
     tools:context=".activities.BaseActivity">
 
     <item
-        android:id="@+id/action_wiktionary"
-        android:icon="@drawable/wiktionary"
-        android:orderInCategory="1"
-        android:title="@string/wiktionary"
-        app:showAsAction="ifRoom" />
-
-    <item
         android:id="@+id/action_login"
         android:orderInCategory="2"
         android:title="@string/login"
@@ -22,33 +15,26 @@
         android:icon="@drawable/ic_language"
         android:orderInCategory="3"
         android:title="@string/select_language"
-        app:showAsAction="always"></item>
-
-
-    <item
-        android:id="@+id/action_upload_commons"
-        android:icon="@drawable/ic_info"
-        android:title="@string/upload_to_commons"
-        app:showAsAction="never"></item>
+        app:showAsAction="always"/>
 
     <item
         android:id="@+id/action_settings"
         android:icon="@drawable/ic_logout"
         android:title="@string/settings"
         android:visible="false"
-        app:showAsAction="never"></item>
+        app:showAsAction="never"/>
 
     <item
         android:id="@+id/action_about"
         android:icon="@drawable/ic_logout"
         android:title="@string/about"
-        app:showAsAction="never"></item>
+        app:showAsAction="never"/>
 
     <item
         android:id="@+id/action_logout"
         android:icon="@drawable/ic_logout"
         android:title="@string/logout"
-        app:showAsAction="withText"></item>
+        app:showAsAction="withText"/>
 
 </menu>
 

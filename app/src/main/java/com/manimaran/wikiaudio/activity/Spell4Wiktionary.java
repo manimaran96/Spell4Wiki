@@ -44,7 +44,6 @@ public class Spell4Wiktionary extends AppCompatActivity implements EndlessListVi
     private SwipeRefreshLayout refreshLayout = null;
 
     private String nextOffsetObj;
-    private boolean doubleBackToExitPressedOnce = false;
     private PrefManager pref;
 
     @Override
@@ -175,20 +174,12 @@ public class Spell4Wiktionary extends AppCompatActivity implements EndlessListVi
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            // action with ID action_refresh was selected
-            case R.id.action_wiktionary:
-                startActivity(new Intent(getApplicationContext(), SearchActivity.class));
-                finish();
-                break;
             // action with ID action_logout was selected
             case R.id.action_logout:
                 GeneralUtils.logoutAlert(Spell4Wiktionary.this);
                 break;
             // action with ID action_settings was selected
             case R.id.action_settings:
-                break;
-            case R.id.action_upload_commons:
-                startActivity(new Intent(getApplicationContext(), UploadToCommonsActivity.class));
                 break;
             case R.id.action_about:
                 startActivity(new Intent(getApplicationContext(), AboutActivity.class));
@@ -228,21 +219,5 @@ public class Spell4Wiktionary extends AppCompatActivity implements EndlessListVi
         super.onDestroy();
         if (adapter != null)
             adapter.destroyView();
-    }
-
-    @Override
-    public void onBackPressed() {
-        if (doubleBackToExitPressedOnce)
-            super.onBackPressed();
-        else {
-            this.doubleBackToExitPressedOnce = true;
-            GeneralUtils.showToast(getApplicationContext(), getString(R.string.alert_to_exit));
-        }
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                doubleBackToExitPressedOnce = false;
-            }
-        }, 2000);
     }
 }

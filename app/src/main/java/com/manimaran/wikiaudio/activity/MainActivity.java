@@ -81,20 +81,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            // action with ID action_refresh was selected
-            case R.id.action_wiktionary:
-                startActivity(new Intent(getApplicationContext(), SearchActivity.class));
-                finish();
-                break;
             // action with ID action_logout was selected
             case R.id.action_logout:
                 GeneralUtils.logoutAlert(MainActivity.this);
                 break;
             // action with ID action_settings was selected
             case R.id.action_settings:
-                break;
-            case R.id.action_upload_commons:
-                startActivity(new Intent(getApplicationContext(), UploadToCommonsActivity.class));
                 break;
             case R.id.action_about:
                 startActivity(new Intent(getApplicationContext(), AboutActivity.class));
