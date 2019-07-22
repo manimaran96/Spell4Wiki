@@ -4,9 +4,9 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.ImageView;
 
 import com.manimaran.wikiaudio.R;
 import com.manimaran.wikiaudio.utils.PrefManager;
@@ -28,8 +28,12 @@ public class SplashActivity extends Activity {
 
         pref = new PrefManager(getApplicationContext());
 
+        Animation animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.zoom);
+        ImageView splash = findViewById(R.id.img_splash);
+        splash.startAnimation(animation);
+
         //splash screen will be shown for 1.5 seconds
-        int SPLASH_DISPLAY_LENGTH = 800;
+        int SPLASH_DISPLAY_LENGTH = 1000;
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {

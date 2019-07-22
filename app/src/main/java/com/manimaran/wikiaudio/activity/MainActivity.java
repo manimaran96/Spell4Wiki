@@ -91,38 +91,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.main_menu, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            // action with ID action_logout was selected
-            case R.id.action_logout:
-                GeneralUtils.logoutAlert(MainActivity.this);
-                break;
-            // action with ID action_settings was selected
-            case R.id.action_settings:
-                break;
-            case R.id.action_about:
-                startActivity(new Intent(getApplicationContext(), AboutActivity.class));
-                break;
-            case R.id.action_lang_change:
-                BottomSheetFragment bottomSheetFragment = new BottomSheetFragment();
-                bottomSheetFragment.show(getSupportFragmentManager(), bottomSheetFragment.getTag());
-                bottomSheetFragment.setCancelable(false);
-                break;
-            default:
-                break;
-        }
-
-        return true;
-    }
-
-    @Override
     public void onBackPressed() {
         if (doubleBackToExitPressedOnce)
             super.onBackPressed();

@@ -48,7 +48,7 @@
             android:theme="@style/ActionBar" />
         <activity
             android:name=".activity.MainActivity"
-            android:theme="@style/ActionBar" />
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activity.WiktionaryWebActivity"
             android:theme="@style/ActionBar" />
