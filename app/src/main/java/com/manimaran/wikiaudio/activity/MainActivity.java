@@ -3,12 +3,13 @@ package com.manimaran.wikiaudio.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.CardView;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.SearchView;
 
 import com.manimaran.wikiaudio.R;
 import com.manimaran.wikiaudio.fragment.BottomSheetFragment;
@@ -31,16 +32,36 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         init();
 
-
-        CardView cardView1 = findViewById(R.id.card_explore);
         CardView cardView2 = findViewById(R.id.card_wiki);
         CardView cardView3 = findViewById(R.id.card_word_list);
         CardView cardView4 = findViewById(R.id.card_word);
 
-        cardView1.setOnClickListener(this);
         cardView2.setOnClickListener(this);
         cardView3.setOnClickListener(this);
         cardView4.setOnClickListener(this);
+
+
+        /*
+         * Search View
+         */
+        SearchView searchView = findViewById(R.id.search_view);
+        searchView.setIconifiedByDefault(false);
+        searchView.setQueryHint(getString(R.string.search_here));
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+
+
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+
+                return false;
+            }
+        });
+
 
 
     }
@@ -49,9 +70,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View view) {
         Class nextClass = SearchActivity.class;
         switch (view.getId()) {
-            case R.id.card_explore:
-                nextClass = SearchActivity.class;
-                break;
             case R.id.card_wiki:
                 nextClass = Spell4Wiktionary.class;
                 break;
@@ -59,6 +77,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 nextClass = UploadToCommonsActivity.class;
                 break;
             case R.id.card_word:
+                nextClass = MainActivity.class;
                 break;
         }
         startActivity(new Intent(getApplicationContext(), nextClass));

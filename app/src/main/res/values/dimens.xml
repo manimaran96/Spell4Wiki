@@ -12,4 +12,9 @@
     <dimen name="card_content_padding">5dp</dimen>
     <dimen name="option_icon_size">100dp</dimen>
     <dimen name="text_large">20sp</dimen>
+    <dimen name="app_bar_height">180dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="text_margin">16dp</dimen>
+    <dimen name="nav_header_vertical_spacing">8dp</dimen>
+    <dimen name="nav_header_height">176dp</dimen>
 </resources>

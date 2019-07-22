@@ -1,7 +1,7 @@
 package com.manimaran.wikiaudio.wiki_api;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 import android.util.Log;
 
 import com.franmontiel.persistentcookiejar.PersistentCookieJar;
@@ -13,6 +13,8 @@ import com.manimaran.wikiaudio.constant.UrlType;
 import com.manimaran.wikiaudio.utils.PrefManager;
 
 import java.io.IOException;
+import java.net.CookieHandler;
+import java.net.CookieManager;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.HttpUrl;
@@ -71,6 +73,7 @@ public class ServiceGenerator {
 
         // Setting cookie
         if (cookieJar == null) {
+            CookieHandler.setDefault(new CookieManager());
             cookieJar = new PersistentCookieJar(new SetCookieCache(), new SharedPrefsCookiePersistor(context));
             httpClient.cookieJar(cookieJar);
             httpClient.connectTimeout(30, TimeUnit.SECONDS);
