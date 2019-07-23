@@ -38,4 +38,16 @@
     <string name="spell4word">Spell for Word</string>
     <string name="spell4wordlist">Spell for WordList</string>
 
+    <!-- App Intro Screen -->
+    <string name="app_intro_slide_1_title">Welcome</string>
+    <string name="app_intro_slide_2_title">Wiktionary Explore</string>
+    <string name="app_intro_slide_4_title">Spell For Word</string>
+    <string name="app_intro_slide_5_title">Permission Request</string>
+    <string name="app_intro_slide_3_title">Spell For Word List</string>
+    <string name="app_intro_slide_1_description">Spell4Wiki app to record and upload audios for Wiki commons.\\nAlso act as wiki dictionary.</string>
+    <string name="app_intro_slide_2_description">You can search and view words meaning form wikitionary for any languages.</string>
+    <string name="app_intro_slide_3_description">You can record and upload audios for your own word list from your device.</string>
+    <string name="app_intro_slide_4_description">You can record and upload audio for your custom word.</string>
+    <string name="app_intro_slide_5_description">Spell4Wiki requires storage and record audio permissions.\\nAllow those permissions</string>
+
 </resources>

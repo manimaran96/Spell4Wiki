@@ -18,7 +18,7 @@
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:contentDescription="@string/app_name"
-            app:srcCompat="@drawable/ic_spell4wiki" />
+            app:srcCompat="@drawable/spell4wiki" />
 
         <TextView
             android:layout_width="wrap_content"

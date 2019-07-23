@@ -5,9 +5,10 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+
 import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
 
 import com.github.paolorotolo.appintro.AppIntro;
 import com.github.paolorotolo.appintro.AppIntroFragment;
@@ -26,46 +27,50 @@ public class AppIntroActivity extends AppIntro {
 
         pref = new PrefManager(getApplicationContext());
 
+        int titleColor = ContextCompat.getColor(getApplicationContext(), R.color.app_intro_title);
+        int descriptionColor = ContextCompat.getColor(getApplicationContext(), R.color.app_intro_description);
+        int bgColor = ContextCompat.getColor(getApplicationContext(), R.color.app_intro_bg);
+
         SliderPage sliderPage1 = new SliderPage();
-        sliderPage1.setTitle("Welcome");
-        sliderPage1.setTitleColor(ContextCompat.getColor(getApplicationContext(), R.color.w_blue));
-        sliderPage1.setDescription("Spell4Wiki app to record and upload audios for Wiki commons.\nAlso act as wiki dictionary.");
-        sliderPage1.setDescColor(ContextCompat.getColor(getApplicationContext(), R.color.w_blue));
+        sliderPage1.setTitle(getString(R.string.app_intro_slide_1_title));
+        sliderPage1.setTitleColor(titleColor);
+        sliderPage1.setDescription(getString(R.string.app_intro_slide_1_description));
+        sliderPage1.setDescColor(descriptionColor);
         sliderPage1.setImageDrawable(R.drawable.ic_spell4wiki);
-        sliderPage1.setBgColor(ContextCompat.getColor(getApplicationContext(), R.color.app_intro_bg));
+        sliderPage1.setBgColor(bgColor);
 
         SliderPage sliderPage2 = new SliderPage();
-        sliderPage2.setTitle("Wiktionary Explore");
-        sliderPage2.setTitleColor(ContextCompat.getColor(getApplicationContext(), R.color.w_blue));
-        sliderPage2.setDescription("You can search and view words meaning form wikitionary for any languages.");
-        sliderPage2.setDescColor(ContextCompat.getColor(getApplicationContext(), R.color.w_blue));
+        sliderPage2.setTitle(getString(R.string.app_intro_slide_2_title));
+        sliderPage2.setTitleColor(titleColor);
+        sliderPage2.setDescription(getString(R.string.app_intro_slide_2_description));
+        sliderPage2.setDescColor(descriptionColor);
         sliderPage2.setImageDrawable(R.drawable.ic_spell4explore);
-        sliderPage2.setBgColor(ContextCompat.getColor(getApplicationContext(), R.color.app_intro_bg));
+        sliderPage2.setBgColor(bgColor);
 
         SliderPage sliderPage3 = new SliderPage();
-        sliderPage3.setTitle("Spell For Word List");
-        sliderPage3.setTitleColor(ContextCompat.getColor(getApplicationContext(), R.color.w_blue));
-        sliderPage3.setDescription("You can record and upload audios for your own word list from your device.");
-        sliderPage3.setDescColor(ContextCompat.getColor(getApplicationContext(), R.color.w_blue));
-        sliderPage3.setImageDrawable(R.drawable.ic_spell4wordlist);
-        sliderPage3.setBgColor(ContextCompat.getColor(getApplicationContext(), R.color.app_intro_bg));
+        sliderPage3.setTitle(getString(R.string.app_intro_slide_3_title));
+        sliderPage3.setTitleColor(titleColor);
+        sliderPage3.setDescription(getString(R.string.app_intro_slide_3_description));
+        sliderPage3.setDescColor(descriptionColor);
+        sliderPage3.setImageDrawable(R.drawable.ic_spell4word_list);
+        sliderPage3.setBgColor(bgColor);
 
         SliderPage sliderPage4 = new SliderPage();
-        sliderPage4.setTitle("Spell For Word");
-        sliderPage4.setTitleColor(ContextCompat.getColor(getApplicationContext(), R.color.w_blue));
-        sliderPage4.setDescription("You can record and upload audio for your custom word.");
-        sliderPage4.setDescColor(ContextCompat.getColor(getApplicationContext(), R.color.w_blue));
+        sliderPage4.setTitle(getString(R.string.app_intro_slide_4_title));
+        sliderPage4.setTitleColor(titleColor);
+        sliderPage4.setDescription(getString(R.string.app_intro_slide_4_description));
+        sliderPage4.setDescColor(descriptionColor);
         sliderPage4.setImageDrawable(R.drawable.ic_spell4word);
-        sliderPage4.setBgColor(ContextCompat.getColor(getApplicationContext(), R.color.app_intro_bg));
+        sliderPage4.setBgColor(bgColor);
 
 
         SliderPage sliderPage5 = new SliderPage();
-        sliderPage5.setTitle("Permission Request");
-        sliderPage5.setTitleColor(ContextCompat.getColor(getApplicationContext(), R.color.w_blue));
-        sliderPage5.setDescription("Spell4Wiki requires storage and record audio permissions.\nAllow those permissions");
-        sliderPage5.setDescColor(ContextCompat.getColor(getApplicationContext(), R.color.w_blue));
+        sliderPage5.setTitle(getString(R.string.app_intro_slide_5_title));
+        sliderPage5.setTitleColor(titleColor);
+        sliderPage5.setDescription(getString(R.string.app_intro_slide_5_description));
+        sliderPage5.setDescColor(descriptionColor);
         sliderPage5.setImageDrawable(R.drawable.ic_spell4wiki);
-        sliderPage5.setBgColor(ContextCompat.getColor(getApplicationContext(), R.color.app_intro_bg));
+        sliderPage5.setBgColor(bgColor);
 
 
         addSlide(AppIntroFragment.newInstance(sliderPage1));
@@ -89,7 +94,7 @@ public class AppIntroActivity extends AppIntro {
         setColorSkipButton(Color.BLACK);
         setIndicatorColor(Color.GRAY, Color.BLACK);
         setColorDoneText(Color.BLACK);
-        setNextArrowColor(Color.BLACK);
+        setNextArrowColor(Color.DKGRAY);
 
         //askForPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.RECORD_AUDIO}, 5);
 

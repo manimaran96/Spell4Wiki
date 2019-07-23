@@ -51,7 +51,7 @@
                         android:layout_width="@dimen/option_icon_size"
                         android:layout_height="@dimen/option_icon_size"
                         android:layout_centerInParent="true"
-                        android:src="@drawable/ic_spell4wiki" />
+                        android:src="@drawable/spell4wiki" />
 
                     <TextView
                         android:layout_width="match_parent"
@@ -99,7 +99,7 @@
                         android:layout_width="@dimen/option_icon_size"
                         android:layout_height="@dimen/option_icon_size"
                         android:layout_centerInParent="true"
-                        android:src="@drawable/ic_spell4wordlist" />
+                        android:src="@drawable/ic_spell4word_list" />
 
                     <TextView
                         android:layout_width="match_parent"
