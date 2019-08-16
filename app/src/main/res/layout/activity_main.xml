@@ -14,24 +14,53 @@
         android:padding="5dp"
         android:weightSum="2">
 
-        <SearchView
-            android:id="@+id/search_view"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_margin="10dp"
-            android:queryHint="@string/search_here"
-            android:background="@drawable/box_bg"/>
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
             android:orientation="horizontal"
-            android:weightSum="1"
-            android:padding="10dp">
+            android:weightSum="2"
+            android:padding="5dp">
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/card_explore"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_margin="@dimen/card_margin"
+                android:elevation="@dimen/card_elevation"
+                card_view:cardCornerRadius="@dimen/card_radius"
+                tools:ignore="NestedWeights">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
 
 
-            <androidx.cardview.widget.CardView
+                    <ImageView
+                        android:layout_width="@dimen/option_icon_size"
+                        android:layout_height="@dimen/option_icon_size"
+                        android:layout_centerInParent="true"
+                        android:src="@drawable/ic_spell4explore" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:layout_centerHorizontal="true"
+                        android:layout_margin="10dp"
+                        android:gravity="center"
+                        android:padding="2dp"
+                        android:text="@string/spell4explore"
+                        android:textSize="@dimen/text_normal"
+                        android:textStyle="bold" />
+
+                </RelativeLayout>
+
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
                 android:id="@+id/card_wiki"
                 android:layout_width="0dp"
                 android:layout_weight="1"
@@ -67,7 +96,7 @@
 
                 </RelativeLayout>
 
-            </androidx.cardview.widget.CardView>
+            </android.support.v7.widget.CardView>
 
         </LinearLayout>
 
@@ -79,7 +108,7 @@
             android:weightSum="2"
             android:padding="5dp">
 
-            <androidx.cardview.widget.CardView
+            <android.support.v7.widget.CardView
                 android:id="@+id/card_word_list"
                 android:layout_width="0dp"
                 android:layout_weight="1"
@@ -115,9 +144,9 @@
 
                 </RelativeLayout>
 
-            </androidx.cardview.widget.CardView>
+            </android.support.v7.widget.CardView>
 
-            <androidx.cardview.widget.CardView
+            <android.support.v7.widget.CardView
                 android:id="@+id/card_word"
                 android:layout_width="0dp"
                 android:layout_weight="1"
@@ -153,7 +182,7 @@
 
                 </RelativeLayout>
 
-            </androidx.cardview.widget.CardView>
+            </android.support.v7.widget.CardView>
 
         </LinearLayout>
 

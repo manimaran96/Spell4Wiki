@@ -13,15 +13,6 @@
         <item name="android:windowContentOverlay">@null</item>
     </style>
 
-    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
-
-    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
-
-    <style name="AppTheme.NoActionBar">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
-    </style>
-
     <style name="ActionBar" parent="@style/Theme.AppCompat.Light">
         <item name="actionBarStyle">@style/Widget.Styled.ActionBar</item>
         <item name="actionMenuTextColor">@color/black</item>
@@ -42,6 +33,4 @@
         <item name="android:textColor">@color/light_gray</item>
         <item name="android:textSize">12sp</item>
     </style>
-
-
 </resources>
