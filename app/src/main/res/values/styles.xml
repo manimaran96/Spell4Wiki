@@ -20,6 +20,7 @@
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+        <item name="android:statusBarColor">@color/light_gray</item>
     </style>
 
     <style name="ActionBar" parent="@style/Theme.AppCompat.Light">

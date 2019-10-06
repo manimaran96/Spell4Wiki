@@ -34,7 +34,7 @@
     <string name="format_file_name_words_already_have_audio">%s-words_already_have_audio</string>
     <string name="upload_to_commons">Upload To Commons</string>
     <string name="spell4explore">Wiki Explore</string>
-    <string name="spell4wiktionary">Spell for Wiki</string>
+    <string name="spell4wiktionary">Spell for Wiktionary</string>
     <string name="spell4word">Spell for Word</string>
     <string name="spell4wordlist">Spell for WordList</string>
 
@@ -49,5 +49,8 @@
     <string name="app_intro_slide_3_description">You can record and upload audios for your own word list from your device.</string>
     <string name="app_intro_slide_4_description">You can record and upload audio for your custom word.</string>
     <string name="app_intro_slide_5_description">Spell4Wiki requires storage and record audio permissions.\\nAllow those permissions</string>
+    <string name="hint_search">Search word on wiktionary</string>
+    <string name="donate">Donate</string>
+    <string name="how_is_work">How?</string>
 
 </resources>

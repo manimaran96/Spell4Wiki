@@ -1,6 +1,7 @@
 package com.manimaran.wikiaudio.activity;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
@@ -9,11 +10,16 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.widget.SearchView;
+import android.widget.TextView;
 
 import com.manimaran.wikiaudio.R;
 import com.manimaran.wikiaudio.fragment.BottomSheetFragment;
 import com.manimaran.wikiaudio.utils.GeneralUtils;
 import com.manimaran.wikiaudio.utils.PrefManager;
+
+import java.text.Format;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -31,17 +37,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         init();
 
+        SearchView searchView = findViewById(R.id.search_view);
+        searchView.setQueryHint(getString(R.string.hint_search));
+        searchView.setOnClickListener(this);
 
-        CardView cardView1 = findViewById(R.id.card_explore);
-        CardView cardView2 = findViewById(R.id.card_wiki);
-        CardView cardView3 = findViewById(R.id.card_word_list);
-        CardView cardView4 = findViewById(R.id.card_word);
+        CardView cardView1 = findViewById(R.id.card_spell4wiki);
+        CardView cardView2 = findViewById(R.id.card_spell4wordlist);
+        CardView cardView3 = findViewById(R.id.card_spell4word);
 
         cardView1.setOnClickListener(this);
         cardView2.setOnClickListener(this);
         cardView3.setOnClickListener(this);
-        cardView4.setOnClickListener(this);
 
+        TextView txtWelcomeUser = findViewById(R.id.txt_welcome_user);
+        txtWelcomeUser.setText(String.format(getString(R.string.welcome_user), pref.getName()));
 
     }
 
@@ -49,16 +58,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View view) {
         Class nextClass = SearchActivity.class;
         switch (view.getId()) {
-            case R.id.card_explore:
+            case R.id.search_view:
                 nextClass = SearchActivity.class;
                 break;
-            case R.id.card_wiki:
+            case R.id.card_spell4wiki:
                 nextClass = Spell4Wiktionary.class;
                 break;
-            case R.id.card_word_list:
+            case R.id.card_spell4wordlist:
                 nextClass = UploadToCommonsActivity.class;
                 break;
-            case R.id.card_word:
+            case R.id.card_spell4word:
                 break;
         }
         startActivity(new Intent(getApplicationContext(), nextClass));
