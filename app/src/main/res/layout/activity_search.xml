@@ -20,12 +20,14 @@
     <SearchView
         android:id="@+id/search_bar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
         android:layout_below="@+id/wiktionary_logo"
-        android:layout_centerHorizontal="true"
         android:layout_margin="@dimen/activity_horizontal_margin"
-        android:orientation="horizontal"
-        app:iconifiedByDefault="false" />
+        android:searchIcon="@drawable/ic_info"
+        android:layout_centerHorizontal="true"
+        android:queryHint="@string/hint_search"
+        android:background="@drawable/search_view_bg"
+        app:iconifiedByDefault="false"/>
 
     <com.manimaran.wikiaudio.view.EndlessListView
         android:id="@+id/search_result_list"

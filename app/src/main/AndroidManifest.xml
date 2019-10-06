@@ -48,6 +48,7 @@
             android:theme="@style/ActionBar" />
         <activity
             android:name=".activity.MainActivity"
+            android:windowSoftInputMode="stateAlwaysHidden"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activity.WiktionaryWebActivity"

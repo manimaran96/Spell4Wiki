@@ -3,7 +3,6 @@
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="fill_parent"
-    android:layout_margin="10dp"
     android:background="@color/white"
     android:orientation="vertical">
 
@@ -11,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="5dp"
+        android:padding="10dp"
         android:weightSum="2">
 
 
@@ -209,7 +208,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
-                android:drawableTop="@drawable/ic_info"
+                android:drawableTop="@drawable/ic_help"
                 android:text="@string/how_is_work"
                 android:textAlignment="center"
                 android:drawablePadding="2dp"/>
@@ -224,10 +223,12 @@
                 android:drawablePadding="2dp"/>
 
             <TextView
+                android:id="@+id/btn_about"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
-                android:drawableTop="@drawable/ic_info"
+                android:drawableTop="@drawable/ic_about"
+                android:drawableTint="@color/gray"
                 android:text="@string/about"
                 android:textAlignment="center"
                 android:drawablePadding="2dp"/>
@@ -243,17 +244,20 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:drawableTop="@drawable/ic_info"
+                android:drawableTop="@drawable/ic_settings"
+                android:drawableTint="@color/gray"
                 android:drawablePadding="2dp"
                 android:padding="10dp"
                 android:text="@string/settings"
                 android:textAlignment="center" />
 
             <TextView
+                android:id="@+id/btn_logout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
-                android:drawableTop="@drawable/ic_info"
+                android:drawableTop="@drawable/ic_logout"
+                android:drawableTint="@color/gray"
                 android:text="@string/logout"
                 android:textAlignment="center"
                 android:drawablePadding="2dp"/>

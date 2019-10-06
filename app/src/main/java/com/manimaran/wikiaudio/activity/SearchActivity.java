@@ -39,6 +39,7 @@ import retrofit2.Response;
 public class SearchActivity extends AppCompatActivity implements EndlessListView.EndlessListener {
 
     private EndlessListView resultListView;
+    private SearchView searchBar;
 
     private String queryString;
     private Integer nextOffset;
@@ -53,22 +54,14 @@ public class SearchActivity extends AppCompatActivity implements EndlessListView
         pref = new PrefManager(getApplicationContext());
         api = ServiceGenerator.createService(MediaWikiClient.class, getApplicationContext(), UrlType.WIKTIONARY_PAGE);
 
-        SearchView searchBar = findViewById(R.id.search_bar);
+        searchBar = findViewById(R.id.search_bar);
         searchBar.requestFocus();
         searchBar.setIconifiedByDefault(false);
         searchBar.setQueryHint(getResources().getString(R.string.search_here));
         searchBar.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String s) {
-                queryString = s;
-                nextOffset = 0;
-                resultListView.reset();
-
-                ImageView wiktionaryLogo = (ImageView) findViewById(R.id.wiktionary_logo);
-                wiktionaryLogo.setVisibility(View.GONE);
-                resultListView.setVisibility(View.VISIBLE);
-
-                search(queryString);
+                submitQuery(s);
                 return true;
             }
 
@@ -86,6 +79,27 @@ public class SearchActivity extends AppCompatActivity implements EndlessListView
         resultListView.setVisibility(View.INVISIBLE);
 
         setTitle();
+
+        if(getIntent() != null && getIntent().getExtras() != null)
+        {
+            if(getIntent().getExtras().containsKey("search_text"))
+            {
+                String text = getIntent().getExtras().getString("search_text");
+                searchBar.setQuery(text, true);
+            }
+        }
+    }
+
+    private void submitQuery(String s) {
+        queryString = s;
+        nextOffset = 0;
+        resultListView.reset();
+
+        ImageView wiktionaryLogo = findViewById(R.id.wiktionary_logo);
+        wiktionaryLogo.setVisibility(View.GONE);
+        resultListView.setVisibility(View.VISIBLE);
+
+        search(queryString);
     }
 
     private void setTitle() {

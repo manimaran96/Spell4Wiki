@@ -1,5 +1,7 @@
 package com.manimaran.wikiaudio.activity;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -11,6 +13,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.SearchView;
 import android.widget.TextView;
 
@@ -39,7 +43,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         SearchView searchView = findViewById(R.id.search_view);
         searchView.setQueryHint(getString(R.string.hint_search));
-        searchView.setOnClickListener(this);
+        searchView.setIconifiedByDefault(false);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                Intent intent = new Intent(getApplicationContext(), SearchActivity.class);
+                intent.putExtra("search_text", query);
+                startActivity(intent);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
+
 
         CardView cardView1 = findViewById(R.id.card_spell4wiki);
         CardView cardView2 = findViewById(R.id.card_spell4wordlist);
@@ -52,6 +71,27 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         TextView txtWelcomeUser = findViewById(R.id.txt_welcome_user);
         txtWelcomeUser.setText(String.format(getString(R.string.welcome_user), pref.getName()));
 
+        findViewById(R.id.btn_about).setOnClickListener(v -> startActivity(new Intent(getApplicationContext(), AboutActivity.class)));
+        findViewById(R.id.btn_logout).setOnClickListener(v -> GeneralUtils.logoutAlert(MainActivity.this));
+
+        new Handler().post(new Runnable() {
+            @Override
+            public void run() {
+                hideKeyboard(MainActivity.this);
+            }
+        });
+
+    }
+
+    public static void hideKeyboard(Activity activity) {
+        InputMethodManager imm = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
+        //Find the currently focused view, so we can grab the correct window token from it.
+        View view = activity.getCurrentFocus();
+        //If no view currently has focus, create a new one, just so we can grab a window token from it
+        if (view == null) {
+            view = new View(activity);
+        }
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
     @Override
