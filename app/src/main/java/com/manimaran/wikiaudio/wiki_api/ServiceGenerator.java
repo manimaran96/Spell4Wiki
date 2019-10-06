@@ -66,7 +66,6 @@ public class ServiceGenerator {
     // Create service
     public static <S> S createService(Class<S> serviceClass, Context context, int urlType) {
 
-
         builder.baseUrl(getUrl(urlType, context));
 
         // Setting cookie
