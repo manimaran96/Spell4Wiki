@@ -37,8 +37,8 @@ import com.manimaran.wikiaudio.record.wav.WAVPlayer;
 import com.manimaran.wikiaudio.record.wav.WAVRecorder;
 import com.manimaran.wikiaudio.utils.GeneralUtils;
 import com.manimaran.wikiaudio.utils.PrefManager;
-import com.manimaran.wikiaudio.wiki_api.MediaWikiClient;
-import com.manimaran.wikiaudio.wiki_api.ServiceGenerator;
+import com.manimaran.wikiaudio.wiki_api.ApiInterface;
+import com.manimaran.wikiaudio.wiki_api.ApiClient;
 
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONException;
@@ -87,7 +87,7 @@ public class EndlessAdapter extends ArrayAdapter<String> {
 
     private ProgressDialog progressDialog;
     private PrefManager pref;
-    private MediaWikiClient api;
+    private ApiInterface api;
 
     private String uploadName = null;
     private CallBackListener listener;
@@ -100,7 +100,7 @@ public class EndlessAdapter extends ArrayAdapter<String> {
         this.layoutId = layoutId;
         this.isContributionMode = isContributionMode;
         this.pref = new PrefManager(ctx);
-        this.api = ServiceGenerator.createService(MediaWikiClient.class, ctx, UrlType.COMMONS);
+        this.api = ApiClient.getCommonsApi(ctx).create(ApiInterface.class);
     }
 
     private static String getMimeType(String url) {
@@ -433,6 +433,7 @@ public class EndlessAdapter extends ArrayAdapter<String> {
                 try {
                     assert response.body() != null;
                     String responseStr = response.body().string();
+                    Log.e(TAG, "Adding " + responseStr);
                     JSONObject reader;
                     JSONObject uploadJSONObject;
                     try {

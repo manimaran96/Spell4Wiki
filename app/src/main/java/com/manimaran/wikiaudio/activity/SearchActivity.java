@@ -2,7 +2,6 @@ package com.manimaran.wikiaudio.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -20,8 +19,8 @@ import com.manimaran.wikiaudio.listerner.CallBackListener;
 import com.manimaran.wikiaudio.utils.GeneralUtils;
 import com.manimaran.wikiaudio.utils.PrefManager;
 import com.manimaran.wikiaudio.view.EndlessListView;
-import com.manimaran.wikiaudio.wiki_api.MediaWikiClient;
-import com.manimaran.wikiaudio.wiki_api.ServiceGenerator;
+import com.manimaran.wikiaudio.wiki_api.ApiInterface;
+import com.manimaran.wikiaudio.wiki_api.ApiClient;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -44,7 +43,7 @@ public class SearchActivity extends AppCompatActivity implements EndlessListView
     private String queryString;
     private Integer nextOffset;
     private PrefManager pref;
-    private MediaWikiClient api;
+    private ApiInterface api;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +51,7 @@ public class SearchActivity extends AppCompatActivity implements EndlessListView
         setContentView(R.layout.activity_search);
 
         pref = new PrefManager(getApplicationContext());
-        api = ServiceGenerator.createService(MediaWikiClient.class, getApplicationContext(), UrlType.WIKTIONARY_PAGE);
+        api = ApiClient.getWiktionaryApi(getApplicationContext()).create(ApiInterface.class);
 
         searchBar = findViewById(R.id.search_bar);
         searchBar.requestFocus();
@@ -105,7 +104,7 @@ public class SearchActivity extends AppCompatActivity implements EndlessListView
     private void setTitle() {
         if (getSupportActionBar() != null) {
             getSupportActionBar().setTitle(getString(R.string.wiktionary));
-            getSupportActionBar().setSubtitle(ServiceGenerator.getUrl(UrlType.WIKTIONARY_PAGE, getApplicationContext()));
+            getSupportActionBar().setSubtitle(ApiClient.getUrl(UrlType.WIKTIONARY_PAGE, getApplicationContext()));
         }
     }
 

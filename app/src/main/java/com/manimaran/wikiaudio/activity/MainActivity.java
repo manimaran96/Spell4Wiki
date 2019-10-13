@@ -74,12 +74,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.btn_about).setOnClickListener(v -> startActivity(new Intent(getApplicationContext(), AboutActivity.class)));
         findViewById(R.id.btn_logout).setOnClickListener(v -> GeneralUtils.logoutAlert(MainActivity.this));
 
-        new Handler().post(new Runnable() {
-            @Override
-            public void run() {
-                hideKeyboard(MainActivity.this);
-            }
-        });
+        new Handler().post(() -> hideKeyboard(MainActivity.this));
 
     }
 

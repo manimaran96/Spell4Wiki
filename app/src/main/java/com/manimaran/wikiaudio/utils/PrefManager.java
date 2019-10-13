@@ -3,10 +3,12 @@ package com.manimaran.wikiaudio.utils;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.util.Log;
 
 import com.manimaran.wikiaudio.R;
 import com.manimaran.wikiaudio.activity.LoginActivity;
-import com.manimaran.wikiaudio.wiki_api.ServiceGenerator;
+
+import java.util.Set;
 
 public class PrefManager {
     // shared pref mode
@@ -134,19 +136,22 @@ public class PrefManager {
         editor.clear();
         setFirstTimeLaunch(true); // Already done
         editor.commit();
-        ServiceGenerator.clearCookies(); // Clear Cookies
 
         // After logout redirect user to Login Activity
         checkLogin();
     }
 
-    public String getCookie() {
-        return pref.getString(KEY_COOKIE, null);
+    public void setCookies(Set<String> cookieList) {
+        Set<String> existigCookie = getCookies();
+        if (existigCookie != null && existigCookie.size() > 0)
+            cookieList.addAll(existigCookie);
+        editor.putStringSet(KEY_COOKIE, cookieList);
+        editor.commit();
+        Log.e("TAG", "Addin " + getCookies().toString());
     }
 
-    public void setCookie(String cookie) {
-        editor.putString(KEY_COOKIE, cookie);
-        editor.commit();
+    public Set<String> getCookies() {
+        return pref.getStringSet(KEY_COOKIE, null);
     }
 
 }

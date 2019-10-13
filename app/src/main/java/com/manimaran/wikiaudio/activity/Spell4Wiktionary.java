@@ -2,7 +2,6 @@ package com.manimaran.wikiaudio.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -20,8 +19,8 @@ import com.manimaran.wikiaudio.listerner.CallBackListener;
 import com.manimaran.wikiaudio.utils.GeneralUtils;
 import com.manimaran.wikiaudio.utils.PrefManager;
 import com.manimaran.wikiaudio.view.EndlessListView;
-import com.manimaran.wikiaudio.wiki_api.MediaWikiClient;
-import com.manimaran.wikiaudio.wiki_api.ServiceGenerator;
+import com.manimaran.wikiaudio.wiki_api.ApiInterface;
+import com.manimaran.wikiaudio.wiki_api.ApiClient;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -101,7 +100,7 @@ public class Spell4Wiktionary extends AppCompatActivity implements EndlessListVi
         if (nextOffsetObj == null)
             refreshLayout.setRefreshing(true);
 
-        MediaWikiClient api = ServiceGenerator.createService(MediaWikiClient.class, getApplicationContext(), UrlType.WIKTIONARY_CONTRIBUTION);
+        ApiInterface api = ApiClient.getWiktionaryApi(getApplicationContext()).create(ApiInterface.class);
         String noAudioTitle = pref.getTitleWordsWithoutAudio();
         Call<ResponseBody> call = api.fetchUnAudioRecords(noAudioTitle, nextOffsetObj);
 

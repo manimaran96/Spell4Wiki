@@ -17,14 +17,13 @@ import android.widget.ProgressBar;
 
 import com.manimaran.wikiaudio.R;
 import com.manimaran.wikiaudio.adapter.LangAdapter;
-import com.manimaran.wikiaudio.constant.UrlType;
 import com.manimaran.wikiaudio.listerner.CallBackListener;
 import com.manimaran.wikiaudio.listerner.OnLangSelectListener;
 import com.manimaran.wikiaudio.model.WikiLanguage;
 import com.manimaran.wikiaudio.utils.GeneralUtils;
 import com.manimaran.wikiaudio.utils.PrefManager;
-import com.manimaran.wikiaudio.wiki_api.MediaWikiClient;
-import com.manimaran.wikiaudio.wiki_api.ServiceGenerator;
+import com.manimaran.wikiaudio.wiki_api.ApiInterface;
+import com.manimaran.wikiaudio.wiki_api.ApiClient;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -77,7 +76,7 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
             if (listView != null)
                 listView.setVisibility(View.GONE);
 
-            MediaWikiClient api = ServiceGenerator.createService(MediaWikiClient.class, getContext(), UrlType.WIKTIONARY_CONTRIBUTION);
+            ApiInterface api = ApiClient.getWiktionaryApi(getContext()).create(ApiInterface.class);
             Call<ResponseBody> call = api.fetchWikiLangList();
             call.enqueue(new Callback<ResponseBody>() {
                 @Override

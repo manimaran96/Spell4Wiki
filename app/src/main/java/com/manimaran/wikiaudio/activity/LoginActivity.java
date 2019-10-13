@@ -18,8 +18,8 @@ import android.widget.Toast;
 import com.manimaran.wikiaudio.R;
 import com.manimaran.wikiaudio.constant.UrlType;
 import com.manimaran.wikiaudio.utils.PrefManager;
-import com.manimaran.wikiaudio.wiki_api.MediaWikiClient;
-import com.manimaran.wikiaudio.wiki_api.ServiceGenerator;
+import com.manimaran.wikiaudio.wiki_api.ApiInterface;
+import com.manimaran.wikiaudio.wiki_api.ApiClient;
 
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONException;
@@ -42,7 +42,7 @@ public class LoginActivity extends AppCompatActivity {
     TextView btnSkipLogin;
 
     PrefManager pref;
-    MediaWikiClient api;
+    ApiInterface api;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,7 +61,7 @@ public class LoginActivity extends AppCompatActivity {
         } else {
             init();
             hideKeyboard();
-            api = ServiceGenerator.createService(MediaWikiClient.class, getApplicationContext(), UrlType.COMMONS);
+            api = ApiClient.getCommonsApi(getApplicationContext()).create(ApiInterface.class);
 
             /*
              * Hit Login Button
@@ -156,7 +156,7 @@ public class LoginActivity extends AppCompatActivity {
      */
     private void completeLogin(String username, String password, String loginToken) {
 
-        Call<ResponseBody> call = api.clientLogin("clientlogin", "json", ServiceGenerator.getUrl(UrlType.COMMONS, getApplicationContext()), loginToken, username, password);
+        Call<ResponseBody> call = api.clientLogin("clientlogin", "json", ApiClient.getUrl(UrlType.COMMONS, getApplicationContext()), loginToken, username, password);
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {

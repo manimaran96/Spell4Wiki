@@ -17,7 +17,7 @@ import retrofit2.http.Query;
 /**
  * Media wiki API - https://mediawiki.org/wiki/API
  */
-public interface MediaWikiClient {
+public interface ApiInterface {
 
     // Login token - Commons
     @GET("w/api.php?action=query&meta=tokens&format=json&type=login")

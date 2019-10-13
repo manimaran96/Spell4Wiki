@@ -13,7 +13,7 @@ import android.webkit.WebViewClient;
 import com.manimaran.wikiaudio.R;
 import com.manimaran.wikiaudio.constant.UrlType;
 import com.manimaran.wikiaudio.utils.PrefManager;
-import com.manimaran.wikiaudio.wiki_api.ServiceGenerator;
+import com.manimaran.wikiaudio.wiki_api.ApiClient;
 
 public class WiktionaryWebActivity extends AppCompatActivity {
 
@@ -34,7 +34,7 @@ public class WiktionaryWebActivity extends AppCompatActivity {
             }
             if (getSupportActionBar() != null) {
                 getSupportActionBar().setTitle(word);
-                getSupportActionBar().setSubtitle(ServiceGenerator.getUrl(UrlType.WIKTIONARY_PAGE, getApplicationContext()));
+                getSupportActionBar().setSubtitle(ApiClient.getUrl(UrlType.WIKTIONARY_PAGE, getApplicationContext()));
                 getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_close);
                 getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             }
