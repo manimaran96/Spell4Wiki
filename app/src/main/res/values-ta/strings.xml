@@ -3,7 +3,7 @@
     <string name="app_name">Spell4Wiki</string>
     <string name="login">உள்நுழை</string>
     <string name="search_here">தேடல்</string>
-    <string name="upload">Upload</string>
+    <string name="upload">பதிவேற்ற</string>
     <string name="hint_before_record">Holding to record</string>
     <string name="alert_to_exit">Again click back to Exit</string>
     <string name="check_internet">Please check your internet connection!</string>
