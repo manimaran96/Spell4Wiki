@@ -12,7 +12,7 @@
     <string name="select_language_response_msg">Now Your Language is %s</string>
     <string name="welcome_user">Welcome, %s</string>
     <string name="wiktionary">Wiktionary</string>
-    <string name="settings">Settings</string>
+    <string name="settings">அமைப்புகள்</string>
     <string name="logout">Logout</string>
     <string name="about">About</string>
     <string name="wiki_login">Wiki Login</string>
