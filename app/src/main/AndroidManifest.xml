@@ -59,6 +59,9 @@
         <activity
             android:name=".activity.UploadToCommonsActivity"
             android:theme="@style/ActionBar" />
+        <activity
+            android:name=".activity.Spell4WordActivity"
+            android:theme="@style/ActionBar" />
     </application>
 
 </manifest>
