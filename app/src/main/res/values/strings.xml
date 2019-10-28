@@ -54,5 +54,6 @@
     <string name="hint_search">Search on wiktionary</string>
     <string name="donate">Donate</string>
     <string name="how_is_work">How?</string>
+    <string name="record">Record</string>
 
 </resources>

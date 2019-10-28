@@ -103,6 +103,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 nextClass = UploadToCommonsActivity.class;
                 break;
             case R.id.card_spell4word:
+                nextClass = Spell4WordActivity.class;
                 break;
         }
         startActivity(new Intent(getApplicationContext(), nextClass));
