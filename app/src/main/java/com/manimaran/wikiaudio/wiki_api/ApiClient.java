@@ -91,7 +91,7 @@ public class ApiClient {
         ClearableCookieJar cookieJar = new PersistentCookieJar(new SetCookieCache(), new SharedPrefsCookiePersistor(context));
         //okHttpClient.cookieJar(cookieJar);
 
-        // Logging
+        /*// Logging
         okHttpClient.interceptors().add(logging);
 
         // Query params
@@ -101,12 +101,11 @@ public class ApiClient {
         okHttpClient.interceptors().add(addCookiesInterceptor);
 
         // Received cookies interceptors
-        okHttpClient.interceptors().add(receiveCookiesInterceptor);
+        okHttpClient.interceptors().add(receiveCookiesInterceptor);*/
 
-        /*if (!okHttpClient.interceptors().contains(logging)) {
-
+        if (!okHttpClient.interceptors().contains(logging)) {
+            okHttpClient.interceptors().add(logging);
         }
-
 
         if (!okHttpClient.interceptors().contains(queryParamInterceptor)) {
             okHttpClient.addInterceptor(queryParamInterceptor);
@@ -120,7 +119,7 @@ public class ApiClient {
 
         if (!okHttpClient.interceptors().contains(receiveCookiesInterceptor)) {
             okHttpClient.addInterceptor(receiveCookiesInterceptor);
-        }*/
+        }
 
 
         return okHttpClient.build();
@@ -168,6 +167,7 @@ public class ApiClient {
             Response originalResponse = chain.proceed(chain.request());
             if (!originalResponse.headers("Set-Cookie").isEmpty()) {
                 HashSet<String> cookies = new HashSet<>(originalResponse.headers("Set-Cookie"));
+                Log.v("OkHttp", "Receive Header: " + cookies.toString());
                 pref.setCookies(cookies);
             }
             return originalResponse;
