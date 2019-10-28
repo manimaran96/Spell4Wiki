@@ -29,9 +29,9 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.arthenica.mobileffmpeg.FFmpeg;
 import com.manimaran.wikiaudio.R;
 import com.manimaran.wikiaudio.activity.WiktionaryWebActivity;
-import com.manimaran.wikiaudio.constant.UrlType;
 import com.manimaran.wikiaudio.listerner.CallBackListener;
 import com.manimaran.wikiaudio.record.wav.WAVPlayer;
 import com.manimaran.wikiaudio.record.wav.WAVRecorder;
@@ -63,6 +63,7 @@ public class EndlessAdapter extends ArrayAdapter<String> {
 
     private static final int RECORD_AUDIO_REQUEST_CODE = 101;
     private static final String RECORDED_FILENAME = "record.wav";
+    private static final String CONVERTED_FILENAME = "record.ogg";
     private List<String> itemList;
     private Context ctx;
     private Activity activity;
@@ -340,7 +341,7 @@ public class EndlessAdapter extends ArrayAdapter<String> {
             @Override
             public void onClick(View view) {
                 if (isRecorded) {
-                    uploadName = pref.getContributionLangCode() + "-" + itemList.get(pos) + ".wav";
+                    uploadName = pref.getContributionLangCode() + "-" + itemList.get(pos) + ".ogg";
                     uploadAudioToWikiServer(false, pos);
                 } else
                     GeneralUtils.showToast(ctx, "Please record audio first");
@@ -404,7 +405,7 @@ public class EndlessAdapter extends ArrayAdapter<String> {
 
     private void completeUpload(String editToken, final int pos) {
 
-        String filePath = getFilePath();
+        String filePath = getFilePathOfOgg();
         String uploadFileName = uploadName;
         File file = new File(filePath);
         // create RequestBody instance from file
@@ -578,6 +579,32 @@ public class EndlessAdapter extends ArrayAdapter<String> {
                 Log.d(TAG, "Not create directory!");
         }
         return file.getAbsolutePath() + "/" + EndlessAdapter.RECORDED_FILENAME;
+    }
+
+    private String getFilePathOfOgg() {
+        String filePath = Environment.getExternalStorageDirectory().getPath();
+        File file = new File(filePath, "/Spell4Wiki/Audios");
+        if (!file.exists()) {
+            if (!file.mkdirs())
+                Log.d(TAG, "Not create directory!");
+        }
+
+        File convertedFile = new File(file.getAbsolutePath() + "/" + EndlessAdapter.CONVERTED_FILENAME);
+        if (convertedFile.exists()) {
+            if (convertedFile.delete()) {
+                System.out.println("file Deleted :" + convertedFile.getPath());
+            } else {
+                System.out.println("file not Deleted :" + convertedFile.getPath());
+            }
+        }
+
+        String recordedFile = file.getAbsolutePath() + "/" + EndlessAdapter.RECORDED_FILENAME;
+
+        Log.e("TAG", "--------- WAV " + recordedFile);
+        FFmpeg.execute("-i " + recordedFile + " -acodec libvorbis "+ convertedFile.getAbsolutePath());
+        Log.e("TAG", "---------");
+
+        return file.getAbsolutePath() + "/" + EndlessAdapter.CONVERTED_FILENAME;
     }
 }
 

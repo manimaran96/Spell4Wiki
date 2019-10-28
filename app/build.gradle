@@ -36,15 +36,15 @@ dependencies {
     /**
      * UI related libraries -Recycler view, Constraint layout
      */
-    implementation 'com.android.support.constraint:constraint-layout:2.0.0-beta2'
+    implementation 'com.android.support.constraint:constraint-layout:2.0.0-beta3'
     implementation 'com.android.support:appcompat-v7:28.0.0'
     implementation 'com.android.support:design:28.0.0'
     implementation 'com.android.support:recyclerview-v7:28.0.0'
     /**
      * Networking libraries - Retrofit, OkHTTP, Gson, Cookie
      */
-    implementation 'com.squareup.retrofit2:retrofit:2.6.1'
-    implementation 'com.squareup.retrofit2:converter-gson:2.6.1'
+    implementation 'com.squareup.retrofit2:retrofit:2.6.2'
+    implementation 'com.squareup.retrofit2:converter-gson:2.6.2'
     implementation 'com.google.code.gson:gson:2.8.5'
     implementation 'com.squareup.okhttp3:okhttp:4.1.0'
     implementation 'com.squareup.okhttp3:logging-interceptor:4.1.0'
@@ -69,6 +69,9 @@ dependencies {
     implementation 'com.github.mukeshsolanki:MarkdownView-Android:1.0.8'
     testImplementation 'junit:junit:4.12'
     implementation 'org.jetbrains:annotations-java5:15.0'
+
+    // FFMPEG convertor
+    implementation 'com.arthenica:mobile-ffmpeg-full:4.2.2.LTS' // support api 16+
 
     implementation 'com.squareup.okhttp3:okhttp-urlconnection:3.2.0'
 }
