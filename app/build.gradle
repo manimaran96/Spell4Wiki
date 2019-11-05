@@ -49,13 +49,9 @@ dependencies {
     implementation 'com.squareup.okhttp3:okhttp:4.1.0'
     implementation 'com.squareup.okhttp3:logging-interceptor:4.1.0'
     implementation 'com.github.franmontiel:PersistentCookieJar:v1.0.1'
-    //implementation 'com.github.axet:android-audio-library:1.0.149'
-    //api 'com.github.axet:android-library:1.30.16'
-    implementation 'com.github.axet:vorbis:1.0.4'
+
     // Markdown
-    implementation 'com.github.billthefarmer:MarkdownView:v1.01'
     implementation 'com.github.tiagohm.MarkdownView:library:0.19.0'
-    // implementation project(':android-audio-library')
 
     /**
      * App Intro
