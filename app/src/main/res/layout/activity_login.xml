@@ -26,59 +26,105 @@
             android:fontFamily="serif"
             android:text="@string/wiki_login"
             android:textAlignment="center"
-            android:textColor="@android:color/background_dark"
-            android:textSize="18sp" />
+            android:textColor="@color/w_blue"
+            android:textSize="@dimen/text_large" />
 
-        <!--  Email Label -->
+        <!--  Email / Username Label -->
         <android.support.design.widget.TextInputLayout
+            android:id="@+id/input_user_name"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp">
+            android:layout_marginTop="8dp"
+            android:layout_height="wrap_content">
 
-            <EditText
+            <android.support.design.widget.TextInputEditText
                 android:id="@+id/edit_username"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/user_name"
-                android:inputType="textPersonName" />
+                android:hint="@string/user_name" />
         </android.support.design.widget.TextInputLayout>
 
         <!--  Password Label -->
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
             android:layout_marginTop="8dp"
             app:passwordToggleEnabled="true">
-
-            <EditText
+            <android.support.design.widget.TextInputEditText
                 android:id="@+id/edit_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/password"
-                android:inputType="textPassword" />
+                android:inputType="textPassword"/>
         </android.support.design.widget.TextInputLayout>
 
         <br.com.simplepass.loading_button_lib.customViews.CircularProgressButton
             android:id="@+id/btn_login"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:padding="10dp"
             android:layout_margin="10dp"
-            android:background="@color/colorAccent"
+            android:background="@drawable/bg_dialog"
             android:text="@string/login"
             android:textColor="@android:color/white"
             app:spinning_bar_color="#FFF"
             app:spinning_bar_padding="6dp"
             app:spinning_bar_width="3dp" />
 
+
         <TextView
-            android:id="@+id/btn_skip_login"
+            android:id="@+id/btn_forgot_password"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1"
             android:layout_marginTop="5dp"
             android:gravity="center"
-            android:text="@string/skip"
-            android:textSize="@dimen/text_normal"
-            android:textStyle="bold" />
+            android:text="@string/action_forgot_password"
+            android:textSize="@dimen/text_small"
+            android:textStyle="bold"
+            android:textColor="@color/w_blue" />
+
+       <LinearLayout
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:weightSum="2"
+           android:layout_marginTop="25dp"
+           android:layout_marginStart="10dp"
+           android:layout_marginEnd="10dp"
+           android:orientation="horizontal">
+
+           <TextView
+               android:id="@+id/btn_join_wikipedia"
+               android:layout_width="0dp"
+               android:layout_height="match_parent"
+               android:layout_weight="1"
+               android:gravity="center"
+               android:text="@string/action_join_wikipedia"
+               android:textSize="@dimen/text_small"
+               android:background="@drawable/search_view_bg"
+               android:textStyle="bold"
+               android:padding="8dp"
+               android:layout_marginEnd="5dp"
+               android:textColor="@color/w_blue" />
+
+
+           <TextView
+               android:id="@+id/btn_skip_login"
+               android:layout_width="0dp"
+               android:layout_height="match_parent"
+               android:layout_weight="1"
+               android:gravity="center"
+               android:text="@string/skip_login"
+               android:textSize="@dimen/text_small"
+               android:background="@drawable/search_view_bg"
+               android:textStyle="bold"
+               android:padding="8dp"
+               android:layout_marginStart="5dp"
+               android:textColor="@color/w_blue" />
+
+       </LinearLayout>
+
 
     </LinearLayout>
 </ScrollView>

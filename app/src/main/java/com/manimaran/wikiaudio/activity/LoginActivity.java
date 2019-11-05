@@ -2,6 +2,7 @@ package com.manimaran.wikiaudio.activity;
 
 import android.content.Intent;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
@@ -39,7 +40,7 @@ public class LoginActivity extends AppCompatActivity {
     // Views
     EditText editUserName, editPassword;
     CircularProgressButton btnLogin;
-    TextView btnSkipLogin;
+    TextView btnSkipLogin, btnJoinWikipedia, btnForgotPassword;
 
     PrefManager pref;
     ApiInterface api;
@@ -66,28 +67,39 @@ public class LoginActivity extends AppCompatActivity {
             /*
              * Hit Login Button
              */
-            btnLogin.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if (!TextUtils.isEmpty(editUserName.getText()) && !TextUtils.isEmpty(editPassword.getText())) {
-                        hideKeyboard();
-                        btnLogin.startAnimation();
-                        callToken(editUserName.getText().toString(), editPassword.getText().toString());
-                    } else
-                        Snackbar.make(btnLogin, getString(R.string.invalid_credential), Snackbar.LENGTH_SHORT).show();
-                }
+            btnLogin.setOnClickListener(view -> {
+                if (!TextUtils.isEmpty(editUserName.getText()) && !TextUtils.isEmpty(editPassword.getText())) {
+                    hideKeyboard();
+                    btnLogin.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.w_blue));
+                    btnLogin.startAnimation();
+                    callToken(editUserName.getText().toString(), editPassword.getText().toString());
+                } else
+                    Snackbar.make(btnLogin, getString(R.string.invalid_credential), Snackbar.LENGTH_SHORT).show();
             });
 
             /*
              *  Hit Skip Button
              */
-            btnSkipLogin.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    pref.setIsAnonymous(true);
-                    launchActivity();
-                }
+            btnSkipLogin.setOnClickListener(v -> {
+                pref.setIsAnonymous(true);
+                launchActivity();
             });
+
+            /*
+             *  Hit Forgot Password Button
+             */
+            btnForgotPassword.setOnClickListener(v -> {
+                openUrl(getString(R.string.url_forgot_password));
+            });
+
+            /*
+             *  Hit Join Wikipedia Button
+             */
+            btnJoinWikipedia.setOnClickListener(v -> {
+                openUrl(getString(R.string.url_join_wikipedia));
+            });
+
+
         }
     }
 
@@ -120,8 +132,7 @@ public class LoginActivity extends AppCompatActivity {
 
                     } catch (JSONException | IOException e) {
                         e.printStackTrace();
-                        showMsg("Please check your connection!");
-                        btnLogin.revertAnimation();
+                        showErrorMsg("Please check your connection!");
                     }
                 }
             }
@@ -129,8 +140,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
                 t.printStackTrace();
-                btnLogin.revertAnimation();
-                showMsg(getString(R.string.check_internet));
+                showErrorMsg(getString(R.string.check_internet));
             }
         });
     }
@@ -171,7 +181,7 @@ public class LoginActivity extends AppCompatActivity {
                             String result = loginJSONObject.getString("status");
                             if (result.equals("PASS")) {
 
-                                showMsg("Welcome " + loginJSONObject.getString("username"));
+                                showSuccessMsg("Welcome " + loginJSONObject.getString("username"));
 
                                 //  Write to shared preferences
                                 pref.setSession(loginJSONObject.getString("username"), true);
@@ -189,26 +199,22 @@ public class LoginActivity extends AppCompatActivity {
                                 }, 2000);
 
                             } else if (result.equals("FAIL")) {
-                                showMsg(loginJSONObject.getString("message"));
-                                btnLogin.revertAnimation();
+                                showErrorMsg(loginJSONObject.getString("message"));
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
-                            showMsg("Server misbehaved! Please try again later.");
-                            btnLogin.revertAnimation();
+                            showErrorMsg("Server misbehaved! Please try again later.");
                         }
                     } catch (IOException e) {
                         e.printStackTrace();
-                        showMsg("Please check your connection!");
-                        btnLogin.revertAnimation();
+                        showErrorMsg("Please check your connection!");
                     }
                 }
             }
 
             @Override
             public void onFailure(@NotNull Call<ResponseBody> call, @NotNull Throwable t) {
-                showMsg("Please check your connection!");
-                btnLogin.revertAnimation();
+                showErrorMsg("Please check your connection!");
             }
         });
 
@@ -223,8 +229,14 @@ public class LoginActivity extends AppCompatActivity {
         finish();
     }
 
-    private void showMsg(String msg) {
-        Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
+    private void showErrorMsg(String msg) {
+        Snackbar.make(btnLogin, msg, Snackbar.LENGTH_LONG).show();
+        btnLogin.revertAnimation();
+        btnLogin.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.bg_dialog));
+    }
+
+    private void showSuccessMsg(String msg) {
+        Snackbar.make(btnLogin, msg, Snackbar.LENGTH_LONG).show();
     }
 
     private void init() {
@@ -232,6 +244,8 @@ public class LoginActivity extends AppCompatActivity {
         editPassword = findViewById(R.id.edit_password);
         btnLogin = findViewById(R.id.btn_login);
         btnSkipLogin = findViewById(R.id.btn_skip_login);
+        btnJoinWikipedia = findViewById(R.id.btn_join_wikipedia);
+        btnForgotPassword = findViewById(R.id.btn_forgot_password);
     }
 
     @Override
@@ -239,5 +253,11 @@ public class LoginActivity extends AppCompatActivity {
         super.onDestroy();
         if (btnLogin != null)
             btnLogin.dispose();
+    }
+
+    private void openUrl(String url)
+    {
+        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+        startActivity(browserIntent);
     }
 }
