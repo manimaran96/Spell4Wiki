@@ -1,43 +1,24 @@
 package com.manimaran.wikiaudio.activity;
 
-import android.content.Intent;
+import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.SearchView;
-import android.widget.Toast;
 
 import com.manimaran.wikiaudio.R;
-import com.manimaran.wikiaudio.adapter.EndlessAdapter;
 import com.manimaran.wikiaudio.constant.UrlType;
-import com.manimaran.wikiaudio.fragment.BottomSheetFragment;
-import com.manimaran.wikiaudio.listerner.CallBackListener;
-import com.manimaran.wikiaudio.utils.GeneralUtils;
+import com.manimaran.wikiaudio.fragment.MyCustomDialogFragment;
 import com.manimaran.wikiaudio.utils.PrefManager;
-import com.manimaran.wikiaudio.view.EndlessListView;
 import com.manimaran.wikiaudio.wiki_api.ApiClient;
 import com.manimaran.wikiaudio.wiki_api.ApiInterface;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-
-import okhttp3.ResponseBody;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-
-public class Spell4WordActivity extends AppCompatActivity{
+public class Spell4WordActivity extends AppCompatActivity {
 
     private EditText editSpell4Word;
     private Button btnRecord;
@@ -52,9 +33,23 @@ public class Spell4WordActivity extends AppCompatActivity{
 
         pref = new PrefManager(getApplicationContext());
         api = ApiClient.getWiktionaryApi(getApplicationContext()).create(ApiInterface.class);
-
-
         setTitle();
+
+        findViewById(R.id.btn_record).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentManager fm = getSupportFragmentManager();
+
+                FragmentTransaction ft = getFragmentManager().beginTransaction();
+                Fragment prev = getFragmentManager().findFragmentByTag("dialog");
+                if (prev != null) {
+                    ft.remove(prev);
+                }
+                ft.addToBackStack(null);
+                DialogFragment dialogFragment = new MyCustomDialogFragment();
+                dialogFragment.show(fm, "dialog");
+            }
+        });
     }
 
     private void setTitle() {
