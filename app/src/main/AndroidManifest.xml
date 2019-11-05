@@ -39,29 +39,29 @@
 
         <activity
             android:name=".activity.LoginActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".activity.Spell4Wiktionary"
-            android:theme="@style/ActionBar" />
+            android:theme="@style/ActionBarStyle" />
         <activity
             android:name=".activity.SearchActivity"
-            android:theme="@style/ActionBar" />
+            android:theme="@style/ActionBarStyle" />
         <activity
             android:name=".activity.MainActivity"
             android:windowSoftInputMode="stateAlwaysHidden"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activity.WiktionaryWebActivity"
-            android:theme="@style/ActionBar" />
+            android:theme="@style/ActionBarStyle" />
         <activity
             android:name=".activity.AboutActivity"
-            android:theme="@style/ActionBar" />
+            android:theme="@style/ActionBarStyle" />
         <activity
             android:name=".activity.UploadToCommonsActivity"
-            android:theme="@style/ActionBar" />
+            android:theme="@style/ActionBarStyle" />
         <activity
             android:name=".activity.Spell4WordActivity"
-            android:theme="@style/ActionBar" />
+            android:theme="@style/ActionBarStyle" />
     </application>
 
 </manifest>

@@ -1,46 +1,95 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light">
+        <!--  color for the app bar and other primary UI elements -->
         <item name="colorPrimary">@color/colorPrimary</item>
+        <!--  a darker variant of the primary color, used for the status bar (on Android 5.0+) and contextual app bars -->
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <!--  a secondary color for controls like checkboxes and text fields -->
         <item name="colorAccent">@color/colorAccent</item>
+        <!-- Custom Edit text style for all edit text view-->
+        <item name="editTextStyle">@style/CustomEditTextStyle</item>
+        <!-- Custom Text view Style for all text view-->
+        <item name="android:textViewStyle">@style/CustomTextViewStyle</item>
+        <!-- Custom Button text style for all Button view-->
+        <item name="buttonStyle">@style/CustomButtonStyle</item>
+        <!-- Action bar style -->
+        <item name="actionBarStyle">@style/ActionBarStyle</item>-->
     </style>
 
-    <style name="AppTheme.FullScreen" parent="Theme.AppCompat.Light.NoActionBar">
+    <!--No action bar Theme-->
+    <style name="AppTheme.NoActionBar" parent="@style/AppTheme">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <!-- Full screen Theme-->
+    <style name="AppTheme.FullScreen" parent="@style/AppTheme.NoActionBar">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowActionBar">false</item>
         <item name="android:windowFullscreen">true</item>
         <item name="android:windowContentOverlay">@null</item>
     </style>
 
-    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
-
-    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
-
-    <style name="AppTheme.NoActionBar">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
-        <item name="android:statusBarColor">@color/light_gray</item>
-    </style>
-
-    <style name="ActionBar" parent="@style/Theme.AppCompat.Light">
-        <item name="actionBarStyle">@style/Widget.Styled.ActionBar</item>
-        <item name="actionMenuTextColor">@color/black</item>
-    </style>
-
-    <style name="Widget.Styled.ActionBar" parent="@style/Widget.AppCompat.Light.ActionBar.Solid.Inverse">
+    <!-- Action Bar Style -->
+    <style name="ActionBarStyle" parent="@style/Theme.AppCompat.Light">
+        <item name="background">@color/white</item>
         <item name="titleTextStyle">@style/ActionBarTitleText</item>
         <item name="subtitleTextStyle">@style/ActionBarSubTitleText</item>
-        <item name="background">@color/white</item>
+        <item name="android:fontFamily">@font/montserrat</item>
     </style>
 
-    <style name="ActionBarTitleText" parent="Base.Widget.AppCompat.ActionBar">
-        <item name="android:textColor">@color/black</item>
-        <item name="android:textSize">18sp</item>
+    <!-- Action Bar Title Style -->
+    <style name="ActionBarTitleText" parent="@style/TextAppearance.AppCompat.Widget.ActionBar.Title">
+        <item name="android:textColor">@color/label_text</item>
+        <item name="android:textSize">16sp</item>
     </style>
 
+    <!-- Action Bar SubTitle Style -->
     <style name="ActionBarSubTitleText" parent="@style/TextAppearance.AppCompat.Widget.ActionBar.Subtitle">
         <item name="android:textColor">@color/light_gray</item>
         <item name="android:textSize">12sp</item>
     </style>
+
+    <!--Custom Edit text style -->
+    <style name="CustomEditTextStyle" parent="android:Widget.EditText">
+        <item name="android:background">@drawable/bg_button</item>
+        <item name="android:fontFamily">@font/montserrat</item>
+        <item name="android:drawablePadding">5dp</item>
+        <item name="android:paddingEnd">5dp</item>
+    </style>
+
+    <!--Custom Text view style-->
+    <style name="CustomTextViewStyle" parent="android:Widget.TextView">
+        <item name="android:fontFamily">@font/montserrat</item>
+    </style>
+
+    <!--Custom Button style -->
+    <style name="CustomButtonStyle" parent="android:Widget.Button">
+        <item name="colorButtonNormal">@color/colorPrimaryDark</item>
+        <item name="android:fontFamily">@font/montserrat</item>
+        <item name="android:background">@drawable/bg_button</item>
+        <item name="android:paddingStart">@dimen/btn_padding_start</item>
+        <item name="android:paddingEnd">@dimen/btn_padding_end</item>
+        <item name="android:paddingTop">5dp</item>
+        <item name="android:paddingBottom">5dp</item>
+        <item name="android:layout_margin">3dp</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <!--PopUpMenu Style-->
+    <style name="PopUpMenuStyle" parent="AppTheme.PopupOverlay">
+        <item name="android:colorBackground">@android:color/transparent</item>
+        <item name="android:textColor">#000000</item>
+        <item name="android:popupBackground">@drawable/bg_dialog</item>
+        <item name="android:fontFamily">@font/montserrat</item>
+    </style>
+
+    <dimen name="btn_padding_start">10dp</dimen>
+    <dimen name="btn_padding_end">10dp</dimen>
 </resources>
