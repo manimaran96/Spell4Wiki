@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#CECECE</color>
+    <color name="colorPrimaryDark">@null</color>
+    <color name="transparent">#00FFFFFF</color>
+    <color name="colorAccent">@color/w_blue</color>
     <color name="green">#059703</color>
     <color name="white">#fff</color>
     <color name="black">#000000</color>
-    <color name="light_gray">#8A8A8A</color>
 
     <color name="w_red">#9A0000</color>
     <color name="w_green">#339967</color>
@@ -17,6 +17,21 @@
     <color name="app_intro_title">@color/w_blue</color>
     <color name="app_intro_description">@color/w_blue</color>
     <color name="gray">#5A5A5A</color>
+
+    <!-- Common - Colors -->
+    <color name="background">#F5F4F4</color>
+    <color name="SplashScreen">#ecebeb</color>
+    <color name="light_gray">#eae9e9</color>
+    <color name="dark_gray">#666666</color>
+    <color name="gray_100">#ccc</color>
+    <color name="edit_text_drawable_bg">#37c871</color>
+    <color name="btn_bg">@color/icon_color</color>
+    <color name="img_bg">#F1F1F1</color>
+    <color name="icon_color">#4DB6AC</color>
+    <color name="blood_color">#bb0a1e</color>
+    <color name="ic_launcher_background">#ffffff</color>
+    <color name="indicator">#dd2c00</color>
+    <color name="label_text">#A09D9D</color>
 
 
 </resources>
