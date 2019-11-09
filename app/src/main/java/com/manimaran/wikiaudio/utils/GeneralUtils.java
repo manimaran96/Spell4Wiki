@@ -113,17 +113,19 @@ public class GeneralUtils {
         //Read text from file
         List<String> tempList = new ArrayList<>();
 
-        try {
-            BufferedReader br = new BufferedReader(new FileReader(file));
-            String line;
+        if(file.exists()) {
+            try {
+                BufferedReader br = new BufferedReader(new FileReader(file));
+                String line;
 
-            while ((line = br.readLine()) != null) {
-                tempList.add(line);
+                while ((line = br.readLine()) != null) {
+                    tempList.add(line);
+                }
+                br.close();
+            } catch (IOException e) {
+                //You'll need to add proper error handling here
+                e.printStackTrace();
             }
-            br.close();
-        } catch (IOException e) {
-            //You'll need to add proper error handling here
-            e.printStackTrace();
         }
         wordsList.removeAll(tempList);
         return wordsList;
