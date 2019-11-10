@@ -14,8 +14,8 @@
         android:layout_height="100dp"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="30dp"
-        android:contentDescription="Wiktionary"
-        app:srcCompat="@drawable/wiktionary" />
+        android:contentDescription="@string/wiktionary"
+        app:srcCompat="@drawable/ic_wiktionary" />
 
     <SearchView
         android:id="@+id/search_bar"

@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_margin="20dp"
-        android:background="@drawable/bg_dialog"
+        android:background="@drawable/bg_blue"
         android:elevation="8dp"
         android:minWidth="300dp"
         android:orientation="vertical"

@@ -134,7 +134,7 @@ public class PrefManager {
     public void logoutUser() {
         // Clearing all data from Shared Preferences
         editor.clear();
-        setFirstTimeLaunch(true); // Already done
+        setFirstTimeLaunch(false); // Already done
         editor.commit();
 
         // After logout redirect user to Login Activity

@@ -24,7 +24,7 @@
             <ImageView
                 android:layout_width="@dimen/logo_large"
                 android:layout_height="@dimen/logo_large"
-                android:src="@drawable/ic_spell4explore"
+                android:src="@drawable/ic_spell4wiki_main"
                 android:padding="10dp"/>
 
             <TextView

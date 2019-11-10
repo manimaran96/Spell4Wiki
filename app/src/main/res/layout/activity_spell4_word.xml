@@ -17,7 +17,7 @@
         android:layout_height="100dp"
         android:layout_marginTop="30dp"
         android:contentDescription="@string/wiktionary"
-        app:srcCompat="@drawable/wiktionary" />
+        app:srcCompat="@drawable/ic_wiktionary" />
 
     <EditText
         android:layout_width="match_parent"
@@ -33,7 +33,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_margin="10dp"
-        android:background="@drawable/bg_dialog"
+        android:background="@drawable/bg_blue"
         android:text="@string/record"
         android:textAllCaps="false"
         android:textColor="@color/white"

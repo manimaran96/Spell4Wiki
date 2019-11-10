@@ -86,7 +86,7 @@
     <style name="PopUpMenuStyle" parent="AppTheme.PopupOverlay">
         <item name="android:colorBackground">@android:color/transparent</item>
         <item name="android:textColor">#000000</item>
-        <item name="android:popupBackground">@drawable/bg_dialog</item>
+        <item name="android:popupBackground">@drawable/bg_blue</item>
         <item name="android:fontFamily">@font/montserrat</item>
     </style>
 

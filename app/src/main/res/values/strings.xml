@@ -62,5 +62,6 @@
     <string name="action_join_wikipedia">Join Wikipedia</string>
     <string name="hint_or">OR</string>
     <string name="skip_login">Skip Login</string>
+    <string name="please_wait">Please wait</string>
 
 </resources>
