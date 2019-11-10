@@ -174,6 +174,11 @@ public class GeneralUtils {
     }
 
     public static void openUrl(Context context, String url){
-        context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
+        try {
+            if (url != null && !url.isEmpty())
+                context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 }
