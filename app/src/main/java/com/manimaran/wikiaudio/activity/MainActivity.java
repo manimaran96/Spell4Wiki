@@ -31,6 +31,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private boolean doubleBackToExitPressedOnce = false;
     private PrefManager pref;
+    SearchView searchView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,9 +42,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         init();
 
-        SearchView searchView = findViewById(R.id.search_view);
+        searchView = findViewById(R.id.search_view);
         searchView.setQueryHint(getString(R.string.hint_search));
         searchView.setIconifiedByDefault(false);
+        searchView.clearFocus();
+        searchView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), SearchActivity.class);
+                startActivity(intent);
+            }
+        });
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -114,6 +123,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      */
     private void init() {
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(searchView != null)
+        {
+            searchView.setQuery("",false);
+            searchView.clearFocus();
+            hideKeyboard(this);
+        }
     }
 
     @Override

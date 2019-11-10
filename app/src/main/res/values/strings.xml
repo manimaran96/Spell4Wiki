@@ -63,5 +63,6 @@
     <string name="hint_or">OR</string>
     <string name="skip_login">Skip Login</string>
     <string name="please_wait">Please wait</string>
+    <string name="select_language_info">Selected Language : %s</string>
 
 </resources>

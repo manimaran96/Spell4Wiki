@@ -21,4 +21,5 @@
     <dimen name="text_margin">16dp</dimen>
     <dimen name="nav_header_vertical_spacing">8dp</dimen>
     <dimen name="nav_header_height">176dp</dimen>
+    <dimen name="search_view_height">40dp</dimen>
 </resources>
