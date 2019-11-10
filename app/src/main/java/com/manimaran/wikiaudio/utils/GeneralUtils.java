@@ -6,9 +6,11 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Point;
 import android.net.ConnectivityManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
 import android.support.design.widget.Snackbar;
@@ -169,5 +171,9 @@ public class GeneralUtils {
     public static boolean isNetworkConnected(Context context) {
         ConnectivityManager connectivityManager = ((ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE));
         return connectivityManager.getActiveNetworkInfo() != null && connectivityManager.getActiveNetworkInfo().isConnected();
+    }
+
+    public static void openUrl(Context context, String url){
+        context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
     }
 }

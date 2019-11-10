@@ -64,5 +64,39 @@
     <string name="skip_login">Skip Login</string>
     <string name="please_wait">Please wait</string>
     <string name="select_language_info">Selected Language : %s</string>
+    <string name="about_app">@string/app_intro_slide_1_description</string>
+    <string name="app_version_and_license"><![CDATA[Version : 1.0 & License : GPLv3]]></string>
+    <string name="rate_us">Rate Us</string>
+    <string name="share">Share</string>
+    <string name="rate_app">Rate App</string>
+    <string name="powered_by">Powered By</string>
+    <string name="kaniyam">Kaniyam</string>
+    <string name="about_kaniyam">தமிழ் மொழி மற்றும் இனக்குழுக்கள் சார்ந்த மெய்நிகர்வளங்கள், கருவிகள் மற்றும் அறிவுத்தொகுதிகள், அனைவருக்கும்  கட்டற்ற அணுக்கத்தில் கிடைக்கும் சூழல்</string>
+    <string name="link_kaniyam">http://www.kaniyam.com/</string>
+    <string name="vglug">VGLUG</string>
+    <string name="about_vglug">Villupuram GNU/Linux Users Group (Villupuram GLUG) is a non profit organization started in 2013, Impression of Free and open-source software (FOSS).</string>
+    <string name="link_vglug">https://vglug.org/</string>
+    <string name="see_source_code">See Source Code</string>
+    <string name="help_development">Help Development</string>
+    <string name="contact_us">Contact Us</string>
+    <string name="third_party_libraries">Third Party Libraries</string>
+    <string name="source_code">Source Code</string>
+    <string name="how_to_contribute">How To Contribute?</string>
+    <string name="credits">Credits</string>
+    <string name="link_app_play_store">https://play.google.com/store/apps/details?id=com.jskaleel.fte</string>
+    <string name="link_source_code">https://github.com/manimaran96/Spell4Wiki/</string>
+    <string name="link_how_to_contribute">https://manimaran96.wordpress.com/2019/01/06/spell4wiki-mobile-app-to-record-upload-audio-for-wiktionary/</string>
+    <string name="app_share_title">Share Spell4Wiki App to your friends…</string>
+    <string name="app_share_message">Spell4Wiki app to record and upload audios for Wiki commons.\nAlso act as wiki dictionary. \n https://play.google.com/store/apps/details?id=com.jskaleel.fte</string>
+    <string name="link_gplv3">https://www.gnu.org/licenses/gpl-3.0.txt</string>
+    <string name="version">Version</string>
+    <string name="license">License</string>
+    <string name="no_email_client">No email client</string>
+    <string name="contact_via_mail">Contact via mail...</string>
+    <string name="contact_email">manimarankumar96@gmail.com</string>
+    <string name="contributors">Contributors</string>
+    <string name="link_contributors">https://github.com/manimaran96/Spell4Wiki/graphs/contributors</string>
+    <string name="visit_web_page">Visit web page</string>
+    <string name="go_to_license_url">Go to License URL</string>
 
 </resources>

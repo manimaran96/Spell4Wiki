@@ -4,10 +4,13 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.animation.AnimationUtils;
+import android.view.animation.LayoutAnimationController;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.ListView;
 
+import com.manimaran.wikiaudio.R;
 import com.manimaran.wikiaudio.adapter.EndlessAdapter;
 
 import java.util.List;

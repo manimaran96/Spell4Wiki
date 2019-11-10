@@ -64,6 +64,10 @@
             android:screenOrientation="portrait"
             android:theme="@style/ActionBarStyle" />
         <activity
+            android:name=".activity.ListItemActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActionBarStyle" />
+        <activity
             android:name=".activity.UploadToCommonsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/ActionBarStyle" />

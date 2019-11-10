@@ -5,6 +5,7 @@
     <dimen name="text_heading">18sp</dimen>
 
     <dimen name="text_small">12sp</dimen>
+    <dimen name="text_semi_normal">14sp</dimen>
     <dimen name="text_normal">16sp</dimen>
     <dimen name="text_large">22sp</dimen>
     <dimen name="text_x_large">28sp</dimen>
@@ -22,4 +23,6 @@
     <dimen name="nav_header_vertical_spacing">8dp</dimen>
     <dimen name="nav_header_height">176dp</dimen>
     <dimen name="search_view_height">40dp</dimen>
+    <dimen name="img_normal">70dp</dimen>
+    <dimen name="img_icon">24dp</dimen>
 </resources>
