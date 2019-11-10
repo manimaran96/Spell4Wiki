@@ -46,19 +46,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         searchView.setQueryHint(getString(R.string.hint_search));
         searchView.setIconifiedByDefault(false);
         searchView.clearFocus();
-        searchView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), SearchActivity.class);
-                startActivity(intent);
-            }
-        });
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 Intent intent = new Intent(getApplicationContext(), SearchActivity.class);
                 intent.putExtra("search_text", query);
                 startActivity(intent);
+                new Handler().postDelayed(() -> {
+                    if(searchView  != null)
+                        searchView.setQuery("",false);
+                }, 100);
+
                 return false;
             }
 
@@ -81,30 +79,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         txtWelcomeUser.setText(String.format(getString(R.string.welcome_user), pref.getName()));
 
         findViewById(R.id.btn_about).setOnClickListener(v -> startActivity(new Intent(getApplicationContext(), AboutActivity.class)));
+        findViewById(R.id.btn_settings).setOnClickListener(v -> GeneralUtils.showSnack(searchView, "Settings clicked"));
         findViewById(R.id.btn_logout).setOnClickListener(v -> GeneralUtils.logoutAlert(MainActivity.this));
 
-        new Handler().post(() -> hideKeyboard(MainActivity.this));
+        new Handler().post(() -> GeneralUtils.hideKeyboard(MainActivity.this));
 
-    }
-
-    public static void hideKeyboard(Activity activity) {
-        InputMethodManager imm = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
-        //Find the currently focused view, so we can grab the correct window token from it.
-        View view = activity.getCurrentFocus();
-        //If no view currently has focus, create a new one, just so we can grab a window token from it
-        if (view == null) {
-            view = new View(activity);
-        }
-        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
     @Override
     public void onClick(View view) {
         Class nextClass = SearchActivity.class;
         switch (view.getId()) {
-            case R.id.search_view:
-                nextClass = SearchActivity.class;
-                break;
             case R.id.card_spell4wiki:
                 nextClass = Spell4Wiktionary.class;
                 break;
@@ -130,9 +115,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onResume();
         if(searchView != null)
         {
-            searchView.setQuery("",false);
             searchView.clearFocus();
-            hideKeyboard(this);
+            GeneralUtils.hideKeyboard(this);
         }
     }
 
@@ -142,7 +126,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             super.onBackPressed();
         else {
             this.doubleBackToExitPressedOnce = true;
-            GeneralUtils.showToast(getApplicationContext(), getString(R.string.alert_to_exit));
+            GeneralUtils.showSnack(searchView, getString(R.string.alert_to_exit));
         }
         new Handler().postDelayed(new Runnable() {
             @Override
