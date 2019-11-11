@@ -70,8 +70,8 @@ public class Spell4Wiktionary extends AppCompatActivity implements EndlessListVi
 
         // Title & Sub title
         if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setTitle(getString(R.string.app_name));
-            getSupportActionBar().setSubtitle(String.format(getString(R.string.welcome_user), pref.getName()));
         }
 
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -166,7 +166,7 @@ public class Spell4Wiktionary extends AppCompatActivity implements EndlessListVi
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.main_menu, menu);
+        inflater.inflate(R.menu.lang_menu, menu);
         return true;
     }
 
@@ -195,11 +195,23 @@ public class Spell4Wiktionary extends AppCompatActivity implements EndlessListVi
                 bottomSheetFragment.show(getSupportFragmentManager(), bottomSheetFragment.getTag());
                 bottomSheetFragment.setCancelable(false);
                 break;
+            case android.R.id.home:
+                finish();
+                break;
             default:
                 break;
         }
 
-        return true;
+        return (super.onOptionsItemSelected(item));
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        if (pref.getContributionLangCode() != null) {
+            MenuItem langCodeMenu = menu.findItem(R.id.action_lang_code);
+            langCodeMenu.setTitle(pref.getContributionLangCode().toUpperCase());
+        }
+        return super.onPrepareOptionsMenu(menu);
     }
 
     @Override
