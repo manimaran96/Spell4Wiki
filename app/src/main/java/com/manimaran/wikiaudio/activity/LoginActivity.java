@@ -44,6 +44,8 @@ public class LoginActivity extends AppCompatActivity {
     PrefManager pref;
     ApiInterface api;
 
+    private boolean isDuringLogin = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,6 +72,7 @@ public class LoginActivity extends AppCompatActivity {
                 if (!TextUtils.isEmpty(editUserName.getText()) && !TextUtils.isEmpty(editPassword.getText())) {
                     hideKeyboard();
                     btnLogin.startAnimation();
+                    isDuringLogin = true;
                     callToken(editUserName.getText().toString(), editPassword.getText().toString());
                 } else
                     showMsg(getString(R.string.invalid_credential));
@@ -79,7 +82,7 @@ public class LoginActivity extends AppCompatActivity {
              *  Hit Skip Button
              */
             btnSkipLogin.setOnClickListener(v -> {
-                if(btnLogin.isAnimating()) {
+                if(isDuringLogin()) {
                     showMsg(getString(R.string.please_wait));
                 }else {
                     pref.setIsAnonymous(true);
@@ -231,6 +234,7 @@ public class LoginActivity extends AppCompatActivity {
     private void showErrorMsg(String msg) {
         showMsg(msg);
         btnLogin.revertAnimation();
+        isDuringLogin = false;
     }
 
     private void showMsg(String msg) {
@@ -255,11 +259,15 @@ public class LoginActivity extends AppCompatActivity {
 
     private void openUrl(String url)
     {
-        if(btnLogin.isAnimating()) {
+        if(isDuringLogin()) {
             showMsg(getString(R.string.please_wait));
         }else {
             Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
             startActivity(browserIntent);
         }
+    }
+
+    private boolean isDuringLogin(){
+        return btnLogin.isAnimating() || isDuringLogin;
     }
 }
