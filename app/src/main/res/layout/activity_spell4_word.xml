@@ -24,7 +24,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:padding="10dp"
-        android:background="@drawable/search_view_bg"
+        android:background="@drawable/bg_line_border"
         android:hint="@string/spell4word"/>
 
     <Button

@@ -33,7 +33,7 @@
     <string name="player">player</string>
     <string name="title_upload_audio">Upload Audio</string>
     <string name="message_upload_info">Uploading \n\"%s\" file…</string>
-    <string name="upload_comment">%s Uploaded by using Spell4Wiki app.</string>
+    <string name="upload_comment">%s Uploaded using Spell4Wiki app.</string>
 
 
     <string name="format_file_name_words_already_have_audio">%s-words_already_have_audio</string>
@@ -54,7 +54,7 @@
     <string name="app_intro_slide_3_description">You can record and upload audios for your own word list from your device.</string>
     <string name="app_intro_slide_4_description">You can record and upload audio for your custom word.</string>
     <string name="app_intro_slide_5_description">Spell4Wiki requires storage and record audio permissions.\nAllow those permissions</string>
-    <string name="hint_search">Search on wiktionary</string>
+    <string name="hint_search">Search on Wiktionary</string>
     <string name="donate">Donate</string>
     <string name="how_is_work">How?</string>
     <string name="record">Record</string>
@@ -98,5 +98,7 @@
     <string name="link_contributors">https://github.com/manimaran96/Spell4Wiki/graphs/contributors</string>
     <string name="visit_web_page">Visit web page</string>
     <string name="go_to_license_url">Go to License URL</string>
+    <string name="view_my_contribution">View My Contributions</string>
+    <string name="link_view_my_contribution">https://commons.wikimedia.org/wiki/Special:ListFiles/%s</string>
 
 </resources>

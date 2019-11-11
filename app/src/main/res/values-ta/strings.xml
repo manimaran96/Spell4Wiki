@@ -22,7 +22,7 @@
     <string name="player">player</string>
     <string name="title_upload_audio">Upload Audio</string>
     <string name="message_upload_info">Uploading \n\"%s\" file…</string>
-    <string name="upload_comment">%s Uploaded by using Spell4Wiki app.</string>
+    <string name="upload_comment">%s Uploaded using Spell4Wiki app.</string>
 
 
     //URL links - Don't translate

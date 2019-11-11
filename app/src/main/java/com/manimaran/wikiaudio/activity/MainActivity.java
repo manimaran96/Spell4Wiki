@@ -1,25 +1,15 @@
 package com.manimaran.wikiaudio.activity;
 
-import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.SearchView;
 import android.widget.TextView;
 
 import com.manimaran.wikiaudio.R;
-import com.manimaran.wikiaudio.fragment.BottomSheetFragment;
 import com.manimaran.wikiaudio.utils.GeneralUtils;
 import com.manimaran.wikiaudio.utils.PrefManager;
 
@@ -29,9 +19,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     // Views
 
+    SearchView searchView;
     private boolean doubleBackToExitPressedOnce = false;
     private PrefManager pref;
-    SearchView searchView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,6 +72,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.btn_settings).setOnClickListener(v -> GeneralUtils.showSnack(searchView, "Settings clicked"));
         findViewById(R.id.btn_logout).setOnClickListener(v -> GeneralUtils.logoutAlert(MainActivity.this));
 
+        String urlViewMyContribution = String.format(getString(R.string.link_view_my_contribution), pref.getName());
+        findViewById(R.id.txtViewMyContribution).setOnClickListener(v -> GeneralUtils.openUrl(MainActivity.this, urlViewMyContribution));
+
         new Handler().post(() -> GeneralUtils.hideKeyboard(MainActivity.this));
 
     }
@@ -113,8 +106,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onResume() {
         super.onResume();
-        if(searchView != null)
-        {
+        if (searchView != null) {
             searchView.clearFocus();
             GeneralUtils.hideKeyboard(this);
         }

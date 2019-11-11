@@ -55,7 +55,7 @@
             android:layout_height="@dimen/search_view_height"
             android:searchIcon="@drawable/ic_info"
             android:queryHint="@string/hint_search"
-            android:background="@drawable/search_view_bg"/>
+            android:background="@drawable/bg_line_border"/>
 
 
         <LinearLayout
@@ -196,6 +196,21 @@
             android:textColor="@color/white"
             android:textStyle="bold" />
 
+        <TextView
+            android:id="@+id/txtViewMyContribution"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="@string/view_my_contribution"
+            android:textSize="@dimen/text_semi_normal"
+            android:background="@drawable/bg_line_border"
+            android:textStyle="bold"
+            android:padding="8dp"
+            android:layout_marginTop="10dp"
+            android:layout_gravity="center"
+            android:layout_marginStart="5dp"
+            android:textColor="@color/w_blue" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -232,17 +247,6 @@
                 android:text="@string/logout"
                 android:textAlignment="center"
                 android:drawablePadding="2dp"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center">
-
-
-
 
         </LinearLayout>
 

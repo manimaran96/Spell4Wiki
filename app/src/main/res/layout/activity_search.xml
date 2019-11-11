@@ -26,7 +26,7 @@
         android:searchIcon="@drawable/ic_info"
         android:layout_centerHorizontal="true"
         android:queryHint="@string/hint_search"
-        android:background="@drawable/search_view_bg"
+        android:background="@drawable/bg_line_border"
         app:iconifiedByDefault="false"/>
 
     <com.manimaran.wikiaudio.view.EndlessListView
