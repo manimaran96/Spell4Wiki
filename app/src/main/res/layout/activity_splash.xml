@@ -12,7 +12,7 @@
         android:layout_height="@dimen/logo_large"
         android:layout_centerInParent="true"
         android:scaleType="fitXY"
-        android:src="@drawable/spell4wiki" />
+        android:src="@drawable/ic_spell4wiki_main" />
 
     <TextView
         android:id="@+id/txt_app_name"

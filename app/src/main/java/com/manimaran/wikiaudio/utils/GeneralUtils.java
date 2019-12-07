@@ -6,14 +6,20 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Point;
+import android.net.ConnectivityManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
+import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.Display;
+import android.view.View;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 import com.manimaran.wikiaudio.R;
@@ -56,6 +62,10 @@ public class GeneralUtils {
 
     public static void showToast(Context context, String msg) {
         Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
+    }
+
+    public static void showSnack(View view, String msg){
+        Snackbar.make(view, msg, Snackbar.LENGTH_LONG).show();
     }
 
     public static void logoutAlert(final Activity activity) {
@@ -145,5 +155,30 @@ public class GeneralUtils {
         Point size = new Point();
         display.getSize(size);
         return size.y;
+    }
+
+    public static void hideKeyboard(Activity activity) {
+        InputMethodManager imm = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
+        //Find the currently focused view, so we can grab the correct window token from it.
+        View view = activity.getCurrentFocus();
+        //If no view currently has focus, create a new one, just so we can grab a window token from it
+        if (view == null) {
+            view = new View(activity);
+        }
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
+
+    public static boolean isNetworkConnected(Context context) {
+        ConnectivityManager connectivityManager = ((ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE));
+        return connectivityManager.getActiveNetworkInfo() != null && connectivityManager.getActiveNetworkInfo().isConnected();
+    }
+
+    public static void openUrl(Context context, String url){
+        try {
+            if (url != null && !url.isEmpty())
+                context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 }

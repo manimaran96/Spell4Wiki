@@ -10,21 +10,20 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="10dp"
-        android:weightSum="2">
-
+        android:padding="16dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
+            android:layout_marginBottom="10dp"
             android:orientation="vertical"
             android:gravity="center">
 
             <ImageView
                 android:layout_width="@dimen/logo_large"
                 android:layout_height="@dimen/logo_large"
-                android:src="@drawable/ic_spell4explore"
+                android:src="@drawable/ic_spell4wiki_main"
                 android:padding="10dp"/>
 
             <TextView
@@ -53,11 +52,10 @@
         <SearchView
             android:id="@+id/search_view"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_marginTop="15dp"
+            android:layout_height="@dimen/search_view_height"
             android:searchIcon="@drawable/ic_info"
             android:queryHint="@string/hint_search"
-            android:background="@drawable/search_view_bg"/>
+            android:background="@drawable/bg_line_border"/>
 
 
         <LinearLayout
@@ -198,29 +196,27 @@
             android:textColor="@color/white"
             android:textStyle="bold" />
 
+        <TextView
+            android:id="@+id/txtViewMyContribution"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="@string/view_my_contribution"
+            android:textSize="@dimen/text_semi_normal"
+            android:background="@drawable/bg_line_border"
+            android:textStyle="bold"
+            android:padding="8dp"
+            android:layout_marginTop="10dp"
+            android:layout_gravity="center"
+            android:layout_marginStart="5dp"
+            android:textColor="@color/w_blue" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
+            android:weightSum="6"
             android:gravity="center">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="10dp"
-                android:drawableTop="@drawable/ic_help"
-                android:text="@string/how_is_work"
-                android:textAlignment="center"
-                android:drawablePadding="2dp"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="10dp"
-                android:drawableTop="@drawable/ic_info"
-                android:text="@string/donate"
-                android:textAlignment="center"
-                android:drawablePadding="2dp"/>
 
             <TextView
                 android:id="@+id/btn_about"
@@ -228,24 +224,15 @@
                 android:layout_height="wrap_content"
                 android:padding="10dp"
                 android:drawableTop="@drawable/ic_about"
-                android:drawableTint="@color/gray"
                 android:text="@string/about"
                 android:textAlignment="center"
                 android:drawablePadding="2dp"/>
 
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center">
-
             <TextView
+                android:id="@+id/btn_settings"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:drawableTop="@drawable/ic_settings"
-                android:drawableTint="@color/gray"
                 android:drawablePadding="2dp"
                 android:padding="10dp"
                 android:text="@string/settings"
@@ -257,11 +244,9 @@
                 android:layout_height="wrap_content"
                 android:padding="10dp"
                 android:drawableTop="@drawable/ic_logout"
-                android:drawableTint="@color/gray"
                 android:text="@string/logout"
                 android:textAlignment="center"
                 android:drawablePadding="2dp"/>
-
 
         </LinearLayout>
 

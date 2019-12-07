@@ -17,6 +17,22 @@
     <color name="app_intro_title">@color/w_blue</color>
     <color name="app_intro_description">@color/w_blue</color>
     <color name="gray">#5A5A5A</color>
+    <color name="gray_border">#A3A3A3</color>
+
+    <!-- Common - Colors -->
+    <color name="background">#F5F4F4</color>
+    <color name="SplashScreen">#ecebeb</color>
+    <color name="light_gray">#eae9e9</color>
+    <color name="dark_gray">#666666</color>
+    <color name="gray_100">#ccc</color>
+    <color name="edit_text_drawable_bg">#37c871</color>
+    <color name="btn_bg">@color/icon_color</color>
+    <color name="img_bg">#F1F1F1</color>
+    <color name="icon_color">#4DB6AC</color>
+    <color name="blood_color">#bb0a1e</color>
+    <color name="ic_launcher_background">#ffffff</color>
+    <color name="indicator">#dd2c00</color>
+    <color name="label_text">#A09D9D</color>
 
     <!-- Common - Colors -->
     <color name="background">#F5F4F4</color>

@@ -14,7 +14,6 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.manimaran.wikiaudio.R;
 import com.manimaran.wikiaudio.constant.UrlType;
@@ -45,6 +44,8 @@ public class LoginActivity extends AppCompatActivity {
     PrefManager pref;
     ApiInterface api;
 
+    private boolean isDuringLogin = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,19 +71,23 @@ public class LoginActivity extends AppCompatActivity {
             btnLogin.setOnClickListener(view -> {
                 if (!TextUtils.isEmpty(editUserName.getText()) && !TextUtils.isEmpty(editPassword.getText())) {
                     hideKeyboard();
-                    btnLogin.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.w_blue));
                     btnLogin.startAnimation();
+                    isDuringLogin = true;
                     callToken(editUserName.getText().toString(), editPassword.getText().toString());
                 } else
-                    Snackbar.make(btnLogin, getString(R.string.invalid_credential), Snackbar.LENGTH_SHORT).show();
+                    showMsg(getString(R.string.invalid_credential));
             });
 
             /*
              *  Hit Skip Button
              */
             btnSkipLogin.setOnClickListener(v -> {
-                pref.setIsAnonymous(true);
-                launchActivity();
+                if(isDuringLogin()) {
+                    showMsg(getString(R.string.please_wait));
+                }else {
+                    pref.setIsAnonymous(true);
+                    launchActivity();
+                }
             });
 
             /*
@@ -181,7 +186,7 @@ public class LoginActivity extends AppCompatActivity {
                             String result = loginJSONObject.getString("status");
                             if (result.equals("PASS")) {
 
-                                showSuccessMsg("Welcome " + loginJSONObject.getString("username"));
+                                showMsg("Welcome " + loginJSONObject.getString("username"));
 
                                 //  Write to shared preferences
                                 pref.setSession(loginJSONObject.getString("username"), true);
@@ -190,13 +195,10 @@ public class LoginActivity extends AppCompatActivity {
                                         ContextCompat.getColor(LoginActivity.this, R.color.w_green),
                                         BitmapFactory.decodeResource(getResources(), R.drawable.ic_done));
 
-                                new Handler().postDelayed(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        // Move to new activity
-                                        launchActivity();
-                                    }
-                                }, 2000);
+                                new Handler().postDelayed(() -> {
+                                    // Move to new activity
+                                    launchActivity();
+                                }, 1500);
 
                             } else if (result.equals("FAIL")) {
                                 showErrorMsg(loginJSONObject.getString("message"));
@@ -230,12 +232,12 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void showErrorMsg(String msg) {
-        Snackbar.make(btnLogin, msg, Snackbar.LENGTH_LONG).show();
+        showMsg(msg);
         btnLogin.revertAnimation();
-        btnLogin.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.bg_dialog));
+        isDuringLogin = false;
     }
 
-    private void showSuccessMsg(String msg) {
+    private void showMsg(String msg) {
         Snackbar.make(btnLogin, msg, Snackbar.LENGTH_LONG).show();
     }
 
@@ -257,7 +259,15 @@ public class LoginActivity extends AppCompatActivity {
 
     private void openUrl(String url)
     {
-        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-        startActivity(browserIntent);
+        if(isDuringLogin()) {
+            showMsg(getString(R.string.please_wait));
+        }else {
+            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+            startActivity(browserIntent);
+        }
+    }
+
+    private boolean isDuringLogin(){
+        return btnLogin.isAnimating() || isDuringLogin;
     }
 }

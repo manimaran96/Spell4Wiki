@@ -353,7 +353,7 @@ public class EndlessAdapter extends ArrayAdapter<String> {
     private void uploadAudioToWikiServer(Boolean recreateEditToken, final int pos) {
 
         progressDialog = ProgressDialog.show(activity, ctx.getString(R.string.title_upload_audio), String.format(ctx.getString(R.string.message_upload_info), uploadName), true);
-        if (pref.getCsrfToken() == null || recreateEditToken) {
+        if (pref.getCsrfToken() == null || recreateEditToken || true) {
 
             Call<ResponseBody> call = api.getEditToken();
             call.enqueue(new Callback<ResponseBody>() {

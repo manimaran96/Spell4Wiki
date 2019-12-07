@@ -14,8 +14,8 @@
         android:layout_height="100dp"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="30dp"
-        android:contentDescription="Wiktionary"
-        app:srcCompat="@drawable/wiktionary" />
+        android:contentDescription="@string/wiktionary"
+        app:srcCompat="@drawable/ic_wiktionary" />
 
     <SearchView
         android:id="@+id/search_bar"
@@ -26,7 +26,7 @@
         android:searchIcon="@drawable/ic_info"
         android:layout_centerHorizontal="true"
         android:queryHint="@string/hint_search"
-        android:background="@drawable/search_view_bg"
+        android:background="@drawable/bg_line_border"
         app:iconifiedByDefault="false"/>
 
     <com.manimaran.wikiaudio.view.EndlessListView

@@ -17,7 +17,7 @@
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:contentDescription="@string/app_name"
-            app:srcCompat="@drawable/spell4wiki" />
+            app:srcCompat="@drawable/ic_spell4wiki_main" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -65,9 +65,10 @@
             android:layout_height="wrap_content"
             android:padding="10dp"
             android:layout_margin="10dp"
-            android:background="@drawable/bg_dialog"
+            android:background="@drawable/bg_blue"
             android:text="@string/login"
             android:textColor="@android:color/white"
+            app:initialCornerAngle="5dp"
             app:spinning_bar_color="#FFF"
             app:spinning_bar_padding="6dp"
             app:spinning_bar_width="3dp" />
@@ -102,7 +103,7 @@
                android:gravity="center"
                android:text="@string/action_join_wikipedia"
                android:textSize="@dimen/text_small"
-               android:background="@drawable/search_view_bg"
+               android:background="@drawable/bg_line_border"
                android:textStyle="bold"
                android:padding="8dp"
                android:layout_marginEnd="5dp"
@@ -117,7 +118,7 @@
                android:gravity="center"
                android:text="@string/skip_login"
                android:textSize="@dimen/text_small"
-               android:background="@drawable/search_view_bg"
+               android:background="@drawable/bg_line_border"
                android:textStyle="bold"
                android:padding="8dp"
                android:layout_marginStart="5dp"
