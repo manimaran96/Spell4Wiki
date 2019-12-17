@@ -182,7 +182,7 @@
                         android:layout_marginTop="3dp"
                         android:autoLink="web"
                         android:ellipsize="end"
-                        android:linksClickable="true"
+                        android:linksClickable="false"
                         android:maxLines="2"
                         android:text="@string/link_kaniyam"
                         android:textSize="@dimen/text_small" />
@@ -242,7 +242,7 @@
                         android:layout_marginTop="3dp"
                         android:autoLink="web"
                         android:ellipsize="end"
-                        android:linksClickable="true"
+                        android:linksClickable="false"
                         android:maxLines="2"
                         android:text="@string/link_vglug"
                         android:textSize="@dimen/text_small" />

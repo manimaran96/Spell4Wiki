@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.manimaran.wikiaudio.R;
 import com.manimaran.wikiaudio.constant.UrlType;
+import com.manimaran.wikiaudio.utils.GeneralUtils;
 import com.manimaran.wikiaudio.utils.PrefManager;
 import com.manimaran.wikiaudio.wiki_api.ApiInterface;
 import com.manimaran.wikiaudio.wiki_api.ApiClient;
@@ -262,8 +263,7 @@ public class LoginActivity extends AppCompatActivity {
         if(isDuringLogin()) {
             showMsg(getString(R.string.please_wait));
         }else {
-            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-            startActivity(browserIntent);
+            GeneralUtils.openUrl(getApplicationContext(), url);
         }
     }
 

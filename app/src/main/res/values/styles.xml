@@ -15,7 +15,7 @@
         <!-- Custom Button text style for all Button view-->
         <item name="buttonStyle">@style/CustomButtonStyle</item>
         <!-- Action bar style -->
-        <item name="actionBarStyle">@style/ActionBarStyle</item>-->
+        <item name="android:actionBarStyle">@style/ActionBarStyle</item>-->
     </style>
 
     <!--No action bar Theme-->
@@ -37,7 +37,7 @@
 
     <!-- Action Bar Style -->
     <style name="ActionBarStyle" parent="@style/Theme.AppCompat.Light">
-        <item name="background">@color/white</item>
+        <item name="colorPrimary">@color/white</item>
         <item name="titleTextStyle">@style/ActionBarTitleText</item>
         <item name="subtitleTextStyle">@style/ActionBarSubTitleText</item>
         <item name="android:fontFamily">@font/montserrat</item>

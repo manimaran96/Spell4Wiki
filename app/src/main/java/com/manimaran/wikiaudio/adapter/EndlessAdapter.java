@@ -31,7 +31,9 @@ import android.widget.Toast;
 
 import com.arthenica.mobileffmpeg.FFmpeg;
 import com.manimaran.wikiaudio.R;
+import com.manimaran.wikiaudio.activity.CommonWebActivity;
 import com.manimaran.wikiaudio.activity.WiktionaryWebActivity;
+import com.manimaran.wikiaudio.constant.Constants;
 import com.manimaran.wikiaudio.listerner.CallBackListener;
 import com.manimaran.wikiaudio.record.wav.WAVPlayer;
 import com.manimaran.wikiaudio.record.wav.WAVRecorder;
@@ -183,9 +185,13 @@ public class EndlessAdapter extends ArrayAdapter<String> {
 
     private void openWiktionaryWebView(int position) {
         Activity activity1 = (Activity) ctx;
-        Intent intent = new Intent(ctx, WiktionaryWebActivity.class);
-        intent.putExtra("is_contribution_mode", isContributionMode);
-        intent.putExtra("word", itemList.get(position));
+        Intent intent = new Intent(ctx, CommonWebActivity.class);
+        String word = itemList.get(position);
+        String url = String.format(ctx.getString(R.string.url_wiktionary_web), isContributionMode ? pref.getContributionLangCode() : pref.getWiktionaryLangCode(), word);
+        intent.putExtra(Constants.TITLE, word);
+        intent.putExtra(Constants.URL, url);
+        intent.putExtra(Constants.IS_CONTRIBUTION_MODE, isContributionMode);
+        intent.putExtra(Constants.IS_WIKTIONARY_WORD, true);
         activity1.startActivity(intent);
     }
 

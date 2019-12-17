@@ -19,6 +19,8 @@
 
     <dimen name="app_bar_height">180dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
+    <dimen name="fab_size">54dp</dimen>
+    <dimen name="fab_icon_size">42dp</dimen>
     <dimen name="text_margin">16dp</dimen>
     <dimen name="nav_header_vertical_spacing">8dp</dimen>
     <dimen name="nav_header_height">176dp</dimen>

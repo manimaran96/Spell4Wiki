@@ -75,6 +75,11 @@
             android:name=".activity.Spell4WordActivity"
             android:screenOrientation="portrait"
             android:theme="@style/ActionBarStyle" />
+
+        <activity
+            android:name=".activity.CommonWebActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActionBarStyle" />
     </application>
 
 </manifest>
