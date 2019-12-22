@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.manimaran.wikiaudio.BuildConfig;
 import com.manimaran.wikiaudio.R;
+import com.manimaran.wikiaudio.constant.UrlType;
 import com.manimaran.wikiaudio.utils.GeneralUtils;
 
 import br.tiagohm.markdownview.css.styles.Github;
@@ -79,11 +80,11 @@ public class AboutActivity extends AppCompatActivity implements View.OnClickList
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.txt_rate_app : GeneralUtils.openUrl(this, getString(R.string.link_app_play_store)); break;
+            case R.id.txt_rate_app : GeneralUtils.openUrl(this, getString(R.string.link_app_play_store), UrlType.EXTERNAL); break;
             case R.id.txt_share : shareApp(); break;
-            case R.id.txt_how_to_contribute : GeneralUtils.openUrl(this, getString(R.string.link_how_to_contribute)); break;
-            case R.id.txt_source_code : GeneralUtils.openUrl(this, getString(R.string.link_source_code)); break;
-            case R.id.txt_contributors : GeneralUtils.openUrl(this, getString(R.string.link_contributors)); break;
+            case R.id.txt_how_to_contribute : GeneralUtils.openUrl(this, getString(R.string.link_how_to_contribute), UrlType.INTERNAL); break;
+            case R.id.txt_source_code : GeneralUtils.openUrl(this, getString(R.string.link_source_code), UrlType.EXTERNAL); break;
+            case R.id.txt_contributors : GeneralUtils.openUrl(this, getString(R.string.link_contributors), UrlType.INTERNAL); break;
             case R.id.txt_third_party_lib :
                 Intent intentTPL = new Intent(getApplicationContext(), ListItemActivity.class);
                 intentTPL.putExtra("title", getString(R.string.third_party_libraries));
@@ -94,10 +95,10 @@ public class AboutActivity extends AppCompatActivity implements View.OnClickList
                 intentCredits.putExtra("title", getString(R.string.credits));
                 startActivity(intentCredits);
                 break;
-            case R.id.txt_help_development : GeneralUtils.openUrl(this, getString(R.string.link_how_to_contribute)); break;
+            case R.id.txt_help_development : GeneralUtils.openUrl(this, getString(R.string.link_how_to_contribute), UrlType.INTERNAL); break;
             case R.id.txt_contact_us : contactUs(); break;
-            case R.id.layout_kaniyam : GeneralUtils.openUrl(this, getString(R.string.link_kaniyam)); break;
-            case R.id.layout_vglug : GeneralUtils.openUrl(this, getString(R.string.link_vglug)); break;
+            case R.id.layout_kaniyam : GeneralUtils.openUrl(this, getString(R.string.link_kaniyam), UrlType.INTERNAL); break;
+            case R.id.layout_vglug : GeneralUtils.openUrl(this, getString(R.string.link_vglug), UrlType.INTERNAL); break;
         }
 
     }

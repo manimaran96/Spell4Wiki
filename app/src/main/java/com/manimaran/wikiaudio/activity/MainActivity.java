@@ -10,6 +10,7 @@ import android.widget.SearchView;
 import android.widget.TextView;
 
 import com.manimaran.wikiaudio.R;
+import com.manimaran.wikiaudio.constant.UrlType;
 import com.manimaran.wikiaudio.utils.GeneralUtils;
 import com.manimaran.wikiaudio.utils.PrefManager;
 
@@ -73,7 +74,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.btn_logout).setOnClickListener(v -> GeneralUtils.logoutAlert(MainActivity.this));
 
         String urlViewMyContribution = String.format(getString(R.string.link_view_my_contribution), pref.getName());
-        findViewById(R.id.txtViewMyContribution).setOnClickListener(v -> GeneralUtils.openUrl(MainActivity.this, urlViewMyContribution));
+        findViewById(R.id.txtViewMyContribution).setOnClickListener(v -> GeneralUtils.openUrl(MainActivity.this, urlViewMyContribution, UrlType.INTERNAL));
 
         new Handler().post(() -> GeneralUtils.hideKeyboard(MainActivity.this));
 

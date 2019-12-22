@@ -25,6 +25,7 @@ import android.widget.Toast;
 import com.manimaran.wikiaudio.R;
 import com.manimaran.wikiaudio.activity.CommonWebActivity;
 import com.manimaran.wikiaudio.constant.Constants;
+import com.manimaran.wikiaudio.constant.UrlType;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -175,13 +176,21 @@ public class GeneralUtils {
         return connectivityManager.getActiveNetworkInfo() != null && connectivityManager.getActiveNetworkInfo().isConnected();
     }
 
-    public static void openUrl(Context context, String url){
+    public static void openUrl(Context context, String url, int urlType){
         try {
             if (url != null && !url.isEmpty())
             {
-                Intent intent  = new Intent(context, CommonWebActivity.class);
-                intent.putExtra(Constants.URL, url);
-                context.startActivity(intent);
+                switch (urlType){
+                    case UrlType.INTERNAL :
+                        Intent intent  = new Intent(context, CommonWebActivity.class);
+                        intent.putExtra(Constants.URL, url);
+                        context.startActivity(intent);
+                        break;
+                    case UrlType.EXTERNAL:
+                    default:
+                        context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
+                        break;
+                }
             }
         }catch (Exception e){
             e.printStackTrace();
@@ -192,8 +201,6 @@ public class GeneralUtils {
         try {
             if (url != null && !url.isEmpty())
             {
-                Intent intent  = new Intent(context, CommonWebActivity.class);
-                intent.putExtra(Constants.URL, url);
                 context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
             }
         }catch (Exception e){

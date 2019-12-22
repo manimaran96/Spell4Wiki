@@ -16,6 +16,7 @@ import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import com.manimaran.wikiaudio.R;
+import com.manimaran.wikiaudio.constant.UrlType;
 import com.manimaran.wikiaudio.model.ItemsModel;
 import com.manimaran.wikiaudio.utils.GeneralUtils;
 
@@ -59,7 +60,7 @@ public class ListItemAdapter extends RecyclerView.Adapter<ListItemAdapter.ViewHo
                         url = model.getLicenseUrl();
                     }
                     Activity activity = (Activity) mContext;
-                    GeneralUtils.openUrl(activity, url);
+                    GeneralUtils.openUrl(activity, url, UrlType.INTERNAL);
                     return false;
                 }
             });

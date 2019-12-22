@@ -10,6 +10,8 @@ public class UrlType {
     public static final int COMMONS = 0;
     public static final int WIKTIONARY_CONTRIBUTION = 1;
     public static final int WIKTIONARY_PAGE = 2;
+    public static final int INTERNAL = 3;
+    public static final int EXTERNAL = 4;
     public final int itemType;
 
     // Mark the argument as restricted to these enumerated types
@@ -21,7 +23,7 @@ public class UrlType {
     // Describes when the annotation will be discarded
     @Retention(RetentionPolicy.SOURCE)
     // Enumerate valid values for this interface
-    @IntDef({COMMONS, WIKTIONARY_CONTRIBUTION, WIKTIONARY_PAGE})
+    @IntDef({COMMONS, WIKTIONARY_CONTRIBUTION, WIKTIONARY_PAGE, INTERNAL, EXTERNAL})
     // Create an interface for validating int types
     public @interface ItemTypeDef {
     }
