@@ -1,24 +1,16 @@
-package com.manimaran.wikiaudio.adapter;
+package com.manimaran.wikiaudio.fragment;
 
-import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Environment;
 import android.os.Handler;
-import android.support.annotation.RequiresApi;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AppCompatActivity;
+import android.support.annotation.Nullable;
+import android.support.v4.app.DialogFragment;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -26,27 +18,22 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.MimeTypeMap;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.arthenica.mobileffmpeg.FFmpeg;
 import com.manimaran.wikiaudio.R;
-import com.manimaran.wikiaudio.activity.CommonWebActivity;
-import com.manimaran.wikiaudio.activity.WiktionaryWebActivity;
 import com.manimaran.wikiaudio.constant.Constants;
-import com.manimaran.wikiaudio.fragment.RecordAudioDialogFragment;
 import com.manimaran.wikiaudio.listerner.CallBackListener;
 import com.manimaran.wikiaudio.record.wav.WAVPlayer;
 import com.manimaran.wikiaudio.record.wav.WAVRecorder;
 import com.manimaran.wikiaudio.utils.GeneralUtils;
 import com.manimaran.wikiaudio.utils.PrefManager;
-import com.manimaran.wikiaudio.wiki_api.ApiInterface;
 import com.manimaran.wikiaudio.wiki_api.ApiClient;
+import com.manimaran.wikiaudio.wiki_api.ApiInterface;
 
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONException;
@@ -54,9 +41,6 @@ import org.json.JSONObject;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
 import java.util.concurrent.Callable;
 
 import okhttp3.MediaType;
@@ -67,22 +51,17 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class EndlessAdapter extends ArrayAdapter<String> {
+public class RecordAudioDialogFragment extends DialogFragment {
 
-    private static final int RECORD_AUDIO_REQUEST_CODE = 101;
     private static final String RECORDED_FILENAME = "record.wav";
     private static final String CONVERTED_FILENAME = "record.ogg";
-    private List<String> itemList;
     private Context ctx;
     private Activity activity;
-    private int layoutId;
-    private Boolean isContributionMode;
-    private String TAG = "Record";
 
+    private Boolean isContributionMode;
     private WAVRecorder recorder = new WAVRecorder();
     private WAVPlayer player = new WAVPlayer();
     private Boolean isPlaying = false, isRecorded = false;
-    private Dialog myDialog;
 
     private ImageView btnClose, btnRecord, btnPlayPause;
     private Button btnUpload;
@@ -96,20 +75,31 @@ public class EndlessAdapter extends ArrayAdapter<String> {
 
     private ProgressDialog progressDialog;
     private PrefManager pref;
+
     private ApiInterface api;
 
+    private String word = "";
     private String uploadName = null;
     private CallBackListener listener;
 
-    public EndlessAdapter(Context ctx, List<String> itemList, int layoutId, Boolean isContributionMode) {
-        super(ctx, layoutId, itemList);
-        this.itemList = itemList;
-        this.ctx = ctx;
-        this.activity = (Activity) ctx;
-        this.layoutId = layoutId;
-        this.isContributionMode = isContributionMode;
-        this.pref = new PrefManager(ctx);
-        this.api = ApiClient.getCommonsApi(ctx).create(ApiInterface.class);
+    private String TAG = RecordAudioDialogFragment.class.getSimpleName();
+
+    static RecordAudioDialogFragment frag = null;
+
+    public RecordAudioDialogFragment() {
+        // Empty constructor is required for DialogFragment
+        // Make sure not to add arguments to the constructor
+        // Use `newInstance` instead as shown below
+    }
+
+    public static RecordAudioDialogFragment newInstance(String word) {
+        if(frag == null){
+            frag = new RecordAudioDialogFragment();
+        }
+        Bundle args = new Bundle();
+        args.putString(Constants.WORD, word);
+        frag.setArguments(args);
+        return frag;
     }
 
     private static String getMimeType(String url) {
@@ -121,154 +111,48 @@ public class EndlessAdapter extends ArrayAdapter<String> {
         return type;
     }
 
-    public void setCallbackListener(CallBackListener listener) {
-        this.listener = listener;
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setStyle(DialogFragment.STYLE_NO_TITLE, R.style.RecordDialogTheme);
     }
 
     @Override
-    public int getCount() {
-        return itemList.size();
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.pop_up_record_ui, container, false);
     }
 
     @Override
-    public String getItem(int position) {
-        return itemList.get(position);
-    }
+    public void onViewCreated(@NotNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
-    @Override
-    public long getItemId(int position) {
-        return itemList.get(position).hashCode();
-    }
+        setCancelable(false);
 
-    @NotNull
-    @Override
-    public View getView(final int position, View convertView, @NotNull ViewGroup parent) {
-        View mView = convertView;
-
-        if (mView == null) {
-            LayoutInflater inflater = (LayoutInflater) ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            mView = inflater.inflate(layoutId, parent, false);
-        }
-
-        // We should use class holder pattern
-        TextView tv = mView.findViewById(R.id.txt1);
-        tv.setText(itemList.get(position));
-
-        tv.setOnClickListener(new View.OnClickListener() {
-            @RequiresApi(api = Build.VERSION_CODES.M)
-            @Override
-            public void onClick(View view) {
-
-                Activity activity1 = (Activity) ctx;
-
-                if (isContributionMode) {
-
-                    if (GeneralUtils.checkPermissionGranted(activity1)) {
-                        showRecordDialog(itemList.get(position));
-                    } else
-                        getPermissionToRecordAudio();
-                } else {
-                    openWiktionaryWebView(position);
-                }
-            }
-        });
-
-        if (isContributionMode) {
-            LinearLayout btnWiki = mView.findViewById(R.id.btn_wiki_meaning);
-            btnWiki.setVisibility(View.VISIBLE);
-            btnWiki.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    openWiktionaryWebView(position);
-                }
-            });
-        }
-
-
-        return mView;
-
-    }
-
-    private void showRecordDialog(String word) {
-        RecordAudioDialogFragment dialogFragment = RecordAudioDialogFragment.newInstance(word);
-        FragmentManager fm = ((AppCompatActivity)activity).getSupportFragmentManager();
-        FragmentTransaction ft = fm.beginTransaction();
-        Fragment prev = fm.findFragmentByTag("dialog");
-        if (prev != null) {
-            ft.remove(prev);
-        }
-        ft.addToBackStack(null);
-        if(!dialogFragment.isVisible())
-            dialogFragment.show(ft, "dialog");
-    }
-
-    private void openWiktionaryWebView(int position) {
-        Activity activity1 = (Activity) ctx;
-        Intent intent = new Intent(ctx, CommonWebActivity.class);
-        String word = itemList.get(position);
-        String url = String.format(ctx.getString(R.string.url_wiktionary_web), isContributionMode ? pref.getContributionLangCode() : pref.getWiktionaryLangCode(), word);
-        intent.putExtra(Constants.TITLE, word);
-        intent.putExtra(Constants.URL, url);
-        intent.putExtra(Constants.IS_CONTRIBUTION_MODE, isContributionMode);
-        intent.putExtra(Constants.IS_WIKTIONARY_WORD, true);
-        activity1.startActivity(intent);
-    }
-
-    @RequiresApi(api = Build.VERSION_CODES.M)
-    private void getPermissionToRecordAudio() {
-        // 1) Use the support library version ContextCompat.checkSelfPermission(...) to avoid
-        // checking the build version since Context.checkSelfPermission(...) is only available
-        // in Marshmallow
-        // 2) Always check for permission (even if permission has already been granted)
-        // since the user can revoke permissions at any time through Settings
-        Activity activity = (Activity) ctx;
-        if (!GeneralUtils.checkPermissionGranted((activity))) {
-            showMsg("Must need Microphone and Storage permissions.\nPlease grant those permissions");
-
-            // The permission is NOT already granted.
-            // Check if the user has been asked about this permission already and denied
-            // it. If so, we want to give more explanation about why the permission is needed.
-            // Fire off an async request to actually get the permission
-            // This will show the standard permission request dialog UI
-            activity.requestPermissions(
-                    new String[]
-                            {
-                                    Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.RECORD_AUDIO,
-                                    Manifest.permission.WRITE_EXTERNAL_STORAGE
-                            }
-                    , RECORD_AUDIO_REQUEST_CODE);
-        }
-    }
-
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-    @SuppressLint("ClickableViewAccessibility")
-    private void showPopup(final Activity activity, final int pos) {
-
-        isRecorded = false;
-        // Dialog init
-        myDialog = new Dialog(activity);
-        myDialog.setContentView(R.layout.pop_up_record_ui);
-        myDialog.setCancelable(false);
+        ctx = getContext();
+        activity = getActivity();
+        pref = new PrefManager(ctx);
+        api = ApiClient.getCommonsApi(ctx).create(ApiInterface.class);
 
         // View init
-        btnClose = (ImageView) myDialog.findViewById(R.id.btnClose);
-        btnUpload = (Button) myDialog.findViewById(R.id.upload_button);
-        btnRecord = (ImageView) myDialog.findViewById(R.id.btnRecord);
-        btnPlayPause = (ImageView) myDialog.findViewById(R.id.btnPlayPause);
+        btnClose = view.findViewById(R.id.btnClose);
+        btnUpload = view.findViewById(R.id.upload_button);
+        btnRecord = view.findViewById(R.id.btnRecord);
+        btnPlayPause = view.findViewById(R.id.btnPlayPause);
 
-        txtWord = myDialog.findViewById(R.id.txtWord);
-        txtSec = myDialog.findViewById(R.id.txtSec);
-        seekBar = (SeekBar) myDialog.findViewById(R.id.seekBar);
+        txtWord = view.findViewById(R.id.txtWord);
+        txtSec = view.findViewById(R.id.txtSec);
+        seekBar = view.findViewById(R.id.seekBar);
 
-        Objects.requireNonNull(myDialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        myDialog.show();
 
-        // Set values
-        txtWord.setText(itemList.get(pos));
+        if (getArguments() != null && getArguments().containsKey(Constants.WORD)) {
+            word = getArguments().getString(Constants.WORD);
+            txtWord.setText(word);
+        }
+
         btnClose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                myDialog.dismiss();
+                dismiss();
                 isPlaying = false;
                 player.stopPlaying();
             }
@@ -366,16 +250,15 @@ public class EndlessAdapter extends ArrayAdapter<String> {
             @Override
             public void onClick(View view) {
                 if (isRecorded) {
-                    uploadName = pref.getContributionLangCode() + "-" + itemList.get(pos) + ".ogg";
-                    uploadAudioToWikiServer(false, pos);
+                    uploadName = pref.getContributionLangCode() + "-" + word + ".ogg";
+                    uploadAudioToWikiServer(false);
                 } else
                     GeneralUtils.showToast(ctx, "Please record audio first");
             }
         });
-
     }
 
-    private void uploadAudioToWikiServer(Boolean recreateEditToken, final int pos) {
+    private void uploadAudioToWikiServer(Boolean recreateEditToken) {
 
         progressDialog = ProgressDialog.show(activity, ctx.getString(R.string.title_upload_audio), String.format(ctx.getString(R.string.message_upload_info), uploadName), true);
         if (pref.getCsrfToken() == null || recreateEditToken || true) {
@@ -397,12 +280,12 @@ public class EndlessAdapter extends ArrayAdapter<String> {
                                 editToken = tokenJSONObject.getString("csrftoken");
                                 if (editToken.equals("+\\")) {
                                     dismissDialog("You are not logged in! \nPlease login to continue.");
-                                    if (myDialog != null && myDialog.isShowing())
-                                        myDialog.dismiss();
+                                    //if (myDialog != null && myDialog.isShowing())
+                                    dismiss();
                                     //GeneralUtils.logoutAlert(activity);
                                 } else {
                                     pref.setCsrfToken(editToken);
-                                    completeUpload(editToken, pos);
+                                    completeUpload(editToken);
                                 }
                             } catch (JSONException e) {
                                 e.printStackTrace();
@@ -416,19 +299,19 @@ public class EndlessAdapter extends ArrayAdapter<String> {
                 }
 
                 @Override
-                public void onFailure(Call<ResponseBody> call, Throwable t) {
+                public void onFailure(@NotNull Call<ResponseBody> call, @NotNull Throwable t) {
                     dismissDialog("Please check your connection!");
                     t.printStackTrace();
 
                 }
             });
         } else
-            completeUpload(pref.getCsrfToken(), pos);
+            completeUpload(pref.getCsrfToken());
 
 
     }
 
-    private void completeUpload(String editToken, final int pos) {
+    private void completeUpload(String editToken) {
 
         String filePath = getFilePathOfOgg();
         String uploadFileName = uploadName;
@@ -445,7 +328,7 @@ public class EndlessAdapter extends ArrayAdapter<String> {
 
         // finally, execute the request
         Call<ResponseBody> call = api.uploadFile(
-                RequestBody.create(MultipartBody.FORM, "upload"), // action
+                RequestBody.create(MultipartBody.FORM, "upload"), // action //RequestBody.create("upload", MultipartBody.FORM), // action
                 RequestBody.create(MultipartBody.FORM, uploadFileName), // filename
                 RequestBody.create(MultipartBody.FORM, editToken), // edit token
                 body, // Body file
@@ -470,10 +353,10 @@ public class EndlessAdapter extends ArrayAdapter<String> {
                             if (result.toLowerCase().contains("warning")) {
                                 String errMsg = "File name already exist";
                                 dismissDialog(errMsg);
-                                writeWordToFile(pos);
+                                writeWordToFile();
                             } else {
                                 dismissDialog("Upload: " + result);
-                                writeWordToFile(pos);
+                                writeWordToFile();
                             }
                         } else {
                             if (reader.has("error")) {
@@ -484,7 +367,7 @@ public class EndlessAdapter extends ArrayAdapter<String> {
                                 String result = uploadJSONObject.getString("result");
                                 String errMsg = "File name already exist";
                                 dismissDialog(errMsg);
-                                writeWordToFile(pos);
+                                writeWordToFile();
                             }
                         }
                     } catch (JSONException e) {
@@ -505,20 +388,22 @@ public class EndlessAdapter extends ArrayAdapter<String> {
         });
     }
 
-    private void writeWordToFile(int pos) {
+
+    private void writeWordToFile() {
         /*
          * Word already have audio
          * Add to text file
          * Then remove from list
          */
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+        /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             GeneralUtils.writeAudioWordsToFile(String.format(ctx.getString(R.string.format_file_name_words_already_have_audio), pref.getContributionLangCode()), Collections.singletonList(itemList.get(pos)));
             itemList.remove(pos);
             notifyDataSetChanged();
         }
 
         if (myDialog != null && myDialog.isShowing())
-            myDialog.dismiss();
+            myDialog.dismiss();*/
+        dismiss();
     }
 
     private void dismissDialog(String msg) {
@@ -575,22 +460,6 @@ public class EndlessAdapter extends ArrayAdapter<String> {
 
     }
 
-    public void destroyView() {
-        /*
-        if(player != null)
-        {
-            player.stopPlaying();
-        }*/
-
-       /* btnPlayPause.performClick();
-        if(isPlaying && btnPlayPause !=null)
-        {
-            btnPlayPause.performClick();
-            btnPlayPause.callOnClick();
-        }*/
-
-    }
-
     private void showMsg(String msg) {
         Toast.makeText(ctx, msg, Toast.LENGTH_LONG).show();
     }
@@ -603,7 +472,7 @@ public class EndlessAdapter extends ArrayAdapter<String> {
             if (!file.mkdirs())
                 Log.d(TAG, "Not create directory!");
         }
-        return file.getAbsolutePath() + "/" + EndlessAdapter.RECORDED_FILENAME;
+        return file.getAbsolutePath() + "/" + Constants.RECORDED_FILENAME;
     }
 
     private String getFilePathOfOgg() {
@@ -614,7 +483,7 @@ public class EndlessAdapter extends ArrayAdapter<String> {
                 Log.d(TAG, "Not create directory!");
         }
 
-        File convertedFile = new File(file.getAbsolutePath() + "/" + EndlessAdapter.CONVERTED_FILENAME);
+        File convertedFile = new File(file.getAbsolutePath() + "/" + Constants.CONVERTED_FILENAME);
         if (convertedFile.exists()) {
             if (convertedFile.delete()) {
                 System.out.println("file Deleted :" + convertedFile.getPath());
@@ -623,13 +492,12 @@ public class EndlessAdapter extends ArrayAdapter<String> {
             }
         }
 
-        String recordedFile = file.getAbsolutePath() + "/" + EndlessAdapter.RECORDED_FILENAME;
+        String recordedFile = file.getAbsolutePath() + "/" + Constants.RECORDED_FILENAME;
 
         Log.e("TAG", "--------- WAV " + recordedFile);
-        FFmpeg.execute("-i " + recordedFile + " -acodec libvorbis "+ convertedFile.getAbsolutePath());
+        FFmpeg.execute("-i " + recordedFile + " -acodec libvorbis " + convertedFile.getAbsolutePath());
         Log.e("TAG", "---------");
 
-        return file.getAbsolutePath() + "/" + EndlessAdapter.CONVERTED_FILENAME;
+        return file.getAbsolutePath() + "/" + Constants.CONVERTED_FILENAME;
     }
 }
-

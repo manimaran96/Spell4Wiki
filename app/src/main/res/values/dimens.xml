@@ -27,4 +27,7 @@
     <dimen name="search_view_height">40dp</dimen>
     <dimen name="img_normal">70dp</dimen>
     <dimen name="img_icon">24dp</dimen>
+
+    <dimen name="btn_padding_start">10dp</dimen>
+    <dimen name="btn_padding_end">10dp</dimen>
 </resources>

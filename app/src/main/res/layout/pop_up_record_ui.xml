@@ -1,16 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@drawable/bg_blue"
     android:layout_gravity="center">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_margin="20dp"
-        android:background="@drawable/bg_blue"
         android:elevation="8dp"
         android:minWidth="300dp"
         android:orientation="vertical"
@@ -57,7 +56,7 @@
                 android:clickable="true"
                 android:contentDescription="@string/player"
                 android:focusable="true"
-                android:src="@drawable/ic_play"
+                app:srcCompat="@drawable/ic_play"
                 android:tint="@android:color/holo_blue_bright" />
 
             <SeekBar
@@ -129,4 +128,4 @@
             android:textStyle="bold" />
 
     </LinearLayout>
-</LinearLayout>
+</ScrollView>

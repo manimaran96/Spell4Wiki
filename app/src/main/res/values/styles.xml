@@ -90,6 +90,10 @@
         <item name="android:fontFamily">@font/montserrat</item>
     </style>
 
-    <dimen name="btn_padding_start">10dp</dimen>
-    <dimen name="btn_padding_end">10dp</dimen>
+    <!-- Define your custom dialog theme here extending from base -->
+    <style name="RecordDialogTheme" parent="Theme.AppCompat.Light.Dialog">
+        <item name="android:windowFullscreen">false</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowIsFloating">true</item>
+    </style>
 </resources>
