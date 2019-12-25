@@ -14,7 +14,11 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Display;
 import android.view.View;
@@ -26,6 +30,7 @@ import com.manimaran.wikiaudio.R;
 import com.manimaran.wikiaudio.activity.CommonWebActivity;
 import com.manimaran.wikiaudio.constant.Constants;
 import com.manimaran.wikiaudio.constant.UrlType;
+import com.manimaran.wikiaudio.fragment.RecordAudioDialogFragment;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -206,5 +211,18 @@ public class GeneralUtils {
         }catch (Exception e){
             e.printStackTrace();
         }
+    }
+
+    public static void showRecordDialog(Activity activity, String word) {
+        RecordAudioDialogFragment dialogFragment = RecordAudioDialogFragment.newInstance(word);
+        FragmentManager fm = ((AppCompatActivity)activity).getSupportFragmentManager();
+        FragmentTransaction ft = fm.beginTransaction();
+        Fragment prev = fm.findFragmentByTag("dialog");
+        if (prev != null) {
+            ft.remove(prev);
+        }
+        ft.addToBackStack(null);
+        if(!dialogFragment.isVisible())
+            dialogFragment.show(ft, "dialog");
     }
 }

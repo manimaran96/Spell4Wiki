@@ -154,22 +154,16 @@ public class EndlessAdapter extends ArrayAdapter<String> {
         TextView tv = mView.findViewById(R.id.txt1);
         tv.setText(itemList.get(position));
 
-        tv.setOnClickListener(new View.OnClickListener() {
-            @RequiresApi(api = Build.VERSION_CODES.M)
-            @Override
-            public void onClick(View view) {
-
-                Activity activity1 = (Activity) ctx;
-
-                if (isContributionMode) {
-
-                    if (GeneralUtils.checkPermissionGranted(activity1)) {
-                        showRecordDialog(itemList.get(position));
-                    } else
-                        getPermissionToRecordAudio();
-                } else {
-                    openWiktionaryWebView(position);
+        tv.setOnClickListener(view -> {
+            Activity activity1 = (Activity) ctx;
+            if (isContributionMode) {
+                if (GeneralUtils.checkPermissionGranted(activity1)) {
+                    GeneralUtils.showRecordDialog(activity, itemList.get(position));
+                } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    getPermissionToRecordAudio();
                 }
+            } else {
+                openWiktionaryWebView(position);
             }
         });
 
@@ -187,19 +181,6 @@ public class EndlessAdapter extends ArrayAdapter<String> {
 
         return mView;
 
-    }
-
-    private void showRecordDialog(String word) {
-        RecordAudioDialogFragment dialogFragment = RecordAudioDialogFragment.newInstance(word);
-        FragmentManager fm = ((AppCompatActivity)activity).getSupportFragmentManager();
-        FragmentTransaction ft = fm.beginTransaction();
-        Fragment prev = fm.findFragmentByTag("dialog");
-        if (prev != null) {
-            ft.remove(prev);
-        }
-        ft.addToBackStack(null);
-        if(!dialogFragment.isVisible())
-            dialogFragment.show(ft, "dialog");
     }
 
     private void openWiktionaryWebView(int position) {

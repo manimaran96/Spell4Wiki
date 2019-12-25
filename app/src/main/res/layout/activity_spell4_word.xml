@@ -20,6 +20,7 @@
         app:srcCompat="@drawable/ic_wiktionary" />
 
     <EditText
+        android:id="@+id/editWord"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
