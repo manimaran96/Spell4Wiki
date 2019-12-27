@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Environment;
 import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.text.TextUtils;
@@ -77,6 +78,7 @@ public class RecordAudioDialogFragment extends DialogFragment {
     private PrefManager pref;
 
     private ApiInterface api;
+    private ApiInterface apiWiki;
 
     private String word = "";
     private String uploadName = null;
@@ -132,6 +134,7 @@ public class RecordAudioDialogFragment extends DialogFragment {
         activity = getActivity();
         pref = new PrefManager(ctx);
         api = ApiClient.getCommonsApi(ctx).create(ApiInterface.class);
+        apiWiki = ApiClient.getWiktionaryApi(ctx).create(ApiInterface.class);
 
         // View init
         btnClose = view.findViewById(R.id.btnClose);
@@ -354,9 +357,11 @@ public class RecordAudioDialogFragment extends DialogFragment {
                                 String errMsg = "File name already exist";
                                 dismissDialog(errMsg);
                                 writeWordToFile();
+                                updateOnWikiPage(errMsg);
                             } else {
                                 dismissDialog("Upload: " + result);
                                 writeWordToFile();
+                                updateOnWikiPage("Upload Done");
                             }
                         } else {
                             if (reader.has("error")) {
@@ -368,6 +373,7 @@ public class RecordAudioDialogFragment extends DialogFragment {
                                 String errMsg = "File name already exist";
                                 dismissDialog(errMsg);
                                 writeWordToFile();
+                                updateOnWikiPage(errMsg);
                             }
                         }
                     } catch (JSONException e) {
@@ -499,5 +505,71 @@ public class RecordAudioDialogFragment extends DialogFragment {
         Log.e("TAG", "---------");
 
         return file.getAbsolutePath() + "/" + Constants.CONVERTED_FILENAME;
+    }
+
+    private void updateOnWikiPage(String msg){
+
+        Call<ResponseBody> call = apiWiki.getEditToken();
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.isSuccessful()) {
+                    try {
+                        String responseStr = response.body().string();
+                        String editToken;
+                        JSONObject reader;
+                        JSONObject tokenJSONObject;
+                        try {
+                            reader = new JSONObject(responseStr);
+                            tokenJSONObject = reader.getJSONObject("query").getJSONObject("tokens");
+                            //noinspection SpellCheckingInspection
+                            editToken = tokenJSONObject.getString("csrftoken");
+                            if (editToken.equals("+\\")) {
+                                //dismissDialog("You are not logged in! \nPlease login to continue.");
+                                dismiss();
+                                //GeneralUtils.logoutAlert(activity);
+                            } else {
+                                //pref.setCsrfToken(editToken);
+
+
+                                //Call<ResponseBody> call = apiWiki.editPage("edit", title, pref.getCsrfToken(), "json","");
+                                Call<ResponseBody> callEdit = apiWiki.editPage("edit", word, editToken, "json","");
+                                callEdit.enqueue(new Callback<ResponseBody>() {
+                                    @Override
+                                    public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
+                                        if (response.isSuccessful() && response.body() != null) {
+                                            dismissDialog(msg);
+                                            Log.e(TAG, " RES " + response.toString());
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onFailure(@NotNull Call<ResponseBody> call, @NotNull Throwable t) {
+                                        showMsg("Please check your connection!");
+                                        dismissDialog(msg);
+                                    }
+                                });
+
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            dismissDialog("Server misbehaved! \nPlease try again later.");
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                        dismissDialog("Please check your connection!");
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                dismissDialog("Please check your connection!");
+                t.printStackTrace();
+
+            }
+        });
+
+
     }
 }

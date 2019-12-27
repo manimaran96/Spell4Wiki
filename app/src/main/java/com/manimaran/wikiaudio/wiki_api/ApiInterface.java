@@ -69,4 +69,14 @@ public interface ApiInterface {
     // Get Wikipedia language list JSON
     @GET("https://raw.githubusercontent.com/manimaran96/Spell4Wiki/master/files/lang-json/language.json")
     Call<ResponseBody> fetchWikiLangList();
+
+    @FormUrlEncoded
+    @POST("w/api.php?")
+    Call<ResponseBody> editPage(
+            @Field("action") String action,
+            @Field("title") String title,
+            @Field("token") String token,
+            @Field("format") String format,
+            @Field("appendtext") String appendText
+    );
 }
