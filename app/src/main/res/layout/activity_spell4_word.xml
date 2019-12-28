@@ -17,23 +17,23 @@
         android:layout_height="100dp"
         android:layout_marginTop="30dp"
         android:contentDescription="@string/wiktionary"
-        app:srcCompat="@drawable/ic_wiktionary" />
+        app:srcCompat="@drawable/ic_spell4word" />
 
     <EditText
         android:id="@+id/editWord"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
+        android:layout_margin="16dp"
         android:padding="10dp"
         android:background="@drawable/bg_line_border"
-        android:hint="@string/spell4word"/>
+        android:drawableEnd="@drawable/ic_info"
+        android:hint="@string/hint_enter_word"/>
 
     <Button
         android:id="@+id/btn_record"
         android:layout_width="120dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_margin="10dp"
         android:background="@drawable/bg_blue"
         android:text="@string/record"
         android:textAllCaps="false"

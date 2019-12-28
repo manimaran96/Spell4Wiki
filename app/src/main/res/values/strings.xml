@@ -109,5 +109,6 @@
     <string name="forward">Forward</string>
     <string name="backward">Backward</string>
     <string name="link_share_message">Link share from Spell4Wiki</string>
+    <string name="hint_enter_word">Enter word</string>
 
 </resources>

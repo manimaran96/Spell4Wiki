@@ -71,7 +71,7 @@ public class Spell4Wiktionary extends AppCompatActivity implements EndlessListVi
         // Title & Sub title
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setTitle(getString(R.string.app_name));
+            getSupportActionBar().setTitle(getString(R.string.spell4wiktionary));
         }
 
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
