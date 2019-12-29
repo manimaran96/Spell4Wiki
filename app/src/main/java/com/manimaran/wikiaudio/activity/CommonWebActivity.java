@@ -4,9 +4,11 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import com.manimaran.wikiaudio.R;
@@ -16,7 +18,7 @@ import com.manimaran.wikiaudio.utils.PrefManager;
 
 public class CommonWebActivity extends AppCompatActivity {
 
-    private boolean isContributionMode = false;
+    private boolean isWitionaryWord = false;
     private WebViewFragment fragment = new WebViewFragment();
 
     @Override
@@ -40,8 +42,8 @@ public class CommonWebActivity extends AppCompatActivity {
                 setTitle(title);
             }
 
-            if (bundle.containsKey(Constants.IS_CONTRIBUTION_MODE))
-                isContributionMode = bundle.getBoolean(Constants.IS_CONTRIBUTION_MODE);
+            if (bundle.containsKey(Constants.IS_WIKTIONARY_WORD))
+                isWitionaryWord = bundle.getBoolean(Constants.IS_WIKTIONARY_WORD);
 
             loadFragment(fragment);
         }
@@ -57,13 +59,8 @@ public class CommonWebActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.web_view_menu, menu);
-        //menu.findItem(R.id.action_favorite).setIcon(R.drawable.ic_cancel);
-        /*if (isContributionMode) {
-            menu.findItem(R.id.action_logout).setVisible(false);
-            menu.findItem(R.id.action_login).setVisible(true);
-        }*/
+        getMenuInflater().inflate(R.menu.web_view_menu, menu);
+        menu.findItem(R.id.action_lang_change).setVisible(isWitionaryWord);
         return true;
     }
 
@@ -98,5 +95,23 @@ public class CommonWebActivity extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        boolean result = super.onPrepareOptionsMenu(menu);
+        changeMenuButtonStyle(menu.findItem(R.id.action_forward), fragment.canGoForward());
+        changeMenuButtonStyle(menu.findItem(R.id.action_backward), fragment.canGoBackward());
+        return result;
+    }
+
+    private void changeMenuButtonStyle(MenuItem menuItem, boolean isAllow) {
+        if (menuItem != null) {
+            SpannableString s = new SpannableString(menuItem.getTitle());
+            s.setSpan(new ForegroundColorSpan(ContextCompat.getColor(getApplicationContext(), isAllow ? R.color.black : R.color.light_gray)), 0, s.length(), 0);
+            menuItem.setEnabled(isAllow);
+            menuItem.setTitle(s);
+        }
+    }
+
 
 }

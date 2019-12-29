@@ -37,16 +37,17 @@
             android:layout_marginTop="8dp"
             android:layout_centerInParent="true"/>
 
-        <ImageButton
-            android:id="@+id/btnRecord"
-            android:layout_width="@dimen/fab_size"
-            android:layout_height="@dimen/fab_size"
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fabRecord"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:src="@drawable/ic_record"
-            android:scaleType="centerCrop"
+            app:maxImageSize="@dimen/fab_size"
+            app:backgroundTint="@color/transparent"
             android:layout_alignParentBottom="true"
             android:layout_alignParentEnd="true"
-            android:background="@color/transparent"
             app:elevation="6dp"
+            app:fabCustomSize="@dimen/fab_size"
             android:contentDescription="@string/record"
             android:layout_margin="16dp" />
 

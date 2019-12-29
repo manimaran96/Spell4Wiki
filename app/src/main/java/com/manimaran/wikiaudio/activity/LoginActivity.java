@@ -95,14 +95,14 @@ public class LoginActivity extends AppCompatActivity {
              *  Hit Forgot Password Button
              */
             btnForgotPassword.setOnClickListener(v -> {
-                openUrl(getString(R.string.url_forgot_password));
+                openUrl(getString(R.string.url_forgot_password) , getString(R.string.action_forgot_password));
             });
 
             /*
              *  Hit Join Wikipedia Button
              */
             btnJoinWikipedia.setOnClickListener(v -> {
-                openUrl(getString(R.string.url_join_wikipedia));
+                openUrl(getString(R.string.url_join_wikipedia), getString(R.string.action_join_wikipedia));
             });
 
 
@@ -258,12 +258,12 @@ public class LoginActivity extends AppCompatActivity {
             btnLogin.dispose();
     }
 
-    private void openUrl(String url)
+    private void openUrl(String url, String title)
     {
         if(isDuringLogin()) {
             showMsg(getString(R.string.please_wait));
         }else {
-            GeneralUtils.openUrl(getApplicationContext(), url, UrlType.INTERNAL);
+            GeneralUtils.openUrl(getApplicationContext(), url, UrlType.INTERNAL, title);
         }
     }
 

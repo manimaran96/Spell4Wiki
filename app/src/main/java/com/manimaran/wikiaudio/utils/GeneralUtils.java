@@ -181,13 +181,14 @@ public class GeneralUtils {
         return connectivityManager.getActiveNetworkInfo() != null && connectivityManager.getActiveNetworkInfo().isConnected();
     }
 
-    public static void openUrl(Context context, String url, int urlType){
+    public static void openUrl(Context context, String url, int urlType, String title){
         try {
             if (url != null && !url.isEmpty())
             {
                 switch (urlType){
                     case UrlType.INTERNAL :
                         Intent intent  = new Intent(context, CommonWebActivity.class);
+                        intent.putExtra(Constants.TITLE, title);
                         intent.putExtra(Constants.URL, url);
                         context.startActivity(intent);
                         break;

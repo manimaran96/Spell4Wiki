@@ -49,20 +49,17 @@ public class ListItemAdapter extends RecyclerView.Adapter<ListItemAdapter.ViewHo
             //inflating menu from xml resource
             popup.inflate(R.menu.item_menu);
             //adding click listener
-            popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                @Override
-                public boolean onMenuItemClick(MenuItem item) {
-                    int i = item.getItemId();
-                    String url = null;
-                    if (i == R.id.web_page) {//handle web page
-                        url = model.getUrl();
-                    } else if (i == R.id.license_url) {//handle license url
-                        url = model.getLicenseUrl();
-                    }
-                    Activity activity = (Activity) mContext;
-                    GeneralUtils.openUrl(activity, url, UrlType.INTERNAL);
-                    return false;
+            popup.setOnMenuItemClickListener(item -> {
+                int i = item.getItemId();
+                String url = null;
+                if (i == R.id.web_page) {//handle web page
+                    url = model.getUrl();
+                } else if (i == R.id.license_url) {//handle license url
+                    url = model.getLicenseUrl();
                 }
+                Activity activity = (Activity) mContext;
+                GeneralUtils.openUrl(activity, url, UrlType.EXTERNAL, null);
+                return false;
             });
             //displaying the popup
             popup.show();

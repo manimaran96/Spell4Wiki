@@ -6,11 +6,12 @@ import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebResourceError;
@@ -18,7 +19,6 @@ import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -34,9 +34,10 @@ public class WebViewFragment extends Fragment {
     private WebView webView;
     private ProgressBar progressBar;
     private TextView txtLoading;
-    private ImageButton btnRecord;
-    private boolean isWitionaryWord = false;
-    private String url = "https://manimaran96.wordpress.com/";
+    private FloatingActionButton fabRecord;
+    private boolean isWitionaryWord = false, isContributionMode = false;
+    private String url = null;
+    private String word = null;
 
 
     @Override
@@ -54,14 +55,42 @@ public class WebViewFragment extends Fragment {
                 url = bundle.getString(Constants.URL);
             if (bundle.containsKey(Constants.IS_WIKTIONARY_WORD))
                 isWitionaryWord = bundle.getBoolean(Constants.IS_WIKTIONARY_WORD);
+            if (bundle.containsKey(Constants.IS_CONTRIBUTION_MODE))
+                isContributionMode = bundle.getBoolean(Constants.IS_CONTRIBUTION_MODE);
+            if (bundle.containsKey(Constants.TITLE))
+                word = bundle.getString(Constants.TITLE);
         }
 
-        loadWebPage(url);
+        if (GeneralUtils.isNetworkConnected(getActivity()))
+            loadWebPage(url);
+        else
+            GeneralUtils.showSnack(webView, getString(R.string.check_internet));
 
-        btnRecord.setVisibility(isWitionaryWord ? View.VISIBLE : View.GONE);
+        if (isWitionaryWord && isContributionMode)
+            fabRecord.show();
+        else
+            fabRecord.hide();
 
-        if (isWitionaryWord) {
-            webView.getViewTreeObserver().addOnScrollChangedListener(() -> Log.v("TAG", "+++ scrollchanged " + webView.getScrollY()));
+        fabRecord.setOnClickListener(v -> {
+            if (word != null)
+                GeneralUtils.showRecordDialog(getActivity(), word.trim());
+            else
+                GeneralUtils.showSnack(fabRecord, "Give valid word");
+        });
+
+        if (isWitionaryWord && isContributionMode && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            webView.setOnScrollChangeListener((webView, scrollX, scrollY, oldScrollX, oldScrollY) -> {
+                if (scrollY > 0) {
+                    fabRecord.hide();
+                    new Handler().postDelayed(() -> {
+                        if (fabRecord != null && isAdded())
+                            fabRecord.show();
+                    }, 1500);
+                }
+                if (scrollY < 0) {
+                    fabRecord.show();
+                }
+            });
         }
         return rootView;
     }
@@ -84,12 +113,16 @@ public class WebViewFragment extends Fragment {
             public void onPageStarted(WebView view, String url, Bitmap favicon) {
                 super.onPageStarted(view, url, favicon);
                 loadingVisibility(View.VISIBLE);
+                if (getActivity() != null)
+                    getActivity().invalidateOptionsMenu();
             }
 
             @Override
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
                 loadingVisibility(View.GONE);
+                if (getActivity() != null)
+                    getActivity().invalidateOptionsMenu();
             }
 
             @Override
@@ -97,6 +130,8 @@ public class WebViewFragment extends Fragment {
                 super.onReceivedError(view, request, error);
                 loadingVisibility(View.GONE);
                 GeneralUtils.showToast(getContext(), getString(R.string.error_wepage_load));
+                if (getActivity() != null)
+                    getActivity().invalidateOptionsMenu();
             }
         });
     }
@@ -107,25 +142,11 @@ public class WebViewFragment extends Fragment {
         webView.setVisibility(visibility == View.VISIBLE ? View.INVISIBLE : View.VISIBLE);
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem menuItem) {
-        switch (menuItem.getItemId()) {
-            case android.R.id.home:
-                Objects.requireNonNull(getActivity()).finish();
-                return true;
-        }
-        return (super.onOptionsItemSelected(menuItem));
-    }
-
-    private void invalidateOptionsMenu() {
-        // visible hide
-    }
-
     private void initUI() {
         webView = rootView.findViewById(R.id.webView);
         progressBar = rootView.findViewById(R.id.progressBar);
         txtLoading = rootView.findViewById(R.id.txtLoading);
-        btnRecord = rootView.findViewById(R.id.btnRecord);
+        fabRecord = rootView.findViewById(R.id.fabRecord);
     }
 
     public void backwardWebPage() {
@@ -140,6 +161,14 @@ public class WebViewFragment extends Fragment {
             webView.goForward();
         } else
             GeneralUtils.showSnack(webView, "Forward nothing");
+    }
+
+    public boolean canGoForward() {
+        return webView != null && webView.canGoForward();
+    }
+
+    public boolean canGoBackward() {
+        return webView != null && webView.canGoBack();
     }
 
     public void refreshWebPage() {
@@ -165,5 +194,12 @@ public class WebViewFragment extends Fragment {
         intent.setType("text/plain");
         intent.putExtra(Intent.EXTRA_TEXT, getString(R.string.link_share_message));
         startActivity(Intent.createChooser(intent, getString(R.string.app_share_title)));
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (webView != null)
+            webView.stopLoading();
     }
 }
