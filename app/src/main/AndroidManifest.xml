@@ -76,6 +76,7 @@
             android:name=".activity.Spell4WordActivity"
             android:screenOrientation="portrait"
             android:parentActivityName=".activity.MainActivity"
+            android:windowSoftInputMode="adjustResize"
             android:theme="@style/ActionBarStyle" />
 
         <activity

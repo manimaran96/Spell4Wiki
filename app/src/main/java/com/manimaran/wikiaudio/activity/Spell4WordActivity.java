@@ -39,10 +39,10 @@ public class Spell4WordActivity extends AppCompatActivity {
             if (event.getAction() == MotionEvent.ACTION_UP) {
                 if (event.getRawX() >= (editSpell4Word.getRight() - editSpell4Word.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
                     // your action here
-                    if (!TextUtils.isEmpty(editSpell4Word.getText()))
+                    if (!TextUtils.isEmpty(editSpell4Word.getText()) && editSpell4Word.getText().length() < 30)
                         openWikitionaryPage(editSpell4Word.getText().toString());
                     else
-                        GeneralUtils.showSnack(btnRecord, "Enter valid word");
+                        GeneralUtils.showSnack(editSpell4Word, "Enter valid word");
                     return true;
                 }
             }
@@ -51,10 +51,10 @@ public class Spell4WordActivity extends AppCompatActivity {
 
 
         btnRecord.setOnClickListener(v -> {
-            if (!TextUtils.isEmpty(editSpell4Word.getText()) && editSpell4Word.getText().toString().length() < 15) {
+            if (!TextUtils.isEmpty(editSpell4Word.getText()) && editSpell4Word.getText().length() < 30) {
                 GeneralUtils.showRecordDialog(Spell4WordActivity.this, editSpell4Word.getText().toString().trim());
             } else
-                GeneralUtils.showSnack(btnRecord, "Enter valid word");
+                GeneralUtils.showSnack(editSpell4Word, "Enter valid word");
         });
     }
 
