@@ -130,7 +130,9 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
                                 };
 
                                 wikiLanguageList = langList;
-                                String existLangCode = isWiktionaryMode || isTempMode ? pref.getWiktionaryLangCode() : pref.getContributionLangCode();
+                                String existLangCode = isWiktionaryMode ? pref.getWiktionaryLangCode() : pref.getContributionLangCode();
+                                if(isTempMode)
+                                    existLangCode = "";
                                 adapter = new LangAdapter(getActivity(), wikiLanguageList, listener, existLangCode);
                                 if (listView != null) {
                                     listView.setAdapter(adapter);

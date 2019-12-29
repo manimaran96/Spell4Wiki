@@ -25,6 +25,7 @@ import android.widget.TextView;
 import com.manimaran.wikiaudio.R;
 import com.manimaran.wikiaudio.constant.Constants;
 import com.manimaran.wikiaudio.utils.GeneralUtils;
+import com.manimaran.wikiaudio.utils.PrefManager;
 
 import java.util.Objects;
 
@@ -35,9 +36,11 @@ public class WebViewFragment extends Fragment {
     private ProgressBar progressBar;
     private TextView txtLoading;
     private FloatingActionButton fabRecord;
-    private boolean isWitionaryWord = false, isContributionMode = false;
+    private boolean isWitionaryWord = false;
     private String url = null;
     private String word = null;
+
+    private PrefManager pref;
 
 
     @Override
@@ -48,6 +51,7 @@ public class WebViewFragment extends Fragment {
         initUI();
 
 
+        pref = new PrefManager(getActivity());
         Bundle bundle = Objects.requireNonNull(getActivity()).getIntent().getExtras();
 
         if (bundle != null) {
@@ -55,8 +59,6 @@ public class WebViewFragment extends Fragment {
                 url = bundle.getString(Constants.URL);
             if (bundle.containsKey(Constants.IS_WIKTIONARY_WORD))
                 isWitionaryWord = bundle.getBoolean(Constants.IS_WIKTIONARY_WORD);
-            if (bundle.containsKey(Constants.IS_CONTRIBUTION_MODE))
-                isContributionMode = bundle.getBoolean(Constants.IS_CONTRIBUTION_MODE);
             if (bundle.containsKey(Constants.TITLE))
                 word = bundle.getString(Constants.TITLE);
         }
@@ -66,7 +68,7 @@ public class WebViewFragment extends Fragment {
         else
             GeneralUtils.showSnack(webView, getString(R.string.check_internet));
 
-        if (isWitionaryWord && isContributionMode)
+        if (isWitionaryWord && !pref.getIsAnonymous())
             fabRecord.show();
         else
             fabRecord.hide();
@@ -78,7 +80,7 @@ public class WebViewFragment extends Fragment {
                 GeneralUtils.showSnack(fabRecord, "Give valid word");
         });
 
-        if (isWitionaryWord && isContributionMode && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+        if (isWitionaryWord && !pref.getIsAnonymous() && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             webView.setOnScrollChangeListener((webView, scrollX, scrollY, oldScrollX, oldScrollY) -> {
                 if (scrollY > 0) {
                     fabRecord.hide();
