@@ -3,22 +3,20 @@ package com.manimaran.wikiaudio.activity;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.manimaran.wikiaudio.BuildConfig;
 import com.manimaran.wikiaudio.R;
+import com.manimaran.wikiaudio.constant.Constants;
 import com.manimaran.wikiaudio.constant.UrlType;
 import com.manimaran.wikiaudio.utils.GeneralUtils;
-
-import br.tiagohm.markdownview.css.styles.Github;
 
 
 public class AboutActivity extends AppCompatActivity implements View.OnClickListener {
@@ -64,7 +62,7 @@ public class AboutActivity extends AppCompatActivity implements View.OnClickList
 
         txtAppVersionLicense.setMovementMethod(LinkMovementMethod.getInstance());
         String appVersionLicense = getString(R.string.version) + " : " + BuildConfig.VERSION_NAME + " & " +
-                                    getString(R.string.license) +" : <a href=" + getString(R.string.link_gplv3) + ">" + "GPLv3" + "</a>";
+                getString(R.string.license) + " : <u><font color='" + ContextCompat.getColor(getApplicationContext(), R.color.w_green) + "'>GPLv3</font></u>";
         txtAppVersionLicense.setText(Html.fromHtml(appVersionLicense));
     }
 
@@ -79,39 +77,59 @@ public class AboutActivity extends AppCompatActivity implements View.OnClickList
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
-            case R.id.txt_rate_app : GeneralUtils.openUrl(this, getString(R.string.link_app_play_store), UrlType.EXTERNAL); break;
-            case R.id.txt_share : shareApp(); break;
-            case R.id.txt_how_to_contribute : GeneralUtils.openUrl(this, getString(R.string.link_how_to_contribute), UrlType.INTERNAL); break;
-            case R.id.txt_source_code : GeneralUtils.openUrl(this, getString(R.string.link_source_code), UrlType.EXTERNAL); break;
-            case R.id.txt_contributors : GeneralUtils.openUrl(this, getString(R.string.link_contributors), UrlType.INTERNAL); break;
-            case R.id.txt_third_party_lib :
+        switch (v.getId()) {
+            case R.id.txt_rate_app:
+                GeneralUtils.openUrl(this, getString(R.string.link_app_play_store), UrlType.EXTERNAL, null);
+                break;
+            case R.id.txt_share:
+                shareApp();
+                break;
+            case R.id.txt_how_to_contribute:
+                GeneralUtils.openUrl(this, getString(R.string.link_how_to_contribute), UrlType.INTERNAL, getString(R.string.how_to_contribute));
+                break;
+            case R.id.txt_source_code:
+                GeneralUtils.openUrl(this, getString(R.string.link_source_code), UrlType.EXTERNAL, null);
+                break;
+            case R.id.txt_contributors:
+                GeneralUtils.openUrl(this, getString(R.string.link_contributors), UrlType.INTERNAL, getString(R.string.contributors));
+                break;
+            case R.id.txt_third_party_lib:
                 Intent intentTPL = new Intent(getApplicationContext(), ListItemActivity.class);
-                intentTPL.putExtra("title", getString(R.string.third_party_libraries));
+                intentTPL.putExtra(Constants.TITLE, getString(R.string.third_party_libraries));
                 startActivity(intentTPL);
                 break;
-            case R.id.txt_credits :
+            case R.id.txt_credits:
                 Intent intentCredits = new Intent(getApplicationContext(), ListItemActivity.class);
-                intentCredits.putExtra("title", getString(R.string.credits));
+                intentCredits.putExtra(Constants.TITLE, getString(R.string.credits));
                 startActivity(intentCredits);
                 break;
-            case R.id.txt_help_development : GeneralUtils.openUrl(this, getString(R.string.link_how_to_contribute), UrlType.INTERNAL); break;
-            case R.id.txt_contact_us : contactUs(); break;
-            case R.id.layout_kaniyam : GeneralUtils.openUrl(this, getString(R.string.link_kaniyam), UrlType.INTERNAL); break;
-            case R.id.layout_vglug : GeneralUtils.openUrl(this, getString(R.string.link_vglug), UrlType.INTERNAL); break;
+            case R.id.txt_help_development:
+                GeneralUtils.openUrl(this, getString(R.string.link_how_to_contribute), UrlType.INTERNAL, getString(R.string.help_development));
+                break;
+            case R.id.txt_contact_us:
+                contactUs();
+                break;
+            case R.id.layout_kaniyam:
+                GeneralUtils.openUrl(this, getString(R.string.link_kaniyam), UrlType.INTERNAL, getString(R.string.kaniyam));
+                break;
+            case R.id.layout_vglug:
+                GeneralUtils.openUrl(this, getString(R.string.link_vglug), UrlType.INTERNAL, getString(R.string.vglug));
+                break;
+            case R.id.txt_app_version_and_license:
+                GeneralUtils.openUrl(this, getString(R.string.link_gplv3), UrlType.INTERNAL, "GPLv3 - App License");
+                break;
         }
 
     }
 
-    private void shareApp(){
+    private void shareApp() {
         Intent intent = new Intent(Intent.ACTION_SEND);
         intent.setType("text/plain");
         intent.putExtra(Intent.EXTRA_TEXT, getString(R.string.app_share_message));
         startActivity(Intent.createChooser(intent, getString(R.string.app_share_title)));
     }
 
-    private void contactUs()
-    {
+    private void contactUs() {
         Intent i = new Intent(Intent.ACTION_SEND);
         i.setType("message/rfc822");
         i.putExtra(Intent.EXTRA_EMAIL, new String[]{getString(R.string.contact_email)});

@@ -58,9 +58,8 @@
                 android:layout_marginBottom="10dp"
                 android:maxLines="1"
                 android:ellipsize="end"
-                android:linksClickable="true"
+                android:linksClickable="false"
                 android:textSize="@dimen/text_small" />
-
 
             <LinearLayout
                 android:layout_width="match_parent"
