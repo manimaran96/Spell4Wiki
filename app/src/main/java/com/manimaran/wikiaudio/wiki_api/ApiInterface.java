@@ -1,6 +1,10 @@
 package com.manimaran.wikiaudio.wiki_api;
 
 
+import com.manimaran.wikiaudio.model.Contributors;
+
+import java.util.List;
+
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
@@ -69,6 +73,9 @@ public interface ApiInterface {
     // Get Wikipedia language list JSON
     @GET("https://raw.githubusercontent.com/manimaran96/Spell4Wiki/master/files/lang-json/language.json")
     Call<ResponseBody> fetchWikiLangList();
+
+    @GET("https://api.github.com/repos/manimaran96/Spell4Wiki/contributors")
+    Call<List<Contributors>> fetchContributorsList();
 
     @FormUrlEncoded
     @POST("w/api.php?")

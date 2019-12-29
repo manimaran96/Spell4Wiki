@@ -91,7 +91,7 @@ public class AboutActivity extends AppCompatActivity implements View.OnClickList
                 GeneralUtils.openUrl(this, getString(R.string.link_source_code), UrlType.EXTERNAL, null);
                 break;
             case R.id.txt_contributors:
-                GeneralUtils.openUrl(this, getString(R.string.link_contributors), UrlType.INTERNAL, getString(R.string.contributors));
+                startActivity(new Intent(getApplicationContext(), ContributorsActivity.class));
                 break;
             case R.id.txt_third_party_lib:
                 Intent intentTPL = new Intent(getApplicationContext(), ListItemActivity.class);

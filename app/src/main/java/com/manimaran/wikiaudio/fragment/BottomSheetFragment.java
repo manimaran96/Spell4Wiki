@@ -76,7 +76,7 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
             if (listView != null)
                 listView.setVisibility(View.GONE);
 
-            ApiInterface api = ApiClient.getWiktionaryApi(getContext()).create(ApiInterface.class);
+            ApiInterface api = ApiClient.getApi().create(ApiInterface.class);
             Call<ResponseBody> call = api.fetchWikiLangList();
             call.enqueue(new Callback<ResponseBody>() {
                 @Override

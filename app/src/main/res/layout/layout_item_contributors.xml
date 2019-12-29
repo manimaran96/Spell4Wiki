@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="12dp"
+    android:paddingEnd="12dp"
+    android:paddingStart="12dp"
+    android:gravity="center"
+    android:layout_gravity="center"
+    android:paddingBottom="0dp">
+
+    <ImageView
+        android:id="@+id/imgIcon"
+        android:layout_width="@dimen/img_normal"
+        android:layout_height="@dimen/img_normal"
+        app:srcCompat="@drawable/ic_contributors"
+        android:scaleType="fitCenter"
+        android:paddingEnd="5dp"
+        android:paddingStart="5dp"
+        android:layout_marginEnd="10dp"
+        android:contentDescription="@string/app_name"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@+id/imgIcon"
+        android:layout_toStartOf="@+id/btn_option"
+        android:layout_centerInParent="true"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/txt_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="middle"
+            android:singleLine="true"
+            android:padding="2dp"
+            android:text="@string/contributors"
+            android:textSize="@dimen/text_normal"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/txt_about"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:padding="2dp"
+            android:linksClickable="true"
+            android:autoLink="all"
+            android:text="@string/link_gplv3"
+            android:textSize="@dimen/text_small" />
+
+    </LinearLayout>
+
+
+
+    <ImageView
+        android:id="@+id/btn_option"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:paddingStart="10dp"
+        android:paddingEnd="5dp"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        app:srcCompat="@drawable/ic_link" />
+
+</RelativeLayout>

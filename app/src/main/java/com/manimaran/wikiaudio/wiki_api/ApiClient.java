@@ -34,6 +34,7 @@ public class ApiClient {
 
     private static Retrofit retrofitCommons = null;
     private static Retrofit retrofitWiktionary = null;
+    private static Retrofit retrofitApi = null;
     @SuppressLint("StaticFieldLeak")
     private static PrefManager pref;
 
@@ -57,6 +58,16 @@ public class ApiClient {
                     .build();
         }
         return retrofitWiktionary;
+    }
+
+    public static Retrofit getApi(){
+        if (retrofitApi == null) {
+            retrofitApi = new Retrofit.Builder()
+                    .baseUrl("https://github.com")
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build();
+        }
+        return retrofitApi;
     }
 
     public static String getUrl(int urlType, Context context) {
