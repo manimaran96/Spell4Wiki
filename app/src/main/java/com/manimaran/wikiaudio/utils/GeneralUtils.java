@@ -183,21 +183,26 @@ public class GeneralUtils {
 
     public static void openUrl(Context context, String url, int urlType, String title){
         try {
-            if (url != null && !url.isEmpty())
-            {
-                switch (urlType){
-                    case UrlType.INTERNAL :
-                        Intent intent  = new Intent(context, CommonWebActivity.class);
-                        intent.putExtra(Constants.TITLE, title);
-                        intent.putExtra(Constants.URL, url);
-                        context.startActivity(intent);
-                        break;
-                    case UrlType.EXTERNAL:
-                    default:
-                        context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
-                        break;
-                }
-            }
+            View view = ((Activity) context).findViewById(android.R.id.content);
+            if(GeneralUtils.isNetworkConnected(context)) {
+                if (url != null && !url.isEmpty()) {
+                    switch (urlType){
+                        case UrlType.INTERNAL:
+                            Intent intent = new Intent(context, CommonWebActivity.class);
+                            intent.putExtra(Constants.TITLE, title);
+                            intent.putExtra(Constants.URL, url);
+                            context.startActivity(intent);
+                            break;
+                        case UrlType.EXTERNAL:
+                        default:
+                            context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
+                            break;
+                    }
+                }else
+                    GeneralUtils.showSnack(view, context.getString(R.string.check_url));
+            }else
+                GeneralUtils.showSnack(view, context.getString(R.string.check_internet));
+
         }catch (Exception e){
             e.printStackTrace();
         }

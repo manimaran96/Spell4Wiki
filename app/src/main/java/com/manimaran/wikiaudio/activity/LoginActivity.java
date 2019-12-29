@@ -263,7 +263,7 @@ public class LoginActivity extends AppCompatActivity {
         if(isDuringLogin()) {
             showMsg(getString(R.string.please_wait));
         }else {
-            GeneralUtils.openUrl(getApplicationContext(), url, UrlType.INTERNAL, title);
+            GeneralUtils.openUrl(LoginActivity.this, url, UrlType.INTERNAL, title);
         }
     }
 
