@@ -13,7 +13,9 @@ import android.view.MenuItem;
 
 import com.manimaran.wikiaudio.R;
 import com.manimaran.wikiaudio.constant.Constants;
+import com.manimaran.wikiaudio.fragment.BottomSheetFragment;
 import com.manimaran.wikiaudio.fragment.WebViewFragment;
+import com.manimaran.wikiaudio.listerner.CallBackListener;
 import com.manimaran.wikiaudio.utils.PrefManager;
 
 public class CommonWebActivity extends AppCompatActivity {
@@ -88,11 +90,28 @@ public class CommonWebActivity extends AppCompatActivity {
             case R.id.action_copy_link:
                 fragment.copyLink();
                 return true;
+            case R.id.action_lang_change :
+                loadLanguages();
+                return true;
             case android.R.id.home:
                 finish();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
+        }
+    }
+
+    private void loadLanguages() {
+        if(isWitionaryWord) {
+            BottomSheetFragment bottomSheetFragment = new BottomSheetFragment();
+            CallBackListener callback = langCode -> {
+                if(fragment !=null)
+                    fragment.loadWordWithOtherLang(langCode);
+            };
+            bottomSheetFragment.setCalBack(callback);
+            bottomSheetFragment.setIsTempMode(true);
+            bottomSheetFragment.show(getSupportFragmentManager(), bottomSheetFragment.getTag());
+            bottomSheetFragment.setCancelable(false);
         }
     }
 

@@ -43,7 +43,7 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
     private CallBackListener callback;
     private List<WikiLanguage> wikiLanguageList = new ArrayList<>();
     private LangAdapter adapter;
-    private Boolean isWiktionaryMode = false;
+    private Boolean isWiktionaryMode = false, isTempMode = false;
 
     public BottomSheetFragment() {
         // Required empty public constructor
@@ -103,7 +103,7 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
                                      * If Contribution mode show only language have "title_words_without_audio" key-value
                                      * "title_words_without_audio" - category of words without audio in wiktionary
                                      */
-                                    if (getIsWiktionaryMode()) {
+                                    if (isWiktionaryMode || isTempMode) {
                                         langList.add(lang);
                                     } else {
                                         if (obj.has("title_words_without_audio")) {
@@ -113,25 +113,24 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
                                     }
                                 }
 
-                                OnLangSelectListener listener = new OnLangSelectListener() {
-                                    @Override
-                                    public void OnClickListener(String langCode, String lang, String titleWordsWithoutAudio) {
-                                        if (getIsWiktionaryMode())
+                                OnLangSelectListener listener = (langCode, lang, titleWordsWithoutAudio) -> {
+                                    if(!isTempMode) {
+                                        if (isWiktionaryMode)
                                             pref.setWiktionaryLangCode(langCode);
                                         else {
                                             pref.setContributionLangCode(langCode);
                                             if (titleWordsWithoutAudio != null)
                                                 pref.setTitleWordsWithoutAudio(titleWordsWithoutAudio);
                                         }
-                                        GeneralUtils.showToast(getContext(), String.format(getString(R.string.select_language_response_msg), lang));
-                                        if (callback != null)
-                                            callback.OnCallBackListener();
-                                        dismiss();
                                     }
+                                    GeneralUtils.showToast(getContext(), String.format(getString(R.string.select_language_response_msg), lang));
+                                    if (callback != null)
+                                        callback.OnCallBackListener(langCode);
+                                    dismiss();
                                 };
 
                                 wikiLanguageList = langList;
-                                String existLangCode = getIsWiktionaryMode() ? pref.getWiktionaryLangCode() : pref.getContributionLangCode();
+                                String existLangCode = isWiktionaryMode || isTempMode ? pref.getWiktionaryLangCode() : pref.getContributionLangCode();
                                 adapter = new LangAdapter(getActivity(), wikiLanguageList, listener, existLangCode);
                                 if (listView != null) {
                                     listView.setAdapter(adapter);
@@ -161,33 +160,25 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
 
 
             if (btnClose != null) {
-                btnClose.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        dismiss();
-                    }
-                });
+                btnClose.setOnClickListener(view -> dismiss());
             }
 
-            dialog.setOnShowListener(new DialogInterface.OnShowListener() {
-                @Override
-                public void onShow(DialogInterface dialog) {
-                    BottomSheetDialog d = (BottomSheetDialog) dialog;
+            dialog.setOnShowListener(dialog1 -> {
+                BottomSheetDialog d = (BottomSheetDialog) dialog1;
 
-                    FrameLayout bottomSheet = (FrameLayout) d.findViewById(R.id.design_bottom_sheet);
-                    if (bottomSheet != null) {
-                        BottomSheetBehavior behavior = BottomSheetBehavior.from(bottomSheet);
-                        behavior.setHideable(false);
-                        behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+                FrameLayout bottomSheet = d.findViewById(R.id.design_bottom_sheet);
+                if (bottomSheet != null) {
+                    BottomSheetBehavior behavior = BottomSheetBehavior.from(bottomSheet);
+                    behavior.setHideable(false);
+                    behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
 
-                        // Full screen mode no collapse
-                        DisplayMetrics displaymetrics = new DisplayMetrics();
-                        getActivity().getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
-                        int screenHeight = displaymetrics.heightPixels;
-                        behavior.setPeekHeight(screenHeight);
-                    }
-
+                    // Full screen mode no collapse
+                    DisplayMetrics displaymetrics = new DisplayMetrics();
+                    getActivity().getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
+                    int screenHeight = displaymetrics.heightPixels;
+                    behavior.setPeekHeight(screenHeight);
                 }
+
             });
 
             if (searchView != null) {
@@ -201,7 +192,7 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
 
                     @Override
                     public boolean onQueryTextChange(String newText) {
-                        if (newText.length() > 0 && adapter != null)
+                        if (adapter != null)
                             adapter.getFilter().filter(newText);
                         return false;
                     }
@@ -223,11 +214,11 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
         this.callback = listener;
     }
 
-    public Boolean getIsWiktionaryMode() {
-        return isWiktionaryMode;
-    }
-
     public void setIsWiktionaryMode(Boolean wiktionary) {
         isWiktionaryMode = wiktionary;
+    }
+
+    public void setIsTempMode(Boolean isTemp){
+        isTempMode = isTemp;
     }
 }

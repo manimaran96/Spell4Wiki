@@ -55,12 +55,7 @@ public class Spell4Wiktionary extends AppCompatActivity implements EndlessListVi
         init();
 
         adapter = new EndlessAdapter(this, new ArrayList<String>(), R.layout.search_result_row, true);
-        CallBackListener listener = new CallBackListener() {
-            @Override
-            public void OnCallBackListener() {
-
-            }
-        };
+        CallBackListener listener = langCode -> { };
         adapter.setCallbackListener(listener);
         resultListView.setAdapter(adapter);
         resultListView.setListener(this);
@@ -185,12 +180,7 @@ public class Spell4Wiktionary extends AppCompatActivity implements EndlessListVi
                 break;
             case R.id.action_lang_change:
                 BottomSheetFragment bottomSheetFragment = new BottomSheetFragment();
-                CallBackListener callback = new CallBackListener() {
-                    @Override
-                    public void OnCallBackListener() {
-                        loadDataFromServer();
-                    }
-                };
+                CallBackListener callback = langCode -> loadDataFromServer();
                 bottomSheetFragment.setCalBack(callback);
                 bottomSheetFragment.show(getSupportFragmentManager(), bottomSheetFragment.getTag());
                 bottomSheetFragment.setCancelable(false);

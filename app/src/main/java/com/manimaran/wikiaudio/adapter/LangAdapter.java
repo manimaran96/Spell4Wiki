@@ -56,10 +56,10 @@ public class LangAdapter extends BaseAdapter implements Filterable {
         if (view == null) {
             view = mActivity.getLayoutInflater().inflate(R.layout.lang_list_item, viewGroup, false);
             holder = new ViewHolder();
-            holder.layout = (RelativeLayout) view.findViewById(R.id.layout_lang_item);
-            holder.textLangName = (TextView) view.findViewById(R.id.txt_lang_name);
-            holder.textLocalName = (TextView) view.findViewById(R.id.txt_local_name);
-            holder.radioSelect = (RadioButton) view.findViewById(R.id.radio_select);
+            holder.layout = view.findViewById(R.id.layout_lang_item);
+            holder.textLangName = view.findViewById(R.id.txt_lang_name);
+            holder.textLocalName = view.findViewById(R.id.txt_local_name);
+            holder.radioSelect = view.findViewById(R.id.radio_select);
             view.setTag(holder);
         } else
             holder = (ViewHolder) view.getTag();
@@ -74,12 +74,9 @@ public class LangAdapter extends BaseAdapter implements Filterable {
         holder.radioSelect.setChecked(existLangCode.equals(model.getCode()));
 
         final ViewHolder finalHolder = holder;
-        holder.layout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finalHolder.radioSelect.setChecked(true);
-                mListener.OnClickListener(model.getCode(), model.getName(), model.getTitleWordsNoAudio());
-            }
+        holder.layout.setOnClickListener(view1 -> {
+            finalHolder.radioSelect.setChecked(true);
+            mListener.OnClickListener(model.getCode(), model.getName(), model.getTitleWordsNoAudio());
         });
 
         return view;

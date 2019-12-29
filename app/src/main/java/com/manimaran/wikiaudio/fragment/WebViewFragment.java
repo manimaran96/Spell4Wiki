@@ -202,4 +202,9 @@ public class WebViewFragment extends Fragment {
         if (webView != null)
             webView.stopLoading();
     }
+
+    public void loadWordWithOtherLang(String langCode) {
+        if(isWitionaryWord && word != null)
+            webView.loadUrl(String.format(getString(R.string.url_wiktionary_web), langCode, word));
+    }
 }

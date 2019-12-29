@@ -132,12 +132,9 @@ public class SearchActivity extends AppCompatActivity implements EndlessListView
                 return true;
             case R.id.action_lang_change:
                 BottomSheetFragment bottomSheetFragment = new BottomSheetFragment();
-                CallBackListener callback = new CallBackListener() {
-                    @Override
-                    public void OnCallBackListener() {
-                        resultListView.reset();
-                        setTitle();
-                    }
+                CallBackListener callback = langCode -> {
+                    resultListView.reset();
+                    setTitle();
                 };
                 bottomSheetFragment.setCalBack(callback);
                 bottomSheetFragment.setIsWiktionaryMode(true);
