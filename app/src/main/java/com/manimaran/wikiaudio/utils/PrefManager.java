@@ -1,5 +1,6 @@
 package com.manimaran.wikiaudio.utils;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -107,28 +108,6 @@ public class PrefManager {
     }
 
     /**
-     * Check login method wil check user login status
-     * If false it will redirect user to login page
-     * Else won't do anything
-     */
-    private void checkLogin() {
-        // Check login status
-        if (!isIsLogin()) {
-            // user is not logged in redirect him to Login Activity
-            Intent i = new Intent(mContext, LoginActivity.class);
-            // Closing all the Activities
-            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-
-            // Add new Flag to start new Activity
-            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-
-            // Staring Login Activity
-            mContext.startActivity(i);
-        }
-
-    }
-
-    /**
      * Clear session details when click logout
      */
     public void logoutUser() {
@@ -137,8 +116,12 @@ public class PrefManager {
         setFirstTimeLaunch(false); // Already done
         editor.commit();
 
-        // After logout redirect user to Login Activity
-        checkLogin();
+        if(mContext !=null) {
+            Activity activity = (Activity) mContext;
+            // After logout redirect user to Login Activity
+            activity.finishAffinity();
+            activity.startActivity(new Intent(mContext, LoginActivity.class));
+        }
     }
 
     public void setCookies(Set<String> cookieList) {

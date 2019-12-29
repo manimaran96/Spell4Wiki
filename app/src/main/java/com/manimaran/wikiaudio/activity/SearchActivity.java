@@ -50,7 +50,7 @@ public class SearchActivity extends AppCompatActivity implements EndlessListView
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
 
-        pref = new PrefManager(getApplicationContext());
+        pref = new PrefManager(SearchActivity.this);
         api = ApiClient.getWiktionaryApi(getApplicationContext()).create(ApiInterface.class);
 
         searchBar = findViewById(R.id.search_bar);
