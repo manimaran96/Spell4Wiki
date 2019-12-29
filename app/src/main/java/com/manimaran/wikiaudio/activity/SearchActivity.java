@@ -1,10 +1,9 @@
 package com.manimaran.wikiaudio.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -13,15 +12,14 @@ import android.widget.Toast;
 
 import com.manimaran.wikiaudio.R;
 import com.manimaran.wikiaudio.adapter.EndlessAdapter;
-import com.manimaran.wikiaudio.constant.UrlType;
 import com.manimaran.wikiaudio.fragment.BottomSheetFragment;
 import com.manimaran.wikiaudio.listerner.CallBackListener;
-import com.manimaran.wikiaudio.utils.GeneralUtils;
 import com.manimaran.wikiaudio.utils.PrefManager;
 import com.manimaran.wikiaudio.view.EndlessListView;
-import com.manimaran.wikiaudio.wiki_api.ApiInterface;
 import com.manimaran.wikiaudio.wiki_api.ApiClient;
+import com.manimaran.wikiaudio.wiki_api.ApiInterface;
 
+import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -79,10 +77,8 @@ public class SearchActivity extends AppCompatActivity implements EndlessListView
 
         setTitle();
 
-        if(getIntent() != null && getIntent().getExtras() != null)
-        {
-            if(getIntent().getExtras().containsKey("search_text"))
-            {
+        if (getIntent() != null && getIntent().getExtras() != null) {
+            if (getIntent().getExtras().containsKey("search_text")) {
                 String text = getIntent().getExtras().getString("search_text");
                 searchBar.setQuery(text, true);
             }
@@ -104,36 +100,25 @@ public class SearchActivity extends AppCompatActivity implements EndlessListView
     private void setTitle() {
         if (getSupportActionBar() != null) {
             getSupportActionBar().setTitle(getString(R.string.wiktionary));
-            getSupportActionBar().setSubtitle(ApiClient.getUrl(UrlType.WIKTIONARY_PAGE, getApplicationContext()));
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            //getSupportActionBar().setSubtitle(ApiClient.getUrl(UrlType.WIKTIONARY_PAGE, getApplicationContext()));
         }
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.main_menu, menu);
-        menu.findItem(R.id.action_settings).setIcon(R.drawable.ic_cancel);
-        if (pref.getIsAnonymous()) {
-            menu.findItem(R.id.action_logout).setVisible(false);
-            menu.findItem(R.id.action_login).setVisible(true);
-        }
+        getMenuInflater().inflate(R.menu.main_menu, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle item selection
         switch (item.getItemId()) {
-            case R.id.action_logout:
-                GeneralUtils.logoutAlert(SearchActivity.this);
-                return true;
-            case R.id.action_about:
-                startActivity(new Intent(getApplicationContext(), AboutActivity.class));
-                return true;
             case R.id.action_lang_change:
                 BottomSheetFragment bottomSheetFragment = new BottomSheetFragment();
                 CallBackListener callback = langCode -> {
                     resultListView.reset();
+                    submitQuery(searchBar.getQuery().toString());
                     setTitle();
                 };
                 bottomSheetFragment.setCalBack(callback);
@@ -141,9 +126,8 @@ public class SearchActivity extends AppCompatActivity implements EndlessListView
                 bottomSheetFragment.show(getSupportFragmentManager(), bottomSheetFragment.getTag());
                 bottomSheetFragment.setCancelable(false);
                 return true;
-            case R.id.action_login:
-                pref.logoutUser();
-                return true;
+            case android.R.id.home:
+                finish();
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -154,8 +138,9 @@ public class SearchActivity extends AppCompatActivity implements EndlessListView
 
         call.enqueue(new Callback<ResponseBody>() {
             @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                if (response.isSuccessful()) {
+            public void onResponse(@NotNull Call<ResponseBody> call, @NotNull Response<ResponseBody> response) {
+                Log.i("TAG", "RES SEARCH " + response.toString());
+                if (response.isSuccessful() && response.body() != null) {
                     try {
                         String responseStr = response.body().string();
                         try {
@@ -172,7 +157,7 @@ public class SearchActivity extends AppCompatActivity implements EndlessListView
             }
 
             @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
+            public void onFailure(@NotNull Call<ResponseBody> call, @NotNull Throwable t) {
                 searchFailed("Please check your connection!\nScroll to try again!");
             }
         });

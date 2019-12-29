@@ -1,40 +1,19 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".activities.BaseActivity">
-
-    <item
-        android:id="@+id/action_login"
-        android:orderInCategory="2"
-        android:title="@string/login"
-        android:visible="false"
-        app:showAsAction="ifRoom" />
+    tools:context=".activity.SearchActivity">
 
     <item
         android:id="@+id/action_lang_change"
         android:icon="@drawable/ic_language"
-        android:orderInCategory="3"
         android:title="@string/select_language"
         app:showAsAction="always"/>
 
     <item
-        android:id="@+id/action_settings"
-        android:icon="@drawable/ic_logout"
-        android:title="@string/settings"
+        android:id="@+id/action_login"
+        android:title="@string/login"
         android:visible="false"
-        app:showAsAction="never"/>
-
-    <item
-        android:id="@+id/action_about"
-        android:icon="@drawable/ic_logout"
-        android:title="@string/about"
-        app:showAsAction="never"/>
-
-    <item
-        android:id="@+id/action_logout"
-        android:icon="@drawable/ic_logout"
-        android:title="@string/logout"
-        app:showAsAction="withText"/>
+        app:showAsAction="ifRoom" />
 
 </menu>
 
