@@ -9,6 +9,8 @@ import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -50,20 +52,26 @@ public class WebViewFragment extends Fragment {
 
         initUI();
 
-
         pref = new PrefManager(getActivity());
-        Bundle bundle = Objects.requireNonNull(getActivity()).getIntent().getExtras();
-
-        if (bundle != null) {
-            if (bundle.containsKey(Constants.URL))
-                url = bundle.getString(Constants.URL);
-            if (bundle.containsKey(Constants.IS_WIKTIONARY_WORD))
-                isWitionaryWord = bundle.getBoolean(Constants.IS_WIKTIONARY_WORD);
-            if (bundle.containsKey(Constants.TITLE))
-                word = bundle.getString(Constants.TITLE);
+        if(getActivity() != null) {
+            Bundle bundle = getActivity().getIntent().getExtras();
+            if (bundle != null) {
+                if (bundle.containsKey(Constants.URL))
+                    url = bundle.getString(Constants.URL);
+                if (bundle.containsKey(Constants.IS_WIKTIONARY_WORD))
+                    isWitionaryWord = bundle.getBoolean(Constants.IS_WIKTIONARY_WORD);
+                if (bundle.containsKey(Constants.TITLE))
+                    word = bundle.getString(Constants.TITLE);
+            }
         }
+        return rootView;
+    }
 
-        if (GeneralUtils.isNetworkConnected(getActivity()))
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        if (getActivity() != null && GeneralUtils.isNetworkConnected(getActivity()))
             loadWebPage(url);
         else
             GeneralUtils.showSnack(webView, getString(R.string.check_internet));
@@ -94,7 +102,6 @@ public class WebViewFragment extends Fragment {
                 }
             });
         }
-        return rootView;
     }
 
     @SuppressLint("SetJavaScriptEnabled")
