@@ -30,4 +30,5 @@
 
     <dimen name="btn_padding_start">10dp</dimen>
     <dimen name="btn_padding_end">10dp</dimen>
+    <dimen name="icon_normal">100dp</dimen>
 </resources>

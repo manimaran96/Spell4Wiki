@@ -111,5 +111,17 @@
     <string name="link_share_message">Link share from Spell4Wiki</string>
     <string name="hint_enter_word">Enter word</string>
     <string name="check_url">Invalid Link</string>
+    <string name="done">Done</string>
+    <string name="select_file">Select file</string>
+    <string name="hint_select_file">
+        \n
+        1. Create .txt file in your device\n
+        2. Add words what ever you want to upload audio\n
+        3. Then store \n
+        4. Click Select file then choose your created file\n
+        5. Align proper your file \n
+        6. Each word in separate line
+        \n
+    </string>
 
 </resources>

@@ -1,36 +1,108 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context="com.manimaran.wikiaudio.activity.AboutActivity">
+    android:orientation="vertical"
+    tools:context=".activity.UploadToCommonsActivity">
 
-
-    <LinearLayout
+    <RelativeLayout
+        android:id="@+id/layoutSelect"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center_horizontal"
-        android:orientation="vertical">
+        android:layout_height="wrap_content"
+        android:visibility="visible">
 
+        <ImageView
+            android:id="@+id/imgIcon"
+            android:layout_width="@dimen/icon_normal"
+            android:layout_height="@dimen/icon_normal"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="30dp"
+            android:contentDescription="@string/wiktionary"
+            app:srcCompat="@drawable/ic_spell4word_list" />
 
         <Button
-            android:id="@+id/btn_pick_file"
-            android:layout_width="wrap_content"
+            android:id="@+id/btnSelectFile"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/imgIcon"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/bg_blue"
+            android:text="@string/select_file"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="30dp"
+            android:layout_below="@+id/btnSelectFile"
+            android:text="@string/hint_select_file"
+            android:textSize="@dimen/text_normal" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/layoutEdit"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/txtFileInfo"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:gravity="center"
-            android:text="select file"
-            android:textSize="16sp" />
+            android:layout_toStartOf="@+id/btnDone"
+            android:maxLines="2"
+            android:ellipsize="end"
+            android:textSize="@dimen/text_normal" />
 
-        <com.manimaran.wikiaudio.view.EndlessListView
-            android:id="@+id/search_result_list"
+        <Button
+            android:id="@+id/btnDone"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_gravity="center"
+            android:layout_margin="10dp"
+            android:background="@drawable/bg_blue"
+            android:text="@string/done"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textStyle="bold" />
+
+
+        <EditText
+            android:id="@+id/editFile"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:divider="@null" />
+            android:layout_below="@+id/btnDone"
+            android:gravity="top"
+            android:background="@drawable/bg_line_border"
+            android:layout_margin="10dp"
+            android:padding="5dp"
+            android:textSize="@dimen/text_semi_normal"
+            android:hint="@string/hint_enter_word"
+            android:imeOptions="flagNoExtractUi"
+            android:importantForAutofill="no"
+            android:inputType="textMultiLine"
+            android:scrollbars="vertical" />
 
 
-    </LinearLayout>
+    </RelativeLayout>
+
+    <com.manimaran.wikiaudio.view.EndlessListView
+        android:id="@+id/listView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:divider="@null"
+        android:visibility="gone" />
 
 
-</android.support.constraint.ConstraintLayout>
+</RelativeLayout>
