@@ -73,7 +73,7 @@
             android:screenOrientation="portrait"
             android:theme="@style/ActionBarStyle"/>
         <activity
-            android:name=".activity.UploadToCommonsActivity"
+            android:name=".activity.Spell4WordListActivity"
             android:screenOrientation="portrait"
             android:theme="@style/ActionBarStyle" />
         <activity

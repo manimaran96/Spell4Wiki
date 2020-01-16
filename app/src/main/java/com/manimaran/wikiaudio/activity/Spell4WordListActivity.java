@@ -27,11 +27,10 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 
-public class UploadToCommonsActivity extends AppCompatActivity {
+public class Spell4WordListActivity extends AppCompatActivity {
 
 
     private static final int EDIT_REQUEST_CODE = 42;
@@ -47,7 +46,7 @@ public class UploadToCommonsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_upload_to_commons);
+        setContentView(R.layout.activity_spell_4_wordlist);
 
         initUI();
 
@@ -74,10 +73,6 @@ public class UploadToCommonsActivity extends AppCompatActivity {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
                 editDocument();
             }
-        });
-
-        btnDone.setOnClickListener(v -> {
-            //svf
         });
 
         resultListView.setLoadingView(R.layout.loading_row);
@@ -126,7 +121,7 @@ public class UploadToCommonsActivity extends AppCompatActivity {
                 uri = resultData.getData();
                 assert uri != null;
                 File file = new File(RealPathUtil.getRealPath(getApplicationContext(), uri));
-                String TAG = "UploadToCommonsActivity";
+                String TAG = "Spell4WordListActivity";
                 openFileInAlignMode(file.getAbsolutePath(), file.getName());
 
             }
@@ -145,6 +140,7 @@ public class UploadToCommonsActivity extends AppCompatActivity {
 
 
         btnDone.setOnClickListener(v -> {
+            GeneralUtils.hideKeyboard(Spell4WordListActivity.this);
             if(!TextUtils.isEmpty(editFile.getText())) {
                 List<String> items = getWordListFromString(editFile.getText().toString());
                 showWordsInRecordMode(items);

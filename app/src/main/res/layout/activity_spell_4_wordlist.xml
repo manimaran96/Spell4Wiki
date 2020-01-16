@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/white"
     android:orientation="vertical"
-    tools:context=".activity.UploadToCommonsActivity">
+    tools:context=".activity.Spell4WordListActivity">
 
     <RelativeLayout
         android:id="@+id/layoutSelect"
@@ -77,22 +77,29 @@
             android:textColor="@color/white"
             android:textStyle="bold" />
 
-
-        <EditText
-            android:id="@+id/editFile"
+        <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@+id/btnDone"
-            android:gravity="top"
             android:background="@drawable/bg_line_border"
             android:layout_margin="10dp"
-            android:padding="5dp"
-            android:textSize="@dimen/text_semi_normal"
-            android:hint="@string/hint_enter_word"
-            android:imeOptions="flagNoExtractUi"
-            android:importantForAutofill="no"
-            android:inputType="textMultiLine"
-            android:scrollbars="vertical" />
+            android:padding="10dp"
+            android:layout_below="@+id/btnDone">
+            <EditText
+                android:id="@+id/editFile"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="top"
+                android:background="@android:color/transparent"
+                android:textSize="@dimen/text_normal"
+                android:hint="@string/hint_enter_word"
+                android:lineSpacingMultiplier="1.2"
+                android:imeOptions="flagNoExtractUi"
+                android:importantForAutofill="no"
+                android:inputType="textMultiLine"
+                android:scrollbars="vertical" />
+
+        </ScrollView>
+
 
 
     </RelativeLayout>

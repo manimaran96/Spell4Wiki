@@ -63,7 +63,7 @@ public class LoginActivity extends AppCompatActivity {
             launchActivity();
         } else {
             init();
-            hideKeyboard();
+            GeneralUtils.hideKeyboard(LoginActivity.this);
             api = ApiClient.getCommonsApi(getApplicationContext()).create(ApiInterface.class);
 
             /*
@@ -71,7 +71,7 @@ public class LoginActivity extends AppCompatActivity {
              */
             btnLogin.setOnClickListener(view -> {
                 if (!TextUtils.isEmpty(editUserName.getText()) && !TextUtils.isEmpty(editPassword.getText())) {
-                    hideKeyboard();
+                    GeneralUtils.hideKeyboard(LoginActivity.this);
                     btnLogin.startAnimation();
                     isDuringLogin = true;
                     callToken(editUserName.getText().toString(), editPassword.getText().toString());
@@ -149,18 +149,6 @@ public class LoginActivity extends AppCompatActivity {
                 showErrorMsg(getString(R.string.check_internet));
             }
         });
-    }
-
-    private void hideKeyboard() {
-        try {
-            View focus = LoginActivity.this.getCurrentFocus();
-            if (focus != null) {
-                InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
-                imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
     /**

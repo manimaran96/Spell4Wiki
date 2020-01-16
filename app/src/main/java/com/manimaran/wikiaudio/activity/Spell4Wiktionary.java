@@ -13,7 +13,6 @@ import android.widget.Toast;
 
 import com.manimaran.wikiaudio.R;
 import com.manimaran.wikiaudio.adapter.EndlessAdapter;
-import com.manimaran.wikiaudio.constant.UrlType;
 import com.manimaran.wikiaudio.fragment.BottomSheetFragment;
 import com.manimaran.wikiaudio.listerner.CallBackListener;
 import com.manimaran.wikiaudio.utils.GeneralUtils;
@@ -48,7 +47,7 @@ public class Spell4Wiktionary extends AppCompatActivity implements EndlessListVi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_spell4_wiktionary);
+        setContentView(R.layout.activity_spell_4_wiktionary);
 
         pref = new PrefManager(getApplicationContext());
 

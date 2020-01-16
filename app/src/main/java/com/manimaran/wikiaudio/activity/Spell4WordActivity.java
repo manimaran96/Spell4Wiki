@@ -25,7 +25,7 @@ public class Spell4WordActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_spell4_word);
+        setContentView(R.layout.activity_spell_4_word);
 
         setTitle();
 
