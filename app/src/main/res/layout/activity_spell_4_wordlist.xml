@@ -23,28 +23,70 @@
             android:contentDescription="@string/wiktionary"
             app:srcCompat="@drawable/ic_spell4word_list" />
 
-        <Button
-            android:id="@+id/btnSelectFile"
-            android:layout_width="120dp"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/imgIcon"
-            android:layout_centerHorizontal="true"
-            android:background="@drawable/bg_blue"
-            android:text="@string/select_file"
-            android:textAllCaps="false"
-            android:textColor="@color/white"
-            android:textStyle="bold" />
 
-        <TextView
+
+        <View
+            android:id="@+id/view"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/imgIcon"/>
+
+        <LinearLayout
+            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp"
-            android:layout_marginTop="30dp"
-            android:layout_marginBottom="30dp"
-            android:layout_below="@+id/btnSelectFile"
-            android:text="@string/hint_select_file"
-            android:textSize="@dimen/text_normal" />
+            android:layout_toStartOf="@+id/view"
+            android:layout_below="@+id/view"
+            android:padding="10dp"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:id="@+id/btnSelectFile"
+                android:layout_width="130dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_blue"
+                android:text="@string/select_file"
+                android:textAllCaps="false"
+                android:layout_gravity="center"
+                android:textColor="@color/white"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/hint_select_file"
+                android:textSize="@dimen/text_normal" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_toEndOf="@+id/view"
+            android:layout_below="@+id/view"
+            android:padding="10dp"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:id="@+id/btnDirectContent"
+                android:layout_width="130dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_blue"
+                android:text="@string/direct_content"
+                android:textAllCaps="false"
+                android:layout_gravity="center"
+                android:textColor="@color/white"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/hint_select_file"
+                android:textSize="@dimen/text_normal" />
+
+        </LinearLayout>
+
+
 
     </RelativeLayout>
 
@@ -82,7 +124,6 @@
             android:layout_height="match_parent"
             android:background="@drawable/bg_line_border"
             android:layout_margin="10dp"
-            android:padding="10dp"
             android:layout_below="@+id/btnDone">
             <EditText
                 android:id="@+id/editFile"
@@ -93,6 +134,7 @@
                 android:textSize="@dimen/text_normal"
                 android:hint="@string/hint_enter_word"
                 android:lineSpacingMultiplier="1.2"
+                android:padding="10dp"
                 android:imeOptions="flagNoExtractUi"
                 android:importantForAutofill="no"
                 android:inputType="textMultiLine"

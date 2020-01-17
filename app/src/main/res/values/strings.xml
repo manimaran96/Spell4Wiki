@@ -124,4 +124,15 @@
         \n
     </string>
 
+    <string name="hint_direct_copy">
+        \n
+        1. Copy content whatever\n
+        2. Click direct content button\n
+        3. Paste content \n
+        4. Align proper your file \n
+        5. Each word in separate line
+        \n
+    </string>
+    <string name="direct_content">Direct content</string>
+
 </resources>

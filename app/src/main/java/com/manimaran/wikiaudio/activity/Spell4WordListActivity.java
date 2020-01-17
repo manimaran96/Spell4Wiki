@@ -36,7 +36,7 @@ public class Spell4WordListActivity extends AppCompatActivity {
     private static final int EDIT_REQUEST_CODE = 42;
 
 
-    private Button btnSelectFile, btnDone;
+    private Button btnSelectFile, btnDirectContent, btnDone;
     private EditText editFile;
     private TextView txtFileInfo;
     private View layoutEdit, layoutSelect;
@@ -61,6 +61,7 @@ public class Spell4WordListActivity extends AppCompatActivity {
         }
 
         btnSelectFile = findViewById(R.id.btnSelectFile);
+        btnDirectContent = findViewById(R.id.btnDirectContent);
         btnDone = findViewById(R.id.btnDone);
         editFile = findViewById(R.id.editFile);
         txtFileInfo = findViewById(R.id.txtFileInfo);
@@ -73,6 +74,19 @@ public class Spell4WordListActivity extends AppCompatActivity {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
                 editDocument();
             }
+        });
+
+        btnDirectContent.setOnClickListener(v -> showDirectContentAlignMode());
+
+        btnDone.setOnClickListener(v -> {
+            GeneralUtils.hideKeyboard(Spell4WordListActivity.this);
+            if(!TextUtils.isEmpty(editFile.getText())) {
+                List<String> items = getWordListFromString(editFile.getText().toString());
+                showWordsInRecordMode(items);
+            }
+            else
+                GeneralUtils.showSnack(editFile, "Enter valid content");
+
         });
 
         resultListView.setLoadingView(R.layout.loading_row);
@@ -130,28 +144,21 @@ public class Spell4WordListActivity extends AppCompatActivity {
 
     private void openFileInAlignMode(String filePath, String fileName) {
 
-
         layoutSelect.setVisibility(View.GONE);
         layoutEdit.setVisibility(View.VISIBLE);
         resultListView.setVisibility(View.GONE);
 
         txtFileInfo.setText(("Align the file \n" + fileName));
         editFile.setText(getContentFromFile(filePath));
+    }
 
+    private void showDirectContentAlignMode(){
+        layoutSelect.setVisibility(View.GONE);
+        layoutEdit.setVisibility(View.VISIBLE);
+        resultListView.setVisibility(View.GONE);
 
-        btnDone.setOnClickListener(v -> {
-            GeneralUtils.hideKeyboard(Spell4WordListActivity.this);
-            if(!TextUtils.isEmpty(editFile.getText())) {
-                List<String> items = getWordListFromString(editFile.getText().toString());
-                showWordsInRecordMode(items);
-            }
-            else
-                GeneralUtils.showSnack(editFile, "Check content");
-
-        });
-
-
-
+        txtFileInfo.setText(("Paste and Align the content\n"));
+        editFile.setText("");
     }
 
     private void showWordsInRecordMode(List<String> items) {
