@@ -69,7 +69,7 @@
             android:paddingBottom="5dp"
             android:paddingTop="5dp">
 
-            <android.support.v7.widget.CardView
+            <androidx.cardview.widget.CardView
                 android:id="@+id/card_spell4wiki"
                 android:layout_width="0dp"
                 android:layout_weight="1"
@@ -105,9 +105,9 @@
 
                 </RelativeLayout>
 
-            </android.support.v7.widget.CardView>
+            </androidx.cardview.widget.CardView>
 
-            <android.support.v7.widget.CardView
+            <androidx.cardview.widget.CardView
                 android:id="@+id/card_spell4wordlist"
                 android:layout_width="0dp"
                 android:layout_weight="1"
@@ -144,9 +144,9 @@
 
                 </RelativeLayout>
 
-            </android.support.v7.widget.CardView>
+            </androidx.cardview.widget.CardView>
 
-            <android.support.v7.widget.CardView
+            <androidx.cardview.widget.CardView
                 android:id="@+id/card_spell4word"
                 android:layout_width="0dp"
                 android:layout_weight="1"
@@ -182,7 +182,7 @@
 
                 </RelativeLayout>
 
-            </android.support.v7.widget.CardView>
+            </androidx.cardview.widget.CardView>
 
         </LinearLayout>
 

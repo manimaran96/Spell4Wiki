@@ -4,14 +4,13 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Environment;
 import android.os.Handler;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.DialogFragment;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.DialogFragment;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -512,8 +511,8 @@ public class RecordAudioDialogFragment extends DialogFragment {
         Call<ResponseBody> call = apiWiki.getEditToken();
         call.enqueue(new Callback<ResponseBody>() {
             @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                if (response.isSuccessful()) {
+            public void onResponse(@NotNull Call<ResponseBody> call, @NotNull Response<ResponseBody> response) {
+                if (response.isSuccessful() && response.body() != null) {
                     try {
                         String responseStr = response.body().string();
                         String editToken;
@@ -559,11 +558,12 @@ public class RecordAudioDialogFragment extends DialogFragment {
                         e.printStackTrace();
                         dismissDialog("Please check your connection!");
                     }
-                }
+                }else
+                    dismissDialog("Something went wrong");
             }
 
             @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
+            public void onFailure(@NotNull Call<ResponseBody> call, @NotNull Throwable t) {
                 dismissDialog("Please check your connection!");
                 t.printStackTrace();
 

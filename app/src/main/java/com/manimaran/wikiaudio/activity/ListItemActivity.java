@@ -1,24 +1,15 @@
 package com.manimaran.wikiaudio.activity;
 
-import android.content.ActivityNotFoundException;
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.text.Html;
-import android.text.method.LinkMovementMethod;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.LinearLayout;
-import android.widget.ListAdapter;
-import android.widget.TextView;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
-import com.manimaran.wikiaudio.BuildConfig;
+import android.view.MenuItem;
+
 import com.manimaran.wikiaudio.R;
 import com.manimaran.wikiaudio.adapter.ListItemAdapter;
 import com.manimaran.wikiaudio.model.ItemsModel;
-import com.manimaran.wikiaudio.utils.GeneralUtils;
 
 import java.util.ArrayList;
 import java.util.List;
