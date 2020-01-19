@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/white"
     android:orientation="vertical"
-    tools:context=".activity.Spell4WordListActivity">
+    tools:context=".activities.Spell4WordListActivity">
 
     <RelativeLayout
         android:id="@+id/layoutSelect"
@@ -146,7 +146,7 @@
 
     </RelativeLayout>
 
-    <com.manimaran.wikiaudio.view.EndlessListView
+    <com.manimaran.wikiaudio.views.EndlessListView
         android:id="@+id/listView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

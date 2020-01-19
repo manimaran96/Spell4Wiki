@@ -7,7 +7,7 @@ import android.content.SharedPreferences;
 import android.util.Log;
 
 import com.manimaran.wikiaudio.R;
-import com.manimaran.wikiaudio.activity.LoginActivity;
+import com.manimaran.wikiaudio.activities.LoginActivity;
 
 import java.util.Set;
 

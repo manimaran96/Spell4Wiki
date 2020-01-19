@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context="com.manimaran.wikiaudio.activity.Spell4Wiktionary">
+    tools:context="com.manimaran.wikiaudio.activities.Spell4Wiktionary">
 
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.manimaran.wikiaudio.view.EndlessListView
+        <com.manimaran.wikiaudio.views.EndlessListView
             android:id="@+id/search_result_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

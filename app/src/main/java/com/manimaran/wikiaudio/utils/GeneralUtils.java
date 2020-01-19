@@ -27,10 +27,10 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 import com.manimaran.wikiaudio.R;
-import com.manimaran.wikiaudio.activity.CommonWebActivity;
-import com.manimaran.wikiaudio.constant.Constants;
-import com.manimaran.wikiaudio.constant.UrlType;
-import com.manimaran.wikiaudio.fragment.RecordAudioDialogFragment;
+import com.manimaran.wikiaudio.activities.CommonWebActivity;
+import com.manimaran.wikiaudio.constants.Constants;
+import com.manimaran.wikiaudio.constants.UrlType;
+import com.manimaran.wikiaudio.fragments.RecordAudioDialogFragment;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
