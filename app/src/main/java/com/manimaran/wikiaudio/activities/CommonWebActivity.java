@@ -10,6 +10,8 @@ import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 
 import com.manimaran.wikiaudio.R;
 import com.manimaran.wikiaudio.constants.Constants;
@@ -22,6 +24,7 @@ public class CommonWebActivity extends AppCompatActivity {
 
     private boolean isWitionaryWord = false;
     private WebViewFragment fragment = new WebViewFragment();
+    private String languageCode = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +37,7 @@ public class CommonWebActivity extends AppCompatActivity {
 
 
         PrefManager pref = new PrefManager(getApplicationContext());
+        languageCode = pref.getWiktionaryLangCode();
 
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
@@ -62,7 +66,6 @@ public class CommonWebActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.web_view_menu, menu);
-        menu.findItem(R.id.action_lang_change).setVisible(isWitionaryWord);
         return true;
     }
 
@@ -90,9 +93,6 @@ public class CommonWebActivity extends AppCompatActivity {
             case R.id.action_copy_link:
                 fragment.copyLink();
                 return true;
-            case R.id.action_lang_change :
-                loadLanguages();
-                return true;
             case android.R.id.home:
                 finish();
                 return true;
@@ -101,10 +101,25 @@ public class CommonWebActivity extends AppCompatActivity {
         }
     }
 
+    private void setupLanguageSelectorMenuItem(Menu menu) {
+        menu.findItem(R.id.menu_lang_selector).setVisible(isWitionaryWord);
+        if(isWitionaryWord) {
+            MenuItem item = menu.findItem(R.id.menu_lang_selector);
+            View rootView = item.getActionView();
+            TextView selectedLang = rootView.findViewById(R.id.txtSelectedLanguage);
+            selectedLang.setText(this.languageCode.toUpperCase());
+            rootView.setOnClickListener(v -> {
+                loadLanguages();
+            });
+        }
+    }
+
     private void loadLanguages() {
         if(isWitionaryWord) {
             BottomSheetFragment bottomSheetFragment = new BottomSheetFragment();
             CallBackListener callback = langCode -> {
+                this.languageCode = langCode;
+                invalidateOptionsMenu();
                 if(fragment !=null)
                     fragment.loadWordWithOtherLang(langCode);
             };
@@ -120,6 +135,7 @@ public class CommonWebActivity extends AppCompatActivity {
         boolean result = super.onPrepareOptionsMenu(menu);
         changeMenuButtonStyle(menu.findItem(R.id.action_forward), fragment.canGoForward());
         changeMenuButtonStyle(menu.findItem(R.id.action_backward), fragment.canGoBackward());
+        setupLanguageSelectorMenuItem(menu);
         return result;
     }
 

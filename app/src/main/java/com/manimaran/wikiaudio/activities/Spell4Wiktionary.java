@@ -1,6 +1,5 @@
 package com.manimaran.wikiaudio.activities;
 
-import android.content.Intent;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -9,6 +8,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.manimaran.wikiaudio.R;
@@ -43,6 +43,7 @@ public class Spell4Wiktionary extends AppCompatActivity implements EndlessListVi
 
     private String nextOffsetObj;
     private PrefManager pref;
+    private String languageCode = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,10 +51,10 @@ public class Spell4Wiktionary extends AppCompatActivity implements EndlessListVi
         setContentView(R.layout.activity_spell_4_wiktionary);
 
         pref = new PrefManager(getApplicationContext());
-
+        languageCode = pref.getContributionLangCode();
         init();
 
-        adapter = new EndlessAdapter(this, new ArrayList<String>(), R.layout.search_result_row, true);
+        adapter = new EndlessAdapter(this, new ArrayList<>(), R.layout.search_result_row, true);
         CallBackListener listener = langCode -> { };
         adapter.setCallbackListener(listener);
         resultListView.setAdapter(adapter);
@@ -160,29 +161,15 @@ public class Spell4Wiktionary extends AppCompatActivity implements EndlessListVi
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.lang_menu, menu);
+        inflater.inflate(R.menu.spell4wiki_view_menu, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            // action with ID action_logout was selected
-            case R.id.action_logout:
-                GeneralUtils.logoutAlert(Spell4Wiktionary.this);
-                break;
-            // action with ID action_settings was selected
-            case R.id.action_settings:
-                break;
-            case R.id.action_about:
-                startActivity(new Intent(getApplicationContext(), AboutActivity.class));
-                break;
             case R.id.action_lang_change:
-                BottomSheetFragment bottomSheetFragment = new BottomSheetFragment();
-                CallBackListener callback = langCode -> loadDataFromServer();
-                bottomSheetFragment.setCalBack(callback);
-                bottomSheetFragment.show(getSupportFragmentManager(), bottomSheetFragment.getTag());
-                bottomSheetFragment.setCancelable(false);
+                loadLanguages();
                 break;
             case android.R.id.home:
                 finish();
@@ -194,12 +181,33 @@ public class Spell4Wiktionary extends AppCompatActivity implements EndlessListVi
         return (super.onOptionsItemSelected(item));
     }
 
+    private void loadLanguages() {
+        BottomSheetFragment bottomSheetFragment = new BottomSheetFragment();
+        CallBackListener callback = langCode -> {
+            languageCode = langCode;
+            invalidateOptionsMenu();
+            loadDataFromServer();
+        };
+        bottomSheetFragment.setCalBack(callback);
+        bottomSheetFragment.show(getSupportFragmentManager(), bottomSheetFragment.getTag());
+        bottomSheetFragment.setCancelable(false);
+    }
+
+    private void setupLanguageSelectorMenuItem(Menu menu) {
+        menu.findItem(R.id.menu_lang_selector).setVisible(true);
+        MenuItem item = menu.findItem(R.id.menu_lang_selector);
+        View rootView = item.getActionView();
+        TextView selectedLang = rootView.findViewById(R.id.txtSelectedLanguage);
+        selectedLang.setText(this.languageCode.toUpperCase());
+        rootView.setOnClickListener(v -> {
+            loadLanguages();
+        });
+
+    }
+
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-        if (pref.getContributionLangCode() != null) {
-            MenuItem langCodeMenu = menu.findItem(R.id.action_lang_code);
-            langCodeMenu.setTitle(pref.getContributionLangCode().toUpperCase());
-        }
+        setupLanguageSelectorMenuItem(menu);
         return super.onPrepareOptionsMenu(menu);
     }
 

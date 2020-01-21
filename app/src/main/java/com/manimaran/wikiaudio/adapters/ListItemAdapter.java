@@ -45,7 +45,7 @@ public class ListItemAdapter extends RecyclerView.Adapter<ListItemAdapter.ViewHo
             //creating a popup menu
             PopupMenu popup = new PopupMenu(mContext, holder.btnOption);
             //inflating menu from xml resource
-            popup.inflate(R.menu.item_menu);
+            popup.inflate(R.menu.list_item_menu);
             //adding click listener
             popup.setOnMenuItemClickListener(item -> {
                 int i = item.getItemId();

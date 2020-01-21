@@ -134,5 +134,8 @@
         \n
     </string>
     <string name="direct_content">Direct content</string>
+    <string name="title">Title</string>
+    <string name="sub_title">Sub Title</string>
+    <string name="tamil">TA</string>
 
 </resources>

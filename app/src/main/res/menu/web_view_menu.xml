@@ -10,10 +10,10 @@
         app:showAsAction="always" />
 
     <item
-        android:id="@+id/action_lang_change"
-        android:icon="@drawable/ic_language"
-        android:title="@string/select_language"
-        app:showAsAction="ifRoom"/>
+        android:id="@+id/menu_lang_selector"
+        android:title="@string/tamil"
+        app:showAsAction="always"
+        app:actionLayout="@layout/custom_menu_item_lang_selector"/>
 
     <item
         android:id="@+id/action_share"
