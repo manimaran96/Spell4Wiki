@@ -10,6 +10,8 @@ import android.provider.MediaStore;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -18,7 +20,10 @@ import android.widget.TextView;
 
 import com.manimaran.wikiaudio.R;
 import com.manimaran.wikiaudio.adapters.EndlessAdapter;
+import com.manimaran.wikiaudio.fragments.BottomSheetFragment;
+import com.manimaran.wikiaudio.listerners.CallBackListener;
 import com.manimaran.wikiaudio.utils.GeneralUtils;
+import com.manimaran.wikiaudio.utils.PrefManager;
 import com.manimaran.wikiaudio.utils.RealPathUtil;
 import com.manimaran.wikiaudio.views.EndlessListView;
 
@@ -43,6 +48,9 @@ public class Spell4WordListActivity extends AppCompatActivity {
     private EndlessListView resultListView;
     private EndlessAdapter adapter;
 
+    private PrefManager pref;
+    private String languageCode = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,6 +58,8 @@ public class Spell4WordListActivity extends AppCompatActivity {
 
         initUI();
 
+        pref = new PrefManager(getApplicationContext());
+        languageCode = pref.getContributionLangCode();
 
     }
 
@@ -278,13 +288,55 @@ public class Spell4WordListActivity extends AppCompatActivity {
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.spell4wiki_view_menu, menu);
+        return true;
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem menuItem) {
-        if (menuItem.getItemId() == android.R.id.home) {
-            finish();
-            return true;
+        switch (menuItem.getItemId()) {
+            case R.id.action_lang_change:
+                loadLanguages();
+                break;
+            case android.R.id.home:
+                finish();
+                break;
+            default:
+                break;
         }
         return (super.onOptionsItemSelected(menuItem));
     }
 
+    private void loadLanguages() {
+        BottomSheetFragment bottomSheetFragment = new BottomSheetFragment();
+        CallBackListener callback = langCode -> {
+            languageCode = langCode;
+            invalidateOptionsMenu();
+        };
+        bottomSheetFragment.setCalBack(callback);
+        bottomSheetFragment.setIsTempMode(true);
+        bottomSheetFragment.show(getSupportFragmentManager(), bottomSheetFragment.getTag());
+        bottomSheetFragment.setCancelable(false);
+    }
+
+    private void setupLanguageSelectorMenuItem(Menu menu) {
+        MenuItem item = menu.findItem(R.id.menu_lang_selector);
+        item.setVisible(true);
+        View rootView = item.getActionView();
+        TextView selectedLang = rootView.findViewById(R.id.txtSelectedLanguage);
+        selectedLang.setText(this.languageCode.toUpperCase());
+        rootView.setOnClickListener(v -> {
+            loadLanguages();
+        });
+
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        setupLanguageSelectorMenuItem(menu);
+        return super.onPrepareOptionsMenu(menu);
+    }
 
 }

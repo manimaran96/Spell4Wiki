@@ -194,8 +194,8 @@ public class Spell4Wiktionary extends AppCompatActivity implements EndlessListVi
     }
 
     private void setupLanguageSelectorMenuItem(Menu menu) {
-        menu.findItem(R.id.menu_lang_selector).setVisible(true);
         MenuItem item = menu.findItem(R.id.menu_lang_selector);
+        item.setVisible(true);
         View rootView = item.getActionView();
         TextView selectedLang = rootView.findViewById(R.id.txtSelectedLanguage);
         selectedLang.setText(this.languageCode.toUpperCase());
