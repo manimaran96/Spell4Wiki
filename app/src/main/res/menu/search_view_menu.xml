@@ -4,10 +4,10 @@
     tools:context=".activities.SearchActivity">
 
     <item
-        android:id="@+id/action_lang_change"
-        android:icon="@drawable/ic_language"
-        android:title="@string/select_language"
-        app:showAsAction="always"/>
+        android:id="@+id/menu_lang_selector"
+        android:title="@string/tamil"
+        app:showAsAction="ifRoom"
+        app:actionLayout="@layout/custom_menu_item_lang_selector"/>
 
     <item
         android:id="@+id/action_login"
@@ -19,6 +19,7 @@
         android:id="@+id/action_about"
         android:icon="@drawable/ic_about"
         android:title="@string/about"
+        android:visible="false"
         app:showAsAction="never"/>
 
 </menu>

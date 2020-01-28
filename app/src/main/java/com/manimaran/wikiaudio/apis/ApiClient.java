@@ -3,6 +3,8 @@ package com.manimaran.wikiaudio.apis;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import androidx.annotation.NonNull;
+
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.franmontiel.persistentcookiejar.ClearableCookieJar;
@@ -48,14 +50,12 @@ public class ApiClient {
         return retrofitCommons;
     }
 
-    public static Retrofit getWiktionaryApi(Context context) {
-        if (retrofitWiktionary == null) {
-            retrofitWiktionary = new Retrofit.Builder()
-                    .baseUrl(getUrl(UrlType.WIKTIONARY_CONTRIBUTION, context))
-                    .client(Objects.requireNonNull(getOkHttpClient(context)))
+    public static Retrofit getWiktionaryApi(Context context, String langCode) {
+        retrofitWiktionary = new Retrofit.Builder()
+                    .baseUrl(getWiktionaryApiUrl(context, langCode))
+                    //.client(Objects.requireNonNull(getOkHttpClient(context)))
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
-        }
         return retrofitWiktionary;
     }
 
@@ -67,6 +67,10 @@ public class ApiClient {
                     .build();
         }
         return retrofitApi;
+    }
+
+    private static String getWiktionaryApiUrl(Context context, String langCode){
+        return String.format(context.getString(R.string.url_wiktionary), !TextUtils.isEmpty(langCode) ? langCode.toLowerCase() : pref.getContributionLangCode());
     }
 
     public static String getUrl(int urlType, Context context) {

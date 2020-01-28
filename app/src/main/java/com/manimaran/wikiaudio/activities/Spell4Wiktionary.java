@@ -95,7 +95,7 @@ public class Spell4Wiktionary extends AppCompatActivity implements EndlessListVi
         if (nextOffsetObj == null)
             refreshLayout.setRefreshing(true);
 
-        ApiInterface api = ApiClient.getWiktionaryApi(getApplicationContext()).create(ApiInterface.class);
+        ApiInterface api = ApiClient.getWiktionaryApi(getApplicationContext(), languageCode).create(ApiInterface.class);
         String noAudioTitle = pref.getTitleWordsWithoutAudio();
         Call<ResponseBody> call = api.fetchUnAudioRecords(noAudioTitle, nextOffsetObj);
 
@@ -168,9 +168,6 @@ public class Spell4Wiktionary extends AppCompatActivity implements EndlessListVi
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.action_lang_change:
-                loadLanguages();
-                break;
             case android.R.id.home:
                 finish();
                 break;
@@ -202,7 +199,6 @@ public class Spell4Wiktionary extends AppCompatActivity implements EndlessListVi
         rootView.setOnClickListener(v -> {
             loadLanguages();
         });
-
     }
 
     @Override

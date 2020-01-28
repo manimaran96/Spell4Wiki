@@ -297,9 +297,6 @@ public class Spell4WordListActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem menuItem) {
         switch (menuItem.getItemId()) {
-            case R.id.action_lang_change:
-                loadLanguages();
-                break;
             case android.R.id.home:
                 finish();
                 break;

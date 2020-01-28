@@ -8,6 +8,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.SearchView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.manimaran.wikiaudio.R;
@@ -42,6 +43,7 @@ public class SearchActivity extends AppCompatActivity implements EndlessListView
     private Integer nextOffset;
     private PrefManager pref;
     private ApiInterface api;
+    private String languageCode = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +51,8 @@ public class SearchActivity extends AppCompatActivity implements EndlessListView
         setContentView(R.layout.activity_search);
 
         pref = new PrefManager(SearchActivity.this);
-        api = ApiClient.getWiktionaryApi(getApplicationContext()).create(ApiInterface.class);
+        languageCode = pref.getContributionLangCode();
+        api = ApiClient.getWiktionaryApi(getApplicationContext(), languageCode).create(ApiInterface.class);
 
         searchBar = findViewById(R.id.search_bar);
         searchBar.requestFocus();
@@ -107,30 +110,51 @@ public class SearchActivity extends AppCompatActivity implements EndlessListView
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main_menu, menu);
+        getMenuInflater().inflate(R.menu.search_view_menu, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.action_lang_change:
-                BottomSheetFragment bottomSheetFragment = new BottomSheetFragment();
-                CallBackListener callback = langCode -> {
-                    resultListView.reset();
-                    submitQuery(searchBar.getQuery().toString());
-                    setTitle();
-                };
-                bottomSheetFragment.setCalBack(callback);
-                bottomSheetFragment.setIsWiktionaryMode(true);
-                bottomSheetFragment.show(getSupportFragmentManager(), bottomSheetFragment.getTag());
-                bottomSheetFragment.setCancelable(false);
-                return true;
             case android.R.id.home:
                 finish();
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        setupLanguageSelectorMenuItem(menu);
+        return super.onPrepareOptionsMenu(menu);
+    }
+
+    private void loadLanguages() {
+        BottomSheetFragment bottomSheetFragment = new BottomSheetFragment();
+        CallBackListener callback = langCode -> {
+            languageCode = langCode;
+            invalidateOptionsMenu();
+            api = ApiClient.getWiktionaryApi(getApplicationContext(), languageCode).create(ApiInterface.class);
+            if(queryString != null)
+                submitQuery(queryString);
+        };
+        bottomSheetFragment.setCalBack(callback);
+        bottomSheetFragment.show(getSupportFragmentManager(), bottomSheetFragment.getTag());
+        bottomSheetFragment.setCancelable(false);
+        bottomSheetFragment.setIsWiktionaryMode(true);
+    }
+
+    private void setupLanguageSelectorMenuItem(Menu menu) {
+        MenuItem item = menu.findItem(R.id.menu_lang_selector);
+        item.setVisible(true);
+        View rootView = item.getActionView();
+        TextView selectedLang = rootView.findViewById(R.id.txtSelectedLanguage);
+        selectedLang.setText(this.languageCode.toUpperCase());
+        rootView.setOnClickListener(v -> {
+            loadLanguages();
+        });
+
     }
 
     private void search(String query) {

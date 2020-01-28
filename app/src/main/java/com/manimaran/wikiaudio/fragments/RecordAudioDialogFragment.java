@@ -78,6 +78,7 @@ public class RecordAudioDialogFragment extends DialogFragment {
 
     private ApiInterface api;
     private ApiInterface apiWiki;
+    private String langCode;
 
     private String word = "";
     private String uploadName = null;
@@ -133,7 +134,8 @@ public class RecordAudioDialogFragment extends DialogFragment {
         activity = getActivity();
         pref = new PrefManager(ctx);
         api = ApiClient.getCommonsApi(ctx).create(ApiInterface.class);
-        apiWiki = ApiClient.getWiktionaryApi(ctx).create(ApiInterface.class);
+        // TODO - change lang code
+        apiWiki = ApiClient.getWiktionaryApi(ctx, pref.getContributionLangCode()).create(ApiInterface.class);
 
         // View init
         btnClose = view.findViewById(R.id.btnClose);
