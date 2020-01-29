@@ -212,7 +212,7 @@ public class LoginActivity extends AppCompatActivity {
      * Launch activity
      */
     private void launchActivity() {
-        Intent intent = new Intent(getApplicationContext(), pref.getIsAnonymous() ? SearchActivity.class : MainActivity.class);
+        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
         startActivity(intent);
         finish();
     }

@@ -48,7 +48,7 @@
             android:screenOrientation="portrait"
             android:theme="@style/ActionBarStyle" />
         <activity
-            android:name=".activities.SearchActivity"
+            android:name=".activities.WiktionarySearchActivity"
             android:screenOrientation="portrait"
             android:theme="@style/ActionBarStyle" />
         <activity

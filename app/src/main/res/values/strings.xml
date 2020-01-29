@@ -139,5 +139,9 @@
     <string name="tamil">TA</string>
     <string name="result_not_found">Result Not Found</string>
     <string name="something_went_wrong">Something went wrong</string>
+    <string name="login_to_contribute">Login to contribute</string>
+    <string name="do_you_like_contribute_to_wiki_commons">
+        Donate voice to wiki commons?
+    </string>
 
 </resources>

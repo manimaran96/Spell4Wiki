@@ -1,6 +1,7 @@
 package com.manimaran.wikiaudio.activities;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import androidx.appcompat.app.AppCompatActivity;
@@ -27,9 +28,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        pref = new PrefManager(getApplicationContext());
+        pref = new PrefManager(MainActivity.this);
 
-        init();
+        initViews();
 
         searchView = findViewById(R.id.search_view);
         searchView.setQueryHint(getString(R.string.hint_search));
@@ -38,7 +39,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                Intent intent = new Intent(getApplicationContext(), SearchActivity.class);
+                Intent intent = new Intent(getApplicationContext(), WiktionarySearchActivity.class);
                 intent.putExtra("search_text", query);
                 startActivity(intent);
                 new Handler().postDelayed(() -> {
@@ -55,32 +56,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         });
 
-
-        CardView cardView1 = findViewById(R.id.card_spell4wiki);
-        CardView cardView2 = findViewById(R.id.card_spell4wordlist);
-        CardView cardView3 = findViewById(R.id.card_spell4word);
-
-        cardView1.setOnClickListener(this);
-        cardView2.setOnClickListener(this);
-        cardView3.setOnClickListener(this);
-
-        TextView txtWelcomeUser = findViewById(R.id.txt_welcome_user);
-        txtWelcomeUser.setText(String.format(getString(R.string.welcome_user), pref.getName()));
-
-        findViewById(R.id.btn_about).setOnClickListener(v -> startActivity(new Intent(getApplicationContext(), AboutActivity.class)));
-        findViewById(R.id.btn_settings).setOnClickListener(v -> GeneralUtils.showSnack(searchView, "Settings clicked"));
-        findViewById(R.id.btn_logout).setOnClickListener(v -> GeneralUtils.logoutAlert(MainActivity.this));
-
-        String urlViewMyContribution = String.format(getString(R.string.link_view_my_contribution), pref.getName());
-        findViewById(R.id.txtViewMyContribution).setOnClickListener(v -> GeneralUtils.openUrl(MainActivity.this, urlViewMyContribution, UrlType.INTERNAL, getString(R.string.view_my_contribution)));
-
         new Handler().post(() -> GeneralUtils.hideKeyboard(MainActivity.this));
 
     }
 
     @Override
     public void onClick(View view) {
-        Class nextClass = SearchActivity.class;
+        if(pref.getIsAnonymous()){
+            GeneralUtils.showSnack(view, getString(R.string.login_to_contribute));
+            return;
+        }
+        Class nextClass = WiktionarySearchActivity.class;
         switch (view.getId()) {
             case R.id.card_spell4wiki:
                 nextClass = Spell4Wiktionary.class;
@@ -98,8 +84,42 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     /**
      * Init views
      */
-    private void init() {
+    private void initViews() {
 
+        CardView cardView1 = findViewById(R.id.card_spell4wiki);
+        CardView cardView2 = findViewById(R.id.card_spell4wordlist);
+        CardView cardView3 = findViewById(R.id.card_spell4word);
+
+        if(pref.getIsAnonymous()){
+            cardView1.setBackgroundColor(Color.GRAY);
+        }
+        cardView1.setOnClickListener(this);
+        cardView2.setOnClickListener(this);
+        cardView3.setOnClickListener(this);
+
+        TextView txtWelcomeUser = findViewById(R.id.txt_welcome_user);
+        txtWelcomeUser.setText(String.format(getString(R.string.welcome_user), pref.getName()));
+
+        findViewById(R.id.btn_about).setOnClickListener(v -> startActivity(new Intent(getApplicationContext(), AboutActivity.class)));
+        findViewById(R.id.btn_settings).setOnClickListener(v -> GeneralUtils.showSnack(searchView, "Settings clicked"));
+        findViewById(R.id.btn_logout).setOnClickListener(v -> GeneralUtils.logoutAlert(MainActivity.this));
+
+        String urlViewMyContribution = String.format(getString(R.string.link_view_my_contribution), pref.getName());
+        TextView btnMyContributions = findViewById(R.id.txtViewMyContribution);
+        TextView btnLogin = findViewById(R.id.txtLogin);
+
+        btnMyContributions.setOnClickListener(v -> GeneralUtils.openUrl(MainActivity.this, urlViewMyContribution, UrlType.INTERNAL, getString(R.string.view_my_contribution)));
+        btnLogin.setOnClickListener(v-> pref.logoutUser());
+
+        View viewContribute = findViewById(R.id.layoutContributeOptions);
+        View viewLogin = findViewById(R.id.layoutLogin);
+        if(pref.getIsAnonymous()){
+            viewContribute.setVisibility(View.GONE);
+            btnMyContributions.setVisibility(View.GONE);
+            txtWelcomeUser.setVisibility(View.GONE);
+            findViewById(R.id.btn_logout).setVisibility(View.GONE);
+            viewLogin.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override

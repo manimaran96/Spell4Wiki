@@ -112,8 +112,9 @@ public class PrefManager {
      */
     public void logoutUser() {
         // Clearing all data from Shared Preferences
+        boolean isFirstTime = isFirstTimeLaunch();
         editor.clear();
-        setFirstTimeLaunch(false); // Already done
+        setFirstTimeLaunch(isFirstTime);
         editor.commit();
 
         if(mContext !=null) {

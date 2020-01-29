@@ -27,14 +27,13 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class SearchActivity extends AppCompatActivity implements EndlessListView.EndlessListener {
+public class WiktionarySearchActivity extends AppCompatActivity implements EndlessListView.EndlessListener {
 
     private EndlessListView resultListView;
     private SearchView searchBar;
@@ -49,9 +48,9 @@ public class SearchActivity extends AppCompatActivity implements EndlessListView
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_search);
+        setContentView(R.layout.activity_wiktionary_search);
 
-        pref = new PrefManager(SearchActivity.this);
+        pref = new PrefManager(WiktionarySearchActivity.this);
         languageCode = pref.getContributionLangCode();
         api = ApiClient.getWiktionaryApi(getApplicationContext(), languageCode).create(ApiInterface.class);
 
@@ -107,13 +106,12 @@ public class SearchActivity extends AppCompatActivity implements EndlessListView
         if (getSupportActionBar() != null) {
             getSupportActionBar().setTitle(getString(R.string.wiktionary));
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            //getSupportActionBar().setSubtitle(ApiClient.getUrl(UrlType.WIKTIONARY_PAGE, getApplicationContext()));
         }
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.search_view_menu, menu);
+        getMenuInflater().inflate(R.menu.spell4wiki_view_menu, menu);
         return true;
     }
 
