@@ -87,6 +87,7 @@ public class EndlessListView extends ListView implements OnScrollListener {
         isLoading = true;
         if (this.getFooterViewsCount() == 0)
             this.addFooterView(footer);
+        super.setAdapter(adapter);
     }
 
     public EndlessListener getListener() {

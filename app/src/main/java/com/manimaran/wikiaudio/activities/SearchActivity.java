@@ -210,18 +210,20 @@ public class SearchActivity extends AppCompatActivity implements EndlessListView
                 nextOffset = reader.getJSONObject("continue").getInt("sroffset");
             else
                 nextOffset = null;
-
             resultListView.addNewData(titleList);
-
-            if(nextOffset == null && titleList.size() == 0)
-                txtNotFound.setVisibility(View.VISIBLE);
-            else
-                txtNotFound.setVisibility(View.GONE);
+            checkResultNotFound(getString(R.string.result_not_found));
         } catch (Exception e) {
             e.printStackTrace();
-            txtNotFound.setVisibility(View.VISIBLE);
-            //resultListView.addNewData(Collections.singletonList("Error accrued"));
+            checkResultNotFound(getString(R.string.something_went_wrong) + "\n Error : " + e.getMessage());
         }
+    }
+
+    private void checkResultNotFound(String msg){
+        if(resultListView != null && resultListView.getAdapter() != null && resultListView.getAdapter().getCount() == 0){
+            txtNotFound.setVisibility(View.VISIBLE);
+        }else
+            txtNotFound.setVisibility(View.GONE);
+        txtNotFound.setText(msg);
     }
 
     @Override
