@@ -137,5 +137,6 @@
     <string name="title">Title</string>
     <string name="sub_title">Sub Title</string>
     <string name="tamil">TA</string>
+    <string name="result_not_found">Result Not Found</string>
 
 </resources>

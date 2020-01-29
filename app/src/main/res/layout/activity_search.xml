@@ -29,6 +29,17 @@
         android:background="@drawable/bg_line_border"
         app:iconifiedByDefault="false"/>
 
+    <TextView
+        android:id="@+id/txtNotFound"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/search_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/text_normal"
+        android:textColor="@color/w_red"
+        android:visibility="gone"
+        android:text="@string/result_not_found"/>
+
     <com.manimaran.wikiaudio.views.EndlessListView
         android:id="@+id/search_result_list"
         android:layout_width="match_parent"

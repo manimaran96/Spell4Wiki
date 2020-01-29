@@ -38,6 +38,7 @@ public class SearchActivity extends AppCompatActivity implements EndlessListView
 
     private EndlessListView resultListView;
     private SearchView searchBar;
+    private TextView txtNotFound;
 
     private String queryString;
     private Integer nextOffset;
@@ -53,6 +54,8 @@ public class SearchActivity extends AppCompatActivity implements EndlessListView
         pref = new PrefManager(SearchActivity.this);
         languageCode = pref.getContributionLangCode();
         api = ApiClient.getWiktionaryApi(getApplicationContext(), languageCode).create(ApiInterface.class);
+
+        txtNotFound = findViewById(R.id.txtNotFound);
 
         searchBar = findViewById(R.id.search_bar);
         searchBar.requestFocus();
@@ -91,12 +94,12 @@ public class SearchActivity extends AppCompatActivity implements EndlessListView
     private void submitQuery(String s) {
         queryString = s;
         nextOffset = 0;
+        txtNotFound.setVisibility(View.GONE);
+        resultListView.setVisibility(View.VISIBLE);
         resultListView.reset();
 
         ImageView wiktionaryLogo = findViewById(R.id.wiktionary_logo);
         wiktionaryLogo.setVisibility(View.GONE);
-        resultListView.setVisibility(View.VISIBLE);
-
         search(queryString);
     }
 
@@ -198,19 +201,26 @@ public class SearchActivity extends AppCompatActivity implements EndlessListView
         try {
             ArrayList<String> titleList = new ArrayList<>();
             JSONArray searchResults = reader.getJSONObject("query").optJSONArray("search");
-            for (int ii = 0; ii < searchResults.length(); ii++) {
+            for (int i = 0; i < searchResults.length(); i++) {
                 titleList.add(
-                        searchResults.getJSONObject(ii).getString("title")  //+ " --> " + searchResults.getJSONObject(ii).getString("pageid")
+                        searchResults.getJSONObject(i).getString("title")  //+ " --> " + searchResults.getJSONObject(ii).getString("pageid")
                 );
             }
             if (reader.has("continue"))
                 nextOffset = reader.getJSONObject("continue").getInt("sroffset");
             else
                 nextOffset = null;
+
             resultListView.addNewData(titleList);
+
+            if(nextOffset == null && titleList.size() == 0)
+                txtNotFound.setVisibility(View.VISIBLE);
+            else
+                txtNotFound.setVisibility(View.GONE);
         } catch (Exception e) {
             e.printStackTrace();
-            resultListView.addNewData(Collections.singletonList("Error accrued"));
+            txtNotFound.setVisibility(View.VISIBLE);
+            //resultListView.addNewData(Collections.singletonList("Error accrued"));
         }
     }
 
