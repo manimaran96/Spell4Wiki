@@ -33,6 +33,5 @@
 - Dictionary icon by [Berkah Icon](https://thenounproject.com/berkahicon/) from the Noun Project
 
 ### TODO List
-1. Record audio as .ogg format.
-2. Session management problem.
-3. Bulk recording and uploading.
+1. Session management problem(Invalid CSRF token).
+2. Bulk recording and uploading.
