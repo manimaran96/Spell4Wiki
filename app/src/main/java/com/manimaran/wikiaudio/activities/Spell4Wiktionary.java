@@ -221,7 +221,5 @@ public class Spell4Wiktionary extends AppCompatActivity implements EndlessListVi
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (adapter != null)
-            adapter.destroyView();
     }
 }
