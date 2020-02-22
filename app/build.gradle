@@ -67,7 +67,7 @@ dependencies {
     implementation 'org.jetbrains:annotations-java5:15.0'
 
     // FFMPEG convertor
-    implementation 'com.arthenica:mobile-ffmpeg-full:4.2.2.LTS' // support api 16+
+    implementation 'com.arthenica:mobile-ffmpeg-full:4.3.1.LTS' // support api 16+
 
     implementation 'com.squareup.okhttp3:okhttp-urlconnection:3.2.0'
 

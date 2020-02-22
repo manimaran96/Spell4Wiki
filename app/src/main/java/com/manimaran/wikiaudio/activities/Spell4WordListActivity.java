@@ -159,7 +159,7 @@ public class Spell4WordListActivity extends AppCompatActivity {
         layoutEdit.setVisibility(View.VISIBLE);
         resultListView.setVisibility(View.GONE);
 
-        txtFileInfo.setText(("Align the file \n" + fileName));
+        txtFileInfo.setText(("Align the file content \n" + fileName));
         editFile.setText(getContentFromFile(filePath));
     }
 
@@ -168,7 +168,7 @@ public class Spell4WordListActivity extends AppCompatActivity {
         layoutEdit.setVisibility(View.VISIBLE);
         resultListView.setVisibility(View.GONE);
 
-        txtFileInfo.setText(("Paste and Align the content\n"));
+        txtFileInfo.setText(("Paste and Align the words\n"));
         editFile.setText("");
     }
 

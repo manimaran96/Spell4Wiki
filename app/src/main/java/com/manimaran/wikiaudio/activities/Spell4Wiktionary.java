@@ -2,8 +2,9 @@ package com.manimaran.wikiaudio.activities;
 
 import android.os.Bundle;
 import androidx.annotation.NonNull;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;

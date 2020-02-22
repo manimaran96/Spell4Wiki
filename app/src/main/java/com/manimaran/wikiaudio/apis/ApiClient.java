@@ -53,7 +53,6 @@ public class ApiClient {
     public static Retrofit getWiktionaryApi(Context context, String langCode) {
         retrofitWiktionary = new Retrofit.Builder()
                     .baseUrl(getWiktionaryApiUrl(context, langCode))
-                    //.client(Objects.requireNonNull(getOkHttpClient(context)))
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
         return retrofitWiktionary;

@@ -33,6 +33,7 @@
             android:layout_below="@id/imgIcon"/>
 
         <LinearLayout
+            android:id="@+id/layoutSelectFile"
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_toStartOf="@+id/view"
@@ -55,11 +56,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/hint_select_file"
+                android:textAlignment="center"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:lineSpacingExtra="2dp"
                 android:textSize="@dimen/text_normal" />
 
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/layoutDirectContent"
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_toEndOf="@+id/view"
@@ -81,11 +87,26 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/hint_select_file"
+                android:text="@string/hint_direct_copy"
+                android:textAlignment="center"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:lineSpacingExtra="2dp"
                 android:textSize="@dimen/text_normal" />
 
         </LinearLayout>
 
+        <TextView
+            android:id="@+id/txtCommonStep"
+            android:layout_below="@+id/layoutSelectFile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="15dp"
+            android:textAlignment="center"
+            android:layout_marginTop="10dp"
+            android:lineSpacingExtra="2dp"
+            android:text="@string/hint_common_steps"
+            android:textSize="@dimen/text_normal" />
 
 
     </RelativeLayout>

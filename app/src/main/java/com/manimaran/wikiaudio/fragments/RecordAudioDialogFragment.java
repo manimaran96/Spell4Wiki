@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Environment;
@@ -86,7 +87,7 @@ public class RecordAudioDialogFragment extends DialogFragment {
 
     private String TAG = RecordAudioDialogFragment.class.getSimpleName();
 
-    static RecordAudioDialogFragment frag = null;
+    private static RecordAudioDialogFragment frag = null;
 
     public RecordAudioDialogFragment() {
         // Empty constructor is required for DialogFragment
@@ -153,13 +154,10 @@ public class RecordAudioDialogFragment extends DialogFragment {
             txtWord.setText(word);
         }
 
-        btnClose.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dismiss();
-                isPlaying = false;
-                player.stopPlaying();
-            }
+        btnClose.setOnClickListener(v -> {
+            dismiss();
+            isPlaying = false;
+            player.stopPlaying();
         });
 
         // Set 10 sec only for recording
@@ -188,39 +186,32 @@ public class RecordAudioDialogFragment extends DialogFragment {
         };
 
 
-        btnRecord.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if (GeneralUtils.checkPermissionGranted(activity)) {
-                    if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                        Log.d(TAG, "Start Recording");
-                        player.stopPlaying();
-                        countDowntimer.start();
-                        recorder.startRecording();
+        btnRecord.setOnTouchListener((v, event) -> {
+            if (GeneralUtils.checkPermissionGranted(activity)) {
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                    Log.d(TAG, "Start Recording");
+                    player.stopPlaying();
+                    countDowntimer.start();
+                    recorder.startRecording();
 
-                        // Animation for scale
-                        btnRecord.animate()
-                                .scaleX(1.4f)
-                                .scaleY(1.4f);
-                    } else if (event.getAction() == MotionEvent.ACTION_UP) {
-                        Log.d(TAG, "Stop Recording");
-                        countDowntimer.onFinish();
-                    }
-                } else
-                    showMsg("Please give require permissions");
-                return false;
-            }
+                    // Animation for scale
+                    btnRecord.animate()
+                            .scaleX(1.4f)
+                            .scaleY(1.4f);
+                } else if (event.getAction() == MotionEvent.ACTION_UP) {
+                    Log.d(TAG, "Stop Recording");
+                    countDowntimer.onFinish();
+                }
+            } else
+                showMsg("Please give require permissions");
+            return false;
         });
 
-        btnPlayPause.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (isRecorded)
-                    onPlayStatusChanged();
-                else
-                    showMsg("Please record audio first");
-            }
-
+        btnPlayPause.setOnClickListener(view1 -> {
+            if (isRecorded)
+                onPlayStatusChanged();
+            else
+                showMsg("Please record audio first");
         });
 
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -250,16 +241,46 @@ public class RecordAudioDialogFragment extends DialogFragment {
             }
         };
 
-        btnUpload.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (isRecorded) {
-                    uploadName = pref.getContributionLangCode() + "-" + word + ".ogg";
-                    uploadAudioToWikiServer(false);
-                } else
-                    GeneralUtils.showToast(ctx, "Please record audio first");
-            }
+        btnUpload.setOnClickListener(view12 -> {
+            if (isRecorded) {
+                uploadName = pref.getContributionLangCode() + "-" + word + ".ogg";
+                uploadAudioToWikiServer(false);
+            } else
+                GeneralUtils.showToast(ctx, "Please record audio first");
         });
+    }
+
+    private class UploadAudioTask extends AsyncTask<String, String, String> {
+
+
+
+        private String resp;
+        ProgressDialog progressDialog;
+
+        @Override
+        protected String doInBackground(String... params) {
+            //publishProgress("Uploading..."); // Calls onProgressUpdate()
+            return resp;
+        }
+
+
+        @Override
+        protected void onPostExecute(String result) {
+            progressDialog.dismiss();
+            dismiss();
+        }
+
+
+        @Override
+        protected void onPreExecute() {
+            progressDialog = ProgressDialog.show(activity, ctx.getString(R.string.title_upload_audio), String.format(ctx.getString(R.string.message_upload_info), uploadName), true);
+        }
+
+
+        @Override
+        protected void onProgressUpdate(String... text) {
+            //progressDialog.
+        }
     }
 
     private void uploadAudioToWikiServer(Boolean recreateEditToken) {
@@ -336,7 +357,7 @@ public class RecordAudioDialogFragment extends DialogFragment {
                 RequestBody.create(MultipartBody.FORM, uploadFileName), // filename
                 RequestBody.create(MultipartBody.FORM, editToken), // edit token
                 body, // Body file
-                RequestBody.create(MultipartBody.FORM, "{{PD-self}}"), // License type - /* PD-self, CC-Zero, CC-BY-SA-4.0, CC-BY-SA-3.0*/
+                RequestBody.create(MultipartBody.FORM, "{{CC-Zero}}"), // License type - /* PD-self, CC-Zero, CC-BY-SA-4.0, CC-BY-SA-3.0*/
                 RequestBody.create(MultipartBody.FORM, String.format(ctx.getString(R.string.upload_comment), uploadFileName)) // Comment
 
         );

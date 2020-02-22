@@ -1,65 +1,32 @@
 package com.manimaran.wikiaudio.adapters;
 
 import android.Manifest;
-import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
-import android.os.CountDownTimer;
-import android.os.Environment;
-import android.os.Handler;
-import androidx.annotation.RequiresApi;
-
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.MimeTypeMap;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.arthenica.mobileffmpeg.FFmpeg;
+import androidx.annotation.RequiresApi;
+
 import com.manimaran.wikiaudio.R;
 import com.manimaran.wikiaudio.activities.CommonWebActivity;
 import com.manimaran.wikiaudio.constants.Constants;
 import com.manimaran.wikiaudio.listerners.CallBackListener;
-import com.manimaran.wikiaudio.record.wav.WAVPlayer;
-import com.manimaran.wikiaudio.record.wav.WAVRecorder;
 import com.manimaran.wikiaudio.utils.GeneralUtils;
 import com.manimaran.wikiaudio.utils.PrefManager;
-import com.manimaran.wikiaudio.apis.ApiInterface;
-import com.manimaran.wikiaudio.apis.ApiClient;
 
 import org.jetbrains.annotations.NotNull;
-import org.json.JSONException;
-import org.json.JSONObject;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
-import java.util.concurrent.Callable;
-
-import okhttp3.MediaType;
-import okhttp3.MultipartBody;
-import okhttp3.RequestBody;
-import okhttp3.ResponseBody;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class EndlessAdapter extends ArrayAdapter<String> {
 
