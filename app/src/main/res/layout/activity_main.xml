@@ -60,6 +60,7 @@
 
 
         <LinearLayout
+            android:id="@+id/layoutContributeOptions"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
@@ -69,7 +70,7 @@
             android:paddingBottom="5dp"
             android:paddingTop="5dp">
 
-            <android.support.v7.widget.CardView
+            <androidx.cardview.widget.CardView
                 android:id="@+id/card_spell4wiki"
                 android:layout_width="0dp"
                 android:layout_weight="1"
@@ -105,9 +106,9 @@
 
                 </RelativeLayout>
 
-            </android.support.v7.widget.CardView>
+            </androidx.cardview.widget.CardView>
 
-            <android.support.v7.widget.CardView
+            <androidx.cardview.widget.CardView
                 android:id="@+id/card_spell4wordlist"
                 android:layout_width="0dp"
                 android:layout_weight="1"
@@ -144,9 +145,9 @@
 
                 </RelativeLayout>
 
-            </android.support.v7.widget.CardView>
+            </androidx.cardview.widget.CardView>
 
-            <android.support.v7.widget.CardView
+            <androidx.cardview.widget.CardView
                 android:id="@+id/card_spell4word"
                 android:layout_width="0dp"
                 android:layout_weight="1"
@@ -182,23 +183,9 @@
 
                 </RelativeLayout>
 
-            </android.support.v7.widget.CardView>
+            </androidx.cardview.widget.CardView>
 
         </LinearLayout>
-
-        <Button
-            android:visibility="gone"
-            android:id="@+id/upload_button"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="15dp"
-            android:layout_marginBottom="25dp"
-            android:background="@drawable/bg_button"
-            android:text="@string/upload"
-            android:textAllCaps="false"
-            android:textColor="@color/white"
-            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/txtViewMyContribution"
@@ -214,6 +201,43 @@
             android:layout_gravity="center"
             android:layout_marginStart="5dp"
             android:textColor="@color/w_blue" />
+
+        <LinearLayout
+            android:id="@+id/layoutLogin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone"
+            android:layout_marginTop="30dp"
+            android:paddingBottom="5dp"
+            android:paddingTop="5dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:text="@string/do_you_like_contribute_to_wiki_commons"/>
+
+            <TextView
+                android:id="@+id/txtLogin"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="@string/login_to_contribute"
+                android:textSize="@dimen/text_semi_normal"
+                android:background="@drawable/bg_line_border"
+                android:textStyle="bold"
+                android:padding="8dp"
+                android:paddingStart="30dp"
+                android:paddingEnd="30dp"
+                android:layout_marginTop="10dp"
+                android:layout_gravity="center"
+                android:layout_marginStart="5dp"
+                android:textColor="@color/w_blue" />
+
+        </LinearLayout>
+
+
 
         <LinearLayout
             android:layout_width="match_parent"

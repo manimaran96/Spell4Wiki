@@ -1,0 +1,12 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".activities.BaseActivity">
+    <item
+        android:id="@+id/menu_lang_selector"
+        android:title="@string/tamil"
+        app:showAsAction="ifRoom"
+        app:actionLayout="@layout/custom_menu_item_lang_selector"/>
+
+</menu>
+

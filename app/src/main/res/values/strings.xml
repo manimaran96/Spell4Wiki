@@ -113,26 +113,18 @@
     <string name="check_url">Invalid Link</string>
     <string name="done">Done</string>
     <string name="select_file">Select file</string>
-    <string name="hint_select_file">
-        \n
-        1. Create .txt file in your device\n
-        2. Add words what ever you want to upload audio\n
-        3. Then store \n
-        4. Click Select file then choose your created file\n
-        5. Align proper your file \n
-        6. Each word in separate line
-        \n
-    </string>
-
-    <string name="hint_direct_copy">
-        \n
-        1. Copy content whatever\n
-        2. Click direct content button\n
-        3. Paste content \n
-        4. Align proper your file \n
-        5. Each word in separate line
-        \n
-    </string>
+    <string name="hint_select_file">Select txt file with contains list of words to upload audio.</string>
+    <string name="hint_direct_copy">Copy and paste or type words to upload audio.</string>
+    <string name="hint_common_steps">---------- NOTE ----------\nEach word must be in separate line.\nAlign words properly If necessary.\n</string>
     <string name="direct_content">Direct content</string>
+    <string name="title">Title</string>
+    <string name="sub_title">Sub Title</string>
+    <string name="tamil">TA</string>
+    <string name="result_not_found">Result Not Found</string>
+    <string name="something_went_wrong">Something went wrong</string>
+    <string name="login_to_contribute">Login to contribute</string>
+    <string name="do_you_like_contribute_to_wiki_commons">
+        Donate voice to wiki commons?
+    </string>
 
 </resources>

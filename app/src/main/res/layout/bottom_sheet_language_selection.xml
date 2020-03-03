@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     android:background="@color/white"
     android:orientation="vertical"
-    app:layout_behavior="android.support.design.widget.BottomSheetBehavior">
+    app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
 
     <RelativeLayout
         android:id="@+id/layout_title"
@@ -45,7 +45,7 @@
 
     </RelativeLayout>
 
-    <android.support.v7.widget.SearchView
+    <androidx.appcompat.widget.SearchView
         android:id="@+id/search_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

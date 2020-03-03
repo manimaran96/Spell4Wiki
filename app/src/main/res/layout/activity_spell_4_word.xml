@@ -9,7 +9,7 @@
     android:orientation="vertical"
     android:layout_gravity="center"
     android:gravity="center_horizontal"
-    tools:context=".activity.SearchActivity">
+    tools:context=".activities.WiktionarySearchActivity">
 
     <ImageView
         android:id="@+id/wiktionary_logo"

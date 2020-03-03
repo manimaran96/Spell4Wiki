@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout android:id="@+id/layoutSelectLanguage"
+    android:layout_width="50dp"
+    android:layout_height="?actionBarSize"
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:gravity="center_horizontal"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/btnSelectLanguage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@android:color/transparent"
+        app:srcCompat="@drawable/ic_language" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/txtSelectedLanguage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:text="@string/tamil"
+        android:textAlignment="center"
+        android:layout_gravity="bottom|center_horizontal"
+        android:textSize="10sp"
+        android:textStyle="bold"
+        android:maxWidth="50dp"
+        android:maxLength="5"
+        android:layout_marginBottom="3dp"
+        tools:ignore="SmallSp" />
+
+</FrameLayout>

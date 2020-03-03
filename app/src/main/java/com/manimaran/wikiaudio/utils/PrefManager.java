@@ -7,7 +7,7 @@ import android.content.SharedPreferences;
 import android.util.Log;
 
 import com.manimaran.wikiaudio.R;
-import com.manimaran.wikiaudio.activity.LoginActivity;
+import com.manimaran.wikiaudio.activities.LoginActivity;
 
 import java.util.Set;
 
@@ -112,8 +112,9 @@ public class PrefManager {
      */
     public void logoutUser() {
         // Clearing all data from Shared Preferences
+        boolean isFirstTime = isFirstTimeLaunch();
         editor.clear();
-        setFirstTimeLaunch(false); // Already done
+        setFirstTimeLaunch(isFirstTime);
         editor.commit();
 
         if(mContext !=null) {
