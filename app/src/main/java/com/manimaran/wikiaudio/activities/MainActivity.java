@@ -101,7 +101,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         txtWelcomeUser.setText(String.format(getString(R.string.welcome_user), pref.getName()));
 
         findViewById(R.id.btn_about).setOnClickListener(v -> startActivity(new Intent(getApplicationContext(), AboutActivity.class)));
-        findViewById(R.id.btn_settings).setOnClickListener(v -> GeneralUtils.showSnack(searchView, "Settings clicked"));
+        findViewById(R.id.btn_settings).setOnClickListener(v -> startActivity(new Intent(getApplicationContext(), SettingsActivity.class)));
         findViewById(R.id.btn_logout).setOnClickListener(v -> GeneralUtils.logoutAlert(MainActivity.this));
 
         String urlViewMyContribution = String.format(getString(R.string.link_view_my_contribution), pref.getName());

@@ -126,5 +126,7 @@
     <string name="do_you_like_contribute_to_wiki_commons">
         Donate voice to wiki commons?
     </string>
+    <string name="language">Language</string>
+    <string name="license_of_upload_audio">License of Upload Audio</string>
 
 </resources>

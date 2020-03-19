@@ -87,6 +87,10 @@
             android:name=".activities.CommonWebActivity"
             android:screenOrientation="portrait"
             android:theme="@style/ActionBarStyle" />
+        <activity
+            android:name=".activities.SettingsActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActionBarStyle" />
     </application>
 
 </manifest>

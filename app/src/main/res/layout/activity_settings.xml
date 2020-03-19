@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context="com.manimaran.wikiaudio.activities.AboutActivity">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:maxLines="1"
+            android:layout_marginBottom="10dp"
+            android:text="@string/language"
+            android:textStyle="bold"
+            android:textSize="@dimen/text_normal" />
+
+        <LinearLayout
+            android:id="@+id/layoutSpell4WikiLang"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:maxLines="1"
+                android:text="@string/spell4wiktionary"
+                android:textSize="@dimen/text_semi_normal" />
+
+            <TextView
+                android:id="@+id/txtSpell4WikiLang"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:maxLines="1"
+                android:layout_marginTop="2dp"
+                android:text="@string/language"
+                android:textSize="@dimen/text_small" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/gray" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layoutSpell4WordListLang"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:maxLines="1"
+                android:text="@string/spell4wordlist"
+                android:textSize="@dimen/text_semi_normal" />
+
+            <TextView
+                android:id="@+id/txtSpell4WordListLang"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:maxLines="1"
+                android:layout_marginTop="2dp"
+                android:text="@string/language"
+                android:textSize="@dimen/text_small" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/gray" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layoutSpell4WordLang"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:maxLines="1"
+                android:text="@string/spell4word"
+                android:textSize="@dimen/text_semi_normal" />
+
+            <TextView
+                android:id="@+id/txtSpell4WordLang"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:maxLines="1"
+                android:layout_marginTop="2dp"
+                android:text="@string/language"
+                android:textSize="@dimen/text_small" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/gray" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layoutWiktionaryLang"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:maxLines="1"
+                android:text="@string/wiktionary"
+                android:textSize="@dimen/text_semi_normal" />
+
+            <TextView
+                android:id="@+id/txtWiktionaryLang"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:maxLines="1"
+                android:layout_marginTop="2dp"
+                android:text="@string/language"
+                android:textSize="@dimen/text_small" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_marginTop="10dp"
+                android:visibility="invisible"
+                android:background="@color/gray" />
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:maxLines="1"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="10dp"
+            android:text="@string/license"
+            android:textStyle="bold"
+            android:textSize="@dimen/text_normal" />
+
+        <LinearLayout
+            android:id="@+id/layoutLicenseOfUploadAudio"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:maxLines="1"
+                android:text="@string/license_of_upload_audio"
+                android:textSize="@dimen/text_semi_normal" />
+
+            <TextView
+                android:id="@+id/txtLicenseOfUploadAudio"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:maxLines="1"
+                android:layout_marginTop="2dp"
+                android:text="@string/language"
+                android:textSize="@dimen/text_small" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_marginTop="10dp"
+                android:visibility="invisible"
+                android:background="@color/gray" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+</ScrollView>

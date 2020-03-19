@@ -20,6 +20,10 @@ public class PrefManager {
     private static final String IS_LOGIN = "is_login";
     private static final String CONTRIBUTION_LANG_CODE = "contribution_lang_code";
     private static final String WIKTIONARY_LANG_CODE = "wiktionary_lang_code";
+    private static final String LANGUAGE_CODE_SPELL_4_WIKI = "language_code_spell_4_wiki";
+    private static final String LANGUAGE_CODE_SPELL_4_WORD_LIST = "language_code_spell_4_word_list";
+    private static final String LANGUAGE_CODE_SPELL_4_WORD = "language_code_spell_4_word";
+    private static final String LANGUAGE_CODE_WIKTIONARY = "language_code_wiktionary";
     private static final String TITLE_WORDS_WITHOUT_AUDIO = "title_words_without_audio";
     private static final String CSRF_TOKEN = "csrf_token";
     private static final String IS_FIRST_TIME_LAUNCH = "is_first_time_launch";
@@ -136,6 +140,43 @@ public class PrefManager {
 
     public Set<String> getCookies() {
         return pref.getStringSet(KEY_COOKIE, null);
+    }
+
+
+    public void setLanguageCodeSpell4Wiki(String languageCode){
+        editor.putString(LANGUAGE_CODE_SPELL_4_WIKI, languageCode);
+        editor.commit();
+    }
+
+    public void setLanguageCodeSpell4WordList(String languageCode){
+        editor.putString(LANGUAGE_CODE_SPELL_4_WORD_LIST, languageCode);
+        editor.commit();
+    }
+
+    public void setLanguageCodeSpell4Word(String languageCode){
+        editor.putString(LANGUAGE_CODE_SPELL_4_WORD, languageCode);
+        editor.commit();
+    }
+
+    public void setLanguageCodeWiktionary(String languageCode){
+        editor.putString(LANGUAGE_CODE_WIKTIONARY, languageCode);
+        editor.commit();
+    }
+
+    public String getLanguageCodeSpell4Wiki() {
+        return pref.getString(LANGUAGE_CODE_SPELL_4_WIKI, "ta");
+    }
+
+    public String getLanguageCodeSpell4WordList() {
+        return pref.getString(LANGUAGE_CODE_SPELL_4_WORD_LIST, "ta");
+    }
+
+    public String getLanguageCodeSpell4Word() {
+        return pref.getString(LANGUAGE_CODE_SPELL_4_WORD, "ta");
+    }
+
+    public String getLanguageCodeWiktionary() {
+        return pref.getString(LANGUAGE_CODE_WIKTIONARY, "ta");
     }
 
 }
