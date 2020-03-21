@@ -2,6 +2,7 @@ package com.manimaran.wikiaudio.activities;
 
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import androidx.core.content.ContextCompat;
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,6 +18,7 @@ import com.manimaran.wikiaudio.R;
 import com.manimaran.wikiaudio.constants.Constants;
 import com.manimaran.wikiaudio.constants.UrlType;
 import com.manimaran.wikiaudio.utils.GeneralUtils;
+import com.manimaran.wikiaudio.utils.PrefManager;
 
 
 public class AboutActivity extends AppCompatActivity implements View.OnClickListener {
@@ -79,7 +81,7 @@ public class AboutActivity extends AppCompatActivity implements View.OnClickList
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.txt_rate_app:
-                GeneralUtils.openUrl(this, getString(R.string.link_app_play_store), UrlType.EXTERNAL, null);
+                GeneralUtils.openUrl(this, String.format(getString(R.string.link_app_play_store), BuildConfig.APPLICATION_ID), UrlType.EXTERNAL, null);
                 break;
             case R.id.txt_share:
                 shareApp();
@@ -110,13 +112,13 @@ public class AboutActivity extends AppCompatActivity implements View.OnClickList
                 contactUs();
                 break;
             case R.id.layout_kaniyam:
-                GeneralUtils.openUrl(this, getString(R.string.link_kaniyam), UrlType.INTERNAL, getString(R.string.kaniyam));
+                GeneralUtils.openUrl(this, getString(R.string.link_kaniyam), UrlType.EXTERNAL, getString(R.string.kaniyam));
                 break;
             case R.id.layout_vglug:
-                GeneralUtils.openUrl(this, getString(R.string.link_vglug), UrlType.INTERNAL, getString(R.string.vglug));
+                GeneralUtils.openUrl(this, getString(R.string.link_vglug), UrlType.EXTERNAL, getString(R.string.vglug));
                 break;
             case R.id.txt_app_version_and_license:
-                GeneralUtils.openUrl(this, getString(R.string.url_license_gpl_v3), UrlType.INTERNAL, "GPLv3 - App License");
+                GeneralUtils.openUrl(this, getString(R.string.url_license_gpl_v3), UrlType.EXTERNAL, "GPLv3 - App License");
                 break;
         }
 
@@ -125,16 +127,18 @@ public class AboutActivity extends AppCompatActivity implements View.OnClickList
     private void shareApp() {
         Intent intent = new Intent(Intent.ACTION_SEND);
         intent.setType("text/plain");
-        intent.putExtra(Intent.EXTRA_TEXT, getString(R.string.app_share_message));
+        intent.putExtra(Intent.EXTRA_TEXT, String.format(getString(R.string.app_share_message), String.format(getString(R.string.link_app_play_store), BuildConfig.APPLICATION_ID)));
         startActivity(Intent.createChooser(intent, getString(R.string.app_share_title)));
     }
 
     private void contactUs() {
-        Intent i = new Intent(Intent.ACTION_SEND);
-        i.setType("message/rfc822");
-        i.putExtra(Intent.EXTRA_EMAIL, new String[]{getString(R.string.contact_email)});
+
+        Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.parse("mailto:" + "manimarnkumar96@gmail.com"));
+        emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Spell4Wiki App");
+        PrefManager pref =new PrefManager(getApplicationContext());
+        emailIntent.putExtra(Intent.EXTRA_TEXT,  "Wiki User : "  + (pref.getIsAnonymous() ? "Anonymous" : pref.getName()));
         try {
-            startActivity(Intent.createChooser(i, getString(R.string.contact_via_mail)));
+            startActivity(Intent.createChooser(emailIntent, getString(R.string.contact_via_mail)));
         } catch (ActivityNotFoundException ex) {
             GeneralUtils.showSnack(findViewById(R.id.txt_contact_us), getString(R.string.no_email_client));
         }
