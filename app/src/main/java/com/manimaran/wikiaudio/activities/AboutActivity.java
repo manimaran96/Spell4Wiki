@@ -116,7 +116,7 @@ public class AboutActivity extends AppCompatActivity implements View.OnClickList
                 GeneralUtils.openUrl(this, getString(R.string.link_vglug), UrlType.INTERNAL, getString(R.string.vglug));
                 break;
             case R.id.txt_app_version_and_license:
-                GeneralUtils.openUrl(this, getString(R.string.link_gplv3), UrlType.INTERNAL, "GPLv3 - App License");
+                GeneralUtils.openUrl(this, getString(R.string.url_license_gpl_v3), UrlType.INTERNAL, "GPLv3 - App License");
                 break;
         }
 

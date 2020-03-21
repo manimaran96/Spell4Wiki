@@ -56,33 +56,30 @@ public class ListItemActivity extends AppCompatActivity {
 
     private List<ItemsModel> getCreditsInfo(){
         List<ItemsModel> list = new ArrayList<>();
-        // int icon, String name, String about, String url, String licenseUrl
-        list.add(new ItemsModel(R.drawable.ic_spell4wiki_main, getString(R.string.spell4wiktionary), getString(R.string.spell4wiktionary), getString(R.string.link_vglug), getString(R.string.link_kaniyam)));
-        list.add(new ItemsModel(R.drawable.ic_spell4wiki_main, getString(R.string.spell4wiktionary), getString(R.string.spell4wiktionary), getString(R.string.link_vglug), getString(R.string.link_kaniyam)));
-        list.add(new ItemsModel(R.drawable.ic_spell4wiki_main, getString(R.string.spell4wiktionary), getString(R.string.spell4wiktionary), getString(R.string.link_vglug), getString(R.string.link_kaniyam)));
-        list.add(new ItemsModel(R.drawable.ic_spell4wiki_main, getString(R.string.spell4wiktionary), getString(R.string.spell4wiktionary), getString(R.string.link_vglug), getString(R.string.link_kaniyam)));
-        list.add(new ItemsModel(R.drawable.ic_spell4wiki_main, getString(R.string.spell4wiktionary), getString(R.string.spell4wiktionary), getString(R.string.link_vglug), getString(R.string.link_kaniyam)));
-        list.add(new ItemsModel(R.drawable.ic_spell4wiki_main, getString(R.string.spell4wiktionary), getString(R.string.spell4wiktionary), getString(R.string.link_vglug), getString(R.string.link_kaniyam)));
-        list.add(new ItemsModel(R.drawable.ic_spell4wiki_main, getString(R.string.spell4wiktionary), getString(R.string.spell4wiktionary), getString(R.string.link_vglug), getString(R.string.link_kaniyam)));
-
+        list.add(new ItemsModel(R.drawable.ic_language, "Translation icon", "Claudiu Antohi from the Noun Project", "https://thenounproject.com/claudiu.antohi/"));
+        list.add(new ItemsModel(R.drawable.ic_info, "Dictionary icon","Berkah Icon from the Noun Project", "https://thenounproject.com/berkahicon/"));
+        list.add(new ItemsModel(R.drawable.ic_git, "Git icon","WClarke from the wiki commons", "https://commons.wikimedia.org/wiki/File:Git-icon-black.svg"));
         return list;
     }
 
     private List<ItemsModel> getThirdPartyLibInfo(){
         List<ItemsModel> list = new ArrayList<>();
-
-        list.add(new ItemsModel(getString(R.string.welcome_user), getString(R.string.app_intro_slide_1_description), getString(R.string.link_vglug)));
-        list.add(new ItemsModel(getString(R.string.welcome_user), getString(R.string.app_intro_slide_1_description), getString(R.string.link_vglug)));
-        list.add(new ItemsModel(getString(R.string.welcome_user), getString(R.string.app_intro_slide_1_description), getString(R.string.link_vglug)));
-        list.add(new ItemsModel(getString(R.string.welcome_user), getString(R.string.app_intro_slide_1_description), getString(R.string.link_vglug)));
-        list.add(new ItemsModel(getString(R.string.welcome_user), getString(R.string.app_intro_slide_1_description), getString(R.string.link_vglug)));
-        list.add(new ItemsModel(getString(R.string.welcome_user), getString(R.string.app_intro_slide_1_description), getString(R.string.link_vglug)));
-        list.add(new ItemsModel(getString(R.string.welcome_user), getString(R.string.app_intro_slide_1_description), getString(R.string.link_vglug)));
-        list.add(new ItemsModel(getString(R.string.welcome_user), getString(R.string.app_intro_slide_1_description), getString(R.string.link_vglug)));
-        list.add(new ItemsModel(getString(R.string.welcome_user), getString(R.string.app_intro_slide_1_description), getString(R.string.link_vglug)));
-        list.add(new ItemsModel(getString(R.string.welcome_user), getString(R.string.app_intro_slide_1_description), getString(R.string.link_vglug)));
-        list.add(new ItemsModel(getString(R.string.welcome_user), getString(R.string.app_intro_slide_1_description), getString(R.string.link_vglug)));
-
+        String gplV3 = getString(R.string.url_license_gpl_v3);
+        String apache = "http://www.apache.org/licenses/LICENSE-2.0.txt";
+        String mit = "https://opensource.org/licenses/MIT";
+        list.add(new ItemsModel("androidx.constraintlayout:constraintlayout:1.1.3", apache, "https://androidstudio.googleblog.com/2018/08/constraintlayout-113.html"));
+        list.add(new ItemsModel("androidx.appcompat:appcompat:1.1.0", apache, "https://developer.android.com/jetpack/androidx/releases/appcompat"));
+        list.add(new ItemsModel("com.google.android.material:material:1.0.0", apache, "https://developer.android.com/topic/libraries/support-library"));
+        list.add(new ItemsModel("androidx.recyclerview:recyclerview:1.1.0", apache, "https://developer.android.com/jetpack/androidx/releases/recyclerview"));
+        list.add(new ItemsModel("br.com.simplepass:loading-button-android:1.14.0", mit, "https://github.com/leandroBorgesFerreira/LoadingButtonAndroid"));
+        list.add(new ItemsModel("com.arthenica:mobile-ffmpeg-full:4.3.1.LTS", gplV3, "https://github.com/tanersener/mobile-ffmpeg"));
+        list.add(new ItemsModel("com.github.bumptech.glide:glide:4.11.0", "https://github.com/bumptech/glide/blob/master/LICENSE", "https://github.com/bumptech/glide"));
+        list.add(new ItemsModel("com.squareup.retrofit2:retrofit:2.6.2", apache, "https://github.com/square/retrofit"));
+        list.add(new ItemsModel("com.squareup.okhttp3:okhttp:4.2.1", apache, "https://github.com/square/okhttp"));
+        list.add(new ItemsModel("com.github.franmontiel:PersistentCookieJar:v1.0.1", apache, "https://github.com/franmontiel/PersistentCookieJar"));
+        list.add(new ItemsModel("com.google.code.gson:gson:2.8.5", apache, "https://github.com/google/gson"));
+        list.add(new ItemsModel("com.github.tiagohm.MarkdownView:library:0.19.0", apache, "https://github.com/tiagohm/MarkdownView"));
+        list.add(new ItemsModel("com.github.AppIntro:AppIntro:4.2.3", apache, "https://github.com/AppIntro/AppIntro"));
         return list;
     }
 

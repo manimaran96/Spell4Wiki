@@ -45,7 +45,7 @@
             android:visibility="gone"
             android:linksClickable="true"
             android:autoLink="all"
-            android:text="@string/link_gplv3"
+            android:text="@string/url_license_gpl_v3"
             android:textSize="@dimen/text_small" />
 
     </LinearLayout>

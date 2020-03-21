@@ -12,6 +12,8 @@
     <string name="url_join_wikipedia"  translatable="false">https://en.m.wikipedia.org/w/index.php?title=Special:CreateAccount&amp;campaign=loginCTA</string>
     <string name="url_forgot_password"  translatable="false">https://en.m.wikipedia.org/wiki/Special%3APasswordReset</string>
 
+    <string name="url_license_gpl_v3" translatable="false">https://www.gnu.org/licenses/gpl-3.0.txt</string>
+
     <string name="login">Login</string>
     <string name="search_here">Search</string>
     <string name="upload">Upload</string>
@@ -88,7 +90,6 @@
     <string name="link_how_to_contribute">https://manimaran96.wordpress.com/2019/01/06/spell4wiki-mobile-app-to-record-upload-audio-for-wiktionary/</string>
     <string name="app_share_title">Share Spell4Wiki App to your friends…</string>
     <string name="app_share_message">Spell4Wiki app to record and upload audios for Wiki commons.\nAlso act as wiki dictionary. \n https://play.google.com/store/apps/details?id=com.jskaleel.fte</string>
-    <string name="link_gplv3">https://www.gnu.org/licenses/gpl-3.0.txt</string>
     <string name="version">Version</string>
     <string name="license">License</string>
     <string name="no_email_client">No email client</string>

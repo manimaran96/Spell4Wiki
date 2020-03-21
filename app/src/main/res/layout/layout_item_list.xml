@@ -3,47 +3,54 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingTop="12dp"
-    android:paddingEnd="12dp"
-    android:paddingStart="12dp"
-    android:paddingBottom="0dp">
+    android:padding="4dp">
 
     <ImageView
         android:id="@+id/imgIcon"
         android:layout_width="@dimen/img_normal"
         android:layout_height="@dimen/img_normal"
         app:srcCompat="@drawable/ic_contact_us"
-        android:scaleType="fitStart"
-        android:paddingEnd="5dp"
-        android:paddingStart="5dp"/>
+        android:scaleType="fitCenter"
+        android:padding="12dp"
+        android:visibility="gone"
+        android:contentDescription="@string/credits"
+        android:layout_marginEnd="4dp" />
 
-    <TextView
-        android:id="@+id/txt_name"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:ellipsize="middle"
-        android:singleLine="true"
         android:layout_toEndOf="@+id/imgIcon"
         android:layout_toStartOf="@+id/btn_option"
-        android:padding="2dp"
-        android:text="@string/credits"
-        android:textSize="@dimen/text_semi_normal"
-        android:textStyle="bold" />
+        android:layout_centerInParent="true"
+        android:paddingStart="2dp"
+        android:paddingEnd="2dp"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
+        android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/txt_about"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/txt_name"
-        android:ellipsize="end"
-        android:maxLines="2"
-        android:layout_toStartOf="@+id/btn_option"
-        android:layout_toEndOf="@+id/imgIcon"
-        android:padding="2dp"
-        android:linksClickable="true"
-        android:autoLink="all"
-        android:text="@string/link_gplv3"
-        android:textSize="@dimen/text_small" />
+        <TextView
+            android:id="@+id/txt_name"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:ellipsize="middle"
+            android:singleLine="true"
+            android:text="@string/contributors"
+            android:textSize="@dimen/text_semi_normal"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/txt_about"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="middle"
+            android:linksClickable="true"
+            android:autoLink="all"
+            android:text="@string/url_license_gpl_v3"
+            android:textSize="@dimen/text_small"
+            android:singleLine="true" />
+
+    </LinearLayout>
 
     <ImageView
         android:id="@+id/btn_option"
@@ -53,8 +60,9 @@
         android:layout_centerVertical="true"
         android:paddingStart="10dp"
         android:paddingEnd="5dp"
+        android:contentDescription="@string/credits"
         android:paddingTop="5dp"
         android:paddingBottom="5dp"
-        android:src="@drawable/ic_link" />
+        app:srcCompat="@drawable/ic_link" />
 
 </RelativeLayout>

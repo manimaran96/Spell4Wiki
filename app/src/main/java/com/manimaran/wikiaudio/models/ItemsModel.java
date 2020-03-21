@@ -10,12 +10,11 @@ public class ItemsModel {
         this.url = url;
     }
 
-    public ItemsModel(int icon, String name, String about, String url, String licenseUrl) {
+    public ItemsModel(int icon, String name, String about, String url) {
         this.icon = icon;
         this.name = name;
         this.about = about;
         this.url = url;
-        this.licenseUrl = licenseUrl;
     }
 
     public String getName() {
