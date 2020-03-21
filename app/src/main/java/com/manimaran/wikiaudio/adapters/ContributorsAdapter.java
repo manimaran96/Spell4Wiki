@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.manimaran.wikiaudio.R;
 import com.manimaran.wikiaudio.constants.UrlType;
 import com.manimaran.wikiaudio.models.Contributors;
@@ -34,7 +35,7 @@ public class ContributorsAdapter extends RecyclerView.Adapter<ContributorsAdapte
         final Contributors model = mList.get(pos);
         holder.txtName.setText(model.getName());
 
-        Glide.with(mContext).load(model.getAvatarUrl()).into(holder.imgIcon);
+        Glide.with(mContext).load(model.getAvatarUrl()).apply(RequestOptions.circleCropTransform()).into(holder.imgIcon);
         holder.txtAbout.setText(("Contributions : " + model.getContributions()));
 
         holder.btnOption.setOnClickListener(v -> {
