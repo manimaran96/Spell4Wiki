@@ -1,16 +1,23 @@
 package com.manimaran.wikiaudio.activities;
 
+import android.app.AlertDialog;
 import android.os.Bundle;
+import android.text.Html;
+import android.text.method.LinkMovementMethod;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import com.manimaran.wikiaudio.R;
 import com.manimaran.wikiaudio.fragments.BottomSheetFragment;
 import com.manimaran.wikiaudio.listerners.CallBackListener;
 import com.manimaran.wikiaudio.utils.PrefManager;
+import com.manimaran.wikiaudio.utils.WikiLicense;
+
+import java.util.Arrays;
 
 
 public class SettingsActivity extends AppCompatActivity {
@@ -32,6 +39,7 @@ public class SettingsActivity extends AppCompatActivity {
         TextView txtSpell4WordLang = findViewById(R.id.txtSpell4WordLang);
         TextView txtWiktionaryLang = findViewById(R.id.txtWiktionaryLang);
         TextView txtLicenseOfUploadAudio = findViewById(R.id.txtLicenseOfUploadAudio);
+        TextView txtLicenseOfUploadAudioLegalCode = findViewById(R.id.txtLicenseOfUploadAudioLegalCode);
 
 
         View layoutSpell4WikiLang = findViewById(R.id.layoutSpell4WikiLang);
@@ -95,7 +103,48 @@ public class SettingsActivity extends AppCompatActivity {
             bottomSheetFragment.setIsTempMode(true);
         });
 
+        updateLicenseView(txtLicenseOfUploadAudio, txtLicenseOfUploadAudioLegalCode);
+        layoutLicenseOfUploadAudio.setOnClickListener(v -> {
+            // setup the alert builder
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle(R.string.hint_license_choose_alert);// add a radio button list
+
+            String[] licensePrefList = {
+                    WikiLicense.LicensePrefs.CC_0,
+                    WikiLicense.LicensePrefs.CC_BY_3,
+                    WikiLicense.LicensePrefs.CC_BY_SA_3,
+                    WikiLicense.LicensePrefs.CC_BY_4,
+                    WikiLicense.LicensePrefs.CC_BY_SA_4
+            };
+
+            String[] licenseList = {
+                    getString(R.string.license_name_cc_zero),
+                    getString(R.string.license_name_cc_by_three),
+                    getString(R.string.license_name_cc_by_sa_three),
+                    getString(R.string.license_name_cc_by_four),
+                    getString(R.string.license_name_cc_by_sa_four)
+            };
+
+            int checkedItem = Arrays.asList(licensePrefList).indexOf(pref.getUploadAudioLicense());
+            builder.setSingleChoiceItems(licenseList, checkedItem, (dialog, which) -> {
+                pref.setUploadAudioLicense(licensePrefList[which]);
+                updateLicenseView(txtLicenseOfUploadAudio, txtLicenseOfUploadAudioLegalCode);
+                dialog.dismiss();
+            });
+            builder.setNegativeButton(getString(R.string.cancel), null);
+            AlertDialog dialog = builder.create();
+            dialog.show();
+        });
+
     }
+
+    private void updateLicenseView(TextView txtLicenseOfUploadAudio, TextView txtLicenseOfUploadAudioLegalCode) {
+        txtLicenseOfUploadAudio.setText(WikiLicense.licenseNameId(pref.getUploadAudioLicense()));
+        txtLicenseOfUploadAudioLegalCode.setMovementMethod(LinkMovementMethod.getInstance());
+        String ccLegalInfo = "(<a href=" + WikiLicense.licenseUrlFor(pref.getUploadAudioLicense()) + "><font color='" + ContextCompat.getColor(getApplicationContext(), R.color.w_green) + "'>legal code</font></a>)";
+        txtLicenseOfUploadAudioLegalCode.setText(Html.fromHtml(ccLegalInfo));
+    }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem menuItem) {

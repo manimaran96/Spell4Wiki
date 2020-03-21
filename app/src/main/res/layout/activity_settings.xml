@@ -20,14 +20,14 @@
             android:maxLines="1"
             android:layout_marginBottom="10dp"
             android:text="@string/language"
-            android:textStyle="bold"
+            android:textColor="@color/w_blue"
             android:textSize="@dimen/text_normal" />
 
         <LinearLayout
             android:id="@+id/layoutSpell4WikiLang"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="5dp"
+            android:padding="8dp"
             android:orientation="vertical">
 
             <TextView
@@ -36,7 +36,7 @@
                 android:gravity="center_vertical"
                 android:maxLines="1"
                 android:text="@string/spell4wiktionary"
-                android:textSize="@dimen/text_semi_normal" />
+                android:textSize="@dimen/text_normal" />
 
             <TextView
                 android:id="@+id/txtSpell4WikiLang"
@@ -44,14 +44,16 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
                 android:maxLines="1"
+                android:textColor="@color/label_text"
                 android:layout_marginTop="2dp"
                 android:text="@string/language"
-                android:textSize="@dimen/text_small" />
+                android:textSize="@dimen/text_semi_normal" />
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
                 android:layout_marginTop="10dp"
+                android:visibility="invisible"
                 android:background="@color/gray" />
 
         </LinearLayout>
@@ -69,7 +71,7 @@
                 android:gravity="center_vertical"
                 android:maxLines="1"
                 android:text="@string/spell4wordlist"
-                android:textSize="@dimen/text_semi_normal" />
+                android:textSize="@dimen/text_normal" />
 
             <TextView
                 android:id="@+id/txtSpell4WordListLang"
@@ -77,14 +79,16 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
                 android:maxLines="1"
+                android:textColor="@color/label_text"
                 android:layout_marginTop="2dp"
                 android:text="@string/language"
-                android:textSize="@dimen/text_small" />
+                android:textSize="@dimen/text_semi_normal" />
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
                 android:layout_marginTop="10dp"
+                android:visibility="invisible"
                 android:background="@color/gray" />
 
         </LinearLayout>
@@ -102,7 +106,7 @@
                 android:gravity="center_vertical"
                 android:maxLines="1"
                 android:text="@string/spell4word"
-                android:textSize="@dimen/text_semi_normal" />
+                android:textSize="@dimen/text_normal" />
 
             <TextView
                 android:id="@+id/txtSpell4WordLang"
@@ -110,14 +114,16 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
                 android:maxLines="1"
+                android:textColor="@color/label_text"
                 android:layout_marginTop="2dp"
                 android:text="@string/language"
-                android:textSize="@dimen/text_small" />
+                android:textSize="@dimen/text_semi_normal" />
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
                 android:layout_marginTop="10dp"
+                android:visibility="invisible"
                 android:background="@color/gray" />
 
         </LinearLayout>
@@ -135,7 +141,7 @@
                 android:gravity="center_vertical"
                 android:maxLines="1"
                 android:text="@string/wiktionary"
-                android:textSize="@dimen/text_semi_normal" />
+                android:textSize="@dimen/text_normal" />
 
             <TextView
                 android:id="@+id/txtWiktionaryLang"
@@ -143,9 +149,10 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
                 android:maxLines="1"
+                android:textColor="@color/label_text"
                 android:layout_marginTop="2dp"
                 android:text="@string/language"
-                android:textSize="@dimen/text_small" />
+                android:textSize="@dimen/text_semi_normal" />
 
             <View
                 android:layout_width="match_parent"
@@ -156,6 +163,13 @@
 
         </LinearLayout>
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginTop="10dp"
+            android:visibility="invisible"
+            android:background="@color/gray" />
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -164,7 +178,7 @@
             android:layout_marginTop="15dp"
             android:layout_marginBottom="10dp"
             android:text="@string/license"
-            android:textStyle="bold"
+            android:textColor="@color/w_blue"
             android:textSize="@dimen/text_normal" />
 
         <LinearLayout
@@ -180,26 +194,47 @@
                 android:gravity="center_vertical"
                 android:maxLines="1"
                 android:text="@string/license_of_upload_audio"
-                android:textSize="@dimen/text_semi_normal" />
+                android:textSize="@dimen/text_normal" />
 
-            <TextView
-                android:id="@+id/txtLicenseOfUploadAudio"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:maxLines="1"
-                android:layout_marginTop="2dp"
-                android:text="@string/language"
-                android:textSize="@dimen/text_small" />
+                android:orientation="horizontal">
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:layout_marginTop="10dp"
-                android:visibility="invisible"
-                android:background="@color/gray" />
+                <TextView
+                    android:id="@+id/txtLicenseOfUploadAudio"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="4dp"
+                    android:gravity="center_vertical"
+                    android:maxLines="1"
+                    android:textColor="@color/label_text"
+                    android:layout_marginTop="2dp"
+                    android:text="@string/language"
+                    android:textSize="@dimen/text_semi_normal" />
+
+                <TextView
+                    android:id="@+id/txtLicenseOfUploadAudioLegalCode"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:maxLines="1"
+                    android:textColor="@color/label_text"
+                    android:layout_marginTop="2dp"
+                    android:text="@string/language"
+                    android:textSize="@dimen/text_semi_normal" />
+
+            </LinearLayout>
+
 
         </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginTop="10dp"
+            android:visibility="invisible"
+            android:background="@color/gray" />
 
     </LinearLayout>
 

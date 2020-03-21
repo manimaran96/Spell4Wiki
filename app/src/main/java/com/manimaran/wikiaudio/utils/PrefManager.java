@@ -20,10 +20,14 @@ public class PrefManager {
     private static final String IS_LOGIN = "is_login";
     private static final String CONTRIBUTION_LANG_CODE = "contribution_lang_code";
     private static final String WIKTIONARY_LANG_CODE = "wiktionary_lang_code";
+
     private static final String LANGUAGE_CODE_SPELL_4_WIKI = "language_code_spell_4_wiki";
     private static final String LANGUAGE_CODE_SPELL_4_WORD_LIST = "language_code_spell_4_word_list";
     private static final String LANGUAGE_CODE_SPELL_4_WORD = "language_code_spell_4_word";
     private static final String LANGUAGE_CODE_WIKTIONARY = "language_code_wiktionary";
+    private static final String UPLOAD_AUDIO_LICENSE = "upload_audio_license";
+
+
     private static final String TITLE_WORDS_WITHOUT_AUDIO = "title_words_without_audio";
     private static final String CSRF_TOKEN = "csrf_token";
     private static final String IS_FIRST_TIME_LAUNCH = "is_first_time_launch";
@@ -45,7 +49,7 @@ public class PrefManager {
         editor.putString(KEY_NAME, name);
         editor.putBoolean(IS_LOGIN, isLogin);
         editor.putBoolean(IS_ANONYMOUS, false);
-        editor.commit();
+        editor.apply();
     }
 
     public String getName() {
@@ -63,7 +67,7 @@ public class PrefManager {
     // First time launch
     public void setFirstTimeLaunch(boolean isFirstTime) {
         editor.putBoolean(IS_FIRST_TIME_LAUNCH, isFirstTime);
-        editor.commit();
+        editor.apply();
     }
 
     public String getCsrfToken() {
@@ -72,7 +76,7 @@ public class PrefManager {
 
     public void setCsrfToken(String editToken) {
         editor.putString(CSRF_TOKEN, editToken);
-        editor.commit();
+        editor.apply();
     }
 
     public String getContributionLangCode() {
@@ -81,7 +85,7 @@ public class PrefManager {
 
     public void setContributionLangCode(String code) {
         editor.putString(CONTRIBUTION_LANG_CODE, code);
-        editor.commit();
+        editor.apply();
     }
 
     public String getWiktionaryLangCode() {
@@ -90,7 +94,7 @@ public class PrefManager {
 
     public void setWiktionaryLangCode(String code) {
         editor.putString(WIKTIONARY_LANG_CODE, code);
-        editor.commit();
+        editor.apply();
     }
 
     public String getTitleWordsWithoutAudio() {
@@ -99,7 +103,7 @@ public class PrefManager {
 
     public void setTitleWordsWithoutAudio(String titleWordsWithoutAudio) {
         editor.putString(TITLE_WORDS_WITHOUT_AUDIO, titleWordsWithoutAudio);
-        editor.commit();
+        editor.apply();
     }
 
     public Boolean getIsAnonymous() {
@@ -108,7 +112,7 @@ public class PrefManager {
 
     public void setIsAnonymous(Boolean isAnonymous) {
         editor.putBoolean(IS_ANONYMOUS, isAnonymous);
-        editor.commit();
+        editor.apply();
     }
 
     /**
@@ -119,7 +123,7 @@ public class PrefManager {
         boolean isFirstTime = isFirstTimeLaunch();
         editor.clear();
         setFirstTimeLaunch(isFirstTime);
-        editor.commit();
+        editor.apply();
 
         if(mContext !=null) {
             Activity activity = (Activity) mContext;
@@ -134,7 +138,7 @@ public class PrefManager {
         if (existigCookie != null && existigCookie.size() > 0)
             cookieList.addAll(existigCookie);
         editor.putStringSet(KEY_COOKIE, cookieList);
-        editor.commit();
+        editor.apply();
         Log.e("TAG", "Addin " + getCookies().toString());
     }
 
@@ -145,22 +149,22 @@ public class PrefManager {
 
     public void setLanguageCodeSpell4Wiki(String languageCode){
         editor.putString(LANGUAGE_CODE_SPELL_4_WIKI, languageCode);
-        editor.commit();
+        editor.apply();
     }
 
     public void setLanguageCodeSpell4WordList(String languageCode){
         editor.putString(LANGUAGE_CODE_SPELL_4_WORD_LIST, languageCode);
-        editor.commit();
+        editor.apply();
     }
 
     public void setLanguageCodeSpell4Word(String languageCode){
         editor.putString(LANGUAGE_CODE_SPELL_4_WORD, languageCode);
-        editor.commit();
+        editor.apply();
     }
 
     public void setLanguageCodeWiktionary(String languageCode){
         editor.putString(LANGUAGE_CODE_WIKTIONARY, languageCode);
-        editor.commit();
+        editor.apply();
     }
 
     public String getLanguageCodeSpell4Wiki() {
@@ -177,6 +181,15 @@ public class PrefManager {
 
     public String getLanguageCodeWiktionary() {
         return pref.getString(LANGUAGE_CODE_WIKTIONARY, "ta");
+    }
+
+    public String getUploadAudioLicense() {
+        return pref.getString(UPLOAD_AUDIO_LICENSE, WikiLicense.LicensePrefs.CC_0);
+    }
+
+    public void setUploadAudioLicense(String uploadAudioLicense){
+        editor.putString(UPLOAD_AUDIO_LICENSE, uploadAudioLicense);
+        editor.apply();
     }
 
 }

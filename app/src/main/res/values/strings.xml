@@ -127,6 +127,13 @@
         Donate voice to wiki commons?
     </string>
     <string name="language">Language</string>
-    <string name="license_of_upload_audio">License of Upload Audio</string>
+    <string name="license_of_upload_audio">Upload Audio - License</string>
+    <string name="license_name_cc_by_three" translatable="false">Attribution 3.0</string>
+    <string name="license_name_cc_by_four" translatable="false">Attribution 4.0</string>
+    <string name="license_name_cc_by_sa_three" translatable="false">Attribution-ShareAlike 3.0</string>
+    <string name="license_name_cc_by_sa_four" translatable="false">Attribution-ShareAlike 4.0</string>
+    <string name="license_name_cc_zero" translatable="false">CC0(release all rights)</string>
+    <string name="hint_license_choose_alert">Choose the CC License</string>
+    <string name="cancel">Cancel</string>
 
 </resources>
