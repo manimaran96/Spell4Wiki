@@ -62,7 +62,6 @@ dependencies {
      * Animation libraries -
      */
     implementation 'br.com.simplepass:loading-button-android:1.14.0'
-    implementation 'com.github.mukeshsolanki:MarkdownView-Android:1.0.8'
     testImplementation 'junit:junit:4.12'
     implementation 'org.jetbrains:annotations-java5:15.0'
 
