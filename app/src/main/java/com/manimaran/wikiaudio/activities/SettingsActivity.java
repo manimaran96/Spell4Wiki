@@ -34,6 +34,7 @@ public class SettingsActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
+        TextView txtTitleLicense = findViewById(R.id.txtTitleLicense);
         TextView txtSpell4WikiLang = findViewById(R.id.txtSpell4WikiLang);
         TextView txtSpell4WordListLang = findViewById(R.id.txtSpell4WordListLang);
         TextView txtSpell4WordLang = findViewById(R.id.txtSpell4WordLang);
@@ -48,8 +49,14 @@ public class SettingsActivity extends AppCompatActivity {
         View layoutWiktionaryLang = findViewById(R.id.layoutWiktionaryLang);
         View layoutLicenseOfUploadAudio = findViewById(R.id.layoutLicenseOfUploadAudio);
 
-
         pref = new PrefManager(getApplicationContext());
+        if(pref.getIsAnonymous()){
+            txtTitleLicense.setVisibility(View.GONE);
+            layoutSpell4WikiLang.setVisibility(View.GONE);
+            layoutSpell4WordListLang.setVisibility(View.GONE);
+            layoutSpell4WordLang.setVisibility(View.GONE);
+            layoutLicenseOfUploadAudio.setVisibility(View.GONE);
+        }
         txtSpell4WikiLang.setText(pref.getLanguageCodeSpell4Wiki());
         txtSpell4WordListLang.setText(pref.getLanguageCodeSpell4WordList());
         txtSpell4WordLang.setText(pref.getLanguageCodeSpell4Word());

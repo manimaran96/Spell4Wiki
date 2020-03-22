@@ -6,14 +6,14 @@
     android:background="@color/white"
     tools:context="com.manimaran.wikiaudio.activities.AboutActivity">
 
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:padding="16dp">
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/txtTitleLanguage"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
@@ -30,7 +30,7 @@
             android:padding="8dp"
             android:orientation="vertical">
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
@@ -38,7 +38,7 @@
                 android:text="@string/spell4wiktionary"
                 android:textSize="@dimen/text_normal" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/txtSpell4WikiLang"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -49,13 +49,6 @@
                 android:text="@string/language"
                 android:textSize="@dimen/text_semi_normal" />
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:layout_marginTop="10dp"
-                android:visibility="invisible"
-                android:background="@color/gray" />
-
         </LinearLayout>
 
         <LinearLayout
@@ -65,7 +58,7 @@
             android:padding="8dp"
             android:orientation="vertical">
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
@@ -73,7 +66,7 @@
                 android:text="@string/spell4wordlist"
                 android:textSize="@dimen/text_normal" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/txtSpell4WordListLang"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -84,12 +77,6 @@
                 android:text="@string/language"
                 android:textSize="@dimen/text_semi_normal" />
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:layout_marginTop="10dp"
-                android:visibility="invisible"
-                android:background="@color/gray" />
 
         </LinearLayout>
 
@@ -100,7 +87,7 @@
             android:padding="8dp"
             android:orientation="vertical">
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
@@ -108,7 +95,7 @@
                 android:text="@string/spell4word"
                 android:textSize="@dimen/text_normal" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/txtSpell4WordLang"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -119,13 +106,6 @@
                 android:text="@string/language"
                 android:textSize="@dimen/text_semi_normal" />
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:layout_marginTop="10dp"
-                android:visibility="invisible"
-                android:background="@color/gray" />
-
         </LinearLayout>
 
         <LinearLayout
@@ -135,7 +115,7 @@
             android:padding="8dp"
             android:orientation="vertical">
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
@@ -143,7 +123,7 @@
                 android:text="@string/wiktionary"
                 android:textSize="@dimen/text_normal" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/txtWiktionaryLang"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -154,23 +134,10 @@
                 android:text="@string/language"
                 android:textSize="@dimen/text_semi_normal" />
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:layout_marginTop="10dp"
-                android:visibility="invisible"
-                android:background="@color/gray" />
-
         </LinearLayout>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:layout_marginTop="10dp"
-            android:visibility="invisible"
-            android:background="@color/gray" />
-
         <TextView
+            android:id="@+id/txtTitleLicense"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
@@ -188,7 +155,7 @@
             android:padding="8dp"
             android:orientation="vertical">
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
@@ -201,7 +168,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/txtLicenseOfUploadAudio"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -213,7 +180,7 @@
                     android:text="@string/language"
                     android:textSize="@dimen/text_semi_normal" />
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/txtLicenseOfUploadAudioLegalCode"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -228,13 +195,6 @@
 
 
         </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:layout_marginTop="10dp"
-            android:visibility="invisible"
-            android:background="@color/gray" />
 
     </LinearLayout>
 
