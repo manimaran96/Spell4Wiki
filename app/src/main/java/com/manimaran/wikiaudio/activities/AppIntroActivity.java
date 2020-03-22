@@ -85,7 +85,7 @@ public class AppIntroActivity extends AppIntro {
         //setSeparatorColor(Color.parseColor("#2196F3"));
         showSeparator(false);
 
-        showStatusBar(false);
+        showStatusBar(true);
         showPagerIndicator(true);
         showSkipButton(false);
         setDepthAnimation();
