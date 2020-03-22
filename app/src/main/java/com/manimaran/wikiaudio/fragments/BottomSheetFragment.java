@@ -25,6 +25,7 @@ import com.manimaran.wikiaudio.utils.PrefManager;
 import com.manimaran.wikiaudio.apis.ApiInterface;
 import com.manimaran.wikiaudio.apis.ApiClient;
 
+import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -207,7 +208,7 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
     }
 
     @Override
-    public void onCancel(DialogInterface dialog) {
+    public void onCancel(@NotNull DialogInterface dialog) {
         super.onCancel(dialog);
 
     }

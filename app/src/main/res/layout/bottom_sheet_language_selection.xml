@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/layout_bottom_sheet"
     android:layout_width="match_parent"
@@ -11,51 +11,51 @@
     <RelativeLayout
         android:id="@+id/layout_title"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="5dp">
+        android:layout_height="56dp"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp">
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/text_select_lang"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
             android:layout_marginTop="5dp"
             android:layout_marginBottom="5dp"
+            android:layout_toStartOf="@+id/btn_close"
             android:text="@string/select_language"
             android:textColor="@color/black"
-            android:textSize="@dimen/text_heading"
-            android:textStyle="bold" />
+            android:textSize="@dimen/text_heading" />
 
-        <ImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/btn_close"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
+            android:contentDescription="@string/cancel"
             android:tint="@color/black"
-            app:srcCompat="@drawable/ic_cancel" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_below="@+id/text_select_lang"
-            android:layout_marginTop="10dp"
-            android:background="@android:color/background_dark" />
+            app:srcCompat="@drawable/ic_close" />
 
     </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/gray_border" />
 
     <androidx.appcompat.widget.SearchView
         android:id="@+id/search_view"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/layout_title"
+        android:layout_height="@dimen/search_view_height"
+        android:layout_margin="10dp"
+        android:background="@drawable/bg_line_border"
+        android:queryHint="@string/hint_search"
         app:iconifiedByDefault="false" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/search_view"
         android:descendantFocusability="blocksDescendants"
         android:orientation="vertical">
 
@@ -71,7 +71,9 @@
         <ListView
             android:id="@+id/list_view_lang"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:divider="@null"
+            android:dividerHeight="0dp" />
 
         <View
             android:layout_width="match_parent"
@@ -80,4 +82,4 @@
     </LinearLayout>
 
 
-</RelativeLayout>
+</LinearLayout>
