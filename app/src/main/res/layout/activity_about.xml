@@ -348,7 +348,7 @@
                 android:textSize="@dimen/text_semi_normal" />
 
             <TextView
-                android:id="@+id/txt_contact_us"
+                android:id="@+id/txtFeedback"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
@@ -357,8 +357,36 @@
                 android:drawablePadding="30dp"
                 android:gravity="center_vertical"
                 android:maxLines="1"
-                android:text="@string/contact_us"
+                android:text="@string/feedback"
                 android:drawableStart="@drawable/ic_contact_us"
+                android:textSize="@dimen/text_semi_normal" />
+
+            <TextView
+                android:id="@+id/txtPrivacyPolicy"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:paddingStart="20dp"
+                android:paddingEnd="10dp"
+                android:drawablePadding="30dp"
+                android:gravity="center_vertical"
+                android:maxLines="1"
+                android:text="@string/privacy_policy"
+                android:drawableStart="@drawable/ic_privacy_policy"
+                android:textSize="@dimen/text_semi_normal" />
+
+            <TextView
+                android:id="@+id/txtTermsOfUse"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:paddingStart="20dp"
+                android:paddingEnd="10dp"
+                android:drawablePadding="30dp"
+                android:gravity="center_vertical"
+                android:maxLines="1"
+                android:text="@string/terms_of_use"
+                android:drawableStart="@drawable/ic_terms_of_use"
                 android:textSize="@dimen/text_semi_normal" />
 
 

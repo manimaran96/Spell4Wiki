@@ -13,6 +13,8 @@
     <string name="url_forgot_password"  translatable="false">https://en.m.wikipedia.org/wiki/Special%3APasswordReset</string>
 
     <string name="url_license_gpl_v3" translatable="false">https://www.gnu.org/licenses/gpl-3.0.txt</string>
+    <string name="url_privacy_policy" translatable="false">https://foundation.m.wikimedia.org/wiki/Privacy_policy</string>
+    <string name="url_terms_of_use" translatable="false">https://foundation.m.wikimedia.org/wiki/Terms_of_Use</string>
 
     <string name="login">Login</string>
     <string name="search_here">Search</string>
@@ -99,7 +101,7 @@
     <string name="link_contributors">https://github.com/manimaran96/Spell4Wiki/graphs/contributors</string>
     <string name="visit_web_page">Visit web page</string>
     <string name="go_to_license_url">Go to License URL</string>
-    <string name="view_my_contribution">View My Contributions</string>
+    <string name="view_my_contribution">My Contributions</string>
     <string name="link_view_my_contribution">https://commons.wikimedia.org/wiki/Special:ListFiles/%s</string>
     <string name="hint_loading">Loading…</string>
     <string name="error_wepage_load">Something went wrong</string>
@@ -136,5 +138,8 @@
     <string name="license_name_cc_zero" translatable="false">CC0(release all rights)</string>
     <string name="hint_license_choose_alert">Choose the CC License</string>
     <string name="cancel">Cancel</string>
+    <string name="feedback">Feedback</string>
+    <string name="privacy_policy">Privacy Policy</string>
+    <string name="terms_of_use">Terms Of Use</string>
 
 </resources>
