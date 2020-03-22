@@ -4,8 +4,6 @@ import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import androidx.core.content.ContextCompat;
-import androidx.appcompat.app.AppCompatActivity;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.view.MenuItem;
@@ -13,10 +11,14 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+
 import com.manimaran.wikiaudio.BuildConfig;
 import com.manimaran.wikiaudio.R;
 import com.manimaran.wikiaudio.constants.Constants;
 import com.manimaran.wikiaudio.constants.UrlType;
+import com.manimaran.wikiaudio.utils.DeviceInfoUtil;
 import com.manimaran.wikiaudio.utils.GeneralUtils;
 import com.manimaran.wikiaudio.utils.PrefManager;
 
@@ -41,7 +43,9 @@ public class AboutActivity extends AppCompatActivity implements View.OnClickList
         TextView txtThirdPartyLib = findViewById(R.id.txt_third_party_lib);
         TextView txtCredits = findViewById(R.id.txt_credits);
         TextView txtHelpDevelopment = findViewById(R.id.txt_help_development);
-        TextView txtContactUs = findViewById(R.id.txt_contact_us);
+        TextView txtFeedback = findViewById(R.id.txtFeedback);
+        TextView txtPrivacyPolicy = findViewById(R.id.txtPrivacyPolicy);
+        TextView txtTermsOfUse = findViewById(R.id.txtTermsOfUse);
 
 
         LinearLayout layoutKaniyam = findViewById(R.id.layout_kaniyam);
@@ -57,7 +61,9 @@ public class AboutActivity extends AppCompatActivity implements View.OnClickList
         txtThirdPartyLib.setOnClickListener(this);
         txtCredits.setOnClickListener(this);
         txtHelpDevelopment.setOnClickListener(this);
-        txtContactUs.setOnClickListener(this);
+        txtFeedback.setOnClickListener(this);
+        txtPrivacyPolicy.setOnClickListener(this);
+        txtTermsOfUse.setOnClickListener(this);
         layoutKaniyam.setOnClickListener(this);
         layoutVGLUG.setOnClickListener(this);
 
@@ -108,8 +114,14 @@ public class AboutActivity extends AppCompatActivity implements View.OnClickList
             case R.id.txt_help_development:
                 GeneralUtils.openUrl(this, getString(R.string.link_how_to_contribute), UrlType.INTERNAL, getString(R.string.help_development));
                 break;
-            case R.id.txt_contact_us:
-                contactUs();
+            case R.id.txtFeedback:
+                feedback();
+                break;
+            case R.id.txtPrivacyPolicy:
+                GeneralUtils.openUrl(this, getString(R.string.url_privacy_policy), UrlType.EXTERNAL, getString(R.string.privacy_policy));
+                break;
+            case R.id.txtTermsOfUse:
+                GeneralUtils.openUrl(this, getString(R.string.url_terms_of_use), UrlType.EXTERNAL, getString(R.string.terms_of_use));
                 break;
             case R.id.layout_kaniyam:
                 GeneralUtils.openUrl(this, getString(R.string.link_kaniyam), UrlType.EXTERNAL, getString(R.string.kaniyam));
@@ -131,17 +143,65 @@ public class AboutActivity extends AppCompatActivity implements View.OnClickList
         startActivity(Intent.createChooser(intent, getString(R.string.app_share_title)));
     }
 
-    private void contactUs() {
+    private void feedback() {
 
-        Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.parse("mailto:" + "manimarnkumar96@gmail.com"));
-        emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Spell4Wiki App");
-        PrefManager pref =new PrefManager(getApplicationContext());
-        emailIntent.putExtra(Intent.EXTRA_TEXT,  "Wiki User : "  + (pref.getIsAnonymous() ? "Anonymous" : pref.getName()));
+        Intent emailIntent = new Intent(Intent.ACTION_SENDTO);
+        emailIntent.setType("message/rfc822");
+        emailIntent.setData(Uri.parse("mailto:"));
+        //emailIntent.setDataAndType(Uri.parse("mailto:"), "message/rfc822");
+        emailIntent.putExtra(Intent.EXTRA_EMAIL, new String[]{"manimarankumar96@gmail.com"});
+        emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Spell4Wiki App - Feedback");
+        emailIntent.putExtra(Intent.EXTRA_TEXT, String.format(
+                "\n\n%s\n%s", "-- Basic Information --", getExtraInfo()));
+
         try {
-            startActivity(Intent.createChooser(emailIntent, getString(R.string.contact_via_mail)));
+            startActivity(emailIntent);
         } catch (ActivityNotFoundException ex) {
-            GeneralUtils.showSnack(findViewById(R.id.txt_contact_us), getString(R.string.no_email_client));
+            GeneralUtils.showSnack(findViewById(R.id.txtFeedback), getString(R.string.no_email_client));
         }
+    }
+
+    public String getExtraInfo() {
+        StringBuilder builder = new StringBuilder();
+
+        // Getting API Level
+        builder.append("API level: ")
+                .append(DeviceInfoUtil.getAPILevel())
+                .append("\n");
+
+        // Getting Android Version
+        builder.append("Android version: ")
+                .append(DeviceInfoUtil.getAndroidVersion())
+                .append("\n");
+
+        // Getting Device Manufacturer
+        builder.append("Device manufacturer: ")
+                .append(DeviceInfoUtil.getDeviceManufacturer())
+                .append("\n");
+
+        // Getting Device Model
+        builder.append("Device model: ")
+                .append(DeviceInfoUtil.getDeviceModel())
+                .append("\n");
+
+        // Getting Device Name
+        builder.append("Device: ")
+                .append(DeviceInfoUtil.getDevice())
+                .append("\n");
+
+        // Getting App Version
+        builder.append("App version name: ")
+                .append(BuildConfig.VERSION_NAME)
+                .append("\n");
+
+        PrefManager prefManager = new PrefManager(getApplicationContext());
+        // Getting Username
+        builder.append("User name: ")
+                .append(prefManager.getIsAnonymous() ? "Anonymous User" : prefManager.getName())
+                .append("\n");
+
+
+        return builder.toString();
     }
 
 }
