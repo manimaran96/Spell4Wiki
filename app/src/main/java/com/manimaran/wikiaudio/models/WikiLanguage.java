@@ -1,20 +1,28 @@
 package com.manimaran.wikiaudio.models;
 
-import org.jetbrains.annotations.NotNull;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
 public class WikiLanguage {
-    private String code, name, local, titleWordsNoAudio;
-    private Boolean isLeftDirection;
 
-    public WikiLanguage() {
-    }
+    @SerializedName("code")
+    @Expose
+    private String code;
 
-    public WikiLanguage(String code, String name, String local, Boolean isLeftDirection) {
-        this.code = code;
-        this.name = name;
-        this.local = local;
-        this.isLeftDirection = isLeftDirection;
-    }
+    @SerializedName("lang")
+    @Expose
+    private String name;
+
+    @SerializedName("dir")
+    @Expose
+    private String direction;
+    @SerializedName("local_lang")
+    @Expose
+    private String localName;
+
+    @SerializedName("title_words_without_audio")
+    @Expose
+    private String titleOfWordsWithoutAudio;
 
     public String getCode() {
         return code;
@@ -32,38 +40,27 @@ public class WikiLanguage {
         this.name = name;
     }
 
-    public String getLocal() {
-        return local;
+    public String getDirection() {
+        return direction;
     }
 
-    public void setLocal(String local) {
-        this.local = local;
+    public void setDirection(String direction) {
+        this.direction = direction;
     }
 
-    public Boolean getIsLeftDirection() {
-        return isLeftDirection;
+    public String getLocalName() {
+        return localName;
     }
 
-    public void setIsLeftDirection(Boolean leftDirection) {
-        isLeftDirection = leftDirection;
+    public void setLocalName(String localName) {
+        this.localName = localName;
     }
 
-    public String getTitleWordsNoAudio() {
-        return titleWordsNoAudio;
+    public String getTitleOfWordsWithoutAudio() {
+        return titleOfWordsWithoutAudio;
     }
 
-    public void setTitleWordsNoAudio(String titleWordsNoAudio) {
-        this.titleWordsNoAudio = titleWordsNoAudio;
-    }
-
-    @NotNull
-    @Override
-    public String toString() {
-        return "WikiLanguage{" +
-                "code='" + code + '\'' +
-                ", name='" + name + '\'' +
-                ", local='" + local + '\'' +
-                ", isLeftDirection=" + isLeftDirection +
-                '}';
+    public void setTitleOfWordsWithoutAudio(String titleOfWordsWithoutAudio) {
+        this.titleOfWordsWithoutAudio = titleOfWordsWithoutAudio;
     }
 }

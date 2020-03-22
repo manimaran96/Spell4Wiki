@@ -2,6 +2,7 @@ package com.manimaran.wikiaudio.apis;
 
 
 import com.manimaran.wikiaudio.models.Contributors;
+import com.manimaran.wikiaudio.models.WikiLanguage;
 
 import java.util.List;
 
@@ -72,7 +73,12 @@ public interface ApiInterface {
 
     // Get Wikipedia language list JSON
     @GET("https://raw.githubusercontent.com/manimaran96/Spell4Wiki/master/files/lang-json/language.json")
-    Call<ResponseBody> fetchWikiLangList();
+    Call<ResponseBody> fetchWikiLangListEx();
+
+    @GET("https://raw.githubusercontent.com/manimaran96/Spell4Wiki/master/files/lang-json/language.json")
+    Call<List<WikiLanguage>> fetchWikiLanguageList();
+
+
 
     @GET("https://api.github.com/repos/manimaran96/Spell4Wiki/contributors")
     Call<List<Contributors>> fetchContributorsList();

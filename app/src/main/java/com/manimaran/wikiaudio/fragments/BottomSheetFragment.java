@@ -19,7 +19,7 @@ import com.manimaran.wikiaudio.R;
 import com.manimaran.wikiaudio.adapters.LangAdapter;
 import com.manimaran.wikiaudio.listerners.CallBackListener;
 import com.manimaran.wikiaudio.listerners.OnLangSelectListener;
-import com.manimaran.wikiaudio.models.WikiLanguage;
+import com.manimaran.wikiaudio.models.WikiLanguageEx;
 import com.manimaran.wikiaudio.utils.GeneralUtils;
 import com.manimaran.wikiaudio.utils.PrefManager;
 import com.manimaran.wikiaudio.apis.ApiInterface;
@@ -42,7 +42,7 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
 
     private PrefManager pref;
     private CallBackListener callback;
-    private List<WikiLanguage> wikiLanguageList = new ArrayList<>();
+    private List<WikiLanguageEx> wikiLanguageList = new ArrayList<>();
     private LangAdapter adapter;
     private Boolean isWiktionaryMode = false, isTempMode = false;
 
@@ -78,21 +78,21 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
                 listView.setVisibility(View.GONE);
 
             ApiInterface api = ApiClient.getApi().create(ApiInterface.class);
-            Call<ResponseBody> call = api.fetchWikiLangList();
+            Call<ResponseBody> call = api.fetchWikiLangListEx();
             call.enqueue(new Callback<ResponseBody>() {
                 @Override
                 public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
                     if (response.isSuccessful() && response.body() != null) {
                         try {
                             String responseStr = response.body().string();
-                            List<WikiLanguage> langList = new ArrayList<>();
+                            List<WikiLanguageEx> langList = new ArrayList<>();
                             try {
                                 JSONArray array = new JSONArray(responseStr);
                                 int len = array.length();
                                 int i;
                                 for (i = 0; i < len; i++) {
                                     JSONObject obj = array.getJSONObject(i);
-                                    WikiLanguage lang = new WikiLanguage();
+                                    WikiLanguageEx lang = new WikiLanguageEx();
                                     lang.setCode(obj.getString("code"));
                                     lang.setName(obj.getString("lang"));
                                     lang.setIsLeftDirection(obj.getString("dir").equals("ltr"));

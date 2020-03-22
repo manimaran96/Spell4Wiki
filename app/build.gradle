@@ -62,6 +62,10 @@ dependencies {
 
     // App Intro
     implementation 'com.github.AppIntro:AppIntro:4.2.3'
+
+    // Room components
+    implementation 'android.arch.persistence.room:runtime:1.1.1'
+    annotationProcessor 'android.arch.persistence.room:compiler:1.1.1'
     
     testImplementation 'junit:junit:4.12'
     implementation 'org.jetbrains:annotations-java5:15.0'

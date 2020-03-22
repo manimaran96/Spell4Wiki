@@ -10,6 +10,7 @@ import android.widget.ImageView;
 
 import com.manimaran.wikiaudio.R;
 import com.manimaran.wikiaudio.utils.PrefManager;
+import com.manimaran.wikiaudio.utils.SyncHelper;
 
 /**
  * Splash screen activity
@@ -43,6 +44,12 @@ public class SplashActivity extends Activity {
                 finish();
             }
         }, SPLASH_DISPLAY_LENGTH);
+
+        // Sync Wiki Languages
+        new SyncHelper(this).syncWikiLanguages();
+
     }
+
+
 }
 
