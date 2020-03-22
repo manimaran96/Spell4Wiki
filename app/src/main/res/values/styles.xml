@@ -15,7 +15,8 @@
         <!-- Custom Button text style for all Button view-->
         <item name="buttonStyle">@style/CustomButtonStyle</item>
         <!-- Action bar style -->
-        <item name="android:actionBarStyle">@style/ActionBarStyle</item>-->
+        <item name="android:actionBarStyle">@style/ActionBarStyle</item>
+        <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>
     </style>
 
     <!--No action bar Theme-->

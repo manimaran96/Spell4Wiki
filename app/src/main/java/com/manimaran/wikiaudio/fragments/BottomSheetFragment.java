@@ -61,7 +61,7 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
             pref = new PrefManager(getContext());
 
 
-            final BottomSheetDialog dialog = new BottomSheetDialog(getActivity());
+            final BottomSheetDialog dialog = new BottomSheetDialog(getActivity(), R.style.AppTheme);
 
             dialog.setContentView(R.layout.bottom_sheet_language_selection);
 
