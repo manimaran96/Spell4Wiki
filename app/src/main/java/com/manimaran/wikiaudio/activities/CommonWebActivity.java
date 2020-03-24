@@ -1,11 +1,6 @@
 package com.manimaran.wikiaudio.activities;
 
 import android.os.Bundle;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.core.content.ContextCompat;
-import androidx.appcompat.app.AppCompatActivity;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
 import android.view.Menu;
@@ -13,16 +8,23 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+
 import com.manimaran.wikiaudio.R;
 import com.manimaran.wikiaudio.constants.Constants;
-import com.manimaran.wikiaudio.fragments.BottomSheetFragment;
+import com.manimaran.wikiaudio.constants.EnumTypeDef.LanguageSelectionMode;
+import com.manimaran.wikiaudio.fragments.LanguageSelectionFragment;
 import com.manimaran.wikiaudio.fragments.WebViewFragment;
-import com.manimaran.wikiaudio.listerners.CallBackListener;
+import com.manimaran.wikiaudio.listerners.OnLanguageSelectionListener;
 import com.manimaran.wikiaudio.utils.PrefManager;
 
 public class CommonWebActivity extends AppCompatActivity {
 
-    private boolean isWitionaryWord = false;
+    private boolean isWiktionaryWord = false;
     private WebViewFragment fragment = new WebViewFragment();
     private String languageCode = "";
 
@@ -37,7 +39,7 @@ public class CommonWebActivity extends AppCompatActivity {
 
 
         PrefManager pref = new PrefManager(getApplicationContext());
-        languageCode = pref.getWiktionaryLangCode();
+        languageCode = pref.getLanguageCodeWiktionary();
 
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
@@ -49,7 +51,7 @@ public class CommonWebActivity extends AppCompatActivity {
             }
 
             if (bundle.containsKey(Constants.IS_WIKTIONARY_WORD))
-                isWitionaryWord = bundle.getBoolean(Constants.IS_WIKTIONARY_WORD);
+                isWiktionaryWord = bundle.getBoolean(Constants.IS_WIKTIONARY_WORD);
 
             loadFragment(fragment);
         }
@@ -102,8 +104,8 @@ public class CommonWebActivity extends AppCompatActivity {
     }
 
     private void setupLanguageSelectorMenuItem(Menu menu) {
-        menu.findItem(R.id.menu_lang_selector).setVisible(isWitionaryWord);
-        if(isWitionaryWord) {
+        menu.findItem(R.id.menu_lang_selector).setVisible(isWiktionaryWord);
+        if (isWiktionaryWord) {
             MenuItem item = menu.findItem(R.id.menu_lang_selector);
             View rootView = item.getActionView();
             TextView selectedLang = rootView.findViewById(R.id.txtSelectedLanguage);
@@ -115,18 +117,16 @@ public class CommonWebActivity extends AppCompatActivity {
     }
 
     private void loadLanguages() {
-        if(isWitionaryWord) {
-            BottomSheetFragment bottomSheetFragment = new BottomSheetFragment();
-            CallBackListener callback = langCode -> {
+        if (isWiktionaryWord) {
+            OnLanguageSelectionListener callback = langCode -> {
                 this.languageCode = langCode;
                 invalidateOptionsMenu();
-                if(fragment !=null)
+                if (fragment != null)
                     fragment.loadWordWithOtherLang(langCode);
             };
-            bottomSheetFragment.setCalBack(callback);
-            bottomSheetFragment.setIsTempMode(true);
-            bottomSheetFragment.show(getSupportFragmentManager(), bottomSheetFragment.getTag());
-            bottomSheetFragment.setCancelable(false);
+            LanguageSelectionFragment languageSelectionFragment = new LanguageSelectionFragment();
+            languageSelectionFragment.init(callback, LanguageSelectionMode.TEMP, languageCode);
+            languageSelectionFragment.show(getSupportFragmentManager(), languageSelectionFragment.getTag());
         }
     }
 

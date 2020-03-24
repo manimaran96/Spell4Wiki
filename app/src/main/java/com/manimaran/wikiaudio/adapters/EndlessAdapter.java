@@ -20,7 +20,7 @@ import androidx.annotation.RequiresApi;
 import com.manimaran.wikiaudio.R;
 import com.manimaran.wikiaudio.activities.CommonWebActivity;
 import com.manimaran.wikiaudio.constants.Constants;
-import com.manimaran.wikiaudio.listerners.CallBackListener;
+import com.manimaran.wikiaudio.listerners.OnLanguageSelectionListener;
 import com.manimaran.wikiaudio.utils.GeneralUtils;
 import com.manimaran.wikiaudio.utils.PrefManager;
 
@@ -39,7 +39,7 @@ public class EndlessAdapter extends ArrayAdapter<String> {
 
     private PrefManager pref;
 
-    private CallBackListener listener;
+    private OnLanguageSelectionListener listener;
 
     public EndlessAdapter(Context ctx, List<String> itemList, int layoutId, Boolean isContributionMode) {
         super(ctx, layoutId, itemList);
@@ -60,7 +60,7 @@ public class EndlessAdapter extends ArrayAdapter<String> {
         return type;
     }
 
-    public void setCallbackListener(CallBackListener listener) {
+    public void setCallbackListener(OnLanguageSelectionListener listener) {
         this.listener = listener;
     }
 

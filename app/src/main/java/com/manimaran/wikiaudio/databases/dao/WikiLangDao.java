@@ -18,16 +18,19 @@ public interface WikiLangDao {
     void insert(WikiLang... wikiLangs);
 
     @Update
-    public void update(WikiLang... wikiLangs);
+    void update(WikiLang... wikiLangs);
 
     @Delete
-    public void delete(WikiLang wikiLang);
+    void delete(WikiLang wikiLang);
 
 
     @Query("SELECT * FROM wiki_language")
-    public List<WikiLang> getWikiLanguageList();
+    List<WikiLang> getWikiLanguageList();
+
+    @Query("SELECT * FROM wiki_language WHERE title_of_words_without_audio NOTNULL")
+    List<WikiLang> getWikiLanguageListForWordsWithoutAudio();
 
     @Query("SELECT * FROM wiki_language WHERE code = :code")
-    public WikiLang getWikiLanguageWithCode(String code);
+    WikiLang getWikiLanguageWithCode(String code);
 
 }

@@ -24,7 +24,7 @@
     <string name="check_internet">Please check your internet connection!</string>
     <string name="invalid_credential">Provide Valid Username &amp; Password</string>
     <string name="select_language">Select Language</string>
-    <string name="select_language_response_msg">Now Your Language is %s</string>
+    <string name="select_language_response_msg">%s - Language Selected.</string>
     <string name="welcome_user">Welcome, %s</string>
     <string name="wiktionary">Wiktionary</string>
     <string name="settings">Settings</string>

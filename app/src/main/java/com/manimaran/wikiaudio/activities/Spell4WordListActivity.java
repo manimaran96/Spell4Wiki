@@ -20,8 +20,8 @@ import android.widget.TextView;
 
 import com.manimaran.wikiaudio.R;
 import com.manimaran.wikiaudio.adapters.EndlessAdapter;
-import com.manimaran.wikiaudio.fragments.BottomSheetFragment;
-import com.manimaran.wikiaudio.listerners.CallBackListener;
+import com.manimaran.wikiaudio.fragments.LanguageSelectionFragment;
+import com.manimaran.wikiaudio.listerners.OnLanguageSelectionListener;
 import com.manimaran.wikiaudio.utils.GeneralUtils;
 import com.manimaran.wikiaudio.utils.PrefManager;
 import com.manimaran.wikiaudio.utils.RealPathUtil;
@@ -33,6 +33,8 @@ import java.io.FileInputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.manimaran.wikiaudio.constants.EnumTypeDef.LanguageSelectionMode.SPELL_4_WORD_LIST;
 
 
 public class Spell4WordListActivity extends AppCompatActivity {
@@ -307,15 +309,13 @@ public class Spell4WordListActivity extends AppCompatActivity {
     }
 
     private void loadLanguages() {
-        BottomSheetFragment bottomSheetFragment = new BottomSheetFragment();
-        CallBackListener callback = langCode -> {
+        OnLanguageSelectionListener callback = langCode -> {
             languageCode = langCode;
             invalidateOptionsMenu();
         };
-        bottomSheetFragment.setCalBack(callback);
-        bottomSheetFragment.setIsTempMode(true);
-        bottomSheetFragment.show(getSupportFragmentManager(), bottomSheetFragment.getTag());
-        bottomSheetFragment.setCancelable(false);
+        LanguageSelectionFragment languageSelectionFragment = new LanguageSelectionFragment();
+        languageSelectionFragment.init(callback, SPELL_4_WORD_LIST);
+        languageSelectionFragment.show(getSupportFragmentManager(), languageSelectionFragment.getTag());
     }
 
     private void setupLanguageSelectorMenuItem(Menu menu) {

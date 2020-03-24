@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="56dp"
         android:paddingStart="16dp"
-        android:paddingEnd="16dp">
+        android:paddingEnd="12dp">
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/text_select_lang"
@@ -57,16 +57,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:descendantFocusability="blocksDescendants"
+        android:layout_marginEnd="4dp"
+        android:layout_marginStart="4dp"
         android:orientation="vertical">
-
-        <ProgressBar
-            android:id="@+id/pb"
-            style="?android:attr/progressBarStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_margin="10dp"
-            android:visibility="gone" />
 
         <ListView
             android:id="@+id/list_view_lang"

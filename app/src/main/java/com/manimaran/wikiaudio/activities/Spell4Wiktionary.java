@@ -14,8 +14,9 @@ import android.widget.Toast;
 
 import com.manimaran.wikiaudio.R;
 import com.manimaran.wikiaudio.adapters.EndlessAdapter;
-import com.manimaran.wikiaudio.fragments.BottomSheetFragment;
-import com.manimaran.wikiaudio.listerners.CallBackListener;
+import com.manimaran.wikiaudio.constants.EnumTypeDef.LanguageSelectionMode;
+import com.manimaran.wikiaudio.fragments.LanguageSelectionFragment;
+import com.manimaran.wikiaudio.listerners.OnLanguageSelectionListener;
 import com.manimaran.wikiaudio.utils.GeneralUtils;
 import com.manimaran.wikiaudio.utils.PrefManager;
 import com.manimaran.wikiaudio.views.EndlessListView;
@@ -56,7 +57,7 @@ public class Spell4Wiktionary extends AppCompatActivity implements EndlessListVi
         init();
 
         adapter = new EndlessAdapter(this, new ArrayList<>(), R.layout.search_result_row, true);
-        CallBackListener listener = langCode -> { };
+        OnLanguageSelectionListener listener = langCode -> { };
         adapter.setCallbackListener(listener);
         resultListView.setAdapter(adapter);
         resultListView.setListener(this);
@@ -168,27 +169,21 @@ public class Spell4Wiktionary extends AppCompatActivity implements EndlessListVi
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                finish();
-                break;
-            default:
-                break;
+        if (item.getItemId() == android.R.id.home) {
+            finish();
         }
-
         return (super.onOptionsItemSelected(item));
     }
 
     private void loadLanguages() {
-        BottomSheetFragment bottomSheetFragment = new BottomSheetFragment();
-        CallBackListener callback = langCode -> {
+        OnLanguageSelectionListener callback = langCode -> {
             languageCode = langCode;
             invalidateOptionsMenu();
             loadDataFromServer();
         };
-        bottomSheetFragment.setCalBack(callback);
-        bottomSheetFragment.show(getSupportFragmentManager(), bottomSheetFragment.getTag());
-        bottomSheetFragment.setCancelable(false);
+        LanguageSelectionFragment languageSelectionFragment = new LanguageSelectionFragment();
+        languageSelectionFragment.init(callback, LanguageSelectionMode.SPELL_4_WIKI);
+        languageSelectionFragment.show(getSupportFragmentManager(), languageSelectionFragment.getTag());
     }
 
     private void setupLanguageSelectorMenuItem(Menu menu) {

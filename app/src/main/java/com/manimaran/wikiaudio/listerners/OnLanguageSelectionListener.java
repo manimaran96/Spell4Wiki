@@ -1,5 +1,5 @@
 package com.manimaran.wikiaudio.listerners;
 
-public interface CallBackListener {
+public interface OnLanguageSelectionListener {
     void OnCallBackListener(String langCode);
 }

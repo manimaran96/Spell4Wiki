@@ -28,7 +28,6 @@ import android.widget.Toast;
 import com.arthenica.mobileffmpeg.FFmpeg;
 import com.manimaran.wikiaudio.R;
 import com.manimaran.wikiaudio.constants.Constants;
-import com.manimaran.wikiaudio.listerners.CallBackListener;
 import com.manimaran.wikiaudio.record.wav.WAVPlayer;
 import com.manimaran.wikiaudio.record.wav.WAVRecorder;
 import com.manimaran.wikiaudio.utils.GeneralUtils;
@@ -83,7 +82,6 @@ public class RecordAudioDialogFragment extends DialogFragment {
 
     private String word = "";
     private String uploadName = null;
-    private CallBackListener listener;
 
     private String TAG = RecordAudioDialogFragment.class.getSimpleName();
 

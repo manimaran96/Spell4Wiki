@@ -13,8 +13,9 @@ import android.widget.Toast;
 
 import com.manimaran.wikiaudio.R;
 import com.manimaran.wikiaudio.adapters.EndlessAdapter;
-import com.manimaran.wikiaudio.fragments.BottomSheetFragment;
-import com.manimaran.wikiaudio.listerners.CallBackListener;
+import com.manimaran.wikiaudio.constants.EnumTypeDef.LanguageSelectionMode;
+import com.manimaran.wikiaudio.fragments.LanguageSelectionFragment;
+import com.manimaran.wikiaudio.listerners.OnLanguageSelectionListener;
 import com.manimaran.wikiaudio.utils.PrefManager;
 import com.manimaran.wikiaudio.views.EndlessListView;
 import com.manimaran.wikiaudio.apis.ApiClient;
@@ -51,7 +52,7 @@ public class WiktionarySearchActivity extends AppCompatActivity implements Endle
         setContentView(R.layout.activity_wiktionary_search);
 
         pref = new PrefManager(WiktionarySearchActivity.this);
-        languageCode = pref.getContributionLangCode();
+        languageCode = pref.getLanguageCodeWiktionary();
         api = ApiClient.getWiktionaryApi(getApplicationContext(), languageCode).create(ApiInterface.class);
 
         txtNotFound = findViewById(R.id.txtNotFound);
@@ -117,12 +118,10 @@ public class WiktionarySearchActivity extends AppCompatActivity implements Endle
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                finish();
-            default:
-                return super.onOptionsItemSelected(item);
+        if (item.getItemId() == android.R.id.home) {
+            finish();
         }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -132,18 +131,16 @@ public class WiktionarySearchActivity extends AppCompatActivity implements Endle
     }
 
     private void loadLanguages() {
-        BottomSheetFragment bottomSheetFragment = new BottomSheetFragment();
-        CallBackListener callback = langCode -> {
+        OnLanguageSelectionListener callback = langCode -> {
             languageCode = langCode;
             invalidateOptionsMenu();
             api = ApiClient.getWiktionaryApi(getApplicationContext(), languageCode).create(ApiInterface.class);
             if(queryString != null)
                 submitQuery(queryString);
         };
-        bottomSheetFragment.setCalBack(callback);
-        bottomSheetFragment.show(getSupportFragmentManager(), bottomSheetFragment.getTag());
-        bottomSheetFragment.setCancelable(false);
-        bottomSheetFragment.setIsWiktionaryMode(true);
+        LanguageSelectionFragment languageSelectionFragment = new LanguageSelectionFragment();
+        languageSelectionFragment.init(callback, LanguageSelectionMode.WIKTIONARY);
+        languageSelectionFragment.show(getSupportFragmentManager(), languageSelectionFragment.getTag());
     }
 
     private void setupLanguageSelectorMenuItem(Menu menu) {

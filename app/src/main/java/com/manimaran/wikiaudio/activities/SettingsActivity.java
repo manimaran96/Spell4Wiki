@@ -12,12 +12,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
 import com.manimaran.wikiaudio.R;
-import com.manimaran.wikiaudio.fragments.BottomSheetFragment;
-import com.manimaran.wikiaudio.listerners.CallBackListener;
+import com.manimaran.wikiaudio.constants.EnumTypeDef.LanguageSelectionMode;
+import com.manimaran.wikiaudio.fragments.LanguageSelectionFragment;
+import com.manimaran.wikiaudio.listerners.OnLanguageSelectionListener;
 import com.manimaran.wikiaudio.utils.PrefManager;
 import com.manimaran.wikiaudio.utils.WikiLicense;
 
 import java.util.Arrays;
+
 
 
 public class SettingsActivity extends AppCompatActivity {
@@ -63,51 +65,40 @@ public class SettingsActivity extends AppCompatActivity {
         txtWiktionaryLang.setText(pref.getLanguageCodeWiktionary());
 
         layoutSpell4WikiLang.setOnClickListener(v -> {
-            BottomSheetFragment bottomSheetFragment = new BottomSheetFragment();
-            CallBackListener callback = langCode -> {
-                pref.setLanguageCodeSpell4Wiki(langCode);
+            OnLanguageSelectionListener callback = langCode -> {
                 txtSpell4WikiLang.setText(pref.getLanguageCodeSpell4Wiki());
             };
-            bottomSheetFragment.setCalBack(callback);
-            bottomSheetFragment.show(getSupportFragmentManager(), bottomSheetFragment.getTag());
-            bottomSheetFragment.setCancelable(false);
+            LanguageSelectionFragment languageSelectionFragment = new LanguageSelectionFragment();
+            languageSelectionFragment.init(callback, LanguageSelectionMode.SPELL_4_WIKI);
+            languageSelectionFragment.show(getSupportFragmentManager(), languageSelectionFragment.getTag());
         });
 
         layoutSpell4WordListLang.setOnClickListener(v -> {
-            BottomSheetFragment bottomSheetFragment = new BottomSheetFragment();
-            CallBackListener callback = langCode -> {
-                pref.setLanguageCodeSpell4WordList(langCode);
+            OnLanguageSelectionListener callback = langCode -> {
                 txtSpell4WordListLang.setText(pref.getLanguageCodeSpell4WordList());
             };
-            bottomSheetFragment.setCalBack(callback);
-            bottomSheetFragment.show(getSupportFragmentManager(), bottomSheetFragment.getTag());
-            bottomSheetFragment.setCancelable(false);
-            bottomSheetFragment.setIsTempMode(true);
+            LanguageSelectionFragment languageSelectionFragment = new LanguageSelectionFragment();
+            languageSelectionFragment.init(callback, LanguageSelectionMode.SPELL_4_WORD_LIST);
+            languageSelectionFragment.show(getSupportFragmentManager(), languageSelectionFragment.getTag());
         });
 
 
         layoutSpell4WordLang.setOnClickListener(v -> {
-            BottomSheetFragment bottomSheetFragment = new BottomSheetFragment();
-            CallBackListener callback = langCode -> {
-                pref.setLanguageCodeSpell4Word(langCode);
+            OnLanguageSelectionListener callback = langCode -> {
                 txtSpell4WordLang.setText(pref.getLanguageCodeSpell4Word());
             };
-            bottomSheetFragment.setCalBack(callback);
-            bottomSheetFragment.show(getSupportFragmentManager(), bottomSheetFragment.getTag());
-            bottomSheetFragment.setCancelable(false);
-            bottomSheetFragment.setIsTempMode(true);
+            LanguageSelectionFragment languageSelectionFragment = new LanguageSelectionFragment();
+            languageSelectionFragment.init(callback, LanguageSelectionMode.SPELL_4_WORD);
+            languageSelectionFragment.show(getSupportFragmentManager(), languageSelectionFragment.getTag());
         });
 
         layoutWiktionaryLang.setOnClickListener(v -> {
-            BottomSheetFragment bottomSheetFragment = new BottomSheetFragment();
-            CallBackListener callback = langCode -> {
-                pref.setLanguageCodeWiktionary(langCode);
+            OnLanguageSelectionListener callback = langCode -> {
                 txtWiktionaryLang.setText(pref.getLanguageCodeWiktionary());
             };
-            bottomSheetFragment.setCalBack(callback);
-            bottomSheetFragment.show(getSupportFragmentManager(), bottomSheetFragment.getTag());
-            bottomSheetFragment.setCancelable(false);
-            bottomSheetFragment.setIsTempMode(true);
+            LanguageSelectionFragment languageSelectionFragment = new LanguageSelectionFragment();
+            languageSelectionFragment.init(callback, LanguageSelectionMode.WIKTIONARY);
+            languageSelectionFragment.show(getSupportFragmentManager(), languageSelectionFragment.getTag());
         });
 
         updateLicenseView(txtLicenseOfUploadAudio, txtLicenseOfUploadAudioLegalCode);
