@@ -1,5 +1,6 @@
 package com.manimaran.wikiaudio.activities;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,6 +24,7 @@ public class Spell4WordActivity extends AppCompatActivity {
 
     private PrefManager pref;
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,7 +43,7 @@ public class Spell4WordActivity extends AppCompatActivity {
                 if (event.getRawX() >= (editSpell4Word.getRight() - editSpell4Word.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
                     // your action here
                     if (!TextUtils.isEmpty(editSpell4Word.getText()) && editSpell4Word.getText().length() < 30)
-                        openWikitionaryPage(editSpell4Word.getText().toString());
+                        openWiktionaryPage(editSpell4Word.getText().toString());
                     else
                         GeneralUtils.showSnack(editSpell4Word, "Enter valid word");
                     return true;
@@ -59,13 +61,13 @@ public class Spell4WordActivity extends AppCompatActivity {
         });
     }
 
-    private void openWikitionaryPage(String wordInfo) {
+    private void openWiktionaryPage(String wordInfo) {
         Intent intent = new Intent(getApplicationContext(), CommonWebActivity.class);
         String url = String.format(Urls.WIKTIONARY_WEB, pref.getLanguageCodeSpell4Word(), wordInfo);
         intent.putExtra(Constants.TITLE, wordInfo);
         intent.putExtra(Constants.URL, url);
-        intent.putExtra(Constants.IS_CONTRIBUTION_MODE, true);
         intent.putExtra(Constants.IS_WIKTIONARY_WORD, true);
+        intent.putExtra(Constants.LANGUAGE_CODE, pref.getLanguageCodeSpell4Word());
         startActivity(intent);
     }
 

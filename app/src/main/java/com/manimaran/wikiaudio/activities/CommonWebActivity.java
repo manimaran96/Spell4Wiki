@@ -16,7 +16,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.manimaran.wikiaudio.R;
 import com.manimaran.wikiaudio.constants.Constants;
-import com.manimaran.wikiaudio.constants.EnumTypeDef.LanguageSelectionMode;
+import com.manimaran.wikiaudio.constants.EnumTypeDef.ListMode;
 import com.manimaran.wikiaudio.fragments.LanguageSelectionFragment;
 import com.manimaran.wikiaudio.fragments.WebViewFragment;
 import com.manimaran.wikiaudio.listerners.OnLanguageSelectionListener;
@@ -52,6 +52,9 @@ public class CommonWebActivity extends AppCompatActivity {
 
             if (bundle.containsKey(Constants.IS_WIKTIONARY_WORD))
                 isWiktionaryWord = bundle.getBoolean(Constants.IS_WIKTIONARY_WORD);
+
+            if (bundle.containsKey(Constants.LANGUAGE_CODE))
+                languageCode = bundle.getString(Constants.LANGUAGE_CODE);
 
             loadFragment(fragment);
         }
@@ -125,7 +128,7 @@ public class CommonWebActivity extends AppCompatActivity {
                     fragment.loadWordWithOtherLang(langCode);
             };
             LanguageSelectionFragment languageSelectionFragment = new LanguageSelectionFragment();
-            languageSelectionFragment.init(callback, LanguageSelectionMode.TEMP, languageCode);
+            languageSelectionFragment.init(callback, ListMode.TEMP, languageCode);
             languageSelectionFragment.show(getSupportFragmentManager(), languageSelectionFragment.getTag());
         }
     }

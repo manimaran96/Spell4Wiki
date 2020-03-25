@@ -17,7 +17,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.manimaran.wikiaudio.R;
 import com.manimaran.wikiaudio.adapters.LangAdapter;
-import com.manimaran.wikiaudio.constants.EnumTypeDef.LanguageSelectionMode;
+import com.manimaran.wikiaudio.constants.EnumTypeDef.ListMode;
 import com.manimaran.wikiaudio.databases.DBHelper;
 import com.manimaran.wikiaudio.databases.entities.WikiLang;
 import com.manimaran.wikiaudio.listerners.OnLanguageSelectionListener;
@@ -35,20 +35,20 @@ public class LanguageSelectionFragment extends BottomSheetDialogFragment {
     private OnLanguageSelectionListener callback;
     private List<WikiLang> wikiLanguageList = new ArrayList<>();
     private LangAdapter adapter;
-    @LanguageSelectionMode
-    private int languageSelectionMode;
+    @ListMode
+    private int listMode;
     private String preSelectedLanguageCode = null;
 
     public LanguageSelectionFragment() {
     }
 
-    public void init(OnLanguageSelectionListener callback, @LanguageSelectionMode int mode) {
+    public void init(OnLanguageSelectionListener callback, @ListMode int mode) {
         init(callback, mode, null);
     }
 
-    public void init(OnLanguageSelectionListener callback, @LanguageSelectionMode int mode, String preSelectedLanguageCode) {
+    public void init(OnLanguageSelectionListener callback, @ListMode int mode, String preSelectedLanguageCode) {
         this.callback = callback;
-        this.languageSelectionMode = mode;
+        this.listMode = mode;
         this.preSelectedLanguageCode = preSelectedLanguageCode;
         setCancelable(false);
     }
@@ -83,27 +83,27 @@ public class LanguageSelectionFragment extends BottomSheetDialogFragment {
          * "title_words_without_audio" - category of words without audio in wiktionary
          */
         wikiLanguageList.clear();
-        if (languageSelectionMode == LanguageSelectionMode.SPELL_4_WIKI) {
+        if (listMode == ListMode.SPELL_4_WIKI) {
             wikiLanguageList = dbHelper.getAppDatabase().getWikiLangDao().getWikiLanguageListForWordsWithoutAudio();
         } else {
             wikiLanguageList = dbHelper.getAppDatabase().getWikiLangDao().getWikiLanguageList();
         }
 
         OnLanguageSelectionListener languageSelectionListener = langCode -> {
-            switch (languageSelectionMode) {
-                case LanguageSelectionMode.SPELL_4_WIKI:
+            switch (listMode) {
+                case ListMode.SPELL_4_WIKI:
                     pref.setLanguageCodeSpell4Wiki(langCode);
                     break;
-                case LanguageSelectionMode.SPELL_4_WORD_LIST:
+                case ListMode.SPELL_4_WORD_LIST:
                     pref.setLanguageCodeSpell4WordList(langCode);
                     break;
-                case LanguageSelectionMode.SPELL_4_WORD:
+                case ListMode.SPELL_4_WORD:
                     pref.setLanguageCodeSpell4Word(langCode);
                     break;
-                case LanguageSelectionMode.WIKTIONARY:
+                case ListMode.WIKTIONARY:
                     pref.setLanguageCodeWiktionary(langCode);
                     break;
-                case LanguageSelectionMode.TEMP:
+                case ListMode.TEMP:
                     break;
             }
 
@@ -160,16 +160,16 @@ public class LanguageSelectionFragment extends BottomSheetDialogFragment {
     }
 
     private String getExistingLanguageCode() {
-        switch (languageSelectionMode) {
-            case LanguageSelectionMode.SPELL_4_WIKI:
+        switch (listMode) {
+            case ListMode.SPELL_4_WIKI:
                 return pref.getLanguageCodeSpell4Wiki();
-            case LanguageSelectionMode.SPELL_4_WORD_LIST:
+            case ListMode.SPELL_4_WORD_LIST:
                 return pref.getLanguageCodeSpell4WordList();
-            case LanguageSelectionMode.SPELL_4_WORD:
+            case ListMode.SPELL_4_WORD:
                 return pref.getLanguageCodeSpell4Word();
-            case LanguageSelectionMode.WIKTIONARY:
+            case ListMode.WIKTIONARY:
                 return pref.getLanguageCodeWiktionary();
-            case LanguageSelectionMode.TEMP:
+            case ListMode.TEMP:
             default:
                 return null;
         }

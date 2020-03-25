@@ -65,11 +65,6 @@
             tools:ignore="LockedOrientationActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".activities.WiktionaryWebActivity"
-            android:screenOrientation="portrait"
-            tools:ignore="LockedOrientationActivity"
-            android:theme="@style/AppTheme" />
-        <activity
             android:name=".activities.AboutActivity"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity"

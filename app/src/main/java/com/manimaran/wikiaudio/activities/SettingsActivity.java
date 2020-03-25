@@ -12,7 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
 import com.manimaran.wikiaudio.R;
-import com.manimaran.wikiaudio.constants.EnumTypeDef.LanguageSelectionMode;
+import com.manimaran.wikiaudio.constants.EnumTypeDef.ListMode;
 import com.manimaran.wikiaudio.fragments.LanguageSelectionFragment;
 import com.manimaran.wikiaudio.listerners.OnLanguageSelectionListener;
 import com.manimaran.wikiaudio.utils.PrefManager;
@@ -69,7 +69,7 @@ public class SettingsActivity extends AppCompatActivity {
                 txtSpell4WikiLang.setText(pref.getLanguageCodeSpell4Wiki());
             };
             LanguageSelectionFragment languageSelectionFragment = new LanguageSelectionFragment();
-            languageSelectionFragment.init(callback, LanguageSelectionMode.SPELL_4_WIKI);
+            languageSelectionFragment.init(callback, ListMode.SPELL_4_WIKI);
             languageSelectionFragment.show(getSupportFragmentManager(), languageSelectionFragment.getTag());
         });
 
@@ -78,7 +78,7 @@ public class SettingsActivity extends AppCompatActivity {
                 txtSpell4WordListLang.setText(pref.getLanguageCodeSpell4WordList());
             };
             LanguageSelectionFragment languageSelectionFragment = new LanguageSelectionFragment();
-            languageSelectionFragment.init(callback, LanguageSelectionMode.SPELL_4_WORD_LIST);
+            languageSelectionFragment.init(callback, ListMode.SPELL_4_WORD_LIST);
             languageSelectionFragment.show(getSupportFragmentManager(), languageSelectionFragment.getTag());
         });
 
@@ -88,7 +88,7 @@ public class SettingsActivity extends AppCompatActivity {
                 txtSpell4WordLang.setText(pref.getLanguageCodeSpell4Word());
             };
             LanguageSelectionFragment languageSelectionFragment = new LanguageSelectionFragment();
-            languageSelectionFragment.init(callback, LanguageSelectionMode.SPELL_4_WORD);
+            languageSelectionFragment.init(callback, ListMode.SPELL_4_WORD);
             languageSelectionFragment.show(getSupportFragmentManager(), languageSelectionFragment.getTag());
         });
 
@@ -97,7 +97,7 @@ public class SettingsActivity extends AppCompatActivity {
                 txtWiktionaryLang.setText(pref.getLanguageCodeWiktionary());
             };
             LanguageSelectionFragment languageSelectionFragment = new LanguageSelectionFragment();
-            languageSelectionFragment.init(callback, LanguageSelectionMode.WIKTIONARY);
+            languageSelectionFragment.init(callback, ListMode.WIKTIONARY);
             languageSelectionFragment.show(getSupportFragmentManager(), languageSelectionFragment.getTag());
         });
 

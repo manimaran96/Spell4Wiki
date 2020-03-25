@@ -5,11 +5,9 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.MimeTypeMap;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -21,7 +19,6 @@ import com.manimaran.wikiaudio.R;
 import com.manimaran.wikiaudio.activities.CommonWebActivity;
 import com.manimaran.wikiaudio.constants.Constants;
 import com.manimaran.wikiaudio.constants.Urls;
-import com.manimaran.wikiaudio.listerners.OnLanguageSelectionListener;
 import com.manimaran.wikiaudio.utils.GeneralUtils;
 import com.manimaran.wikiaudio.utils.PrefManager;
 
@@ -29,40 +26,24 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
+import static com.manimaran.wikiaudio.constants.EnumTypeDef.ListMode;
+
 public class EndlessAdapter extends ArrayAdapter<String> {
 
     private static final int RECORD_AUDIO_REQUEST_CODE = 101;
     private List<String> itemList;
-    private Context ctx;
     private Activity activity;
-    private int layoutId;
-    private Boolean isContributionMode;
 
     private PrefManager pref;
+    @ListMode
+    private int mode = ListMode.WIKTIONARY;
 
-    private OnLanguageSelectionListener listener;
-
-    public EndlessAdapter(Context ctx, List<String> itemList, int layoutId, Boolean isContributionMode) {
-        super(ctx, layoutId, itemList);
+    public EndlessAdapter(Context ctx, List<String> itemList, @ListMode int mode) {
+        super(ctx, R.layout.search_result_row, itemList);
         this.itemList = itemList;
-        this.ctx = ctx;
         this.activity = (Activity) ctx;
-        this.layoutId = layoutId;
-        this.isContributionMode = isContributionMode;
         this.pref = new PrefManager(ctx);
-    }
-
-    private static String getMimeType(String url) {
-        String type = null;
-        String extension = url.substring(url.lastIndexOf(".") + 1);
-        if (!TextUtils.isEmpty(extension)) {
-            type = MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension);
-        }
-        return type;
-    }
-
-    public void setCallbackListener(OnLanguageSelectionListener listener) {
-        this.listener = listener;
+        this.mode = mode;
     }
 
     @Override
@@ -86,8 +67,8 @@ public class EndlessAdapter extends ArrayAdapter<String> {
         View mView = convertView;
 
         if (mView == null) {
-            LayoutInflater inflater = (LayoutInflater) ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            mView = inflater.inflate(layoutId, parent, false);
+            LayoutInflater inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            mView = inflater.inflate(R.layout.search_result_row, parent, false);
         }
 
         // We should use class holder pattern
@@ -95,44 +76,62 @@ public class EndlessAdapter extends ArrayAdapter<String> {
         tv.setText(itemList.get(position));
 
         tv.setOnClickListener(view -> {
-            Activity activity1 = (Activity) ctx;
-            if (isContributionMode) {
-                if (GeneralUtils.checkPermissionGranted(activity1)) {
-                    GeneralUtils.showRecordDialog(activity, itemList.get(position));
-                } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    getPermissionToRecordAudio();
-                }
-            } else {
-                openWiktionaryWebView(position);
+
+            switch (mode) {
+                case ListMode.SPELL_4_WIKI:
+                case ListMode.SPELL_4_WORD_LIST:
+                case ListMode.SPELL_4_WORD:
+                    if (GeneralUtils.checkPermissionGranted(activity)) {
+                        GeneralUtils.showRecordDialog(activity, itemList.get(position));
+                    } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                        getPermissionToRecordAudio();
+                    }
+                    break;
+                case ListMode.WIKTIONARY:
+                default:
+                    openWiktionaryWebView(position);
+                    break;
+                case ListMode.TEMP:
+                    break;
             }
         });
 
-        if (isContributionMode) {
-            LinearLayout btnWiki = mView.findViewById(R.id.btn_wiki_meaning);
-            btnWiki.setVisibility(View.VISIBLE);
-            btnWiki.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    openWiktionaryWebView(position);
-                }
-            });
-        }
-
+        LinearLayout btnWiki = mView.findViewById(R.id.btn_wiki_meaning);
+        btnWiki.setVisibility(View.VISIBLE);
+        btnWiki.setOnClickListener(v -> openWiktionaryWebView(position));
 
         return mView;
+    }
 
+    private String getLanguageCode() {
+        switch (mode) {
+            case ListMode.SPELL_4_WIKI:
+                return pref.getLanguageCodeSpell4Wiki();
+            case ListMode.SPELL_4_WORD_LIST:
+                return pref.getLanguageCodeSpell4WordList();
+            case ListMode.SPELL_4_WORD:
+                return pref.getLanguageCodeSpell4Word();
+            case ListMode.WIKTIONARY:
+                return pref.getLanguageCodeWiktionary();
+            case ListMode.TEMP:
+            default:
+                return null;
+        }
     }
 
     private void openWiktionaryWebView(int position) {
-        Activity activity1 = (Activity) ctx;
-        Intent intent = new Intent(ctx, CommonWebActivity.class);
+        Intent intent = new Intent(activity, CommonWebActivity.class);
         String word = itemList.get(position);
-        String url = String.format(Urls.WIKTIONARY_WEB, isContributionMode ? pref.getLanguageCodeSpell4Wiki() : pref.getLanguageCodeWiktionary(), word);
+        String langCode = getLanguageCode();
+        if (langCode == null)
+            langCode = Constants.DEFAULT_LANGUAGE_CODE;
+
+        String url = String.format(Urls.WIKTIONARY_WEB, langCode, word);
         intent.putExtra(Constants.TITLE, word);
         intent.putExtra(Constants.URL, url);
-        intent.putExtra(Constants.IS_CONTRIBUTION_MODE, isContributionMode);
         intent.putExtra(Constants.IS_WIKTIONARY_WORD, true);
-        activity1.startActivity(intent);
+        intent.putExtra(Constants.LANGUAGE_CODE, langCode);
+        activity.startActivity(intent);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.M)
@@ -142,9 +141,8 @@ public class EndlessAdapter extends ArrayAdapter<String> {
         // in Marshmallow
         // 2) Always check for permission (even if permission has already been granted)
         // since the user can revoke permissions at any time through Settings
-        Activity activity = (Activity) ctx;
         if (!GeneralUtils.checkPermissionGranted((activity))) {
-            showMsg("Must need Microphone and Storage permissions.\nPlease grant those permissions");
+            Toast.makeText(activity, "Must need Microphone and Storage permissions.\nPlease grant those permissions", Toast.LENGTH_LONG).show();
 
             // The permission is NOT already granted.
             // Check if the user has been asked about this permission already and denied
@@ -159,11 +157,6 @@ public class EndlessAdapter extends ArrayAdapter<String> {
                             }
                     , RECORD_AUDIO_REQUEST_CODE);
         }
-    }
-
-
-    private void showMsg(String msg) {
-        Toast.makeText(ctx, msg, Toast.LENGTH_LONG).show();
     }
 
 }

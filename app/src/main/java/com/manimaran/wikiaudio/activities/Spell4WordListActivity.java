@@ -20,6 +20,7 @@ import android.widget.TextView;
 
 import com.manimaran.wikiaudio.R;
 import com.manimaran.wikiaudio.adapters.EndlessAdapter;
+import com.manimaran.wikiaudio.constants.EnumTypeDef;
 import com.manimaran.wikiaudio.fragments.LanguageSelectionFragment;
 import com.manimaran.wikiaudio.listerners.OnLanguageSelectionListener;
 import com.manimaran.wikiaudio.utils.GeneralUtils;
@@ -34,7 +35,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.manimaran.wikiaudio.constants.EnumTypeDef.LanguageSelectionMode.SPELL_4_WORD_LIST;
+import static com.manimaran.wikiaudio.constants.EnumTypeDef.ListMode.SPELL_4_WORD_LIST;
 
 
 public class Spell4WordListActivity extends AppCompatActivity {
@@ -181,7 +182,7 @@ public class Spell4WordListActivity extends AppCompatActivity {
         resultListView.setVisibility(View.VISIBLE);
 
 
-        adapter = new EndlessAdapter(this, items, R.layout.search_result_row, true);
+        adapter = new EndlessAdapter(this, items, SPELL_4_WORD_LIST);
         resultListView.setAdapter(adapter);
         resultListView.setVisibility(View.VISIBLE);
     }

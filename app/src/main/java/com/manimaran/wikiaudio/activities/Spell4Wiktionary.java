@@ -16,7 +16,7 @@ import android.widget.Toast;
 import com.manimaran.wikiaudio.R;
 import com.manimaran.wikiaudio.adapters.EndlessAdapter;
 import com.manimaran.wikiaudio.constants.Constants;
-import com.manimaran.wikiaudio.constants.EnumTypeDef.LanguageSelectionMode;
+import com.manimaran.wikiaudio.constants.EnumTypeDef.ListMode;
 import com.manimaran.wikiaudio.databases.DBHelper;
 import com.manimaran.wikiaudio.databases.entities.WikiLang;
 import com.manimaran.wikiaudio.fragments.LanguageSelectionFragment;
@@ -60,9 +60,8 @@ public class Spell4Wiktionary extends AppCompatActivity implements EndlessListVi
         languageCode = pref.getLanguageCodeSpell4Wiki();
         init();
 
-        adapter = new EndlessAdapter(this, new ArrayList<>(), R.layout.search_result_row, true);
+        adapter = new EndlessAdapter(this, new ArrayList<>(), ListMode.SPELL_4_WIKI);
         OnLanguageSelectionListener listener = langCode -> { };
-        adapter.setCallbackListener(listener);
         resultListView.setAdapter(adapter);
         resultListView.setListener(this);
         resultListView.setVisibility(View.VISIBLE);
@@ -198,7 +197,7 @@ public class Spell4Wiktionary extends AppCompatActivity implements EndlessListVi
             loadDataFromServer();
         };
         LanguageSelectionFragment languageSelectionFragment = new LanguageSelectionFragment();
-        languageSelectionFragment.init(callback, LanguageSelectionMode.SPELL_4_WIKI);
+        languageSelectionFragment.init(callback, ListMode.SPELL_4_WIKI);
         languageSelectionFragment.show(getSupportFragmentManager(), languageSelectionFragment.getTag());
     }
 

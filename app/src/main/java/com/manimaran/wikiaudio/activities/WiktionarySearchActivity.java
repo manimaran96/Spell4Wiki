@@ -13,7 +13,7 @@ import android.widget.Toast;
 
 import com.manimaran.wikiaudio.R;
 import com.manimaran.wikiaudio.adapters.EndlessAdapter;
-import com.manimaran.wikiaudio.constants.EnumTypeDef.LanguageSelectionMode;
+import com.manimaran.wikiaudio.constants.EnumTypeDef.ListMode;
 import com.manimaran.wikiaudio.fragments.LanguageSelectionFragment;
 import com.manimaran.wikiaudio.listerners.OnLanguageSelectionListener;
 import com.manimaran.wikiaudio.utils.PrefManager;
@@ -76,8 +76,7 @@ public class WiktionarySearchActivity extends AppCompatActivity implements Endle
 
         resultListView = findViewById(R.id.search_result_list);
         resultListView.setLoadingView(R.layout.loading_row);
-        resultListView.setAdapter(new EndlessAdapter(this, new ArrayList<String>(), R.layout.search_result_row, false));
-        //
+        resultListView.setAdapter(new EndlessAdapter(this, new ArrayList<>(), ListMode.WIKTIONARY));
         resultListView.setListener(this);
         resultListView.setVisibility(View.INVISIBLE);
 
@@ -139,7 +138,7 @@ public class WiktionarySearchActivity extends AppCompatActivity implements Endle
                 submitQuery(queryString);
         };
         LanguageSelectionFragment languageSelectionFragment = new LanguageSelectionFragment();
-        languageSelectionFragment.init(callback, LanguageSelectionMode.WIKTIONARY);
+        languageSelectionFragment.init(callback, ListMode.WIKTIONARY);
         languageSelectionFragment.show(getSupportFragmentManager(), languageSelectionFragment.getTag());
     }
 
