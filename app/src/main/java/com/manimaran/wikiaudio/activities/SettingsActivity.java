@@ -3,6 +3,7 @@ package com.manimaran.wikiaudio.activities;
 import android.app.AlertDialog;
 import android.os.Bundle;
 import android.text.Html;
+import android.text.TextUtils;
 import android.text.method.LinkMovementMethod;
 import android.view.MenuItem;
 import android.view.View;
@@ -13,6 +14,9 @@ import androidx.core.content.ContextCompat;
 
 import com.manimaran.wikiaudio.R;
 import com.manimaran.wikiaudio.constants.EnumTypeDef.ListMode;
+import com.manimaran.wikiaudio.databases.DBHelper;
+import com.manimaran.wikiaudio.databases.dao.WikiLangDao;
+import com.manimaran.wikiaudio.databases.entities.WikiLang;
 import com.manimaran.wikiaudio.fragments.LanguageSelectionFragment;
 import com.manimaran.wikiaudio.listerners.OnLanguageSelectionListener;
 import com.manimaran.wikiaudio.utils.PrefManager;
@@ -25,6 +29,7 @@ import java.util.Arrays;
 public class SettingsActivity extends AppCompatActivity {
 
     private PrefManager pref;
+    private WikiLangDao wikiLangDao = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +57,7 @@ public class SettingsActivity extends AppCompatActivity {
         View layoutLicenseOfUploadAudio = findViewById(R.id.layoutLicenseOfUploadAudio);
 
         pref = new PrefManager(getApplicationContext());
+        wikiLangDao = new DBHelper(getApplicationContext()).getAppDatabase().getWikiLangDao();
         if(pref.getIsAnonymous()){
             txtTitleLicense.setVisibility(View.GONE);
             layoutSpell4WikiLang.setVisibility(View.GONE);
@@ -59,10 +65,11 @@ public class SettingsActivity extends AppCompatActivity {
             layoutSpell4WordLang.setVisibility(View.GONE);
             layoutLicenseOfUploadAudio.setVisibility(View.GONE);
         }
-        txtSpell4WikiLang.setText(pref.getLanguageCodeSpell4Wiki());
-        txtSpell4WordListLang.setText(pref.getLanguageCodeSpell4WordList());
-        txtSpell4WordLang.setText(pref.getLanguageCodeSpell4Word());
-        txtWiktionaryLang.setText(pref.getLanguageCodeWiktionary());
+
+        updateLanguageView(txtSpell4WikiLang, pref.getLanguageCodeSpell4Wiki());
+        updateLanguageView(txtSpell4WordListLang, pref.getLanguageCodeSpell4WordList());
+        updateLanguageView(txtSpell4WordLang, pref.getLanguageCodeSpell4Word());
+        updateLanguageView(txtWiktionaryLang, pref.getLanguageCodeWiktionary());
 
         layoutSpell4WikiLang.setOnClickListener(v -> {
             OnLanguageSelectionListener callback = langCode -> {
@@ -75,7 +82,7 @@ public class SettingsActivity extends AppCompatActivity {
 
         layoutSpell4WordListLang.setOnClickListener(v -> {
             OnLanguageSelectionListener callback = langCode -> {
-                txtSpell4WordListLang.setText(pref.getLanguageCodeSpell4WordList());
+                updateLanguageView(txtSpell4WordListLang, pref.getLanguageCodeSpell4WordList());
             };
             LanguageSelectionFragment languageSelectionFragment = new LanguageSelectionFragment();
             languageSelectionFragment.init(callback, ListMode.SPELL_4_WORD_LIST);
@@ -85,7 +92,7 @@ public class SettingsActivity extends AppCompatActivity {
 
         layoutSpell4WordLang.setOnClickListener(v -> {
             OnLanguageSelectionListener callback = langCode -> {
-                txtSpell4WordLang.setText(pref.getLanguageCodeSpell4Word());
+                updateLanguageView(txtSpell4WordLang, pref.getLanguageCodeSpell4Word());
             };
             LanguageSelectionFragment languageSelectionFragment = new LanguageSelectionFragment();
             languageSelectionFragment.init(callback, ListMode.SPELL_4_WORD);
@@ -94,7 +101,7 @@ public class SettingsActivity extends AppCompatActivity {
 
         layoutWiktionaryLang.setOnClickListener(v -> {
             OnLanguageSelectionListener callback = langCode -> {
-                txtWiktionaryLang.setText(pref.getLanguageCodeWiktionary());
+                updateLanguageView(txtWiktionaryLang, pref.getLanguageCodeWiktionary());
             };
             LanguageSelectionFragment languageSelectionFragment = new LanguageSelectionFragment();
             languageSelectionFragment.init(callback, ListMode.WIKTIONARY);
@@ -134,6 +141,16 @@ public class SettingsActivity extends AppCompatActivity {
             dialog.show();
         });
 
+    }
+
+    private void updateLanguageView(TextView txtView, String languageCode){
+        if(languageCode != null && txtView != null && wikiLangDao != null){
+            WikiLang wikiLang = wikiLangDao.getWikiLanguageWithCode(languageCode);
+            String value = "";
+            if(wikiLang != null && !TextUtils.isEmpty(wikiLang.getName()))
+                value = wikiLang.getLocalName() + " - " + wikiLang.getName() +  "(" + languageCode + ")";
+            txtView.setText(value);
+        }
     }
 
     private void updateLicenseView(TextView txtLicenseOfUploadAudio, TextView txtLicenseOfUploadAudioLegalCode) {
