@@ -11,6 +11,7 @@ import android.widget.EditText;
 
 import com.manimaran.wikiaudio.R;
 import com.manimaran.wikiaudio.constants.Constants;
+import com.manimaran.wikiaudio.constants.Urls;
 import com.manimaran.wikiaudio.utils.GeneralUtils;
 import com.manimaran.wikiaudio.utils.PrefManager;
 
@@ -60,7 +61,7 @@ public class Spell4WordActivity extends AppCompatActivity {
 
     private void openWikitionaryPage(String wordInfo) {
         Intent intent = new Intent(getApplicationContext(), CommonWebActivity.class);
-        String url = String.format(getString(R.string.url_wiktionary_web), pref.getContributionLangCode(), wordInfo);
+        String url = String.format(Urls.WIKTIONARY_WEB, pref.getLanguageCodeSpell4Word(), wordInfo);
         intent.putExtra(Constants.TITLE, wordInfo);
         intent.putExtra(Constants.URL, url);
         intent.putExtra(Constants.IS_CONTRIBUTION_MODE, true);
@@ -73,7 +74,6 @@ public class Spell4WordActivity extends AppCompatActivity {
         if (getSupportActionBar() != null) {
             getSupportActionBar().setTitle(getString(R.string.spell4word));
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            //getSupportActionBar().setSubtitle(ApiClient.getUrl(UrlType.WIKTIONARY_PAGE, getApplicationContext()));
         }
     }
 

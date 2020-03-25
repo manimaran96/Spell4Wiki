@@ -20,6 +20,7 @@ import androidx.annotation.RequiresApi;
 import com.manimaran.wikiaudio.R;
 import com.manimaran.wikiaudio.activities.CommonWebActivity;
 import com.manimaran.wikiaudio.constants.Constants;
+import com.manimaran.wikiaudio.constants.Urls;
 import com.manimaran.wikiaudio.listerners.OnLanguageSelectionListener;
 import com.manimaran.wikiaudio.utils.GeneralUtils;
 import com.manimaran.wikiaudio.utils.PrefManager;
@@ -126,7 +127,7 @@ public class EndlessAdapter extends ArrayAdapter<String> {
         Activity activity1 = (Activity) ctx;
         Intent intent = new Intent(ctx, CommonWebActivity.class);
         String word = itemList.get(position);
-        String url = String.format(ctx.getString(R.string.url_wiktionary_web), isContributionMode ? pref.getContributionLangCode() : pref.getWiktionaryLangCode(), word);
+        String url = String.format(Urls.WIKTIONARY_WEB, isContributionMode ? pref.getLanguageCodeSpell4Wiki() : pref.getLanguageCodeWiktionary(), word);
         intent.putExtra(Constants.TITLE, word);
         intent.putExtra(Constants.URL, url);
         intent.putExtra(Constants.IS_CONTRIBUTION_MODE, isContributionMode);

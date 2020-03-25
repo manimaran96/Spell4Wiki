@@ -1,5 +1,6 @@
 package com.manimaran.wikiaudio.activities;
 
+import android.annotation.SuppressLint;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.net.Uri;
@@ -17,7 +18,8 @@ import androidx.core.content.ContextCompat;
 import com.manimaran.wikiaudio.BuildConfig;
 import com.manimaran.wikiaudio.R;
 import com.manimaran.wikiaudio.constants.Constants;
-import com.manimaran.wikiaudio.constants.UrlType;
+import com.manimaran.wikiaudio.constants.EnumTypeDef;
+import com.manimaran.wikiaudio.constants.Urls;
 import com.manimaran.wikiaudio.utils.DeviceInfoUtil;
 import com.manimaran.wikiaudio.utils.GeneralUtils;
 import com.manimaran.wikiaudio.utils.PrefManager;
@@ -46,6 +48,11 @@ public class AboutActivity extends AppCompatActivity implements View.OnClickList
         TextView txtFeedback = findViewById(R.id.txtFeedback);
         TextView txtPrivacyPolicy = findViewById(R.id.txtPrivacyPolicy);
         TextView txtTermsOfUse = findViewById(R.id.txtTermsOfUse);
+        TextView txtPoweredByLink = findViewById(R.id.txtPoweredByLink);
+        TextView txtInitiatedByLink = findViewById(R.id.txtInitiatedByLink);
+
+        txtPoweredByLink.setText(Urls.KANIYAM);
+        txtInitiatedByLink.setText(Urls.VGLUG);
 
 
         LinearLayout layoutKaniyam = findViewById(R.id.layout_kaniyam);
@@ -87,16 +94,16 @@ public class AboutActivity extends AppCompatActivity implements View.OnClickList
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.txt_rate_app:
-                GeneralUtils.openUrl(this, String.format(getString(R.string.link_app_play_store), BuildConfig.APPLICATION_ID), UrlType.EXTERNAL, null);
+                GeneralUtils.openUrlInBrowser(this, Urls.APP_LINK);
                 break;
             case R.id.txt_share:
                 shareApp();
                 break;
             case R.id.txt_how_to_contribute:
-                GeneralUtils.openUrl(this, getString(R.string.link_how_to_contribute), UrlType.INTERNAL, getString(R.string.how_to_contribute));
+                GeneralUtils.openUrl(this, getString(R.string.link_how_to_contribute), getString(R.string.how_to_contribute));
                 break;
             case R.id.txt_source_code:
-                GeneralUtils.openUrl(this, getString(R.string.link_source_code), UrlType.EXTERNAL, null);
+                GeneralUtils.openUrlInBrowser(this, Urls.SOURCE_CODE);
                 break;
             case R.id.txt_contributors:
                 startActivity(new Intent(getApplicationContext(), ContributorsActivity.class));
@@ -112,25 +119,25 @@ public class AboutActivity extends AppCompatActivity implements View.OnClickList
                 startActivity(intentCredits);
                 break;
             case R.id.txt_help_development:
-                GeneralUtils.openUrl(this, getString(R.string.link_how_to_contribute), UrlType.INTERNAL, getString(R.string.help_development));
+                GeneralUtils.openUrl(this, getString(R.string.link_how_to_contribute), getString(R.string.help_development));
                 break;
             case R.id.txtFeedback:
                 feedback();
                 break;
             case R.id.txtPrivacyPolicy:
-                GeneralUtils.openUrl(this, getString(R.string.url_privacy_policy), UrlType.EXTERNAL, getString(R.string.privacy_policy));
+                GeneralUtils.openUrlInBrowser(this, getString(R.string.url_privacy_policy));
                 break;
             case R.id.txtTermsOfUse:
-                GeneralUtils.openUrl(this, getString(R.string.url_terms_of_use), UrlType.EXTERNAL, getString(R.string.terms_of_use));
+                GeneralUtils.openUrlInBrowser(this, getString(R.string.url_terms_of_use));
                 break;
             case R.id.layout_kaniyam:
-                GeneralUtils.openUrl(this, getString(R.string.link_kaniyam), UrlType.EXTERNAL, getString(R.string.kaniyam));
+                GeneralUtils.openUrlInBrowser(this, Urls.KANIYAM);
                 break;
             case R.id.layout_vglug:
-                GeneralUtils.openUrl(this, getString(R.string.link_vglug), UrlType.EXTERNAL, getString(R.string.vglug));
+                GeneralUtils.openUrlInBrowser(this, Urls.VGLUG);
                 break;
             case R.id.txt_app_version_and_license:
-                GeneralUtils.openUrl(this, getString(R.string.url_license_gpl_v3), UrlType.EXTERNAL, "GPLv3 - App License");
+                GeneralUtils.openUrlInBrowser(this, getString(R.string.url_license_gpl_v3));
                 break;
         }
 
@@ -139,10 +146,11 @@ public class AboutActivity extends AppCompatActivity implements View.OnClickList
     private void shareApp() {
         Intent intent = new Intent(Intent.ACTION_SEND);
         intent.setType("text/plain");
-        intent.putExtra(Intent.EXTRA_TEXT, String.format(getString(R.string.app_share_message), String.format(getString(R.string.link_app_play_store), BuildConfig.APPLICATION_ID)));
+        intent.putExtra(Intent.EXTRA_TEXT, String.format(getString(R.string.app_share_message), Urls.APP_LINK));
         startActivity(Intent.createChooser(intent, getString(R.string.app_share_title)));
     }
 
+    @SuppressLint("IntentReset")
     private void feedback() {
 
         Intent emailIntent = new Intent(Intent.ACTION_SENDTO);

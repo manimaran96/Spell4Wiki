@@ -5,6 +5,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -14,7 +15,10 @@ import android.widget.Toast;
 
 import com.manimaran.wikiaudio.R;
 import com.manimaran.wikiaudio.adapters.EndlessAdapter;
+import com.manimaran.wikiaudio.constants.Constants;
 import com.manimaran.wikiaudio.constants.EnumTypeDef.LanguageSelectionMode;
+import com.manimaran.wikiaudio.databases.DBHelper;
+import com.manimaran.wikiaudio.databases.entities.WikiLang;
 import com.manimaran.wikiaudio.fragments.LanguageSelectionFragment;
 import com.manimaran.wikiaudio.listerners.OnLanguageSelectionListener;
 import com.manimaran.wikiaudio.utils.GeneralUtils;
@@ -53,7 +57,7 @@ public class Spell4Wiktionary extends AppCompatActivity implements EndlessListVi
         setContentView(R.layout.activity_spell_4_wiktionary);
 
         pref = new PrefManager(getApplicationContext());
-        languageCode = pref.getContributionLangCode();
+        languageCode = pref.getLanguageCodeSpell4Wiki();
         init();
 
         adapter = new EndlessAdapter(this, new ArrayList<>(), R.layout.search_result_row, true);
@@ -97,9 +101,21 @@ public class Spell4Wiktionary extends AppCompatActivity implements EndlessListVi
         if (nextOffsetObj == null)
             refreshLayout.setRefreshing(true);
 
-        ApiInterface api = ApiClient.getWiktionaryApi(getApplicationContext(), languageCode).create(ApiInterface.class);
-        String noAudioTitle = pref.getTitleWordsWithoutAudio();
-        Call<ResponseBody> call = api.fetchUnAudioRecords(noAudioTitle, nextOffsetObj);
+        DBHelper dbHelper = new DBHelper(getApplicationContext());
+        WikiLang wikiLang = dbHelper.getAppDatabase().getWikiLangDao().getWikiLanguageWithCode(languageCode);
+        String titleOfWordsWithoutAudio = null;
+        if(wikiLang != null && !TextUtils.isEmpty(wikiLang.getTitleOfWordsWithoutAudio()))
+            titleOfWordsWithoutAudio = wikiLang.getTitleOfWordsWithoutAudio();
+        // DB Clear or Sync Issue
+        if(titleOfWordsWithoutAudio == null){
+            titleOfWordsWithoutAudio = Constants.DEFAULT_TITLE_FOR_WITHOUT_AUDIO;
+            languageCode = Constants.DEFAULT_LANGUAGE_CODE;
+            invalidateOptionsMenu();
+            pref.setLanguageCodeSpell4Wiki(languageCode);
+        }
+
+        ApiInterface api = ApiClient.getWiktionaryApi(getApplicationContext(),  languageCode).create(ApiInterface.class);
+        Call<ResponseBody> call = api.fetchUnAudioRecords(titleOfWordsWithoutAudio, nextOffsetObj);
 
         call.enqueue(new Callback<ResponseBody>() {
             @Override
@@ -142,7 +158,7 @@ public class Spell4Wiktionary extends AppCompatActivity implements EndlessListVi
                 nextOffsetObj = null;
             if (refreshLayout.isRefreshing())
                 refreshLayout.setRefreshing(false);
-            List<String> wordsList = GeneralUtils.getWordsWithoutAudioListOnly(String.format(getString(R.string.format_file_name_words_already_have_audio), pref.getContributionLangCode()), titleList);
+            List<String> wordsList = GeneralUtils.getWordsWithoutAudioListOnly(String.format(getString(R.string.format_file_name_words_already_have_audio), pref.getLanguageCodeSpell4Wiki()), titleList);
             resultListView.addNewData(wordsList);
             if (wordsList.size() == 0) {
                 loadDataFromServer(); // Get more words if no words without audio

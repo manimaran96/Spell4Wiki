@@ -61,7 +61,7 @@ public class Spell4WordListActivity extends AppCompatActivity {
         initUI();
 
         pref = new PrefManager(getApplicationContext());
-        languageCode = pref.getContributionLangCode();
+        languageCode = pref.getLanguageCodeSpell4WordList();
 
     }
 

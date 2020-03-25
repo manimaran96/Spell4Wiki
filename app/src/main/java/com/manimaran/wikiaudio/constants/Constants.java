@@ -11,4 +11,7 @@ public class Constants {
 
     public static final String RECORDED_FILENAME = "record.wav";
     public static final String CONVERTED_FILENAME = "record.ogg";
+
+    public static final String DEFAULT_TITLE_FOR_WITHOUT_AUDIO = "பகுப்பு:தமிழ்-ஒலிக்கோப்புகளில்லை";
+    public static final String DEFAULT_LANGUAGE_CODE = "ta";
 }

@@ -174,7 +174,7 @@
                         android:textSize="@dimen/text_small" />
 
                     <TextView
-                        android:id="@+id/txt_powered_by_link"
+                        android:id="@+id/txtPoweredByLink"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="3dp"
@@ -182,7 +182,7 @@
                         android:ellipsize="end"
                         android:linksClickable="false"
                         android:maxLines="2"
-                        android:text="@string/link_kaniyam"
+                        android:text="@string/url_license_gpl_v3"
                         android:textSize="@dimen/text_small" />
 
 
@@ -235,6 +235,7 @@
                         android:textSize="@dimen/text_small" />
 
                     <TextView
+                        android:id="@+id/txtInitiatedByLink"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="3dp"
@@ -242,7 +243,7 @@
                         android:ellipsize="end"
                         android:linksClickable="false"
                         android:maxLines="2"
-                        android:text="@string/link_vglug"
+                        android:text="@string/url_license_gpl_v3"
                         android:textSize="@dimen/text_small" />
 
 

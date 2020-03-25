@@ -12,7 +12,7 @@ import com.franmontiel.persistentcookiejar.PersistentCookieJar;
 import com.franmontiel.persistentcookiejar.cache.SetCookieCache;
 import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersistor;
 import com.manimaran.wikiaudio.R;
-import com.manimaran.wikiaudio.constants.UrlType;
+import com.manimaran.wikiaudio.constants.Urls;
 import com.manimaran.wikiaudio.utils.PrefManager;
 
 import org.jetbrains.annotations.NotNull;
@@ -42,7 +42,7 @@ public class ApiClient {
     public static Retrofit getCommonsApi(Context context) {
         if (retrofitCommons == null) {
             retrofitCommons = new Retrofit.Builder()
-                    .baseUrl(getUrl(UrlType.COMMONS, context))
+                    .baseUrl(Urls.COMMONS)
                     .client(Objects.requireNonNull(getOkHttpClient(context)))
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
@@ -52,7 +52,7 @@ public class ApiClient {
 
     public static Retrofit getWiktionaryApi(Context context, String langCode) {
         retrofitWiktionary = new Retrofit.Builder()
-                    .baseUrl(getWiktionaryApiUrl(context, langCode))
+                    .baseUrl(getWiktionaryApiUrl(langCode))
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
         return retrofitWiktionary;
@@ -68,32 +68,15 @@ public class ApiClient {
         return retrofitApi;
     }
 
-    private static String getWiktionaryApiUrl(Context context, String langCode){
-        return String.format(context.getString(R.string.url_wiktionary), !TextUtils.isEmpty(langCode) ? langCode.toLowerCase() : pref.getContributionLangCode());
-    }
-
-    public static String getUrl(int urlType, Context context) {
-        pref = new PrefManager(context);
-        String url;
-        switch (urlType) {
-            case UrlType.COMMONS:
-                url = context.getString(R.string.url_commons);
-                break;
-            case UrlType.WIKTIONARY_CONTRIBUTION:
-                url = String.format(context.getString(R.string.url_wiktionary), pref.getContributionLangCode());
-                break;
-            case UrlType.WIKTIONARY_PAGE:
-                url = String.format(context.getString(R.string.url_wiktionary), pref.getWiktionaryLangCode());
-                break;
-            default:
-                url = context.getString(R.string.url_commons);
-        }
-
-        return url;
+    private static String getWiktionaryApiUrl(String langCode){
+        if(TextUtils.isEmpty(langCode))
+            langCode = pref.getLanguageCodeSpell4Wiki();
+        return  String.format(Urls.WIKTIONARY, langCode);
     }
 
     private static OkHttpClient getOkHttpClient(Context context) {
 
+        pref = new PrefManager(context);
         OkHttpClient.Builder okHttpClient = new OkHttpClient().newBuilder();
 
         okHttpClient.retryOnConnectionFailure(true);

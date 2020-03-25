@@ -12,7 +12,6 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.manimaran.wikiaudio.R;
-import com.manimaran.wikiaudio.constants.UrlType;
 import com.manimaran.wikiaudio.models.Contributors;
 import com.manimaran.wikiaudio.utils.GeneralUtils;
 
@@ -39,7 +38,7 @@ public class ContributorsAdapter extends RecyclerView.Adapter<ContributorsAdapte
         holder.txtAbout.setText(("Contributions : " + model.getContributions()));
 
         holder.btnOption.setOnClickListener(v -> {
-            GeneralUtils.openUrl(mContext, model.getHtmlUrl(), UrlType.EXTERNAL, null);
+            GeneralUtils.openUrlInBrowser(mContext, model.getHtmlUrl());
         });
     }
 

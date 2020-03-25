@@ -26,6 +26,7 @@ import android.widget.TextView;
 
 import com.manimaran.wikiaudio.R;
 import com.manimaran.wikiaudio.constants.Constants;
+import com.manimaran.wikiaudio.constants.Urls;
 import com.manimaran.wikiaudio.utils.GeneralUtils;
 import com.manimaran.wikiaudio.utils.PrefManager;
 
@@ -214,6 +215,6 @@ public class WebViewFragment extends Fragment {
 
     public void loadWordWithOtherLang(String langCode) {
         if(isWitionaryWord && word != null)
-            webView.loadUrl(String.format(getString(R.string.url_wiktionary_web), langCode, word));
+            webView.loadUrl(String.format(Urls.WIKTIONARY_WEB, langCode, word));
     }
 }

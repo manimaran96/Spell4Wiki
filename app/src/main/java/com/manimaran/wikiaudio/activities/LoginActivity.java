@@ -13,7 +13,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.manimaran.wikiaudio.R;
-import com.manimaran.wikiaudio.constants.UrlType;
+import com.manimaran.wikiaudio.constants.Urls;
 import com.manimaran.wikiaudio.utils.GeneralUtils;
 import com.manimaran.wikiaudio.utils.PrefManager;
 import com.manimaran.wikiaudio.apis.ApiInterface;
@@ -56,7 +56,7 @@ public class LoginActivity extends AppCompatActivity {
          * If yes - Open Main screen
          * Else - Ask to login
          */
-        if (pref.isIsLogin() || pref.getIsAnonymous()) {
+        if (pref.isLoggedIn() || pref.getIsAnonymous()) {
             launchActivity();
         } else {
             init();
@@ -157,7 +157,7 @@ public class LoginActivity extends AppCompatActivity {
      */
     private void completeLogin(String username, String password, String loginToken) {
 
-        Call<ResponseBody> call = api.clientLogin("clientlogin", "json", ApiClient.getUrl(UrlType.COMMONS, getApplicationContext()), loginToken, username, password);
+        Call<ResponseBody> call = api.clientLogin("clientlogin", "json", Urls.COMMONS, loginToken, username, password);
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
@@ -175,7 +175,7 @@ public class LoginActivity extends AppCompatActivity {
                                 showMsg("Welcome " + loginJSONObject.getString("username"));
 
                                 //  Write to shared preferences
-                                pref.setSession(loginJSONObject.getString("username"), true);
+                                pref.setUserSession(loginJSONObject.getString("username"));
 
                                 btnLogin.doneLoadingAnimation(
                                         ContextCompat.getColor(LoginActivity.this, R.color.w_green),
@@ -248,7 +248,7 @@ public class LoginActivity extends AppCompatActivity {
         if(isDuringLogin()) {
             showMsg(getString(R.string.please_wait));
         }else {
-            GeneralUtils.openUrl(LoginActivity.this, url, UrlType.INTERNAL, title);
+            GeneralUtils.openUrl(LoginActivity.this, url, title);
         }
     }
 

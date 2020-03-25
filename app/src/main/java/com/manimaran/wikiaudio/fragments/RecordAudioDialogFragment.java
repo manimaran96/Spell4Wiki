@@ -134,7 +134,7 @@ public class RecordAudioDialogFragment extends DialogFragment {
         pref = new PrefManager(ctx);
         api = ApiClient.getCommonsApi(ctx).create(ApiInterface.class);
         // TODO - change lang code
-        apiWiki = ApiClient.getWiktionaryApi(ctx, pref.getContributionLangCode()).create(ApiInterface.class);
+        apiWiki = ApiClient.getWiktionaryApi(ctx, pref.getLanguageCodeSpell4Wiki()).create(ApiInterface.class);
 
         // View init
         btnClose = view.findViewById(R.id.btnClose);
@@ -241,7 +241,7 @@ public class RecordAudioDialogFragment extends DialogFragment {
 
         btnUpload.setOnClickListener(view12 -> {
             if (isRecorded) {
-                uploadName = pref.getContributionLangCode() + "-" + word + ".ogg";
+                uploadName = pref.getLanguageCodeSpell4Wiki() + "-" + word + ".ogg";
                 uploadAudioToWikiServer(false);
             } else
                 GeneralUtils.showToast(ctx, "Please record audio first");

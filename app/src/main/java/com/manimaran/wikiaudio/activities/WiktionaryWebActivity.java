@@ -11,9 +11,8 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import com.manimaran.wikiaudio.R;
-import com.manimaran.wikiaudio.constants.UrlType;
+import com.manimaran.wikiaudio.constants.Urls;
 import com.manimaran.wikiaudio.utils.PrefManager;
-import com.manimaran.wikiaudio.apis.ApiClient;
 
 public class WiktionaryWebActivity extends AppCompatActivity {
 
@@ -34,11 +33,10 @@ public class WiktionaryWebActivity extends AppCompatActivity {
             }
             if (getSupportActionBar() != null) {
                 getSupportActionBar().setTitle(word);
-                getSupportActionBar().setSubtitle(ApiClient.getUrl(UrlType.WIKTIONARY_PAGE, getApplicationContext()));
                 getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_close);
                 getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             }
-            String wikiUrl = String.format(getString(R.string.url_wiktionary_web), isContributionMode ? pref.getContributionLangCode() : pref.getWiktionaryLangCode(), word);
+            String wikiUrl = String.format(Urls.WIKTIONARY_WEB, isContributionMode ? pref.getLanguageCodeSpell4Wiki() : pref.getLanguageCodeWiktionary(), word);
             loadPage(wikiUrl);
         }
 

@@ -2,7 +2,7 @@ package com.manimaran.wikiaudio.models;
 
 public class ItemsModel {
     private int icon = -1;
-    private String name, about, url , licenseUrl;
+    private String name, about, url;
 
     public ItemsModel(String name, String about, String url) {
         this.name = name;
@@ -43,17 +43,5 @@ public class ItemsModel {
 
     public int getIcon() {
         return icon;
-    }
-
-    public void setIcon(int icon) {
-        this.icon = icon;
-    }
-
-    public String getLicenseUrl() {
-        return licenseUrl;
-    }
-
-    public void setLicenseUrl(String licenseUrl) {
-        this.licenseUrl = licenseUrl;
     }
 }

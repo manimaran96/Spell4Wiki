@@ -11,7 +11,7 @@ import android.widget.SearchView;
 import android.widget.TextView;
 
 import com.manimaran.wikiaudio.R;
-import com.manimaran.wikiaudio.constants.UrlType;
+import com.manimaran.wikiaudio.constants.Urls;
 import com.manimaran.wikiaudio.utils.GeneralUtils;
 import com.manimaran.wikiaudio.utils.PrefManager;
 
@@ -104,11 +104,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.btn_settings).setOnClickListener(v -> startActivity(new Intent(getApplicationContext(), SettingsActivity.class)));
         findViewById(R.id.btn_logout).setOnClickListener(v -> GeneralUtils.logoutAlert(MainActivity.this));
 
-        String urlViewMyContribution = String.format(getString(R.string.link_view_my_contribution), pref.getName());
+        String urlMyContribution = String.format(Urls.COMMONS_CONTRIBUTION, pref.getName());
         TextView btnMyContributions = findViewById(R.id.txtViewMyContribution);
         TextView btnLogin = findViewById(R.id.txtLogin);
 
-        btnMyContributions.setOnClickListener(v -> GeneralUtils.openUrl(MainActivity.this, urlViewMyContribution, UrlType.INTERNAL, getString(R.string.view_my_contribution)));
+        btnMyContributions.setOnClickListener(v -> GeneralUtils.openUrl(MainActivity.this, urlMyContribution,  getString(R.string.view_my_contribution)));
         btnLogin.setOnClickListener(v-> pref.logoutUser());
 
         View viewContribute = findViewById(R.id.layoutContributeOptions);
