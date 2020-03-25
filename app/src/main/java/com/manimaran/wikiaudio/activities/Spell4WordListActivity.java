@@ -44,14 +44,11 @@ public class Spell4WordListActivity extends AppCompatActivity {
     private static final int EDIT_REQUEST_CODE = 42;
 
 
-    private Button btnSelectFile, btnDirectContent, btnDone;
     private EditText editFile;
     private TextView txtFileInfo;
     private View layoutEdit, layoutSelect;
     private EndlessListView resultListView;
-    private EndlessAdapter adapter;
 
-    private PrefManager pref;
     private String languageCode = "";
 
     @Override
@@ -61,7 +58,7 @@ public class Spell4WordListActivity extends AppCompatActivity {
 
         initUI();
 
-        pref = new PrefManager(getApplicationContext());
+        PrefManager pref = new PrefManager(getApplicationContext());
         languageCode = pref.getLanguageCodeSpell4WordList();
 
     }
@@ -73,9 +70,9 @@ public class Spell4WordListActivity extends AppCompatActivity {
             getSupportActionBar().setTitle(getString(R.string.spell4wordlist));
         }
 
-        btnSelectFile = findViewById(R.id.btnSelectFile);
-        btnDirectContent = findViewById(R.id.btnDirectContent);
-        btnDone = findViewById(R.id.btnDone);
+        Button btnSelectFile = findViewById(R.id.btnSelectFile);
+        Button btnDirectContent = findViewById(R.id.btnDirectContent);
+        Button btnDone = findViewById(R.id.btnDone);
         editFile = findViewById(R.id.editFile);
         txtFileInfo = findViewById(R.id.txtFileInfo);
         resultListView = findViewById(R.id.listView);
@@ -182,7 +179,7 @@ public class Spell4WordListActivity extends AppCompatActivity {
         resultListView.setVisibility(View.VISIBLE);
 
 
-        adapter = new EndlessAdapter(this, items, SPELL_4_WORD_LIST);
+        EndlessAdapter adapter = new EndlessAdapter(this, items, SPELL_4_WORD_LIST);
         resultListView.setAdapter(adapter);
         resultListView.setVisibility(View.VISIBLE);
     }
@@ -299,12 +296,8 @@ public class Spell4WordListActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem menuItem) {
-        switch (menuItem.getItemId()) {
-            case android.R.id.home:
-                finish();
-                break;
-            default:
-                break;
+        if (menuItem.getItemId() == android.R.id.home) {
+            finish();
         }
         return (super.onOptionsItemSelected(menuItem));
     }
