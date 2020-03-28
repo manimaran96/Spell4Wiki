@@ -4,17 +4,20 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Build;
+import android.provider.Settings;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 
+import com.google.android.material.snackbar.Snackbar;
+import com.manimaran.wikiaudio.BuildConfig;
 import com.manimaran.wikiaudio.R;
 import com.manimaran.wikiaudio.activities.CommonWebActivity;
 import com.manimaran.wikiaudio.constants.Constants;
@@ -36,7 +39,9 @@ public class EndlessAdapter extends ArrayAdapter<String> {
 
     private PrefManager pref;
     @ListMode
-    private int mode = ListMode.WIKTIONARY;
+    private int mode;
+
+    private View rootView;
 
     public EndlessAdapter(Context ctx, List<String> itemList, @ListMode int mode) {
         super(ctx, R.layout.search_result_row, itemList);
@@ -64,15 +69,16 @@ public class EndlessAdapter extends ArrayAdapter<String> {
     @NotNull
     @Override
     public View getView(final int position, View convertView, @NotNull ViewGroup parent) {
-        View mView = convertView;
 
-        if (mView == null) {
+        if (convertView == null) {
             LayoutInflater inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            mView = inflater.inflate(R.layout.search_result_row, parent, false);
-        }
+            if(inflater != null)
+                rootView = inflater.inflate(R.layout.search_result_row, parent, false);
+        }else
+            rootView = convertView;
 
         // We should use class holder pattern
-        TextView tv = mView.findViewById(R.id.txt1);
+        TextView tv = rootView.findViewById(R.id.txt1);
         tv.setText(itemList.get(position));
 
         tv.setOnClickListener(view -> {
@@ -96,11 +102,11 @@ public class EndlessAdapter extends ArrayAdapter<String> {
             }
         });
 
-        LinearLayout btnWiki = mView.findViewById(R.id.btn_wiki_meaning);
+        LinearLayout btnWiki = rootView.findViewById(R.id.btn_wiki_meaning);
         btnWiki.setVisibility(View.VISIBLE);
         btnWiki.setOnClickListener(v -> openWiktionaryWebView(position));
 
-        return mView;
+        return rootView;
     }
 
     private String getLanguageCode() {
@@ -136,26 +142,24 @@ public class EndlessAdapter extends ArrayAdapter<String> {
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     private void getPermissionToRecordAudio() {
-        // 1) Use the support library version ContextCompat.checkSelfPermission(...) to avoid
-        // checking the build version since Context.checkSelfPermission(...) is only available
-        // in Marshmallow
-        // 2) Always check for permission (even if permission has already been granted)
-        // since the user can revoke permissions at any time through Settings
-        if (!GeneralUtils.checkPermissionGranted((activity))) {
-            Toast.makeText(activity, "Must need Microphone and Storage permissions.\nPlease grant those permissions", Toast.LENGTH_LONG).show();
+        if (GeneralUtils.permissionDenied(activity))
+            showAppSettingsPageHint();
+        activity.requestPermissions(new String[]{
+                        Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.RECORD_AUDIO,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE
+                }
+                , RECORD_AUDIO_REQUEST_CODE);
+    }
 
-            // The permission is NOT already granted.
-            // Check if the user has been asked about this permission already and denied
-            // it. If so, we want to give more explanation about why the permission is needed.
-            // Fire off an async request to actually get the permission
-            // This will show the standard permission request dialog UI
-            activity.requestPermissions(
-                    new String[]
-                            {
-                                    Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.RECORD_AUDIO,
-                                    Manifest.permission.WRITE_EXTERNAL_STORAGE
-                            }
-                    , RECORD_AUDIO_REQUEST_CODE);
+    private void showAppSettingsPageHint() {
+        if (rootView != null) {
+            Snackbar.make(rootView, activity.getString(R.string.permisstion_required), Snackbar.LENGTH_LONG)
+                    .setAction(activity.getString(R.string.go_settings), view -> {
+                        Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, Uri.fromParts("package", BuildConfig.APPLICATION_ID, null));
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        activity.startActivity(intent);
+                    })
+                    .show();
         }
     }
 
