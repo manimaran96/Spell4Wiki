@@ -1,41 +1,38 @@
 package com.manimaran.wikiaudio.activities;
 
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
+import com.google.android.material.snackbar.Snackbar;
 import com.manimaran.wikiaudio.R;
 import com.manimaran.wikiaudio.adapters.EndlessAdapter;
+import com.manimaran.wikiaudio.apis.ApiClient;
+import com.manimaran.wikiaudio.apis.ApiInterface;
 import com.manimaran.wikiaudio.constants.Constants;
 import com.manimaran.wikiaudio.constants.EnumTypeDef.ListMode;
 import com.manimaran.wikiaudio.databases.DBHelper;
+import com.manimaran.wikiaudio.databases.dao.WordsHaveAudioDao;
 import com.manimaran.wikiaudio.databases.entities.WikiLang;
 import com.manimaran.wikiaudio.fragments.LanguageSelectionFragment;
 import com.manimaran.wikiaudio.listerners.OnLanguageSelectionListener;
+import com.manimaran.wikiaudio.models.WikiWordsWithoutAudio;
 import com.manimaran.wikiaudio.utils.GeneralUtils;
 import com.manimaran.wikiaudio.utils.PrefManager;
 import com.manimaran.wikiaudio.views.EndlessListView;
-import com.manimaran.wikiaudio.apis.ApiInterface;
-import com.manimaran.wikiaudio.apis.ApiClient;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -50,6 +47,8 @@ public class Spell4Wiktionary extends AppCompatActivity implements EndlessListVi
     private String nextOffsetObj;
     private PrefManager pref;
     private String languageCode = "";
+    private WordsHaveAudioDao wordsHaveAudioDao;
+    private Snackbar snackbar = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,10 +57,10 @@ public class Spell4Wiktionary extends AppCompatActivity implements EndlessListVi
 
         pref = new PrefManager(getApplicationContext());
         languageCode = pref.getLanguageCodeSpell4Wiki();
+        wordsHaveAudioDao = new DBHelper(getApplicationContext()).getAppDatabase().getWordsHaveAudioDao();
         init();
 
         adapter = new EndlessAdapter(this, new ArrayList<>(), ListMode.SPELL_4_WIKI);
-        OnLanguageSelectionListener listener = langCode -> { };
         resultListView.setAdapter(adapter);
         resultListView.setListener(this);
         resultListView.setVisibility(View.VISIBLE);
@@ -74,12 +73,7 @@ public class Spell4Wiktionary extends AppCompatActivity implements EndlessListVi
             getSupportActionBar().setTitle(getString(R.string.spell4wiktionary));
         }
 
-        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                loadDataFromServer();
-            }
-        });
+        refreshLayout.setOnRefreshListener(this::loadDataFromServer);
 
     }
 
@@ -90,6 +84,7 @@ public class Spell4Wiktionary extends AppCompatActivity implements EndlessListVi
         resultListView = findViewById(R.id.search_result_list);
         refreshLayout = findViewById(R.id.layout_swipe);
         resultListView.setLoadingView(R.layout.loading_row);
+        snackbar = Snackbar.make(resultListView, getString(R.string.record_fetch_fail), Snackbar.LENGTH_LONG);
     }
 
     /**
@@ -103,76 +98,88 @@ public class Spell4Wiktionary extends AppCompatActivity implements EndlessListVi
         DBHelper dbHelper = new DBHelper(getApplicationContext());
         WikiLang wikiLang = dbHelper.getAppDatabase().getWikiLangDao().getWikiLanguageWithCode(languageCode);
         String titleOfWordsWithoutAudio = null;
-        if(wikiLang != null && !TextUtils.isEmpty(wikiLang.getTitleOfWordsWithoutAudio()))
+        if (wikiLang != null && !TextUtils.isEmpty(wikiLang.getTitleOfWordsWithoutAudio()))
             titleOfWordsWithoutAudio = wikiLang.getTitleOfWordsWithoutAudio();
         // DB Clear or Sync Issue
-        if(titleOfWordsWithoutAudio == null){
+        if (titleOfWordsWithoutAudio == null) {
             titleOfWordsWithoutAudio = Constants.DEFAULT_TITLE_FOR_WITHOUT_AUDIO;
             languageCode = Constants.DEFAULT_LANGUAGE_CODE;
             invalidateOptionsMenu();
             pref.setLanguageCodeSpell4Wiki(languageCode);
         }
 
-        ApiInterface api = ApiClient.getWiktionaryApi(getApplicationContext(),  languageCode).create(ApiInterface.class);
-        Call<ResponseBody> call = api.fetchUnAudioRecords(titleOfWordsWithoutAudio, nextOffsetObj);
+        ApiInterface api = ApiClient.getWiktionaryApi(getApplicationContext(), languageCode).create(ApiInterface.class);
+        Call<WikiWordsWithoutAudio> call = api.fetchUnAudioRecords(titleOfWordsWithoutAudio, nextOffsetObj);
 
-        call.enqueue(new Callback<ResponseBody>() {
+        call.enqueue(new Callback<WikiWordsWithoutAudio>() {
             @Override
-            public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
+            public void onResponse(@NonNull Call<WikiWordsWithoutAudio> call, @NonNull Response<WikiWordsWithoutAudio> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    try {
-                        String responseStr = response.body().string();
-                        processSearchResultAudio(responseStr);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                        searchFailed();
-                    }
-                }
+                    processSearchResultAudio(response.body());
+                }else
+                    searchFailed(getString(R.string.something_went_wrong));
             }
 
             @Override
-            public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
-                searchFailed();
+            public void onFailure(@NonNull Call<WikiWordsWithoutAudio> call, @NonNull Throwable t) {
+                searchFailed(getString(R.string.something_went_wrong));
             }
         });
     }
 
-    private void processSearchResultAudio(String responseStr) {
-        try {
-            JSONObject reader = new JSONObject(responseStr);
-            ArrayList<String> titleList = new ArrayList<>();
-            JSONArray searchResults = reader.getJSONObject("query").optJSONArray("categorymembers");
-            if (nextOffsetObj == null)
-                resultListView.reset();
-            for (int ii = 0; ii < searchResults.length(); ii++) {
-                titleList.add(
-                        searchResults.getJSONObject(ii).getString("title")//+ " --> " + searchResults.getJSONObject(ii).getString("pageid")
-                );
-            }
-            if (reader.has("continue")) {
-                JSONObject jsonObject = reader.getJSONObject("continue");
-                if (jsonObject.has("cmcontinue"))
-                    nextOffsetObj = jsonObject.getString("cmcontinue");
+    private void processSearchResultAudio(WikiWordsWithoutAudio wikiWordsWithoutAudio) {
+
+        ArrayList<String> titleList = new ArrayList<>();
+        if (nextOffsetObj == null)
+            resultListView.reset();
+        if(resultListView.getVisibility() != View.VISIBLE)
+            resultListView.setVisibility(View.VISIBLE);
+        if (snackbar.isShown())
+            snackbar.dismiss();
+        boolean isEmptyResponse;
+        if (wikiWordsWithoutAudio != null) {
+            if (wikiWordsWithoutAudio.getOffset() != null && wikiWordsWithoutAudio.getOffset().getNextOffset() != null) {
+                nextOffsetObj = wikiWordsWithoutAudio.getOffset().getNextOffset();
             } else
                 nextOffsetObj = null;
+
             if (refreshLayout.isRefreshing())
                 refreshLayout.setRefreshing(false);
-            List<String> wordsList = GeneralUtils.getWordsWithoutAudioListOnly(String.format(getString(R.string.format_file_name_words_already_have_audio), pref.getLanguageCodeSpell4Wiki()), titleList);
-            resultListView.addNewData(wordsList);
-            if (wordsList.size() == 0) {
-                loadDataFromServer(); // Get more words if no words without audio
+
+            if (wikiWordsWithoutAudio.getQuery() != null && wikiWordsWithoutAudio.getQuery().getWikiTitleList() != null) {
+                for (WikiWordsWithoutAudio.WikiTitle wikiTitle : wikiWordsWithoutAudio.getQuery().getWikiTitleList()) {
+                    titleList.add(wikiTitle.getTitle());
+                }
+                isEmptyResponse = titleList.isEmpty();
+            } else
+                isEmptyResponse = true;
+
+            if (!isEmptyResponse) {
+                titleList.removeAll(wordsHaveAudioDao.getWordsAlreadyHaveAudioByLanguage(languageCode));
+                if (titleList.size() == 0) {
+                    // TODO : May issue comes
+                    loadDataFromServer(); // Get more words if no words without audio
+                }
+                resultListView.addNewData(titleList);
+            } else {
+                searchFailed(getString(R.string.something_went_wrong));
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-            resultListView.addNewData(Collections.singletonList("Error accrued"));
-        }
+        } else
+            searchFailed(getString(R.string.something_went_wrong));
     }
 
-    private void searchFailed() {
-        resultListView.loadLaterOnScroll();
+    private void searchFailed(String msg) {
+        if(resultListView != null && resultListView.getAdapter() != null && resultListView.getAdapter().getCount() < 2){ // Footer loader consume count = 1
+            resultListView.setVisibility(View.INVISIBLE);
+        }
+        if (GeneralUtils.isNetworkConnected(getApplicationContext())) {
+            snackbar.setText(msg);
+        } else
+            snackbar.setText(getString(R.string.check_internet));
         if (refreshLayout.isRefreshing())
             refreshLayout.setRefreshing(false);
-        Toast.makeText(this, "Please check your connection!\nScroll to try again!", Toast.LENGTH_LONG).show();
+        if (!snackbar.isShown())
+            snackbar.show();
     }
 
     @Override

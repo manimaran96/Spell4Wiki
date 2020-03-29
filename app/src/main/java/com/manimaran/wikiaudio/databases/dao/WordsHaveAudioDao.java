@@ -23,7 +23,7 @@ public interface WordsHaveAudioDao {
     @Delete
     public void delete(WordsHaveAudio wordsHaveAudio);
 
-    @Query("SELECT * FROM words_already_have_audio WHERE language_code = :code")
-    public List<WordsHaveAudio> getWordsAlreadyHaveAudioByLanguage(String code);
+    @Query("SELECT word FROM words_already_have_audio WHERE language_code = :code")
+    public List<String> getWordsAlreadyHaveAudioByLanguage(String code);
 
 }

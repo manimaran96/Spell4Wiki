@@ -37,7 +37,6 @@ import retrofit2.Response;
 public class WiktionarySearchActivity extends AppCompatActivity implements EndlessListView.EndlessListener {
 
     private EndlessListView resultListView;
-    private SearchView searchBar;
     private TextView txtNotFound;
 
     private String queryString;
@@ -57,7 +56,7 @@ public class WiktionarySearchActivity extends AppCompatActivity implements Endle
 
         txtNotFound = findViewById(R.id.txtNotFound);
 
-        searchBar = findViewById(R.id.search_bar);
+        SearchView searchBar = findViewById(R.id.search_bar);
         searchBar.requestFocus();
         searchBar.setIconifiedByDefault(false);
         searchBar.setQueryHint(getResources().getString(R.string.search_here));

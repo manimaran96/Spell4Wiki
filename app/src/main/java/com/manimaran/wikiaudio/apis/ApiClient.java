@@ -125,20 +125,17 @@ public class ApiClient {
     private static HttpLoggingInterceptor logging = new HttpLoggingInterceptor()
             .setLevel(HttpLoggingInterceptor.Level.BODY); // Log the response body
 
-    private static Interceptor queryParamInterceptor = new Interceptor() {
-        @Override
-        public Response intercept(@NonNull Chain chain) throws IOException {
-            Request original = chain.request();
-            HttpUrl originalHttpUrl = original.url();
+    private static Interceptor queryParamInterceptor = chain -> {
+        Request original = chain.request();
+        HttpUrl originalHttpUrl = original.url();
 
-            HttpUrl url = originalHttpUrl.newBuilder().addQueryParameter("format", "json").build();
+        HttpUrl url = originalHttpUrl.newBuilder().addQueryParameter("format", "json").build();
 
-            // Request customization: add request headers
-            Request.Builder requestBuilder = original.newBuilder().url(url);
+        // Request customization: add request headers
+        Request.Builder requestBuilder = original.newBuilder().url(url);
 
-            Request request = requestBuilder.build();
-            return chain.proceed(request);
-        }
+        Request request = requestBuilder.build();
+        return chain.proceed(request);
     };
 
     private static Interceptor addCookiesInterceptor = new Interceptor() {

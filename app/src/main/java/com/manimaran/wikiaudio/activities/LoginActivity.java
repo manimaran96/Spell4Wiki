@@ -13,7 +13,10 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.manimaran.wikiaudio.R;
+import com.manimaran.wikiaudio.constants.Constants;
 import com.manimaran.wikiaudio.constants.Urls;
+import com.manimaran.wikiaudio.models.WikiLogin;
+import com.manimaran.wikiaudio.models.WikiToken;
 import com.manimaran.wikiaudio.utils.GeneralUtils;
 import com.manimaran.wikiaudio.utils.PrefManager;
 import com.manimaran.wikiaudio.apis.ApiInterface;
@@ -113,35 +116,26 @@ public class LoginActivity extends AppCompatActivity {
      * @param password - password of the user
      */
     private void callToken(final String username, final String password) {
-        Call<ResponseBody> call = api.getLoginToken();
-        call.enqueue(new Callback<ResponseBody>() {
+        Call<WikiToken> call = api.getLoginToken();
+        call.enqueue(new Callback<WikiToken>() {
             @Override
-            public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
+            public void onResponse(@NonNull Call<WikiToken> call, @NonNull Response<WikiToken> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     try {
-                        String responseStr = response.body().string();
-                        String lgToken;
-                        JSONObject reader;
-                        JSONObject tokenJSONObject;
-
-                        reader = new JSONObject(responseStr);
-                        tokenJSONObject = reader.getJSONObject("query").getJSONObject("tokens");
-                        lgToken = tokenJSONObject.getString("logintoken");
-
+                        String lgToken = response.body().getQuery().getTokenValue().getToken();
                         /*
                          * Once getting login token then call client login api
                          */
                         completeLogin(username, password, lgToken);
-
-                    } catch (JSONException | IOException e) {
+                    } catch (Exception e) {
                         e.printStackTrace();
-                        showErrorMsg("Please check your connection!");
+                        showErrorMsg(getString(R.string.check_network));
                     }
                 }
             }
 
             @Override
-            public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
+            public void onFailure(@NonNull Call<WikiToken> call, @NonNull Throwable t) {
                 t.printStackTrace();
                 showErrorMsg(getString(R.string.check_internet));
             }
@@ -150,58 +144,53 @@ public class LoginActivity extends AppCompatActivity {
 
     /**
      * Call client login api after getting login token
-     *
      * @param username   - username of the user
      * @param password   - password of the user
      * @param loginToken - Login token
      */
     private void completeLogin(String username, String password, String loginToken) {
 
-        Call<ResponseBody> call = api.clientLogin("clientlogin", "json", Urls.COMMONS, loginToken, username, password);
-        call.enqueue(new Callback<ResponseBody>() {
+        Call<WikiLogin> call = api.clientLogin(username, password, loginToken, Urls.COMMONS);
+        call.enqueue(new Callback<WikiLogin>() {
             @Override
-            public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
+            public void onResponse(@NonNull Call<WikiLogin> call, @NonNull Response<WikiLogin> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     try {
-                        String responseStr = response.body().string();
-                        JSONObject reader;
-                        JSONObject loginJSONObject;
-                        try {
-                            reader = new JSONObject(responseStr);
-                            loginJSONObject = reader.getJSONObject("clientlogin");
-                            String result = loginJSONObject.getString("status");
-                            if (result.equals("PASS")) {
+                        WikiLogin.ClientLogin login = response.body().getClientLogin();
+                        if(login != null && login.getStatus() != null){
+                            switch (login.getStatus()){
+                                case Constants.PASS:
+                                    showMsg(String.format(getString(R.string.welcome_user), login.getUsername()));
+                                    //  Write to shared preferences
+                                    pref.setUserSession(login.getUsername());
+                                    btnLogin.doneLoadingAnimation(
+                                            ContextCompat.getColor(LoginActivity.this, R.color.w_green),
+                                            BitmapFactory.decodeResource(getResources(), R.drawable.ic_done));
 
-                                showMsg("Welcome " + loginJSONObject.getString("username"));
-
-                                //  Write to shared preferences
-                                pref.setUserSession(loginJSONObject.getString("username"));
-
-                                btnLogin.doneLoadingAnimation(
-                                        ContextCompat.getColor(LoginActivity.this, R.color.w_green),
-                                        BitmapFactory.decodeResource(getResources(), R.drawable.ic_done));
-
-                                new Handler().postDelayed(() -> {
-                                    // Move to new activity
-                                    launchActivity();
-                                }, 1500);
-
-                            } else if (result.equals("FAIL")) {
-                                showErrorMsg(loginJSONObject.getString("message"));
+                                    new Handler().postDelayed(() -> {
+                                        // Move to new activity
+                                        launchActivity();
+                                    }, 1500);
+                                    break;
+                                case Constants.FAIL:
+                                    showErrorMsg(login.getMessage());
+                                    break;
+                                default:
+                                    showErrorMsg(getString(R.string.server_misbehaved));
+                                    break;
                             }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                            showErrorMsg("Server misbehaved! Please try again later.");
-                        }
-                    } catch (IOException e) {
+                        }else
+                            showErrorMsg(getString(R.string.something_went_wrong));
+                    } catch (Exception e) {
                         e.printStackTrace();
-                        showErrorMsg("Please check your connection!");
+                        showErrorMsg(getString(R.string.something_went_wrong));
                     }
-                }
+                }else
+                    showErrorMsg(getString(R.string.something_went_wrong));
             }
 
             @Override
-            public void onFailure(@NotNull Call<ResponseBody> call, @NotNull Throwable t) {
+            public void onFailure(@NotNull Call<WikiLogin> call, @NotNull Throwable t) {
                 showErrorMsg("Please check your connection!");
             }
         });

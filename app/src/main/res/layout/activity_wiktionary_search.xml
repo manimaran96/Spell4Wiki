@@ -8,22 +8,12 @@
     android:background="@color/white"
     tools:context=".activities.WiktionarySearchActivity">
 
-    <ImageView
-        android:id="@+id/wiktionary_logo"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="30dp"
-        android:contentDescription="@string/wiktionary"
-        app:srcCompat="@drawable/ic_wiktionary" />
-
-    <SearchView
+    <androidx.appcompat.widget.SearchView
         android:id="@+id/search_bar"
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:layout_below="@+id/wiktionary_logo"
         android:layout_margin="@dimen/activity_horizontal_margin"
-        android:searchIcon="@drawable/ic_info"
+        app:searchIcon="@drawable/ic_info"
         android:layout_centerHorizontal="true"
         android:queryHint="@string/hint_search"
         android:background="@drawable/bg_line_border"

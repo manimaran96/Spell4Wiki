@@ -351,7 +351,6 @@ public class RecordAudioDialogFragment extends DialogFragment {
 
         // finally, execute the request
         Call<ResponseBody> call = api.uploadFile(
-                RequestBody.create(MultipartBody.FORM, "upload"), // action //RequestBody.create("upload", MultipartBody.FORM), // action
                 RequestBody.create(MultipartBody.FORM, uploadFileName), // filename
                 RequestBody.create(MultipartBody.FORM, editToken), // edit token
                 body, // Body file

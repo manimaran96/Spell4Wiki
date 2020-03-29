@@ -13,12 +13,6 @@ import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
-import com.google.android.material.snackbar.Snackbar;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.core.content.ContextCompat;
-import androidx.appcompat.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Display;
 import android.view.View;
@@ -26,18 +20,22 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+
+import com.google.android.material.snackbar.Snackbar;
 import com.manimaran.wikiaudio.R;
 import com.manimaran.wikiaudio.activities.CommonWebActivity;
 import com.manimaran.wikiaudio.constants.Constants;
 import com.manimaran.wikiaudio.fragments.RecordAudioDialogFragment;
 
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 public class GeneralUtils {
@@ -51,7 +49,7 @@ public class GeneralUtils {
                 && ContextCompat.checkSelfPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED;
     }
 
-    public static Boolean permissionDenied(Activity activity){
+    public static Boolean permissionDenied(Activity activity) {
         return ContextCompat.checkSelfPermission(activity, Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_DENIED
                 || ContextCompat.checkSelfPermission(activity, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED
                 || ContextCompat.checkSelfPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED;
@@ -77,7 +75,7 @@ public class GeneralUtils {
         Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
     }
 
-    public static void showSnack(View view, String msg){
+    public static void showSnack(View view, String msg) {
         Snackbar.make(view, msg, Snackbar.LENGTH_LONG).show();
     }
 
@@ -127,49 +125,6 @@ public class GeneralUtils {
         }
     }
 
-    public static List<String> getWordsWithoutAudioListOnly(String fileName, ArrayList<String> wordsList) {
-
-        final File dir = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/Spell4Wiki/WordsWithAudio");
-        //Get the text file
-        File file = new File(dir, fileName + ".txt");
-
-        //Read text from file
-        List<String> tempList = new ArrayList<>();
-
-        if(file.exists()) {
-            try {
-                BufferedReader br = new BufferedReader(new FileReader(file));
-                String line;
-
-                while ((line = br.readLine()) != null) {
-                    tempList.add(line);
-                }
-                br.close();
-            } catch (IOException e) {
-                //You'll need to add proper error handling here
-                e.printStackTrace();
-            }
-        }
-        wordsList.removeAll(tempList);
-        return wordsList;
-    }
-
-    public Integer getScreenWidth(Context context) {
-        WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
-        Display display = wm.getDefaultDisplay();
-        Point size = new Point();
-        display.getSize(size);
-        return size.x;
-    }
-
-    public Integer getScreenHeight(Context context) {
-        WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
-        Display display = wm.getDefaultDisplay();
-        Point size = new Point();
-        display.getSize(size);
-        return size.y;
-    }
-
     public static void hideKeyboard(Activity activity) {
         try {
             InputMethodManager imm = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
@@ -179,8 +134,9 @@ public class GeneralUtils {
             if (view == null) {
                 view = new View(activity);
             }
-            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-        }catch (Exception e){
+            if (imm != null)
+                imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -190,46 +146,45 @@ public class GeneralUtils {
         return connectivityManager.getActiveNetworkInfo() != null && connectivityManager.getActiveNetworkInfo().isConnected();
     }
 
-    public static void openUrl(Context context, String url, String title){
+    public static void openUrl(Context context, String url, String title) {
         try {
             View view = ((Activity) context).findViewById(android.R.id.content);
-            if(GeneralUtils.isNetworkConnected(context)) {
+            if (GeneralUtils.isNetworkConnected(context)) {
                 if (url != null && !url.isEmpty()) {
                     Intent intent = new Intent(context, CommonWebActivity.class);
                     intent.putExtra(Constants.TITLE, title);
                     intent.putExtra(Constants.URL, url);
                     context.startActivity(intent);
-                }else
+                } else
                     GeneralUtils.showSnack(view, context.getString(R.string.check_url));
-            }else
+            } else
                 GeneralUtils.showSnack(view, context.getString(R.string.check_internet));
 
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public static void openUrlInBrowser(Context context, String url){
+    public static void openUrlInBrowser(Context context, String url) {
         try {
-            if (url != null && !url.isEmpty())
-            {
+            if (url != null && !url.isEmpty()) {
                 context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     public static void showRecordDialog(Activity activity, String word) {
         RecordAudioDialogFragment dialogFragment = RecordAudioDialogFragment.newInstance(word);
-        FragmentManager fm = ((AppCompatActivity)activity).getSupportFragmentManager();
+        FragmentManager fm = ((AppCompatActivity) activity).getSupportFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
         Fragment prev = fm.findFragmentByTag("dialog");
         if (prev != null) {
             ft.remove(prev);
         }
         ft.addToBackStack(null);
-        if(!dialogFragment.isVisible())
+        if (!dialogFragment.isVisible())
             dialogFragment.show(ft, "dialog");
     }
 }
