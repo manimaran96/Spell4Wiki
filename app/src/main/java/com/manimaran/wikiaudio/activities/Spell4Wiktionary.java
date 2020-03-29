@@ -54,27 +54,8 @@ public class Spell4Wiktionary extends AppCompatActivity implements EndlessListVi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_spell_4_wiktionary);
-
-        pref = new PrefManager(getApplicationContext());
-        languageCode = pref.getLanguageCodeSpell4Wiki();
-        wordsHaveAudioDao = new DBHelper(getApplicationContext()).getAppDatabase().getWordsHaveAudioDao();
         init();
-
-        adapter = new EndlessAdapter(this, new ArrayList<>(), ListMode.SPELL_4_WIKI);
-        resultListView.setAdapter(adapter);
-        resultListView.setListener(this);
-        resultListView.setVisibility(View.VISIBLE);
-
         loadDataFromServer();
-
-        // Title & Sub title
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setTitle(getString(R.string.spell4wiktionary));
-        }
-
-        refreshLayout.setOnRefreshListener(this::loadDataFromServer);
-
     }
 
     /**
@@ -85,6 +66,23 @@ public class Spell4Wiktionary extends AppCompatActivity implements EndlessListVi
         refreshLayout = findViewById(R.id.layout_swipe);
         resultListView.setLoadingView(R.layout.loading_row);
         snackbar = Snackbar.make(resultListView, getString(R.string.record_fetch_fail), Snackbar.LENGTH_LONG);
+
+        pref = new PrefManager(getApplicationContext());
+        languageCode = pref.getLanguageCodeSpell4Wiki();
+        wordsHaveAudioDao = new DBHelper(getApplicationContext()).getAppDatabase().getWordsHaveAudioDao();
+
+        adapter = new EndlessAdapter(this, new ArrayList<>(), ListMode.SPELL_4_WIKI);
+        resultListView.setAdapter(adapter);
+        resultListView.setListener(this);
+        resultListView.setVisibility(View.VISIBLE);
+
+        // Title & Sub title
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setTitle(getString(R.string.spell4wiktionary));
+        }
+
+        refreshLayout.setOnRefreshListener(this::loadDataFromServer);
     }
 
     /**
@@ -169,13 +167,16 @@ public class Spell4Wiktionary extends AppCompatActivity implements EndlessListVi
     }
 
     private void searchFailed(String msg) {
-        if(resultListView != null && resultListView.getAdapter() != null && resultListView.getAdapter().getCount() < 2){ // Footer loader consume count = 1
-            resultListView.setVisibility(View.INVISIBLE);
+        if(resultListView != null){ // Footer loader consume count = 1
+            if(resultListView.getAdapter() != null && resultListView.getAdapter().getCount() < 2)
+                resultListView.setVisibility(View.INVISIBLE);
+            else
+                resultListView.loadLaterOnScroll();
         }
         if (GeneralUtils.isNetworkConnected(getApplicationContext())) {
             snackbar.setText(msg);
         } else
-            snackbar.setText(getString(R.string.check_internet));
+            snackbar.setText(getString(resultListView.getVisibility() != View.VISIBLE ?  R.string.check_internet : R.string.record_fetch_fail));
         if (refreshLayout.isRefreshing())
             refreshLayout.setRefreshing(false);
         if (!snackbar.isShown())

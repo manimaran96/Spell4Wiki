@@ -15,6 +15,9 @@ public class Constants {
     public static final String DEFAULT_LANGUAGE_CODE = "ta";
     public static final String LANGUAGE_CODE = "language_code";
 
+    // Intent
+    public static final String SEARCH_TEXT = "search_text";
+
     // API related
     public static final String PASS = "PASS";
     public static final String FAIL = "FAIL";

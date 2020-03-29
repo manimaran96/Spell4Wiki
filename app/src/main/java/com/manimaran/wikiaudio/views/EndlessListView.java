@@ -59,7 +59,7 @@ public class EndlessListView extends ListView implements OnScrollListener {
 
     public void setLoadingView(int resId) {
         final LayoutInflater inflater = (LayoutInflater) super.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        footer = inflater.inflate(resId, null);
+        footer = inflater != null ? inflater.inflate(resId, null)  : null;
         this.addFooterView(footer);
     }
 

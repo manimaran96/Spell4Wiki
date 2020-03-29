@@ -3,6 +3,7 @@ package com.manimaran.wikiaudio.apis;
 
 import com.manimaran.wikiaudio.models.Contributors;
 import com.manimaran.wikiaudio.models.WikiLogin;
+import com.manimaran.wikiaudio.models.WikiSearchWords;
 import com.manimaran.wikiaudio.models.WikiToken;
 import com.manimaran.wikiaudio.models.WikiLanguage;
 import com.manimaran.wikiaudio.models.WikiWordsWithoutAudio;
@@ -43,7 +44,7 @@ public interface ApiInterface {
 
     // Search Query - Wiktionary
     @GET("w/api.php?action=query&list=search&utf8=1&format=json")
-    Call<ResponseBody> fetchRecords(
+    Call<WikiSearchWords> fetchRecords(
             @Query("srsearch") String searchString,
             @Query("sroffset") Integer offSet
     );

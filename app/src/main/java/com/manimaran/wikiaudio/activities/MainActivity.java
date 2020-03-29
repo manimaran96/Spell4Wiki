@@ -11,6 +11,7 @@ import android.widget.SearchView;
 import android.widget.TextView;
 
 import com.manimaran.wikiaudio.R;
+import com.manimaran.wikiaudio.constants.Constants;
 import com.manimaran.wikiaudio.constants.Urls;
 import com.manimaran.wikiaudio.utils.GeneralUtils;
 import com.manimaran.wikiaudio.utils.PrefManager;
@@ -40,7 +41,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public boolean onQueryTextSubmit(String query) {
                 Intent intent = new Intent(getApplicationContext(), WiktionarySearchActivity.class);
-                intent.putExtra("search_text", query);
+                intent.putExtra(Constants.SEARCH_TEXT, query);
                 startActivity(intent);
                 new Handler().postDelayed(() -> {
                     if(searchView  != null)
