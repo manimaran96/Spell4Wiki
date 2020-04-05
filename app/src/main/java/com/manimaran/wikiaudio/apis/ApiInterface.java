@@ -1,11 +1,13 @@
 package com.manimaran.wikiaudio.apis;
 
 
+import com.manimaran.wikiaudio.databases.entities.WikiLang;
 import com.manimaran.wikiaudio.models.Contributors;
 import com.manimaran.wikiaudio.models.WikiLogin;
 import com.manimaran.wikiaudio.models.WikiSearchWords;
 import com.manimaran.wikiaudio.models.WikiToken;
 import com.manimaran.wikiaudio.models.WikiLanguage;
+import com.manimaran.wikiaudio.models.WikiUpload;
 import com.manimaran.wikiaudio.models.WikiWordsWithoutAudio;
 
 import java.util.List;
@@ -59,16 +61,20 @@ public interface ApiInterface {
 
     // Edit Token - Commons
     @GET("w/api.php?action=query&meta=tokens&format=json&type=csrf")
-    Call<ResponseBody> getEditToken();
+    Call<WikiToken> getEditToken();
+
+    // Edit Token - Commons
+    @GET("w/api.php?action=query&meta=tokens&format=json&type=csrf")
+    Call<ResponseBody> getEditTokenEx();
 
     // Upload - commons
     @Multipart
     @POST("w/api.php?action=upload")
-    Call<ResponseBody> uploadFile(
+    Call<WikiUpload> uploadFile(
             @Part("filename") RequestBody filename,
             @Part("token") RequestBody token,
             @Part MultipartBody.Part file,
-            @Part("text") RequestBody text,
+            @Part("text") RequestBody contentAndLicense,
             @Part("comment") RequestBody comment
     );
 

@@ -28,7 +28,7 @@ public class SyncHelper {
     public void syncWikiLanguages() {
         // Sync Wiki Language List
 
-        DBHelper dbHelper = new DBHelper(mActivity);
+        DBHelper dbHelper = DBHelper.getInstance(mActivity);
 
         ApiInterface api = ApiClient.getApi().create(ApiInterface.class);
         Call<List<WikiLanguage>> wikiLanguageCall = api.fetchWikiLanguageList();

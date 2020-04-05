@@ -3,7 +3,6 @@ package com.manimaran.wikiaudio.record.wav;
 import android.media.AudioFormat;
 import android.media.AudioRecord;
 import android.media.MediaRecorder;
-import android.os.Environment;
 import android.util.Log;
 
 import java.io.File;
@@ -14,14 +13,12 @@ import java.io.IOException;
 
 public class WAVRecorder {
     private static final int RECORDER_BPP = 16;
-    private static final int RECORDER_SAMPLE_RATE = 44100;
+    private static final int RECORDER_SAMPLE_RATE = 16000; //44100;
     private static final int RECORDER_CHANNELS = AudioFormat.CHANNEL_IN_MONO;
     private static final int RECORDER_AUDIO_ENCODING = AudioFormat.ENCODING_PCM_16BIT;
-    private static final String AUDIO_RECORDER_FOLDER = "AudioRecorder";
-    private static final String AUDIO_RECORDER_TEMP_FILE = "record_temp.raw";
     private static final String TAG = WAVRecorder.class.getSimpleName();
     private static int bufferSize = AudioRecord.getMinBufferSize(
-            44100,
+            RECORDER_SAMPLE_RATE,
             AudioFormat.CHANNEL_IN_MONO,
             AudioFormat.ENCODING_PCM_16BIT
     );
@@ -116,7 +113,7 @@ public class WAVRecorder {
         out.write(header, 0, 44);
     }
 
-    public void startRecording() {
+    public void startRecording(String recordingFilePath) {
         recorder = new AudioRecord(MediaRecorder.AudioSource.MIC,
                 RECORDER_SAMPLE_RATE, RECORDER_CHANNELS,
                 RECORDER_AUDIO_ENCODING, bufferSize);
@@ -127,13 +124,7 @@ public class WAVRecorder {
 
         isRecording = true;
 
-        recordingThread = new Thread(new Runnable() {
-
-            @Override
-            public void run() {
-                writeAudioDataToFile(getTempFilename());
-            }
-        }, "AudioRecorder Thread");
+        recordingThread = new Thread(() -> writeAudioDataToFile(recordingFilePath), "AudioRecorder Thread");
 
         recordingThread.start();
     }
@@ -171,7 +162,7 @@ public class WAVRecorder {
         }
     }
 
-    public void stopRecording(String filepath) {
+    public void stopRecording(String recordingFilePath, String recordedFilePath) {
         if (null != recorder) {
             isRecording = false;
 
@@ -184,24 +175,12 @@ public class WAVRecorder {
             recordingThread = null;
         }
 
-        copyWaveFile(getTempFilename(), filepath);
+        copyWaveFile(recordingFilePath, recordedFilePath);
 
         //  Delete temporary file
-        File tempFile = new File(getTempFilename());
+        File tempFile = new File(recordingFilePath);
         if (!tempFile.delete())
             Log.d(TAG, "Can not delete temporary file!");
-    }
-
-    private String getTempFilename() {
-        String filepath = Environment.getExternalStorageDirectory().getPath();
-        File file = new File(filepath, AUDIO_RECORDER_FOLDER);
-
-        if (!file.exists()) {
-            if (!file.mkdirs())
-                Log.d(TAG, "Can not create directory!");
-        }
-
-        return (file.getAbsolutePath() + "/" + AUDIO_RECORDER_TEMP_FILE);
     }
 
     public Boolean isRecording() {

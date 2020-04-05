@@ -36,7 +36,7 @@
     <Button
         android:id="@+id/btn_record"
         android:layout_width="120dp"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/btn_height"
         android:layout_gravity="center"
         android:background="@drawable/bg_blue"
         android:text="@string/record"

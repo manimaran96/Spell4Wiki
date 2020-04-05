@@ -12,14 +12,11 @@ public class WAVPlayer {
         mPlayer = new MediaPlayer();
         try {
             mPlayer.setDataSource(sourceFilePath);
-            mPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-                @Override
-                public void onCompletion(MediaPlayer mediaPlayer) {
-                    try {
-                        onCompletion.call();
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
+            mPlayer.setOnCompletionListener(mediaPlayer -> {
+                try {
+                    onCompletion.call();
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
             });
             mPlayer.prepare();

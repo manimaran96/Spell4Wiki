@@ -31,6 +31,14 @@ public class WikiLang implements Serializable {
     public WikiLang() {
     }
 
+    public WikiLang(@NotNull String code, String name, String localName, String titleOfWordsWithoutAudio, Boolean isLeftDirection) {
+        this.code = code;
+        this.name = name;
+        this.localName = localName;
+        this.titleOfWordsWithoutAudio = titleOfWordsWithoutAudio;
+        this.isLeftDirection = isLeftDirection;
+    }
+
     @NotNull
     public String getCode() {
         return code;
@@ -70,13 +78,5 @@ public class WikiLang implements Serializable {
 
     public void setIsLeftDirection(Boolean leftDirection) {
         isLeftDirection = leftDirection;
-    }
-
-    public WikiLang(@NotNull String code, String name, String localName, String titleOfWordsWithoutAudio, Boolean isLeftDirection) {
-        this.code = code;
-        this.name = name;
-        this.localName = localName;
-        this.titleOfWordsWithoutAudio = titleOfWordsWithoutAudio;
-        this.isLeftDirection = isLeftDirection;
     }
 }

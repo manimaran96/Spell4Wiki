@@ -43,8 +43,9 @@ dependencies {
     // Animation libraries
     implementation 'br.com.simplepass:loading-button-android:1.14.0'
 
-    // FFMPEG - Audio wav to ogg convertor
-    implementation 'com.arthenica:mobile-ffmpeg-full:4.3.1.LTS' // support api 16+
+    // FFMPEG - Audio wav to ogg converter
+    implementation 'com.arthenica:mobile-ffmpeg-audio:4.3.1.LTS'
+    //implementation 'com.arthenica:mobile-ffmpeg-full:4.3.1.LTS' // support api 16+
 
     // Glide
     implementation 'com.github.bumptech.glide:glide:4.11.0'
@@ -66,6 +67,9 @@ dependencies {
     // Room components
     implementation 'android.arch.persistence.room:runtime:1.1.1'
     annotationProcessor 'android.arch.persistence.room:compiler:1.1.1'
+
+    // Lottie Animation
+    implementation 'com.airbnb.android:lottie:3.4.0'
     
     testImplementation 'junit:junit:4.12'
     implementation 'org.jetbrains:annotations-java5:15.0'

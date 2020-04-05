@@ -79,7 +79,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 nextClass = Spell4WordActivity.class;
                 break;
         }
-        startActivity(new Intent(getApplicationContext(), nextClass));
+        Intent intent = new Intent(getApplicationContext(), nextClass);
+        intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        startActivity(intent);
     }
 
     /**

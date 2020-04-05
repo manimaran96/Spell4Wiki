@@ -147,19 +147,11 @@
     <string name="record_fetch_fail">Please check your connection!\nScroll to try again!</string>
     <string name="hint_record_duration">00:10</string>
     <string name="record_audio_not_found">Please record audio first</string>
-    <string name="recorded_audio_too_short">Recorded audio too short.</string>
     <string name="recording_under_process">Recording under process</string>
     <string name="invalid_word">Invalid word</string>
     <string name="invalid_language">Invalid Language</string>
     <string name="confirm_declaration">Please check and confirm the declaration.</string>
     <string name="invalid_csrf">You are not logged in! \nPlease login to continue.</string>
-    <string name="invalid_csrf_try_again">Invalid CSRF Token. Please Try again.</string>
-    <string name="file_content_description">Pronunciation of %1$s word %2$s.</string>
-    <string name="unable_to_upload_audio">Unable to upload audio. Something went wrong</string>
-    <string name="upload_success">Successfully Uploaded\nPronunciation audio of %s</string>
-    <string name="upload_failed">Upload failed. Please Try again.</string>
-    <string name="file_already_exist">Upload file already exist.</string>
-    <string name="invalid_response">Invalid response</string>
-    // %1$s - language name, %2$s - word.
+    <string name="file_content_description">%2$s என்ற %1$s வார்த்தையின் உச்சரிப்பு.</string>
 
 </resources>

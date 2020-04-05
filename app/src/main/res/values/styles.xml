@@ -95,4 +95,15 @@
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:windowIsFloating">true</item>
     </style>
+
+    <style name="RecordAudioDialogTheme" parent="Theme.AppCompat.Light.Dialog">
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowActionBar">false</item>
+        <item name="android:fillViewport">true</item>
+        <item name="android:windowIsTranslucent">false</item>
+        <item name="android:windowBackground">#4f000000</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
 </resources>

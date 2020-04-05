@@ -82,12 +82,12 @@ public class WikiLicense {
 
     private static class LicenseTemplateInWiki {
         //{{CC-Zero}}"), License type ->  PD-self, CC-Zero, CC-BY-SA-4.0, CC-BY-SA-3.0
-        static final String CC_BY_3 = "{{CC-BY-3.0}}";
-        static final String CC_BY_4 = "{{CC-BY-4.0}}";
-        static final String CC_BY_SA_3 = "{{CC-BY-SA-3.0}}";
-        static final String CC_BY_SA_4 = "{{CC-BY-SA-4.0}}";
-        static final String CC_0 = "{{CC-Zero}}";
-        static final String PUBLIC_DOMAIN = "{{PD-self}}";
+        static final String CC_BY_3 = "{{self|cc-by-3.0}}";
+        static final String CC_BY_4 = "{{self|cc-by-4.0}}";
+        static final String CC_BY_SA_3 = "{{self|cc-by-sa-3.0}}";
+        static final String CC_BY_SA_4 = "{{self|cc-by-sa-4.0}}";
+        static final String CC_0 = "{{self|cc-zero}}";
+        static final String PUBLIC_DOMAIN = "{{self|pd-self}}";
     }
 
 

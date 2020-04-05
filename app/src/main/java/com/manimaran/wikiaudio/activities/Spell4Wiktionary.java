@@ -1,5 +1,6 @@
 package com.manimaran.wikiaudio.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -10,6 +11,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
@@ -69,7 +71,7 @@ public class Spell4Wiktionary extends AppCompatActivity implements EndlessListVi
 
         pref = new PrefManager(getApplicationContext());
         languageCode = pref.getLanguageCodeSpell4Wiki();
-        wordsHaveAudioDao = new DBHelper(getApplicationContext()).getAppDatabase().getWordsHaveAudioDao();
+        wordsHaveAudioDao = DBHelper.getInstance(getApplicationContext()).getAppDatabase().getWordsHaveAudioDao();
 
         adapter = new EndlessAdapter(this, new ArrayList<>(), ListMode.SPELL_4_WIKI);
         resultListView.setAdapter(adapter);
@@ -93,7 +95,7 @@ public class Spell4Wiktionary extends AppCompatActivity implements EndlessListVi
         if (nextOffsetObj == null)
             refreshLayout.setRefreshing(true);
 
-        DBHelper dbHelper = new DBHelper(getApplicationContext());
+        DBHelper dbHelper = DBHelper.getInstance(getApplicationContext());
         WikiLang wikiLang = dbHelper.getAppDatabase().getWikiLangDao().getWikiLanguageWithCode(languageCode);
         String titleOfWordsWithoutAudio = null;
         if (wikiLang != null && !TextUtils.isEmpty(wikiLang.getTitleOfWordsWithoutAudio()))
@@ -240,5 +242,18 @@ public class Spell4Wiktionary extends AppCompatActivity implements EndlessListVi
     @Override
     protected void onDestroy() {
         super.onDestroy();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == Constants.RC_UPLOAD_DIALOG){
+            if(data != null && data.hasExtra(Constants.WORD)){
+                if(adapter != null) {
+                    adapter.remove(data.getStringExtra(Constants.WORD));
+                    adapter.notifyDataSetChanged();
+                }
+            }
+        }
     }
 }

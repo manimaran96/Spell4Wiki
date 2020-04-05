@@ -8,29 +8,22 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Point;
 import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
 import android.util.Log;
-import android.view.Display;
 import android.view.View;
-import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.manimaran.wikiaudio.R;
 import com.manimaran.wikiaudio.activities.CommonWebActivity;
+import com.manimaran.wikiaudio.activities.RecordAudioActivity;
 import com.manimaran.wikiaudio.constants.Constants;
-import com.manimaran.wikiaudio.fragments.RecordAudioDialogFragment;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -39,9 +32,6 @@ import java.io.IOException;
 import java.util.List;
 
 public class GeneralUtils {
-
-    public GeneralUtils() {
-    }
 
     public static Boolean checkPermissionGranted(Activity activity) {
         return ContextCompat.checkSelfPermission(activity, Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_GRANTED
@@ -175,16 +165,11 @@ public class GeneralUtils {
         }
     }
 
-    public static void showRecordDialog(Activity activity, String word) {
-        RecordAudioDialogFragment dialogFragment = RecordAudioDialogFragment.newInstance(word);
-        FragmentManager fm = ((AppCompatActivity) activity).getSupportFragmentManager();
-        FragmentTransaction ft = fm.beginTransaction();
-        Fragment prev = fm.findFragmentByTag("dialog");
-        if (prev != null) {
-            ft.remove(prev);
-        }
-        ft.addToBackStack(null);
-        if (!dialogFragment.isVisible())
-            dialogFragment.show(ft, "dialog");
+    public static void showRecordDialog(Activity activity, String word, String langCode) {
+        Intent intent = new Intent(activity, RecordAudioActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        intent.putExtra(Constants.WORD, word);
+        intent.putExtra(Constants.LANGUAGE_CODE, langCode);
+        activity.startActivityForResult(intent, Constants.RC_UPLOAD_DIALOG);
     }
 }

@@ -33,6 +33,8 @@
     <color name="ic_launcher_background">#ffffff</color>
     <color name="indicator">#dd2c00</color>
     <color name="label_text">#A09D9D</color>
+    <color name="fab_close">#FF5722</color>
+    <color name="txt_light">#DFDCDC</color>
 
 
 </resources>

@@ -74,7 +74,7 @@ public class LanguageSelectionFragment extends BottomSheetDialogFragment {
         ImageView btnClose = dialog.findViewById(R.id.btn_close);
         final SearchView searchView = dialog.findViewById(R.id.search_view);
 
-        DBHelper dbHelper = new DBHelper(getContext());
+        DBHelper dbHelper = DBHelper.getInstance(getContext());
 
         /*
          * Check Wiktionary mode or not

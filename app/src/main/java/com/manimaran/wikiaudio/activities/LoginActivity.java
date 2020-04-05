@@ -122,7 +122,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onResponse(@NonNull Call<WikiToken> call, @NonNull Response<WikiToken> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     try {
-                        String lgToken = response.body().getQuery().getTokenValue().getToken();
+                        String lgToken = response.body().getQuery().getTokenValue().getLoginToken();
                         /*
                          * Once getting login token then call client login api
                          */

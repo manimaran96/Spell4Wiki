@@ -83,7 +83,7 @@ public class Spell4WordActivity extends AppCompatActivity {
 
         btnRecord.setOnClickListener(v -> {
             if (!TextUtils.isEmpty(editSpell4Word.getText()) && editSpell4Word.getText().length() < 30) {
-                GeneralUtils.showRecordDialog(Spell4WordActivity.this, editSpell4Word.getText().toString().trim());
+                GeneralUtils.showRecordDialog(Spell4WordActivity.this, editSpell4Word.getText().toString().trim(), languageCode);
             } else
                 GeneralUtils.showSnack(editSpell4Word, "Enter valid word");
         });

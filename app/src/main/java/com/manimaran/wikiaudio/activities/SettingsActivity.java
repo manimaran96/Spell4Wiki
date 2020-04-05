@@ -57,7 +57,7 @@ public class SettingsActivity extends AppCompatActivity {
         View layoutLicenseOfUploadAudio = findViewById(R.id.layoutLicenseOfUploadAudio);
 
         pref = new PrefManager(getApplicationContext());
-        wikiLangDao = new DBHelper(getApplicationContext()).getAppDatabase().getWikiLangDao();
+        wikiLangDao = DBHelper.getInstance(getApplicationContext()).getAppDatabase().getWikiLangDao();
         if(pref.getIsAnonymous()){
             txtTitleLicense.setVisibility(View.GONE);
             layoutSpell4WikiLang.setVisibility(View.GONE);
@@ -154,7 +154,7 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     private void updateLicenseView(TextView txtLicenseOfUploadAudio, TextView txtLicenseOfUploadAudioLegalCode) {
-        txtLicenseOfUploadAudio.setText(WikiLicense.licenseNameId(pref.getUploadAudioLicense()));
+        txtLicenseOfUploadAudio.setText(getString(WikiLicense.licenseNameId(pref.getUploadAudioLicense())));
         txtLicenseOfUploadAudioLegalCode.setMovementMethod(LinkMovementMethod.getInstance());
         String ccLegalInfo = "(<a href=" + WikiLicense.licenseUrlFor(pref.getUploadAudioLicense()) + "><font color='" + ContextCompat.getColor(getApplicationContext(), R.color.w_green) + "'>legal code</font></a>)";
         txtLicenseOfUploadAudioLegalCode.setText(Html.fromHtml(ccLegalInfo));

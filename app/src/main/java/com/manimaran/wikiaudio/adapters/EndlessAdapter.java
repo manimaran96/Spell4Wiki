@@ -88,7 +88,7 @@ public class EndlessAdapter extends ArrayAdapter<String> {
                 case ListMode.SPELL_4_WORD_LIST:
                 case ListMode.SPELL_4_WORD:
                     if (GeneralUtils.checkPermissionGranted(activity)) {
-                        GeneralUtils.showRecordDialog(activity, itemList.get(position));
+                        GeneralUtils.showRecordDialog(activity, itemList.get(position), getLanguageCode());
                     } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                         getPermissionToRecordAudio();
                     }

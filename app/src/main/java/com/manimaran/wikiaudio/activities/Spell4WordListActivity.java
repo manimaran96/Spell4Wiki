@@ -7,8 +7,6 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -18,9 +16,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.manimaran.wikiaudio.R;
 import com.manimaran.wikiaudio.adapters.EndlessAdapter;
-import com.manimaran.wikiaudio.constants.EnumTypeDef;
+import com.manimaran.wikiaudio.constants.Constants;
 import com.manimaran.wikiaudio.fragments.LanguageSelectionFragment;
 import com.manimaran.wikiaudio.listerners.OnLanguageSelectionListener;
 import com.manimaran.wikiaudio.utils.GeneralUtils;
@@ -42,13 +43,11 @@ public class Spell4WordListActivity extends AppCompatActivity {
 
 
     private static final int EDIT_REQUEST_CODE = 42;
-
-
+    EndlessAdapter adapter;
     private EditText editFile;
     private TextView txtFileInfo;
     private View layoutEdit, layoutSelect;
     private EndlessListView resultListView;
-
     private String languageCode = "";
 
     @Override
@@ -90,11 +89,10 @@ public class Spell4WordListActivity extends AppCompatActivity {
 
         btnDone.setOnClickListener(v -> {
             GeneralUtils.hideKeyboard(Spell4WordListActivity.this);
-            if(!TextUtils.isEmpty(editFile.getText())) {
+            if (!TextUtils.isEmpty(editFile.getText())) {
                 List<String> items = getWordListFromString(editFile.getText().toString());
                 showWordsInRecordMode(items);
-            }
-            else
+            } else
                 GeneralUtils.showSnack(editFile, "Enter valid content");
 
         });
@@ -129,26 +127,33 @@ public class Spell4WordListActivity extends AppCompatActivity {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode,
-                                 Intent resultData) {
+                                 Intent data) {
 
         // The ACTION_OPEN_DOCUMENT intent was sent with the request code
         // READ_REQUEST_CODE. If the request code seen here doesn't match, it's the
         // response to some other intent, and the code below shouldn't run at all.
 
-        super.onActivityResult(requestCode, resultCode, resultData);
+        super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == EDIT_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
             // The document selected by the user won't be returned in the intent.
             // Instead, a URI to that document will be contained in the return intent
             // provided to this method as a parameter.
             // Pull that URI using resultData.getData().
             Uri uri = null;
-            if (resultData != null) {
-                uri = resultData.getData();
+            if (data != null) {
+                uri = data.getData();
                 assert uri != null;
                 File file = new File(RealPathUtil.getRealPath(getApplicationContext(), uri));
-                String TAG = "Spell4WordListActivity";
                 openFileInAlignMode(file.getAbsolutePath(), file.getName());
+            }
+        }
 
+        if (requestCode == Constants.RC_UPLOAD_DIALOG) {
+            if (data != null && data.hasExtra(Constants.WORD)) {
+                if (adapter != null) {
+                    adapter.remove(data.getStringExtra(Constants.WORD));
+                    adapter.notifyDataSetChanged();
+                }
             }
         }
     }
@@ -163,7 +168,7 @@ public class Spell4WordListActivity extends AppCompatActivity {
         editFile.setText(getContentFromFile(filePath));
     }
 
-    private void showDirectContentAlignMode(){
+    private void showDirectContentAlignMode() {
         layoutSelect.setVisibility(View.GONE);
         layoutEdit.setVisibility(View.VISIBLE);
         resultListView.setVisibility(View.GONE);
@@ -179,7 +184,7 @@ public class Spell4WordListActivity extends AppCompatActivity {
         resultListView.setVisibility(View.VISIBLE);
 
 
-        EndlessAdapter adapter = new EndlessAdapter(this, items, SPELL_4_WORD_LIST);
+        adapter = new EndlessAdapter(this, items, SPELL_4_WORD_LIST);
         resultListView.setAdapter(adapter);
         resultListView.setVisibility(View.VISIBLE);
     }
@@ -188,15 +193,14 @@ public class Spell4WordListActivity extends AppCompatActivity {
 
         List<String> list = new ArrayList<>();
         try {
-            if(data != null && data.length() > 0) {
+            if (data != null && data.length() > 0) {
                 String[] l = data.split("\n");
 
-                if(l.length > 0){
-                    for(String s : l){
-                        if(s != null)
-                        {
+                if (l.length > 0) {
+                    for (String s : l) {
+                        if (s != null) {
                             String word = s.trim();
-                            if(word.length() > 0){
+                            if (word.length() > 0) {
                                 list.add(word);
                             }
                         }
@@ -214,11 +218,11 @@ public class Spell4WordListActivity extends AppCompatActivity {
         String result = null;
         Cursor cursor = null;//ww  w.j  a  va2  s. c om
         try {
-            String[] proj = { MediaStore.Images.Media.DATA };
+            String[] proj = {MediaStore.Images.Media.DATA};
             cursor = getContentResolver().query(contentURI, proj,
                     null, null, null);
             int column_index = cursor != null ? cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA) : 0;
-            if(cursor != null && cursor.moveToFirst())
+            if (cursor != null && cursor.moveToFirst())
                 result = cursor.getString(column_index);
         } finally {
             if (cursor != null) {
@@ -229,7 +233,7 @@ public class Spell4WordListActivity extends AppCompatActivity {
         return result;
     }
 
-    private String getContentFromFile(String fileName){
+    private String getContentFromFile(String fileName) {
         String data = "";
         try {
             FileInputStream inputStream = new FileInputStream(fileName);

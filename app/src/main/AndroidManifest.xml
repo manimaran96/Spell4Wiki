@@ -27,7 +27,6 @@
             tools:ignore="LockedOrientationActivity"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize"
             android:screenOrientation="portrait"
-
             android:theme="@style/AppTheme.FullScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -114,6 +113,13 @@
             tools:ignore="LockedOrientationActivity"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize"
             android:theme="@style/AppTheme" />
+
+        <activity
+            android:name=".activities.RecordAudioActivity"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustResize"
+            android:theme="@style/RecordAudioDialogTheme" />
     </application>
 
 </manifest>

@@ -36,14 +36,26 @@ public class WikiToken {
 
         @SerializedName("logintoken")
         @Expose
-        private String token;
+        private String loginToken;
 
-        public String getToken() {
-            return token;
+        @SerializedName("csrftoken")
+        @Expose
+        private String csrfToken;
+
+        public String getLoginToken() {
+            return loginToken;
         }
 
-        public void setToken(String token) {
-            this.token = token;
+        public void setLoginToken(String loginToken) {
+            this.loginToken = loginToken;
+        }
+
+        public String getCsrfToken() {
+            return csrfToken;
+        }
+
+        public void setCsrfToken(String csrfToken) {
+            this.csrfToken = csrfToken;
         }
     }
 }

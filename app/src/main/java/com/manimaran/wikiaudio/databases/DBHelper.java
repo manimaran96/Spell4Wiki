@@ -11,7 +11,7 @@ public class DBHelper {
     //our app database object
     private AppDatabase appDatabase;
 
-    public DBHelper(Context mCtx) {
+    private DBHelper(Context mCtx) {
         //creating the app database with Room database builder
         //Spell4Wiki-DB is the name of the database
         appDatabase = Room.databaseBuilder(mCtx, AppDatabase.class, "Spell4Wiki-DB").allowMainThreadQueries().build();

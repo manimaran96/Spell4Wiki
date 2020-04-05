@@ -42,7 +42,7 @@ public class WebViewFragment extends Fragment {
     private boolean isWitionaryWord = false;
     private String url = null;
     private String word = null;
-
+    private String languageCode;
     private PrefManager pref;
 
 
@@ -63,6 +63,9 @@ public class WebViewFragment extends Fragment {
                     isWitionaryWord = bundle.getBoolean(Constants.IS_WIKTIONARY_WORD);
                 if (bundle.containsKey(Constants.TITLE))
                     word = bundle.getString(Constants.TITLE);
+
+                if (bundle.containsKey(Constants.LANGUAGE_CODE))
+                    languageCode = bundle.getString(Constants.LANGUAGE_CODE);
             }
         }
         return rootView;
@@ -84,7 +87,7 @@ public class WebViewFragment extends Fragment {
 
         fabRecord.setOnClickListener(v -> {
             if (word != null)
-                GeneralUtils.showRecordDialog(getActivity(), word.trim());
+                GeneralUtils.showRecordDialog(getActivity(), word.trim(), languageCode);
             else
                 GeneralUtils.showSnack(fabRecord, "Give valid word");
         });
