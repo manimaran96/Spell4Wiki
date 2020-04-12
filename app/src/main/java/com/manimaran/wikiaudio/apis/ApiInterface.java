@@ -36,12 +36,16 @@ public interface ApiInterface {
 
     // Login - Commons
     @FormUrlEncoded
-    @POST("w/api.php?action=clientlogin&format=json")
+    @POST("w/api.php?action=clientlogin&format=json&ogincontinue=1")
     Call<WikiLogin> clientLogin(
             @Field("username") String username,
             @Field("password") String password,
-            @Field("logintoken") String token,
-            @Field("loginreturnurl") String url
+            @Field("logintoken") String token
+    );
+
+    @POST("w/api.php?action=logout")
+    Call<ResponseBody> logOut(
+            @Field("token") String csrfToken
     );
 
     // Search Query - Wiktionary

@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:visibility="visible">
 
-        <ImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/imgIcon"
             android:layout_width="@dimen/icon_normal"
             android:layout_height="@dimen/icon_normal"
@@ -41,10 +41,12 @@
             android:padding="10dp"
             android:layout_height="wrap_content">
 
-            <Button
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btnSelectFile"
-                android:layout_width="130dp"
-                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:paddingStart="30dp"
+                android:paddingEnd="30dp"
+                android:layout_height="@dimen/btn_height"
                 android:background="@drawable/bg_blue"
                 android:text="@string/select_file"
                 android:textAllCaps="false"
@@ -52,7 +54,7 @@
                 android:textColor="@color/white"
                 android:textStyle="bold" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/hint_select_file"
@@ -73,10 +75,12 @@
             android:padding="10dp"
             android:layout_height="wrap_content">
 
-            <Button
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btnDirectContent"
-                android:layout_width="130dp"
-                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:paddingStart="30dp"
+                android:paddingEnd="30dp"
+                android:layout_height="@dimen/btn_height"
                 android:background="@drawable/bg_blue"
                 android:text="@string/direct_content"
                 android:textAllCaps="false"
@@ -84,7 +88,7 @@
                 android:textColor="@color/white"
                 android:textStyle="bold" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/hint_direct_copy"
@@ -96,7 +100,7 @@
 
         </LinearLayout>
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/txtCommonStep"
             android:layout_below="@+id/layoutSelectFile"
             android:layout_width="match_parent"
@@ -117,7 +121,7 @@
         android:layout_height="match_parent"
         android:visibility="gone">
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/txtFileInfo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -127,10 +131,10 @@
             android:ellipsize="end"
             android:textSize="@dimen/text_normal" />
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnDone"
             android:layout_width="120dp"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/btn_height"
             android:layout_alignParentEnd="true"
             android:layout_gravity="center"
             android:layout_margin="10dp"
@@ -146,7 +150,7 @@
             android:background="@drawable/bg_line_border"
             android:layout_margin="10dp"
             android:layout_below="@+id/btnDone">
-            <EditText
+            <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/editFile"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

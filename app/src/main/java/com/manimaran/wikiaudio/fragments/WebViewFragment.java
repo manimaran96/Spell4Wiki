@@ -118,6 +118,7 @@ public class WebViewFragment extends Fragment {
         webSettings.setJavaScriptEnabled(true);
         webSettings.setSupportZoom(true);
         webView.clearHistory();
+        webView.clearCache(true);
         webView.setHorizontalScrollBarEnabled(false);
 
         webView.setWebViewClient(new WebViewClient());

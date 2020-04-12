@@ -28,6 +28,7 @@
                 android:paddingTop="30dp"
                 android:paddingBottom="30dp"
                 android:paddingStart="8dp"
+                android:visibility="visible"
                 android:paddingEnd="8dp">
 
                 <!--Word-->
@@ -41,7 +42,7 @@
                     android:ellipsize="end"
                     android:text="@string/spell4word"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/text_large" />
+                    android:textSize="@dimen/text_heading" />
 
                 <!--Language-->
                 <androidx.appcompat.widget.AppCompatTextView
@@ -54,7 +55,7 @@
                     android:ellipsize="middle"
                     android:text="@string/language"
                     android:layout_marginBottom="24dp"
-                    android:textColor="@color/white"
+                    android:textColor="@color/txt_light"
                     android:textSize="@dimen/text_semi_normal" />
 
                 <!--Hint-->
@@ -193,24 +194,26 @@
 
             <RelativeLayout
                 android:id="@+id/layoutUploadPopUp"
-                android:layout_width="250dp"
-                android:layout_height="250dp"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:background="@drawable/bg_blue"
                 android:padding="20dp"
+                android:orientation="vertical"
                 android:visibility="gone">
 
                 <com.airbnb.lottie.LottieAnimationView
                     android:id="@+id/lottieUpload"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
-                    android:layout_margin="10dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="5dp"
                     app:lottie_rawRes="@raw/lottie_upload"
                     app:lottie_autoPlay="true"
                     app:lottie_loop="true"
-                    app:lottie_speed="1.5"
+                    app:lottie_speed="2.5"
                     android:tint="@color/white"
-                    android:layout_centerInParent="true"/>
+                    android:layout_centerHorizontal="true"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/txtUploadMsg"
@@ -218,14 +221,15 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:gravity="center"
-                    android:maxLines="3"
+                    android:maxLines="4"
                     android:ellipsize="middle"
                     android:layout_centerHorizontal="true"
                     android:layout_below="@+id/lottieUpload"
                     android:text="@string/upload"
-                    android:layout_marginTop="12dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="20dp"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/text_normal" />
+                    android:textSize="@dimen/text_semi_normal" />
 
 
             </RelativeLayout>

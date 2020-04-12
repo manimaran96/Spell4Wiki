@@ -150,7 +150,7 @@ public class LoginActivity extends AppCompatActivity {
      */
     private void completeLogin(String username, String password, String loginToken) {
 
-        Call<WikiLogin> call = api.clientLogin(username, password, loginToken, Urls.COMMONS);
+        Call<WikiLogin> call = api.clientLogin(username, password, loginToken);
         call.enqueue(new Callback<WikiLogin>() {
             @Override
             public void onResponse(@NonNull Call<WikiLogin> call, @NonNull Response<WikiLogin> response) {

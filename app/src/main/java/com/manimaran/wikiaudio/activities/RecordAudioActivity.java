@@ -223,15 +223,7 @@ public class RecordAudioActivity extends AppCompatActivity {
 
         runnable = this::seekUpdate;
 
-        //btnUpload.setOnClickListener(v -> uploadAudioProcess());
-
-        btnUpload.setOnClickListener(v -> {
-            Log.e("TAG", "RESULT CHECK 1");
-            Intent resultIntent = new Intent();
-            resultIntent.putExtra(Constants.WORD, word);
-            setResult(Constants.RC_UPLOAD_DIALOG, resultIntent);
-            finish();
-        });
+        btnUpload.setOnClickListener(v -> uploadAudioProcess());
 
         btnClose.setOnClickListener(v -> closePopUp());
 
@@ -357,7 +349,7 @@ public class RecordAudioActivity extends AppCompatActivity {
                 if (isRecorded) {
                     if (recordedSecs > 1) {
                         if (checkBoxDeclaration.isChecked()) {
-                            //uploadAudioToWikiServer();
+                            uploadAudioToWikiServer();
                         } else
                             GeneralUtils.showToast(getApplicationContext(), getString(R.string.confirm_declaration));// TODO
                     } else
@@ -371,7 +363,7 @@ public class RecordAudioActivity extends AppCompatActivity {
     }
 
     private String getUploadName() {
-        String UPLOAD_FILE_NAME = "%s_%s.ogg";
+        String UPLOAD_FILE_NAME = "%s-%s.ogg";
         return String.format(UPLOAD_FILE_NAME, langCode, word);
     }
 
@@ -392,7 +384,10 @@ public class RecordAudioActivity extends AppCompatActivity {
 
     private void recordLayoutVisibility(boolean visible) {
         layoutRecordControls.setVisibility(visible ? View.VISIBLE : View.GONE);
-        //btnClose.setVisibility(visible ? View.VISIBLE : View.GONE);
+        if(visible)
+            btnClose.show();
+        else
+            btnClose.hide();
         layoutUploadPopUp.setVisibility(visible ? View.GONE : View.VISIBLE);
         if (!visible)
             txtUploadMsg.setText(String.format(getString(R.string.message_upload_info), getUploadName()));
@@ -547,15 +542,15 @@ public class RecordAudioActivity extends AppCompatActivity {
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(@NotNull Call<ResponseBody> call, @NotNull Response<ResponseBody> response) {
-                Log.e("TAG", "PURGE RES --> " + new Gson().toJson(response));
+                Log.e("TAG", "PURGE RES --> " + new Gson().toJson(response.body()));
                 uploadSuccess(msg);
             }
 
             @Override
             public void onFailure(@NotNull Call<ResponseBody> call, @NotNull Throwable t) {
-                Log.e("TAG", "PURGE RES ERRn --> " + new Gson().toJson(t.getMessage()));
-                t.printStackTrace();
                 uploadSuccess(msg);
+                Log.e("TAG", "PURGE RES ERR --> " + new Gson().toJson(t.getMessage()));
+                t.printStackTrace();
             }
         });
     }
@@ -597,7 +592,7 @@ public class RecordAudioActivity extends AppCompatActivity {
                 WikiLicense.getLicenseTemplateInWiki(pref.getUploadAudioLicense()) + "\n" +
 
                 // File Category
-                "[[Category:Pronunciation]]" + (langCode.equals("ta") ? "\n[[Category:Tamil pronunciation]]" : "");
+                "[[Category:Pronunciation]]" + (langCode.equals("ta") ? "\n[[Category:Tamil pronunciation | " + word + "]]" : "");
         /*
         TODO Category may given common lang api in array list of categories then add into for loop.
         TODO Given selection for category

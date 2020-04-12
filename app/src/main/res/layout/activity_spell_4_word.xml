@@ -11,7 +11,7 @@
     android:gravity="center_horizontal"
     tools:context=".activities.WiktionarySearchActivity">
 
-    <ImageView
+    <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/wiktionary_logo"
         android:layout_width="100dp"
         android:layout_height="100dp"
@@ -19,7 +19,7 @@
         android:contentDescription="@string/wiktionary"
         app:srcCompat="@drawable/ic_spell4word" />
 
-    <EditText
+    <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/editWord"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -33,9 +33,11 @@
         android:inputType="text"
         android:importantForAutofill="no" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_record"
-        android:layout_width="120dp"
+        android:layout_width="wrap_content"
+        android:paddingStart="30dp"
+        android:paddingEnd="30dp"
         android:layout_height="@dimen/btn_height"
         android:layout_gravity="center"
         android:background="@drawable/bg_blue"

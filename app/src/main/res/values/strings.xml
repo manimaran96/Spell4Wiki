@@ -41,7 +41,7 @@
     <string name="skip">SKIP</string>
     <string name="player">player</string>
     <string name="title_upload_audio">Upload Audio</string>
-    <string name="message_upload_info">Uploading \n\"%s\" file…</string>
+    <string name="message_upload_info">Uploading \n%s</string>
     <string name="upload_comment">%s Uploaded using Spell4Wiki app.</string>
 
 
@@ -160,6 +160,7 @@
     <string name="upload_failed">Upload failed. Please Try again.</string>
     <string name="file_already_exist">Upload file already exist.</string>
     <string name="invalid_response">Invalid response</string>
+    <string name="uploading">Uploading…</string>
     // %1$s - language name, %2$s - word.
 
 </resources>
