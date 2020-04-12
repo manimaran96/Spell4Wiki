@@ -35,6 +35,8 @@
     <color name="label_text">#A09D9D</color>
     <color name="fab_close">#FF5722</color>
     <color name="txt_light">#DFDCDC</color>
+    <color name="record_normal">#FFFFFF</color>
+    <color name="record_have_audio">#EFFFF0</color>
 
 
 </resources>

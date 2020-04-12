@@ -15,6 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
+import androidx.core.content.ContextCompat;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.manimaran.wikiaudio.BuildConfig;
@@ -27,6 +28,7 @@ import com.manimaran.wikiaudio.utils.PrefManager;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.manimaran.wikiaudio.constants.EnumTypeDef.ListMode;
@@ -35,6 +37,7 @@ public class EndlessAdapter extends ArrayAdapter<String> {
 
     private static final int RECORD_AUDIO_REQUEST_CODE = 101;
     private List<String> itemList;
+    private List<String> wordsAlreadyHaveAudio = new ArrayList<>();
     private Activity activity;
 
     private PrefManager pref;
@@ -77,9 +80,13 @@ public class EndlessAdapter extends ArrayAdapter<String> {
         }else
             rootView = convertView;
 
+        String word = itemList.get(position);
+        boolean isHaveAudio = wordsAlreadyHaveAudio.contains(word);
+        rootView.setBackgroundColor(ContextCompat.getColor(activity, isHaveAudio ? R.color.record_have_audio : R.color.record_normal));
+
         // We should use class holder pattern
         TextView tv = rootView.findViewById(R.id.txt1);
-        tv.setText(itemList.get(position));
+        tv.setText(word);
 
         tv.setOnClickListener(view -> {
 
@@ -87,11 +94,14 @@ public class EndlessAdapter extends ArrayAdapter<String> {
                 case ListMode.SPELL_4_WIKI:
                 case ListMode.SPELL_4_WORD_LIST:
                 case ListMode.SPELL_4_WORD:
-                    if (GeneralUtils.checkPermissionGranted(activity)) {
-                        GeneralUtils.showRecordDialog(activity, itemList.get(position), getLanguageCode());
-                    } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                        getPermissionToRecordAudio();
-                    }
+                    if(!isHaveAudio){
+                        if (GeneralUtils.checkPermissionGranted(activity)) {
+                            GeneralUtils.showRecordDialog(activity, word, getLanguageCode());
+                        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                            getPermissionToRecordAudio();
+                        }
+                    }else
+                        GeneralUtils.showSnack(rootView, String.format(activity.getString(R.string.audio_file_already_exist), word));
                     break;
                 case ListMode.WIKTIONARY:
                 default:
@@ -161,6 +171,10 @@ public class EndlessAdapter extends ArrayAdapter<String> {
                     })
                     .show();
         }
+    }
+
+    public void setWordsHaveAudioList(List<String> wordsAlreadyHaveAudio) {
+        this.wordsAlreadyHaveAudio = wordsAlreadyHaveAudio;
     }
 
 }

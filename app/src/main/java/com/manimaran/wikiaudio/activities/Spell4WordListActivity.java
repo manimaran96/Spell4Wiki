@@ -22,6 +22,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.manimaran.wikiaudio.R;
 import com.manimaran.wikiaudio.adapters.EndlessAdapter;
 import com.manimaran.wikiaudio.constants.Constants;
+import com.manimaran.wikiaudio.databases.DBHelper;
+import com.manimaran.wikiaudio.databases.dao.WordsHaveAudioDao;
 import com.manimaran.wikiaudio.fragments.LanguageSelectionFragment;
 import com.manimaran.wikiaudio.listerners.OnLanguageSelectionListener;
 import com.manimaran.wikiaudio.utils.GeneralUtils;
@@ -49,6 +51,7 @@ public class Spell4WordListActivity extends AppCompatActivity {
     private View layoutEdit, layoutSelect;
     private EndlessListView resultListView;
     private String languageCode = "";
+    private WordsHaveAudioDao wordsHaveAudioDao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +71,8 @@ public class Spell4WordListActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setTitle(getString(R.string.spell4wordlist));
         }
+
+        wordsHaveAudioDao = DBHelper.getInstance(getApplicationContext()).getAppDatabase().getWordsHaveAudioDao();
 
         Button btnSelectFile = findViewById(R.id.btnSelectFile);
         Button btnDirectContent = findViewById(R.id.btnDirectContent);
@@ -187,6 +192,7 @@ public class Spell4WordListActivity extends AppCompatActivity {
         adapter = new EndlessAdapter(this, items, SPELL_4_WORD_LIST);
         resultListView.setAdapter(adapter);
         resultListView.setVisibility(View.VISIBLE);
+        adapter.setWordsHaveAudioList(wordsHaveAudioDao.getWordsAlreadyHaveAudioByLanguage(languageCode));
     }
 
     private List<String> getWordListFromString(String data) {

@@ -156,11 +156,7 @@ public class Spell4Wiktionary extends AppCompatActivity implements EndlessListVi
                 isEmptyResponse = true;
 
             if (!isEmptyResponse) {
-                titleList.removeAll(wordsHaveAudioDao.getWordsAlreadyHaveAudioByLanguage(languageCode));
-                if (titleList.size() == 0) {
-                    // TODO : May issue comes
-                    loadDataFromServer(); // Get more words if no words without audio
-                }
+                adapter.setWordsHaveAudioList(wordsHaveAudioDao.getWordsAlreadyHaveAudioByLanguage(languageCode));
                 resultListView.addNewData(titleList);
             } else {
                 searchFailed(getString(R.string.something_went_wrong));

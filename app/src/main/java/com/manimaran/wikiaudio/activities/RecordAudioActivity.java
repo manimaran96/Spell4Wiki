@@ -594,11 +594,11 @@ public class RecordAudioActivity extends AppCompatActivity {
                 // File Category
                 "[[Category:Pronunciation]]" + (langCode.equals("ta") ? "\n[[Category:Tamil pronunciation | " + word + "]]" : "");
         /*
-        TODO Category may given common lang api in array list of categories then add into for loop.
-        TODO Given selection for category
+        TODO Category may given common lang api in array list of categories then add into for loop. Given selection for category
         Category : [[Category:St. Thomas Mount]]
         [[Category:Pronunciation]]
-        TODO Template for Spell4wiki
+
+        Template for Spell4wiki
         Template : {{Uploaded from Mobile|platform=Android|version=2.10.2~66e1539a1}}
          */
     }

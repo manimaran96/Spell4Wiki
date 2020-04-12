@@ -159,6 +159,7 @@
     <string name="upload_success">Successfully Uploaded\nPronunciation audio of %s</string>
     <string name="upload_failed">Upload failed. Please Try again.</string>
     <string name="file_already_exist">Upload file already exist.</string>
+    <string name="audio_file_already_exist">%s already have audio.</string>
     <string name="invalid_response">Invalid response</string>
     <string name="uploading">Uploading…</string>
     // %1$s - language name, %2$s - word.
