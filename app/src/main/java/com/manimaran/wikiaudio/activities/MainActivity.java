@@ -1,14 +1,16 @@
 package com.manimaran.wikiaudio.activities;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.cardview.widget.CardView;
 import android.view.View;
 import android.widget.SearchView;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 
 import com.manimaran.wikiaudio.R;
 import com.manimaran.wikiaudio.constants.Constants;
@@ -44,8 +46,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 intent.putExtra(Constants.SEARCH_TEXT, query);
                 startActivity(intent);
                 new Handler().postDelayed(() -> {
-                    if(searchView  != null)
-                        searchView.setQuery("",false);
+                    if (searchView != null)
+                        searchView.setQuery("", false);
                 }, 100);
 
                 return false;
@@ -63,7 +65,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View view) {
-        if(pref.getIsAnonymous()){
+        if (pref.getIsAnonymous()) {
             GeneralUtils.showSnack(view, getString(R.string.login_to_contribute));
             return;
         }
@@ -93,7 +95,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         CardView cardView2 = findViewById(R.id.card_spell4wordlist);
         CardView cardView3 = findViewById(R.id.card_spell4word);
 
-        if(pref.getIsAnonymous()){
+        if (pref.getIsAnonymous()) {
             cardView1.setBackgroundColor(Color.GRAY);
         }
         cardView1.setOnClickListener(this);
@@ -105,24 +107,42 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         findViewById(R.id.btn_about).setOnClickListener(v -> startActivity(new Intent(getApplicationContext(), AboutActivity.class)));
         findViewById(R.id.btn_settings).setOnClickListener(v -> startActivity(new Intent(getApplicationContext(), SettingsActivity.class)));
-        findViewById(R.id.btn_logout).setOnClickListener(v -> GeneralUtils.logoutAlert(MainActivity.this));
+        findViewById(R.id.btn_logout).setOnClickListener(v -> logoutUser());
 
         String urlMyContribution = String.format(Urls.COMMONS_CONTRIBUTION, pref.getName());
         TextView btnMyContributions = findViewById(R.id.txtViewMyContribution);
         TextView btnLogin = findViewById(R.id.txtLogin);
 
-        btnMyContributions.setOnClickListener(v -> GeneralUtils.openUrl(MainActivity.this, urlMyContribution,  getString(R.string.view_my_contribution)));
-        btnLogin.setOnClickListener(v-> pref.logoutUser());
+        btnMyContributions.setOnClickListener(v -> GeneralUtils.openUrl(MainActivity.this, urlMyContribution, getString(R.string.view_my_contribution)));
+        btnLogin.setOnClickListener(v -> pref.logoutUser());
 
         View viewContribute = findViewById(R.id.layoutContributeOptions);
         View viewLogin = findViewById(R.id.layoutLogin);
-        if(pref.getIsAnonymous()){
+        if (pref.getIsAnonymous()) {
             viewContribute.setVisibility(View.GONE);
             btnMyContributions.setVisibility(View.GONE);
             txtWelcomeUser.setVisibility(View.GONE);
             findViewById(R.id.btn_logout).setVisibility(View.GONE);
             viewLogin.setVisibility(View.VISIBLE);
         }
+    }
+
+    private void logoutUser() {
+        new AlertDialog.Builder(this)
+                //.setIcon(R.drawable.ic_logout)
+                .setTitle(R.string.logout_confirmation)
+                .setMessage(R.string.logout_message)
+                .setPositiveButton("Yes", (dialog, which) -> {
+                    // Logout user
+                    logoutApi();
+                    pref.logoutUser();
+                })
+                .setNegativeButton("No", null)
+                .show();
+    }
+
+    private void logoutApi() {
+        //Call<ResponseBody>
     }
 
     @Override

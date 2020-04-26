@@ -1,12 +1,12 @@
 package com.manimaran.wikiaudio.apis;
 
 
-import com.manimaran.wikiaudio.databases.entities.WikiLang;
+import com.manimaran.wikiaudio.constants.Urls;
 import com.manimaran.wikiaudio.models.Contributors;
+import com.manimaran.wikiaudio.models.WikiLanguage;
 import com.manimaran.wikiaudio.models.WikiLogin;
 import com.manimaran.wikiaudio.models.WikiSearchWords;
 import com.manimaran.wikiaudio.models.WikiToken;
-import com.manimaran.wikiaudio.models.WikiLanguage;
 import com.manimaran.wikiaudio.models.WikiUpload;
 import com.manimaran.wikiaudio.models.WikiWordsWithoutAudio;
 
@@ -36,7 +36,7 @@ public interface ApiInterface {
 
     // Login - Commons
     @FormUrlEncoded
-    @POST("w/api.php?action=clientlogin&format=json&ogincontinue=1")
+    @POST("w/api.php?action=clientlogin&format=json&rememberMe=&loginreturnurl=" + Urls.COMMONS)
     Call<WikiLogin> clientLogin(
             @Field("username") String username,
             @Field("password") String password,

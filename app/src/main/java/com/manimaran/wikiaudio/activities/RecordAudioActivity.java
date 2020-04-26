@@ -416,6 +416,8 @@ public class RecordAudioActivity extends AppCompatActivity {
                             e.printStackTrace();
                             uploadFailed(getString(R.string.something_went_wrong) + "\n" + e.getMessage());
                         }
+                    }else {
+                        uploadFailed(getString(R.string.something_went_wrong) + "\n" + response.code());
                     }
                 }
 
@@ -542,7 +544,6 @@ public class RecordAudioActivity extends AppCompatActivity {
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(@NotNull Call<ResponseBody> call, @NotNull Response<ResponseBody> response) {
-                Log.e("TAG", "PURGE RES --> " + new Gson().toJson(response.body()));
                 uploadSuccess(msg);
             }
 

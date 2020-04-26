@@ -162,6 +162,8 @@
     <string name="audio_file_already_exist">%s already have audio.</string>
     <string name="invalid_response">Invalid response</string>
     <string name="uploading">Uploading…</string>
+    <string name="logout_confirmation">Logout Confirmation</string>
+    <string name="logout_message">Do you want to logout?</string>
     // %1$s - language name, %2$s - word.
 
 </resources>

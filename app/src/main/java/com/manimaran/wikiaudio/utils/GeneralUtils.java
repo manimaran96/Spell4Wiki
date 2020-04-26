@@ -69,24 +69,6 @@ public class GeneralUtils {
         Snackbar.make(view, msg, Snackbar.LENGTH_LONG).show();
     }
 
-    public static void logoutAlert(final Activity activity) {
-
-        new AlertDialog.Builder(activity)
-                //.setIcon(R.drawable.ic_logout)
-                .setTitle("Confirm to Logout")
-                .setMessage("Are you sure you want to logout?")
-                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        // Logout user
-                        new PrefManager(activity).logoutUser();
-                    }
-
-                })
-                .setNegativeButton("No", null)
-                .show();
-    }
-
     @TargetApi(Build.VERSION_CODES.KITKAT)
     public static void writeAudioWordsToFile(String fileName, List<String> wordsList) {
 
