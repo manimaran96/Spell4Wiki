@@ -19,6 +19,7 @@ import android.webkit.MimeTypeMap;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
@@ -33,19 +34,23 @@ import com.manimaran.wikiaudio.BuildConfig;
 import com.manimaran.wikiaudio.R;
 import com.manimaran.wikiaudio.apis.ApiClient;
 import com.manimaran.wikiaudio.apis.ApiInterface;
+import com.manimaran.wikiaudio.auth.AccountUtils;
 import com.manimaran.wikiaudio.constants.Constants;
 import com.manimaran.wikiaudio.databases.DBHelper;
 import com.manimaran.wikiaudio.databases.dao.WikiLangDao;
 import com.manimaran.wikiaudio.databases.dao.WordsHaveAudioDao;
 import com.manimaran.wikiaudio.databases.entities.WikiLang;
 import com.manimaran.wikiaudio.databases.entities.WordsHaveAudio;
+import com.manimaran.wikiaudio.models.WikiLogin;
 import com.manimaran.wikiaudio.models.WikiToken;
 import com.manimaran.wikiaudio.models.WikiUpload;
+import com.manimaran.wikiaudio.models.WikiUser;
 import com.manimaran.wikiaudio.record.ogg.WavToOggConverter;
 import com.manimaran.wikiaudio.record.wav.WAVPlayer;
 import com.manimaran.wikiaudio.record.wav.WAVRecorder;
 import com.manimaran.wikiaudio.utils.GeneralUtils;
 import com.manimaran.wikiaudio.utils.PrefManager;
+import com.manimaran.wikiaudio.utils.Print;
 import com.manimaran.wikiaudio.utils.WikiLicense;
 
 import org.jetbrains.annotations.NotNull;
@@ -96,7 +101,12 @@ public class RecordAudioActivity extends AppCompatActivity {
     private Runnable runnable;
     private Handler mHandler = new Handler();
 
-    private String TAG = RecordAudioActivity.class.getSimpleName();
+    private static final int MAX_RETRIES_FOR_FORCE_LOGIN = 1;
+    private static final int MAX_RETRIES_FOR_CSRF_TOKEN = 2;
+    private int retryCountForLogin = 0;
+    private int retryCountForCsrf = 0;
+
+    private String TAG = RecordAudioActivity.class.getSimpleName() + " --> ";
 
     private static String getMimeType(String url) {
         String type = null;
@@ -396,8 +406,8 @@ public class RecordAudioActivity extends AppCompatActivity {
     private void uploadAudioToWikiServer() {
         // Background process
         recordLayoutVisibility(false);
-
         if (pref.getCsrfToken() == null) {
+            retryCountForCsrf++;
             Call<WikiToken> call = api.getEditToken();
             call.enqueue(new Callback<WikiToken>() {
                 @Override
@@ -510,10 +520,16 @@ public class RecordAudioActivity extends AppCompatActivity {
     }
 
     private void uploadFailed(String msg) {
-        recordLayoutVisibility(true);
         if (GeneralUtils.isNetworkConnected(getApplicationContext())) {
-            if (pref.getCsrfToken() == null) {
-                GeneralUtils.showToast(getApplicationContext(), getString(R.string.invalid_csrf_try_again));
+            if (pref.getCsrfToken() == null) { // CSRF Invalid then get new csrf and try again
+                if(retryCountForCsrf < MAX_RETRIES_FOR_CSRF_TOKEN){
+                    uploadAudioToWikiServer();
+                    return;
+                }else if(retryCountForLogin < MAX_RETRIES_FOR_FORCE_LOGIN){ // Same issue after the new csrf also then do force login
+                    retryWithLogin();
+                    return;
+                }else
+                    GeneralUtils.showToast(getApplicationContext(), getString(R.string.invalid_csrf_try_again));
             } else if (!TextUtils.isEmpty(msg))
                 GeneralUtils.showToast(getApplicationContext(), msg);
             else
@@ -521,7 +537,88 @@ public class RecordAudioActivity extends AppCompatActivity {
         } else
             GeneralUtils.showToast(getApplicationContext(), getString(R.string.check_internet));
 
+        recordLayoutVisibility(true);
         //txtUploadMsg.setText("Upload DONE " + msg);
+    }
+
+    private void retryWithLogin() {
+        if (retryCountForLogin < MAX_RETRIES_FOR_FORCE_LOGIN && !TextUtils.isEmpty(AccountUtils.getUserName()) && !TextUtils.isEmpty(AccountUtils.getPassword())) {
+            retryCountForLogin++;
+            //Clear cache and login info temp
+            forceLogin();
+        }else {
+            if(retryCountForLogin >= MAX_RETRIES_FOR_FORCE_LOGIN){
+                failWithLogout();
+            }
+            uploadFailed("Login expired. Please login and continue");
+        }
+    }
+
+    private void failWithLogout() {
+    }
+
+    private void forceLogin() {
+        Print.log(TAG + "FORCE LOGIN INIT " + retryCountForLogin);
+        Call<WikiToken> callLoginToken = api.getLoginToken();
+        callLoginToken.enqueue(new Callback<WikiToken>() {
+            @Override
+            public void onResponse(@NotNull Call<WikiToken> call, @NotNull Response<WikiToken> response) {
+                if(response.isSuccessful() && response.body() !=null){
+                    try {
+                        String loginToken = response.body().getQuery().getTokenValue().getLoginToken();
+                        /*
+                         * Once getting login token then call client login api
+                         */
+                        Call<WikiLogin> callLogin = api.clientLogin(AccountUtils.getUserName(), AccountUtils.getPassword(), loginToken);
+                        callLogin.enqueue(new Callback<WikiLogin>() {
+                            @Override
+                            public void onResponse(@NonNull Call<WikiLogin> call, @NonNull Response<WikiLogin> response) {
+                                if (response.isSuccessful() && response.body() != null) {
+                                    try {
+                                        WikiLogin.ClientLogin login = response.body().getClientLogin();
+                                        if(login != null && login.getStatus() != null && Constants.PASS.equals(login.getStatus())){
+                                            pref.setUserSession(login.getUsername());
+                                            uploadAudioProcess();
+                                        }else {
+                                            retryWithLogin();
+                                            Print.error(TAG + " LOGIN COMPLETE FAIL " + response.toString());
+                                        }
+                                    } catch (Exception e) {
+                                        retryWithLogin();
+                                        e.printStackTrace();
+                                        Print.error(TAG + " LOGIN COMPLETE FAIL " + e.getMessage());
+                                    }
+                                }else{
+                                    retryWithLogin();
+                                    Print.error(TAG + " LOGIN COMPLETE FAIL " + response.toString());
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(@NotNull Call<WikiLogin> call, @NotNull Throwable t) {
+                                retryWithLogin();
+                                Print.error(TAG + " LOGIN COMPLETE FAIL " + response.toString());
+                            }
+                        });
+
+                    }catch (Exception e){
+                        retryWithLogin();
+                        e.printStackTrace();
+                        Print.error(TAG + "LOGIN FAIL " + e.getMessage());
+                    }
+                }else {
+                    retryWithLogin();
+                    Print.error(TAG + "LOGIN FAIL " + response.toString());
+                }
+            }
+
+            @Override
+            public void onFailure(@NotNull Call<WikiToken> call, @NotNull Throwable t) {
+                retryWithLogin();
+                t.printStackTrace();
+                Print.error(TAG + "LOGIN FAIL EXCEPTION " +  t.getMessage());
+            }
+        });
     }
 
     private void uploadSuccess(String msg) {
@@ -537,7 +634,6 @@ public class RecordAudioActivity extends AppCompatActivity {
 
     private void purgeWiktionaryPage(String msg) {
 
-        // TODO write to db
         wordsHaveAudioDao.insert(new WordsHaveAudio(word, langCode));
 
         Call<ResponseBody> call = apiWiki.purgePage(word);

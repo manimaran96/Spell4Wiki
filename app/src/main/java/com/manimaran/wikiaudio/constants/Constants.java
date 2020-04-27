@@ -16,6 +16,7 @@ public class Constants {
     // API related
     public static final String PASS = "PASS";
     public static final String FAIL = "FAIL";
+    public static final String TWO_FACTOR = "UI";
     public static final String INVALID_CSRF = "+\\";
     public static final String UPLOAD_SUCCESS = "success";
     public static final String UPLOAD_WARNING = "warning";

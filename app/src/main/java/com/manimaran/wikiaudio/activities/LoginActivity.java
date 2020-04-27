@@ -1,5 +1,7 @@
 package com.manimaran.wikiaudio.activities;
 
+import android.accounts.AccountAuthenticatorResponse;
+import android.accounts.AccountManager;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -13,23 +15,19 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.manimaran.wikiaudio.R;
+import com.manimaran.wikiaudio.auth.AccountUtils;
 import com.manimaran.wikiaudio.constants.Constants;
-import com.manimaran.wikiaudio.constants.Urls;
 import com.manimaran.wikiaudio.models.WikiLogin;
 import com.manimaran.wikiaudio.models.WikiToken;
+import com.manimaran.wikiaudio.models.WikiUser;
 import com.manimaran.wikiaudio.utils.GeneralUtils;
 import com.manimaran.wikiaudio.utils.PrefManager;
 import com.manimaran.wikiaudio.apis.ApiInterface;
 import com.manimaran.wikiaudio.apis.ApiClient;
 
 import org.jetbrains.annotations.NotNull;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.IOException;
 
 import br.com.simplepass.loading_button_lib.customViews.CircularProgressButton;
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -131,6 +129,8 @@ public class LoginActivity extends AppCompatActivity {
                         e.printStackTrace();
                         showErrorMsg(getString(R.string.check_network));
                     }
+                }else {
+                    showErrorMsg(getString(R.string.something_went_wrong_try_again));
                 }
             }
 
@@ -160,6 +160,11 @@ public class LoginActivity extends AppCompatActivity {
                         if(login != null && login.getStatus() != null){
                             switch (login.getStatus()){
                                 case Constants.PASS:
+                                    Bundle extras = getIntent().getExtras();
+                                    AccountAuthenticatorResponse accountAuthenticatorResponse = extras == null ? null : extras.getParcelable(AccountManager.KEY_ACCOUNT_AUTHENTICATOR_RESPONSE);
+                                    WikiUser wikiUser = new WikiUser(username, password);
+                                    AccountUtils.updateAccount(accountAuthenticatorResponse, wikiUser);
+
                                     showMsg(String.format(getString(R.string.welcome_user), login.getUsername()));
                                     //  Write to shared preferences
                                     pref.setUserSession(login.getUsername());
@@ -175,6 +180,9 @@ public class LoginActivity extends AppCompatActivity {
                                 case Constants.FAIL:
                                     showErrorMsg(login.getMessage());
                                     break;
+                                case Constants.TWO_FACTOR:
+
+                                    showErrorMsg("Two factor Authentication not implemented." + (login.getMessage() != null ? "\n"+ login.getMessage() : ""));
                                 default:
                                     showErrorMsg(getString(R.string.server_misbehaved));
                                     break;
