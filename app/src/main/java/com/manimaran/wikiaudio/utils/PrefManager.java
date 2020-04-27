@@ -51,7 +51,7 @@ public class PrefManager {
     }
 
     public Boolean isLoggedIn() {
-        return !pref.getBoolean(IS_ANONYMOUS_USER, false) && pref.getBoolean(IS_LOGGED_IN_USER, false);
+        return !pref.getBoolean(IS_ANONYMOUS_USER, false) && pref.getBoolean(IS_LOGGED_IN_USER, false) && AccountUtils.isLoggedIn();
     }
 
     public boolean isFirstTimeLaunch() {
