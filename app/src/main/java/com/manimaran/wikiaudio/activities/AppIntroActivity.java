@@ -19,6 +19,7 @@ import com.manimaran.wikiaudio.utils.PrefManager;
 public class AppIntroActivity extends AppIntro {
 
     private PrefManager pref;
+    private boolean isDoneCalled = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,14 +104,17 @@ public class AppIntroActivity extends AppIntro {
     @Override
     public void onDonePressed(Fragment currentFragment) {
         super.onDonePressed(currentFragment);
-
-        // Ask required permission on done pressed
-        if (!GeneralUtils.checkPermissionGranted((this)) && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            this.requestPermissions(
-                    new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.RECORD_AUDIO, Manifest.permission.READ_EXTERNAL_STORAGE}
-                    , 200);
-        } else
-            openMainActivity();
+        if(!isDoneCalled) {
+            isDoneCalled = true;
+            // Ask required permission on done pressed
+            if (!GeneralUtils.checkPermissionGranted((this)) && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                this.requestPermissions(
+                        new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.RECORD_AUDIO, Manifest.permission.READ_EXTERNAL_STORAGE}
+                        , 200);
+            } else {
+                openMainActivity();
+            }
+        }
     }
 
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -127,6 +131,7 @@ public class AppIntroActivity extends AppIntro {
     }
 
     private void openMainActivity() {
+        isDoneCalled = false;
         pref.setFirstTimeLaunch(false);
         finish();
         Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
