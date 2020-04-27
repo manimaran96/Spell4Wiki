@@ -104,7 +104,7 @@ public class Spell4WordActivity extends AppCompatActivity {
             languageCode = langCode;
             invalidateOptionsMenu();
         };
-        LanguageSelectionFragment languageSelectionFragment = new LanguageSelectionFragment();
+        LanguageSelectionFragment languageSelectionFragment = new LanguageSelectionFragment(this);
         languageSelectionFragment.init(callback, ListMode.SPELL_4_WORD);
         languageSelectionFragment.show(getSupportFragmentManager(), languageSelectionFragment.getTag());
     }

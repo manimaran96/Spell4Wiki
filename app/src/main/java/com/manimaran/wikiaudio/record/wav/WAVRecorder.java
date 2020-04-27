@@ -45,7 +45,7 @@ public class WAVRecorder {
             Log.d(TAG, "File size: " + totalDataLen);
 
             WriteWaveFileHeader(out, totalAudioLen, totalDataLen,
-                    (long) RECORDER_SAMPLE_RATE, channels, byteRate);
+                    channels, byteRate);
 
             while (in.read(data) != -1) {
                 out.write(data);
@@ -60,7 +60,7 @@ public class WAVRecorder {
 
     private static void WriteWaveFileHeader(
             FileOutputStream out, long totalAudioLen,
-            long totalDataLen, long longSampleRate, int channels,
+            long totalDataLen, int channels,
             long byteRate) throws IOException {
 
         byte[] header = new byte[44];
@@ -89,10 +89,10 @@ public class WAVRecorder {
         header[21] = 0;
         header[22] = (byte) channels;
         header[23] = 0;
-        header[24] = (byte) (longSampleRate & 0xff);
-        header[25] = (byte) ((longSampleRate >> 8) & 0xff);
-        header[26] = (byte) ((longSampleRate >> 16) & 0xff);
-        header[27] = (byte) ((longSampleRate >> 24) & 0xff);
+        header[24] = (byte) ((long) WAVRecorder.RECORDER_SAMPLE_RATE & 0xff);
+        header[25] = (byte) (((long) WAVRecorder.RECORDER_SAMPLE_RATE >> 8) & 0xff);
+        header[26] = (byte) (((long) WAVRecorder.RECORDER_SAMPLE_RATE >> 16) & 0xff);
+        header[27] = (byte) (((long) WAVRecorder.RECORDER_SAMPLE_RATE >> 24) & 0xff);
         header[28] = (byte) (byteRate & 0xff);
         header[29] = (byte) ((byteRate >> 8) & 0xff);
         header[30] = (byte) ((byteRate >> 16) & 0xff);
@@ -130,7 +130,7 @@ public class WAVRecorder {
     }
 
     private void writeAudioDataToFile(String filename) {
-        byte data[] = new byte[bufferSize];
+        byte[] data = new byte[bufferSize];
         FileOutputStream os = null;
 
         try {

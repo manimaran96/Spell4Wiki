@@ -1,5 +1,6 @@
 package com.manimaran.wikiaudio.fragments;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -39,7 +40,10 @@ public class LanguageSelectionFragment extends BottomSheetDialogFragment {
     private int listMode;
     private String preSelectedLanguageCode = null;
 
-    public LanguageSelectionFragment() {
+    private Activity mActivity;
+
+    public LanguageSelectionFragment(Activity activity) {
+        this.mActivity = activity;
     }
 
     public void init(OnLanguageSelectionListener callback, @ListMode int mode) {
@@ -66,7 +70,7 @@ public class LanguageSelectionFragment extends BottomSheetDialogFragment {
         if (TextUtils.isEmpty(preSelectedLanguageCode))
             preSelectedLanguageCode = getExistingLanguageCode();
 
-        final BottomSheetDialog dialog = new BottomSheetDialog(getActivity(), R.style.AppTheme);
+        final BottomSheetDialog dialog = new BottomSheetDialog(mActivity, R.style.AppTheme);
 
         dialog.setContentView(R.layout.bottom_sheet_language_selection);
 
@@ -132,7 +136,7 @@ public class LanguageSelectionFragment extends BottomSheetDialogFragment {
 
                 // Full screen mode no collapse
                 DisplayMetrics displaymetrics = new DisplayMetrics();
-                getActivity().getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
+                mActivity.getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
                 int screenHeight = displaymetrics.heightPixels;
                 behavior.setPeekHeight(screenHeight);
             }
@@ -178,6 +182,5 @@ public class LanguageSelectionFragment extends BottomSheetDialogFragment {
     @Override
     public void onCancel(@NotNull DialogInterface dialog) {
         super.onCancel(dialog);
-
     }
 }

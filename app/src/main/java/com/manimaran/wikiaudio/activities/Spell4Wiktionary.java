@@ -201,7 +201,7 @@ public class Spell4Wiktionary extends AppCompatActivity implements EndlessListVi
             invalidateOptionsMenu();
             loadDataFromServer();
         };
-        LanguageSelectionFragment languageSelectionFragment = new LanguageSelectionFragment();
+        LanguageSelectionFragment languageSelectionFragment = new LanguageSelectionFragment(this);
         languageSelectionFragment.init(callback, ListMode.SPELL_4_WIKI);
         languageSelectionFragment.show(getSupportFragmentManager(), languageSelectionFragment.getTag());
     }

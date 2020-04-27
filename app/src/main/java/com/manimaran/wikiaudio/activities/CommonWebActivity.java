@@ -127,7 +127,7 @@ public class CommonWebActivity extends AppCompatActivity {
                 if (fragment != null)
                     fragment.loadWordWithOtherLang(langCode);
             };
-            LanguageSelectionFragment languageSelectionFragment = new LanguageSelectionFragment();
+            LanguageSelectionFragment languageSelectionFragment = new LanguageSelectionFragment(this);
             languageSelectionFragment.init(callback, ListMode.TEMP, languageCode);
             languageSelectionFragment.show(getSupportFragmentManager(), languageSelectionFragment.getTag());
         }

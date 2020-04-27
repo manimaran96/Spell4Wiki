@@ -317,7 +317,7 @@ public class Spell4WordListActivity extends AppCompatActivity {
             languageCode = langCode;
             invalidateOptionsMenu();
         };
-        LanguageSelectionFragment languageSelectionFragment = new LanguageSelectionFragment();
+        LanguageSelectionFragment languageSelectionFragment = new LanguageSelectionFragment(this);
         languageSelectionFragment.init(callback, SPELL_4_WORD_LIST);
         languageSelectionFragment.show(getSupportFragmentManager(), languageSelectionFragment.getTag());
     }

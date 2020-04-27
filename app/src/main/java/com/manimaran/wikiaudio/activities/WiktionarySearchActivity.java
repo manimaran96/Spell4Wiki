@@ -134,7 +134,7 @@ public class WiktionarySearchActivity extends AppCompatActivity implements Endle
             if (queryString != null)
                 submitQuery(queryString);
         };
-        LanguageSelectionFragment languageSelectionFragment = new LanguageSelectionFragment();
+        LanguageSelectionFragment languageSelectionFragment = new LanguageSelectionFragment(this);
         languageSelectionFragment.init(callback, ListMode.WIKTIONARY);
         languageSelectionFragment.show(getSupportFragmentManager(), languageSelectionFragment.getTag());
     }

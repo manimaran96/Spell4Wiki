@@ -9,6 +9,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
+import android.net.NetworkCapabilities;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
@@ -46,22 +48,6 @@ public class GeneralUtils {
                 || ContextCompat.checkSelfPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED;
     }
 
-    public static void exitAlert(final Activity activity) {
-        new AlertDialog.Builder(activity)
-                .setIcon(R.drawable.ic_warning)
-                .setTitle("Confirm to Exit")
-                .setMessage("Are you sure you want to exit?")
-                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        activity.finish();
-                    }
-
-                })
-                .setNegativeButton("No", null)
-                .show();
-    }
-
     public static void showLongToast(String msg) {
         Toast.makeText(Spell4WikiApp.getInstance(), msg, Toast.LENGTH_SHORT).show();
     }
@@ -72,34 +58,6 @@ public class GeneralUtils {
 
     public static void showSnack(View view, String msg) {
         Snackbar.make(view, msg, Snackbar.LENGTH_LONG).show();
-    }
-
-    @TargetApi(Build.VERSION_CODES.KITKAT)
-    public static void writeAudioWordsToFile(String fileName, List<String> wordsList) {
-
-        try {
-            final File dir = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/Spell4Wiki/WordsWithAudio");
-
-            if (!dir.exists()) {
-                if (!dir.mkdirs()) {
-                    Log.e("TAG", "could not create the directories");
-                }
-            }
-
-            final File myFile = new File(dir, fileName + ".txt");
-            if (!myFile.exists())
-                myFile.createNewFile();
-
-            BufferedWriter bw = new BufferedWriter(new FileWriter(myFile, true));
-            for (String str : wordsList) {
-                bw.write(str);
-                bw.newLine();
-            }
-            bw.flush();
-            bw.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     public static void hideKeyboard(Activity activity) {
