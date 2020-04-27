@@ -16,7 +16,7 @@ import android.widget.TextView;
 
 import com.manimaran.wikiaudio.R;
 import com.manimaran.wikiaudio.auth.AccountUtils;
-import com.manimaran.wikiaudio.constants.Constants;
+import com.manimaran.wikiaudio.constants.AppConstants;
 import com.manimaran.wikiaudio.models.WikiLogin;
 import com.manimaran.wikiaudio.models.WikiToken;
 import com.manimaran.wikiaudio.models.WikiUser;
@@ -159,7 +159,7 @@ public class LoginActivity extends AppCompatActivity {
                         WikiLogin.ClientLogin login = response.body().getClientLogin();
                         if(login != null && login.getStatus() != null){
                             switch (login.getStatus()){
-                                case Constants.PASS:
+                                case AppConstants.PASS:
                                     Bundle extras = getIntent().getExtras();
                                     AccountAuthenticatorResponse accountAuthenticatorResponse = extras == null ? null : extras.getParcelable(AccountManager.KEY_ACCOUNT_AUTHENTICATOR_RESPONSE);
                                     WikiUser wikiUser = new WikiUser(username, password);
@@ -177,11 +177,10 @@ public class LoginActivity extends AppCompatActivity {
                                         launchActivity();
                                     }, 1500);
                                     break;
-                                case Constants.FAIL:
+                                case AppConstants.FAIL:
                                     showErrorMsg(login.getMessage());
                                     break;
-                                case Constants.TWO_FACTOR:
-
+                                case AppConstants.TWO_FACTOR:
                                     showErrorMsg("Two factor Authentication not implemented." + (login.getMessage() != null ? "\n"+ login.getMessage() : ""));
                                 default:
                                     showErrorMsg(getString(R.string.server_misbehaved));

@@ -35,7 +35,7 @@ import com.manimaran.wikiaudio.R;
 import com.manimaran.wikiaudio.apis.ApiClient;
 import com.manimaran.wikiaudio.apis.ApiInterface;
 import com.manimaran.wikiaudio.auth.AccountUtils;
-import com.manimaran.wikiaudio.constants.Constants;
+import com.manimaran.wikiaudio.constants.AppConstants;
 import com.manimaran.wikiaudio.databases.DBHelper;
 import com.manimaran.wikiaudio.databases.dao.WikiLangDao;
 import com.manimaran.wikiaudio.databases.dao.WordsHaveAudioDao;
@@ -44,7 +44,6 @@ import com.manimaran.wikiaudio.databases.entities.WordsHaveAudio;
 import com.manimaran.wikiaudio.models.WikiLogin;
 import com.manimaran.wikiaudio.models.WikiToken;
 import com.manimaran.wikiaudio.models.WikiUpload;
-import com.manimaran.wikiaudio.models.WikiUser;
 import com.manimaran.wikiaudio.record.ogg.WavToOggConverter;
 import com.manimaran.wikiaudio.record.wav.WAVPlayer;
 import com.manimaran.wikiaudio.record.wav.WAVRecorder;
@@ -132,6 +131,7 @@ public class RecordAudioActivity extends AppCompatActivity {
         btnClose = findViewById(R.id.btnClose);
         btnUpload = findViewById(R.id.btnUpload);
         btnRecord = findViewById(R.id.btnRecord);
+        btnRecord.requestFocus();
         btnPlayPause = findViewById(R.id.btnPlayPause);
         checkBoxDeclaration = findViewById(R.id.checkboxDeclaration);
 
@@ -148,16 +148,16 @@ public class RecordAudioActivity extends AppCompatActivity {
         // Don't close outside click
         setFinishOnTouchOutside(false);
 
-        pref = new PrefManager(getApplicationContext());
+        pref = new PrefManager(this);
         wikiLangDao = DBHelper.getInstance(getApplicationContext()).getAppDatabase().getWikiLangDao();
         wordsHaveAudioDao = DBHelper.getInstance(getApplicationContext()).getAppDatabase().getWordsHaveAudioDao();
 
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
-            if (bundle.containsKey(Constants.LANGUAGE_CODE))
-                langCode = bundle.getString(Constants.LANGUAGE_CODE);
-            if (bundle.containsKey(Constants.WORD))
-                word = bundle.getString(Constants.WORD);
+            if (bundle.containsKey(AppConstants.LANGUAGE_CODE))
+                langCode = bundle.getString(AppConstants.LANGUAGE_CODE);
+            if (bundle.containsKey(AppConstants.WORD))
+                word = bundle.getString(AppConstants.WORD);
         }
 
         if (langCode == null)
@@ -242,7 +242,7 @@ public class RecordAudioActivity extends AppCompatActivity {
     private void startRecording() {
         Log.d(TAG, "Start Recording");
         isRecorded = false;
-        recorder.startRecording(getFilePath(Constants.AUDIO_TEMP_RECORDER_FILENAME));
+        recorder.startRecording(getFilePath(AppConstants.AUDIO_TEMP_RECORDER_FILENAME));
         countDownTimer.start();
         txtDuration.setText(getDurationValue(0));
         player.stopPlaying();
@@ -254,7 +254,7 @@ public class RecordAudioActivity extends AppCompatActivity {
         Log.d(TAG, "Stop Recording");
         txtRecordHint.setText(getString(R.string.hint_after_record));
         if (recorder.isRecording()) {
-            recorder.stopRecording(getFilePath(Constants.AUDIO_TEMP_RECORDER_FILENAME), getFilePath(Constants.AUDIO_RECORDED_FILENAME));
+            recorder.stopRecording(getFilePath(AppConstants.AUDIO_TEMP_RECORDER_FILENAME), getFilePath(AppConstants.AUDIO_RECORDED_FILENAME));
             player.stopPlaying();
 
             txtDuration.setText(getDurationValue(recordedSecs));
@@ -271,7 +271,7 @@ public class RecordAudioActivity extends AppCompatActivity {
             player.stopPlaying();
             btnPlayPause.setImageResource(R.drawable.ic_play);
         } else {
-            player.startPlaying(getFilePath(Constants.AUDIO_RECORDED_FILENAME), () -> {
+            player.startPlaying(getFilePath(AppConstants.AUDIO_RECORDED_FILENAME), () -> {
                 // Play Done
                 btnPlayPause.setImageResource(R.drawable.ic_play);
                 isPlaying = false;
@@ -406,7 +406,9 @@ public class RecordAudioActivity extends AppCompatActivity {
     private void uploadAudioToWikiServer() {
         // Background process
         recordLayoutVisibility(false);
+        Print.log(TAG + "UPLOAD PROCESS INIT");
         if (pref.getCsrfToken() == null) {
+            Print.log(TAG + "GETTING CSRF TOKEN");
             retryCountForCsrf++;
             Call<WikiToken> call = api.getEditToken();
             call.enqueue(new Callback<WikiToken>() {
@@ -415,10 +417,11 @@ public class RecordAudioActivity extends AppCompatActivity {
                     if (response.isSuccessful() && response.body() != null) {
                         try {
                             String editToken = response.body().getQuery().getTokenValue().getCsrfToken();
-                            if (editToken.equals(Constants.INVALID_CSRF)) {
+                            if (editToken.equals(AppConstants.INVALID_CSRF)) {
                                 pref.setCsrfToken(null);
                                 uploadFailed(getString(R.string.invalid_csrf_try_again));
                             } else {
+                                Print.log(TAG + "CSRF GETTING DONE");
                                 pref.setCsrfToken(editToken);
                                 completeUpload(editToken);
                             }
@@ -427,7 +430,7 @@ public class RecordAudioActivity extends AppCompatActivity {
                             uploadFailed(getString(R.string.something_went_wrong) + "\n" + e.getMessage());
                         }
                     }else {
-                        uploadFailed(getString(R.string.something_went_wrong) + "\n" + response.code());
+                        uploadFailed(getString(R.string.invalid_response) + "\nResponse code : " + response.code());
                     }
                 }
 
@@ -468,6 +471,7 @@ public class RecordAudioActivity extends AppCompatActivity {
         );
 
 
+        Print.log(TAG + "COMPLETE UPLOAD INIT");
         call.enqueue(new Callback<WikiUpload>() {
             @Override
             public void onResponse(@NotNull Call<WikiUpload> call, @NotNull Response<WikiUpload> response) {
@@ -478,8 +482,11 @@ public class RecordAudioActivity extends AppCompatActivity {
                             completeUploadFinalProcess(wikiUpload.getSuccess().getResult());
                         } else if (wikiUpload.getError() != null && wikiUpload.getError().getCode() != null) {
                             WikiUpload.WikiError wikiError = wikiUpload.getError();
-                            if (wikiError.getCode().equalsIgnoreCase(Constants.UPLOAD_FILE_EXIST) || wikiError.getCode().equalsIgnoreCase(Constants.UPLOAD_INVALID_TOKEN))
+                            Print.error(TAG + "UPLOAD FAIL RESPONSE -- " + new Gson().toJson(wikiError));
+                            if (wikiError.getCode().equalsIgnoreCase(AppConstants.UPLOAD_FILE_EXIST) || wikiError.getCode().equalsIgnoreCase(AppConstants.UPLOAD_FILE_EXIST_FORBIDDEN) || wikiError.getCode().equalsIgnoreCase(AppConstants.UPLOAD_INVALID_TOKEN))
                                 completeUploadFinalProcess(wikiError.getCode());
+                            else if(wikiError.getCode().contains("exists"))
+                                completeUploadFinalProcess(AppConstants.UPLOAD_FILE_EXIST);
                             else
                                 completeUploadFinalProcess(wikiError.getInfo());
                         } else
@@ -488,22 +495,26 @@ public class RecordAudioActivity extends AppCompatActivity {
                         completeUploadFinalProcess(TextUtils.isEmpty(e.getMessage()) ? "" : e.getMessage());
                         e.printStackTrace();
                     }
-                } else
-                    completeUploadFinalProcess(getString(R.string.invalid_response));
+                } else {
+                    Print.error(TAG + "COMPLETE UPLOAD RES ISSUE " + response.code());
+                    completeUploadFinalProcess(getString(R.string.invalid_response) + "\nResponse code : " + response.code());
+                }
             }
 
             private void completeUploadFinalProcess(String data) {
+                Print.log(TAG + "COMPLETE UPLOAD FINAL PROCESS " + data);
                 switch (data.toLowerCase()) {
-                    case Constants.UPLOAD_SUCCESS:
+                    case AppConstants.UPLOAD_SUCCESS:
                         purgeWiktionaryPage(String.format(getString(R.string.upload_success), word));
                         break;
-                    case Constants.UPLOAD_FILE_EXIST:
-                    case Constants.UPLOAD_WARNING:
+                    case AppConstants.UPLOAD_FILE_EXIST:
+                    case AppConstants.UPLOAD_FILE_EXIST_FORBIDDEN:
+                    case AppConstants.UPLOAD_WARNING:
                         purgeWiktionaryPage(getString(R.string.file_already_exist));
                         break;
-                    case Constants.UPLOAD_INVALID_TOKEN:
+                    case AppConstants.UPLOAD_INVALID_TOKEN:
                         pref.setCsrfToken(null);
-                        uploadFailed(getString(R.string.invalid_csrf_try_again)); // TODO invalid
+                        uploadFailed(getString(R.string.invalid_csrf_try_again));
                         break;
                     default:
                         uploadFailed(getString(R.string.something_went_wrong_try_again) + "\n" + data);
@@ -513,6 +524,7 @@ public class RecordAudioActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(@NotNull Call<WikiUpload> call, @NotNull Throwable t) {
+                Print.error(TAG + "COMPLETE UPLOAD FAIL - " + t.getMessage());
                 completeUploadFinalProcess(getString(R.string.upload_failed));
                 t.printStackTrace();
             }
@@ -520,41 +532,48 @@ public class RecordAudioActivity extends AppCompatActivity {
     }
 
     private void uploadFailed(String msg) {
+        Print.error(TAG + "UPLOAD FAIL MESSAGE " + msg);
         if (GeneralUtils.isNetworkConnected(getApplicationContext())) {
             if (pref.getCsrfToken() == null) { // CSRF Invalid then get new csrf and try again
                 if(retryCountForCsrf < MAX_RETRIES_FOR_CSRF_TOKEN){
                     uploadAudioToWikiServer();
                     return;
                 }else if(retryCountForLogin < MAX_RETRIES_FOR_FORCE_LOGIN){ // Same issue after the new csrf also then do force login
-                    retryWithLogin();
+                    retryWithForceLogin();
                     return;
                 }else
-                    GeneralUtils.showToast(getApplicationContext(), getString(R.string.invalid_csrf_try_again));
+                    GeneralUtils.showLongToast(getString(R.string.invalid_csrf_try_again));
             } else if (!TextUtils.isEmpty(msg))
-                GeneralUtils.showToast(getApplicationContext(), msg);
+                GeneralUtils.showLongToast(msg);
             else
-                GeneralUtils.showToast(getApplicationContext(), getString(R.string.something_went_wrong_try_again));
+                GeneralUtils.showLongToast(getString(R.string.something_went_wrong_try_again));
         } else
-            GeneralUtils.showToast(getApplicationContext(), getString(R.string.check_internet));
+            GeneralUtils.showLongToast(getString(R.string.check_internet));
 
         recordLayoutVisibility(true);
         //txtUploadMsg.setText("Upload DONE " + msg);
     }
 
-    private void retryWithLogin() {
+    private void retryWithForceLogin() {
+        Print.log(TAG + "RETRY WITH FORCE LOGIN " + retryCountForLogin);
         if (retryCountForLogin < MAX_RETRIES_FOR_FORCE_LOGIN && !TextUtils.isEmpty(AccountUtils.getUserName()) && !TextUtils.isEmpty(AccountUtils.getPassword())) {
             retryCountForLogin++;
             //Clear cache and login info temp
             forceLogin();
         }else {
+            Print.error(TAG + "RETRY LOGIN FAIL");
+            uploadFailed("Login expired. Please login and continue");
             if(retryCountForLogin >= MAX_RETRIES_FOR_FORCE_LOGIN){
                 failWithLogout();
             }
-            uploadFailed("Login expired. Please login and continue");
         }
     }
 
     private void failWithLogout() {
+        recordLayoutVisibility(false);
+        Print.error(TAG + "RETRY LOGIN FAIL -- LOGOUT & ASK RE-LOGIN");
+        if(pref != null)
+            pref.logoutUser();
     }
 
     private void forceLogin() {
@@ -576,45 +595,45 @@ public class RecordAudioActivity extends AppCompatActivity {
                                 if (response.isSuccessful() && response.body() != null) {
                                     try {
                                         WikiLogin.ClientLogin login = response.body().getClientLogin();
-                                        if(login != null && login.getStatus() != null && Constants.PASS.equals(login.getStatus())){
+                                        if(login != null && login.getStatus() != null && AppConstants.PASS.equals(login.getStatus())){
                                             pref.setUserSession(login.getUsername());
                                             uploadAudioProcess();
                                         }else {
-                                            retryWithLogin();
-                                            Print.error(TAG + " LOGIN COMPLETE FAIL " + response.toString());
+                                            retryWithForceLogin();
+                                            Print.error(TAG + " LOGIN COMPLETE FAIL 1 " + response.toString());
                                         }
                                     } catch (Exception e) {
-                                        retryWithLogin();
+                                        retryWithForceLogin();
                                         e.printStackTrace();
-                                        Print.error(TAG + " LOGIN COMPLETE FAIL " + e.getMessage());
+                                        Print.error(TAG + " LOGIN COMPLETE FAIL 2 " + e.getMessage());
                                     }
                                 }else{
-                                    retryWithLogin();
-                                    Print.error(TAG + " LOGIN COMPLETE FAIL " + response.toString());
+                                    retryWithForceLogin();
+                                    Print.error(TAG + " LOGIN COMPLETE FAIL 3 " + response.toString());
                                 }
                             }
 
                             @Override
                             public void onFailure(@NotNull Call<WikiLogin> call, @NotNull Throwable t) {
-                                retryWithLogin();
-                                Print.error(TAG + " LOGIN COMPLETE FAIL " + response.toString());
+                                retryWithForceLogin();
+                                Print.error(TAG + " LOGIN COMPLETE EXCEPTION " + t.getMessage());
                             }
                         });
 
                     }catch (Exception e){
-                        retryWithLogin();
+                        retryWithForceLogin();
                         e.printStackTrace();
-                        Print.error(TAG + "LOGIN FAIL " + e.getMessage());
+                        Print.error(TAG + "LOGIN TOKEN FAIL 1 " + e.getMessage());
                     }
                 }else {
-                    retryWithLogin();
-                    Print.error(TAG + "LOGIN FAIL " + response.toString());
+                    retryWithForceLogin();
+                    Print.error(TAG + "LOGIN TOKEN FAIL 2 " + response.toString());
                 }
             }
 
             @Override
             public void onFailure(@NotNull Call<WikiToken> call, @NotNull Throwable t) {
-                retryWithLogin();
+                retryWithForceLogin();
                 t.printStackTrace();
                 Print.error(TAG + "LOGIN FAIL EXCEPTION " +  t.getMessage());
             }
@@ -622,31 +641,32 @@ public class RecordAudioActivity extends AppCompatActivity {
     }
 
     private void uploadSuccess(String msg) {
+        Print.log(TAG + "UPLOAD SUCCESS " + msg + " --  WORD : " + word);
         GeneralUtils.showToast(getApplicationContext(), msg);
 
         // Result back
         Intent resultIntent = new Intent();
-        resultIntent.putExtra(Constants.WORD, word);
-        setResult(Constants.RC_UPLOAD_DIALOG, resultIntent);
+        resultIntent.putExtra(AppConstants.WORD, word);
+        setResult(AppConstants.RC_UPLOAD_DIALOG, resultIntent);
 
         closePopUp();
     }
 
     private void purgeWiktionaryPage(String msg) {
-
         wordsHaveAudioDao.insert(new WordsHaveAudio(word, langCode));
 
         Call<ResponseBody> call = apiWiki.purgePage(word);
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(@NotNull Call<ResponseBody> call, @NotNull Response<ResponseBody> response) {
+                Print.log(TAG + "PURGE WIKTIONARY PAGE SUCCESS " + response.toString());
                 uploadSuccess(msg);
             }
 
             @Override
             public void onFailure(@NotNull Call<ResponseBody> call, @NotNull Throwable t) {
                 uploadSuccess(msg);
-                Log.e("TAG", "PURGE RES ERR --> " + new Gson().toJson(t.getMessage()));
+                Print.error(TAG + "PURGE WIKTIONARY PAGE EXCEPTION " + t.getMessage());
                 t.printStackTrace();
             }
         });
@@ -654,7 +674,7 @@ public class RecordAudioActivity extends AppCompatActivity {
 
     // Get record file name
     private String getFilePath(String fileName) {
-        File file = new File(getExternalFilesDir(Environment.DIRECTORY_MUSIC), Constants.AUDIO_FILEPATH);
+        File file = new File(getExternalFilesDir(AppConstants.AUDIO_MAIN_PATH), AppConstants.AUDIO_FILEPATH);
         if (!file.exists()) {
             if (!file.mkdirs())
                 Log.d(TAG, "Not create directory!");
@@ -663,8 +683,8 @@ public class RecordAudioActivity extends AppCompatActivity {
     }
 
     private String getRecordedFilePath() {
-        new WavToOggConverter().convert(getFilePath(Constants.AUDIO_RECORDED_FILENAME), getFilePath(Constants.AUDIO_CONVERTED_FILENAME));
-        return getFilePath(Constants.AUDIO_CONVERTED_FILENAME);
+        new WavToOggConverter().convert(getFilePath(AppConstants.AUDIO_RECORDED_FILENAME), getFilePath(AppConstants.AUDIO_CONVERTED_FILENAME));
+        return getFilePath(AppConstants.AUDIO_CONVERTED_FILENAME);
     }
 
     private String getContentAndLicense() {

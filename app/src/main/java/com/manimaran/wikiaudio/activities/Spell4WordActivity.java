@@ -16,7 +16,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.manimaran.wikiaudio.R;
-import com.manimaran.wikiaudio.constants.Constants;
+import com.manimaran.wikiaudio.constants.AppConstants;
 import com.manimaran.wikiaudio.constants.Urls;
 import com.manimaran.wikiaudio.fragments.LanguageSelectionFragment;
 import com.manimaran.wikiaudio.listerners.OnLanguageSelectionListener;
@@ -48,10 +48,10 @@ public class Spell4WordActivity extends AppCompatActivity {
     private void openWiktionaryPage(String wordInfo) {
         Intent intent = new Intent(getApplicationContext(), CommonWebActivity.class);
         String url = String.format(Urls.WIKTIONARY_WEB, pref.getLanguageCodeSpell4Word(), wordInfo);
-        intent.putExtra(Constants.TITLE, wordInfo);
-        intent.putExtra(Constants.URL, url);
-        intent.putExtra(Constants.IS_WIKTIONARY_WORD, true);
-        intent.putExtra(Constants.LANGUAGE_CODE, pref.getLanguageCodeSpell4Word());
+        intent.putExtra(AppConstants.TITLE, wordInfo);
+        intent.putExtra(AppConstants.URL, url);
+        intent.putExtra(AppConstants.IS_WIKTIONARY_WORD, true);
+        intent.putExtra(AppConstants.LANGUAGE_CODE, pref.getLanguageCodeSpell4Word());
         startActivity(intent);
     }
 

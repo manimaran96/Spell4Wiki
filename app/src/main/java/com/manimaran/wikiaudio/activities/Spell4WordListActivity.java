@@ -21,7 +21,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.manimaran.wikiaudio.R;
 import com.manimaran.wikiaudio.adapters.EndlessAdapter;
-import com.manimaran.wikiaudio.constants.Constants;
+import com.manimaran.wikiaudio.constants.AppConstants;
 import com.manimaran.wikiaudio.databases.DBHelper;
 import com.manimaran.wikiaudio.databases.dao.WordsHaveAudioDao;
 import com.manimaran.wikiaudio.fragments.LanguageSelectionFragment;
@@ -153,10 +153,10 @@ public class Spell4WordListActivity extends AppCompatActivity {
             }
         }
 
-        if (requestCode == Constants.RC_UPLOAD_DIALOG) {
-            if (data != null && data.hasExtra(Constants.WORD)) {
+        if (requestCode == AppConstants.RC_UPLOAD_DIALOG) {
+            if (data != null && data.hasExtra(AppConstants.WORD)) {
                 if (adapter != null) {
-                    adapter.remove(data.getStringExtra(Constants.WORD));
+                    adapter.remove(data.getStringExtra(AppConstants.WORD));
                     adapter.notifyDataSetChanged();
                 }
             }

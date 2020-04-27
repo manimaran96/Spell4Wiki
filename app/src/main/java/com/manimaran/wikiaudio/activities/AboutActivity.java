@@ -17,8 +17,7 @@ import androidx.core.content.ContextCompat;
 
 import com.manimaran.wikiaudio.BuildConfig;
 import com.manimaran.wikiaudio.R;
-import com.manimaran.wikiaudio.constants.Constants;
-import com.manimaran.wikiaudio.constants.EnumTypeDef;
+import com.manimaran.wikiaudio.constants.AppConstants;
 import com.manimaran.wikiaudio.constants.Urls;
 import com.manimaran.wikiaudio.utils.DeviceInfoUtil;
 import com.manimaran.wikiaudio.utils.GeneralUtils;
@@ -110,12 +109,12 @@ public class AboutActivity extends AppCompatActivity implements View.OnClickList
                 break;
             case R.id.txt_third_party_lib:
                 Intent intentTPL = new Intent(getApplicationContext(), ListItemActivity.class);
-                intentTPL.putExtra(Constants.TITLE, getString(R.string.third_party_libraries));
+                intentTPL.putExtra(AppConstants.TITLE, getString(R.string.third_party_libraries));
                 startActivity(intentTPL);
                 break;
             case R.id.txt_credits:
                 Intent intentCredits = new Intent(getApplicationContext(), ListItemActivity.class);
-                intentCredits.putExtra(Constants.TITLE, getString(R.string.credits));
+                intentCredits.putExtra(AppConstants.TITLE, getString(R.string.credits));
                 startActivity(intentCredits);
                 break;
             case R.id.txt_help_development:

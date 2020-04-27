@@ -6,6 +6,7 @@ import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -25,12 +26,10 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.manimaran.wikiaudio.R;
-import com.manimaran.wikiaudio.constants.Constants;
+import com.manimaran.wikiaudio.constants.AppConstants;
 import com.manimaran.wikiaudio.constants.Urls;
 import com.manimaran.wikiaudio.utils.GeneralUtils;
 import com.manimaran.wikiaudio.utils.PrefManager;
-
-import java.util.Objects;
 
 public class WebViewFragment extends Fragment {
 
@@ -57,15 +56,15 @@ public class WebViewFragment extends Fragment {
         if(getActivity() != null) {
             Bundle bundle = getActivity().getIntent().getExtras();
             if (bundle != null) {
-                if (bundle.containsKey(Constants.URL))
-                    url = bundle.getString(Constants.URL);
-                if (bundle.containsKey(Constants.IS_WIKTIONARY_WORD))
-                    isWitionaryWord = bundle.getBoolean(Constants.IS_WIKTIONARY_WORD);
-                if (bundle.containsKey(Constants.TITLE))
-                    word = bundle.getString(Constants.TITLE);
+                if (bundle.containsKey(AppConstants.URL))
+                    url = bundle.getString(AppConstants.URL);
+                if (bundle.containsKey(AppConstants.IS_WIKTIONARY_WORD))
+                    isWitionaryWord = bundle.getBoolean(AppConstants.IS_WIKTIONARY_WORD);
+                if (bundle.containsKey(AppConstants.TITLE))
+                    word = bundle.getString(AppConstants.TITLE);
 
-                if (bundle.containsKey(Constants.LANGUAGE_CODE))
-                    languageCode = bundle.getString(Constants.LANGUAGE_CODE);
+                if (bundle.containsKey(AppConstants.LANGUAGE_CODE))
+                    languageCode = bundle.getString(AppConstants.LANGUAGE_CODE);
             }
         }
         return rootView;
@@ -194,19 +193,22 @@ public class WebViewFragment extends Fragment {
     }
 
     public void copyLink() {
-        ClipboardManager clipboardManager = (ClipboardManager) Objects.requireNonNull(getActivity()).getSystemService(Context.CLIPBOARD_SERVICE);
-        // Create a new ClipData.
-        ClipData clipData = ClipData.newPlainText("Source Text", webView.getUrl());
-        // Set it as primary clip data to copy text to system clipboard.
-        clipboardManager.setPrimaryClip(clipData);
-        // Popup a snack bar.
-        GeneralUtils.showSnack(webView, "Link copied");
+        if(isAdded() && getActivity() != null){
+            ClipboardManager clipboardManager = (ClipboardManager) getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
+            // Create a new ClipData.
+            ClipData clipData = ClipData.newPlainText("Source Text", Uri.decode(webView.getUrl()));
+            // Set it as primary clip data to copy text to system clipboard.
+            if(clipboardManager != null)
+                clipboardManager.setPrimaryClip(clipData);
+            // Popup a snack bar.
+            GeneralUtils.showSnack(webView, "Link copied");
+        }
     }
 
     public void shareLink() {
         Intent intent = new Intent(Intent.ACTION_SEND);
         intent.setType("text/plain");
-        intent.putExtra(Intent.EXTRA_TEXT, getString(R.string.link_share_message));
+        intent.putExtra(Intent.EXTRA_TEXT, String.format(getString(R.string.link_share_message), Uri.decode(webView.getUrl())));
         startActivity(Intent.createChooser(intent, getString(R.string.app_share_title)));
     }
 

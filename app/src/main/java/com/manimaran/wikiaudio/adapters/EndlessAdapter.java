@@ -21,7 +21,7 @@ import com.google.android.material.snackbar.Snackbar;
 import com.manimaran.wikiaudio.BuildConfig;
 import com.manimaran.wikiaudio.R;
 import com.manimaran.wikiaudio.activities.CommonWebActivity;
-import com.manimaran.wikiaudio.constants.Constants;
+import com.manimaran.wikiaudio.constants.AppConstants;
 import com.manimaran.wikiaudio.constants.Urls;
 import com.manimaran.wikiaudio.utils.GeneralUtils;
 import com.manimaran.wikiaudio.utils.PrefManager;
@@ -140,13 +140,13 @@ public class EndlessAdapter extends ArrayAdapter<String> {
         String word = itemList.get(position);
         String langCode = getLanguageCode();
         if (langCode == null)
-            langCode = Constants.DEFAULT_LANGUAGE_CODE;
+            langCode = AppConstants.DEFAULT_LANGUAGE_CODE;
 
         String url = String.format(Urls.WIKTIONARY_WEB, langCode, word);
-        intent.putExtra(Constants.TITLE, word);
-        intent.putExtra(Constants.URL, url);
-        intent.putExtra(Constants.IS_WIKTIONARY_WORD, true);
-        intent.putExtra(Constants.LANGUAGE_CODE, langCode);
+        intent.putExtra(AppConstants.TITLE, word);
+        intent.putExtra(AppConstants.URL, url);
+        intent.putExtra(AppConstants.IS_WIKTIONARY_WORD, true);
+        intent.putExtra(AppConstants.LANGUAGE_CODE, langCode);
         activity.startActivity(intent);
     }
 

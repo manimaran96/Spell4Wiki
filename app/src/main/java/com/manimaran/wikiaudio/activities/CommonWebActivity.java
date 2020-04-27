@@ -15,7 +15,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.manimaran.wikiaudio.R;
-import com.manimaran.wikiaudio.constants.Constants;
+import com.manimaran.wikiaudio.constants.AppConstants;
 import com.manimaran.wikiaudio.constants.EnumTypeDef.ListMode;
 import com.manimaran.wikiaudio.fragments.LanguageSelectionFragment;
 import com.manimaran.wikiaudio.fragments.WebViewFragment;
@@ -45,16 +45,16 @@ public class CommonWebActivity extends AppCompatActivity {
         if (bundle != null) {
 
             String title = "";
-            if (bundle.containsKey(Constants.TITLE)) {
-                title = bundle.getString(Constants.TITLE);
+            if (bundle.containsKey(AppConstants.TITLE)) {
+                title = bundle.getString(AppConstants.TITLE);
                 setTitle(title);
             }
 
-            if (bundle.containsKey(Constants.IS_WIKTIONARY_WORD))
-                isWiktionaryWord = bundle.getBoolean(Constants.IS_WIKTIONARY_WORD);
+            if (bundle.containsKey(AppConstants.IS_WIKTIONARY_WORD))
+                isWiktionaryWord = bundle.getBoolean(AppConstants.IS_WIKTIONARY_WORD);
 
-            if (bundle.containsKey(Constants.LANGUAGE_CODE))
-                languageCode = bundle.getString(Constants.LANGUAGE_CODE);
+            if (bundle.containsKey(AppConstants.LANGUAGE_CODE))
+                languageCode = bundle.getString(AppConstants.LANGUAGE_CODE);
 
             loadFragment(fragment);
         }

@@ -1,6 +1,6 @@
 package com.manimaran.wikiaudio.constants;
 
-public class Constants {
+public class AppConstants {
 
     public static final String URL = "url";
     public static final String TITLE = "title";
@@ -21,10 +21,12 @@ public class Constants {
     public static final String UPLOAD_SUCCESS = "success";
     public static final String UPLOAD_WARNING = "warning";
     public static final String UPLOAD_FILE_EXIST = "fileexists-no-change";
+    public static final String UPLOAD_FILE_EXIST_FORBIDDEN = "fileexists-forbidden";
     public static final String UPLOAD_INVALID_TOKEN = "badtoken";
 
     // Record & Storage related
-    public static final String AUDIO_FILEPATH = "/Spell4Wiki_Audios";
+    public static final String AUDIO_MAIN_PATH = "Spell4Wiki_Audios";
+    public static final String AUDIO_FILEPATH = "/RecordedAudios";
     public static final String AUDIO_TEMP_RECORDER_FILENAME = "record_temp.raw";
     public static final String AUDIO_RECORDED_FILENAME = "record.wav";
     public static final String AUDIO_CONVERTED_FILENAME = "record.ogg";

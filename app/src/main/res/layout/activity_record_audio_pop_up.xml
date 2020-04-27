@@ -22,7 +22,7 @@
                 android:id="@+id/layoutRecordControls"
                 android:background="@drawable/bg_blue"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:orientation="vertical"
                 android:paddingTop="30dp"

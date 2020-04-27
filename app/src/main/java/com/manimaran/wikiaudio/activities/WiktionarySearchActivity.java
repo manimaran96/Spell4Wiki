@@ -14,7 +14,7 @@ import com.manimaran.wikiaudio.R;
 import com.manimaran.wikiaudio.adapters.EndlessAdapter;
 import com.manimaran.wikiaudio.apis.ApiClient;
 import com.manimaran.wikiaudio.apis.ApiInterface;
-import com.manimaran.wikiaudio.constants.Constants;
+import com.manimaran.wikiaudio.constants.AppConstants;
 import com.manimaran.wikiaudio.constants.EnumTypeDef.ListMode;
 import com.manimaran.wikiaudio.fragments.LanguageSelectionFragment;
 import com.manimaran.wikiaudio.listerners.OnLanguageSelectionListener;
@@ -89,8 +89,8 @@ public class WiktionarySearchActivity extends AppCompatActivity implements Endle
         }
 
         if (getIntent() != null && getIntent().getExtras() != null) {
-            if (getIntent().getExtras().containsKey(Constants.SEARCH_TEXT)) {
-                String text = getIntent().getExtras().getString(Constants.SEARCH_TEXT);
+            if (getIntent().getExtras().containsKey(AppConstants.SEARCH_TEXT)) {
+                String text = getIntent().getExtras().getString(AppConstants.SEARCH_TEXT);
                 searchView.setQuery(text, true);
             }
         }

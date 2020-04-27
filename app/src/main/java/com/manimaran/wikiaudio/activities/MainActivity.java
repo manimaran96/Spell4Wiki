@@ -13,7 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
 import com.manimaran.wikiaudio.R;
-import com.manimaran.wikiaudio.constants.Constants;
+import com.manimaran.wikiaudio.constants.AppConstants;
 import com.manimaran.wikiaudio.constants.Urls;
 import com.manimaran.wikiaudio.utils.GeneralUtils;
 import com.manimaran.wikiaudio.utils.PrefManager;
@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public boolean onQueryTextSubmit(String query) {
                 Intent intent = new Intent(getApplicationContext(), WiktionarySearchActivity.class);
-                intent.putExtra(Constants.SEARCH_TEXT, query);
+                intent.putExtra(AppConstants.SEARCH_TEXT, query);
                 startActivity(intent);
                 new Handler().postDelayed(() -> {
                     if (searchView != null)

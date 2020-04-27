@@ -21,9 +21,10 @@ import androidx.core.content.ContextCompat;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.manimaran.wikiaudio.R;
+import com.manimaran.wikiaudio.Spell4WikiApp;
 import com.manimaran.wikiaudio.activities.CommonWebActivity;
 import com.manimaran.wikiaudio.activities.RecordAudioActivity;
-import com.manimaran.wikiaudio.constants.Constants;
+import com.manimaran.wikiaudio.constants.AppConstants;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -59,6 +60,10 @@ public class GeneralUtils {
                 })
                 .setNegativeButton("No", null)
                 .show();
+    }
+
+    public static void showLongToast(String msg) {
+        Toast.makeText(Spell4WikiApp.getInstance(), msg, Toast.LENGTH_SHORT).show();
     }
 
     public static void showToast(Context context, String msg) {
@@ -124,8 +129,8 @@ public class GeneralUtils {
             if (GeneralUtils.isNetworkConnected(context)) {
                 if (url != null && !url.isEmpty()) {
                     Intent intent = new Intent(context, CommonWebActivity.class);
-                    intent.putExtra(Constants.TITLE, title);
-                    intent.putExtra(Constants.URL, url);
+                    intent.putExtra(AppConstants.TITLE, title);
+                    intent.putExtra(AppConstants.URL, url);
                     context.startActivity(intent);
                 } else
                     GeneralUtils.showSnack(view, context.getString(R.string.check_url));
@@ -150,8 +155,8 @@ public class GeneralUtils {
     public static void showRecordDialog(Activity activity, String word, String langCode) {
         Intent intent = new Intent(activity, RecordAudioActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-        intent.putExtra(Constants.WORD, word);
-        intent.putExtra(Constants.LANGUAGE_CODE, langCode);
-        activity.startActivityForResult(intent, Constants.RC_UPLOAD_DIALOG);
+        intent.putExtra(AppConstants.WORD, word);
+        intent.putExtra(AppConstants.LANGUAGE_CODE, langCode);
+        activity.startActivityForResult(intent, AppConstants.RC_UPLOAD_DIALOG);
     }
 }

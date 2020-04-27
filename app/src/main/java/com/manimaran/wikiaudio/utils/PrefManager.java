@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 
 import com.manimaran.wikiaudio.R;
 import com.manimaran.wikiaudio.activities.LoginActivity;
+import com.manimaran.wikiaudio.auth.AccountUtils;
 
 import java.util.Set;
 
@@ -90,7 +91,10 @@ public class PrefManager {
         setFirstTimeLaunch(isFirstTime);
         editor.apply();
 
-        if (mContext != null) {
+        // Remove sync - authenticator account
+        AccountUtils.removeAccount();
+
+        if (mContext != null && mContext instanceof Activity) {
             Activity activity = (Activity) mContext;
             // After logout redirect user to Login Activity
             activity.finishAffinity();

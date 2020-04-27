@@ -3,7 +3,6 @@ package com.manimaran.wikiaudio.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -20,7 +19,7 @@ import com.manimaran.wikiaudio.R;
 import com.manimaran.wikiaudio.adapters.EndlessAdapter;
 import com.manimaran.wikiaudio.apis.ApiClient;
 import com.manimaran.wikiaudio.apis.ApiInterface;
-import com.manimaran.wikiaudio.constants.Constants;
+import com.manimaran.wikiaudio.constants.AppConstants;
 import com.manimaran.wikiaudio.constants.EnumTypeDef.ListMode;
 import com.manimaran.wikiaudio.databases.DBHelper;
 import com.manimaran.wikiaudio.databases.dao.WordsHaveAudioDao;
@@ -33,7 +32,6 @@ import com.manimaran.wikiaudio.utils.PrefManager;
 import com.manimaran.wikiaudio.views.EndlessListView;
 
 import java.util.ArrayList;
-import java.util.Collections;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -102,8 +100,8 @@ public class Spell4Wiktionary extends AppCompatActivity implements EndlessListVi
             titleOfWordsWithoutAudio = wikiLang.getTitleOfWordsWithoutAudio();
         // DB Clear or Sync Issue
         if (titleOfWordsWithoutAudio == null) {
-            titleOfWordsWithoutAudio = Constants.DEFAULT_TITLE_FOR_WITHOUT_AUDIO;
-            languageCode = Constants.DEFAULT_LANGUAGE_CODE;
+            titleOfWordsWithoutAudio = AppConstants.DEFAULT_TITLE_FOR_WITHOUT_AUDIO;
+            languageCode = AppConstants.DEFAULT_LANGUAGE_CODE;
             invalidateOptionsMenu();
             pref.setLanguageCodeSpell4Wiki(languageCode);
         }
@@ -244,10 +242,10 @@ public class Spell4Wiktionary extends AppCompatActivity implements EndlessListVi
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == Constants.RC_UPLOAD_DIALOG){
-            if(data != null && data.hasExtra(Constants.WORD)){
+        if(requestCode == AppConstants.RC_UPLOAD_DIALOG){
+            if(data != null && data.hasExtra(AppConstants.WORD)){
                 if(adapter != null) {
-                    adapter.remove(data.getStringExtra(Constants.WORD));
+                    adapter.remove(data.getStringExtra(AppConstants.WORD));
                     adapter.notifyDataSetChanged();
                 }
             }
