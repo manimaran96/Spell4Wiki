@@ -33,12 +33,12 @@ import com.manimaran.wikiaudio.utils.PrefManager;
 
 public class WebViewFragment extends Fragment {
 
-    private View rootView;
+    private View rootView, layoutWebPageNotFound;
     private WebView webView;
     private ProgressBar progressBar;
     private TextView txtLoading;
     private FloatingActionButton fabRecord;
-    private boolean isWitionaryWord = false;
+    private boolean isWitionaryWord = false, isWebPageNotFound = false;
     private String url = null;
     private String word = null;
     private String languageCode;
@@ -113,18 +113,18 @@ public class WebViewFragment extends Fragment {
         webView.loadUrl(url);
 
         // Enable Javascript
-        WebSettings webSettings = webView.getSettings();
-        webSettings.setJavaScriptEnabled(true);
-        webSettings.setSupportZoom(true);
-        webView.clearHistory();
-        webView.clearCache(true);
+        webView.getSettings().setJavaScriptEnabled(true);
         webView.setHorizontalScrollBarEnabled(false);
-
-        webView.setWebViewClient(new WebViewClient());
+        webView.getSettings().setUseWideViewPort(true);
+        webView.getSettings().setLoadWithOverviewMode(true);
+        webView.getSettings().setSupportZoom(true);
+        webView.getSettings().setBuiltInZoomControls(true);
+        webView.getSettings().setDisplayZoomControls(false);
         webView.setWebViewClient(new WebViewClient() {
             @Override
             public void onPageStarted(WebView view, String url, Bitmap favicon) {
                 super.onPageStarted(view, url, favicon);
+                isWebPageNotFound = false;
                 loadingVisibility(View.VISIBLE);
                 if (getActivity() != null)
                     getActivity().invalidateOptionsMenu();
@@ -133,7 +133,8 @@ public class WebViewFragment extends Fragment {
             @Override
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
-                loadingVisibility(View.GONE);
+                if(!isWebPageNotFound)
+                    loadingVisibility(View.GONE);
                 if (getActivity() != null)
                     getActivity().invalidateOptionsMenu();
             }
@@ -141,22 +142,31 @@ public class WebViewFragment extends Fragment {
             @Override
             public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
                 super.onReceivedError(view, request, error);
-                loadingVisibility(View.GONE);
-                GeneralUtils.showToast(getContext(), getString(R.string.error_wepage_load));
+                isWebPageNotFound = true;
+                showPageNotFound();
                 if (getActivity() != null)
                     getActivity().invalidateOptionsMenu();
             }
         });
     }
 
+    private void showPageNotFound(){
+        webView.setVisibility(View.INVISIBLE);
+        txtLoading.setVisibility(View.INVISIBLE);
+        progressBar.setVisibility(View.INVISIBLE);
+        layoutWebPageNotFound.setVisibility(View.VISIBLE);
+    }
+
     private void loadingVisibility(int visibility) {
         txtLoading.setVisibility(visibility);
         progressBar.setVisibility(visibility);
         webView.setVisibility(visibility == View.VISIBLE ? View.INVISIBLE : View.VISIBLE);
+        layoutWebPageNotFound.setVisibility(View.INVISIBLE);
     }
 
     private void initUI() {
         webView = rootView.findViewById(R.id.webView);
+        layoutWebPageNotFound = rootView.findViewById(R.id.layoutWebPageNotFound);
         progressBar = rootView.findViewById(R.id.progressBar);
         txtLoading = rootView.findViewById(R.id.txtLoading);
         fabRecord = rootView.findViewById(R.id.fabRecord);
@@ -185,6 +195,7 @@ public class WebViewFragment extends Fragment {
     }
 
     public void refreshWebPage() {
+        isWebPageNotFound = false;
         webView.reload();
     }
 
