@@ -11,7 +11,7 @@ import com.franmontiel.persistentcookiejar.ClearableCookieJar;
 import com.franmontiel.persistentcookiejar.PersistentCookieJar;
 import com.franmontiel.persistentcookiejar.cache.SetCookieCache;
 import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersistor;
-import com.manimaran.wikiaudio.R;
+import com.manimaran.wikiaudio.BuildConfig;
 import com.manimaran.wikiaudio.constants.Urls;
 import com.manimaran.wikiaudio.utils.PrefManager;
 
@@ -34,7 +34,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class ApiClient {
 
     private static Retrofit retrofitCommons = null;
-    private static Retrofit retrofitWiktionary = null;
     private static Retrofit retrofitApi = null;
     @SuppressLint("StaticFieldLeak")
     private static PrefManager pref;
@@ -51,11 +50,10 @@ public class ApiClient {
     }
 
     public static Retrofit getWiktionaryApi(Context context, String langCode) {
-        retrofitWiktionary = new Retrofit.Builder()
-                    .baseUrl(getWiktionaryApiUrl(langCode))
-                    .addConverterFactory(GsonConverterFactory.create())
-                    .build();
-        return retrofitWiktionary;
+        return new Retrofit.Builder()
+                .baseUrl(getWiktionaryApiUrl(langCode))
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
     }
 
     public static Retrofit getApi(){
@@ -85,21 +83,9 @@ public class ApiClient {
         okHttpClient.writeTimeout(60 * 5, TimeUnit.SECONDS);
 */
         ClearableCookieJar cookieJar = new PersistentCookieJar(new SetCookieCache(), new SharedPrefsCookiePersistor(context));
-        //okHttpClient.cookieJar(cookieJar);
+        okHttpClient.cookieJar(cookieJar);
 
-        /*// Logging
-        okHttpClient.interceptors().add(logging);
-
-        // Query params
-        okHttpClient.interceptors().add(queryParamInterceptor);
-
-        // Add Cookies interceptors
-        okHttpClient.interceptors().add(addCookiesInterceptor);
-
-        // Received cookies interceptors
-        okHttpClient.interceptors().add(receiveCookiesInterceptor);*/
-
-        if (!okHttpClient.interceptors().contains(logging)) {
+        if (BuildConfig.DEBUG && !okHttpClient.interceptors().contains(logging)) {
             okHttpClient.interceptors().add(logging);
         }
 
@@ -108,7 +94,7 @@ public class ApiClient {
         }
 
 
-        if (!okHttpClient.interceptors().contains(addCookiesInterceptor)) {
+        /*if (!okHttpClient.interceptors().contains(addCookiesInterceptor)) {
             okHttpClient.addInterceptor(addCookiesInterceptor);
         }
 
@@ -116,7 +102,7 @@ public class ApiClient {
         if (!okHttpClient.interceptors().contains(receiveCookiesInterceptor)) {
             okHttpClient.addInterceptor(receiveCookiesInterceptor);
         }
-
+*/
 
         return okHttpClient.build();
     }

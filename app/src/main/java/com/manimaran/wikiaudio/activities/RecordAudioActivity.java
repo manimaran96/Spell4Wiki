@@ -541,7 +541,9 @@ public class RecordAudioActivity extends AppCompatActivity {
                 }else if(retryCountForLogin < MAX_RETRIES_FOR_FORCE_LOGIN){ // Same issue after the new csrf also then do force login
                     retryWithForceLogin();
                     return;
-                }else
+                }else if(msg.equalsIgnoreCase(getString(R.string.login_expired)))
+                    GeneralUtils.showLongToast(getString(R.string.login_expired));
+                else
                     GeneralUtils.showLongToast(getString(R.string.invalid_csrf_try_again));
             } else if (!TextUtils.isEmpty(msg))
                 GeneralUtils.showLongToast(msg);
@@ -562,7 +564,7 @@ public class RecordAudioActivity extends AppCompatActivity {
             forceLogin();
         }else {
             Print.error(TAG + "RETRY LOGIN FAIL");
-            uploadFailed("Login expired. Please login and continue");
+            uploadFailed(getString(R.string.login_expired));
             if(retryCountForLogin >= MAX_RETRIES_FOR_FORCE_LOGIN){
                 failWithLogout();
             }
@@ -600,7 +602,7 @@ public class RecordAudioActivity extends AppCompatActivity {
                                             uploadAudioProcess();
                                         }else {
                                             retryWithForceLogin();
-                                            Print.error(TAG + " LOGIN COMPLETE FAIL 1 " + response.toString());
+                                            Print.error(TAG + " LOGIN COMPLETE FAIL 1 " + new Gson().toJson(response.body()));
                                         }
                                     } catch (Exception e) {
                                         retryWithForceLogin();
