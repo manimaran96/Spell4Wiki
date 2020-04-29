@@ -8,7 +8,6 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.os.Environment;
 import android.os.Handler;
 import android.provider.Settings;
 import android.text.TextUtils;
@@ -691,16 +690,11 @@ public class RecordAudioActivity extends AppCompatActivity {
 
     private String getContentAndLicense() {
 
-        WikiLang wikiLang = wikiLangDao.getWikiLanguageWithCode(langCode);
-        String currentLangDescription = getStringByLocalLang(R.string.file_content_description, langCode);
         return "== {{int:filedesc}} ==" + "\n" +
 
                 // File summary or Information
                 "{{Information" + "\n" +
-                "|description=" +
-                "{{en|1=" + String.format(getString(R.string.file_content_description), wikiLang.getName(), word) + "}}" +
-                (TextUtils.isEmpty(currentLangDescription) ? "" : "{{" + langCode + "|1=" + String.format(currentLangDescription, wikiLang.getLocalName(), word) + "}}") +
-                "\n" +
+                (getDescription() != null ? "|description=" + getDescription() +"\n" : "") +
                 "|source={{own}}" +
                 "|author=[[User:" + pref.getName() + "|" + pref.getName() + "]]" + "\n" +
                 "|date=" + getDateNow() + "\n" +
@@ -726,10 +720,33 @@ public class RecordAudioActivity extends AppCompatActivity {
         return new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH).format(new Date());
     }
 
-    public String getStringByLocalLang(int id, String locale) {
-        Configuration config = new Configuration(getResources().getConfiguration());
-        config.setLocale(new Locale(locale));
-        String result = createConfigurationContext(config).getResources().getString(id);
-        return result.equals(getString(R.string.file_content_description)) ? null : result;
+    private String getDescription(){
+        StringBuilder sb = new StringBuilder();
+        try {
+            WikiLang wikiLang = wikiLangDao.getWikiLanguageWithCode(langCode);
+            String enDescriptionFormat = getStringByLocalLang("en");
+            String contributedLangDescriptionFormat = getStringByLocalLang(langCode);
+            if(contributedLangDescriptionFormat != null) {
+                if(!langCode.equals("en") && enDescriptionFormat != null && !contributedLangDescriptionFormat.equalsIgnoreCase(enDescriptionFormat))
+                    sb.append("{{").append(langCode).append("|1=").append(String.format(contributedLangDescriptionFormat, wikiLang.getLocalName(), word)).append("}}");
+            }
+            if(enDescriptionFormat != null)
+                sb.append("{{en|1=").append(String.format(enDescriptionFormat, wikiLang.getName(), word)).append("}}");
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return TextUtils.isEmpty(sb.toString()) ? null : sb.toString();
+    }
+
+    private String getStringByLocalLang(String locale){
+        String result = null;
+        try {
+            Configuration config = new Configuration(getResources().getConfiguration());
+            config.setLocale(new Locale(locale));
+            result = createConfigurationContext(config).getResources().getString(R.string.file_content_description);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return TextUtils.isEmpty(result) ? null : result;
     }
 }
