@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.manimaran.wikiaudio.R;
 import com.manimaran.wikiaudio.auth.AccountUtils;
 import com.manimaran.wikiaudio.constants.AppConstants;
+import com.manimaran.wikiaudio.constants.Urls;
 import com.manimaran.wikiaudio.models.WikiLogin;
 import com.manimaran.wikiaudio.models.WikiToken;
 import com.manimaran.wikiaudio.models.WikiUser;
@@ -93,14 +94,14 @@ public class LoginActivity extends AppCompatActivity {
              *  Hit Forgot Password Button
              */
             btnForgotPassword.setOnClickListener(v -> {
-                openUrl(getString(R.string.url_forgot_password) , getString(R.string.action_forgot_password));
+                openUrl(Urls.FORGOT_PASSWORD, getString(R.string.action_forgot_password));
             });
 
             /*
              *  Hit Join Wikipedia Button
              */
             btnJoinWikipedia.setOnClickListener(v -> {
-                openUrl(getString(R.string.url_join_wikipedia), getString(R.string.action_join_wikipedia));
+                openUrl(Urls.JOIN_WIKI, getString(R.string.action_join_wikipedia));
             });
 
 
