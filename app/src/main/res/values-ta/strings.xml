@@ -148,6 +148,6 @@
     <string name="invalid_language">Invalid Language</string>
     <string name="confirm_declaration">Please check and confirm the declaration.</string>
     <string name="invalid_csrf">You are not logged in! \nPlease login to continue.</string>
-    <string name="file_content_description">%2$s என்ற %1$s வார்த்தையின் உச்சரிப்பு.</string>
+    <string name="file_content_description">%2$s என்ற %1$s வார்த்தையின் ஒலிப்புக்கோப்பு</string> //Don't use full stop
 
 </resources>

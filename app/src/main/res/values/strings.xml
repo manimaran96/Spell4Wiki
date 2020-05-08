@@ -150,7 +150,7 @@
     <string name="confirm_declaration">Please check and confirm the declaration.</string>
     <string name="invalid_csrf">You are not logged in! \nPlease login to continue.</string>
     <string name="invalid_csrf_try_again">Invalid CSRF Token. Please Try again.</string>
-    <string name="file_content_description">Pronunciation of %1$s word %2$s.</string>
+    <string name="file_content_description">Pronunciation of %1$s Language word %2$s</string>  //Don't use full stop
     <string name="unable_to_upload_audio">Unable to upload audio. Something went wrong</string>
     <string name="upload_success">Successfully Uploaded\nPronunciation audio of %s</string>
     <string name="upload_failed">Upload failed. Please Try again.</string>
