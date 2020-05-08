@@ -705,7 +705,7 @@ public class RecordAudioActivity extends AppCompatActivity {
                 WikiLicense.getLicenseTemplateInWiki(pref.getUploadAudioLicense()) + "\n" +
 
                 // File Category
-                "[[Category:Pronunciation]]" + (langCode.equals("ta") ? "\n[[Category:Tamil pronunciation | " + word + "]]" : "");
+                (langCode.equals("ta") ? "[[Category:Files uploaded by spell4wiki in ta]]" : "[[Category:Files uploaded by spell4wiki]]\n[[Category:Files uploaded by spell4wiki in "+ langCode +"]]");
         /*
         TODO Category may given common lang api in array list of categories then add into for loop. Given selection for category
         Category : [[Category:St. Thomas Mount]]
