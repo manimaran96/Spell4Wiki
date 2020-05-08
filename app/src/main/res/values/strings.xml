@@ -38,7 +38,6 @@
     <string name="player">player</string>
     <string name="title_upload_audio">Upload Audio</string>
     <string name="message_upload_info">Uploading \n%s</string>
-    <string name="upload_comment">%s Uploaded using Spell4Wiki app.</string>
 
 
     <string name="format_file_name_words_already_have_audio">%s-words_already_have_audio</string>

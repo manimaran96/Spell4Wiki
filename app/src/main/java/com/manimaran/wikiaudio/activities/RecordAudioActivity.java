@@ -466,7 +466,7 @@ public class RecordAudioActivity extends AppCompatActivity {
                 RequestBody.create(MultipartBody.FORM, editToken), // edit/csrf token
                 body, // original file source
                 RequestBody.create(MultipartBody.FORM, contentAndLicense), // Text Content of the file.
-                RequestBody.create(MultipartBody.FORM, String.format(getString(R.string.upload_comment), uploadFileName)) // Comment
+                RequestBody.create(MultipartBody.FORM, AppConstants.UPLOAD_COMMENT) // Comment
         );
 
 

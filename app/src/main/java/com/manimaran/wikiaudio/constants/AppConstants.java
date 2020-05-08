@@ -9,6 +9,7 @@ public class AppConstants {
     public static final String DEFAULT_TITLE_FOR_WITHOUT_AUDIO = "பகுப்பு:தமிழ்-ஒலிக்கோப்புகளில்லை";
     public static final String DEFAULT_LANGUAGE_CODE = "ta";
     public static final String LANGUAGE_CODE = "language_code";
+    public static final String UPLOAD_COMMENT = "Uploaded using [[:Commons:Spell4Wiki|Spell4Wiki]] app.";
 
     // Intent
     public static final String SEARCH_TEXT = "search_text";
