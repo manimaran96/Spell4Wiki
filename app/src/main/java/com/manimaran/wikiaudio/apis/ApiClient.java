@@ -85,9 +85,9 @@ public class ApiClient {
         ClearableCookieJar cookieJar = new PersistentCookieJar(new SetCookieCache(), new SharedPrefsCookiePersistor(context));
         okHttpClient.cookieJar(cookieJar);
 
-        if (BuildConfig.DEBUG && !okHttpClient.interceptors().contains(logging)) {
+        /*if (BuildConfig.DEBUG && !okHttpClient.interceptors().contains(logging)) {
             okHttpClient.interceptors().add(logging);
-        }
+        }*/
 
         if (!okHttpClient.interceptors().contains(queryParamInterceptor)) {
             okHttpClient.addInterceptor(queryParamInterceptor);
