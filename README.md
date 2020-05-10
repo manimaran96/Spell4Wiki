@@ -20,6 +20,7 @@ App Link - [Spell4Wiki.apk](https://drive.google.com/file/d/1htltxEfEOEGzs64dRJ_
 ##### Initiated & Powered By
 * [Kaniyam](http://www.kaniyam.com/) Foundation - [Project idea](https://github.com/KaniyamFoundation/ProjectIdeas/wiki/Project-Ideas)
 * [VGLUG](https://vglug.org/) - Villupuram GNU Linux Users Group
+* [Tamil Wiki Community](https://en.wikipedia.org/wiki/Tamil_Wikipedia)
 
 ##### Inspired By
 * [WikiAudio](https://github.com/Atul22/wikiAudio)
