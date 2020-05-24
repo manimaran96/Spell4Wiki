@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.manimaran.wikiaudio.activities.WiktionaryWebActivity">
+    tools:context="com.manimarank.spell4wiki.activities.WiktionaryWebActivity">
 
     <FrameLayout
         android:id="@+id/frameLayout"

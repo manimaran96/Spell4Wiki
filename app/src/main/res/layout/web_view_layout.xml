@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/white"
-    tools:context="com.manimaran.wikiaudio.activities.CommonWebActivity">
+    tools:context="com.manimarank.spell4wiki.activities.CommonWebActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
