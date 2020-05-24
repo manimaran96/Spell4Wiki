@@ -3,6 +3,8 @@ package com.manimarank.spell4wiki.models;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.List;
+
 public class WikiLanguage {
 
     @SerializedName("code")
@@ -20,9 +22,13 @@ public class WikiLanguage {
     @Expose
     private String localName;
 
-    @SerializedName("title_words_without_audio")
+    @SerializedName("title_of_words_list")
     @Expose
     private String titleOfWordsWithoutAudio;
+
+    @SerializedName("category")
+    @Expose
+    private List<String> category = null;
 
     public String getCode() {
         return code;
@@ -62,5 +68,13 @@ public class WikiLanguage {
 
     public void setTitleOfWordsWithoutAudio(String titleOfWordsWithoutAudio) {
         this.titleOfWordsWithoutAudio = titleOfWordsWithoutAudio;
+    }
+
+    public List<String> getCategory() {
+        return category;
+    }
+
+    public void setCategory(List<String> category) {
+        this.category = category;
     }
 }

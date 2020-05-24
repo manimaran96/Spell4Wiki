@@ -3,7 +3,7 @@ package com.manimarank.spell4wiki.apis;
 
 import com.manimarank.spell4wiki.constants.Urls;
 import com.manimarank.spell4wiki.models.Contributors;
-import com.manimarank.spell4wiki.models.WikiLanguage;
+import com.manimarank.spell4wiki.models.WikiBaseData;
 import com.manimarank.spell4wiki.models.WikiLogin;
 import com.manimarank.spell4wiki.models.WikiSearchWords;
 import com.manimarank.spell4wiki.models.WikiToken;
@@ -99,8 +99,8 @@ public interface ApiInterface {
     );
 
     // Get Wikipedia language list JSON - Static Link
-    @GET("https://raw.githubusercontent.com/manimaran96/Spell4Wiki/master/files/lang-json/language.json")
-    Call<List<WikiLanguage>> fetchWikiLanguageList();
+    @GET("https://raw.githubusercontent.com/manimaran96/Spell4Wiki/master/files/base_data/spell4wiki_base.json")
+    Call<WikiBaseData> fetchWikiBaseData();
 
     // Contributors List - Github API
     @GET("https://api.github.com/repos/manimaran96/Spell4Wiki/contributors")

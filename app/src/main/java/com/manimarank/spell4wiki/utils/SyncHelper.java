@@ -3,10 +3,12 @@ package com.manimarank.spell4wiki.utils;
 import android.app.Activity;
 import android.text.TextUtils;
 
+import com.manimarank.spell4wiki.Spell4WikiApp;
 import com.manimarank.spell4wiki.apis.ApiClient;
 import com.manimarank.spell4wiki.apis.ApiInterface;
 import com.manimarank.spell4wiki.databases.DBHelper;
 import com.manimarank.spell4wiki.databases.entities.WikiLang;
+import com.manimarank.spell4wiki.models.WikiBaseData;
 import com.manimarank.spell4wiki.models.WikiLanguage;
 
 import org.jetbrains.annotations.NotNull;
@@ -31,14 +33,19 @@ public class SyncHelper {
         DBHelper dbHelper = DBHelper.getInstance(mActivity);
 
         ApiInterface api = ApiClient.getApi().create(ApiInterface.class);
-        Call<List<WikiLanguage>> wikiLanguageCall = api.fetchWikiLanguageList();
+        Call<WikiBaseData> wikiBaseDataCall = api.fetchWikiBaseData();
 
-        wikiLanguageCall.enqueue(new Callback<List<WikiLanguage>>() {
+        wikiBaseDataCall.enqueue(new Callback<WikiBaseData>() {
             @Override
-            public void onResponse(@NotNull Call<List<WikiLanguage>> call, @NotNull Response<List<WikiLanguage>> response) {
+            public void onResponse(@NotNull Call<WikiBaseData> call, @NotNull Response<WikiBaseData> response) {
                 try {
-                    if (response.isSuccessful()) {
-                        List<WikiLanguage> languageList = response.body();
+                    if (response.isSuccessful() && response.body() != null) {
+                        WikiBaseData data = response.body();
+                        PrefManager prefManager = new PrefManager(Spell4WikiApp.Companion.getApplicationContext());
+                        prefManager.setCommonCategories(data.getCategoryCommon());
+
+
+                        List<WikiLanguage> languageList = data.getLanguageWiseData();
                         if (languageList != null && languageList.size() > 0) {
                             for (WikiLanguage lang : languageList) {
                                 WikiLang dbLang = new WikiLang();
@@ -51,6 +58,8 @@ public class SyncHelper {
                                     dbLang.setIsLeftDirection(false);
                                 else
                                     dbLang.setIsLeftDirection(true);
+                                if(lang.getCategory() != null && lang.getCategory().size() > 0)
+                                    dbLang.setCategories(lang.getCategory());
                                 dbHelper.getAppDatabase().getWikiLangDao().insert(dbLang);
                             }
                         }
@@ -61,7 +70,7 @@ public class SyncHelper {
             }
 
             @Override
-            public void onFailure(@NotNull Call<List<WikiLanguage>> call, @NotNull Throwable t) {
+            public void onFailure(@NotNull Call<WikiBaseData> call, @NotNull Throwable t) {
                 t.printStackTrace();
             }
         });

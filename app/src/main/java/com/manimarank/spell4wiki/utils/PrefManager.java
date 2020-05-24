@@ -9,6 +9,8 @@ import com.manimarank.spell4wiki.R;
 import com.manimarank.spell4wiki.activities.LoginActivity;
 import com.manimarank.spell4wiki.auth.AccountUtils;
 
+import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class PrefManager {
@@ -24,6 +26,7 @@ public class PrefManager {
     private static final String LANGUAGE_CODE_SPELL_4_WORD = "language_code_spell_4_word";
     private static final String LANGUAGE_CODE_WIKTIONARY = "language_code_wiktionary";
     private static final String UPLOAD_AUDIO_LICENSE = "upload_audio_license";
+    private static final String COMMON_CATEGORIES = "common_categories";
     private static final String CSRF_TOKEN = "csrf_token";
     private static final String COOKIE = "cookie";
     private SharedPreferences pref;
@@ -159,4 +162,12 @@ public class PrefManager {
         editor.apply();
     }
 
+    public void setCommonCategories(List<String> categoryCommon) {
+        editor.putStringSet(COMMON_CATEGORIES, new HashSet<>(categoryCommon));
+        editor.apply();
+    }
+
+    public Set<String> getCommonCategories(){
+        return pref.getStringSet(COMMON_CATEGORIES, null);
+    }
 }

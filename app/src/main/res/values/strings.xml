@@ -160,7 +160,7 @@
     <string name="logout_confirmation">Logout Confirmation</string>
     <string name="logout_message">Do you want to logout?</string>
     <string name="account_name">Spell4Wiki</string>
-    <string name="account_type">com.manimaran.spell4wiki</string>
+    <string name="account_type">com.manimarank.spell4wiki</string>
     <string name="web_page_not_found">Page not found.\nTry again.</string>
     <string name="login_expired">Login expired. Please login and continue.</string>
     <string name="start">Start</string>

@@ -705,7 +705,7 @@ public class RecordAudioActivity extends AppCompatActivity {
                 WikiLicense.getLicenseTemplateInWiki(pref.getUploadAudioLicense()) + "\n" +
 
                 // File Category
-                (langCode.equals("ta") ? "[[Category:Files uploaded by spell4wiki in ta]]" : "[[Category:Files uploaded by spell4wiki]]\n[[Category:Files uploaded by spell4wiki in "+ langCode +"]]");
+                getCategoryInfo();
         /*
         TODO Category may given common lang api in array list of categories then add into for loop. Given selection for category
         Category : [[Category:St. Thomas Mount]]
@@ -714,6 +714,30 @@ public class RecordAudioActivity extends AppCompatActivity {
         Template for Spell4wiki
         Template : {{Uploaded from Mobile|platform=Android|version=2.10.2~66e1539a1}}
          */
+    }
+
+    private String getCategoryInfo() {
+        StringBuilder sb = new StringBuilder();
+        if(wikiLangDao.getWikiLanguageWithCode(langCode) != null &&  wikiLangDao.getWikiLanguageWithCode(langCode).getCategories() != null && wikiLangDao.getWikiLanguageWithCode(langCode).getCategories().size() > 0){
+            for(String category : wikiLangDao.getWikiLanguageWithCode(langCode).getCategories()){
+                if(!TextUtils.isEmpty(category))
+                    sb.append("[[Category:").append(category).append("]]").append("\n");
+            }
+        }else {
+            if(pref.getCommonCategories() != null && pref.getCommonCategories().size() > 0) {
+                for (String category : pref.getCommonCategories()) {
+                    if(!TextUtils.isEmpty(category))
+                        sb.append("[[Category:").append(category).append("]]").append("\n");
+                }
+            }
+        }
+
+        if(TextUtils.isEmpty(sb.toString())) {
+            sb.append("[[Category:Files uploaded by spell4wiki]]").append("\n");
+            sb.append("[[Category:Files uploaded by spell4wiki in "+ langCode +"]]").append("\n");
+        }
+
+        return sb.toString();
     }
 
     private String getDateNow() {

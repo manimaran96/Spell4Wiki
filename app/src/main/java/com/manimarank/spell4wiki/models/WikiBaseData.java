@@ -1,26 +1,31 @@
 package com.manimarank.spell4wiki.models;
 
-public class WikiUser {
-    private String userName, password;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
-    public String getUserName() {
-        return userName;
+import java.util.List;
+
+public class WikiBaseData {
+    @SerializedName("category_common")
+    @Expose
+    private List<String> categoryCommon = null;
+    @SerializedName("language_wise_data")
+    @Expose
+    private List<WikiLanguage> languageWiseData = null;
+
+    public List<String> getCategoryCommon() {
+        return categoryCommon;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setCategoryCommon(List<String> categoryCommon) {
+        this.categoryCommon = categoryCommon;
     }
 
-    public String getPassword() {
-        return password;
+    public List<WikiLanguage> getLanguageWiseData() {
+        return languageWiseData;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public WikiUser(String userName, String password) {
-        this.userName = userName;
-        this.password = password;
+    public void setLanguageWiseData(List<WikiLanguage> languageWiseData) {
+        this.languageWiseData = languageWiseData;
     }
 }

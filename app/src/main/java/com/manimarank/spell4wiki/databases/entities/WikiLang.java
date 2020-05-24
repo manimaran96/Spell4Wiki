@@ -5,11 +5,14 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
+import androidx.room.TypeConverters;
 
+import com.manimarank.spell4wiki.databases.converters.ListTypeConverters;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.io.Serializable;
+import java.util.List;
 
 
 @Entity(tableName = "wiki_language", indices = {@Index(value = {"code"}, unique = true)})
@@ -29,15 +32,21 @@ public class WikiLang implements Serializable {
     @ColumnInfo(name = "is_left_direction")
     private Boolean isLeftDirection;
 
-    public WikiLang() {
-    }
+    @ColumnInfo(name = "category_list")
+    @TypeConverters(ListTypeConverters.class)
+    private List<String> categories;
 
-    public WikiLang(@NotNull String code, String name, String localName, String titleOfWordsWithoutAudio, Boolean isLeftDirection) {
+    public WikiLang(@NotNull String code, String name, String localName, String titleOfWordsWithoutAudio, Boolean isLeftDirection, List<String> categories) {
         this.code = code;
         this.name = name;
         this.localName = localName;
         this.titleOfWordsWithoutAudio = titleOfWordsWithoutAudio;
         this.isLeftDirection = isLeftDirection;
+        this.categories = categories;
+    }
+
+    public WikiLang() {
+
     }
 
     @NotNull
@@ -79,5 +88,13 @@ public class WikiLang implements Serializable {
 
     public void setIsLeftDirection(Boolean leftDirection) {
         isLeftDirection = leftDirection;
+    }
+
+    public List<String> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(List<String> categories) {
+        this.categories = categories;
     }
 }
