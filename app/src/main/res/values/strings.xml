@@ -53,7 +53,7 @@
     <string name="app_intro_slide_4_title">Spell For Word</string>
     <string name="app_intro_slide_5_title">Permission Request</string>
     <string name="app_intro_slide_3_title">Spell For Word List</string>
-    <string name="app_intro_slide_1_description">Spell4Wiki app to record and upload audios for Wiki commons.\nAlso act as wiki dictionary.</string>
+    <string name="app_intro_slide_1_description">Spell4Wiki app to record and upload audios for Wikimedia commons.\nAlso act as wiki dictionary.</string>
     <string name="app_intro_slide_2_description">You can search and view words meaning form wikitionary for any languages.</string>
     <string name="app_intro_slide_3_description">You can record and upload audios for your own word list from your device.</string>
     <string name="app_intro_slide_4_description">You can record and upload audio for your custom word.</string>
@@ -149,7 +149,7 @@
     <string name="confirm_declaration">Please check and confirm the declaration.</string>
     <string name="invalid_csrf">You are not logged in! \nPlease login to continue.</string>
     <string name="invalid_csrf_try_again">Invalid CSRF Token. Please Try again.</string>
-    <string name="file_content_description">Pronunciation of %1$s Language word %2$s</string>  //Don't use full stop
+    <string name="file_content_description">Pronunciation of %1$s Language word %2$s</string>  //Don't use full stop,  %1$s - language name, %2$s - word.
     <string name="unable_to_upload_audio">Unable to upload audio. Something went wrong</string>
     <string name="upload_success">Successfully Uploaded\nPronunciation audio of %s</string>
     <string name="upload_failed">Upload failed. Please Try again.</string>
@@ -163,7 +163,8 @@
     <string name="account_type">com.manimaran.spell4wiki</string>
     <string name="web_page_not_found">Page not found.\nTry again.</string>
     <string name="login_expired">Login expired. Please login and continue.</string>
-    <string name="start">Strat</string>
-    // %1$s - language name, %2$s - word.
+    <string name="start">Start</string>
+    <string name="share_app">Share App</string>
+
 
 </resources>

@@ -30,7 +30,7 @@ class Spell4WikiApp : Application() {
                     .setAlertDialogPositiveButton("Send")
                     .setAlertDialogNegativeButton("Cancel")
                     .setIncludeDeviceInformation(true)
-                    .setCrashReportSubjectForEmail("[${getString(R.string.app_name)}] App Crash Report")
+                    .setCrashReportSubjectForEmail("${getString(R.string.app_name)} App - Crash Report")
                     .setCrashReportSendEmailIds(emailIds)
 
             CrashReporter.initialize(applicationContext, config)

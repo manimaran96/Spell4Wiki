@@ -73,14 +73,17 @@ public class ListItemActivity extends AppCompatActivity {
         list.add(new ItemsModel("com.google.android.material:material:1.0.0", apache, "https://developer.android.com/topic/libraries/support-library"));
         list.add(new ItemsModel("androidx.recyclerview:recyclerview:1.1.0", apache, "https://developer.android.com/jetpack/androidx/releases/recyclerview"));
         list.add(new ItemsModel("br.com.simplepass:loading-button-android:1.14.0", mit, "https://github.com/leandroBorgesFerreira/LoadingButtonAndroid"));
-        list.add(new ItemsModel("com.arthenica:mobile-ffmpeg-full:4.3.1.LTS", gplV3, "https://github.com/tanersener/mobile-ffmpeg"));
+        list.add(new ItemsModel("com.arthenica:mobile-ffmpeg-audio:4.3.1.LTS", gplV3, "https://github.com/tanersener/mobile-ffmpeg"));
         list.add(new ItemsModel("com.github.bumptech.glide:glide:4.11.0", "https://github.com/bumptech/glide/blob/master/LICENSE", "https://github.com/bumptech/glide"));
         list.add(new ItemsModel("com.squareup.retrofit2:retrofit:2.6.2", apache, "https://github.com/square/retrofit"));
         list.add(new ItemsModel("com.squareup.okhttp3:okhttp:4.2.1", apache, "https://github.com/square/okhttp"));
         list.add(new ItemsModel("com.github.franmontiel:PersistentCookieJar:v1.0.1", apache, "https://github.com/franmontiel/PersistentCookieJar"));
         list.add(new ItemsModel("com.google.code.gson:gson:2.8.5", apache, "https://github.com/google/gson"));
-        list.add(new ItemsModel("com.github.tiagohm.MarkdownView:library:0.19.0", apache, "https://github.com/tiagohm/MarkdownView"));
         list.add(new ItemsModel("com.github.AppIntro:AppIntro:4.2.3", apache, "https://github.com/AppIntro/AppIntro"));
+        list.add(new ItemsModel("com.gitlab.manimaran:crashreporter:v0.1", gplV3, "https://github.com/manimaran96/CrashReporter"));
+        list.add(new ItemsModel("org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.3.72", apache, "https://mvnrepository.com/artifact/org.jetbrains.kotlin/kotlin-stdlib-jdk7"));
+        list.add(new ItemsModel("androidx.core:core-ktx:1.2.0", apache, "https://developer.android.com/jetpack/androidx/releases/core"));
+
         return list;
     }
 
