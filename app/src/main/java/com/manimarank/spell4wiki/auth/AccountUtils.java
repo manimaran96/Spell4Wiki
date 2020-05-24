@@ -74,7 +74,7 @@ public class AccountUtils {
 
     @NonNull
     private static Spell4WikiApp app() {
-        return Spell4WikiApp.getInstance();
+        return Spell4WikiApp.Companion.getApplicationContext();
     }
 
     public static boolean isLoggedIn() {

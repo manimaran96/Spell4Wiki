@@ -15,6 +15,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
+import com.manimaran.crash_reporter.utils.AppUtils;
 import com.manimarank.spell4wiki.BuildConfig;
 import com.manimarank.spell4wiki.R;
 import com.manimarank.spell4wiki.constants.AppConstants;
@@ -171,35 +172,7 @@ public class AboutActivity extends AppCompatActivity implements View.OnClickList
     public String getExtraInfo() {
         StringBuilder builder = new StringBuilder();
 
-        // Getting API Level
-        builder.append("API level: ")
-                .append(DeviceInfoUtil.getAPILevel())
-                .append("\n");
-
-        // Getting Android Version
-        builder.append("Android version: ")
-                .append(DeviceInfoUtil.getAndroidVersion())
-                .append("\n");
-
-        // Getting Device Manufacturer
-        builder.append("Device manufacturer: ")
-                .append(DeviceInfoUtil.getDeviceManufacturer())
-                .append("\n");
-
-        // Getting Device Model
-        builder.append("Device model: ")
-                .append(DeviceInfoUtil.getDeviceModel())
-                .append("\n");
-
-        // Getting Device Name
-        builder.append("Device: ")
-                .append(DeviceInfoUtil.getDevice())
-                .append("\n");
-
-        // Getting App Version
-        builder.append("App version name: ")
-                .append(BuildConfig.VERSION_NAME)
-                .append("\n");
+        builder.append(AppUtils.getDeviceDetails(getApplicationContext())).append("\n");
 
         PrefManager prefManager = new PrefManager(getApplicationContext());
         // Getting Username

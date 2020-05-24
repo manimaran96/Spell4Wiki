@@ -35,7 +35,7 @@ public class GeneralUtils {
     }
 
     public static void showLongToast(String msg) {
-        Toast.makeText(Spell4WikiApp.getInstance(), msg, Toast.LENGTH_SHORT).show();
+        Toast.makeText(Spell4WikiApp.Companion.getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
     }
 
     public static void showToast(Context context, String msg) {

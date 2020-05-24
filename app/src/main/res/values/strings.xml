@@ -163,6 +163,7 @@
     <string name="account_type">com.manimaran.spell4wiki</string>
     <string name="web_page_not_found">Page not found.\nTry again.</string>
     <string name="login_expired">Login expired. Please login and continue.</string>
+    <string name="start">Strat</string>
     // %1$s - language name, %2$s - word.
 
 </resources>

@@ -7,7 +7,7 @@ android {
     defaultConfig {
         applicationId "com.manimarank.spell4wiki"
         vectorDrawables.useSupportLibrary = true
-        minSdkVersion 17
+        minSdkVersion 19
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
@@ -68,6 +68,9 @@ dependencies {
 
     // Lottie Animation
     implementation 'com.airbnb.android:lottie:3.4.0'
+
+    // Crash Reporter
+    implementation 'com.gitlab.manimaran:crashreporter:v0.1'
     
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'

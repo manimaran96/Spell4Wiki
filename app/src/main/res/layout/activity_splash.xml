@@ -26,4 +26,21 @@
         android:textColor="@color/w_blue"
         android:textSize="@dimen/text_x_large"
         android:textStyle="bold" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnStart"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/btn_height"
+        android:layout_gravity="center"
+        android:paddingStart="40dp"
+        android:paddingEnd="40dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="32dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerInParent="true"
+        android:background="@drawable/bg_button"
+        android:text="@string/start"
+        android:textAllCaps="false"
+        android:textColor="@color/white" />
+
 </RelativeLayout>
