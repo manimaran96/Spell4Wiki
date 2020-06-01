@@ -734,7 +734,7 @@ public class RecordAudioActivity extends AppCompatActivity {
 
         if(TextUtils.isEmpty(sb.toString())) {
             sb.append("[[Category:Files uploaded by spell4wiki]]").append("\n");
-            sb.append("[[Category:Files uploaded by spell4wiki in "+ langCode +"]]").append("\n");
+            sb.append("[[Category:Files uploaded by spell4wiki in ").append(langCode).append("]]").append("\n");
         }
 
         return sb.toString();

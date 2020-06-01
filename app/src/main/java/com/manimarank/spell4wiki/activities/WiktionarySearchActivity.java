@@ -35,12 +35,10 @@ public class WiktionarySearchActivity extends AppCompatActivity implements Endle
 
     private EndlessListView resultListView;
     private TextView txtNotFound;
-    private SearchView searchView;
     private Snackbar snackbar;
 
     private String queryString;
     private Integer nextOffset;
-    private PrefManager pref;
     private ApiInterface api;
     private String languageCode = "";
 
@@ -52,13 +50,13 @@ public class WiktionarySearchActivity extends AppCompatActivity implements Endle
     }
 
     private void init() {
-        pref = new PrefManager(WiktionarySearchActivity.this);
+        PrefManager pref = new PrefManager(WiktionarySearchActivity.this);
         languageCode = pref.getLanguageCodeWiktionary();
         api = ApiClient.getWiktionaryApi(getApplicationContext(), languageCode).create(ApiInterface.class);
 
         // Views
         txtNotFound = findViewById(R.id.txtNotFound);
-        searchView = findViewById(R.id.search_bar);
+        SearchView searchView = findViewById(R.id.search_bar);
         resultListView = findViewById(R.id.search_result_list);
         snackbar = Snackbar.make(searchView, getString(R.string.something_went_wrong), Snackbar.LENGTH_LONG);
 

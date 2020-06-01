@@ -20,7 +20,6 @@ import com.manimarank.spell4wiki.BuildConfig;
 import com.manimarank.spell4wiki.R;
 import com.manimarank.spell4wiki.constants.AppConstants;
 import com.manimarank.spell4wiki.constants.Urls;
-import com.manimarank.spell4wiki.utils.DeviceInfoUtil;
 import com.manimarank.spell4wiki.utils.GeneralUtils;
 import com.manimarank.spell4wiki.utils.PrefManager;
 

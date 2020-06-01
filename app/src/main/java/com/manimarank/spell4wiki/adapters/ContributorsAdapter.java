@@ -55,7 +55,7 @@ public class ContributorsAdapter extends RecyclerView.Adapter<ContributorsAdapte
     }
 
     /* adapter view holder */
-    class ViewHolder extends RecyclerView.ViewHolder {
+    static class ViewHolder extends RecyclerView.ViewHolder {
 
         TextView txtName, txtAbout;
         ImageView imgIcon, btnOption;
