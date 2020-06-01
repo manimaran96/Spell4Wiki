@@ -32,4 +32,9 @@
     <dimen name="btn_padding_end">10dp</dimen>
     <dimen name="icon_normal">100dp</dimen>
     <dimen name="btn_height">40dp</dimen>
+    <dimen name="app_intro_icon">200dp</dimen>
+
+    <!--Space Margin, Padding -->
+    <dimen name="space_12dp">12dp</dimen>
+    <dimen name="space_32dp">32dp</dimen>
 </resources>

@@ -23,7 +23,7 @@
             <ImageView
                 android:layout_width="@dimen/logo_large"
                 android:layout_height="@dimen/logo_large"
-                android:src="@drawable/ic_spell4wiki_main"
+                android:src="@drawable/ic_spell4wiki_logo"
                 android:contentDescription="@string/app_name"
                 android:padding="10dp"/>
 
@@ -91,7 +91,7 @@
                         android:layout_height="@dimen/option_icon_size"
                         android:layout_centerHorizontal="true"
                         android:contentDescription="@string/spell4wiktionary"
-                        android:src="@drawable/ic_spell4wiki" />
+                        android:src="@drawable/ic_spell4wiktionary" />
 
                     <TextView
                         android:layout_width="match_parent"

@@ -34,4 +34,5 @@ public class AppConstants {
 
     // Request Code
     public static final int RC_UPLOAD_DIALOG = 1001;
+    public static final int RC_PERMISSIONS = 1000;
 }

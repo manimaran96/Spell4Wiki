@@ -1,6 +1,11 @@
 <resources>
     <string name="app_name">Spell4Wiki</string>
 
+    <string name="start">Start</string>
+
+
+
+
     <string name="pref_file_name" translatable="false">spell4wiki_pref</string>
     <string name="pref_is_logged_in"  translatable="false">is_login</string>
 
@@ -163,7 +168,7 @@
     <string name="account_type">com.manimarank.spell4wiki</string>
     <string name="web_page_not_found">Page not found.\nTry again.</string>
     <string name="login_expired">Login expired. Please login and continue.</string>
-    <string name="start">Start</string>
+
     <string name="share_app">Share App</string>
 
 
