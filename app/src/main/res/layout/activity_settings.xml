@@ -4,13 +4,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context="com.manimarank.spell4wiki.activities.AboutActivity">
+    tools:context=".activities.AboutActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="16dp">
+        android:padding="@dimen/space16dp">
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/txtTitleLanguage"
@@ -18,7 +18,7 @@
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
             android:maxLines="1"
-            android:layout_marginBottom="10dp"
+            android:layout_marginBottom="@dimen/space8dp"
             android:text="@string/language"
             android:textColor="@color/w_blue"
             android:textSize="@dimen/text_normal" />
@@ -27,7 +27,7 @@
             android:id="@+id/layoutSpell4WikiLang"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="8dp"
+            android:padding="@dimen/space8dp"
             android:orientation="vertical">
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -45,7 +45,7 @@
                 android:gravity="center_vertical"
                 android:maxLines="1"
                 android:textColor="@color/label_text"
-                android:layout_marginTop="2dp"
+                android:layout_marginTop="@dimen/space2dp"
                 android:text="@string/language"
                 android:textSize="@dimen/text_semi_normal" />
 
@@ -55,7 +55,7 @@
             android:id="@+id/layoutSpell4WordListLang"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="8dp"
+            android:padding="@dimen/space8dp"
             android:orientation="vertical">
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -73,7 +73,7 @@
                 android:gravity="center_vertical"
                 android:maxLines="1"
                 android:textColor="@color/label_text"
-                android:layout_marginTop="2dp"
+                android:layout_marginTop="@dimen/space2dp"
                 android:text="@string/language"
                 android:textSize="@dimen/text_semi_normal" />
 
@@ -84,7 +84,7 @@
             android:id="@+id/layoutSpell4WordLang"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="8dp"
+            android:padding="@dimen/space8dp"
             android:orientation="vertical">
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -102,7 +102,7 @@
                 android:gravity="center_vertical"
                 android:maxLines="1"
                 android:textColor="@color/label_text"
-                android:layout_marginTop="2dp"
+                android:layout_marginTop="@dimen/space2dp"
                 android:text="@string/language"
                 android:textSize="@dimen/text_semi_normal" />
 
@@ -112,7 +112,7 @@
             android:id="@+id/layoutWiktionaryLang"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="8dp"
+            android:padding="@dimen/space8dp"
             android:orientation="vertical">
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -130,20 +130,20 @@
                 android:gravity="center_vertical"
                 android:maxLines="1"
                 android:textColor="@color/label_text"
-                android:layout_marginTop="2dp"
+                android:layout_marginTop="@dimen/space2dp"
                 android:text="@string/language"
                 android:textSize="@dimen/text_semi_normal" />
 
         </LinearLayout>
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/txtTitleLicense"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
             android:maxLines="1"
-            android:layout_marginTop="15dp"
-            android:layout_marginBottom="10dp"
+            android:layout_marginTop="@dimen/space16dp"
+            android:layout_marginBottom="@dimen/space8dp"
             android:text="@string/license"
             android:textColor="@color/w_blue"
             android:textSize="@dimen/text_normal" />
@@ -152,7 +152,7 @@
             android:id="@+id/layoutLicenseOfUploadAudio"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="8dp"
+            android:padding="@dimen/space8dp"
             android:orientation="vertical">
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -166,17 +166,17 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space2dp"
                 android:orientation="horizontal">
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/txtLicenseOfUploadAudio"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="4dp"
+                    android:layout_marginEnd="@dimen/space4dp"
                     android:gravity="center_vertical"
                     android:maxLines="1"
                     android:textColor="@color/label_text"
-                    android:layout_marginTop="2dp"
                     android:text="@string/language"
                     android:textSize="@dimen/text_semi_normal" />
 
@@ -187,7 +187,6 @@
                     android:gravity="center_vertical"
                     android:maxLines="1"
                     android:textColor="@color/label_text"
-                    android:layout_marginTop="2dp"
                     android:text="@string/language"
                     android:textSize="@dimen/text_semi_normal" />
 

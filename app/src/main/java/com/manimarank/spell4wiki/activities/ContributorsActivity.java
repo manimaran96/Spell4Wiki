@@ -1,19 +1,20 @@
 package com.manimarank.spell4wiki.activities;
 
 import android.os.Bundle;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.manimarank.spell4wiki.R;
 import com.manimarank.spell4wiki.adapters.ContributorsAdapter;
-import com.manimarank.spell4wiki.models.Contributors;
-import com.manimarank.spell4wiki.utils.GeneralUtils;
 import com.manimarank.spell4wiki.apis.ApiClient;
 import com.manimarank.spell4wiki.apis.ApiInterface;
+import com.manimarank.spell4wiki.models.Contributors;
+import com.manimarank.spell4wiki.utils.GeneralUtils;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -48,9 +49,9 @@ public class ContributorsActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
 
-        if(GeneralUtils.isNetworkConnected(getApplicationContext()))
+        if (GeneralUtils.isNetworkConnected(getApplicationContext()))
             loadContributorsFromApi();
-        else{
+        else {
             GeneralUtils.showSnack(recyclerView, getString(R.string.check_internet));
         }
     }

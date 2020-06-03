@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/constraintLayout"
     android:layout_width="match_parent"
-    android:padding="20dp"
+    android:padding="@dimen/space16dp"
     android:layout_height="match_parent">
 
     <androidx.appcompat.widget.AppCompatTextView
@@ -13,7 +13,7 @@
         android:gravity="center"
         android:text="@string/app_name"
         android:textAlignment="center"
-        android:textColor="@color/w_blue"
+        android:textColor="@color/app_intro_title"
         android:layout_above="@+id/imgAppIntro"
         android:layout_marginBottom="100dp"
         android:textSize="@dimen/text_x_large"
@@ -33,12 +33,12 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="70dp"
         android:gravity="center"
-        android:paddingStart="20dp"
-        android:paddingEnd="20dp"
+        android:paddingStart="@dimen/space20dp"
+        android:paddingEnd="@dimen/space20dp"
         android:lineSpacingExtra="2dp"
         android:text="@string/app_intro_slide_1_description"
         android:textAlignment="center"
-        android:textColor="@color/w_blue"
+        android:textColor="@color/app_intro_description"
         android:layout_below="@+id/imgAppIntro"
         android:textSize="@dimen/text_normal" />
 

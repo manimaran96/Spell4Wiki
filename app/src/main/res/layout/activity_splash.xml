@@ -2,9 +2,9 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/white">
+    android:background="@color/white">
 
-    <ImageView
+    <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/img_splash"
         android:layout_width="@dimen/logo_large"
         android:layout_height="@dimen/logo_large"
@@ -13,13 +13,13 @@
         android:contentDescription="@string/app_name"
         android:src="@drawable/ic_spell4wiki_logo" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/txt_app_name"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/img_splash"
         android:layout_alignParentBottom="true"
-        android:layout_margin="@dimen/space_12dp"
+        android:layout_margin="@dimen/space12dp"
         android:gravity="center"
         android:text="@string/app_name"
         android:textAlignment="center"
@@ -34,11 +34,11 @@
         android:layout_alignParentBottom="true"
         android:layout_centerInParent="true"
         android:layout_gravity="center"
-        android:layout_marginTop="@dimen/space_12dp"
-        android:layout_marginBottom="@dimen/space_32dp"
+        android:layout_marginTop="@dimen/space12dp"
+        android:layout_marginBottom="@dimen/space32dp"
         android:background="@drawable/bg_button"
-        android:paddingStart="@dimen/space_32dp"
-        android:paddingEnd="@dimen/space_32dp"
+        android:paddingStart="@dimen/space32dp"
+        android:paddingEnd="@dimen/space32dp"
         android:text="@string/start"
         android:textAllCaps="false"
         android:textColor="@color/white" />

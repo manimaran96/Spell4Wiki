@@ -13,7 +13,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:background="@android:color/transparent"
+        android:background="@color/transparent"
         app:srcCompat="@drawable/ic_language" />
 
     <androidx.appcompat.widget.AppCompatTextView
@@ -22,14 +22,14 @@
         android:layout_height="wrap_content"
         android:ellipsize="end"
         android:maxLines="1"
-        android:text="@string/tamil"
+        android:text="@string/language_code"
         android:textAlignment="center"
         android:layout_gravity="bottom|center_horizontal"
-        android:textSize="10sp"
+        android:textSize="@dimen/text_semi_small"
         android:textStyle="bold"
         android:maxWidth="50dp"
         android:maxLength="5"
-        android:layout_marginBottom="3dp"
+        android:layout_marginBottom="@dimen/space2dp"
         tools:ignore="SmallSp" />
 
 </FrameLayout>

@@ -5,8 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    android:padding="8dp"
-    tools:context="com.manimarank.spell4wiki.activities.ContributorsActivity">
+    android:padding="@dimen/space8dp"
+    tools:context=".activities.ContributorsActivity">
 
     <LinearLayout
         android:id="@+id/layoutProgress"
@@ -22,14 +22,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/txtLoading"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/hint_loading"
+            android:text="@string/loading"
             android:textColor="@color/w_blue"
             android:textSize="@dimen/text_normal"
-            android:layout_marginTop="8dp"/>
+            android:layout_marginTop="@dimen/space8dp"/>
 
     </LinearLayout>
 
@@ -37,7 +37,7 @@
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
+        android:layout_marginBottom="@dimen/space10dp"
         android:layoutAnimation="@anim/recycler_layout_animation"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 

@@ -1,6 +1,7 @@
 package com.manimarank.spell4wiki
 
 import android.app.Application
+import androidx.appcompat.app.AppCompatDelegate
 import com.manimaran.crash_reporter.CrashReporter
 import com.manimaran.crash_reporter.CrashReporterConfiguration
 import com.manimarank.spell4wiki.utils.PrefManager
@@ -15,6 +16,7 @@ class Spell4WikiApp : Application() {
 
     override fun onCreate() {
         super.onCreate()
+        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
         try {
             val sharedPref = PrefManager(applicationContext)
             val emailIds = arrayOf("manimarankumar96@gmail.com")
@@ -27,8 +29,10 @@ class Spell4WikiApp : Application() {
             val config = CrashReporterConfiguration()
                     .setExtraInformation(extraInfo)
                     .setMaxNumberOfCrashToBeReport(15)
-                    .setAlertDialogPositiveButton("Send")
-                    .setAlertDialogNegativeButton("Cancel")
+                    .setAlertDialogTitle(getString(R.string.crash_report_alert_title))
+                    .setAlertDialogMessage(getString(R.string.crash_report_alert_message))
+                    .setAlertDialogPositiveButton(getString(R.string.send))
+                    .setAlertDialogNegativeButton(getString(R.string.cancel))
                     .setIncludeDeviceInformation(true)
                     .setCrashReportSubjectForEmail("${getString(R.string.app_name)} App - Crash Report")
                     .setCrashReportSendEmailIds(emailIds)

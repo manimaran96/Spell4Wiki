@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/layout_bottom_sheet"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -11,17 +12,17 @@
     <RelativeLayout
         android:id="@+id/layout_title"
         android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:paddingStart="16dp"
-        android:paddingEnd="12dp">
+        android:layout_height="@dimen/app_bar_height"
+        android:paddingStart="@dimen/space16dp"
+        android:paddingEnd="@dimen/space12dp">
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/text_select_lang"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
+            android:layout_marginTop="@dimen/space4dp"
+            android:layout_marginBottom="@dimen/space4dp"
             android:layout_toStartOf="@+id/btn_close"
             android:text="@string/select_language"
             android:textColor="@color/black"
@@ -29,8 +30,8 @@
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/btn_close"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+            android:layout_width="@dimen/action_icon"
+            android:layout_height="@dimen/action_icon"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:contentDescription="@string/cancel"
@@ -48,17 +49,17 @@
         android:id="@+id/search_view"
         android:layout_width="match_parent"
         android:layout_height="@dimen/search_view_height"
-        android:layout_margin="10dp"
+        android:layout_margin="@dimen/space10dp"
         android:background="@drawable/bg_line_border"
-        android:queryHint="@string/hint_search"
+        android:queryHint="@string/search"
         app:iconifiedByDefault="false" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:descendantFocusability="blocksDescendants"
-        android:layout_marginEnd="4dp"
-        android:layout_marginStart="4dp"
+        android:layout_marginEnd="@dimen/space4dp"
+        android:layout_marginStart="@dimen/space4dp"
         android:orientation="vertical">
 
         <ListView

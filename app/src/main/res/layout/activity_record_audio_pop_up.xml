@@ -3,13 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
+    android:id="@+id/rootView"
     android:layout_height="fill_parent">
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_margin="8dp"
+        android:layout_margin="@dimen/space8dp"
         tools:ignore="UselessParent">
 
         <RelativeLayout
@@ -25,11 +26,11 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:orientation="vertical"
-                android:paddingTop="30dp"
-                android:paddingBottom="30dp"
-                android:paddingStart="8dp"
+                android:paddingTop="@dimen/space24dp"
+                android:paddingBottom="@dimen/space24dp"
+                android:paddingStart="@dimen/space8dp"
                 android:visibility="visible"
-                android:paddingEnd="8dp">
+                android:paddingEnd="@dimen/space8dp">
 
                 <!--Word-->
                 <androidx.appcompat.widget.AppCompatTextView
@@ -54,7 +55,7 @@
                     android:maxLines="3"
                     android:ellipsize="middle"
                     android:text="@string/language"
-                    android:layout_marginBottom="24dp"
+                    android:layout_marginBottom="@dimen/space24dp"
                     android:textColor="@color/txt_light"
                     android:textSize="@dimen/text_semi_normal" />
 
@@ -66,26 +67,27 @@
                     android:layout_gravity="center"
                     android:ellipsize="end"
                     android:maxLines="1"
-                    android:text="@string/hint_before_record"
+                    android:text="@string/before_record"
                     android:textAlignment="center"
                     android:textColor="@color/txt_light"
                     android:textSize="@dimen/text_small" />
 
                 <!--Record button-->
                 <LinearLayout
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:layout_marginTop="4dp"
+                    android:layout_width="@dimen/mic_expand"
+                    android:layout_height="@dimen/mic_expand"
+                    android:layout_marginTop="@dimen/space4dp"
                     android:layout_gravity="center"
                     android:gravity="center">
 
-                    <ImageView
+                    <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/btnRecord"
-                        android:layout_width="70dp"
-                        android:layout_height="70dp"
+                        android:layout_width="@dimen/mic_normal"
+                        android:layout_height="@dimen/mic_normal"
                         android:layout_gravity="center"
                         android:clickable="true"
                         android:focusable="true"
+                        android:focusableInTouchMode="true"
                         android:contentDescription="@string/record"
                         android:src="@drawable/ic_record" />
                 </LinearLayout>
@@ -98,20 +100,20 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginEnd="8dp"
+                    android:layout_marginStart="@dimen/space8dp"
+                    android:layout_marginEnd="@dimen/space8dp"
                     android:visibility="visible">
 
-                    <ImageView
+                    <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/btnPlayPause"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
+                        android:layout_width="@dimen/icon_record_play"
+                        android:layout_height="@dimen/icon_record_play"
                         android:clickable="true"
                         android:layout_alignParentStart="true"
                         android:layout_centerVertical="true"
-                        android:contentDescription="@string/player"
+                        android:contentDescription="@string/app_name"
                         android:focusable="true"
-                        android:tint="@color/txt_light"
+                        android:tint="@color/record_play_icon"
                         app:srcCompat="@drawable/ic_play" />
 
                     <androidx.appcompat.widget.AppCompatSeekBar
@@ -129,12 +131,12 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
-                        android:text="@string/hint_record_duration"
+                        android:text="@string/record_duration"
                         android:textAlignment="center"
                         android:layout_centerVertical="true"
                         android:gravity="center_horizontal"
                         android:textColor="@color/txt_light"
-                        android:layout_marginEnd="4dp"
+                        android:layout_marginEnd="@dimen/space4dp"
                         android:textSize="@dimen/text_semi_normal"
                         tools:ignore="RelativeOverlap" />
 
@@ -144,17 +146,17 @@
                 <androidx.appcompat.widget.AppCompatCheckBox
                     android:id="@+id/checkboxDeclaration"
                     app:buttonTint="@color/txt_light"
-                    android:layout_marginTop="32dp"
+                    android:layout_marginTop="@dimen/space24dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:ellipsize="end"
                     android:maxLines="4"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginEnd="8dp"
+                    android:layout_marginStart="@dimen/space8dp"
+                    android:layout_marginEnd="@dimen/space8dp"
                     android:gravity="center_vertical"
                     android:layout_gravity="center"
-                    android:drawablePadding="8dp"
-                    android:text="@string/hint_declaration_note"
+                    android:drawablePadding="@dimen/space8dp"
+                    android:text="@string/declaration_note"
                     android:textColor="@color/txt_light"
                     android:textSize="@dimen/text_small" />
 
@@ -164,15 +166,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/btn_height"
                     android:layout_gravity="center"
-                    android:paddingStart="40dp"
-                    android:paddingEnd="40dp"
+                    android:paddingStart="@dimen/space32dp"
+                    android:paddingEnd="@dimen/space32dp"
                     android:layout_marginTop="12dp"
                     android:layout_marginBottom="24dp"
                     android:background="@drawable/bg_button"
                     android:text="@string/upload"
                     android:textAllCaps="false"
                     android:textColor="@color/white" />
-
 
             </LinearLayout>
 
@@ -184,9 +185,9 @@
                 android:layout_height="wrap_content"
                 app:fabSize="normal"
                 android:layout_centerHorizontal="true"
-                app:fabCustomSize="50dp"
+                app:fabCustomSize="@dimen/record_close_btn_size"
                 android:layout_below="@+id/layoutRecordControls"
-                android:layout_marginTop="-25dp"
+                android:layout_marginTop="@dimen/record_close_btn_margin"
                 app:srcCompat="@drawable/ic_close"
                 android:tint="@color/white"
                 app:backgroundTint="@color/fab_close" />
@@ -194,20 +195,20 @@
 
             <RelativeLayout
                 android:id="@+id/layoutUploadPopUp"
-                android:layout_width="300dp"
+                android:layout_width="@dimen/lottie_icon"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:background="@drawable/bg_blue"
-                android:padding="20dp"
+                android:padding="@dimen/space20dp"
                 android:orientation="vertical"
                 android:visibility="gone">
 
                 <com.airbnb.lottie.LottieAnimationView
                     android:id="@+id/lottieUpload"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginBottom="5dp"
+                    android:layout_width="@dimen/icon_normal"
+                    android:layout_height="@dimen/icon_normal"
+                    android:layout_marginTop="@dimen/space20dp"
+                    android:layout_marginBottom="@dimen/space4dp"
                     app:lottie_rawRes="@raw/lottie_upload"
                     app:lottie_autoPlay="true"
                     app:lottie_loop="true"
@@ -226,8 +227,8 @@
                     android:layout_centerHorizontal="true"
                     android:layout_below="@+id/lottieUpload"
                     android:text="@string/upload"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginBottom="20dp"
+                    android:layout_marginTop="@dimen/space4dp"
+                    android:layout_marginBottom="@dimen/space20dp"
                     android:textColor="@color/white"
                     android:textSize="@dimen/text_semi_normal" />
 

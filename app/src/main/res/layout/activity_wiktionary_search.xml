@@ -11,15 +11,15 @@
     <androidx.appcompat.widget.SearchView
         android:id="@+id/search_bar"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_margin="@dimen/activity_horizontal_margin"
+        android:layout_height="@dimen/btn_height"
+        android:layout_margin="@dimen/space16dp"
         app:searchIcon="@drawable/ic_info"
         android:layout_centerHorizontal="true"
-        android:queryHint="@string/hint_search"
+        android:queryHint="@string/search_on_wiktionary"
         android:background="@drawable/bg_line_border"
         app:iconifiedByDefault="false"/>
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/txtNotFound"
         android:layout_centerHorizontal="true"
         android:layout_below="@+id/search_bar"

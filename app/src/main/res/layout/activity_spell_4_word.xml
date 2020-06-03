@@ -13,31 +13,31 @@
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/wiktionary_logo"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_marginTop="30dp"
-        android:contentDescription="@string/wiktionary"
+        android:layout_width="@dimen/icon_normal"
+        android:layout_height="@dimen/icon_normal"
+        android:layout_marginTop="@dimen/space32dp"
+        android:contentDescription="@string/app_name"
         app:srcCompat="@drawable/ic_spell4word" />
 
     <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/editWord"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:padding="10dp"
+        android:layout_margin="@dimen/space16dp"
+        android:padding="@dimen/space10dp"
         android:maxLines="2"
         android:maxLength="30"
         android:background="@drawable/bg_line_border"
-        android:drawableEnd="@drawable/ic_info"
-        android:hint="@string/hint_enter_word"
+        app:drawableEndCompat="@drawable/ic_info"
+        android:hint="@string/enter_word"
         android:inputType="text"
         android:importantForAutofill="no" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_record"
         android:layout_width="wrap_content"
-        android:paddingStart="30dp"
-        android:paddingEnd="30dp"
+        android:paddingStart="@dimen/space32dp"
+        android:paddingEnd="@dimen/space32dp"
         android:layout_height="@dimen/btn_height"
         android:layout_gravity="center"
         android:background="@drawable/bg_blue"

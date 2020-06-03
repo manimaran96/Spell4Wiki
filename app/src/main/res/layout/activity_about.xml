@@ -3,58 +3,59 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/white"
-    tools:context="com.manimarank.spell4wiki.activities.AboutActivity">
+    tools:context=".activities.AboutActivity">
 
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="10dp">
+        android:padding="@dimen/space10dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
+            android:layout_margin="@dimen/space4dp"
             android:orientation="vertical">
 
-            <ImageView
+            <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/img_app_logo"
                 android:layout_width="@dimen/logo_large"
                 android:layout_height="@dimen/logo_large"
                 android:layout_gravity="center"
-                android:layout_marginBottom="10dp"
-                android:paddingTop="20dp"
+                android:layout_marginBottom="@dimen/space10dp"
+                android:paddingTop="@dimen/space20dp"
                 android:src="@drawable/ic_spell4wiki_logo" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/txt_app_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
+                android:layout_marginBottom="@dimen/space10dp"
                 android:gravity="center"
                 android:text="@string/app_name"
                 android:textSize="@dimen/text_large"
                 android:textStyle="bold" />
 
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/txt_app_about"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
+                android:layout_marginBottom="@dimen/space10dp"
                 android:gravity="center"
                 android:text="@string/about_app"
                 android:textSize="@dimen/text_semi_normal" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/txt_app_version_and_license"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="@string/app_version_and_license"
-                android:layout_marginBottom="10dp"
+                android:text="@string/version"
+                android:layout_marginBottom="@dimen/space10dp"
                 android:maxLines="1"
                 android:ellipsize="end"
                 android:linksClickable="false"
@@ -63,44 +64,46 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="@dimen/space10dp"
+                android:layout_marginStart="@dimen/space10dp"
+                android:layout_marginEnd="@dimen/space10dp"
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:orientation="horizontal">
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/txt_rate_app"
-                    android:layout_marginStart="5dp"
-                    android:layout_marginEnd="5dp"
+                    android:layout_marginStart="@dimen/space4dp"
+                    android:layout_marginEnd="@dimen/space4dp"
                     android:layout_width="wrap_content"
-                    android:layout_height="40dp"
-                    android:padding="10dp"
-                    android:drawableStart="@drawable/ic_rate_us"
-                    android:drawablePadding="8dp"
+                    android:layout_height="wrap_content"
+                    android:minHeight="@dimen/btn_height"
+                    android:paddingStart="@dimen/space10dp"
+                    android:paddingEnd="@dimen/space10dp"
+                    app:drawableStartCompat="@drawable/ic_rate_us"
+                    android:drawablePadding="@dimen/space8dp"
                     android:background="@drawable/bg_line_border"
                     android:gravity="center"
                     android:text="@string/rate_app"
-                    android:maxLines="1"
+                    android:maxLines="2"
                     android:textSize="@dimen/text_semi_normal"
                     tools:ignore="RelativeOverlap" />
 
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/txt_share"
                     android:layout_width="wrap_content"
-                    android:layout_height="40dp"
-                    android:padding="10dp"
-                    android:paddingStart="10dp"
-                    android:paddingEnd="13dp"
-                    android:background="@drawable/bg_line_border"
-                    android:drawableStart="@drawable/ic_share"
-                    android:drawablePadding="8dp"
-                    android:gravity="center"
-                    android:layout_marginStart="5dp"
+                    android:layout_height="wrap_content"
+                    android:minHeight="@dimen/btn_height"
+                    android:paddingStart="@dimen/space10dp"
+                    android:paddingEnd="@dimen/space10dp"
                     android:text="@string/share_app"
-                    android:maxLines="1"
+                    android:background="@drawable/bg_line_border"
+                    app:drawableStartCompat="@drawable/ic_share"
+                    android:drawablePadding="@dimen/space8dp"
+                    android:gravity="center"
+                    android:layout_marginStart="@dimen/space4dp"
+                    android:maxLines="2"
                     android:textSize="@dimen/text_semi_normal"
                     tools:ignore="RelativeOverlap" />
             </LinearLayout>
@@ -117,15 +120,15 @@
                 android:id="@+id/view_line_1"
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
-                android:layout_margin="15dp"
+                android:layout_margin="@dimen/space12dp"
                 android:background="@color/gray" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/txt_powered_by_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:layout_marginBottom="5dp"
+                android:layout_marginStart="@dimen/space4dp"
+                android:layout_marginBottom="@dimen/space4dp"
                 android:text="@string/powered_by"
                 android:textSize="@dimen/text_semi_normal" />
 
@@ -136,13 +139,13 @@
                 android:orientation="horizontal">
 
 
-                <ImageView
+                <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/img_powered_by"
                     android:layout_width="@dimen/img_normal"
                     android:layout_height="@dimen/img_normal"
-                    android:layout_marginEnd="5dp"
+                    android:layout_marginEnd="@dimen/space4dp"
                     android:contentDescription="@string/kaniyam"
-                    android:padding="5dp"
+                    android:padding="@dimen/space4dp"
                     android:scaleType="fitStart"
                     android:src="@drawable/logo_kaniyam" />
 
@@ -150,11 +153,11 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="5dp"
+                    android:layout_marginStart="@dimen/space4dp"
                     android:orientation="vertical">
 
 
-                    <TextView
+                    <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/txt_powered_by_name"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -164,7 +167,7 @@
                         android:textSize="@dimen/text_normal"
                         android:textStyle="bold" />
 
-                    <TextView
+                    <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/txt_powered_by_about"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -173,16 +176,16 @@
                         android:text="@string/about_kaniyam"
                         android:textSize="@dimen/text_small" />
 
-                    <TextView
+                    <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/txtPoweredByLink"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="3dp"
+                        android:layout_marginTop="@dimen/space4dp"
                         android:autoLink="web"
                         android:ellipsize="end"
                         android:linksClickable="false"
                         android:maxLines="2"
-                        android:text="@string/url_license_gpl_v3"
+                        android:text="@string/sample_url"
                         android:textSize="@dimen/text_small" />
 
 
@@ -193,18 +196,18 @@
                 android:id="@+id/layout_vglug"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="@dimen/space10dp"
                 android:orientation="horizontal">
 
 
-                <ImageView
+                <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/img_powered_by_2"
                     android:layout_width="@dimen/img_normal"
                     android:layout_height="@dimen/img_normal"
-                    android:layout_marginEnd="5dp"
-                    android:paddingStart="10dp"
-                    android:paddingEnd="10dp"
-                    android:paddingTop="5dp"
+                    android:layout_marginEnd="@dimen/space4dp"
+                    android:paddingStart="@dimen/space10dp"
+                    android:paddingEnd="@dimen/space10dp"
+                    android:paddingTop="@dimen/space4dp"
                     android:scaleType="fitStart"
                     android:contentDescription="@string/kaniyam"
                     android:src="@drawable/logo_vglug" />
@@ -213,11 +216,11 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="5dp"
+                    android:layout_marginStart="@dimen/space4dp"
                     android:orientation="vertical">
 
 
-                    <TextView
+                    <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:ellipsize="end"
@@ -226,7 +229,7 @@
                         android:textSize="@dimen/text_normal"
                         android:textStyle="bold" />
 
-                    <TextView
+                    <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:ellipsize="end"
@@ -234,16 +237,16 @@
                         android:text="@string/about_vglug"
                         android:textSize="@dimen/text_small" />
 
-                    <TextView
+                    <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/txtInitiatedByLink"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="3dp"
+                        android:layout_marginTop="@dimen/space4dp"
                         android:autoLink="web"
                         android:ellipsize="end"
                         android:linksClickable="false"
                         android:maxLines="2"
-                        android:text="@string/url_license_gpl_v3"
+                        android:text="@string/sample_url"
                         android:textSize="@dimen/text_small" />
 
 
@@ -261,133 +264,133 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
-                android:layout_margin="15dp"
+                android:layout_margin="@dimen/space12dp"
                 android:background="@color/gray" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/txt_how_to_contribute"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="10dp"
-                android:paddingStart="20dp"
-                android:paddingEnd="10dp"
-                android:drawablePadding="30dp"
+                android:padding="@dimen/space10dp"
+                android:paddingStart="@dimen/space20dp"
+                android:paddingEnd="@dimen/space10dp"
+                android:drawablePadding="@dimen/space24dp"
                 android:gravity="center_vertical"
                 android:maxLines="1"
                 android:text="@string/how_to_contribute"
-                android:drawableStart="@drawable/ic_help"
+                app:drawableStartCompat="@drawable/ic_help"
                 android:textSize="@dimen/text_semi_normal" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/txt_source_code"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="10dp"
-                android:paddingStart="20dp"
-                android:paddingEnd="10dp"
-                android:drawablePadding="30dp"
+                android:padding="@dimen/space10dp"
+                android:paddingStart="@dimen/space20dp"
+                android:paddingEnd="@dimen/space10dp"
+                android:drawablePadding="@dimen/space24dp"
                 android:gravity="center_vertical"
                 android:maxLines="1"
                 android:text="@string/source_code"
-                android:drawableStart="@drawable/ic_git"
+                app:drawableStartCompat="@drawable/ic_git"
                 android:textSize="@dimen/text_semi_normal" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/txt_contributors"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="10dp"
-                android:paddingStart="20dp"
-                android:paddingEnd="10dp"
-                android:drawablePadding="30dp"
+                android:padding="@dimen/space10dp"
+                android:paddingStart="@dimen/space20dp"
+                android:paddingEnd="@dimen/space10dp"
+                android:drawablePadding="@dimen/space24dp"
                 android:gravity="center_vertical"
                 android:maxLines="1"
                 android:text="@string/contributors"
-                android:drawableStart="@drawable/ic_contributors"
+                app:drawableStartCompat="@drawable/ic_contributors"
                 android:textSize="@dimen/text_semi_normal" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/txt_third_party_lib"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="10dp"
-                android:paddingStart="20dp"
-                android:paddingEnd="10dp"
-                android:drawablePadding="30dp"
+                android:padding="@dimen/space10dp"
+                android:paddingStart="@dimen/space20dp"
+                android:paddingEnd="@dimen/space10dp"
+                android:drawablePadding="@dimen/space24dp"
                 android:gravity="center_vertical"
                 android:maxLines="1"
                 android:text="@string/third_party_libraries"
-                android:drawableStart="@drawable/ic_third_party_library"
+                app:drawableStartCompat="@drawable/ic_third_party_library"
                 android:textSize="@dimen/text_semi_normal" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/txt_credits"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="10dp"
-                android:paddingStart="20dp"
-                android:paddingEnd="10dp"
-                android:drawablePadding="30dp"
+                android:padding="@dimen/space10dp"
+                android:paddingStart="@dimen/space20dp"
+                android:paddingEnd="@dimen/space10dp"
+                android:drawablePadding="@dimen/space24dp"
                 android:gravity="center_vertical"
                 android:maxLines="1"
                 android:text="@string/credits"
-                android:drawableStart="@drawable/ic_credits"
+                app:drawableStartCompat="@drawable/ic_credits"
                 android:textSize="@dimen/text_semi_normal" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/txt_help_development"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="10dp"
-                android:paddingStart="20dp"
-                android:paddingEnd="10dp"
-                android:drawablePadding="30dp"
+                android:padding="@dimen/space10dp"
+                android:paddingStart="@dimen/space20dp"
+                android:paddingEnd="@dimen/space10dp"
+                android:drawablePadding="@dimen/space24dp"
                 android:gravity="center_vertical"
                 android:maxLines="1"
                 android:text="@string/help_development"
-                android:drawableStart="@drawable/ic_help_development"
+                app:drawableStartCompat="@drawable/ic_help_development"
                 android:textSize="@dimen/text_semi_normal" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/txtFeedback"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="10dp"
-                android:paddingStart="20dp"
-                android:paddingEnd="10dp"
-                android:drawablePadding="30dp"
+                android:padding="@dimen/space10dp"
+                android:paddingStart="@dimen/space20dp"
+                android:paddingEnd="@dimen/space10dp"
+                android:drawablePadding="@dimen/space24dp"
                 android:gravity="center_vertical"
                 android:maxLines="1"
                 android:text="@string/feedback"
-                android:drawableStart="@drawable/ic_contact_us"
+                app:drawableStartCompat="@drawable/ic_contact_us"
                 android:textSize="@dimen/text_semi_normal" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/txtPrivacyPolicy"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="10dp"
-                android:paddingStart="20dp"
-                android:paddingEnd="10dp"
-                android:drawablePadding="30dp"
+                android:padding="@dimen/space10dp"
+                android:paddingStart="@dimen/space20dp"
+                android:paddingEnd="@dimen/space10dp"
+                android:drawablePadding="@dimen/space24dp"
                 android:gravity="center_vertical"
                 android:maxLines="1"
                 android:text="@string/privacy_policy"
-                android:drawableStart="@drawable/ic_privacy_policy"
+                app:drawableStartCompat="@drawable/ic_privacy_policy"
                 android:textSize="@dimen/text_semi_normal" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/txtTermsOfUse"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="10dp"
-                android:paddingStart="20dp"
-                android:paddingEnd="10dp"
-                android:drawablePadding="30dp"
+                android:padding="@dimen/space10dp"
+                android:paddingStart="@dimen/space20dp"
+                android:paddingEnd="@dimen/space10dp"
+                android:drawablePadding="@dimen/space24dp"
                 android:gravity="center_vertical"
                 android:maxLines="1"
                 android:text="@string/terms_of_use"
-                android:drawableStart="@drawable/ic_terms_of_use"
+                app:drawableStartCompat="@drawable/ic_terms_of_use"
                 android:textSize="@dimen/text_semi_normal" />
 
 

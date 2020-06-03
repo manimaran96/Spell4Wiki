@@ -18,7 +18,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.manimarank.spell4wiki.R;
 import com.manimarank.spell4wiki.adapters.LangAdapter;
-import com.manimarank.spell4wiki.constants.EnumTypeDef.ListMode;
+import com.manimarank.spell4wiki.utils.constants.EnumTypeDef.ListMode;
 import com.manimarank.spell4wiki.databases.DBHelper;
 import com.manimarank.spell4wiki.databases.entities.WikiLang;
 import com.manimarank.spell4wiki.listerners.OnLanguageSelectionListener;
@@ -144,7 +144,7 @@ public class LanguageSelectionFragment extends BottomSheetDialogFragment {
         });
 
         if (searchView != null) {
-            searchView.setQueryHint(getString(R.string.search_here));
+            searchView.setQueryHint(getString(R.string.search));
             searchView.setQueryRefinementEnabled(true);
             searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
                 @Override

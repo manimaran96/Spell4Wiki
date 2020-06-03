@@ -19,8 +19,8 @@ import com.manimarank.spell4wiki.R;
 import com.manimarank.spell4wiki.adapters.EndlessAdapter;
 import com.manimarank.spell4wiki.apis.ApiClient;
 import com.manimarank.spell4wiki.apis.ApiInterface;
-import com.manimarank.spell4wiki.constants.AppConstants;
-import com.manimarank.spell4wiki.constants.EnumTypeDef.ListMode;
+import com.manimarank.spell4wiki.utils.constants.AppConstants;
+import com.manimarank.spell4wiki.utils.constants.EnumTypeDef.ListMode;
 import com.manimarank.spell4wiki.databases.DBHelper;
 import com.manimarank.spell4wiki.databases.dao.WordsHaveAudioDao;
 import com.manimarank.spell4wiki.databases.entities.WikiLang;
@@ -106,7 +106,6 @@ public class Spell4Wiktionary extends AppCompatActivity implements EndlessListVi
             pref.setLanguageCodeSpell4Wiki(languageCode);
         }
 
-        //titleOfWordsWithoutAudio= "பகுப்பு:அறுபட்ட_கோப்பு_இணைப்புகள்_உள்ள_பக்கங்கள்";
         ApiInterface api = ApiClient.getWiktionaryApi(getApplicationContext(), languageCode).create(ApiInterface.class);
         Call<WikiWordsWithoutAudio> call = api.fetchUnAudioRecords(titleOfWordsWithoutAudio, nextOffsetObj);
 
@@ -115,7 +114,7 @@ public class Spell4Wiktionary extends AppCompatActivity implements EndlessListVi
             public void onResponse(@NonNull Call<WikiWordsWithoutAudio> call, @NonNull Response<WikiWordsWithoutAudio> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     processSearchResultAudio(response.body());
-                }else
+                } else
                     searchFailed(getString(R.string.something_went_wrong));
             }
 
@@ -131,7 +130,7 @@ public class Spell4Wiktionary extends AppCompatActivity implements EndlessListVi
         ArrayList<String> titleList = new ArrayList<>();
         if (nextOffsetObj == null)
             resultListView.reset();
-        if(resultListView.getVisibility() != View.VISIBLE)
+        if (resultListView.getVisibility() != View.VISIBLE)
             resultListView.setVisibility(View.VISIBLE);
         if (snackbar.isShown())
             snackbar.dismiss();
@@ -164,8 +163,8 @@ public class Spell4Wiktionary extends AppCompatActivity implements EndlessListVi
     }
 
     private void searchFailed(String msg) {
-        if(resultListView != null){ // Footer loader consume count = 1
-            if(resultListView.getAdapter() != null && resultListView.getAdapter().getCount() < 2)
+        if (resultListView != null) { // Footer loader consume count = 1
+            if (resultListView.getAdapter() != null && resultListView.getAdapter().getCount() < 2)
                 resultListView.setVisibility(View.INVISIBLE);
             else
                 resultListView.loadLaterOnScroll();
@@ -173,7 +172,7 @@ public class Spell4Wiktionary extends AppCompatActivity implements EndlessListVi
         if (GeneralUtils.isNetworkConnected(getApplicationContext())) {
             snackbar.setText(msg);
         } else
-            snackbar.setText(getString(resultListView.getVisibility() != View.VISIBLE ?  R.string.check_internet : R.string.record_fetch_fail));
+            snackbar.setText(getString(resultListView.getVisibility() != View.VISIBLE ? R.string.check_internet : R.string.record_fetch_fail));
         if (refreshLayout.isRefreshing())
             refreshLayout.setRefreshing(false);
         if (!snackbar.isShown())
@@ -242,9 +241,9 @@ public class Spell4Wiktionary extends AppCompatActivity implements EndlessListVi
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == AppConstants.RC_UPLOAD_DIALOG){
-            if(data != null && data.hasExtra(AppConstants.WORD)){
-                if(adapter != null) {
+        if (requestCode == AppConstants.RC_UPLOAD_DIALOG) {
+            if (data != null && data.hasExtra(AppConstants.WORD)) {
+                if (adapter != null) {
                     adapter.remove(data.getStringExtra(AppConstants.WORD));
                     adapter.notifyDataSetChanged();
                 }

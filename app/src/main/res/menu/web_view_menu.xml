@@ -11,7 +11,7 @@
 
     <item
         android:id="@+id/menu_lang_selector"
-        android:title="@string/tamil"
+        android:title="@string/language_code"
         app:showAsAction="always"
         app:actionLayout="@layout/custom_menu_item_lang_selector"/>
 
@@ -44,7 +44,7 @@
 
     <item
         android:id="@+id/action_open_in_browser"
-        android:icon="@drawable/ic_open_in_browser"
+        android:icon="@drawable/ic_link"
         android:title="@string/open_in_browser"
         app:showAsAction="never"/>
 

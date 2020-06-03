@@ -21,8 +21,8 @@ import com.google.android.material.snackbar.Snackbar;
 import com.manimarank.spell4wiki.BuildConfig;
 import com.manimarank.spell4wiki.R;
 import com.manimarank.spell4wiki.activities.CommonWebActivity;
-import com.manimarank.spell4wiki.constants.AppConstants;
-import com.manimarank.spell4wiki.constants.Urls;
+import com.manimarank.spell4wiki.utils.constants.AppConstants;
+import com.manimarank.spell4wiki.utils.constants.Urls;
 import com.manimarank.spell4wiki.utils.GeneralUtils;
 import com.manimarank.spell4wiki.utils.PrefManager;
 
@@ -31,7 +31,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.manimarank.spell4wiki.constants.EnumTypeDef.ListMode;
+import static com.manimarank.spell4wiki.utils.constants.EnumTypeDef.ListMode;
 
 public class EndlessAdapter extends ArrayAdapter<String> {
 
@@ -75,9 +75,9 @@ public class EndlessAdapter extends ArrayAdapter<String> {
 
         if (convertView == null) {
             LayoutInflater inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            if(inflater != null)
+            if (inflater != null)
                 rootView = inflater.inflate(R.layout.search_result_row, parent, false);
-        }else
+        } else
             rootView = convertView;
 
         String word = itemList.get(position);
@@ -94,13 +94,13 @@ public class EndlessAdapter extends ArrayAdapter<String> {
                 case ListMode.SPELL_4_WIKI:
                 case ListMode.SPELL_4_WORD_LIST:
                 case ListMode.SPELL_4_WORD:
-                    if(!isHaveAudio){
+                    if (!isHaveAudio) {
                         if (GeneralUtils.checkPermissionGranted(activity)) {
                             GeneralUtils.showRecordDialog(activity, word, getLanguageCode());
                         } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                             getPermissionToRecordAudio();
                         }
-                    }else
+                    } else
                         GeneralUtils.showSnack(rootView, String.format(activity.getString(R.string.audio_file_already_exist), word));
                     break;
                 case ListMode.WIKTIONARY:
@@ -163,7 +163,7 @@ public class EndlessAdapter extends ArrayAdapter<String> {
 
     private void showAppSettingsPageHint() {
         if (rootView != null) {
-            Snackbar.make(rootView, activity.getString(R.string.permisstion_required), Snackbar.LENGTH_LONG)
+            Snackbar.make(rootView, activity.getString(R.string.permission_required), Snackbar.LENGTH_LONG)
                     .setAction(activity.getString(R.string.go_settings), view -> {
                         Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, Uri.fromParts("package", BuildConfig.APPLICATION_ID, null));
                         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

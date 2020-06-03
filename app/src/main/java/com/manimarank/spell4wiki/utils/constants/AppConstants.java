@@ -1,4 +1,4 @@
-package com.manimarank.spell4wiki.constants;
+package com.manimarank.spell4wiki.utils.constants;
 
 public class AppConstants {
 
@@ -35,4 +35,7 @@ public class AppConstants {
     // Request Code
     public static final int RC_UPLOAD_DIALOG = 1001;
     public static final int RC_PERMISSIONS = 1000;
+
+    // Mail Ids
+    public static final String CONTACT_MAIL = "manimarankumar96@gmail.com";
 }

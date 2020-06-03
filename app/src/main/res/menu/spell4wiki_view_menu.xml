@@ -4,7 +4,7 @@
     tools:context=".activities.BaseActivity">
     <item
         android:id="@+id/menu_lang_selector"
-        android:title="@string/tamil"
+        android:title="@string/language_code"
         app:showAsAction="ifRoom"
         app:actionLayout="@layout/custom_menu_item_lang_selector"/>
 

@@ -60,12 +60,12 @@ public class SplashActivity extends Activity {
                         callNextScreen();
                     }
                 };
-                if(CrashUtil.Companion.isHaveCrashData()){
+                if (CrashUtil.Companion.isHaveCrashData()) {
 
-                    CrashReporter.INSTANCE.showAlertDialogForShareCrash(this, listener,true);
-                }else
+                    CrashReporter.INSTANCE.showAlertDialogForShareCrash(this, listener, true);
+                } else
                     callNextScreen();
-            }catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
                 callNextScreen();
             }

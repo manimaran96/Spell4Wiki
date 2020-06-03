@@ -6,25 +6,26 @@ import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Handler;
-import androidx.annotation.NonNull;
-import com.google.android.material.snackbar.Snackbar;
-import androidx.core.content.ContextCompat;
-import androidx.appcompat.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+
+import com.google.android.material.snackbar.Snackbar;
 import com.manimarank.spell4wiki.R;
+import com.manimarank.spell4wiki.apis.ApiClient;
+import com.manimarank.spell4wiki.apis.ApiInterface;
 import com.manimarank.spell4wiki.auth.AccountUtils;
-import com.manimarank.spell4wiki.constants.AppConstants;
-import com.manimarank.spell4wiki.constants.Urls;
+import com.manimarank.spell4wiki.utils.constants.AppConstants;
+import com.manimarank.spell4wiki.utils.constants.Urls;
 import com.manimarank.spell4wiki.models.WikiLogin;
 import com.manimarank.spell4wiki.models.WikiToken;
 import com.manimarank.spell4wiki.models.WikiUser;
 import com.manimarank.spell4wiki.utils.GeneralUtils;
 import com.manimarank.spell4wiki.utils.PrefManager;
-import com.manimarank.spell4wiki.apis.ApiInterface;
-import com.manimarank.spell4wiki.apis.ApiClient;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -82,9 +83,9 @@ public class LoginActivity extends AppCompatActivity {
              *  Hit Skip Button
              */
             btnSkipLogin.setOnClickListener(v -> {
-                if(isDuringLogin()) {
+                if (isDuringLogin()) {
                     showMsg(getString(R.string.please_wait));
-                }else {
+                } else {
                     pref.setIsAnonymous(true);
                     launchActivity();
                 }
@@ -94,14 +95,14 @@ public class LoginActivity extends AppCompatActivity {
              *  Hit Forgot Password Button
              */
             btnForgotPassword.setOnClickListener(v -> {
-                openUrl(Urls.FORGOT_PASSWORD, getString(R.string.action_forgot_password));
+                openUrl(Urls.FORGOT_PASSWORD, getString(R.string.forgot_password));
             });
 
             /*
              *  Hit Join Wikipedia Button
              */
             btnJoinWikipedia.setOnClickListener(v -> {
-                openUrl(Urls.JOIN_WIKI, getString(R.string.action_join_wikipedia));
+                openUrl(Urls.JOIN_WIKI, getString(R.string.join_wiki));
             });
 
 
@@ -128,9 +129,9 @@ public class LoginActivity extends AppCompatActivity {
                         completeLogin(username, password, lgToken);
                     } catch (Exception e) {
                         e.printStackTrace();
-                        showErrorMsg(getString(R.string.check_network));
+                        showErrorMsg(getString(R.string.something_went_wrong));
                     }
-                }else {
+                } else {
                     showErrorMsg(getString(R.string.something_went_wrong_try_again));
                 }
             }
@@ -145,6 +146,7 @@ public class LoginActivity extends AppCompatActivity {
 
     /**
      * Call client login api after getting login token
+     *
      * @param username   - username of the user
      * @param password   - password of the user
      * @param loginToken - Login token
@@ -158,8 +160,8 @@ public class LoginActivity extends AppCompatActivity {
                 if (response.isSuccessful() && response.body() != null) {
                     try {
                         WikiLogin.ClientLogin login = response.body().getClientLogin();
-                        if(login != null && login.getStatus() != null){
-                            switch (login.getStatus()){
+                        if (login != null && login.getStatus() != null) {
+                            switch (login.getStatus()) {
                                 case AppConstants.PASS:
                                     Bundle extras = getIntent().getExtras();
                                     AccountAuthenticatorResponse accountAuthenticatorResponse = extras == null ? null : extras.getParcelable(AccountManager.KEY_ACCOUNT_AUTHENTICATOR_RESPONSE);
@@ -182,18 +184,18 @@ public class LoginActivity extends AppCompatActivity {
                                     showErrorMsg(login.getMessage());
                                     break;
                                 case AppConstants.TWO_FACTOR:
-                                    showErrorMsg("Two factor Authentication not implemented." + (login.getMessage() != null ? "\n"+ login.getMessage() : ""));
+                                    showErrorMsg(getString(R.string.two_factor_login) + (login.getMessage() != null ? "\n" + login.getMessage() : ""));
                                 default:
                                     showErrorMsg(getString(R.string.server_misbehaved));
                                     break;
                             }
-                        }else
+                        } else
                             showErrorMsg(getString(R.string.something_went_wrong));
                     } catch (Exception e) {
                         e.printStackTrace();
                         showErrorMsg(getString(R.string.something_went_wrong));
                     }
-                }else
+                } else
                     showErrorMsg(getString(R.string.something_went_wrong));
             }
 
@@ -240,16 +242,15 @@ public class LoginActivity extends AppCompatActivity {
             btnLogin.dispose();
     }
 
-    private void openUrl(String url, String title)
-    {
-        if(isDuringLogin()) {
+    private void openUrl(String url, String title) {
+        if (isDuringLogin()) {
             showMsg(getString(R.string.please_wait));
-        }else {
+        } else {
             GeneralUtils.openUrl(LoginActivity.this, url, title);
         }
     }
 
-    private boolean isDuringLogin(){
+    private boolean isDuringLogin() {
         return btnLogin.isAnimating() || isDuringLogin;
     }
 }

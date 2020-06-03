@@ -2,19 +2,18 @@ package com.manimarank.spell4wiki.activities;
 
 import android.app.AlertDialog;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
-import android.widget.SearchView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.cardview.widget.CardView;
 
 import com.manimarank.spell4wiki.R;
-import com.manimarank.spell4wiki.constants.AppConstants;
-import com.manimarank.spell4wiki.constants.Urls;
+import com.manimarank.spell4wiki.utils.constants.AppConstants;
+import com.manimarank.spell4wiki.utils.constants.Urls;
 import com.manimarank.spell4wiki.utils.GeneralUtils;
 import com.manimarank.spell4wiki.utils.PrefManager;
 
@@ -36,7 +35,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         initViews();
 
         searchView = findViewById(R.id.search_view);
-        searchView.setQueryHint(getString(R.string.hint_search));
+        searchView.setQueryHint(getString(R.string.search));
         searchView.setIconifiedByDefault(false);
         searchView.clearFocus();
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -95,9 +94,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         CardView cardView2 = findViewById(R.id.card_spell4wordlist);
         CardView cardView3 = findViewById(R.id.card_spell4word);
 
-        if (pref.getIsAnonymous()) {
-            cardView1.setBackgroundColor(Color.GRAY);
-        }
         cardView1.setOnClickListener(this);
         cardView2.setOnClickListener(this);
         cardView3.setOnClickListener(this);
@@ -119,7 +115,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         View viewContribute = findViewById(R.id.layoutContributeOptions);
         View viewLogin = findViewById(R.id.layoutLogin);
         if (pref.getIsAnonymous()) {
-            viewContribute.setVisibility(View.GONE);
+            //viewContribute.setVisibility(View.GONE);
             btnMyContributions.setVisibility(View.GONE);
             txtWelcomeUser.setVisibility(View.GONE);
             findViewById(R.id.btn_logout).setVisibility(View.GONE);
@@ -132,12 +128,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 //.setIcon(R.drawable.ic_logout)
                 .setTitle(R.string.logout_confirmation)
                 .setMessage(R.string.logout_message)
-                .setPositiveButton("Yes", (dialog, which) -> {
+                .setPositiveButton(getString(R.string.yes), (dialog, which) -> {
                     // Logout user
                     logoutApi();
                     pref.logoutUser();
                 })
-                .setNegativeButton("No", null)
+                .setNegativeButton(R.string.no, null)
                 .show();
     }
 

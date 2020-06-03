@@ -1,7 +1,7 @@
 package com.manimarank.spell4wiki.apis;
 
 
-import com.manimarank.spell4wiki.constants.Urls;
+import com.manimarank.spell4wiki.utils.constants.Urls;
 import com.manimarank.spell4wiki.models.Contributors;
 import com.manimarank.spell4wiki.models.WikiBaseData;
 import com.manimarank.spell4wiki.models.WikiLogin;

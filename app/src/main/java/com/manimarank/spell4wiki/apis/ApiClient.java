@@ -8,7 +8,7 @@ import com.franmontiel.persistentcookiejar.ClearableCookieJar;
 import com.franmontiel.persistentcookiejar.PersistentCookieJar;
 import com.franmontiel.persistentcookiejar.cache.SetCookieCache;
 import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersistor;
-import com.manimarank.spell4wiki.constants.Urls;
+import com.manimarank.spell4wiki.utils.constants.Urls;
 import com.manimarank.spell4wiki.utils.PrefManager;
 
 import java.util.Objects;
@@ -36,6 +36,7 @@ public class ApiClient {
         Request.Builder requestBuilder = original.newBuilder().url(url);
 
         Request request = requestBuilder.build();
+        // TODO Test
         return chain.proceed(request);
     };
 

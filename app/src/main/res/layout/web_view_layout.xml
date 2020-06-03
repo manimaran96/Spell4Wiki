@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/white"
-    tools:context="com.manimarank.spell4wiki.activities.CommonWebActivity">
+    tools:context=".activities.CommonWebActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -15,9 +15,7 @@
             android:id="@+id/webView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:clickable="false"
-            tools:layout_editor_absoluteX="8dp"
-            tools:layout_editor_absoluteY="8dp" />
+            android:clickable="false" />
 
         <RelativeLayout
             android:id="@+id/layoutWebPageNotFound"
@@ -39,7 +37,7 @@
             <com.airbnb.lottie.LottieAnimationView
                 android:id="@+id/lottiePageNotFound"
                 android:layout_width="match_parent"
-                android:layout_height="300dp"
+                android:layout_height="@dimen/lottie_icon"
                 app:lottie_rawRes="@raw/web_page_load_error"
                 app:lottie_autoPlay="true"
                 app:lottie_loop="true"
@@ -47,8 +45,6 @@
                 android:layout_centerInParent="true"/>
 
         </RelativeLayout>
-
-
 
         <ProgressBar
             android:id="@+id/progressBar"
@@ -61,7 +57,7 @@
             android:id="@+id/txtLoading"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/hint_loading"
+            android:text="@string/loading"
             android:textColor="@color/w_blue"
             android:textSize="@dimen/text_normal"
             android:layout_below="@+id/progressBar"
@@ -77,10 +73,10 @@
             app:backgroundTint="@color/transparent"
             android:layout_alignParentBottom="true"
             android:layout_alignParentEnd="true"
-            app:elevation="6dp"
+            app:elevation="@dimen/card_elevation"
             app:fabCustomSize="@dimen/fab_size"
             android:contentDescription="@string/record"
-            android:layout_margin="16dp" />
+            android:layout_margin="@dimen/fab_margin" />
 
     </RelativeLayout>
 

@@ -15,8 +15,8 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.manimarank.spell4wiki.R;
-import com.manimarank.spell4wiki.constants.AppConstants;
-import com.manimarank.spell4wiki.constants.EnumTypeDef.ListMode;
+import com.manimarank.spell4wiki.utils.constants.AppConstants;
+import com.manimarank.spell4wiki.utils.constants.EnumTypeDef.ListMode;
 import com.manimarank.spell4wiki.fragments.LanguageSelectionFragment;
 import com.manimarank.spell4wiki.fragments.WebViewFragment;
 import com.manimarank.spell4wiki.listerners.OnLanguageSelectionListener;

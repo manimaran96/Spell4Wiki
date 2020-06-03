@@ -13,7 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
 import com.manimarank.spell4wiki.R;
-import com.manimarank.spell4wiki.constants.EnumTypeDef.ListMode;
+import com.manimarank.spell4wiki.utils.constants.EnumTypeDef.ListMode;
 import com.manimarank.spell4wiki.databases.DBHelper;
 import com.manimarank.spell4wiki.databases.dao.WikiLangDao;
 import com.manimarank.spell4wiki.databases.entities.WikiLang;
@@ -23,7 +23,6 @@ import com.manimarank.spell4wiki.utils.PrefManager;
 import com.manimarank.spell4wiki.utils.WikiLicense;
 
 import java.util.Arrays;
-
 
 
 public class SettingsActivity extends AppCompatActivity {
@@ -58,7 +57,7 @@ public class SettingsActivity extends AppCompatActivity {
 
         pref = new PrefManager(getApplicationContext());
         wikiLangDao = DBHelper.getInstance(getApplicationContext()).getAppDatabase().getWikiLangDao();
-        if(pref.getIsAnonymous()){
+        if (pref.getIsAnonymous()) {
             txtTitleLicense.setVisibility(View.GONE);
             layoutSpell4WikiLang.setVisibility(View.GONE);
             layoutSpell4WordListLang.setVisibility(View.GONE);
@@ -112,7 +111,7 @@ public class SettingsActivity extends AppCompatActivity {
         layoutLicenseOfUploadAudio.setOnClickListener(v -> {
             // setup the alert builder
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setTitle(R.string.hint_license_choose_alert);// add a radio button list
+            builder.setTitle(R.string.license_choose_alert);// add a radio button list
 
             String[] licensePrefList = {
                     WikiLicense.LicensePrefs.CC_0,
@@ -143,12 +142,12 @@ public class SettingsActivity extends AppCompatActivity {
 
     }
 
-    private void updateLanguageView(TextView txtView, String languageCode){
-        if(languageCode != null && txtView != null && wikiLangDao != null){
+    private void updateLanguageView(TextView txtView, String languageCode) {
+        if (languageCode != null && txtView != null && wikiLangDao != null) {
             WikiLang wikiLang = wikiLangDao.getWikiLanguageWithCode(languageCode);
             String value = "";
-            if(wikiLang != null && !TextUtils.isEmpty(wikiLang.getName()))
-                value = wikiLang.getLocalName() + " - " + wikiLang.getName() +  "(" + languageCode + ")";
+            if (wikiLang != null && !TextUtils.isEmpty(wikiLang.getName()))
+                value = wikiLang.getLocalName() + " - " + wikiLang.getName() + "(" + languageCode + ")";
             txtView.setText(value);
         }
     }

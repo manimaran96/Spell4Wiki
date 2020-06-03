@@ -16,14 +16,14 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.manimarank.spell4wiki.R;
-import com.manimarank.spell4wiki.constants.AppConstants;
-import com.manimarank.spell4wiki.constants.Urls;
+import com.manimarank.spell4wiki.utils.constants.AppConstants;
+import com.manimarank.spell4wiki.utils.constants.Urls;
 import com.manimarank.spell4wiki.fragments.LanguageSelectionFragment;
 import com.manimarank.spell4wiki.listerners.OnLanguageSelectionListener;
 import com.manimarank.spell4wiki.utils.GeneralUtils;
 import com.manimarank.spell4wiki.utils.PrefManager;
 
-import static com.manimarank.spell4wiki.constants.EnumTypeDef.ListMode;
+import static com.manimarank.spell4wiki.utils.constants.EnumTypeDef.ListMode;
 
 
 public class Spell4WordActivity extends AppCompatActivity {
@@ -73,7 +73,7 @@ public class Spell4WordActivity extends AppCompatActivity {
                     if (!TextUtils.isEmpty(editSpell4Word.getText()) && editSpell4Word.getText().length() < 30)
                         openWiktionaryPage(editSpell4Word.getText().toString());
                     else
-                        GeneralUtils.showSnack(editSpell4Word, "Enter valid word");
+                        GeneralUtils.showSnack(editSpell4Word, getString(R.string.enter_valid_word));
                     return true;
                 }
             }
@@ -85,7 +85,7 @@ public class Spell4WordActivity extends AppCompatActivity {
             if (!TextUtils.isEmpty(editSpell4Word.getText()) && editSpell4Word.getText().length() < 30) {
                 GeneralUtils.showRecordDialog(Spell4WordActivity.this, editSpell4Word.getText().toString().trim(), languageCode);
             } else
-                GeneralUtils.showSnack(editSpell4Word, "Enter valid word");
+                GeneralUtils.showSnack(editSpell4Word, getString(R.string.enter_valid_word));
         });
     }
 

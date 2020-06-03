@@ -1,6 +1,7 @@
 package com.manimarank.spell4wiki.activities;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
@@ -21,7 +22,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.manimarank.spell4wiki.R;
 import com.manimarank.spell4wiki.adapters.EndlessAdapter;
-import com.manimarank.spell4wiki.constants.AppConstants;
+import com.manimarank.spell4wiki.utils.constants.AppConstants;
 import com.manimarank.spell4wiki.databases.DBHelper;
 import com.manimarank.spell4wiki.databases.dao.WordsHaveAudioDao;
 import com.manimarank.spell4wiki.fragments.LanguageSelectionFragment;
@@ -38,7 +39,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.manimarank.spell4wiki.constants.EnumTypeDef.ListMode.SPELL_4_WORD_LIST;
+import static com.manimarank.spell4wiki.utils.constants.EnumTypeDef.ListMode.SPELL_4_WORD_LIST;
 
 
 public class Spell4WordListActivity extends AppCompatActivity {
@@ -98,7 +99,7 @@ public class Spell4WordListActivity extends AppCompatActivity {
                 List<String> items = getWordListFromString(editFile.getText().toString());
                 showWordsInRecordMode(items);
             } else
-                GeneralUtils.showSnack(editFile, "Enter valid content");
+                GeneralUtils.showSnack(editFile, getString(R.string.provide_valid_content));
 
         });
 
@@ -169,7 +170,7 @@ public class Spell4WordListActivity extends AppCompatActivity {
         layoutEdit.setVisibility(View.VISIBLE);
         resultListView.setVisibility(View.GONE);
 
-        txtFileInfo.setText(("Align the file content \n" + fileName));
+        txtFileInfo.setText(String.format (getString(R.string.hint_select_file_next), fileName));
         editFile.setText(getContentFromFile(filePath));
     }
 
@@ -178,7 +179,7 @@ public class Spell4WordListActivity extends AppCompatActivity {
         layoutEdit.setVisibility(View.VISIBLE);
         resultListView.setVisibility(View.GONE);
 
-        txtFileInfo.setText(("Paste and Align the words\n"));
+        txtFileInfo.setText(getString(R.string.hint_direct_copy_next));
         editFile.setText("");
     }
 
@@ -307,7 +308,7 @@ public class Spell4WordListActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem menuItem) {
         if (menuItem.getItemId() == android.R.id.home) {
-            finish();
+            callBackPress();
         }
         return (super.onOptionsItemSelected(menuItem));
     }
@@ -340,4 +341,35 @@ public class Spell4WordListActivity extends AppCompatActivity {
         return super.onPrepareOptionsMenu(menu);
     }
 
+    @Override
+    public void onBackPressed() {
+        callBackPress();
+    }
+
+    private void callBackPress() {
+        if(resultListView.getVisibility() == View.VISIBLE){
+            layoutEdit.setVisibility(View.VISIBLE);
+            resultListView.setVisibility(View.GONE);
+        }else if(layoutEdit.getVisibility() == View.VISIBLE){
+            if(!TextUtils.isEmpty(editFile.getText())) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setTitle(R.string.confirmation);// add a radio button list
+                builder.setMessage(R.string.confirm_to_back);// add a radio button list
+                builder.setCancelable(false);
+                builder.setPositiveButton(getString(R.string.yes), (dialog, which) -> {
+                    layoutSelect.setVisibility(View.VISIBLE);
+                    layoutEdit.setVisibility(View.GONE);
+                });
+                builder.setNegativeButton(getString(R.string.cancel), (dialog, which) -> {
+
+                });
+                AlertDialog dialog = builder.create();
+                dialog.show();
+            }else {
+                layoutSelect.setVisibility(View.VISIBLE);
+                layoutEdit.setVisibility(View.GONE);
+            }
+        }else
+            super.onBackPressed();
+    }
 }

@@ -2,7 +2,7 @@
     android:id="@+id/layout_lang_item"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="10dp"
+    android:layout_marginTop="@dimen/space10dp"
     android:gravity="center"
     android:orientation="vertical">
 
@@ -11,7 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:layout_margin="10dp"
+        android:layout_margin="@dimen/space10dp"
         android:clickable="false" />
 
     <LinearLayout
@@ -25,8 +25,8 @@
             android:id="@+id/txt_lang_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="10dp"
-            android:layout_marginBottom="2dp"
+            android:layout_marginEnd="@dimen/space10dp"
+            android:layout_marginBottom="@dimen/space2dp"
             android:ellipsize="end"
             android:maxLines="1"
             android:textSize="@dimen/text_normal" />
@@ -35,7 +35,7 @@
             android:id="@+id/txt_local_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="10dp"
+            android:layout_marginEnd="@dimen/space10dp"
             android:ellipsize="end"
             android:maxLines="1"
             android:textSize="@dimen/text_small" />

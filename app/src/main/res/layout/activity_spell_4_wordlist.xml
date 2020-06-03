@@ -19,8 +19,8 @@
             android:layout_width="@dimen/icon_normal"
             android:layout_height="@dimen/icon_normal"
             android:layout_centerHorizontal="true"
-            android:layout_margin="30dp"
-            android:contentDescription="@string/wiktionary"
+            android:layout_margin="@dimen/space32dp"
+            android:contentDescription="@string/app_name"
             app:srcCompat="@drawable/ic_spell4word_list" />
 
 
@@ -38,15 +38,16 @@
             android:layout_width="match_parent"
             android:layout_toStartOf="@+id/view"
             android:layout_below="@+id/view"
-            android:padding="10dp"
+            android:padding="@dimen/space8dp"
             android:layout_height="wrap_content">
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btnSelectFile"
                 android:layout_width="wrap_content"
-                android:paddingStart="30dp"
-                android:paddingEnd="30dp"
-                android:layout_height="@dimen/btn_height"
+                android:paddingStart="@dimen/space32dp"
+                android:paddingEnd="@dimen/space32dp"
+                android:layout_height="wrap_content"
+                android:minHeight="@dimen/btn_height"
                 android:background="@drawable/bg_blue"
                 android:text="@string/select_file"
                 android:textAllCaps="false"
@@ -59,9 +60,9 @@
                 android:layout_height="wrap_content"
                 android:text="@string/hint_select_file"
                 android:textAlignment="center"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
-                android:lineSpacingExtra="2dp"
+                android:layout_marginTop="@dimen/space8dp"
+                android:layout_marginBottom="@dimen/space8dp"
+                android:lineSpacingExtra="@dimen/space2dp"
                 android:textSize="@dimen/text_normal" />
 
         </LinearLayout>
@@ -72,15 +73,16 @@
             android:layout_width="match_parent"
             android:layout_toEndOf="@+id/view"
             android:layout_below="@+id/view"
-            android:padding="10dp"
+            android:padding="@dimen/space8dp"
             android:layout_height="wrap_content">
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btnDirectContent"
                 android:layout_width="wrap_content"
-                android:paddingStart="30dp"
-                android:paddingEnd="30dp"
-                android:layout_height="@dimen/btn_height"
+                android:paddingStart="@dimen/space30dp"
+                android:paddingEnd="@dimen/space30dp"
+                android:layout_height="wrap_content"
+                android:minHeight="@dimen/btn_height"
                 android:background="@drawable/bg_blue"
                 android:text="@string/direct_content"
                 android:textAllCaps="false"
@@ -93,9 +95,9 @@
                 android:layout_height="wrap_content"
                 android:text="@string/hint_direct_copy"
                 android:textAlignment="center"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
-                android:lineSpacingExtra="2dp"
+                android:layout_marginTop="@dimen/space8dp"
+                android:layout_marginBottom="@dimen/space8dp"
+                android:lineSpacingExtra="@dimen/space2dp"
                 android:textSize="@dimen/text_normal" />
 
         </LinearLayout>
@@ -105,10 +107,10 @@
             android:layout_below="@+id/layoutSelectFile"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="15dp"
+            android:padding="@dimen/space12dp"
             android:textAlignment="center"
-            android:layout_marginTop="10dp"
-            android:lineSpacingExtra="2dp"
+            android:layout_marginTop="@dimen/space8dp"
+            android:lineSpacingExtra="@dimen/space2dp"
             android:text="@string/hint_common_steps"
             android:textSize="@dimen/text_normal" />
 
@@ -125,7 +127,7 @@
             android:id="@+id/txtFileInfo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
+            android:layout_margin="@dimen/space8dp"
             android:layout_toStartOf="@+id/btnDone"
             android:maxLines="2"
             android:ellipsize="end"
@@ -133,13 +135,16 @@
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnDone"
-            android:layout_width="120dp"
-            android:layout_height="@dimen/btn_height"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minHeight="@dimen/btn_height"
             android:layout_alignParentEnd="true"
             android:layout_gravity="center"
-            android:layout_margin="10dp"
+            android:layout_margin="@dimen/space8dp"
+            android:paddingStart="@dimen/space20dp"
+            android:paddingEnd="@dimen/space20dp"
             android:background="@drawable/bg_blue"
-            android:text="@string/done"
+            android:text="@string/next"
             android:textAllCaps="false"
             android:textColor="@color/white"
             android:textStyle="bold" />
@@ -148,7 +153,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@drawable/bg_line_border"
-            android:layout_margin="10dp"
+            android:layout_margin="@dimen/space8dp"
             android:layout_below="@+id/btnDone">
             <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/editFile"
@@ -157,9 +162,9 @@
                 android:gravity="top"
                 android:background="@android:color/transparent"
                 android:textSize="@dimen/text_normal"
-                android:hint="@string/hint_enter_word"
+                android:hint="@string/type_word"
                 android:lineSpacingMultiplier="1.2"
-                android:padding="10dp"
+                android:padding="@dimen/space10dp"
                 android:imeOptions="flagNoExtractUi"
                 android:importantForAutofill="no"
                 android:inputType="textMultiLine"

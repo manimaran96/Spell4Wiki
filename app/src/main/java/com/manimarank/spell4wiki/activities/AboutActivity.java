@@ -18,8 +18,8 @@ import androidx.core.content.ContextCompat;
 import com.manimaran.crash_reporter.utils.AppUtils;
 import com.manimarank.spell4wiki.BuildConfig;
 import com.manimarank.spell4wiki.R;
-import com.manimarank.spell4wiki.constants.AppConstants;
-import com.manimarank.spell4wiki.constants.Urls;
+import com.manimarank.spell4wiki.utils.constants.AppConstants;
+import com.manimarank.spell4wiki.utils.constants.Urls;
 import com.manimarank.spell4wiki.utils.GeneralUtils;
 import com.manimarank.spell4wiki.utils.PrefManager;
 
@@ -124,10 +124,10 @@ public class AboutActivity extends AppCompatActivity implements View.OnClickList
                 feedback();
                 break;
             case R.id.txtPrivacyPolicy:
-                GeneralUtils.openUrlInBrowser(this, getString(R.string.url_privacy_policy));
+                GeneralUtils.openUrlInBrowser(this, Urls.PRIVACY_POLICY);
                 break;
             case R.id.txtTermsOfUse:
-                GeneralUtils.openUrlInBrowser(this, getString(R.string.url_terms_of_use));
+                GeneralUtils.openUrlInBrowser(this, Urls.TERMS_OF_USE);
                 break;
             case R.id.layout_kaniyam:
                 GeneralUtils.openUrlInBrowser(this, Urls.KANIYAM);
@@ -136,7 +136,7 @@ public class AboutActivity extends AppCompatActivity implements View.OnClickList
                 GeneralUtils.openUrlInBrowser(this, Urls.VGLUG);
                 break;
             case R.id.txt_app_version_and_license:
-                GeneralUtils.openUrlInBrowser(this, getString(R.string.url_license_gpl_v3));
+                GeneralUtils.openUrlInBrowser(this, Urls.GPL_V3);
                 break;
         }
 
@@ -156,8 +156,8 @@ public class AboutActivity extends AppCompatActivity implements View.OnClickList
         emailIntent.setType("message/rfc822");
         emailIntent.setData(Uri.parse("mailto:"));
         //emailIntent.setDataAndType(Uri.parse("mailto:"), "message/rfc822");
-        emailIntent.putExtra(Intent.EXTRA_EMAIL, new String[]{"manimarankumar96@gmail.com"});
-        emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Spell4Wiki App - Feedback");
+        emailIntent.putExtra(Intent.EXTRA_EMAIL, new String[]{AppConstants.CONTACT_MAIL});
+        emailIntent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.app_name) + " App - Feedback");
         emailIntent.putExtra(Intent.EXTRA_TEXT, String.format(
                 "\n\n%s\n%s", "-- Basic Information --", getExtraInfo()));
 

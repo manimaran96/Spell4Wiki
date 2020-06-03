@@ -5,8 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    android:padding="8dp"
-    tools:context="com.manimarank.spell4wiki.activities.ListItemActivity">
+    android:padding="@dimen/space8dp"
+    tools:context=".activities.ListItemActivity">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
@@ -14,7 +14,5 @@
         android:layout_height="wrap_content"
         android:layoutAnimation="@anim/recycler_layout_animation"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
-
-
 
 </LinearLayout>

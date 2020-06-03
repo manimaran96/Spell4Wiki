@@ -35,7 +35,7 @@ public class ContributorsAdapter extends RecyclerView.Adapter<ContributorsAdapte
         holder.txtName.setText(model.getName());
 
         Glide.with(mContext).load(model.getAvatarUrl()).apply(RequestOptions.circleCropTransform()).into(holder.imgIcon);
-        holder.txtAbout.setText(("Contributions : " + model.getContributions()));
+        holder.txtAbout.setText(String.format(mContext.getString(R.string.contributions) , model.getContributions()));
 
         holder.btnOption.setOnClickListener(v -> {
             GeneralUtils.openUrlInBrowser(mContext, model.getHtmlUrl());

@@ -2,174 +2,166 @@
     <string name="app_name">Spell4Wiki</string>
 
     <string name="start">Start</string>
-
-
-
-
-    <string name="pref_file_name" translatable="false">spell4wiki_pref</string>
-    <string name="pref_is_logged_in"  translatable="false">is_login</string>
-
-    //URL links - Don't translate
-    <string name="url_license_gpl_v3" translatable="false">https://www.gnu.org/licenses/gpl-3.0.txt</string>
-    <string name="url_privacy_policy" translatable="false">https://foundation.m.wikimedia.org/wiki/Privacy_policy</string>
-    <string name="url_policy_and_guidelines" translatable="false">https://commons.m.wikimedia.org/wiki/Commons:Policies_and_guidelines</string>
-    <string name="url_terms_of_use" translatable="false">https://foundation.m.wikimedia.org/wiki/Terms_of_Use</string>
-
-    <string name="url_about">https://raw.githubusercontent.com/manimaran96/Spell4Wiki/master/README.md</string>
-    <string name="link_how_to_contribute">https://manimaran96.wordpress.com/2019/01/06/spell4wiki-mobile-app-to-record-upload-audio-for-wiktionary/</string>
-
+    <string name="done">Done</string>
+    <string name="wiki_login">Wiki Login</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
     <string name="login">Login</string>
-    <string name="search_here">Search</string>
-    <string name="upload">Upload</string>
-    <string name="hint_before_record">Hold the Mic to Record</string>
-    <string name="hint_during_record">Recording…  %s</string>
-    <string name="hint_after_record">Hold the Mic to Re-Record</string>
-    <string name="hint_declaration_note">I declare, This is my own work and anyone can use it under the %s license.</string>
-    <string name="alert_to_exit">Again click back to Exit</string>
-    <string name="check_internet">Please check your internet connection!</string>
-    <string name="check_network">Please check your connection!</string>
-    <string name="invalid_credential">Provide Valid Username &amp; Password</string>
-    <string name="select_language">Select Language</string>
-    <string name="select_language_response_msg">%s - Language Selected.</string>
+    <string name="please_wait">Please wait</string>
+    <string name="forgot_password">Forgot your password?</string>
+    <string name="join_wiki">Join Wiki</string>
+    <string name="or">OR</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="skip_login">Skip Login</string>
     <string name="welcome_user">Welcome, %s</string>
+    <string name="loading">Loading…</string>
+    <string name="spell4wiktionary">Spell for Wiktionary</string>
+    <string name="spell4wordlist">Spell for WordList</string>
+    <string name="spell4word">Spell for Word</string>
+    <string name="spell4explore">Wiki Explore</string>
     <string name="wiktionary">Wiktionary</string>
+    <string name="search_on_wiktionary">Search on Wiktionary</string>
+    <string name="view_my_contribution">My Contributions</string>
+    <string name="search">Search</string>
     <string name="settings">Settings</string>
+    <string name="login_to_contribute">Login to contribute</string>
+    <string name="do_you_like_contribute_to_wiki_commons">Donate voice to Wikimedia commons?</string>
     <string name="logout">Logout</string>
     <string name="about">About</string>
-    <string name="wiki_login">Wiki Login</string>
-    <string name="user_name">User name</string>
-    <string name="password">Password</string>
-    <string name="skip">SKIP</string>
-    <string name="player">player</string>
+    <string name="record">Record</string>
+    <string name="link_copied">Link copied</string>
+    <string name="link_share_message">Visit : %s\nLink share from Spell4Wiki App.</string>
+    <string name="link_share_title">Share Link to your friends…</string>
+    <string name="app_share_title">Share Spell4Wiki App to your friends…</string>
+    <string name="app_share_message">Spell4Wiki is an mobile application to record and upload audio to wiki commons for Wiktionary words.\nSpell4Wiki also act as dictionary words meanings are come from Wiktionary.\n\nApp Link :\n%s</string>
+    <string name="upload">Upload</string>
+    <string name="before_record">Hold the Mic to Record</string>
+    <string name="during_record">Recording…  %s</string>
+    <string name="after_record">Hold the Mic to Re-Record</string>
+    <string name="record_duration">00:10</string>
+    <string name="declaration_note">I declare, This is my own work and anyone can use it under the %s license.</string>
+    <string name="record_audio_not_found">Please record audio first.</string>
+    <string name="recorded_audio_too_short">Recorded audio too short.</string>
+    <string name="recording_under_process">Recording under process</string>
+    <string name="permission_required">Microphone and Storage permissions required.</string>
+    <string name="go_settings">GO SETTINGS</string>
     <string name="title_upload_audio">Upload Audio</string>
     <string name="message_upload_info">Uploading \n%s</string>
-
-
-    <string name="format_file_name_words_already_have_audio">%s-words_already_have_audio</string>
-    <string name="upload_to_commons">Upload To Commons</string>
-    <string name="spell4explore">Wiki Explore</string>
-    <string name="spell4wiktionary">Spell for Wiktionary</string>
-    <string name="spell4word">Spell for Word</string>
-    <string name="spell4wordlist">Spell for WordList</string>
-
-    <!-- App Intro Screen -->
-    <string name="app_intro_slide_1_title">Welcome</string>
-    <string name="app_intro_slide_2_title">Wiktionary Explore</string>
-    <string name="app_intro_slide_4_title">Spell For Word</string>
-    <string name="app_intro_slide_5_title">Permission Request</string>
-    <string name="app_intro_slide_3_title">Spell For Word List</string>
-    <string name="app_intro_slide_1_description">Spell4Wiki app to record and upload audios for Wikimedia commons.\nAlso act as wiki dictionary.</string>
-    <string name="app_intro_slide_2_description">You can search and view words meaning form wikitionary for any languages.</string>
-    <string name="app_intro_slide_3_description">You can record and upload audios for your own word list from your device.</string>
-    <string name="app_intro_slide_4_description">You can record and upload audio for your custom word.</string>
-    <string name="app_intro_slide_5_description">Spell4Wiki requires storage and record audio permissions.\nAllow those permissions</string>
-    <string name="hint_search">Search on Wiktionary</string>
-    <string name="donate">Donate</string>
-    <string name="how_is_work">How?</string>
-    <string name="record">Record</string>
-    <string name="action_forgot_password">Forgot your password?</string>
-    <string name="action_join_wikipedia">Join Wiki</string>
-    <string name="hint_or">OR</string>
-    <string name="skip_login">Skip Login</string>
-    <string name="please_wait">Please wait</string>
-    <string name="select_language_info">Selected Language : %s</string>
-    <string name="about_app">@string/app_intro_slide_1_description</string>
-    <string name="app_version_and_license"><![CDATA[Version : 1.0 & License : GPLv3]]></string>
-    <string name="rate_us">Rate Us</string>
-    <string name="share">Share</string>
+    <string name="crash_report_alert_title">Do you like to share crash information?</string>
+    <string name="crash_report_alert_message">A previous crash was collected. Would you like to send the crash logs to developer to fix this issue in the future?</string>
+    <string name="send">Send</string>
+    <string name="cancel">Cancel</string>
+    <string name="upload_success">Successfully Uploaded\nPronunciation audio of %s</string>
+    <string name="select_file">Select file</string>
+    <string name="next">Next</string>
+    <string name="type_word">Type or Paste your words here</string>
+    <string name="enter_word">Enter word</string>
+    <string name="hint_select_file">Select .txt file with contains list of words to upload audio.</string>
+    <string name="hint_select_file_next">Align the file content\n%s</string>
+    <string name="direct_content">Direct content</string>
+    <string name="hint_direct_copy">Copy and paste or type words to upload audio.</string>
+    <string name="hint_direct_copy_next">Paste and Align the words.</string>
+    <string name="hint_common_steps">---------- NOTE ----------\nEach word must be in separate line.\nAlign words properly If necessary.\n</string>
+    <string name="confirmation">Confirmation</string>
+    <string name="confirm_to_back">Do you want to go back?</string>
+    <string name="select_language">Select Language</string>
+    <string name="language_code">TA</string>
+    <string name="uploading">Uploading…</string>
     <string name="rate_app">Rate App</string>
+    <string name="share_app">Share App</string>
+    <string name="share">Share</string>
     <string name="powered_by">Powered By</string>
     <string name="kaniyam">Kaniyam</string>
     <string name="about_kaniyam">தமிழ் மொழி மற்றும் இனக்குழுக்கள் சார்ந்த மெய்நிகர்வளங்கள், கருவிகள் மற்றும் அறிவுத்தொகுதிகள், அனைவருக்கும்  கட்டற்ற அணுக்கத்தில் கிடைக்கும் சூழல்</string>
     <string name="vglug">VGLUG</string>
     <string name="about_vglug">Villupuram GNU/Linux Users Group (Villupuram GLUG) is a non profit organization started in 2013, Impression of Free and open-source software (FOSS).</string>
-    <string name="see_source_code">See Source Code</string>
-    <string name="help_development">Help Development</string>
-    <string name="contact_us">Contact Us</string>
-    <string name="third_party_libraries">Third Party Libraries</string>
-    <string name="source_code">Source Code</string>
     <string name="how_to_contribute">How To Contribute?</string>
+    <string name="source_code">Source Code</string>
+    <string name="help_development">Help Development</string>
+    <string name="contributors">Contributors</string>
     <string name="credits">Credits</string>
-
-    <string name="app_share_title">Share Spell4Wiki App to your friends…</string>
-    <string name="app_share_message">Spell4Wiki is an mobile application to record and upload audio to wiki commons for Wiktionary words.\nSpell4Wiki also act as dictionary words meanings are come from Wiktionary.\n\nLink : %s</string>
+    <string name="third_party_libraries">Third Party Libraries</string>
+    <string name="feedback">Feedback</string>
+    <string name="privacy_policy">Privacy Policy</string>
+    <string name="terms_of_use">Terms Of Use</string>
+    <string name="about_app">@string/app_intro_slide_1_description</string>
     <string name="version">Version</string>
     <string name="license">License</string>
-    <string name="no_email_client">No email client</string>
-    <string name="contact_via_mail">Contact via mail…</string>
-    <string name="contact_email">manimarankumar96@gmail.com</string>
-    <string name="contributors">Contributors</string>
-    <string name="visit_web_page">Visit web page</string>
-    <string name="go_to_license_url">Go to License URL</string>
-    <string name="view_my_contribution">My Contributions</string>
-    <string name="hint_loading">Loading…</string>
-    <string name="error_wepage_load">Something went wrong</string>
-    <string name="refresh">Refresh</string>
-    <string name="open_in_browser">Open in browser</string>
     <string name="copy_link">Copy link</string>
     <string name="favorite">Favorite</string>
     <string name="forward">Forward</string>
     <string name="backward">Backward</string>
-    <string name="link_share_message">Visit : %s\n\nLink share from Spell4Wiki App.</string>
-    <string name="hint_enter_word">Enter word</string>
-    <string name="check_url">Invalid Link</string>
-    <string name="done">Done</string>
-    <string name="select_file">Select file</string>
-    <string name="hint_select_file">Select txt file with contains list of words to upload audio.</string>
-    <string name="hint_direct_copy">Copy and paste or type words to upload audio.</string>
-    <string name="hint_common_steps">---------- NOTE ----------\nEach word must be in separate line.\nAlign words properly If necessary.\n</string>
-    <string name="direct_content">Direct content</string>
-    <string name="title">Title</string>
-    <string name="sub_title">Sub Title</string>
-    <string name="tamil">TA</string>
-    <string name="result_not_found">Result Not Found</string>
-    <string name="something_went_wrong">Something went wrong</string>
-    <string name="something_went_wrong_try_again">Something went wrong. Please try again.</string>
-    <string name="login_to_contribute">Login to contribute</string>
-    <string name="do_you_like_contribute_to_wiki_commons">
-        Donate voice to wiki commons?
-    </string>
+    <string name="select_language_response_msg">%s - Language Selected.</string>
+    <string name="visit_web_page">Visit web page</string>
+    <string name="go_to_license_url">Go to License URL</string>
+    <string name="refresh">Refresh</string>
+    <string name="open_in_browser">Open in browser</string>
+    <string name="logout_confirmation">Logout Confirmation</string>
+    <string name="logout_message">Do you want to logout?</string>
+    <string name="contributions">Contributions : %s</string>
     <string name="language">Language</string>
     <string name="license_of_upload_audio">Upload Audio - License</string>
+    <string name="license_choose_alert">Choose the CC License</string>
+
+
+    <string name="check_internet">Please check your internet connection!</string>
+    <string name="record_fetch_fail">Please check your connection!\nScroll to try again!</string>
+    <string name="something_went_wrong">Something went wrong.</string>
+    <string name="something_went_wrong_try_again">Something went wrong. Please try again.</string>
+    <string name="web_page_not_found">Page not found.\nTry again.</string>
+    <string name="enter_valid_word">Enter valid word.(Max : 30 characters)</string>
+    <string name="provide_valid_word">Provide valid word</string>
+    <string name="provide_valid_content">Provide valid content</string>
+    <string name="backward_nothing">Backward nothing</string>
+    <string name="forward_nothing">Forward nothing</string>
+    <string name="invalid_language">Select valid language.</string>
+    <string name="confirm_declaration">Please check and confirm the declaration.</string>
+    <string name="invalid_csrf">You are not logged in! \nPlease login to continue.</string>
+    <string name="invalid_csrf_try_again">Invalid CSRF Token. Please Try again.</string>
+    <string name="invalid_response">Invalid response. Please Try again</string>
+    <string name="upload_failed">Upload failed. Please Try again.</string>
+    <string name="file_already_exist">Upload file already exist.</string>
+    <string name="audio_file_already_exist">%s already have audio.</string>
+    <string name="login_expired">Login expired. Please login and continue.</string>
+    <string name="two_factor_login">Two factor Authentication not implemented.</string>
+    <string name="check_url">Invalid Link</string>
+    <string name="alert_to_exit">Again click back to Exit</string>
+    <string name="invalid_credential">Provide Valid Username &amp; Password</string>
+    <string name="no_email_client">No email client</string>
+    <string name="result_not_found">Result Not Found</string>
+    <string name="server_misbehaved">Server misbehaved! Please try again later.</string>
+
+
+    <!-- App Intro Screen -->
+    <string name="app_intro_slide_1_title">Welcome</string>
+    <string name="app_intro_slide_2_title">Wiktionary Explore</string>
+    <string name="app_intro_slide_3_title">Spell For Word List</string>
+    <string name="app_intro_slide_4_title">Spell For Word</string>
+    <string name="app_intro_slide_5_title">Permission Request</string>
+
+    <string name="app_intro_slide_1_description">Spell4Wiki is an mobile application to record and upload audio to Wikimedia commons for Wiktionary words.</string>
+    <string name="app_intro_slide_2_description">You can search and view words meaning form Wikitionary for any languages.</string>
+    <string name="app_intro_slide_3_description">You can upload audio for your own word list from text file or from copy &amp;amp; paste the content.</string>
+    <string name="app_intro_slide_4_description">You can upload audio for your own single word.</string>
+    <string name="app_intro_slide_5_description">Spell4Wiki requires storage and record audio permissions.\nAllow those permissions</string>
+
+
+    //Don't use full stop,  %1$s - language name, %2$s - word.
+    <string name="file_content_description">Pronunciation of %1$s Language word %2$s</string>
+
+    //Don't translate
+    <string name="account_name" translatable="false">Spell4Wiki</string>
+    <string name="account_type" translatable="false">com.manimarank.spell4wiki</string>
     <string name="license_name_cc_by_three" translatable="false">Attribution 3.0</string>
     <string name="license_name_cc_by_four" translatable="false">Attribution 4.0</string>
     <string name="license_name_cc_by_sa_three" translatable="false">Attribution-ShareAlike 3.0</string>
     <string name="license_name_cc_by_sa_four" translatable="false">Attribution-ShareAlike 4.0</string>
     <string name="license_name_cc_zero" translatable="false">CC0(release all rights)</string>
-    <string name="hint_license_choose_alert">Choose the CC License</string>
-    <string name="cancel">Cancel</string>
-    <string name="feedback">Feedback</string>
-    <string name="privacy_policy">Privacy Policy</string>
-    <string name="terms_of_use">Terms Of Use</string>
-    <string name="permisstion_required">Microphone and Storage permissions required.</string>
-    <string name="go_settings">GO SETTINGS</string>
-    <string name="server_misbehaved">Server misbehaved! Please try again later.</string>
-    <string name="record_fetch_fail">Please check your connection!\nScroll to try again!</string>
-    <string name="hint_record_duration">00:10</string>
-    <string name="record_audio_not_found">Please record audio first</string>
-    <string name="recorded_audio_too_short">Recorded audio too short.</string>
-    <string name="recording_under_process">Recording under process</string>
-    <string name="invalid_word">Invalid word</string>
-    <string name="invalid_language">Invalid Language</string>
-    <string name="confirm_declaration">Please check and confirm the declaration.</string>
-    <string name="invalid_csrf">You are not logged in! \nPlease login to continue.</string>
-    <string name="invalid_csrf_try_again">Invalid CSRF Token. Please Try again.</string>
-    <string name="file_content_description">Pronunciation of %1$s Language word %2$s</string>  //Don't use full stop,  %1$s - language name, %2$s - word.
-    <string name="unable_to_upload_audio">Unable to upload audio. Something went wrong</string>
-    <string name="upload_success">Successfully Uploaded\nPronunciation audio of %s</string>
-    <string name="upload_failed">Upload failed. Please Try again.</string>
-    <string name="file_already_exist">Upload file already exist.</string>
-    <string name="audio_file_already_exist">%s already have audio.</string>
-    <string name="invalid_response">Invalid response</string>
-    <string name="uploading">Uploading…</string>
-    <string name="logout_confirmation">Logout Confirmation</string>
-    <string name="logout_message">Do you want to logout?</string>
-    <string name="account_name">Spell4Wiki</string>
-    <string name="account_type">com.manimarank.spell4wiki</string>
-    <string name="web_page_not_found">Page not found.\nTry again.</string>
-    <string name="login_expired">Login expired. Please login and continue.</string>
+    <string name="sample_url" translatable="false">https://manimaran96.wordpress.com</string>
 
-    <string name="share_app">Share App</string>
+    // TODO
+    <string name="link_how_to_contribute">https://manimaran96.wordpress.com/2019/01/06/spell4wiki-mobile-app-to-record-upload-audio-for-wiktionary/</string>
 
 
 </resources>

@@ -14,7 +14,8 @@ import java.util.List;
 import java.util.Set;
 
 public class PrefManager {
-    // shared pref mode
+    // shared pref
+    private static final String PREF_NAME = "spell4wiki_pref";
     private static final int PRIVATE_MODE = 0;
     // Kay values
     private static final String USERNAME = "username";
@@ -36,7 +37,7 @@ public class PrefManager {
 
     public PrefManager(Context context) {
         this.mContext = context;
-        pref = mContext.getSharedPreferences(mContext.getString(R.string.pref_file_name), PRIVATE_MODE);
+        pref = mContext.getSharedPreferences(PREF_NAME, PRIVATE_MODE);
         editor = pref.edit();
         editor.apply();
     }
@@ -105,7 +106,7 @@ public class PrefManager {
         }
     }
 
-    public Set<String> getCookies() {
+    private Set<String> getCookies() {
         return pref.getStringSet(COOKIE, null);
     }
 
@@ -162,7 +163,7 @@ public class PrefManager {
         editor.apply();
     }
 
-    public void setCommonCategories(List<String> categoryCommon) {
+    void setCommonCategories(List<String> categoryCommon) {
         editor.putStringSet(COMMON_CATEGORIES, new HashSet<>(categoryCommon));
         editor.apply();
     }

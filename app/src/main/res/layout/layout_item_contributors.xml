@@ -5,14 +5,14 @@
     android:layout_height="wrap_content"
     android:padding="8dp">
 
-    <ImageView
+    <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/imgIcon"
         android:layout_width="@dimen/img_normal"
         android:layout_height="@dimen/img_normal"
         app:srcCompat="@drawable/ic_contributors"
         android:scaleType="fitCenter"
-        android:padding="8dp"
-        android:layout_marginEnd="4dp"
+        android:padding="@dimen/space8dp"
+        android:layout_marginEnd="@dimen/space4dp"
         android:contentDescription="@string/app_name"/>
 
     <LinearLayout
@@ -23,46 +23,46 @@
         android:layout_centerInParent="true"
         android:orientation="vertical">
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/txt_name"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center_vertical"
             android:ellipsize="end"
             android:singleLine="true"
-            android:padding="2dp"
+            android:padding="@dimen/space2dp"
             android:text="@string/contributors"
             android:textSize="@dimen/text_normal"
             android:textStyle="bold" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/txt_about"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ellipsize="end"
             android:maxLines="2"
-            android:padding="2dp"
+            android:padding="@dimen/space2dp"
             android:visibility="gone"
             android:linksClickable="true"
             android:autoLink="all"
-            android:text="@string/url_license_gpl_v3"
+            android:text="@string/sample_url"
             android:textSize="@dimen/text_small" />
 
     </LinearLayout>
 
 
 
-    <ImageView
+    <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/btn_option"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_centerVertical="true"
-        android:paddingStart="10dp"
-        android:contentDescription="@string/contributors"
-        android:paddingEnd="5dp"
-        android:paddingTop="5dp"
-        android:paddingBottom="5dp"
+        android:paddingStart="@dimen/space8dp"
+        android:contentDescription="@string/app_name"
+        android:paddingEnd="@dimen/space4dp"
+        android:paddingTop="@dimen/space4dp"
+        android:paddingBottom="@dimen/space4dp"
         app:srcCompat="@drawable/ic_link" />
 
 </RelativeLayout>

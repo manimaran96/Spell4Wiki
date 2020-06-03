@@ -18,7 +18,7 @@ import com.manimarank.spell4wiki.R;
 import com.manimarank.spell4wiki.Spell4WikiApp;
 import com.manimarank.spell4wiki.activities.CommonWebActivity;
 import com.manimarank.spell4wiki.activities.RecordAudioActivity;
-import com.manimarank.spell4wiki.constants.AppConstants;
+import com.manimarank.spell4wiki.utils.constants.AppConstants;
 
 public class GeneralUtils {
 

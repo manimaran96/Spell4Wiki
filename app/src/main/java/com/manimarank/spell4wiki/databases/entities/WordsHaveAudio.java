@@ -5,6 +5,8 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.io.Serializable;
 
 
@@ -45,11 +47,12 @@ public class WordsHaveAudio implements Serializable {
         this.languageCode = languageCode;
     }
 
+    @NotNull
     public String getCombineWordWithCode() {
         return combineWordWithCode;
     }
 
-    public void setCombineWordWithCode(String combineWordWithCode) {
+    public void setCombineWordWithCode(@NotNull String combineWordWithCode) {
         this.combineWordWithCode = combineWordWithCode;
     }
 }

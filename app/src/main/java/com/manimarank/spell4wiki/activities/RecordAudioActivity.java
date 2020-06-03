@@ -11,7 +11,6 @@ import android.os.CountDownTimer;
 import android.os.Handler;
 import android.provider.Settings;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.webkit.MimeTypeMap;
@@ -34,7 +33,7 @@ import com.manimarank.spell4wiki.R;
 import com.manimarank.spell4wiki.apis.ApiClient;
 import com.manimarank.spell4wiki.apis.ApiInterface;
 import com.manimarank.spell4wiki.auth.AccountUtils;
-import com.manimarank.spell4wiki.constants.AppConstants;
+import com.manimarank.spell4wiki.utils.constants.AppConstants;
 import com.manimarank.spell4wiki.databases.DBHelper;
 import com.manimarank.spell4wiki.databases.dao.WikiLangDao;
 import com.manimarank.spell4wiki.databases.dao.WordsHaveAudioDao;
@@ -70,37 +69,31 @@ import retrofit2.Response;
 
 public class RecordAudioActivity extends AppCompatActivity {
 
+    private static final int MAX_RETRIES_FOR_FORCE_LOGIN = 1;
+    private static final int MAX_RETRIES_FOR_CSRF_TOKEN = 2;
     // Views
-    private View layoutPopUp, layoutUploadPopUp, layoutRecordControls;
+    private View layoutUploadPopUp, layoutRecordControls;
     private ImageView btnRecord, btnPlayPause;
     private FloatingActionButton btnClose;
     private AppCompatButton btnUpload;
     private AppCompatTextView txtWord, txtLanguage, txtDuration, txtUploadMsg, txtRecordHint;
     private AppCompatCheckBox checkBoxDeclaration;
     private AppCompatSeekBar seekBar;
-
     private CountDownTimer countDownTimer;
     private long recordedSecs = 0;
-
     private PrefManager pref;
     private WordsHaveAudioDao wordsHaveAudioDao;
     private WikiLangDao wikiLangDao;
-
     private String langCode;
     private String word = "";
-
     private ApiInterface api;
     private ApiInterface apiWiki;
-
     private WAVRecorder recorder = new WAVRecorder();
     private WAVPlayer player = new WAVPlayer();
     private Boolean isPlaying = false, isRecorded = false;
     private Integer lastProgress = 0;
     private Runnable runnable;
     private Handler mHandler = new Handler();
-
-    private static final int MAX_RETRIES_FOR_FORCE_LOGIN = 1;
-    private static final int MAX_RETRIES_FOR_CSRF_TOKEN = 2;
     private int retryCountForLogin = 0;
     private int retryCountForCsrf = 0;
 
@@ -124,7 +117,6 @@ public class RecordAudioActivity extends AppCompatActivity {
 
     private void initViews() {
         // View init
-        layoutPopUp = findViewById(R.id.layoutPopUp);
         layoutRecordControls = findViewById(R.id.layoutRecordControls);
         layoutUploadPopUp = findViewById(R.id.layoutUploadPopUp);
         btnClose = findViewById(R.id.btnClose);
@@ -170,9 +162,9 @@ public class RecordAudioActivity extends AppCompatActivity {
         txtWord.setText(word);
         WikiLang wikiLang = wikiLangDao.getWikiLanguageWithCode(langCode);
         txtLanguage.setText(("(" + wikiLang.getLocalName() + " - " + wikiLang.getName() + ")"));
-        txtRecordHint.setText(getString(R.string.hint_before_record));
+        txtRecordHint.setText(getString(R.string.before_record));
         txtDuration.setText(getDurationValue(0));
-        checkBoxDeclaration.setText(String.format(getString(R.string.hint_declaration_note), getString(WikiLicense.licenseNameId(pref.getUploadAudioLicense()))));
+        checkBoxDeclaration.setText(String.format(getString(R.string.declaration_note), getString(WikiLicense.licenseNameId(pref.getUploadAudioLicense()))));
 
 
         // Set 10 sec only for recording
@@ -180,7 +172,7 @@ public class RecordAudioActivity extends AppCompatActivity {
             public void onTick(long millisUntilFinished) {
                 long remainingSecs = TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished);
                 recordedSecs = 10 - remainingSecs;
-                txtRecordHint.setText(String.format(getString(R.string.hint_during_record), getDurationValue(remainingSecs)));
+                txtRecordHint.setText(String.format(getString(R.string.during_record), getDurationValue(remainingSecs)));
             }
 
             public void onFinish() {
@@ -239,7 +231,6 @@ public class RecordAudioActivity extends AppCompatActivity {
     }
 
     private void startRecording() {
-        Log.d(TAG, "Start Recording");
         isRecorded = false;
         recorder.startRecording(getFilePath(AppConstants.AUDIO_TEMP_RECORDER_FILENAME));
         countDownTimer.start();
@@ -250,8 +241,7 @@ public class RecordAudioActivity extends AppCompatActivity {
     }
 
     private void stopRecording() {
-        Log.d(TAG, "Stop Recording");
-        txtRecordHint.setText(getString(R.string.hint_after_record));
+        txtRecordHint.setText(getString(R.string.after_record));
         if (recorder.isRecording()) {
             recorder.stopRecording(getFilePath(AppConstants.AUDIO_TEMP_RECORDER_FILENAME), getFilePath(AppConstants.AUDIO_RECORDED_FILENAME));
             player.stopPlaying();
@@ -281,7 +271,6 @@ public class RecordAudioActivity extends AppCompatActivity {
                 return null;
             });
 
-            //player.startPlaying(getFilePath(Constants.AUDIO_RECORDED_FILENAME), null);
 
             // Play
             seekBar.setProgress(lastProgress);
@@ -339,7 +328,7 @@ public class RecordAudioActivity extends AppCompatActivity {
     }
 
     private void showAppSettingsPageHint() {
-        Snackbar.make(layoutPopUp, getString(R.string.permisstion_required), Snackbar.LENGTH_LONG)
+        Snackbar.make(layoutRecordControls, getString(R.string.permission_required), Snackbar.LENGTH_LONG)
                 .setAction(getString(R.string.go_settings), view -> {
                     Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, Uri.fromParts("package", BuildConfig.APPLICATION_ID, null));
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -360,7 +349,7 @@ public class RecordAudioActivity extends AppCompatActivity {
                         if (checkBoxDeclaration.isChecked()) {
                             uploadAudioToWikiServer();
                         } else
-                            GeneralUtils.showToast(getApplicationContext(), getString(R.string.confirm_declaration));// TODO
+                            GeneralUtils.showToast(getApplicationContext(), getString(R.string.confirm_declaration));
                     } else
                         GeneralUtils.showToast(getApplicationContext(), getString(R.string.recorded_audio_too_short));
                 } else
@@ -368,7 +357,7 @@ public class RecordAudioActivity extends AppCompatActivity {
             } else
                 GeneralUtils.showToast(getApplicationContext(), getString(R.string.invalid_language));
         } else
-            GeneralUtils.showToast(getApplicationContext(), getString(R.string.invalid_word));
+            GeneralUtils.showToast(getApplicationContext(), getString(R.string.provide_valid_word));
     }
 
     private String getUploadName() {
@@ -393,7 +382,7 @@ public class RecordAudioActivity extends AppCompatActivity {
 
     private void recordLayoutVisibility(boolean visible) {
         layoutRecordControls.setVisibility(visible ? View.VISIBLE : View.GONE);
-        if(visible)
+        if (visible)
             btnClose.show();
         else
             btnClose.hide();
@@ -428,7 +417,7 @@ public class RecordAudioActivity extends AppCompatActivity {
                             e.printStackTrace();
                             uploadFailed(getString(R.string.something_went_wrong) + "\n" + e.getMessage());
                         }
-                    }else {
+                    } else {
                         uploadFailed(getString(R.string.invalid_response) + "\nResponse code : " + response.code());
                     }
                 }
@@ -484,7 +473,7 @@ public class RecordAudioActivity extends AppCompatActivity {
                             Print.error(TAG + "UPLOAD FAIL RESPONSE -- " + new Gson().toJson(wikiError));
                             if (wikiError.getCode().equalsIgnoreCase(AppConstants.UPLOAD_FILE_EXIST) || wikiError.getCode().equalsIgnoreCase(AppConstants.UPLOAD_FILE_EXIST_FORBIDDEN) || wikiError.getCode().equalsIgnoreCase(AppConstants.UPLOAD_INVALID_TOKEN))
                                 completeUploadFinalProcess(wikiError.getCode());
-                            else if(wikiError.getCode().contains("exists"))
+                            else if (wikiError.getCode().contains("exists"))
                                 completeUploadFinalProcess(AppConstants.UPLOAD_FILE_EXIST);
                             else
                                 completeUploadFinalProcess(wikiError.getInfo());
@@ -534,13 +523,13 @@ public class RecordAudioActivity extends AppCompatActivity {
         Print.error(TAG + "UPLOAD FAIL MESSAGE " + msg);
         if (GeneralUtils.isNetworkConnected(getApplicationContext())) {
             if (pref.getCsrfToken() == null) { // CSRF Invalid then get new csrf and try again
-                if(retryCountForCsrf < MAX_RETRIES_FOR_CSRF_TOKEN){
+                if (retryCountForCsrf < MAX_RETRIES_FOR_CSRF_TOKEN) {
                     uploadAudioToWikiServer();
                     return;
-                }else if(retryCountForLogin < MAX_RETRIES_FOR_FORCE_LOGIN){ // Same issue after the new csrf also then do force login
+                } else if (retryCountForLogin < MAX_RETRIES_FOR_FORCE_LOGIN) { // Same issue after the new csrf also then do force login
                     retryWithForceLogin();
                     return;
-                }else if(msg.equalsIgnoreCase(getString(R.string.login_expired)))
+                } else if (msg.equalsIgnoreCase(getString(R.string.login_expired)))
                     GeneralUtils.showLongToast(getString(R.string.login_expired));
                 else
                     GeneralUtils.showLongToast(getString(R.string.invalid_csrf_try_again));
@@ -552,7 +541,6 @@ public class RecordAudioActivity extends AppCompatActivity {
             GeneralUtils.showLongToast(getString(R.string.check_internet));
 
         recordLayoutVisibility(true);
-        //txtUploadMsg.setText("Upload DONE " + msg);
     }
 
     private void retryWithForceLogin() {
@@ -561,10 +549,10 @@ public class RecordAudioActivity extends AppCompatActivity {
             retryCountForLogin++;
             //Clear cache and login info temp
             forceLogin();
-        }else {
+        } else {
             Print.error(TAG + "RETRY LOGIN FAIL");
             uploadFailed(getString(R.string.login_expired));
-            if(retryCountForLogin >= MAX_RETRIES_FOR_FORCE_LOGIN){
+            if (retryCountForLogin >= MAX_RETRIES_FOR_FORCE_LOGIN) {
                 failWithLogout();
             }
         }
@@ -573,7 +561,7 @@ public class RecordAudioActivity extends AppCompatActivity {
     private void failWithLogout() {
         recordLayoutVisibility(false);
         Print.error(TAG + "RETRY LOGIN FAIL -- LOGOUT & ASK RE-LOGIN");
-        if(pref != null)
+        if (pref != null)
             pref.logoutUser();
     }
 
@@ -583,7 +571,7 @@ public class RecordAudioActivity extends AppCompatActivity {
         callLoginToken.enqueue(new Callback<WikiToken>() {
             @Override
             public void onResponse(@NotNull Call<WikiToken> call, @NotNull Response<WikiToken> response) {
-                if(response.isSuccessful() && response.body() !=null){
+                if (response.isSuccessful() && response.body() != null) {
                     try {
                         String loginToken = response.body().getQuery().getTokenValue().getLoginToken();
                         /*
@@ -596,10 +584,10 @@ public class RecordAudioActivity extends AppCompatActivity {
                                 if (response.isSuccessful() && response.body() != null) {
                                     try {
                                         WikiLogin.ClientLogin login = response.body().getClientLogin();
-                                        if(login != null && login.getStatus() != null && AppConstants.PASS.equals(login.getStatus())){
+                                        if (login != null && login.getStatus() != null && AppConstants.PASS.equals(login.getStatus())) {
                                             pref.setUserSession(login.getUsername());
                                             uploadAudioProcess();
-                                        }else {
+                                        } else {
                                             retryWithForceLogin();
                                             Print.error(TAG + " LOGIN COMPLETE FAIL 1 " + new Gson().toJson(response.body()));
                                         }
@@ -608,7 +596,7 @@ public class RecordAudioActivity extends AppCompatActivity {
                                         e.printStackTrace();
                                         Print.error(TAG + " LOGIN COMPLETE FAIL 2 " + e.getMessage());
                                     }
-                                }else{
+                                } else {
                                     retryWithForceLogin();
                                     Print.error(TAG + " LOGIN COMPLETE FAIL 3 " + response.toString());
                                 }
@@ -621,12 +609,12 @@ public class RecordAudioActivity extends AppCompatActivity {
                             }
                         });
 
-                    }catch (Exception e){
+                    } catch (Exception e) {
                         retryWithForceLogin();
                         e.printStackTrace();
                         Print.error(TAG + "LOGIN TOKEN FAIL 1 " + e.getMessage());
                     }
-                }else {
+                } else {
                     retryWithForceLogin();
                     Print.error(TAG + "LOGIN TOKEN FAIL 2 " + response.toString());
                 }
@@ -636,7 +624,7 @@ public class RecordAudioActivity extends AppCompatActivity {
             public void onFailure(@NotNull Call<WikiToken> call, @NotNull Throwable t) {
                 retryWithForceLogin();
                 t.printStackTrace();
-                Print.error(TAG + "LOGIN FAIL EXCEPTION " +  t.getMessage());
+                Print.error(TAG + "LOGIN FAIL EXCEPTION " + t.getMessage());
             }
         });
     }
@@ -678,7 +666,7 @@ public class RecordAudioActivity extends AppCompatActivity {
         File file = new File(getExternalFilesDir(AppConstants.AUDIO_MAIN_PATH), AppConstants.AUDIO_FILEPATH);
         if (!file.exists()) {
             if (!file.mkdirs())
-                Log.d(TAG, "Not create directory!");
+                Print.log(TAG + "Not create directory!");
         }
         return file.getAbsolutePath() + "/" + fileName;
     }
@@ -694,7 +682,7 @@ public class RecordAudioActivity extends AppCompatActivity {
 
                 // File summary or Information
                 "{{Information" + "\n" +
-                (getDescription() != null ? "|description=" + getDescription() +"\n" : "") +
+                (getDescription() != null ? "|description=" + getDescription() + "\n" : "") +
                 "|source={{own}}" +
                 "|author=[[User:" + pref.getName() + "|" + pref.getName() + "]]" + "\n" +
                 "|date=" + getDateNow() + "\n" +
@@ -706,33 +694,25 @@ public class RecordAudioActivity extends AppCompatActivity {
 
                 // File Category
                 getCategoryInfo();
-        /*
-        TODO Category may given common lang api in array list of categories then add into for loop. Given selection for category
-        Category : [[Category:St. Thomas Mount]]
-        [[Category:Pronunciation]]
-
-        Template for Spell4wiki
-        Template : {{Uploaded from Mobile|platform=Android|version=2.10.2~66e1539a1}}
-         */
     }
 
     private String getCategoryInfo() {
         StringBuilder sb = new StringBuilder();
-        if(wikiLangDao.getWikiLanguageWithCode(langCode) != null &&  wikiLangDao.getWikiLanguageWithCode(langCode).getCategories() != null && wikiLangDao.getWikiLanguageWithCode(langCode).getCategories().size() > 0){
-            for(String category : wikiLangDao.getWikiLanguageWithCode(langCode).getCategories()){
-                if(!TextUtils.isEmpty(category))
+        if (wikiLangDao.getWikiLanguageWithCode(langCode) != null && wikiLangDao.getWikiLanguageWithCode(langCode).getCategories() != null && wikiLangDao.getWikiLanguageWithCode(langCode).getCategories().size() > 0) {
+            for (String category : wikiLangDao.getWikiLanguageWithCode(langCode).getCategories()) {
+                if (!TextUtils.isEmpty(category))
                     sb.append("[[Category:").append(category).append("]]").append("\n");
             }
-        }else {
-            if(pref.getCommonCategories() != null && pref.getCommonCategories().size() > 0) {
+        } else {
+            if (pref.getCommonCategories() != null && pref.getCommonCategories().size() > 0) {
                 for (String category : pref.getCommonCategories()) {
-                    if(!TextUtils.isEmpty(category))
+                    if (!TextUtils.isEmpty(category))
                         sb.append("[[Category:").append(category).append("]]").append("\n");
                 }
             }
         }
 
-        if(TextUtils.isEmpty(sb.toString())) {
+        if (TextUtils.isEmpty(sb.toString())) {
             sb.append("[[Category:Files uploaded by spell4wiki]]").append("\n");
             sb.append("[[Category:Files uploaded by spell4wiki in ").append(langCode).append("]]").append("\n");
         }
@@ -744,31 +724,31 @@ public class RecordAudioActivity extends AppCompatActivity {
         return new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH).format(new Date());
     }
 
-    private String getDescription(){
+    private String getDescription() {
         StringBuilder sb = new StringBuilder();
         try {
             WikiLang wikiLang = wikiLangDao.getWikiLanguageWithCode(langCode);
             String enDescriptionFormat = getStringByLocalLang("en");
             String contributedLangDescriptionFormat = getStringByLocalLang(langCode);
-            if(contributedLangDescriptionFormat != null) {
-                if(!langCode.equals("en") && enDescriptionFormat != null && !contributedLangDescriptionFormat.equalsIgnoreCase(enDescriptionFormat))
+            if (contributedLangDescriptionFormat != null) {
+                if (!langCode.equals("en") && enDescriptionFormat != null && !contributedLangDescriptionFormat.equalsIgnoreCase(enDescriptionFormat))
                     sb.append("{{").append(langCode).append("|1=").append(String.format(contributedLangDescriptionFormat, wikiLang.getLocalName(), word)).append("}}");
             }
-            if(enDescriptionFormat != null)
+            if (enDescriptionFormat != null)
                 sb.append("{{en|1=").append(String.format(enDescriptionFormat, wikiLang.getName(), word)).append("}}");
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return TextUtils.isEmpty(sb.toString()) ? null : sb.toString();
     }
 
-    private String getStringByLocalLang(String locale){
+    private String getStringByLocalLang(String locale) {
         String result = null;
         try {
             Configuration config = new Configuration(getResources().getConfiguration());
             config.setLocale(new Locale(locale));
             result = createConfigurationContext(config).getResources().getString(R.string.file_content_description);
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return TextUtils.isEmpty(result) ? null : result;

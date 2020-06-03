@@ -69,8 +69,6 @@ public class LangAdapter extends BaseAdapter implements Filterable {
 
         holder.textLangName.setText(model.getName());
         holder.textLocalName.setText(model.getLocalName());
-        /*if(model.getTitleWordsNoAudio() != null && model.getTitleWordsNoAudio().length() > 0)
-            holder.textLocalName.append(" - " + model.getTitleWordsNoAudio());*/
         holder.textLocalName.setGravity(model.getIsLeftDirection() ? Gravity.START : Gravity.END);
         holder.radioSelect.setChecked(existLangCode != null && existLangCode.equals(model.getCode()));
 

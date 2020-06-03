@@ -10,7 +10,7 @@ import androidx.viewpager.widget.ViewPager
 import androidx.viewpager.widget.ViewPager.OnPageChangeListener
 import com.manimarank.spell4wiki.R
 import com.manimarank.spell4wiki.adapters.AppIntroTabsPagerAdapter
-import com.manimarank.spell4wiki.constants.AppConstants
+import com.manimarank.spell4wiki.utils.constants.AppConstants
 import com.manimarank.spell4wiki.models.AppIntroData
 import com.manimarank.spell4wiki.utils.GeneralUtils
 import com.manimarank.spell4wiki.utils.PrefManager
@@ -21,14 +21,15 @@ class AppIntroActivity : AppCompatActivity() {
     private lateinit var pref: PrefManager
     private var isDoneCalled = false
 
-    val list get() =
-        listOf(
-                AppIntroData(R.drawable.ic_spell4wiktionary, getString(R.string.app_intro_slide_1_title), getString(R.string.app_intro_slide_1_description)),
-                AppIntroData(R.drawable.ic_spell4explore, getString(R.string.app_intro_slide_2_title), getString(R.string.app_intro_slide_2_description)),
-                AppIntroData(R.drawable.ic_spell4word_list, getString(R.string.app_intro_slide_3_title), getString(R.string.app_intro_slide_3_description)),
-                AppIntroData(R.drawable.ic_spell4word, getString(R.string.app_intro_slide_4_title), getString(R.string.app_intro_slide_4_description)),
-                AppIntroData(R.drawable.ic_spell4wiktionary, getString(R.string.app_intro_slide_5_title), getString(R.string.app_intro_slide_5_description))
-        )
+    val list
+        get() =
+            listOf(
+                    AppIntroData(R.drawable.ic_spell4wiktionary, getString(R.string.app_intro_slide_1_title), getString(R.string.app_intro_slide_1_description)),
+                    AppIntroData(R.drawable.ic_spell4explore, getString(R.string.app_intro_slide_2_title), getString(R.string.app_intro_slide_2_description)),
+                    AppIntroData(R.drawable.ic_spell4word_list, getString(R.string.app_intro_slide_3_title), getString(R.string.app_intro_slide_3_description)),
+                    AppIntroData(R.drawable.ic_spell4word, getString(R.string.app_intro_slide_4_title), getString(R.string.app_intro_slide_4_description)),
+                    AppIntroData(R.drawable.ic_spell4wiktionary, getString(R.string.app_intro_slide_5_title), getString(R.string.app_intro_slide_5_description))
+            )
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,14 +48,14 @@ class AppIntroActivity : AppCompatActivity() {
             }
 
             override fun onPageScrolled(
-                position: Int,
-                positionOffset: Float,
-                positionOffsetPixels: Int
+                    position: Int,
+                    positionOffset: Float,
+                    positionOffsetPixels: Int
             ) {
             }
 
             override fun onPageSelected(position: Int) {
-                if (tabLayout.tabCount -1 <= position) {
+                if (tabLayout.tabCount - 1 <= position) {
                     btnDone.visibility = View.VISIBLE
                     btnNext.visibility = View.GONE
                 } else {
@@ -67,7 +68,7 @@ class AppIntroActivity : AppCompatActivity() {
         tabLayout.setupWithViewPager(viewPager)
 
         btnNext.setOnClickListener {
-            if(tabLayout.selectedTabPosition < tabLayout.tabCount-1) {
+            if (tabLayout.selectedTabPosition < tabLayout.tabCount - 1) {
                 viewPager.currentItem = tabLayout.selectedTabPosition + 1
             }
         }

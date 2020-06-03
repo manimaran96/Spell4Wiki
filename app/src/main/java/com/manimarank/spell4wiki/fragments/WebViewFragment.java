@@ -13,6 +13,7 @@ import android.os.Handler;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,8 +26,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.manimarank.spell4wiki.R;
-import com.manimarank.spell4wiki.constants.AppConstants;
-import com.manimarank.spell4wiki.constants.Urls;
+import com.manimarank.spell4wiki.utils.constants.AppConstants;
+import com.manimarank.spell4wiki.utils.constants.Urls;
 import com.manimarank.spell4wiki.utils.GeneralUtils;
 import com.manimarank.spell4wiki.utils.PrefManager;
 
@@ -87,7 +88,7 @@ public class WebViewFragment extends Fragment {
             if (word != null)
                 GeneralUtils.showRecordDialog(getActivity(), word.trim(), languageCode);
             else
-                GeneralUtils.showSnack(fabRecord, "Give valid word");
+                GeneralUtils.showSnack(fabRecord, getString(R.string.provide_valid_word));
         });
 
         if (isWitionaryWord && !pref.getIsAnonymous() && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -175,14 +176,14 @@ public class WebViewFragment extends Fragment {
         if (webView.canGoBack()) {
             webView.goBack();
         } else
-            GeneralUtils.showSnack(webView, "Backward nothing");
+            GeneralUtils.showSnack(webView, getString(R.string.backward_nothing));
     }
 
     public void forwardWebPage() {
         if (webView.canGoForward()) {
             webView.goForward();
         } else
-            GeneralUtils.showSnack(webView, "Forward nothing");
+            GeneralUtils.showSnack(webView, getString(R.string.forward_nothing));
     }
 
     public boolean canGoForward() {
@@ -206,20 +207,21 @@ public class WebViewFragment extends Fragment {
         if(isAdded() && getActivity() != null){
             ClipboardManager clipboardManager = (ClipboardManager) getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
             // Create a new ClipData.
-            ClipData clipData = ClipData.newPlainText("Source Text", Uri.decode(webView.getUrl()));
+            ClipData clipData = ClipData.newPlainText(AppConstants.URL, Uri.decode(webView.getUrl()));
             // Set it as primary clip data to copy text to system clipboard.
             if(clipboardManager != null)
                 clipboardManager.setPrimaryClip(clipData);
             // Popup a snack bar.
-            GeneralUtils.showSnack(webView, "Link copied");
+            GeneralUtils.showSnack(webView, getString(R.string.link_copied));
         }
     }
 
     public void shareLink() {
         Intent intent = new Intent(Intent.ACTION_SEND);
         intent.setType("text/plain");
-        intent.putExtra(Intent.EXTRA_TEXT, String.format(getString(R.string.link_share_message), Uri.decode(webView.getUrl())));
-        startActivity(Intent.createChooser(intent, getString(R.string.app_share_title)));
+        String shareMsg = String.format(getString(R.string.link_share_message), Uri.decode(webView.getUrl())) + "\n\n" + String.format(getString(R.string.app_share_message), Urls.APP_LINK);
+        intent.putExtra(Intent.EXTRA_TEXT, shareMsg);
+        startActivity(Intent.createChooser(intent, getString(R.string.link_share_title)));
     }
 
     @Override

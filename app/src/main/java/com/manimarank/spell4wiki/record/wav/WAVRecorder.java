@@ -5,6 +5,8 @@ import android.media.AudioRecord;
 import android.media.MediaRecorder;
 import android.util.Log;
 
+import com.manimarank.spell4wiki.utils.Print;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -42,7 +44,7 @@ public class WAVRecorder {
             totalAudioLen = in.getChannel().size();
             totalDataLen = totalAudioLen + 36;
 
-            Log.d(TAG, "File size: " + totalDataLen);
+            Print.log(TAG + " --> File size: " + totalDataLen);
 
             WriteWaveFileHeader(out, totalAudioLen, totalDataLen,
                     channels, byteRate);
@@ -180,7 +182,7 @@ public class WAVRecorder {
         //  Delete temporary file
         File tempFile = new File(recordingFilePath);
         if (!tempFile.delete())
-            Log.d(TAG, "Can not delete temporary file!");
+            Print.log(TAG + " --> Can not delete temporary file!");
     }
 
     public Boolean isRecording() {

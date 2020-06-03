@@ -1,4 +1,4 @@
-package com.manimarank.spell4wiki.constants;
+package com.manimarank.spell4wiki.utils.constants;
 
 import androidx.annotation.IntDef;
 

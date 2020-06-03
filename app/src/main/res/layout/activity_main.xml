@@ -3,6 +3,7 @@
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="fill_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/white"
     android:orientation="vertical">
 
@@ -10,24 +11,24 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="16dp">
+        android:padding="@dimen/space16dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:layout_marginBottom="10dp"
+            android:layout_marginTop="@dimen/space16dp"
+            android:layout_marginBottom="@dimen/space12dp"
             android:orientation="vertical"
             android:gravity="center">
 
-            <ImageView
+            <androidx.appcompat.widget.AppCompatImageView
                 android:layout_width="@dimen/logo_large"
                 android:layout_height="@dimen/logo_large"
                 android:src="@drawable/ic_spell4wiki_logo"
                 android:contentDescription="@string/app_name"
-                android:padding="10dp"/>
+                android:padding="@dimen/space8dp"/>
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/app_name"
@@ -37,7 +38,7 @@
                 android:textSize="@dimen/text_x_large"
                 android:textColor="@color/w_blue"/>
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/txt_welcome_user"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -50,13 +51,13 @@
 
         </LinearLayout>
 
-        <SearchView
+        <androidx.appcompat.widget.SearchView
             android:id="@+id/search_view"
             android:layout_width="match_parent"
             android:layout_height="@dimen/search_view_height"
-            android:searchIcon="@drawable/ic_info"
-            android:queryHint="@string/hint_search"
-            android:background="@drawable/bg_line_border"/>
+            app:searchIcon="@drawable/ic_info"
+            android:queryHint="@string/search"
+            android:background="@drawable/bg_line_border" />
 
 
         <LinearLayout
@@ -66,26 +67,25 @@
             android:layout_weight="1"
             android:orientation="horizontal"
             android:weightSum="3"
-            android:layout_marginTop="10dp"
-            android:paddingBottom="5dp"
-            android:paddingTop="5dp">
+            android:layout_marginTop="@dimen/space12dp"
+            android:paddingBottom="@dimen/space4dp"
+            android:paddingTop="@dimen/space4dp">
 
-            <androidx.cardview.widget.CardView
+            <com.google.android.material.card.MaterialCardView
                 android:id="@+id/card_spell4wiki"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="match_parent"
                 android:layout_margin="@dimen/card_margin"
-                android:elevation="@dimen/card_elevation"
+                card_view:cardElevation="@dimen/card_elevation"
                 card_view:cardCornerRadius="@dimen/card_radius"
                 tools:ignore="NestedWeights">
-
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:padding="10dp"
+                    android:padding="@dimen/space8dp"
                     android:layout_height="match_parent">
 
-                    <ImageView
+                    <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/img_spell4wiki"
                         android:layout_width="@dimen/option_icon_size"
                         android:layout_height="@dimen/option_icon_size"
@@ -93,37 +93,36 @@
                         android:contentDescription="@string/spell4wiktionary"
                         android:src="@drawable/ic_spell4wiktionary" />
 
-                    <TextView
+                    <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/img_spell4wiki"
-                        android:layout_marginTop="10dp"
+                        android:layout_marginTop="@dimen/space8dp"
                         android:layout_centerHorizontal="true"
                         android:gravity="center"
-                        android:padding="2dp"
                         android:text="@string/spell4wiktionary"
                         android:textSize="@dimen/text_normal" />
 
                 </RelativeLayout>
 
-            </androidx.cardview.widget.CardView>
+            </com.google.android.material.card.MaterialCardView>
 
-            <androidx.cardview.widget.CardView
+            <com.google.android.material.card.MaterialCardView
                 android:id="@+id/card_spell4wordlist"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="match_parent"
                 android:layout_margin="@dimen/card_margin"
-                android:elevation="@dimen/card_elevation"
+                card_view:cardElevation="@dimen/card_elevation"
                 card_view:cardCornerRadius="@dimen/card_radius"
                 tools:ignore="NestedWeights">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:padding="10dp"
+                    android:padding="@dimen/space8dp"
                     android:layout_height="match_parent">
 
-                    <ImageView
+                    <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/img_spell4wordlist"
                         android:layout_width="@dimen/option_icon_size"
                         android:layout_height="@dimen/option_icon_size"
@@ -131,38 +130,37 @@
                         android:contentDescription="@string/spell4wordlist"
                         android:src="@drawable/ic_spell4word_list" />
 
-                    <TextView
+                    <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
                         android:gravity="center"
-                        android:padding="2dp"
                         android:layout_below="@+id/img_spell4wordlist"
-                        android:layout_marginTop="10dp"
+                        android:layout_marginTop="@dimen/space8dp"
                         android:text="@string/spell4wordlist"
                         android:textSize="@dimen/text_normal"
                         />
 
                 </RelativeLayout>
 
-            </androidx.cardview.widget.CardView>
+            </com.google.android.material.card.MaterialCardView>
 
-            <androidx.cardview.widget.CardView
+            <com.google.android.material.card.MaterialCardView
                 android:id="@+id/card_spell4word"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="match_parent"
                 android:layout_margin="@dimen/card_margin"
-                android:elevation="@dimen/card_elevation"
+                card_view:cardElevation="@dimen/card_elevation"
                 card_view:cardCornerRadius="@dimen/card_radius"
                 tools:ignore="NestedWeights">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:padding="10dp"
+                    android:padding="@dimen/space8dp"
                     android:layout_height="match_parent">
 
-                    <ImageView
+                    <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/img_spell4word"
                         android:layout_width="@dimen/option_icon_size"
                         android:layout_height="@dimen/option_icon_size"
@@ -170,37 +168,22 @@
                         android:contentDescription="@string/spell4word"
                         android:src="@drawable/ic_spell4word" />
 
-                    <TextView
+                    <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/img_spell4word"
                         android:layout_centerHorizontal="true"
-                        android:layout_marginTop="10dp"
+                        android:layout_marginTop="@dimen/space8dp"
                         android:gravity="center"
-                        android:padding="2dp"
                         android:text="@string/spell4word"
                         android:textSize="@dimen/text_normal" />
 
                 </RelativeLayout>
 
-            </androidx.cardview.widget.CardView>
+            </com.google.android.material.card.MaterialCardView>
 
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/txtViewMyContribution"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:text="@string/view_my_contribution"
-            android:textSize="@dimen/text_semi_normal"
-            android:background="@drawable/bg_line_border"
-            android:textStyle="bold"
-            android:padding="8dp"
-            android:layout_marginTop="10dp"
-            android:layout_gravity="center"
-            android:layout_marginStart="5dp"
-            android:textColor="@color/w_blue" />
 
         <LinearLayout
             android:id="@+id/layoutLogin"
@@ -208,17 +191,18 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:visibility="gone"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="@dimen/space8dp"
             android:paddingBottom="5dp"
             android:paddingTop="5dp">
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textAlignment="center"
+                android:textSize="@dimen/text_semi_normal"
                 android:text="@string/do_you_like_contribute_to_wiki_commons"/>
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/txtLogin"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
@@ -227,7 +211,7 @@
                 android:textSize="@dimen/text_semi_normal"
                 android:background="@drawable/bg_line_border"
                 android:textStyle="bold"
-                android:padding="8dp"
+                android:padding="@dimen/space8dp"
                 android:paddingStart="30dp"
                 android:paddingEnd="30dp"
                 android:layout_marginTop="10dp"
@@ -237,44 +221,57 @@
 
         </LinearLayout>
 
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/txtViewMyContribution"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="@string/view_my_contribution"
+            android:textSize="@dimen/text_semi_normal"
+            android:background="@drawable/bg_line_border"
+            android:textStyle="bold"
+            android:padding="@dimen/space8dp"
+            android:layout_marginTop="@dimen/space12dp"
+            android:layout_gravity="center"
+            android:textColor="@color/w_blue" />
+
 
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:weightSum="6"
+            android:layout_marginTop="@dimen/space16dp"
             android:gravity="center">
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/btn_about"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="10dp"
-                android:drawableTop="@drawable/ic_about"
+                android:padding="@dimen/space8dp"
+                app:drawableTopCompat="@drawable/ic_about"
                 android:text="@string/about"
                 android:textAlignment="center"
-                android:drawablePadding="2dp"/>
+                android:drawablePadding="@dimen/space2dp"/>
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/btn_settings"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:drawableTop="@drawable/ic_settings"
-                android:drawablePadding="2dp"
-                android:padding="10dp"
+                app:drawableTopCompat="@drawable/ic_settings"
+                android:drawablePadding="@dimen/space2dp"
+                android:padding="@dimen/space8dp"
                 android:text="@string/settings"
                 android:textAlignment="center" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/btn_logout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="10dp"
-                android:drawableTop="@drawable/ic_logout"
+                android:padding="@dimen/space8dp"
+                app:drawableTopCompat="@drawable/ic_logout"
                 android:text="@string/logout"
                 android:textAlignment="center"
-                android:drawablePadding="2dp"/>
+                android:drawablePadding="@dimen/space2dp"/>
 
         </LinearLayout>
 
