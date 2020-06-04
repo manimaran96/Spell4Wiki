@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="8dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/imgIcon"
+            android:layout_width="@dimen/img_normal"
+            android:layout_height="@dimen/img_normal"
+            android:layout_marginEnd="@dimen/space4dp"
+            android:contentDescription="@string/app_name"
+            android:padding="@dimen/space8dp"
+            android:scaleType="fitCenter"
+            app:srcCompat="@drawable/ic_contributors" />
+
+        <LinearLayout
+            android:id="@+id/view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_toStartOf="@+id/btn_option"
+            android:layout_toEndOf="@+id/imgIcon"
+            android:orientation="vertical">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/txtName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:gravity="center_vertical"
+                android:paddingStart="@dimen/space2dp"
+                android:paddingEnd="@dimen/space2dp"
+                android:singleLine="true"
+                android:text="@string/contributors"
+                android:textSize="@dimen/text_normal"
+                android:textStyle="bold" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/txtContribution"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:autoLink="all"
+                android:ellipsize="end"
+                android:linksClickable="true"
+                android:maxLines="2"
+                android:paddingStart="@dimen/space2dp"
+                android:paddingEnd="@dimen/space2dp"
+                android:singleLine="false"
+                android:textSize="@dimen/text_small" />
+
+        </LinearLayout>
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/btn_option"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:contentDescription="@string/app_name"
+            android:paddingStart="@dimen/space8dp"
+            android:paddingTop="@dimen/space4dp"
+            android:paddingEnd="@dimen/space4dp"
+            android:paddingBottom="@dimen/space4dp"
+            app:srcCompat="@drawable/ic_link" />
+
+    </RelativeLayout>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/txtAbout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/space8dp"
+        android:layout_marginEnd="@dimen/space8dp"
+        android:autoLink="all"
+        android:background="@drawable/bg_txt_border"
+        android:lineSpacingExtra="@dimen/space4dp"
+        android:linksClickable="true"
+        android:padding="@dimen/space8dp"
+        android:text="@string/sample_url"
+        android:textSize="@dimen/text_small"
+        android:visibility="gone" />
+
+</LinearLayout>

@@ -3,43 +3,102 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:background="@color/white"
-    android:padding="@dimen/space8dp"
+    android:orientation="vertical"
     tools:context=".activities.ContributorsActivity">
 
-    <LinearLayout
-        android:id="@+id/layoutProgress"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tabLayout"
         android:visibility="gone"
-        android:gravity="center"
-        android:orientation="vertical">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-        <ProgressBar
-            android:id="@+id/progressBar"
-            style="?android:attr/progressBarStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/txtLoading"
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/tabCoreContributors"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/loading"
-            android:textColor="@color/w_blue"
-            android:textSize="@dimen/text_normal"
-            android:layout_marginTop="@dimen/space8dp"/>
+            android:text="@string/core_contributors" />
 
-    </LinearLayout>
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/tabCodeContributors"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/code_contributors" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
+    </com.google.android.material.tabs.TabLayout>
+
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/space10dp"
-        android:layoutAnimation="@anim/recycler_layout_animation"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+        android:layout_below="@+id/tabLayout"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/space10dp"
+            android:orientation="vertical">
+
+            <include
+                android:id="@+id/loadingContributors"
+                layout="@layout/loading_info"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="@dimen/space4dp" />
+
+            <LinearLayout
+                android:id="@+id/layoutCoreContributors"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerViewCoreContributors"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layoutAnimation="@anim/recycler_layout_animation"
+                    app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.1dp"
+                    android:layout_margin="@dimen/space16dp"
+                    android:background="@color/gray_border" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/txtWikiTechHelpers"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:layout_marginStart="@dimen/space16dp"
+                    android:text="@string/wiki_tech_helpers"
+                    android:textSize="@dimen/text_normal" />
+
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/txtHelpers"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:lineSpacingExtra="@dimen/space2dp"
+                    android:layout_marginTop="@dimen/space12dp"
+                    android:layout_marginBottom="@dimen/space12dp"
+                    android:layout_marginStart="@dimen/space32dp"
+                    android:layout_marginEnd="@dimen/space32dp" />
+
+
+            </LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerViewCodeContributors"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layoutAnimation="@anim/recycler_layout_animation"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+        </RelativeLayout>
+    </androidx.core.widget.NestedScrollView>
+
+
 
 
 </RelativeLayout>

@@ -99,7 +99,7 @@ public class AboutActivity extends AppCompatActivity implements View.OnClickList
                 shareApp();
                 break;
             case R.id.txt_how_to_contribute:
-                GeneralUtils.openUrl(this, getString(R.string.link_how_to_contribute), getString(R.string.how_to_contribute));
+                GeneralUtils.openUrlInBrowser(this, getString(R.string.link_how_to_contribute));
                 break;
             case R.id.txt_source_code:
                 GeneralUtils.openUrlInBrowser(this, Urls.SOURCE_CODE);

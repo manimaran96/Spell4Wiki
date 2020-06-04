@@ -1,0 +1,52 @@
+{
+   "core_contributors": [
+      {
+         "name": "Shrinivasan",
+         "contribution": "Project Idea, Tech & WikiMedia Knowledge",
+         "about": "<b>Contribution</b><br>செயலிக்கான யோசனை, தொழில்நுட்ப மற்றும் விக்கிநுட்ப உதவிகள் மற்றும் வழிகாட்டுதல்கள்.<br><br><b>About</b><br>Free Software Activist.<br>Member of Kaniyam Foundation.<br>Founder of Free Tamil Ebooks.<br>Ex-coordinator of Indian Linux Users Group Chennai.<br><b>Email :</b> tshrinivasan@gmail.com<br><br><b>Links</b><br>https://github.com/tshrinivasan<br>https://goinggnu.wordpress.com",
+         "link": "https://goinggnu.wordpress.com/about/",
+         "img_link": "https://i0.wp.com/d13pix9kaak6wt.cloudfront.net/background/users/t/s/h/tshrinivasan_1369914946_04.jpg"
+      },
+      {
+         "name": "Info-Former",
+         "contribution": "WikiMedia Knowledge & Categorized uploaded audio files",
+         "about": "<b>Contribution</b><br>விக்கிநுட்ப உதவிகள் மற்றும் ஒலிப்புக்கோப்புகளை ஒருங்கிணைத்தல்<br><br><b>About</b><br>Tamil Wikipedian.<br>Free Software Activist.<br>Lexicographer.<br><b>Email :</b> tha.uzhavan@gmail.com<br><br><b>Links</b><br>https://www.mediawiki.org/wiki/User:Info-farmer<br>https://github.com/tha-uzhavan",
+         "link": "https://www.mediawiki.org/wiki/User:Info-farmer",
+         "img_link": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Info-farmer_at_WikiConference_India_2016.jpg/320px-Info-farmer_at_WikiConference_India_2016.jpg"
+      },
+      {
+         "name": "Khaleel Jageer",
+         "contribution": "Tech Support of App Development",
+         "about": "<b>Contribution</b><br>செயலிக்கான தொழில்நுட்ப உதவிகள் மற்றும் வழிகாட்டுதல்கள்.<br><br><b>About</b><br>Free Software Activist.<br>Mobile app developer.<br>Mozilla Rep.<br>Member of Kaniyam Foundation.<br>Developer of Free Tamil Ebooks App.<br>Member of Villupuram GNU/Linux Users Group(VGLUG)<br><b>Email :</b> jskcse4@gmail.com<br><br><b>Links</b><br>https://about.me/syed.khaleel1<br>https://github.com/khaleeljageer",
+         "link": "https://about.me/syed.khaleel1",
+         "img_link": "https://avatars0.githubusercontent.com/u/28587143"
+      },
+      {
+         "name": "Manimaran",
+         "contribution": "App Development & Documentation",
+         "about": "<b>Contribution</b><br>ஆன்டிராய்டு செயலி உருவாக்கம் மற்றும் ஆவணமாக்கல்.<br><br><b>About</b><br>Free Software Activist.<br>Mobile Application Developer.<br>Tamil localization contributor.<br>Member of Villupuram GNU/Linux Users Group(VGLUG)<br><b>Email :</b> manimarankumar96@gmail.com<br><br><b>Links</b><br>https://manimaran96.wordpress.com<br>https://github.com/manimaran96<br>https://t.me/manimaran_k",
+         "link": "https://manimaran96.wordpress.com/",
+         "img_link": "https://manimaran96.files.wordpress.com/2019/03/manimaran-e1553712552757.jpg"
+      },
+      {
+         "name": "Ganesh",
+         "contribution": "App Logo and UI development",
+         "about": "<b>Contribution</b><br>செயலிக்கான சின்னம் மற்றும் இடைமுக(UI) வடிவமைப்பு.<br><br><b>About</b><br>Free Software Activist.<br>Independent & Collaborative Researcher.<br>Director of Coopon SciTech LLP.<br>Researcher of French Institute of Pondicherry<br><b>Email :</b> 31gane@gmail.com<br><br><b>Links</b><br>https://cosmobird.github.io/<br>https://github.com/lrmodesgh",
+         "link": "https://cosmobird.github.io/",
+         "img_link": "https://avatars0.githubusercontent.com/u/6794375"
+      },
+      {
+         "name": "Ragulkanth",
+         "contribution": "Tech Knowledge of API",
+         "about": "<b>Contribution</b><br>தொழில்நுட்ப உதவிகள் மற்றும் வழிகாட்டுதல்கள்.<br><br><b>About</b><br>Free Software Activist.<br>DevOps Engineer.<br>Researcher of French Institute of Pondicherry.<br><b>Email :</b> ragul274@gmail.com<br><br><b>Links</b><br>https://ragulkanth.gitlab.io/blog/<br>https://github.com/ragulkanth",
+         "link": "https://ragulkanth.gitlab.io/blog/",
+         "img_link": "https://avatars2.githubusercontent.com/u/9149295"
+      }
+   ],
+   "wiki_tech_helpers": [
+      "Sivaram",
+      "Gergo Tisza",
+      "bawolff",
+      "Jan Ainali"
+   ]
+}

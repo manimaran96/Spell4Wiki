@@ -1,6 +1,7 @@
 package com.manimarank.spell4wiki.apis;
 
 
+import com.manimarank.spell4wiki.models.ContributorData;
 import com.manimarank.spell4wiki.utils.constants.Urls;
 import com.manimarank.spell4wiki.models.Contributors;
 import com.manimarank.spell4wiki.models.WikiBaseData;
@@ -102,7 +103,11 @@ public interface ApiInterface {
     @GET("https://raw.githubusercontent.com/manimaran96/Spell4Wiki/master/files/base_data/spell4wiki_base.json")
     Call<WikiBaseData> fetchWikiBaseData();
 
+    // Contributor data - Static API
+    @GET("https://raw.githubusercontent.com/manimaran96/Spell4Wiki/master/files/base_data/spell4wiki_contributors.json")
+    Call<ContributorData> fetchContributorData();
+
     // Contributors List - Github API
     @GET("https://api.github.com/repos/manimaran96/Spell4Wiki/contributors")
-    Call<List<Contributors>> fetchContributorsList();
+    Call<List<Contributors>> fetchCodeContributorsList();
 }

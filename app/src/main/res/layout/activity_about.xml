@@ -268,6 +268,20 @@
                 android:background="@color/gray" />
 
             <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/txt_contributors"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/space10dp"
+                android:paddingStart="@dimen/space20dp"
+                android:paddingEnd="@dimen/space10dp"
+                android:drawablePadding="@dimen/space24dp"
+                android:gravity="center_vertical"
+                android:maxLines="1"
+                android:text="@string/contributors"
+                app:drawableStartCompat="@drawable/ic_contributors"
+                android:textSize="@dimen/text_semi_normal" />
+
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/txt_how_to_contribute"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -296,7 +310,7 @@
                 android:textSize="@dimen/text_semi_normal" />
 
             <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/txt_contributors"
+                android:id="@+id/txt_help_development"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/space10dp"
@@ -305,8 +319,8 @@
                 android:drawablePadding="@dimen/space24dp"
                 android:gravity="center_vertical"
                 android:maxLines="1"
-                android:text="@string/contributors"
-                app:drawableStartCompat="@drawable/ic_contributors"
+                android:text="@string/help_development"
+                app:drawableStartCompat="@drawable/ic_help_development"
                 android:textSize="@dimen/text_semi_normal" />
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -335,20 +349,6 @@
                 android:maxLines="1"
                 android:text="@string/credits"
                 app:drawableStartCompat="@drawable/ic_credits"
-                android:textSize="@dimen/text_semi_normal" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/txt_help_development"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="@dimen/space10dp"
-                android:paddingStart="@dimen/space20dp"
-                android:paddingEnd="@dimen/space10dp"
-                android:drawablePadding="@dimen/space24dp"
-                android:gravity="center_vertical"
-                android:maxLines="1"
-                android:text="@string/help_development"
-                app:drawableStartCompat="@drawable/ic_help_development"
                 android:textSize="@dimen/text_semi_normal" />
 
             <androidx.appcompat.widget.AppCompatTextView
