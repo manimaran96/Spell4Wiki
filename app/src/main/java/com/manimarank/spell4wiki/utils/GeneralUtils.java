@@ -16,6 +16,7 @@ import androidx.core.content.ContextCompat;
 import com.google.android.material.snackbar.Snackbar;
 import com.manimarank.spell4wiki.R;
 import com.manimarank.spell4wiki.Spell4WikiApp;
+import com.manimarank.spell4wiki.activities.CommonWebContentActivity;
 import com.manimarank.spell4wiki.activities.CommonWebActivity;
 import com.manimarank.spell4wiki.activities.RecordAudioActivity;
 import com.manimarank.spell4wiki.utils.constants.AppConstants;
@@ -101,6 +102,13 @@ public class GeneralUtils {
         intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
         intent.putExtra(AppConstants.WORD, word);
         intent.putExtra(AppConstants.LANGUAGE_CODE, langCode);
+        activity.startActivityForResult(intent, AppConstants.RC_UPLOAD_DIALOG);
+    }
+
+    public static void openMarkdownUrl(Activity activity, String url, String title) {
+        Intent intent = new Intent(activity, CommonWebContentActivity.class);
+        intent.putExtra(AppConstants.TITLE, title);
+        intent.putExtra(AppConstants.URL, url);
         activity.startActivityForResult(intent, AppConstants.RC_UPLOAD_DIALOG);
     }
 }

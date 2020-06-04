@@ -21,4 +21,7 @@ public class Urls {
 
     public static final String VGLUG = "https://vglug.org/";
     public static final String KANIYAM = "http://www.kaniyam.com/";
+
+    public static final String HOW_TO_CONTRIBUTE = "https://raw.githubusercontent.com/manimaran96/Spell4Wiki/master/files/base_data/HOW_TO_CONTRIBUTE.html";
+    public static final String HELP_DEVELOPMENT = "https://raw.githubusercontent.com/manimaran96/Spell4Wiki/master/files/base_data/HELP_DEVELOPMENT.html";
 }

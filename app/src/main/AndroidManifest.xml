@@ -132,6 +132,13 @@
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize"
             android:theme="@style/RecordAudioDialogTheme" />
 
+        <activity
+            android:name="com.manimarank.spell4wiki.activities.CommonWebContentActivity"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustResize"
+            android:theme="@style/AppTheme" />
+
         <service android:name="com.manimarank.spell4wiki.auth.WikiAuthenticatorService">
             <intent-filter>
                 <action android:name="android.accounts.AccountAuthenticator" />

@@ -18,10 +18,10 @@ import androidx.core.content.ContextCompat;
 import com.manimaran.crash_reporter.utils.AppUtils;
 import com.manimarank.spell4wiki.BuildConfig;
 import com.manimarank.spell4wiki.R;
-import com.manimarank.spell4wiki.utils.constants.AppConstants;
-import com.manimarank.spell4wiki.utils.constants.Urls;
 import com.manimarank.spell4wiki.utils.GeneralUtils;
 import com.manimarank.spell4wiki.utils.PrefManager;
+import com.manimarank.spell4wiki.utils.constants.AppConstants;
+import com.manimarank.spell4wiki.utils.constants.Urls;
 
 
 public class AboutActivity extends AppCompatActivity implements View.OnClickListener {
@@ -99,7 +99,7 @@ public class AboutActivity extends AppCompatActivity implements View.OnClickList
                 shareApp();
                 break;
             case R.id.txt_how_to_contribute:
-                GeneralUtils.openUrlInBrowser(this, getString(R.string.link_how_to_contribute));
+                GeneralUtils.openMarkdownUrl(this, Urls.HOW_TO_CONTRIBUTE, getString(R.string.how_to_contribute));
                 break;
             case R.id.txt_source_code:
                 GeneralUtils.openUrlInBrowser(this, Urls.SOURCE_CODE);
@@ -118,7 +118,7 @@ public class AboutActivity extends AppCompatActivity implements View.OnClickList
                 startActivity(intentCredits);
                 break;
             case R.id.txt_help_development:
-                GeneralUtils.openUrl(this, getString(R.string.link_how_to_contribute), getString(R.string.help_development));
+                GeneralUtils.openMarkdownUrl(this, Urls.HELP_DEVELOPMENT, getString(R.string.help_development));
                 break;
             case R.id.txtFeedback:
                 feedback();
