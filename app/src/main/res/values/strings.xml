@@ -186,5 +186,6 @@
     <string name="sc_d_core_contributors_list_item">Click the name and you can get more details about contributor</string>
     <string name="checking_file_availability">Checking File Availability\n(%s)</string>
     <string name="word_list_no_record_found">No record found.\n(or)\nAudio file already exist/uploaded for all the words.</string>
+    <string name="temporary">Temporary</string>
 
 </resources>

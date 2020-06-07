@@ -82,9 +82,9 @@ public class LanguageSelectionFragment extends BottomSheetDialogFragment {
         dialog.setContentView(R.layout.bottom_sheet_language_selection);
 
         TextView txtTitle = dialog.findViewById(R.id.text_select_lang_title);
-        if(!TextUtils.isEmpty(titleNameExtra) && txtTitle != null) {
+        if(!TextUtils.isEmpty(getSubTitleInfo()) && txtTitle != null) {
             txtTitle.setVisibility(View.VISIBLE);
-            txtTitle.setText(String.format(getString(R.string.language_for_note), titleNameExtra));
+            txtTitle.setText(getSubTitleInfo());
         }
         final ListView listView = dialog.findViewById(R.id.list_view_lang);
         ImageView btnClose = dialog.findViewById(R.id.btn_close);
@@ -189,6 +189,30 @@ public class LanguageSelectionFragment extends BottomSheetDialogFragment {
             default:
                 return null;
         }
+    }
+
+    private String getSubTitleInfo() {
+        String info = null;
+        switch (listMode) {
+            case ListMode.SPELL_4_WIKI:
+                info = getString(R.string.spell4wiktionary);
+                break;
+            case ListMode.SPELL_4_WORD_LIST:
+                info = getString(R.string.spell4wordlist);
+                break;
+            case ListMode.SPELL_4_WORD:
+                info = getString(R.string.spell4word);
+                break;
+            case ListMode.WIKTIONARY:
+                info = getString(R.string.wiktionary);
+                break;
+            case ListMode.TEMP:
+                info = getString(R.string.temporary);
+        }
+        if(info != null){
+            info = String.format(getString(R.string.language_for_note), info);
+        }
+        return info;
     }
 
     @Override
