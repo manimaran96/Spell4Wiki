@@ -56,7 +56,8 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/search_view_height"
             app:searchIcon="@drawable/ic_info"
-            android:queryHint="@string/search"
+            android:queryHint="@string/wiktionary_search"
+            android:focusableInTouchMode="true"
             android:background="@drawable/bg_line_border" />
 
 

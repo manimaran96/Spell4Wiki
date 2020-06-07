@@ -36,7 +36,9 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="@dimen/space10dp"
+            android:paddingStart="@dimen/space10dp"
+            android:paddingEnd="@dimen/space10dp"
+            android:paddingBottom="@dimen/space10dp"
             android:orientation="vertical">
 
             <include
@@ -44,7 +46,7 @@
                 layout="@layout/loading_info"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="@dimen/space4dp" />
+                android:layout_marginTop="@dimen/space12dp" />
 
             <LinearLayout
                 android:id="@+id/layoutCoreContributors"

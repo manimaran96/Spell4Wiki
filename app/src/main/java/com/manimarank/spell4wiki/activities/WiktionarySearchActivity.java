@@ -1,6 +1,7 @@
 package com.manimarank.spell4wiki.activities;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -8,12 +9,16 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
+import androidx.interpolator.view.animation.FastOutSlowInInterpolator;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.manimarank.spell4wiki.R;
 import com.manimarank.spell4wiki.adapters.EndlessAdapter;
 import com.manimarank.spell4wiki.apis.ApiClient;
 import com.manimarank.spell4wiki.apis.ApiInterface;
+import com.manimarank.spell4wiki.databases.DBHelper;
+import com.manimarank.spell4wiki.databases.dao.WikiLangDao;
+import com.manimarank.spell4wiki.utils.ShowCasePref;
 import com.manimarank.spell4wiki.utils.constants.AppConstants;
 import com.manimarank.spell4wiki.utils.constants.EnumTypeDef.ListMode;
 import com.manimarank.spell4wiki.fragments.LanguageSelectionFragment;
@@ -30,6 +35,9 @@ import java.util.ArrayList;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import uk.co.samuelwall.materialtaptargetprompt.MaterialTapTargetPrompt;
+import uk.co.samuelwall.materialtaptargetprompt.MaterialTapTargetSequence;
+import uk.co.samuelwall.materialtaptargetprompt.extras.focals.RectanglePromptFocal;
 
 public class WiktionarySearchActivity extends AppCompatActivity implements EndlessListView.EndlessListener {
 
@@ -60,7 +68,6 @@ public class WiktionarySearchActivity extends AppCompatActivity implements Endle
         resultListView = findViewById(R.id.search_result_list);
         snackbar = Snackbar.make(searchView, getString(R.string.something_went_wrong), Snackbar.LENGTH_LONG);
 
-        searchView.requestFocus();
         searchView.setIconifiedByDefault(false);
         searchView.setQueryHint(getResources().getString(R.string.search));
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -107,6 +114,7 @@ public class WiktionarySearchActivity extends AppCompatActivity implements Endle
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.spell4wiki_view_menu, menu);
+        new Handler().post(this::callShowCaseUI);
         return true;
     }
 
@@ -132,7 +140,7 @@ public class WiktionarySearchActivity extends AppCompatActivity implements Endle
             if (queryString != null)
                 submitQuery(queryString);
         };
-        LanguageSelectionFragment languageSelectionFragment = new LanguageSelectionFragment(this);
+        LanguageSelectionFragment languageSelectionFragment = new LanguageSelectionFragment(this, getString(R.string.wiktionary));
         languageSelectionFragment.init(callback, ListMode.WIKTIONARY);
         languageSelectionFragment.show(getSupportFragmentManager(), languageSelectionFragment.getTag());
     }
@@ -144,6 +152,8 @@ public class WiktionarySearchActivity extends AppCompatActivity implements Endle
         TextView selectedLang = rootView.findViewById(R.id.txtSelectedLanguage);
         selectedLang.setText(this.languageCode.toUpperCase());
         rootView.setOnClickListener(v -> {
+            if (ShowCasePref.INSTANCE.isNotShowed(ShowCasePref.WIKTIONARY_PAGE))
+                return;
             loadLanguages();
         });
 
@@ -227,6 +237,21 @@ public class WiktionarySearchActivity extends AppCompatActivity implements Endle
             return true;
         } else
             return false;
+    }
+
+    private void callShowCaseUI(){
+        if(!isFinishing() && !isDestroyed() && ShowCasePref.INSTANCE.isNotShowed(ShowCasePref.WIKTIONARY_PAGE)){
+            WikiLangDao wikiLangDao = DBHelper.getInstance(getApplicationContext()).getAppDatabase().getWikiLangDao();
+            MaterialTapTargetSequence sequence = new MaterialTapTargetSequence().setSequenceCompleteListener(() -> ShowCasePref.INSTANCE.showed(ShowCasePref.WIKTIONARY_PAGE));
+            sequence.addPrompt(new MaterialTapTargetPrompt.Builder(WiktionarySearchActivity.this)
+                    .setPromptFocal(new RectanglePromptFocal())
+                    .setAnimationInterpolator(new FastOutSlowInInterpolator())
+                    .setFocalPadding(R.dimen.show_case_focal_padding)
+                    .setTarget(R.id.layoutSelectLanguage)
+                    .setPrimaryText(R.string.sc_t_wiktionary_page_language)
+                    .setSecondaryText(String.format(getString(R.string.sc_d_wiktionary_page_language), wikiLangDao.getWikiLanguageWithCode(languageCode).getName())));
+            sequence.show();
+        }
     }
 }
 

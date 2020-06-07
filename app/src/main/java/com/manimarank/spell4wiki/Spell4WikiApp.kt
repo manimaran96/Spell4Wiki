@@ -16,7 +16,7 @@ class Spell4WikiApp : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
+        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true)
         try {
             val sharedPref = PrefManager(applicationContext)
             val emailIds = arrayOf("manimarankumar96@gmail.com")

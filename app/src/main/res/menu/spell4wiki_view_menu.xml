@@ -5,7 +5,7 @@
     <item
         android:id="@+id/menu_lang_selector"
         android:title="@string/language_code"
-        app:showAsAction="ifRoom"
+        app:showAsAction="always"
         app:actionLayout="@layout/custom_menu_item_lang_selector"/>
 
 </menu>

@@ -21,6 +21,7 @@ import com.google.android.material.snackbar.Snackbar;
 import com.manimarank.spell4wiki.BuildConfig;
 import com.manimarank.spell4wiki.R;
 import com.manimarank.spell4wiki.activities.CommonWebActivity;
+import com.manimarank.spell4wiki.utils.ShowCasePref;
 import com.manimarank.spell4wiki.utils.constants.AppConstants;
 import com.manimarank.spell4wiki.utils.constants.Urls;
 import com.manimarank.spell4wiki.utils.GeneralUtils;
@@ -94,6 +95,8 @@ public class EndlessAdapter extends ArrayAdapter<String> {
                 case ListMode.SPELL_4_WIKI:
                 case ListMode.SPELL_4_WORD_LIST:
                 case ListMode.SPELL_4_WORD:
+                    if(ShowCasePref.INSTANCE.isNotShowed(ShowCasePref.LIST_ITEM_SPELL_4_WIKI))
+                        return;
                     if (!isHaveAudio) {
                         if (GeneralUtils.checkPermissionGranted(activity)) {
                             GeneralUtils.showRecordDialog(activity, word, getLanguageCode());

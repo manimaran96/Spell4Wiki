@@ -109,6 +109,8 @@
             android:layout_height="wrap_content"
             android:padding="@dimen/space12dp"
             android:textAlignment="center"
+            android:paddingStart="@dimen/space24dp"
+            android:paddingEnd="@dimen/space24dp"
             android:layout_marginTop="@dimen/space8dp"
             android:lineSpacingExtra="@dimen/space2dp"
             android:text="@string/hint_common_steps"
@@ -126,10 +128,14 @@
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/txtFileInfo"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/space8dp"
+            android:layout_height="match_parent"
             android:layout_toStartOf="@+id/btnDone"
             android:maxLines="2"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:paddingStart="@dimen/space12dp"
+            android:paddingEnd="@dimen/space4dp"
+            android:layout_above="@+id/layoutEditView"
             android:ellipsize="end"
             android:textSize="@dimen/text_normal" />
 
@@ -150,6 +156,7 @@
             android:textStyle="bold" />
 
         <ScrollView
+            android:id="@+id/layoutEditView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@drawable/bg_line_border"

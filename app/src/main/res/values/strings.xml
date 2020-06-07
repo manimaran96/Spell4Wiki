@@ -19,7 +19,6 @@
     <string name="spell4wiktionary">Spell for Wiktionary</string>
     <string name="spell4wordlist">Spell for WordList</string>
     <string name="spell4word">Spell for Word</string>
-    <string name="spell4explore">Wiki Explore</string>
     <string name="wiktionary">Wiktionary</string>
     <string name="search_on_wiktionary">Search on Wiktionary</string>
     <string name="view_my_contribution">My Contributions</string>
@@ -58,10 +57,10 @@
     <string name="type_word">Type or Paste your words here</string>
     <string name="enter_word">Enter word</string>
     <string name="hint_select_file">Select .txt file with contains list of words to upload audio.</string>
-    <string name="hint_select_file_next">Align the file content\n%s</string>
+    <string name="hint_select_file_next">Align the file content(One word per line).</string>
     <string name="direct_content">Direct content</string>
     <string name="hint_direct_copy">Copy and paste or type words to upload audio.</string>
-    <string name="hint_direct_copy_next">Paste and Align the words.</string>
+    <string name="hint_direct_copy_next">Type or Paste in below box then Align the words(One word per line).</string>
     <string name="hint_common_steps">---------- NOTE ----------\nEach word must be in separate line.\nAlign words properly If necessary.\n</string>
     <string name="confirmation">Confirmation</string>
     <string name="confirm_to_back">Do you want to go back?</string>
@@ -106,6 +105,8 @@
     <string name="core_contributors">Core Contributors</string>
     <string name="code_contributors">Code Contributors</string>
     <string name="wiki_tech_helpers">Wikimedia &amp; Tech Helpers</string>
+    <string name="language_for_note">Note : Language For %s</string>
+    <string name="wiktionary_search">Wiktionary search</string>
 
 
     <string name="check_internet">Please check your internet connection!</string>
@@ -145,15 +146,12 @@
 
     <string name="app_intro_slide_1_description">Spell4Wiki is an mobile application to record and upload audio to Wikimedia commons for Wiktionary words.</string>
     <string name="app_intro_slide_2_description">You can search and view words meaning form Wikitionary for any languages.</string>
-    <string name="app_intro_slide_3_description">You can upload audio for your own word list from text file or from copy &amp;amp; paste the content.</string>
-    <string name="app_intro_slide_4_description">You can upload audio for your own single word.</string>
+    <string name="app_intro_slide_3_description">You can upload audio for your own word list from text file or directly copy &amp; paste the content.</string>
+    <string name="app_intro_slide_4_description">You can upload audio file for your own single word.</string>
     <string name="app_intro_slide_5_description">Spell4Wiki requires storage and record audio permissions.\nAllow those permissions</string>
 
 
-    //Don't use full stop,  %1$s - language name, %2$s - word.
-    <string name="file_content_description">Pronunciation of %1$s Language word %2$s</string>
-
-    //Don't translate
+    <!--Don't translate-->
     <string name="account_name" translatable="false">Spell4Wiki</string>
     <string name="account_type" translatable="false">com.manimarank.spell4wiki</string>
     <string name="license_name_cc_by_three" translatable="false">Attribution 3.0</string>
@@ -163,8 +161,28 @@
     <string name="license_name_cc_zero" translatable="false">CC0(release all rights)</string>
     <string name="sample_url" translatable="false">https://manimaran96.wordpress.com</string>
 
-    // TODO
-    <string name="link_how_to_contribute">https://www.youtube.com/watch?v=E19-sDvjXD8</string>
+    <!-- Don't use full stop,  %1$s - language name, %2$s - word.-->
+    <string name="file_content_description">Pronunciation of %1$s Language word %2$s</string>
 
+    <!-- App Show case -->
+    <string name="sc_t_spell4wiki">@string/spell4wiktionary</string>
+    <string name="sc_d_spell4wiki">Wiktionary words are listed here. You can record and upload audio to Wikimedia commons for this words.</string>
+    <string name="sc_t_spell4wordlist">@string/spell4wordlist</string>
+    <string name="sc_d_spell4wordlist">You can upload audio files for your own word list directly from copy &amp; paste contents or from a text file.</string>
+    <string name="sc_t_spell4word">@string/spell4word</string>
+    <string name="sc_d_spell4word">@string/app_intro_slide_4_description</string>
+
+    <string name="sc_t_spell4wiki_page_language">Language switch</string>
+    <string name="sc_d_spell4wiki_page_language">You can change the language for Spell4Wiki. The audio will be uploaded based on the selected language.\n\nCurrently selected language is %s\n\nNote :\nCurrently few languages only supported for this feature.</string>
+    <string name="sc_t_spell4wiki_list_item">Word To Record</string>
+    <string name="sc_d_spell4wiki_list_item">Click the word to record audio. Click dictionary icon to view word meaning from Wiktionary</string>
+    <string name="sc_t_spell4word_page_edit_word">Enter Word To Record</string>
+    <string name="sc_d_spell4word_page_edit_word">Type or Paste your single word here. Click dictionary icon to view word meaning from Wiktionary</string>
+    <string name="sc_t_wiktionary_page_language">@string/sc_t_spell4wiki_page_language</string>
+    <string name="sc_d_wiktionary_page_language">You can select any language for Wiktionary. The results and word meanings will be based on the selected language.\n\nCurrently selected language is %s</string>
+    <string name="sc_t_record_upload">Verify before Upload</string>
+    <string name="sc_d_record_upload">1. Verify the word and language\n2. Play and verify the recorded audio\n3. Then upload to Wikimedia commons</string>
+    <string name="sc_t_core_contributors_list_item">More About Contributor</string>
+    <string name="sc_d_core_contributors_list_item">Click the name and you can get more details about contributor</string>
 
 </resources>

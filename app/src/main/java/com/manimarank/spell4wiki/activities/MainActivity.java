@@ -10,17 +10,21 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.cardview.widget.CardView;
+import androidx.interpolator.view.animation.FastOutSlowInInterpolator;
 
 import com.manimarank.spell4wiki.R;
-import com.manimarank.spell4wiki.utils.constants.AppConstants;
-import com.manimarank.spell4wiki.utils.constants.Urls;
 import com.manimarank.spell4wiki.utils.GeneralUtils;
 import com.manimarank.spell4wiki.utils.PrefManager;
+import com.manimarank.spell4wiki.utils.ShowCasePref;
+import com.manimarank.spell4wiki.utils.constants.AppConstants;
+import com.manimarank.spell4wiki.utils.constants.Urls;
+
+import uk.co.samuelwall.materialtaptargetprompt.MaterialTapTargetPrompt;
+import uk.co.samuelwall.materialtaptargetprompt.extras.focals.RectanglePromptFocal;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     // Views
-
     SearchView searchView;
     private boolean doubleBackToExitPressedOnce = false;
     private PrefManager pref;
@@ -34,8 +38,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         initViews();
 
-        searchView = findViewById(R.id.search_view);
-        searchView.setQueryHint(getString(R.string.search));
+        searchView.setQueryHint(getString(R.string.wiktionary_search));
         searchView.setIconifiedByDefault(false);
         searchView.clearFocus();
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -71,13 +74,25 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Class nextClass = WiktionarySearchActivity.class;
         switch (view.getId()) {
             case R.id.card_spell4wiki:
-                nextClass = Spell4Wiktionary.class;
+                if (ShowCasePref.INSTANCE.isNotShowed(ShowCasePref.SPELL_4_WIKI)) {
+                    showCaseFor(ShowCasePref.SPELL_4_WIKI);
+                    return;
+                } else
+                    nextClass = Spell4Wiktionary.class;
                 break;
             case R.id.card_spell4wordlist:
-                nextClass = Spell4WordListActivity.class;
+                if (ShowCasePref.INSTANCE.isNotShowed(ShowCasePref.SPELL_4_WORD_LIST)) {
+                    showCaseFor(ShowCasePref.SPELL_4_WORD_LIST);
+                    return;
+                } else
+                    nextClass = Spell4WordListActivity.class;
                 break;
             case R.id.card_spell4word:
-                nextClass = Spell4WordActivity.class;
+                if (ShowCasePref.INSTANCE.isNotShowed(ShowCasePref.SPELL_4_WORD)) {
+                    showCaseFor(ShowCasePref.SPELL_4_WORD);
+                    return;
+                } else
+                    nextClass = Spell4WordActivity.class;
                 break;
         }
         Intent intent = new Intent(getApplicationContext(), nextClass);
@@ -93,6 +108,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         CardView cardView1 = findViewById(R.id.card_spell4wiki);
         CardView cardView2 = findViewById(R.id.card_spell4wordlist);
         CardView cardView3 = findViewById(R.id.card_spell4word);
+        searchView = findViewById(R.id.search_view);
 
         cardView1.setOnClickListener(this);
         cardView2.setOnClickListener(this);
@@ -125,7 +141,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void logoutUser() {
         new AlertDialog.Builder(this)
-                //.setIcon(R.drawable.ic_logout)
                 .setTitle(R.string.logout_confirmation)
                 .setMessage(R.string.logout_message)
                 .setPositiveButton(getString(R.string.yes), (dialog, which) -> {
@@ -138,7 +153,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void logoutApi() {
-        //Call<ResponseBody>
     }
 
     @Override
@@ -164,5 +178,40 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 doubleBackToExitPressedOnce = false;
             }
         }, 2000);
+    }
+
+    private void showCaseFor(String showCaseItem) {
+        if (!isFinishing() && !isDestroyed() && ShowCasePref.INSTANCE.isNotShowed(showCaseItem)) {
+            MaterialTapTargetPrompt.Builder builder = new MaterialTapTargetPrompt.Builder(MainActivity.this)
+                    .setPromptFocal(new RectanglePromptFocal())
+                    .setAnimationInterpolator(new FastOutSlowInInterpolator())
+                    .setFocalPadding(R.dimen.show_case_focal_padding)
+                    .setPromptStateChangeListener((prompt, state) -> {
+                        if (state == MaterialTapTargetPrompt.STATE_FOCAL_PRESSED || state == MaterialTapTargetPrompt.STATE_NON_FOCAL_PRESSED)
+                            ShowCasePref.INSTANCE.showed(showCaseItem);
+                    });
+
+            switch (showCaseItem) {
+                case ShowCasePref.SPELL_4_WIKI:
+                    builder.setTarget(R.id.card_spell4wiki)
+                            .setPrimaryText(R.string.sc_t_spell4wiki)
+                            .setSecondaryText(R.string.sc_d_spell4wiki)
+                            .show();
+                    break;
+                case ShowCasePref.SPELL_4_WORD_LIST:
+                    builder.setTarget(R.id.card_spell4wordlist)
+                            .setPrimaryText(R.string.sc_t_spell4wordlist)
+                            .setSecondaryText(R.string.sc_d_spell4wordlist)
+                            .show();
+                    break;
+                case ShowCasePref.SPELL_4_WORD:
+                    builder.setTarget(R.id.card_spell4word)
+                            .setPrimaryText(R.string.sc_t_spell4word)
+                            .setSecondaryText(R.string.sc_d_spell4word)
+                            .show();
+                    break;
+            }
+        }
+
     }
 }

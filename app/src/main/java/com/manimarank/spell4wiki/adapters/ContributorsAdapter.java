@@ -1,13 +1,14 @@
 package com.manimarank.spell4wiki.adapters;
 
 import android.content.Context;
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
@@ -35,7 +36,7 @@ public class ContributorsAdapter extends RecyclerView.Adapter<ContributorsAdapte
         holder.txtName.setText(model.getName());
 
         Glide.with(mContext).load(model.getAvatarUrl()).apply(RequestOptions.circleCropTransform()).into(holder.imgIcon);
-        holder.txtAbout.setText(String.format(mContext.getString(R.string.contributions) , String.valueOf(model.getContributions())));
+        holder.txtAbout.setText(String.format(mContext.getString(R.string.contributions), String.valueOf(model.getContributions())));
 
         holder.btnOption.setOnClickListener(v -> {
             GeneralUtils.openUrlInBrowser(mContext, model.getHtmlUrl());

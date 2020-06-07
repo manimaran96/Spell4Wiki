@@ -24,6 +24,8 @@ import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.AppCompatCheckBox;
 import androidx.appcompat.widget.AppCompatSeekBar;
 import androidx.appcompat.widget.AppCompatTextView;
+import androidx.core.content.ContextCompat;
+import androidx.interpolator.view.animation.FastOutSlowInInterpolator;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
@@ -33,7 +35,6 @@ import com.manimarank.spell4wiki.R;
 import com.manimarank.spell4wiki.apis.ApiClient;
 import com.manimarank.spell4wiki.apis.ApiInterface;
 import com.manimarank.spell4wiki.auth.AccountUtils;
-import com.manimarank.spell4wiki.utils.constants.AppConstants;
 import com.manimarank.spell4wiki.databases.DBHelper;
 import com.manimarank.spell4wiki.databases.dao.WikiLangDao;
 import com.manimarank.spell4wiki.databases.dao.WordsHaveAudioDao;
@@ -48,7 +49,9 @@ import com.manimarank.spell4wiki.record.wav.WAVRecorder;
 import com.manimarank.spell4wiki.utils.GeneralUtils;
 import com.manimarank.spell4wiki.utils.PrefManager;
 import com.manimarank.spell4wiki.utils.Print;
+import com.manimarank.spell4wiki.utils.ShowCasePref;
 import com.manimarank.spell4wiki.utils.WikiLicense;
+import com.manimarank.spell4wiki.utils.constants.AppConstants;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -65,6 +68,8 @@ import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import uk.co.samuelwall.materialtaptargetprompt.MaterialTapTargetPrompt;
+import uk.co.samuelwall.materialtaptargetprompt.extras.focals.RectanglePromptFocal;
 
 
 public class RecordAudioActivity extends AppCompatActivity {
@@ -98,6 +103,7 @@ public class RecordAudioActivity extends AppCompatActivity {
     private int retryCountForCsrf = 0;
 
     private String TAG = RecordAudioActivity.class.getSimpleName() + " --> ";
+    private Boolean showCaseShowed = true;
 
     private static String getMimeType(String url) {
         String type = null;
@@ -224,10 +230,18 @@ public class RecordAudioActivity extends AppCompatActivity {
 
         runnable = this::seekUpdate;
 
-        btnUpload.setOnClickListener(v -> uploadAudioProcess());
+        btnUpload.setOnClickListener(v -> {
+            if (ShowCasePref.INSTANCE.isNotShowed(ShowCasePref.RECORD_UPLOAD_UI)) {
+                showCaseShowed = false;
+                callShowCaseUI();
+            } else if (!showCaseShowed) {
+                // For avoid re-click
+                showCaseShowed = true;
+            } else
+                uploadAudioProcess();
+        });
 
         btnClose.setOnClickListener(v -> closePopUp());
-
     }
 
     private void startRecording() {
@@ -753,4 +767,21 @@ public class RecordAudioActivity extends AppCompatActivity {
         }
         return TextUtils.isEmpty(result) ? null : result;
     }
+
+    private void callShowCaseUI() {
+        if (!isFinishing() && !isDestroyed() && ShowCasePref.INSTANCE.isNotShowed(ShowCasePref.RECORD_UPLOAD_UI)) {
+            ShowCasePref.INSTANCE.showed(ShowCasePref.RECORD_UPLOAD_UI);
+            new MaterialTapTargetPrompt.Builder(RecordAudioActivity.this)
+                    .setPromptFocal(new RectanglePromptFocal())
+                    .setAnimationInterpolator(new FastOutSlowInInterpolator())
+                    .setFocalPadding(R.dimen.show_case_focal_padding)
+                    .setBackgroundColour(ContextCompat.getColor(getApplicationContext(), R.color.show_case_bg_record_upload))
+                    .setTarget(R.id.btnUpload)
+                    .setPrimaryText(R.string.sc_t_record_upload)
+                    .setSecondaryText(R.string.sc_d_record_upload)
+                    .setClipToView(findViewById(R.id.layoutRecordControls))
+                    .show();
+        }
+    }
+
 }

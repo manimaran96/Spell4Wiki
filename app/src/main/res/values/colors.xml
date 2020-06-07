@@ -23,4 +23,5 @@
     <color name="record_normal">#FFFFFF</color>
     <color name="record_have_audio">#EFFFF0</color>
     <color name="record_play_icon">@color/txt_light</color>
+    <color name="show_case_bg_record_upload">#5E35B1</color>
 </resources>

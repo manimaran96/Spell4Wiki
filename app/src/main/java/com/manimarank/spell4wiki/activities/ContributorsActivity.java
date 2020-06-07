@@ -1,11 +1,13 @@
 package com.manimarank.spell4wiki.activities;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.MenuItem;
 import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatTextView;
+import androidx.interpolator.view.animation.FastOutSlowInInterpolator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -19,6 +21,7 @@ import com.manimarank.spell4wiki.models.ContributorData;
 import com.manimarank.spell4wiki.models.Contributors;
 import com.manimarank.spell4wiki.models.CoreContributors;
 import com.manimarank.spell4wiki.utils.GeneralUtils;
+import com.manimarank.spell4wiki.utils.ShowCasePref;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -28,6 +31,9 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import uk.co.samuelwall.materialtaptargetprompt.MaterialTapTargetPrompt;
+import uk.co.samuelwall.materialtaptargetprompt.MaterialTapTargetSequence;
+import uk.co.samuelwall.materialtaptargetprompt.extras.focals.RectanglePromptFocal;
 
 
 public class ContributorsActivity extends AppCompatActivity {
@@ -36,8 +42,7 @@ public class ContributorsActivity extends AppCompatActivity {
     private List<CoreContributors> coreContributorsList = new ArrayList<>();
     private RecyclerView recyclerViewCodeContributors, recyclerViewCoreContributors;
     private AppCompatTextView txtHelpers;
-    private View loadingContributors, layoutCoreContributors, tabCore, tabCode;
-    private ContributorsAdapter contributorsAdapter;
+    private View loadingContributors, layoutCoreContributors;
     private CoreContributorsAdapter coreContributorsAdapter;
 
     @Override
@@ -56,7 +61,7 @@ public class ContributorsActivity extends AppCompatActivity {
         loadingContributors = findViewById(R.id.loadingContributors);
         layoutCoreContributors = findViewById(R.id.layoutCoreContributors);
 
-        contributorsAdapter = new ContributorsAdapter(this, contributorsList);
+        ContributorsAdapter contributorsAdapter = new ContributorsAdapter(this, contributorsList);
         recyclerViewCodeContributors.setAdapter(contributorsAdapter);
         recyclerViewCodeContributors.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
 
@@ -120,6 +125,8 @@ public class ContributorsActivity extends AppCompatActivity {
                             loadingContributors.setVisibility(View.GONE);
                         if (layoutCoreContributors != null)
                             layoutCoreContributors.setVisibility(View.VISIBLE);
+
+                        new Handler().postDelayed(() -> callShowCaseUI(), 1000);
                     }
 
                 }
@@ -174,5 +181,18 @@ public class ContributorsActivity extends AppCompatActivity {
         return (super.onOptionsItemSelected(menuItem));
     }
 
+    private void callShowCaseUI() {
+        if (!isFinishing() && !isDestroyed() && ShowCasePref.INSTANCE.isNotShowed(ShowCasePref.CORE_CONTRIBUTORS_LIST_ITEM) && recyclerViewCoreContributors != null && recyclerViewCoreContributors.getVisibility() == View.VISIBLE && recyclerViewCoreContributors.getChildAt(0) != null) {
+            MaterialTapTargetSequence sequence = new MaterialTapTargetSequence().setSequenceCompleteListener(() -> ShowCasePref.INSTANCE.showed(ShowCasePref.CORE_CONTRIBUTORS_LIST_ITEM));
+            sequence.addPrompt(new MaterialTapTargetPrompt.Builder(ContributorsActivity.this)
+                    .setPromptFocal(new RectanglePromptFocal())
+                    .setAnimationInterpolator(new FastOutSlowInInterpolator())
+                    .setFocalPadding(R.dimen.show_case_focal_padding)
+                    .setTarget(recyclerViewCoreContributors.getChildAt(0))
+                    .setPrimaryText(R.string.sc_t_core_contributors_list_item)
+                    .setSecondaryText(R.string.sc_d_core_contributors_list_item));
+            sequence.show();
+        }
+    }
 
 }

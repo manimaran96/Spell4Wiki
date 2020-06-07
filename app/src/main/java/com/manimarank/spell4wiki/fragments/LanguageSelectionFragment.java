@@ -6,9 +6,11 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
+import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.SearchView;
@@ -36,6 +38,7 @@ public class LanguageSelectionFragment extends BottomSheetDialogFragment {
     private OnLanguageSelectionListener callback;
     private List<WikiLang> wikiLanguageList = new ArrayList<>();
     private LangAdapter adapter;
+    private String titleNameExtra;
     @ListMode
     private int listMode;
     private String preSelectedLanguageCode = null;
@@ -44,6 +47,10 @@ public class LanguageSelectionFragment extends BottomSheetDialogFragment {
 
     public LanguageSelectionFragment(Activity activity) {
         this.mActivity = activity;
+    }
+    public LanguageSelectionFragment(Activity activity, String title) {
+        this.mActivity = activity;
+        this.titleNameExtra = title;
     }
 
     public void init(OnLanguageSelectionListener callback, @ListMode int mode) {
@@ -54,7 +61,7 @@ public class LanguageSelectionFragment extends BottomSheetDialogFragment {
         this.callback = callback;
         this.listMode = mode;
         this.preSelectedLanguageCode = preSelectedLanguageCode;
-        setCancelable(false);
+        setCancelable(true);
     }
 
     @Override
@@ -74,6 +81,11 @@ public class LanguageSelectionFragment extends BottomSheetDialogFragment {
 
         dialog.setContentView(R.layout.bottom_sheet_language_selection);
 
+        TextView txtTitle = dialog.findViewById(R.id.text_select_lang_title);
+        if(!TextUtils.isEmpty(titleNameExtra) && txtTitle != null) {
+            txtTitle.setVisibility(View.VISIBLE);
+            txtTitle.setText(String.format(getString(R.string.language_for_note), titleNameExtra));
+        }
         final ListView listView = dialog.findViewById(R.id.list_view_lang);
         ImageView btnClose = dialog.findViewById(R.id.btn_close);
         final SearchView searchView = dialog.findViewById(R.id.search_view);

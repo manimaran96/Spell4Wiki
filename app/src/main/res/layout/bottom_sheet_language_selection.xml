@@ -16,17 +16,37 @@
         android:paddingStart="@dimen/space16dp"
         android:paddingEnd="@dimen/space12dp">
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/text_select_lang"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginTop="@dimen/space4dp"
             android:layout_marginBottom="@dimen/space4dp"
             android:layout_toStartOf="@+id/btn_close"
-            android:text="@string/select_language"
-            android:textColor="@color/black"
-            android:textSize="@dimen/text_heading" />
+            android:orientation="vertical"
+            android:layout_height="wrap_content">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/text_select_lang"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/select_language"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_heading" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/text_select_lang_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:textColor="@color/gray"
+                android:textSize="@dimen/text_small" />
+
+
+        </LinearLayout>
+
+
+
+
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/btn_close"

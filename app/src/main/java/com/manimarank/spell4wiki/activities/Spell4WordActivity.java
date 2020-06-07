@@ -3,6 +3,7 @@ package com.manimarank.spell4wiki.activities;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -14,14 +15,20 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.interpolator.view.animation.FastOutSlowInInterpolator;
 
 import com.manimarank.spell4wiki.R;
-import com.manimarank.spell4wiki.utils.constants.AppConstants;
-import com.manimarank.spell4wiki.utils.constants.Urls;
 import com.manimarank.spell4wiki.fragments.LanguageSelectionFragment;
 import com.manimarank.spell4wiki.listerners.OnLanguageSelectionListener;
 import com.manimarank.spell4wiki.utils.GeneralUtils;
 import com.manimarank.spell4wiki.utils.PrefManager;
+import com.manimarank.spell4wiki.utils.ShowCasePref;
+import com.manimarank.spell4wiki.utils.constants.AppConstants;
+import com.manimarank.spell4wiki.utils.constants.Urls;
+
+import uk.co.samuelwall.materialtaptargetprompt.MaterialTapTargetPrompt;
+import uk.co.samuelwall.materialtaptargetprompt.MaterialTapTargetSequence;
+import uk.co.samuelwall.materialtaptargetprompt.extras.focals.RectanglePromptFocal;
 
 import static com.manimarank.spell4wiki.utils.constants.EnumTypeDef.ListMode;
 
@@ -104,7 +111,7 @@ public class Spell4WordActivity extends AppCompatActivity {
             languageCode = langCode;
             invalidateOptionsMenu();
         };
-        LanguageSelectionFragment languageSelectionFragment = new LanguageSelectionFragment(this);
+        LanguageSelectionFragment languageSelectionFragment = new LanguageSelectionFragment(this, getString(R.string.spell4word));
         languageSelectionFragment.init(callback, ListMode.SPELL_4_WORD);
         languageSelectionFragment.show(getSupportFragmentManager(), languageSelectionFragment.getTag());
     }
@@ -113,6 +120,7 @@ public class Spell4WordActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.spell4wiki_view_menu, menu);
+        new Handler().post(this::callShowCaseUI);
         return true;
     }
 
@@ -132,6 +140,24 @@ public class Spell4WordActivity extends AppCompatActivity {
     public boolean onPrepareOptionsMenu(Menu menu) {
         setupLanguageSelectorMenuItem(menu);
         return super.onPrepareOptionsMenu(menu);
+    }
+
+    private void callShowCaseUI() {
+        if (!isFinishing() && !isDestroyed() && ShowCasePref.INSTANCE.isNotShowed(ShowCasePref.SPELL_4_WORD_PAGE)) {
+            MaterialTapTargetSequence sequence = new MaterialTapTargetSequence().setSequenceCompleteListener(() -> ShowCasePref.INSTANCE.showed(ShowCasePref.SPELL_4_WORD_PAGE));
+            sequence.addPrompt(getPromptBuilder()
+                    .setTarget(R.id.editWord)
+                    .setPrimaryText(R.string.sc_t_spell4word_page_edit_word)
+                    .setSecondaryText(R.string.sc_d_spell4word_page_edit_word))
+                    .show();
+        }
+    }
+
+    private MaterialTapTargetPrompt.Builder getPromptBuilder() {
+        return new MaterialTapTargetPrompt.Builder(Spell4WordActivity.this)
+                .setPromptFocal(new RectanglePromptFocal())
+                .setAnimationInterpolator(new FastOutSlowInInterpolator())
+                .setFocalPadding(R.dimen.show_case_focal_padding);
     }
 }
 

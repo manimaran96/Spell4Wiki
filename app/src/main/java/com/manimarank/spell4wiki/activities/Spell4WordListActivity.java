@@ -7,6 +7,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.view.Menu;
@@ -19,10 +20,10 @@ import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.interpolator.view.animation.FastOutSlowInInterpolator;
 
 import com.manimarank.spell4wiki.R;
 import com.manimarank.spell4wiki.adapters.EndlessAdapter;
-import com.manimarank.spell4wiki.utils.constants.AppConstants;
 import com.manimarank.spell4wiki.databases.DBHelper;
 import com.manimarank.spell4wiki.databases.dao.WordsHaveAudioDao;
 import com.manimarank.spell4wiki.fragments.LanguageSelectionFragment;
@@ -30,6 +31,8 @@ import com.manimarank.spell4wiki.listerners.OnLanguageSelectionListener;
 import com.manimarank.spell4wiki.utils.GeneralUtils;
 import com.manimarank.spell4wiki.utils.PrefManager;
 import com.manimarank.spell4wiki.utils.RealPathUtil;
+import com.manimarank.spell4wiki.utils.ShowCasePref;
+import com.manimarank.spell4wiki.utils.constants.AppConstants;
 import com.manimarank.spell4wiki.views.EndlessListView;
 
 import java.io.BufferedReader;
@@ -38,6 +41,10 @@ import java.io.FileInputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
+
+import uk.co.samuelwall.materialtaptargetprompt.MaterialTapTargetPrompt;
+import uk.co.samuelwall.materialtaptargetprompt.MaterialTapTargetSequence;
+import uk.co.samuelwall.materialtaptargetprompt.extras.focals.RectanglePromptFocal;
 
 import static com.manimarank.spell4wiki.utils.constants.EnumTypeDef.ListMode.SPELL_4_WORD_LIST;
 
@@ -150,7 +157,7 @@ public class Spell4WordListActivity extends AppCompatActivity {
                 uri = data.getData();
                 assert uri != null;
                 File file = new File(RealPathUtil.getRealPath(getApplicationContext(), uri));
-                openFileInAlignMode(file.getAbsolutePath(), file.getName());
+                openFileInAlignMode(file.getAbsolutePath());
             }
         }
 
@@ -164,13 +171,13 @@ public class Spell4WordListActivity extends AppCompatActivity {
         }
     }
 
-    private void openFileInAlignMode(String filePath, String fileName) {
+    private void openFileInAlignMode(String filePath) {
 
         layoutSelect.setVisibility(View.GONE);
         layoutEdit.setVisibility(View.VISIBLE);
         resultListView.setVisibility(View.GONE);
 
-        txtFileInfo.setText(String.format (getString(R.string.hint_select_file_next), fileName));
+        txtFileInfo.setText(getString(R.string.hint_select_file_next));
         editFile.setText(getContentFromFile(filePath));
     }
 
@@ -194,6 +201,10 @@ public class Spell4WordListActivity extends AppCompatActivity {
         resultListView.setAdapter(adapter);
         resultListView.setVisibility(View.VISIBLE);
         adapter.setWordsHaveAudioList(wordsHaveAudioDao.getWordsAlreadyHaveAudioByLanguage(languageCode));
+
+        if (items.size() > 0) {
+            new Handler().post(this::callShowCaseUI);
+        }
     }
 
     private List<String> getWordListFromString(String data) {
@@ -318,7 +329,7 @@ public class Spell4WordListActivity extends AppCompatActivity {
             languageCode = langCode;
             invalidateOptionsMenu();
         };
-        LanguageSelectionFragment languageSelectionFragment = new LanguageSelectionFragment(this);
+        LanguageSelectionFragment languageSelectionFragment = new LanguageSelectionFragment(this, getString(R.string.spell4wordlist));
         languageSelectionFragment.init(callback, SPELL_4_WORD_LIST);
         languageSelectionFragment.show(getSupportFragmentManager(), languageSelectionFragment.getTag());
     }
@@ -347,11 +358,11 @@ public class Spell4WordListActivity extends AppCompatActivity {
     }
 
     private void callBackPress() {
-        if(resultListView.getVisibility() == View.VISIBLE){
+        if (resultListView.getVisibility() == View.VISIBLE) {
             layoutEdit.setVisibility(View.VISIBLE);
             resultListView.setVisibility(View.GONE);
-        }else if(layoutEdit.getVisibility() == View.VISIBLE){
-            if(!TextUtils.isEmpty(editFile.getText())) {
+        } else if (layoutEdit.getVisibility() == View.VISIBLE) {
+            if (!TextUtils.isEmpty(editFile.getText())) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
                 builder.setTitle(R.string.confirmation);// add a radio button list
                 builder.setMessage(R.string.confirm_to_back);// add a radio button list
@@ -365,11 +376,31 @@ public class Spell4WordListActivity extends AppCompatActivity {
                 });
                 AlertDialog dialog = builder.create();
                 dialog.show();
-            }else {
+            } else {
                 layoutSelect.setVisibility(View.VISIBLE);
                 layoutEdit.setVisibility(View.GONE);
             }
-        }else
+        } else
             super.onBackPressed();
+    }
+
+    private void callShowCaseUI() {
+        if (!isFinishing() && !isDestroyed()) {
+            if (ShowCasePref.INSTANCE.isNotShowed(ShowCasePref.LIST_ITEM_SPELL_4_WIKI) && resultListView != null && resultListView.getVisibility() == View.VISIBLE && resultListView.getChildAt(0) != null) {
+                MaterialTapTargetSequence sequence = new MaterialTapTargetSequence().setSequenceCompleteListener(() -> ShowCasePref.INSTANCE.showed(ShowCasePref.LIST_ITEM_SPELL_4_WIKI));
+                sequence.addPrompt(getPromptBuilder()
+                        .setTarget(resultListView.getChildAt(0))
+                        .setPrimaryText(R.string.sc_t_spell4wiki_list_item)
+                        .setSecondaryText(R.string.sc_d_spell4wiki_list_item));
+                sequence.show();
+            }
+        }
+    }
+
+    private MaterialTapTargetPrompt.Builder getPromptBuilder() {
+        return new MaterialTapTargetPrompt.Builder(Spell4WordListActivity.this)
+                .setPromptFocal(new RectanglePromptFocal())
+                .setAnimationInterpolator(new FastOutSlowInInterpolator())
+                .setFocalPadding(R.dimen.show_case_focal_padding);
     }
 }

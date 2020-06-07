@@ -2,6 +2,7 @@ package com.manimarank.spell4wiki.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.interpolator.view.animation.FastOutSlowInInterpolator;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.google.android.material.snackbar.Snackbar;
@@ -19,6 +21,8 @@ import com.manimarank.spell4wiki.R;
 import com.manimarank.spell4wiki.adapters.EndlessAdapter;
 import com.manimarank.spell4wiki.apis.ApiClient;
 import com.manimarank.spell4wiki.apis.ApiInterface;
+import com.manimarank.spell4wiki.databases.dao.WikiLangDao;
+import com.manimarank.spell4wiki.utils.ShowCasePref;
 import com.manimarank.spell4wiki.utils.constants.AppConstants;
 import com.manimarank.spell4wiki.utils.constants.EnumTypeDef.ListMode;
 import com.manimarank.spell4wiki.databases.DBHelper;
@@ -36,6 +40,9 @@ import java.util.ArrayList;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import uk.co.samuelwall.materialtaptargetprompt.MaterialTapTargetPrompt;
+import uk.co.samuelwall.materialtaptargetprompt.MaterialTapTargetSequence;
+import uk.co.samuelwall.materialtaptargetprompt.extras.focals.RectanglePromptFocal;
 
 public class Spell4Wiktionary extends AppCompatActivity implements EndlessListView.EndlessListener {
 
@@ -155,6 +162,7 @@ public class Spell4Wiktionary extends AppCompatActivity implements EndlessListVi
             if (!isEmptyResponse) {
                 adapter.setWordsHaveAudioList(wordsHaveAudioDao.getWordsAlreadyHaveAudioByLanguage(languageCode));
                 resultListView.addNewData(titleList);
+                new Handler().post(this::callShowCaseUI);
             } else {
                 searchFailed(getString(R.string.something_went_wrong));
             }
@@ -200,7 +208,7 @@ public class Spell4Wiktionary extends AppCompatActivity implements EndlessListVi
             invalidateOptionsMenu();
             loadDataFromServer();
         };
-        LanguageSelectionFragment languageSelectionFragment = new LanguageSelectionFragment(this);
+        LanguageSelectionFragment languageSelectionFragment = new LanguageSelectionFragment(this, getString(R.string.spell4wiktionary));
         languageSelectionFragment.init(callback, ListMode.SPELL_4_WIKI);
         languageSelectionFragment.show(getSupportFragmentManager(), languageSelectionFragment.getTag());
     }
@@ -212,6 +220,8 @@ public class Spell4Wiktionary extends AppCompatActivity implements EndlessListVi
         TextView selectedLang = rootView.findViewById(R.id.txtSelectedLanguage);
         selectedLang.setText(this.languageCode.toUpperCase());
         rootView.setOnClickListener(v -> {
+            if (ShowCasePref.INSTANCE.isNotShowed(ShowCasePref.SPELL_4_WIKI_PAGE))
+                return;
             loadLanguages();
         });
     }
@@ -249,5 +259,40 @@ public class Spell4Wiktionary extends AppCompatActivity implements EndlessListVi
                 }
             }
         }
+    }
+
+    private void callShowCaseUI() {
+        if(!isFinishing() && !isDestroyed()) {
+            if (ShowCasePref.INSTANCE.isNotShowed(ShowCasePref.LIST_ITEM_SPELL_4_WIKI) || ShowCasePref.INSTANCE.isNotShowed(ShowCasePref.SPELL_4_WIKI_PAGE)) {
+                MaterialTapTargetSequence sequence = new MaterialTapTargetSequence().setSequenceCompleteListener(() -> {
+                    ShowCasePref.INSTANCE.showed(ShowCasePref.LIST_ITEM_SPELL_4_WIKI);
+                    ShowCasePref.INSTANCE.showed(ShowCasePref.SPELL_4_WIKI_PAGE);
+                });
+
+                if (ShowCasePref.INSTANCE.isNotShowed(ShowCasePref.SPELL_4_WIKI_PAGE)) {
+                    WikiLangDao wikiLangDao = DBHelper.getInstance(getApplicationContext()).getAppDatabase().getWikiLangDao();
+                    sequence.addPrompt(
+                            getPromptBuilder()
+                                    .setTarget(R.id.layoutSelectLanguage)
+                                    .setPrimaryText(R.string.sc_t_spell4wiki_page_language)
+                                    .setSecondaryText(String.format(getString(R.string.sc_d_spell4wiki_page_language), wikiLangDao.getWikiLanguageWithCode(languageCode).getName())));
+                }
+                if (ShowCasePref.INSTANCE.isNotShowed(ShowCasePref.LIST_ITEM_SPELL_4_WIKI) && resultListView != null && resultListView.getChildAt(0) != null) {
+                    sequence.addPrompt(getPromptBuilder()
+                            .setTarget(resultListView.getChildAt(0))
+                            .setPrimaryText(R.string.sc_t_spell4wiki_list_item)
+                            .setSecondaryText(R.string.sc_d_spell4wiki_list_item));
+
+                }
+                sequence.show();
+            }
+        }
+    }
+
+    private MaterialTapTargetPrompt.Builder getPromptBuilder() {
+        return new MaterialTapTargetPrompt.Builder(Spell4Wiktionary.this)
+                .setPromptFocal(new RectanglePromptFocal())
+                .setAnimationInterpolator(new FastOutSlowInInterpolator())
+                .setFocalPadding(R.dimen.show_case_focal_padding);
     }
 }
