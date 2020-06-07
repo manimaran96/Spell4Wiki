@@ -33,4 +33,6 @@ public interface WikiLangDao {
     @Query("SELECT * FROM wiki_language WHERE code = :code")
     WikiLang getWikiLanguageWithCode(String code);
 
+    @Query(("DELETE FROM wiki_language"))
+    void deleteAll();
 }

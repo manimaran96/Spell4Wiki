@@ -47,6 +47,7 @@ public class SyncHelper {
 
                         List<WikiLanguage> languageList = data.getLanguageWiseData();
                         if (languageList != null && languageList.size() > 0) {
+                            dbHelper.getAppDatabase().getWikiLangDao().deleteAll();
                             for (WikiLanguage lang : languageList) {
                                 WikiLang dbLang = new WikiLang();
                                 dbLang.setCode(lang.getCode());
