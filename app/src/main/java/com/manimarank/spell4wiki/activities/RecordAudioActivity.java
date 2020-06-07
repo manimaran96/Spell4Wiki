@@ -190,8 +190,10 @@ public class RecordAudioActivity extends AppCompatActivity {
             if (GeneralUtils.checkPermissionGranted(RecordAudioActivity.this)) {
                 if (event.getAction() == MotionEvent.ACTION_DOWN) {
                     startRecording();
+                    return true;
                 } else if (event.getAction() == MotionEvent.ACTION_UP) {
                     stopRecording();
+                    return true;
                 }
             } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 getPermissionToRecordAudio();
