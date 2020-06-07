@@ -15,6 +15,8 @@ import androidx.annotation.Nullable;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import androidx.fragment.app.Fragment;
+
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,10 +28,14 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.manimarank.spell4wiki.R;
+import com.manimarank.spell4wiki.databases.DBHelper;
+import com.manimarank.spell4wiki.databases.dao.WordsHaveAudioDao;
 import com.manimarank.spell4wiki.utils.constants.AppConstants;
 import com.manimarank.spell4wiki.utils.constants.Urls;
 import com.manimarank.spell4wiki.utils.GeneralUtils;
 import com.manimarank.spell4wiki.utils.PrefManager;
+
+import java.util.List;
 
 public class WebViewFragment extends Fragment {
 
@@ -43,16 +49,16 @@ public class WebViewFragment extends Fragment {
     private String word = null;
     private String languageCode;
     private PrefManager pref;
+    private boolean fabShow = false;
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
         rootView = inflater.inflate(R.layout.web_view_layout, container, false);
+        pref = new PrefManager(getActivity());
 
         initUI();
 
-        pref = new PrefManager(getActivity());
         if(getActivity() != null) {
             Bundle bundle = getActivity().getIntent().getExtras();
             if (bundle != null) {
@@ -70,6 +76,20 @@ public class WebViewFragment extends Fragment {
         return rootView;
     }
 
+    private Boolean isAllowRecord(){
+        boolean isValid = false;
+        try {
+            if(isWitionaryWord && !pref.getIsAnonymous() && !TextUtils.isEmpty(word)){
+                WordsHaveAudioDao wordsHaveAudioDao = DBHelper.getInstance(getContext()).getAppDatabase().getWordsHaveAudioDao();
+                List<String> wordsAlreadyHaveAudio = wordsHaveAudioDao.getWordsAlreadyHaveAudioByLanguage(languageCode);
+                isValid = !wordsAlreadyHaveAudio.contains(word);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return isValid;
+    }
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -79,32 +99,38 @@ public class WebViewFragment extends Fragment {
         else
             GeneralUtils.showSnack(webView, getString(R.string.check_internet));
 
-        if (isWitionaryWord && !pref.getIsAnonymous())
+        recordButtonInit();
+
+    }
+
+    private void recordButtonInit() {
+        if (isAllowRecord()) {
             fabRecord.show();
-        else
-            fabRecord.hide();
+            fabShow = true;
 
-        fabRecord.setOnClickListener(v -> {
-            if (word != null)
-                GeneralUtils.showRecordDialog(getActivity(), word.trim(), languageCode);
-            else
-                GeneralUtils.showSnack(fabRecord, getString(R.string.provide_valid_word));
-        });
-
-        if (isWitionaryWord && !pref.getIsAnonymous() && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            webView.setOnScrollChangeListener((webView, scrollX, scrollY, oldScrollX, oldScrollY) -> {
-                if (scrollY > 0) {
-                    fabRecord.hide();
-                    new Handler().postDelayed(() -> {
-                        if (fabRecord != null && isAdded())
-                            fabRecord.show();
-                    }, 1500);
-                }
-                if (scrollY < 0) {
-                    fabRecord.show();
-                }
+            fabRecord.setOnClickListener(v -> {
+                if (word != null)
+                    GeneralUtils.showRecordDialog(getActivity(), word.trim(), languageCode);
+                else
+                    GeneralUtils.showSnack(fabRecord, getString(R.string.provide_valid_word));
             });
-        }
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                webView.setOnScrollChangeListener((webView, scrollX, scrollY, oldScrollX, oldScrollY) -> {
+                    if (scrollY > 0) {
+                        fabRecord.hide();
+                        new Handler().postDelayed(() -> {
+                            if (fabRecord != null && isAdded() && fabShow)
+                                fabRecord.show();
+                        }, 1500);
+                    }
+                    if (scrollY < 0 && fabShow) {
+                        fabRecord.show();
+                    }
+                });
+            }
+        }else
+            fabRecord.hide();
     }
 
     @SuppressLint("SetJavaScriptEnabled")
@@ -232,7 +258,20 @@ public class WebViewFragment extends Fragment {
     }
 
     public void loadWordWithOtherLang(String langCode) {
-        if(isWitionaryWord && word != null)
+        if(isWitionaryWord && word != null) {
             webView.loadUrl(String.format(Urls.WIKTIONARY_WEB, langCode, word));
+            recordButtonInit();
+        }
+    }
+
+    public void hideRecordButton(String wordDone) {
+        if(word.equals(wordDone)){
+            if(isAdded()){
+                fabShow = false;
+                if(fabRecord != null){
+                    fabRecord.hide();
+                }
+            }
+        }
     }
 }

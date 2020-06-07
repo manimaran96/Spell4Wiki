@@ -134,11 +134,13 @@ public class WiktionarySearchActivity extends AppCompatActivity implements Endle
 
     private void loadLanguages() {
         OnLanguageSelectionListener callback = langCode -> {
-            languageCode = langCode;
-            invalidateOptionsMenu();
-            api = ApiClient.getWiktionaryApi(getApplicationContext(), languageCode).create(ApiInterface.class);
-            if (queryString != null)
-                submitQuery(queryString);
+            if(!languageCode.equals(langCode)) {
+                languageCode = langCode;
+                invalidateOptionsMenu();
+                api = ApiClient.getWiktionaryApi(getApplicationContext(), languageCode).create(ApiInterface.class);
+                if (queryString != null)
+                    submitQuery(queryString);
+            }
         };
         LanguageSelectionFragment languageSelectionFragment = new LanguageSelectionFragment(this, getString(R.string.wiktionary));
         languageSelectionFragment.init(callback, ListMode.WIKTIONARY);

@@ -1,6 +1,7 @@
 package com.manimarank.spell4wiki.activities;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -18,6 +19,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.interpolator.view.animation.FastOutSlowInInterpolator;
 
 import com.manimarank.spell4wiki.R;
+import com.manimarank.spell4wiki.databases.DBHelper;
+import com.manimarank.spell4wiki.databases.dao.WordsHaveAudioDao;
 import com.manimarank.spell4wiki.fragments.LanguageSelectionFragment;
 import com.manimarank.spell4wiki.listerners.OnLanguageSelectionListener;
 import com.manimarank.spell4wiki.utils.GeneralUtils;
@@ -25,6 +28,8 @@ import com.manimarank.spell4wiki.utils.PrefManager;
 import com.manimarank.spell4wiki.utils.ShowCasePref;
 import com.manimarank.spell4wiki.utils.constants.AppConstants;
 import com.manimarank.spell4wiki.utils.constants.Urls;
+
+import java.util.List;
 
 import uk.co.samuelwall.materialtaptargetprompt.MaterialTapTargetPrompt;
 import uk.co.samuelwall.materialtaptargetprompt.MaterialTapTargetSequence;
@@ -45,11 +50,10 @@ public class Spell4WordActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_spell_4_word);
 
-        initUI();
-
         pref = new PrefManager(this);
         languageCode = pref.getLanguageCodeSpell4Word();
 
+        initUI();
     }
 
     private void openWiktionaryPage(String wordInfo) {
@@ -90,26 +94,47 @@ public class Spell4WordActivity extends AppCompatActivity {
 
         btnRecord.setOnClickListener(v -> {
             if (!TextUtils.isEmpty(editSpell4Word.getText()) && editSpell4Word.getText().length() < 30) {
-                GeneralUtils.showRecordDialog(Spell4WordActivity.this, editSpell4Word.getText().toString().trim(), languageCode);
+                String word = editSpell4Word.getText().toString().trim();
+                if(isAllowRecord(word))
+                    GeneralUtils.showRecordDialog(Spell4WordActivity.this, word, languageCode);
+                else
+                    GeneralUtils.showSnack(editSpell4Word, String.format(getString(R.string.audio_file_already_exist), word));
             } else
                 GeneralUtils.showSnack(editSpell4Word, getString(R.string.enter_valid_word));
         });
     }
 
+    private Boolean isAllowRecord(String word){
+        boolean isValid = false;
+        try {
+            if(!pref.getIsAnonymous() && !TextUtils.isEmpty(word)){
+                WordsHaveAudioDao wordsHaveAudioDao = DBHelper.getInstance(getApplicationContext()).getAppDatabase().getWordsHaveAudioDao();
+                List<String> wordsAlreadyHaveAudio = wordsHaveAudioDao.getWordsAlreadyHaveAudioByLanguage(languageCode);
+                isValid = !wordsAlreadyHaveAudio.contains(word);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return isValid;
+    }
+
+
     @Override
     public boolean onOptionsItemSelected(MenuItem menuItem) {
         if (menuItem.getItemId() == android.R.id.home) {
-            finish();
+            callBackPress();
             return true;
-        }
-        return (super.onOptionsItemSelected(menuItem));
+        }else
+            return (super.onOptionsItemSelected(menuItem));
     }
 
 
     private void loadLanguages() {
         OnLanguageSelectionListener callback = langCode -> {
-            languageCode = langCode;
-            invalidateOptionsMenu();
+            if(!languageCode.equals(langCode)) {
+                languageCode = langCode;
+                invalidateOptionsMenu();
+            }
         };
         LanguageSelectionFragment languageSelectionFragment = new LanguageSelectionFragment(this, getString(R.string.spell4word));
         languageSelectionFragment.init(callback, ListMode.SPELL_4_WORD);
@@ -130,10 +155,7 @@ public class Spell4WordActivity extends AppCompatActivity {
         View rootView = item.getActionView();
         TextView selectedLang = rootView.findViewById(R.id.txtSelectedLanguage);
         selectedLang.setText(this.languageCode.toUpperCase());
-        rootView.setOnClickListener(v -> {
-            loadLanguages();
-        });
-
+        rootView.setOnClickListener(v -> loadLanguages());
     }
 
     @Override
@@ -158,6 +180,30 @@ public class Spell4WordActivity extends AppCompatActivity {
                 .setPromptFocal(new RectanglePromptFocal())
                 .setAnimationInterpolator(new FastOutSlowInInterpolator())
                 .setFocalPadding(R.dimen.show_case_focal_padding);
+    }
+
+    public void updateList(String word) {
+
+    }
+
+    @Override
+    public void onBackPressed() {
+        callBackPress();
+    }
+
+    private void callBackPress() {
+        if (!TextUtils.isEmpty(editSpell4Word.getText())) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle(R.string.confirmation);
+            builder.setMessage(R.string.confirm_to_back);
+            builder.setCancelable(false);
+            builder.setPositiveButton(getString(R.string.yes), (dialog, which) -> super.onBackPressed());
+            builder.setNegativeButton(getString(R.string.cancel), (dialog, which) -> { });
+            AlertDialog dialog = builder.create();
+            dialog.show();
+        } else {
+            super.onBackPressed();
+        }
     }
 }
 

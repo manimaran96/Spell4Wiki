@@ -72,7 +72,7 @@ public class SettingsActivity extends AppCompatActivity {
 
         layoutSpell4WikiLang.setOnClickListener(v -> {
             OnLanguageSelectionListener callback = langCode -> {
-                txtSpell4WikiLang.setText(pref.getLanguageCodeSpell4Wiki());
+                updateLanguageView(txtSpell4WikiLang, pref.getLanguageCodeSpell4Wiki());
             };
             LanguageSelectionFragment languageSelectionFragment = new LanguageSelectionFragment(this);
             languageSelectionFragment.init(callback, ListMode.SPELL_4_WIKI);

@@ -114,7 +114,7 @@
     <string name="something_went_wrong">Something went wrong.</string>
     <string name="something_went_wrong_try_again">Something went wrong. Please try again.</string>
     <string name="web_page_not_found">Page not found.\nTry again.</string>
-    <string name="enter_valid_word">Enter valid word.(Max : 30 characters)</string>
+    <string name="enter_valid_word">Enter valid word(Max : 30 characters).</string>
     <string name="provide_valid_word">Provide valid word</string>
     <string name="provide_valid_content">Provide valid content</string>
     <string name="backward_nothing">Backward nothing</string>
@@ -125,8 +125,8 @@
     <string name="invalid_csrf_try_again">Invalid CSRF Token. Please Try again.</string>
     <string name="invalid_response">Invalid response. Please Try again</string>
     <string name="upload_failed">Upload failed. Please Try again.</string>
-    <string name="file_already_exist">Upload file already exist.</string>
-    <string name="audio_file_already_exist">%s already have audio.</string>
+    <string name="file_already_exist">The upload file already exist in same/another format</string>
+    <string name="audio_file_already_exist">Audio file already exist for %s.</string>
     <string name="login_expired">Login expired. Please login and continue.</string>
     <string name="two_factor_login">Two factor Authentication not implemented.</string>
     <string name="check_url">Invalid Link</string>
@@ -145,7 +145,7 @@
     <string name="app_intro_slide_5_title">Permission Request</string>
 
     <string name="app_intro_slide_1_description">Spell4Wiki is an mobile application to record and upload audio to Wikimedia commons for Wiktionary words.</string>
-    <string name="app_intro_slide_2_description">You can search and view words meaning form Wikitionary for any languages.</string>
+    <string name="app_intro_slide_2_description">You can search and view word meanings from Wikitionary for any languages.</string>
     <string name="app_intro_slide_3_description">You can upload audio for your own word list from text file or directly copy &amp; paste the content.</string>
     <string name="app_intro_slide_4_description">You can upload audio file for your own single word.</string>
     <string name="app_intro_slide_5_description">Spell4Wiki requires storage and record audio permissions.\nAllow those permissions</string>
@@ -184,5 +184,7 @@
     <string name="sc_d_record_upload">1. Verify the word and language\n2. Play and verify the recorded audio\n3. Then upload to Wikimedia commons</string>
     <string name="sc_t_core_contributors_list_item">More About Contributor</string>
     <string name="sc_d_core_contributors_list_item">Click the name and you can get more details about contributor</string>
+    <string name="checking_file_availability">Checking File Availability\n(%s)</string>
+    <string name="word_list_no_record_found">No record found.\n(or)\nAudio file already exist/uploaded for all the words.</string>
 
 </resources>

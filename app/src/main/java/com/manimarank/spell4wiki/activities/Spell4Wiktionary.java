@@ -21,21 +21,23 @@ import com.manimarank.spell4wiki.R;
 import com.manimarank.spell4wiki.adapters.EndlessAdapter;
 import com.manimarank.spell4wiki.apis.ApiClient;
 import com.manimarank.spell4wiki.apis.ApiInterface;
-import com.manimarank.spell4wiki.databases.dao.WikiLangDao;
-import com.manimarank.spell4wiki.utils.ShowCasePref;
-import com.manimarank.spell4wiki.utils.constants.AppConstants;
-import com.manimarank.spell4wiki.utils.constants.EnumTypeDef.ListMode;
 import com.manimarank.spell4wiki.databases.DBHelper;
+import com.manimarank.spell4wiki.databases.dao.WikiLangDao;
 import com.manimarank.spell4wiki.databases.dao.WordsHaveAudioDao;
 import com.manimarank.spell4wiki.databases.entities.WikiLang;
+import com.manimarank.spell4wiki.databases.entities.WordsHaveAudio;
 import com.manimarank.spell4wiki.fragments.LanguageSelectionFragment;
 import com.manimarank.spell4wiki.listerners.OnLanguageSelectionListener;
 import com.manimarank.spell4wiki.models.WikiWordsWithoutAudio;
 import com.manimarank.spell4wiki.utils.GeneralUtils;
 import com.manimarank.spell4wiki.utils.PrefManager;
+import com.manimarank.spell4wiki.utils.ShowCasePref;
+import com.manimarank.spell4wiki.utils.constants.AppConstants;
+import com.manimarank.spell4wiki.utils.constants.EnumTypeDef.ListMode;
 import com.manimarank.spell4wiki.views.EndlessListView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -46,21 +48,25 @@ import uk.co.samuelwall.materialtaptargetprompt.extras.focals.RectanglePromptFoc
 
 public class Spell4Wiktionary extends AppCompatActivity implements EndlessListView.EndlessListener {
 
+    WordsHaveAudioDao wordsHaveAudioDao;
+    List<String> wordsListAlreadyHaveAudio = new ArrayList<>();
     // Views
     private EndlessListView resultListView;
     private EndlessAdapter adapter;
     private SwipeRefreshLayout refreshLayout = null;
-
     private String nextOffsetObj;
     private PrefManager pref;
     private String languageCode = "";
-    private WordsHaveAudioDao wordsHaveAudioDao;
     private Snackbar snackbar = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_spell_4_wiktionary);
+
+        pref = new PrefManager(getApplicationContext());
+        languageCode = pref.getLanguageCodeSpell4Wiki();
+
         init();
         loadDataFromServer();
     }
@@ -74,9 +80,6 @@ public class Spell4Wiktionary extends AppCompatActivity implements EndlessListVi
         resultListView.setLoadingView(R.layout.loading_row);
         snackbar = Snackbar.make(resultListView, getString(R.string.record_fetch_fail), Snackbar.LENGTH_LONG);
 
-        pref = new PrefManager(getApplicationContext());
-        languageCode = pref.getLanguageCodeSpell4Wiki();
-        wordsHaveAudioDao = DBHelper.getInstance(getApplicationContext()).getAppDatabase().getWordsHaveAudioDao();
 
         adapter = new EndlessAdapter(this, new ArrayList<>(), ListMode.SPELL_4_WIKI);
         resultListView.setAdapter(adapter);
@@ -97,14 +100,20 @@ public class Spell4Wiktionary extends AppCompatActivity implements EndlessListVi
      */
     private void loadDataFromServer() {
 
-        if (nextOffsetObj == null)
-            refreshLayout.setRefreshing(true);
-
-        DBHelper dbHelper = DBHelper.getInstance(getApplicationContext());
-        WikiLang wikiLang = dbHelper.getAppDatabase().getWikiLangDao().getWikiLanguageWithCode(languageCode);
         String titleOfWordsWithoutAudio = null;
-        if (wikiLang != null && !TextUtils.isEmpty(wikiLang.getTitleOfWordsWithoutAudio()))
-            titleOfWordsWithoutAudio = wikiLang.getTitleOfWordsWithoutAudio();
+        if (nextOffsetObj == null) {
+            refreshLayout.setRefreshing(true);
+            if (resultListView != null)
+                resultListView.reset();
+            DBHelper dbHelper = DBHelper.getInstance(getApplicationContext());
+            WikiLang wikiLang = dbHelper.getAppDatabase().getWikiLangDao().getWikiLanguageWithCode(languageCode);
+            if (wikiLang != null && !TextUtils.isEmpty(wikiLang.getTitleOfWordsWithoutAudio()))
+                titleOfWordsWithoutAudio = wikiLang.getTitleOfWordsWithoutAudio();
+
+            wordsHaveAudioDao = dbHelper.getAppDatabase().getWordsHaveAudioDao();
+            wordsListAlreadyHaveAudio = wordsHaveAudioDao.getWordsAlreadyHaveAudioByLanguage(languageCode);
+        }
+
         // DB Clear or Sync Issue
         if (titleOfWordsWithoutAudio == null) {
             titleOfWordsWithoutAudio = AppConstants.DEFAULT_TITLE_FOR_WITHOUT_AUDIO;
@@ -135,8 +144,7 @@ public class Spell4Wiktionary extends AppCompatActivity implements EndlessListVi
     private void processSearchResultAudio(WikiWordsWithoutAudio wikiWordsWithoutAudio) {
 
         ArrayList<String> titleList = new ArrayList<>();
-        if (nextOffsetObj == null)
-            resultListView.reset();
+
         if (resultListView.getVisibility() != View.VISIBLE)
             resultListView.setVisibility(View.VISIBLE);
         if (snackbar.isShown())
@@ -160,7 +168,8 @@ public class Spell4Wiktionary extends AppCompatActivity implements EndlessListVi
                 isEmptyResponse = true;
 
             if (!isEmptyResponse) {
-                adapter.setWordsHaveAudioList(wordsHaveAudioDao.getWordsAlreadyHaveAudioByLanguage(languageCode));
+                titleList.removeAll(wordsListAlreadyHaveAudio);
+                adapter.setWordsHaveAudioList(wordsListAlreadyHaveAudio);
                 resultListView.addNewData(titleList);
                 new Handler().post(this::callShowCaseUI);
             } else {
@@ -204,9 +213,12 @@ public class Spell4Wiktionary extends AppCompatActivity implements EndlessListVi
 
     private void loadLanguages() {
         OnLanguageSelectionListener callback = langCode -> {
-            languageCode = langCode;
-            invalidateOptionsMenu();
-            loadDataFromServer();
+            if (!languageCode.equals(langCode)) {
+                languageCode = langCode;
+                invalidateOptionsMenu();
+                nextOffsetObj = null;
+                loadDataFromServer();
+            }
         };
         LanguageSelectionFragment languageSelectionFragment = new LanguageSelectionFragment(this, getString(R.string.spell4wiktionary));
         languageSelectionFragment.init(callback, ListMode.SPELL_4_WIKI);
@@ -248,12 +260,22 @@ public class Spell4Wiktionary extends AppCompatActivity implements EndlessListVi
         super.onDestroy();
     }
 
+    public void updateList(String word) {
+        if (adapter != null) {
+            wordsHaveAudioDao.insert(new WordsHaveAudio(word, languageCode));
+            adapter.addWordInWordsHaveAudioList(word);
+            adapter.remove(word);
+            adapter.notifyDataSetChanged();
+        }
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == AppConstants.RC_UPLOAD_DIALOG) {
             if (data != null && data.hasExtra(AppConstants.WORD)) {
                 if (adapter != null) {
+                    adapter.addWordInWordsHaveAudioList(data.getStringExtra(AppConstants.WORD));
                     adapter.remove(data.getStringExtra(AppConstants.WORD));
                     adapter.notifyDataSetChanged();
                 }
@@ -262,7 +284,7 @@ public class Spell4Wiktionary extends AppCompatActivity implements EndlessListVi
     }
 
     private void callShowCaseUI() {
-        if(!isFinishing() && !isDestroyed()) {
+        if (!isFinishing() && !isDestroyed()) {
             if (ShowCasePref.INSTANCE.isNotShowed(ShowCasePref.LIST_ITEM_SPELL_4_WIKI) || ShowCasePref.INSTANCE.isNotShowed(ShowCasePref.SPELL_4_WIKI_PAGE)) {
                 MaterialTapTargetSequence sequence = new MaterialTapTargetSequence().setSequenceCompleteListener(() -> {
                     ShowCasePref.INSTANCE.showed(ShowCasePref.LIST_ITEM_SPELL_4_WIKI);

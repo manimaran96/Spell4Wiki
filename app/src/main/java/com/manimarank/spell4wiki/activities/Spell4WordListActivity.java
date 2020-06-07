@@ -26,6 +26,7 @@ import com.manimarank.spell4wiki.R;
 import com.manimarank.spell4wiki.adapters.EndlessAdapter;
 import com.manimarank.spell4wiki.databases.DBHelper;
 import com.manimarank.spell4wiki.databases.dao.WordsHaveAudioDao;
+import com.manimarank.spell4wiki.databases.entities.WordsHaveAudio;
 import com.manimarank.spell4wiki.fragments.LanguageSelectionFragment;
 import com.manimarank.spell4wiki.listerners.OnLanguageSelectionListener;
 import com.manimarank.spell4wiki.utils.GeneralUtils;
@@ -56,7 +57,7 @@ public class Spell4WordListActivity extends AppCompatActivity {
     EndlessAdapter adapter;
     private EditText editFile;
     private TextView txtFileInfo;
-    private View layoutEdit, layoutSelect;
+    private View layoutEdit, layoutSelect, layoutEmpty;
     private EndlessListView resultListView;
     private String languageCode = "";
     private WordsHaveAudioDao wordsHaveAudioDao;
@@ -66,11 +67,10 @@ public class Spell4WordListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_spell_4_wordlist);
 
-        initUI();
-
         PrefManager pref = new PrefManager(getApplicationContext());
         languageCode = pref.getLanguageCodeSpell4WordList();
 
+        initUI();
     }
 
     private void initUI() {
@@ -90,6 +90,7 @@ public class Spell4WordListActivity extends AppCompatActivity {
         resultListView = findViewById(R.id.listView);
         layoutSelect = findViewById(R.id.layoutSelect);
         layoutEdit = findViewById(R.id.layoutEdit);
+        layoutEmpty = findViewById(R.id.layoutEmpty);
 
 
         btnSelectFile.setOnClickListener(v -> {
@@ -115,6 +116,7 @@ public class Spell4WordListActivity extends AppCompatActivity {
         layoutSelect.setVisibility(View.VISIBLE);
         layoutEdit.setVisibility(View.GONE);
         resultListView.setVisibility(View.GONE);
+        layoutEmpty.setVisibility(View.GONE);
 
     }
 
@@ -136,6 +138,18 @@ public class Spell4WordListActivity extends AppCompatActivity {
         intent.setType("text/plain");
 
         startActivityForResult(intent, EDIT_REQUEST_CODE);
+    }
+
+    public void updateList(String word) {
+        if (adapter != null) {
+            wordsHaveAudioDao.insert(new WordsHaveAudio(word, languageCode));
+            adapter.addWordInWordsHaveAudioList(word);
+            adapter.remove(word);
+            adapter.notifyDataSetChanged();
+            if (adapter.getCount() == 0) {
+                showEmptyView();
+            }
+        }
     }
 
     @Override
@@ -164,6 +178,7 @@ public class Spell4WordListActivity extends AppCompatActivity {
         if (requestCode == AppConstants.RC_UPLOAD_DIALOG) {
             if (data != null && data.hasExtra(AppConstants.WORD)) {
                 if (adapter != null) {
+                    adapter.addWordInWordsHaveAudioList(data.getStringExtra(AppConstants.WORD));
                     adapter.remove(data.getStringExtra(AppConstants.WORD));
                     adapter.notifyDataSetChanged();
                 }
@@ -176,6 +191,7 @@ public class Spell4WordListActivity extends AppCompatActivity {
         layoutSelect.setVisibility(View.GONE);
         layoutEdit.setVisibility(View.VISIBLE);
         resultListView.setVisibility(View.GONE);
+        layoutEmpty.setVisibility(View.GONE);
 
         txtFileInfo.setText(getString(R.string.hint_select_file_next));
         editFile.setText(getContentFromFile(filePath));
@@ -185,6 +201,7 @@ public class Spell4WordListActivity extends AppCompatActivity {
         layoutSelect.setVisibility(View.GONE);
         layoutEdit.setVisibility(View.VISIBLE);
         resultListView.setVisibility(View.GONE);
+        layoutEmpty.setVisibility(View.GONE);
 
         txtFileInfo.setText(getString(R.string.hint_direct_copy_next));
         editFile.setText("");
@@ -192,19 +209,31 @@ public class Spell4WordListActivity extends AppCompatActivity {
 
     private void showWordsInRecordMode(List<String> items) {
 
+        List<String> wordsAlreadyHaveAudio = wordsHaveAudioDao.getWordsAlreadyHaveAudioByLanguage(languageCode);
+        items.removeAll(wordsAlreadyHaveAudio);
+        if (items.size() > 0) {
+            layoutSelect.setVisibility(View.GONE);
+            layoutEdit.setVisibility(View.GONE);
+            resultListView.setVisibility(View.VISIBLE);
+            layoutEmpty.setVisibility(View.GONE);
+
+
+            adapter = new EndlessAdapter(this, items, SPELL_4_WORD_LIST);
+            resultListView.setAdapter(adapter);
+            resultListView.setVisibility(View.VISIBLE);
+            adapter.setWordsHaveAudioList(wordsHaveAudioDao.getWordsAlreadyHaveAudioByLanguage(languageCode));
+
+            new Handler().post(this::callShowCaseUI);
+        } else {
+            showEmptyView();
+        }
+    }
+
+    private void showEmptyView() {
         layoutSelect.setVisibility(View.GONE);
         layoutEdit.setVisibility(View.GONE);
-        resultListView.setVisibility(View.VISIBLE);
-
-
-        adapter = new EndlessAdapter(this, items, SPELL_4_WORD_LIST);
-        resultListView.setAdapter(adapter);
-        resultListView.setVisibility(View.VISIBLE);
-        adapter.setWordsHaveAudioList(wordsHaveAudioDao.getWordsAlreadyHaveAudioByLanguage(languageCode));
-
-        if (items.size() > 0) {
-            new Handler().post(this::callShowCaseUI);
-        }
+        resultListView.setVisibility(View.GONE);
+        layoutEmpty.setVisibility(View.VISIBLE);
     }
 
     private List<String> getWordListFromString(String data) {
@@ -326,8 +355,16 @@ public class Spell4WordListActivity extends AppCompatActivity {
 
     private void loadLanguages() {
         OnLanguageSelectionListener callback = langCode -> {
-            languageCode = langCode;
-            invalidateOptionsMenu();
+            if (!languageCode.equals(langCode)) {
+                languageCode = langCode;
+                invalidateOptionsMenu();
+                if (resultListView.getVisibility() == View.VISIBLE) {
+                    if (!TextUtils.isEmpty(editFile.getText())) {
+                        List<String> items = getWordListFromString(editFile.getText().toString());
+                        showWordsInRecordMode(items);
+                    }
+                }
+            }
         };
         LanguageSelectionFragment languageSelectionFragment = new LanguageSelectionFragment(this, getString(R.string.spell4wordlist));
         languageSelectionFragment.init(callback, SPELL_4_WORD_LIST);
@@ -340,10 +377,7 @@ public class Spell4WordListActivity extends AppCompatActivity {
         View rootView = item.getActionView();
         TextView selectedLang = rootView.findViewById(R.id.txtSelectedLanguage);
         selectedLang.setText(this.languageCode.toUpperCase());
-        rootView.setOnClickListener(v -> {
-            loadLanguages();
-        });
-
+        rootView.setOnClickListener(v -> loadLanguages());
     }
 
     @Override
@@ -358,21 +392,21 @@ public class Spell4WordListActivity extends AppCompatActivity {
     }
 
     private void callBackPress() {
-        if (resultListView.getVisibility() == View.VISIBLE) {
+        if (resultListView.getVisibility() == View.VISIBLE || layoutEmpty.getVisibility() == View.VISIBLE) {
             layoutEdit.setVisibility(View.VISIBLE);
             resultListView.setVisibility(View.GONE);
+            layoutEmpty.setVisibility(View.GONE);
         } else if (layoutEdit.getVisibility() == View.VISIBLE) {
             if (!TextUtils.isEmpty(editFile.getText())) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                builder.setTitle(R.string.confirmation);// add a radio button list
-                builder.setMessage(R.string.confirm_to_back);// add a radio button list
+                builder.setTitle(R.string.confirmation);
+                builder.setMessage(R.string.confirm_to_back);
                 builder.setCancelable(false);
                 builder.setPositiveButton(getString(R.string.yes), (dialog, which) -> {
                     layoutSelect.setVisibility(View.VISIBLE);
                     layoutEdit.setVisibility(View.GONE);
                 });
                 builder.setNegativeButton(getString(R.string.cancel), (dialog, which) -> {
-
                 });
                 AlertDialog dialog = builder.create();
                 dialog.show();

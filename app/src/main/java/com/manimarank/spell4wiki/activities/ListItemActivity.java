@@ -63,6 +63,7 @@ public class ListItemActivity extends AppCompatActivity {
         list.add(new ItemsModel(R.drawable.ic_info, "Dictionary icon", "Berkah Icon from the Noun Project", "https://thenounproject.com/berkahicon/"));
         list.add(new ItemsModel(R.drawable.ic_git, "Git icon", "WClarke from the wiki commons", "https://commons.wikimedia.org/wiki/File:Git-icon-black.svg"));
         list.add(new ItemsModel(R.drawable.ic_privacy_policy, "Privacy policy icon", "Wahyu Adam Pratama from the Noun Project", "https://thenounproject.com/flatsain141/"));
+        list.add(new ItemsModel(R.raw.check_file_availability, "Analyzing website", "Osama Sarsar from the Lottie Files", "https://lottiefiles.com/17784-analyzing-website"));
         return list;
     }
 

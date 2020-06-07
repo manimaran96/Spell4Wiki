@@ -180,5 +180,9 @@ public class EndlessAdapter extends ArrayAdapter<String> {
         this.wordsAlreadyHaveAudio = wordsAlreadyHaveAudio;
     }
 
+    public void addWordInWordsHaveAudioList(String wordsAlreadyHaveAudio) {
+        this.wordsAlreadyHaveAudio.add(wordsAlreadyHaveAudio);
+    }
+
 }
 

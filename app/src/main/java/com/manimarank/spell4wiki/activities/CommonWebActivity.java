@@ -1,5 +1,6 @@
 package com.manimarank.spell4wiki.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
@@ -8,6 +9,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
@@ -122,10 +124,12 @@ public class CommonWebActivity extends AppCompatActivity {
     private void loadLanguages() {
         if (isWiktionaryWord) {
             OnLanguageSelectionListener callback = langCode -> {
-                this.languageCode = langCode;
-                invalidateOptionsMenu();
-                if (fragment != null)
-                    fragment.loadWordWithOtherLang(langCode);
+                if (!languageCode.equals(langCode)) {
+                    this.languageCode = langCode;
+                    invalidateOptionsMenu();
+                    if (fragment != null)
+                        fragment.loadWordWithOtherLang(langCode);
+                }
             };
             LanguageSelectionFragment languageSelectionFragment = new LanguageSelectionFragment(this);
             languageSelectionFragment.init(callback, ListMode.TEMP, languageCode);
@@ -148,6 +152,22 @@ public class CommonWebActivity extends AppCompatActivity {
             s.setSpan(new ForegroundColorSpan(ContextCompat.getColor(getApplicationContext(), isAllow ? R.color.black : R.color.light_gray)), 0, s.length(), 0);
             menuItem.setEnabled(isAllow);
             menuItem.setTitle(s);
+        }
+    }
+
+
+    public void updateList(String word) {
+        if (fragment != null)
+            fragment.hideRecordButton(word);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == AppConstants.RC_UPLOAD_DIALOG) {
+            if (data != null && data.hasExtra(AppConstants.WORD)) {
+                updateList(data.getStringExtra(AppConstants.WORD));
+            }
         }
     }
 

@@ -16,9 +16,16 @@ import androidx.core.content.ContextCompat;
 import com.google.android.material.snackbar.Snackbar;
 import com.manimarank.spell4wiki.R;
 import com.manimarank.spell4wiki.Spell4WikiApp;
-import com.manimarank.spell4wiki.activities.CommonWebContentActivity;
 import com.manimarank.spell4wiki.activities.CommonWebActivity;
+import com.manimarank.spell4wiki.activities.CommonWebContentActivity;
 import com.manimarank.spell4wiki.activities.RecordAudioActivity;
+import com.manimarank.spell4wiki.activities.Spell4Wiktionary;
+import com.manimarank.spell4wiki.activities.Spell4WordActivity;
+import com.manimarank.spell4wiki.activities.Spell4WordListActivity;
+import com.manimarank.spell4wiki.apis.WikimediaCommonsUtils;
+import com.manimarank.spell4wiki.databases.DBHelper;
+import com.manimarank.spell4wiki.databases.dao.WordsHaveAudioDao;
+import com.manimarank.spell4wiki.databases.entities.WordsHaveAudio;
 import com.manimarank.spell4wiki.utils.constants.AppConstants;
 
 public class GeneralUtils {
@@ -98,11 +105,30 @@ public class GeneralUtils {
     }
 
     public static void showRecordDialog(Activity activity, String word, String langCode) {
-        Intent intent = new Intent(activity, RecordAudioActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-        intent.putExtra(AppConstants.WORD, word);
-        intent.putExtra(AppConstants.LANGUAGE_CODE, langCode);
-        activity.startActivityForResult(intent, AppConstants.RC_UPLOAD_DIALOG);
+        WikimediaCommonsUtils.INSTANCE.checkFileAvailability(activity, word, langCode, fileExist -> {
+            if (!activity.isDestroyed() && !activity.isFinishing()) {
+                if (fileExist) {
+                    WordsHaveAudioDao wordsHaveAudioDao = DBHelper.getInstance(activity).getAppDatabase().getWordsHaveAudioDao();
+                    wordsHaveAudioDao.insert(new WordsHaveAudio(word, langCode));
+                    if (activity instanceof Spell4Wiktionary)
+                        ((Spell4Wiktionary) activity).updateList(word);
+                    else if (activity instanceof Spell4WordListActivity)
+                        ((Spell4WordListActivity) activity).updateList(word);
+                    else if (activity instanceof Spell4WordActivity)
+                        ((Spell4WordActivity) activity).updateList(word);
+                    else if (activity instanceof CommonWebActivity)
+                        ((CommonWebActivity) activity).updateList(word);
+
+                    showLongToast(String.format(activity.getString(R.string.audio_file_already_exist), word));
+                } else {
+                    Intent intent = new Intent(activity, RecordAudioActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                    intent.putExtra(AppConstants.WORD, word);
+                    intent.putExtra(AppConstants.LANGUAGE_CODE, langCode);
+                    activity.startActivityForResult(intent, AppConstants.RC_UPLOAD_DIALOG);
+                }
+            }
+        });
     }
 
     public static void openMarkdownUrl(Activity activity, String url, String title) {
