@@ -190,24 +190,8 @@
         android:divider="@null"
         android:visibility="gone" />
 
-    <RelativeLayout
-        android:id="@+id/layoutEmpty"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:visibility="gone">
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:gravity="center"
-            android:text="@string/word_list_no_record_found"
-            android:paddingStart="@dimen/space32dp"
-            android:paddingEnd="@dimen/space32dp"
-            android:ellipsize="end"
-            android:textSize="@dimen/text_heading" />
-    </RelativeLayout>
+    <include layout="@layout/empty_state_ui"
+        android:visibility="gone"/>
 
 
 </RelativeLayout>

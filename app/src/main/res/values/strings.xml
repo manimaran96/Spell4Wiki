@@ -168,9 +168,7 @@
     <string name="sc_t_spell4wiki">@string/spell4wiktionary</string>
     <string name="sc_d_spell4wiki">Wiktionary words are listed here. You can record and upload audio to Wikimedia commons for this words.</string>
     <string name="sc_t_spell4wordlist">@string/spell4wordlist</string>
-    <string name="sc_d_spell4wordlist">You can upload audio files for your own word list directly from copy &amp; paste contents or from a text file.</string>
-    <string name="sc_t_spell4word">@string/spell4word</string>
-    <string name="sc_d_spell4word">@string/app_intro_slide_4_description</string>
+
 
     <string name="sc_t_spell4wiki_page_language">Language switch</string>
     <string name="sc_d_spell4wiki_page_language">You can change the language for Spell4Wiki. The audio will be uploaded based on the selected language.\n\nCurrently selected language is %s\n\nNote :\nCurrently few languages only supported for this feature.</string>
@@ -184,8 +182,15 @@
     <string name="sc_d_record_upload">1. Verify the word and language\n2. Play and verify the recorded audio\n3. Then upload to Wikimedia commons</string>
     <string name="sc_t_core_contributors_list_item">More About Contributor</string>
     <string name="sc_d_core_contributors_list_item">Click the name and you can get more details about contributor</string>
+
+
+    <string name="sc_d_spell4wordlist">You can upload audio files for your own word list directly from copy &amp; paste contents or from a text file.</string>
     <string name="checking_file_availability">Checking File Availability\n(%s)</string>
     <string name="word_list_no_record_found">No record found.\n(or)\nAudio file already exist/uploaded for all the words.</string>
     <string name="temporary">Temporary</string>
+    <string name="do_you_want_continue">Do you want to Continue?</string>
+    <string name="spell4wiktionary_load_more_confirmation">Take more time for finding the Wiktionary words haven\'t audio. Because, lot of words are may have audio already.\n\nIf you want to finding with more Wiktionary words then click continue.\nOtherwise click the not now for avoid load more.</string>
+    <string name="yes_continue">Yes, Continue</string>
+    <string name="not_now">Not now</string>
 
 </resources>

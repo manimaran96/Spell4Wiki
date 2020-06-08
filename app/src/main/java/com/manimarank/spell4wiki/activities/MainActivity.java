@@ -75,24 +75,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch (view.getId()) {
             case R.id.card_spell4wiki:
                 if (ShowCasePref.INSTANCE.isNotShowed(ShowCasePref.SPELL_4_WIKI)) {
-                    showCaseFor(ShowCasePref.SPELL_4_WIKI);
+                    callShowCase();
                     return;
                 } else
                     nextClass = Spell4Wiktionary.class;
                 break;
             case R.id.card_spell4wordlist:
-                if (ShowCasePref.INSTANCE.isNotShowed(ShowCasePref.SPELL_4_WORD_LIST)) {
-                    showCaseFor(ShowCasePref.SPELL_4_WORD_LIST);
-                    return;
-                } else
-                    nextClass = Spell4WordListActivity.class;
+                nextClass = Spell4WordListActivity.class;
                 break;
             case R.id.card_spell4word:
-                if (ShowCasePref.INSTANCE.isNotShowed(ShowCasePref.SPELL_4_WORD)) {
-                    showCaseFor(ShowCasePref.SPELL_4_WORD);
-                    return;
-                } else
-                    nextClass = Spell4WordActivity.class;
+                nextClass = Spell4WordActivity.class;
                 break;
         }
         Intent intent = new Intent(getApplicationContext(), nextClass);
@@ -180,37 +172,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }, 2000);
     }
 
-    private void showCaseFor(String showCaseItem) {
-        if (!isFinishing() && !isDestroyed() && ShowCasePref.INSTANCE.isNotShowed(showCaseItem)) {
-            MaterialTapTargetPrompt.Builder builder = new MaterialTapTargetPrompt.Builder(MainActivity.this)
+    private void callShowCase() {
+        if (!isFinishing() && !isDestroyed() && ShowCasePref.INSTANCE.isNotShowed(ShowCasePref.SPELL_4_WIKI)) {
+            new MaterialTapTargetPrompt.Builder(MainActivity.this)
                     .setPromptFocal(new RectanglePromptFocal())
                     .setAnimationInterpolator(new FastOutSlowInInterpolator())
+                    .setTarget(R.id.card_spell4wiki)
+                    .setPrimaryText(R.string.sc_t_spell4wiki)
+                    .setSecondaryText(R.string.sc_d_spell4wiki)
                     .setFocalPadding(R.dimen.show_case_focal_padding)
                     .setPromptStateChangeListener((prompt, state) -> {
                         if (state == MaterialTapTargetPrompt.STATE_FOCAL_PRESSED || state == MaterialTapTargetPrompt.STATE_NON_FOCAL_PRESSED)
-                            ShowCasePref.INSTANCE.showed(showCaseItem);
-                    });
-
-            switch (showCaseItem) {
-                case ShowCasePref.SPELL_4_WIKI:
-                    builder.setTarget(R.id.card_spell4wiki)
-                            .setPrimaryText(R.string.sc_t_spell4wiki)
-                            .setSecondaryText(R.string.sc_d_spell4wiki)
-                            .show();
-                    break;
-                case ShowCasePref.SPELL_4_WORD_LIST:
-                    builder.setTarget(R.id.card_spell4wordlist)
-                            .setPrimaryText(R.string.sc_t_spell4wordlist)
-                            .setSecondaryText(R.string.sc_d_spell4wordlist)
-                            .show();
-                    break;
-                case ShowCasePref.SPELL_4_WORD:
-                    builder.setTarget(R.id.card_spell4word)
-                            .setPrimaryText(R.string.sc_t_spell4word)
-                            .setSecondaryText(R.string.sc_d_spell4word)
-                            .show();
-                    break;
-            }
+                            ShowCasePref.INSTANCE.showed(ShowCasePref.SPELL_4_WIKI);
+                    }).show();
         }
 
     }

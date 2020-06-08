@@ -38,7 +38,6 @@ public class LanguageSelectionFragment extends BottomSheetDialogFragment {
     private OnLanguageSelectionListener callback;
     private List<WikiLang> wikiLanguageList = new ArrayList<>();
     private LangAdapter adapter;
-    private String titleNameExtra;
     @ListMode
     private int listMode;
     private String preSelectedLanguageCode = null;
@@ -47,10 +46,6 @@ public class LanguageSelectionFragment extends BottomSheetDialogFragment {
 
     public LanguageSelectionFragment(Activity activity) {
         this.mActivity = activity;
-    }
-    public LanguageSelectionFragment(Activity activity, String title) {
-        this.mActivity = activity;
-        this.titleNameExtra = title;
     }
 
     public void init(OnLanguageSelectionListener callback, @ListMode int mode) {

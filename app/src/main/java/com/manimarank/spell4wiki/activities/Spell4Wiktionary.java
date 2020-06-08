@@ -1,5 +1,6 @@
 package com.manimarank.spell4wiki.activities;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -38,6 +39,7 @@ import com.manimarank.spell4wiki.views.EndlessListView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -58,6 +60,8 @@ public class Spell4Wiktionary extends AppCompatActivity implements EndlessListVi
     private PrefManager pref;
     private String languageCode = "";
     private Snackbar snackbar = null;
+    private View layoutEmpty;
+    private Long apiResultTime = 0L;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,6 +82,7 @@ public class Spell4Wiktionary extends AppCompatActivity implements EndlessListVi
         resultListView = findViewById(R.id.search_result_list);
         refreshLayout = findViewById(R.id.layout_swipe);
         resultListView.setLoadingView(R.layout.loading_row);
+        layoutEmpty = findViewById(R.id.layoutEmpty);
         snackbar = Snackbar.make(resultListView, getString(R.string.record_fetch_fail), Snackbar.LENGTH_LONG);
 
 
@@ -95,105 +100,152 @@ public class Spell4Wiktionary extends AppCompatActivity implements EndlessListVi
         refreshLayout.setOnRefreshListener(this::loadDataFromServer);
     }
 
+    private void resetApiResultTime() {
+        apiResultTime = System.currentTimeMillis();
+    }
+
     /**
      * Getting words from wiktionary without audio
      */
     private void loadDataFromServer() {
+        if (!isFinishing() && !isDestroyed()) {
+            String wiktionaryTitleOfWordsWithoutAudio = null;
+            if (nextOffsetObj == null) {
+                if (!refreshLayout.isRefreshing())
+                    refreshLayout.setRefreshing(true);
+                resetApiResultTime();
+                if (resultListView != null)
+                    resultListView.reset();
+                DBHelper dbHelper = DBHelper.getInstance(getApplicationContext());
+                WikiLang wikiLang = dbHelper.getAppDatabase().getWikiLangDao().getWikiLanguageWithCode(languageCode);
+                if (wikiLang != null && !TextUtils.isEmpty(wikiLang.getTitleOfWordsWithoutAudio()))
+                    wiktionaryTitleOfWordsWithoutAudio = wikiLang.getTitleOfWordsWithoutAudio();
 
-        String titleOfWordsWithoutAudio = null;
-        if (nextOffsetObj == null) {
-            refreshLayout.setRefreshing(true);
-            if (resultListView != null)
-                resultListView.reset();
-            DBHelper dbHelper = DBHelper.getInstance(getApplicationContext());
-            WikiLang wikiLang = dbHelper.getAppDatabase().getWikiLangDao().getWikiLanguageWithCode(languageCode);
-            if (wikiLang != null && !TextUtils.isEmpty(wikiLang.getTitleOfWordsWithoutAudio()))
-                titleOfWordsWithoutAudio = wikiLang.getTitleOfWordsWithoutAudio();
+                wordsHaveAudioDao = dbHelper.getAppDatabase().getWordsHaveAudioDao();
+                wordsListAlreadyHaveAudio = wordsHaveAudioDao.getWordsAlreadyHaveAudioByLanguage(languageCode);
+            } else {
+                long duration = System.currentTimeMillis() - apiResultTime;
+                if (TimeUnit.MILLISECONDS.toSeconds(duration) > 30) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                    builder.setTitle(R.string.do_you_want_continue);
+                    builder.setMessage(R.string.spell4wiktionary_load_more_confirmation);
+                    builder.setCancelable(false);
+                    builder.setPositiveButton(R.string.yes_continue, (dialog, which) -> {
+                        resetApiResultTime();
+                        loadDataFromServer();
+                    });
+                    builder.setNegativeButton(R.string.not_now, ((dialog, which) -> {
+                        resultListView.removeLoader();
+                        dialog.dismiss();
+                    }));
+                    AlertDialog dialog = builder.create();
+                    resultListView.removeLoader();
+                    if (refreshLayout.isRefreshing())
+                        refreshLayout.setRefreshing(false);
+                    dialog.show();
+                    return;
+                }
+            }
 
-            wordsHaveAudioDao = dbHelper.getAppDatabase().getWordsHaveAudioDao();
-            wordsListAlreadyHaveAudio = wordsHaveAudioDao.getWordsAlreadyHaveAudioByLanguage(languageCode);
-        }
+            // DB Clear or Sync Issue
+            if (wiktionaryTitleOfWordsWithoutAudio == null) {
+                wiktionaryTitleOfWordsWithoutAudio = AppConstants.DEFAULT_TITLE_FOR_WITHOUT_AUDIO;
+                languageCode = AppConstants.DEFAULT_LANGUAGE_CODE;
+                invalidateOptionsMenu();
+                pref.setLanguageCodeSpell4Wiki(languageCode);
+            }
 
-        // DB Clear or Sync Issue
-        if (titleOfWordsWithoutAudio == null) {
-            titleOfWordsWithoutAudio = AppConstants.DEFAULT_TITLE_FOR_WITHOUT_AUDIO;
-            languageCode = AppConstants.DEFAULT_LANGUAGE_CODE;
-            invalidateOptionsMenu();
-            pref.setLanguageCodeSpell4Wiki(languageCode);
-        }
+            ApiInterface api = ApiClient.getWiktionaryApi(getApplicationContext(), languageCode).create(ApiInterface.class);
+            Call<WikiWordsWithoutAudio> call = api.fetchUnAudioRecords(wiktionaryTitleOfWordsWithoutAudio, nextOffsetObj);
 
-        ApiInterface api = ApiClient.getWiktionaryApi(getApplicationContext(), languageCode).create(ApiInterface.class);
-        Call<WikiWordsWithoutAudio> call = api.fetchUnAudioRecords(titleOfWordsWithoutAudio, nextOffsetObj);
+            call.enqueue(new Callback<WikiWordsWithoutAudio>() {
+                @Override
+                public void onResponse(@NonNull Call<WikiWordsWithoutAudio> call, @NonNull Response<WikiWordsWithoutAudio> response) {
+                    if (response.isSuccessful() && response.body() != null) {
+                        processSearchResultAudio(response.body());
+                    } else
+                        searchFailed(getString(R.string.something_went_wrong));
+                }
 
-        call.enqueue(new Callback<WikiWordsWithoutAudio>() {
-            @Override
-            public void onResponse(@NonNull Call<WikiWordsWithoutAudio> call, @NonNull Response<WikiWordsWithoutAudio> response) {
-                if (response.isSuccessful() && response.body() != null) {
-                    processSearchResultAudio(response.body());
-                } else
+                @Override
+                public void onFailure(@NonNull Call<WikiWordsWithoutAudio> call, @NonNull Throwable t) {
                     searchFailed(getString(R.string.something_went_wrong));
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<WikiWordsWithoutAudio> call, @NonNull Throwable t) {
-                searchFailed(getString(R.string.something_went_wrong));
-            }
-        });
+                }
+            });
+        }
     }
 
     private void processSearchResultAudio(WikiWordsWithoutAudio wikiWordsWithoutAudio) {
 
-        ArrayList<String> titleList = new ArrayList<>();
+        if (!isDestroyed() && !isFinishing()) {
 
-        if (resultListView.getVisibility() != View.VISIBLE)
-            resultListView.setVisibility(View.VISIBLE);
-        if (snackbar.isShown())
-            snackbar.dismiss();
-        boolean isEmptyResponse;
-        if (wikiWordsWithoutAudio != null) {
-            if (wikiWordsWithoutAudio.getOffset() != null && wikiWordsWithoutAudio.getOffset().getNextOffset() != null) {
-                nextOffsetObj = wikiWordsWithoutAudio.getOffset().getNextOffset();
-            } else
-                nextOffsetObj = null;
+            ArrayList<String> titleList = new ArrayList<>();
 
-            if (refreshLayout.isRefreshing())
-                refreshLayout.setRefreshing(false);
+            if (resultListView.getVisibility() != View.VISIBLE)
+                resultListView.setVisibility(View.VISIBLE);
 
-            if (wikiWordsWithoutAudio.getQuery() != null && wikiWordsWithoutAudio.getQuery().getWikiTitleList() != null) {
-                for (WikiWordsWithoutAudio.WikiTitle wikiTitle : wikiWordsWithoutAudio.getQuery().getWikiTitleList()) {
-                    titleList.add(wikiTitle.getTitle());
+            if (layoutEmpty.getVisibility() == View.VISIBLE)
+                layoutEmpty.setVisibility(View.GONE);
+
+            if (snackbar.isShown())
+                snackbar.dismiss();
+            boolean isEmptyResponse;
+            if (wikiWordsWithoutAudio != null) {
+                if (wikiWordsWithoutAudio.getOffset() != null && wikiWordsWithoutAudio.getOffset().getNextOffset() != null) {
+                    nextOffsetObj = wikiWordsWithoutAudio.getOffset().getNextOffset();
+                } else
+                    nextOffsetObj = null;
+
+                if (wikiWordsWithoutAudio.getQuery() != null && wikiWordsWithoutAudio.getQuery().getWikiTitleList() != null) {
+                    for (WikiWordsWithoutAudio.WikiTitle wikiTitle : wikiWordsWithoutAudio.getQuery().getWikiTitleList()) {
+                        titleList.add(wikiTitle.getTitle());
+                    }
+                    isEmptyResponse = titleList.isEmpty();
+                } else
+                    isEmptyResponse = true;
+
+
+                if (!isEmptyResponse) {
+                    titleList.removeAll(wordsListAlreadyHaveAudio);
+                    if (titleList.size() > 0) {
+                        if (refreshLayout.isRefreshing())
+                            refreshLayout.setRefreshing(false);
+                        resetApiResultTime();
+                        adapter.setWordsHaveAudioList(wordsListAlreadyHaveAudio);
+                        resultListView.addNewData(titleList);
+                        new Handler().post(this::callShowCaseUI);
+                    } else {
+                        if (!refreshLayout.isRefreshing())
+                            refreshLayout.setRefreshing(true);
+                        loadDataFromServer();
+                    }
+                } else {
+                    searchFailed(getString(R.string.something_went_wrong));
                 }
-                isEmptyResponse = titleList.isEmpty();
             } else
-                isEmptyResponse = true;
-
-            if (!isEmptyResponse) {
-                titleList.removeAll(wordsListAlreadyHaveAudio);
-                adapter.setWordsHaveAudioList(wordsListAlreadyHaveAudio);
-                resultListView.addNewData(titleList);
-                new Handler().post(this::callShowCaseUI);
-            } else {
                 searchFailed(getString(R.string.something_went_wrong));
-            }
-        } else
-            searchFailed(getString(R.string.something_went_wrong));
+        }
     }
 
     private void searchFailed(String msg) {
-        if (resultListView != null) { // Footer loader consume count = 1
-            if (resultListView.getAdapter() != null && resultListView.getAdapter().getCount() < 2)
-                resultListView.setVisibility(View.INVISIBLE);
-            else
-                resultListView.loadLaterOnScroll();
+        if (!isDestroyed() && !isFinishing()) {
+            resetApiResultTime();
+            if (resultListView != null) { // Footer loader consume count = 1
+                if (adapter != null && adapter.getCount() < 1 && resultListView.isLoading()) {
+                    resultListView.setVisibility(View.INVISIBLE);
+                    layoutEmpty.setVisibility(View.VISIBLE);
+                } else
+                    resultListView.loadLaterOnScroll();
+            }
+            if (GeneralUtils.isNetworkConnected(getApplicationContext())) {
+                snackbar.setText(msg);
+            } else
+                snackbar.setText(getString(resultListView.getVisibility() != View.VISIBLE ? R.string.check_internet : R.string.record_fetch_fail));
+            if (refreshLayout.isRefreshing())
+                refreshLayout.setRefreshing(false);
+            if (!snackbar.isShown())
+                snackbar.show();
         }
-        if (GeneralUtils.isNetworkConnected(getApplicationContext())) {
-            snackbar.setText(msg);
-        } else
-            snackbar.setText(getString(resultListView.getVisibility() != View.VISIBLE ? R.string.check_internet : R.string.record_fetch_fail));
-        if (refreshLayout.isRefreshing())
-            refreshLayout.setRefreshing(false);
-        if (!snackbar.isShown())
-            snackbar.show();
     }
 
     @Override
@@ -206,7 +258,7 @@ public class Spell4Wiktionary extends AppCompatActivity implements EndlessListVi
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
-            finish();
+            callBackPress();
         }
         return (super.onOptionsItemSelected(item));
     }
@@ -220,7 +272,7 @@ public class Spell4Wiktionary extends AppCompatActivity implements EndlessListVi
                 loadDataFromServer();
             }
         };
-        LanguageSelectionFragment languageSelectionFragment = new LanguageSelectionFragment(this, getString(R.string.spell4wiktionary));
+        LanguageSelectionFragment languageSelectionFragment = new LanguageSelectionFragment(this);
         languageSelectionFragment.init(callback, ListMode.SPELL_4_WIKI);
         languageSelectionFragment.show(getSupportFragmentManager(), languageSelectionFragment.getTag());
     }
@@ -316,5 +368,21 @@ public class Spell4Wiktionary extends AppCompatActivity implements EndlessListVi
                 .setPromptFocal(new RectanglePromptFocal())
                 .setAnimationInterpolator(new FastOutSlowInInterpolator())
                 .setFocalPadding(R.dimen.show_case_focal_padding);
+    }
+
+    @Override
+    public void onBackPressed() {
+        callBackPress();
+    }
+
+    private void callBackPress() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(R.string.confirmation);
+        builder.setMessage(R.string.confirm_to_back);
+        builder.setCancelable(false);
+        builder.setPositiveButton(getString(R.string.yes), (dialog, which) -> super.onBackPressed());
+        builder.setNegativeButton(getString(R.string.cancel), (dialog, which) -> dialog.dismiss());
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 }

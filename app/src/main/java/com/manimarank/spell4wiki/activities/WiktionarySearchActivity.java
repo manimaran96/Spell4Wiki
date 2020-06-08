@@ -142,7 +142,7 @@ public class WiktionarySearchActivity extends AppCompatActivity implements Endle
                     submitQuery(queryString);
             }
         };
-        LanguageSelectionFragment languageSelectionFragment = new LanguageSelectionFragment(this, getString(R.string.wiktionary));
+        LanguageSelectionFragment languageSelectionFragment = new LanguageSelectionFragment(this);
         languageSelectionFragment.init(callback, ListMode.WIKTIONARY);
         languageSelectionFragment.show(getSupportFragmentManager(), languageSelectionFragment.getTag());
     }

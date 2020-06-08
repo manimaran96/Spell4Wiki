@@ -19,5 +19,8 @@
             android:divider="@null" />
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
+    <include layout="@layout/empty_state_ui"
+        android:visibility="gone"/>
+
 
 </RelativeLayout>

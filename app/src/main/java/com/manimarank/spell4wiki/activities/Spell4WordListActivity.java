@@ -358,7 +358,7 @@ public class Spell4WordListActivity extends AppCompatActivity {
             if (!languageCode.equals(langCode)) {
                 languageCode = langCode;
                 invalidateOptionsMenu();
-                if (resultListView.getVisibility() == View.VISIBLE) {
+                if (resultListView.getVisibility() == View.VISIBLE || layoutEmpty.getVisibility() == View.VISIBLE) {
                     if (!TextUtils.isEmpty(editFile.getText())) {
                         List<String> items = getWordListFromString(editFile.getText().toString());
                         showWordsInRecordMode(items);
@@ -366,7 +366,7 @@ public class Spell4WordListActivity extends AppCompatActivity {
                 }
             }
         };
-        LanguageSelectionFragment languageSelectionFragment = new LanguageSelectionFragment(this, getString(R.string.spell4wordlist));
+        LanguageSelectionFragment languageSelectionFragment = new LanguageSelectionFragment(this);
         languageSelectionFragment.init(callback, SPELL_4_WORD_LIST);
         languageSelectionFragment.show(getSupportFragmentManager(), languageSelectionFragment.getTag());
     }

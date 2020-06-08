@@ -20,6 +20,7 @@
     <dimen name="text_small">12sp</dimen>
     <dimen name="text_semi_normal">14sp</dimen>
     <dimen name="text_normal">16sp</dimen>
+    <dimen name="text_x_normal">16sp</dimen>
     <dimen name="text_large">22sp</dimen>
     <dimen name="text_x_large">28sp</dimen>
     <dimen name="text_heading">18sp</dimen>
