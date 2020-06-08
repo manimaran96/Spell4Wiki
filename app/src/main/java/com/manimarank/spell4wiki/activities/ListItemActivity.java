@@ -63,8 +63,10 @@ public class ListItemActivity extends AppCompatActivity {
         list.add(new ItemsModel(R.drawable.ic_info, "Dictionary icon", "Berkah Icon from the Noun Project", "https://thenounproject.com/berkahicon/"));
         list.add(new ItemsModel(R.drawable.ic_git, "Git icon", "WClarke from the wiki commons", "https://commons.wikimedia.org/wiki/File:Git-icon-black.svg"));
         list.add(new ItemsModel(R.drawable.ic_privacy_policy, "Privacy policy icon", "Wahyu Adam Pratama from the Noun Project", "https://thenounproject.com/flatsain141/"));
-        list.add(new ItemsModel(R.raw.check_file_availability, "Analyzing website", "Osama Sarsar from the Lottie Files", "https://lottiefiles.com/17784-analyzing-website"));
-        list.add(new ItemsModel(R.raw.empty_state, "Empty state", "Rizwan Rasool19 from the Lottie Files", "https://lottiefiles.com/16656-empty-state"));
+        list.add(new ItemsModel(R.raw.check_file_availability, "Analyzing website icon", "Osama Sarsar at lottiefiles.com", "https://lottiefiles.com/17784-analyzing-website"));
+        list.add(new ItemsModel(R.raw.empty_state, "Empty state icon", "Rizwan Rasool19 at lottiefiles.com", "https://lottiefiles.com/16656-empty-state"));
+        list.add(new ItemsModel(R.raw.uploading_file, "Upload icon", "Esko Ahonen at lottiefiles.com", "https://lottiefiles.com/1683-cloud-upload"));
+        list.add(new ItemsModel(R.raw.check_file_availability, "Upload icon", "Arushi Saini at lottiefiles.com", "https://lottiefiles.com/3648-no-internet-connection"));
         return list;
     }
 
