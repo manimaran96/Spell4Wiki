@@ -147,7 +147,7 @@ public class SettingsActivity extends AppCompatActivity {
             WikiLang wikiLang = wikiLangDao.getWikiLanguageWithCode(languageCode);
             String value = "";
             if (wikiLang != null && !TextUtils.isEmpty(wikiLang.getName()))
-                value = wikiLang.getLocalName() + " - " + wikiLang.getName() + "(" + languageCode + ")";
+                value = wikiLang.getLocalName() + " - " + wikiLang.getName() + " : " + languageCode;
             txtView.setText(value);
         }
     }

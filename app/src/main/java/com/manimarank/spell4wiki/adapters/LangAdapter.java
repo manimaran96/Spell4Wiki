@@ -67,8 +67,9 @@ public class LangAdapter extends BaseAdapter implements Filterable {
 
         final WikiLang model = mList.get(i);
 
+        String localName = model.getLocalName()  + " : " + model.getCode();
         holder.textLangName.setText(model.getName());
-        holder.textLocalName.setText(model.getLocalName());
+        holder.textLocalName.setText(localName);
         holder.textLocalName.setGravity(model.getIsLeftDirection() ? Gravity.START : Gravity.END);
         holder.radioSelect.setChecked(existLangCode != null && existLangCode.equals(model.getCode()));
 
@@ -106,7 +107,7 @@ public class LangAdapter extends BaseAdapter implements Filterable {
             if (constraint != null && constraint.length() > 0) {
                 List<WikiLang> filterList = new ArrayList<>();
                 for (WikiLang l : mBackUpList) {
-                    if ((l.getName().toLowerCase() + " " + l.getLocalName().toLowerCase()).contains(constraint.toString().toLowerCase())) {
+                    if ((l.getName().toLowerCase() + " " + l.getLocalName().toLowerCase() + " " + l.getCode().toLowerCase()).contains(constraint.toString().toLowerCase())) {
                         filterList.add(l);
                     }
                 }
