@@ -42,17 +42,6 @@ public class GeneralUtils {
                 || ContextCompat.checkSelfPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED;
     }
 
-    public static void showLongToast(String msg) {
-        Toast.makeText(Spell4WikiApp.Companion.getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
-    }
-
-    public static void showToast(Context context, String msg) {
-        Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
-    }
-
-    public static void showSnack(View view, String msg) {
-        Snackbar.make(view, msg, Snackbar.LENGTH_LONG).show();
-    }
 
     public static void hideKeyboard(Activity activity) {
         try {
@@ -85,9 +74,9 @@ public class GeneralUtils {
                     intent.putExtra(AppConstants.URL, url);
                     context.startActivity(intent);
                 } else
-                    GeneralUtils.showSnack(view, context.getString(R.string.check_url));
+                    SnackBarUtils.INSTANCE.showLong(view, context.getString(R.string.check_url));
             } else
-                GeneralUtils.showSnack(view, context.getString(R.string.check_internet));
+                SnackBarUtils.INSTANCE.showLong(view, context.getString(R.string.check_internet));
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -119,7 +108,7 @@ public class GeneralUtils {
                     else if (activity instanceof CommonWebActivity)
                         ((CommonWebActivity) activity).updateList(word);
 
-                    showLongToast(String.format(activity.getString(R.string.audio_file_already_exist), word));
+                    ToastUtils.INSTANCE.showLong(String.format(activity.getString(R.string.audio_file_already_exist), word));
                 } else {
                     Intent intent = new Intent(activity, RecordAudioActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);

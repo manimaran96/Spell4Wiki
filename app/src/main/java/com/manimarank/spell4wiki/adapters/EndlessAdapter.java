@@ -22,6 +22,7 @@ import com.manimarank.spell4wiki.BuildConfig;
 import com.manimarank.spell4wiki.R;
 import com.manimarank.spell4wiki.activities.CommonWebActivity;
 import com.manimarank.spell4wiki.utils.ShowCasePref;
+import com.manimarank.spell4wiki.utils.SnackBarUtils;
 import com.manimarank.spell4wiki.utils.constants.AppConstants;
 import com.manimarank.spell4wiki.utils.constants.Urls;
 import com.manimarank.spell4wiki.utils.GeneralUtils;
@@ -104,7 +105,7 @@ public class EndlessAdapter extends ArrayAdapter<String> {
                             getPermissionToRecordAudio();
                         }
                     } else
-                        GeneralUtils.showSnack(rootView, String.format(activity.getString(R.string.audio_file_already_exist), word));
+                        SnackBarUtils.INSTANCE.showLong(rootView, String.format(activity.getString(R.string.audio_file_already_exist), word));
                     break;
                 case ListMode.WIKTIONARY:
                 default:

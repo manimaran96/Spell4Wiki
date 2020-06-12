@@ -16,6 +16,8 @@ import com.manimarank.spell4wiki.R;
 import com.manimarank.spell4wiki.utils.GeneralUtils;
 import com.manimarank.spell4wiki.utils.PrefManager;
 import com.manimarank.spell4wiki.utils.ShowCasePref;
+import com.manimarank.spell4wiki.utils.SnackBarUtils;
+import com.manimarank.spell4wiki.utils.ToastUtils;
 import com.manimarank.spell4wiki.utils.constants.AppConstants;
 import com.manimarank.spell4wiki.utils.constants.Urls;
 
@@ -68,7 +70,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View view) {
         if (pref.getIsAnonymous()) {
-            GeneralUtils.showSnack(view, getString(R.string.login_to_contribute));
+            SnackBarUtils.INSTANCE.showLong(view, getString(R.string.login_to_contribute));
             return;
         }
         Class nextClass = WiktionarySearchActivity.class;
@@ -81,6 +83,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     nextClass = Spell4Wiktionary.class;
                 break;
             case R.id.card_spell4wordlist:
+                ToastUtils.INSTANCE.showLong("Hello how are you?");
                 nextClass = Spell4WordListActivity.class;
                 break;
             case R.id.card_spell4word:
@@ -162,7 +165,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             super.onBackPressed();
         else {
             this.doubleBackToExitPressedOnce = true;
-            GeneralUtils.showSnack(searchView, getString(R.string.alert_to_exit));
+            SnackBarUtils.INSTANCE.showLong(searchView, getString(R.string.alert_to_exit));
         }
         new Handler().postDelayed(new Runnable() {
             @Override

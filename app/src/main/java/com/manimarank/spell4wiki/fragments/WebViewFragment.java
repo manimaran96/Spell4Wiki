@@ -30,6 +30,7 @@ import android.widget.TextView;
 import com.manimarank.spell4wiki.R;
 import com.manimarank.spell4wiki.databases.DBHelper;
 import com.manimarank.spell4wiki.databases.dao.WordsHaveAudioDao;
+import com.manimarank.spell4wiki.utils.SnackBarUtils;
 import com.manimarank.spell4wiki.utils.constants.AppConstants;
 import com.manimarank.spell4wiki.utils.constants.Urls;
 import com.manimarank.spell4wiki.utils.GeneralUtils;
@@ -97,7 +98,7 @@ public class WebViewFragment extends Fragment {
         if (getActivity() != null && GeneralUtils.isNetworkConnected(getActivity()))
             loadWebPage(url);
         else
-            GeneralUtils.showSnack(webView, getString(R.string.check_internet));
+            SnackBarUtils.INSTANCE.showLong(webView, getString(R.string.check_internet));
 
         recordButtonInit();
 
@@ -112,7 +113,7 @@ public class WebViewFragment extends Fragment {
                 if (word != null)
                     GeneralUtils.showRecordDialog(getActivity(), word.trim(), languageCode);
                 else
-                    GeneralUtils.showSnack(fabRecord, getString(R.string.provide_valid_word));
+                    SnackBarUtils.INSTANCE.showLong(fabRecord, getString(R.string.provide_valid_word));
             });
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -202,14 +203,14 @@ public class WebViewFragment extends Fragment {
         if (webView.canGoBack()) {
             webView.goBack();
         } else
-            GeneralUtils.showSnack(webView, getString(R.string.backward_nothing));
+            SnackBarUtils.INSTANCE.showLong(webView, getString(R.string.backward_nothing));
     }
 
     public void forwardWebPage() {
         if (webView.canGoForward()) {
             webView.goForward();
         } else
-            GeneralUtils.showSnack(webView, getString(R.string.forward_nothing));
+            SnackBarUtils.INSTANCE.showLong(webView, getString(R.string.forward_nothing));
     }
 
     public boolean canGoForward() {
@@ -238,7 +239,7 @@ public class WebViewFragment extends Fragment {
             if(clipboardManager != null)
                 clipboardManager.setPrimaryClip(clipData);
             // Popup a snack bar.
-            GeneralUtils.showSnack(webView, getString(R.string.link_copied));
+            SnackBarUtils.INSTANCE.showLong(webView, getString(R.string.link_copied));
         }
     }
 

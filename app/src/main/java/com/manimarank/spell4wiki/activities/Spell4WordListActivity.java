@@ -33,6 +33,7 @@ import com.manimarank.spell4wiki.utils.GeneralUtils;
 import com.manimarank.spell4wiki.utils.PrefManager;
 import com.manimarank.spell4wiki.utils.RealPathUtil;
 import com.manimarank.spell4wiki.utils.ShowCasePref;
+import com.manimarank.spell4wiki.utils.SnackBarUtils;
 import com.manimarank.spell4wiki.utils.constants.AppConstants;
 import com.manimarank.spell4wiki.views.EndlessListView;
 
@@ -107,7 +108,7 @@ public class Spell4WordListActivity extends AppCompatActivity {
                 List<String> items = getWordListFromString(editFile.getText().toString());
                 showWordsInRecordMode(items);
             } else
-                GeneralUtils.showSnack(editFile, getString(R.string.provide_valid_content));
+                SnackBarUtils.INSTANCE.showLong(editFile, getString(R.string.provide_valid_content));
 
         });
 

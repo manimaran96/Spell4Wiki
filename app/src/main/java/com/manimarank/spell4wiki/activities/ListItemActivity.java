@@ -58,7 +58,6 @@ public class ListItemActivity extends AppCompatActivity {
 
     private List<ItemsModel> getCreditsInfo() {
         List<ItemsModel> list = new ArrayList<>();
-        //TODO Lottie
         list.add(new ItemsModel(R.drawable.ic_language, "Translation icon", "Claudiu Antohi from the Noun Project", "https://thenounproject.com/claudiu.antohi/"));
         list.add(new ItemsModel(R.drawable.ic_info, "Dictionary icon", "Berkah Icon from the Noun Project", "https://thenounproject.com/berkahicon/"));
         list.add(new ItemsModel(R.drawable.ic_git, "Git icon", "WClarke from the wiki commons", "https://commons.wikimedia.org/wiki/File:Git-icon-black.svg"));

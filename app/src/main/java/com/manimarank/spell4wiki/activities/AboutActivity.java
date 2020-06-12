@@ -20,6 +20,7 @@ import com.manimarank.spell4wiki.BuildConfig;
 import com.manimarank.spell4wiki.R;
 import com.manimarank.spell4wiki.utils.GeneralUtils;
 import com.manimarank.spell4wiki.utils.PrefManager;
+import com.manimarank.spell4wiki.utils.SnackBarUtils;
 import com.manimarank.spell4wiki.utils.constants.AppConstants;
 import com.manimarank.spell4wiki.utils.constants.Urls;
 
@@ -164,7 +165,7 @@ public class AboutActivity extends AppCompatActivity implements View.OnClickList
         try {
             startActivity(emailIntent);
         } catch (ActivityNotFoundException ex) {
-            GeneralUtils.showSnack(findViewById(R.id.txtFeedback), getString(R.string.no_email_client));
+            SnackBarUtils.INSTANCE.showLong(findViewById(R.id.txtFeedback), getString(R.string.no_email_client));
         }
     }
 

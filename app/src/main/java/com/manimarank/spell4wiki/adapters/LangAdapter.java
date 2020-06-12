@@ -14,7 +14,7 @@ import android.widget.TextView;
 import com.manimarank.spell4wiki.R;
 import com.manimarank.spell4wiki.databases.entities.WikiLang;
 import com.manimarank.spell4wiki.listerners.OnLanguageSelectionListener;
-import com.manimarank.spell4wiki.utils.GeneralUtils;
+import com.manimarank.spell4wiki.utils.ToastUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -67,7 +67,7 @@ public class LangAdapter extends BaseAdapter implements Filterable {
 
         final WikiLang model = mList.get(i);
 
-        String localName = model.getLocalName()  + " : " + model.getCode();
+        String localName = model.getLocalName() + " : " + model.getCode();
         holder.textLangName.setText(model.getName());
         holder.textLocalName.setText(localName);
         holder.textLocalName.setGravity(model.getIsLeftDirection() ? Gravity.START : Gravity.END);
@@ -76,7 +76,7 @@ public class LangAdapter extends BaseAdapter implements Filterable {
         final ViewHolder finalHolder = holder;
         holder.layout.setOnClickListener(view1 -> {
             finalHolder.radioSelect.setChecked(true);
-            GeneralUtils.showToast(mActivity, String.format(mActivity.getString(R.string.select_language_response_msg), model.getName()));
+            ToastUtils.INSTANCE.showLong(String.format(mActivity.getString(R.string.select_language_response_msg), model.getName()));
             mListener.OnCallBackListener(model.getCode());
         });
 

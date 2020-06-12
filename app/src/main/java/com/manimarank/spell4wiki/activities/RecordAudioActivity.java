@@ -50,6 +50,7 @@ import com.manimarank.spell4wiki.utils.GeneralUtils;
 import com.manimarank.spell4wiki.utils.PrefManager;
 import com.manimarank.spell4wiki.utils.Print;
 import com.manimarank.spell4wiki.utils.ShowCasePref;
+import com.manimarank.spell4wiki.utils.ToastUtils;
 import com.manimarank.spell4wiki.utils.WikiLicense;
 import com.manimarank.spell4wiki.utils.constants.AppConstants;
 
@@ -205,7 +206,7 @@ public class RecordAudioActivity extends AppCompatActivity {
             if (isRecorded)
                 playPauseRecordedAudio();
             else
-                GeneralUtils.showToast(getApplicationContext(), getString(R.string.record_audio_not_found));
+                ToastUtils.INSTANCE.showLong(getString(R.string.record_audio_not_found));
         });
 
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -365,15 +366,15 @@ public class RecordAudioActivity extends AppCompatActivity {
                         if (checkBoxDeclaration.isChecked()) {
                             uploadAudioToWikiServer();
                         } else
-                            GeneralUtils.showToast(getApplicationContext(), getString(R.string.confirm_declaration));
+                            ToastUtils.INSTANCE.showLong(getString(R.string.confirm_declaration));
                     } else
-                        GeneralUtils.showToast(getApplicationContext(), getString(R.string.recorded_audio_too_short));
+                        ToastUtils.INSTANCE.showLong(getString(R.string.recorded_audio_too_short));
                 } else
-                    GeneralUtils.showToast(getApplicationContext(), getString(R.string.record_audio_not_found));
+                    ToastUtils.INSTANCE.showLong(getString(R.string.record_audio_not_found));
             } else
-                GeneralUtils.showToast(getApplicationContext(), getString(R.string.invalid_language));
+                ToastUtils.INSTANCE.showLong(getString(R.string.invalid_language));
         } else
-            GeneralUtils.showToast(getApplicationContext(), getString(R.string.provide_valid_word));
+            ToastUtils.INSTANCE.showLong(getString(R.string.provide_valid_word));
     }
 
     private String getUploadName() {
@@ -388,7 +389,7 @@ public class RecordAudioActivity extends AppCompatActivity {
             player.stopPlaying();
             finish();
         } else
-            GeneralUtils.showToast(getApplicationContext(), getString(R.string.recording_under_process));
+            ToastUtils.INSTANCE.showLong(getString(R.string.recording_under_process));
     }
 
     @Override
@@ -546,15 +547,15 @@ public class RecordAudioActivity extends AppCompatActivity {
                     retryWithForceLogin();
                     return;
                 } else if (msg.equalsIgnoreCase(getString(R.string.login_expired)))
-                    GeneralUtils.showLongToast(getString(R.string.login_expired));
+                    ToastUtils.INSTANCE.showLong(getString(R.string.login_expired));
                 else
-                    GeneralUtils.showLongToast(getString(R.string.invalid_csrf_try_again));
+                    ToastUtils.INSTANCE.showLong(getString(R.string.invalid_csrf_try_again));
             } else if (!TextUtils.isEmpty(msg))
-                GeneralUtils.showLongToast(msg);
+                ToastUtils.INSTANCE.showLong(msg);
             else
-                GeneralUtils.showLongToast(getString(R.string.something_went_wrong_try_again));
+                ToastUtils.INSTANCE.showLong(getString(R.string.something_went_wrong_try_again));
         } else
-            GeneralUtils.showLongToast(getString(R.string.check_internet));
+            ToastUtils.INSTANCE.showLong(getString(R.string.check_internet));
 
         recordLayoutVisibility(true);
     }
@@ -647,7 +648,7 @@ public class RecordAudioActivity extends AppCompatActivity {
 
     private void uploadSuccess(String msg) {
         Print.log(TAG + "UPLOAD SUCCESS " + msg + " --  WORD : " + word);
-        GeneralUtils.showToast(getApplicationContext(), msg);
+        ToastUtils.INSTANCE.showLong(msg);
 
         // Result back
         Intent resultIntent = new Intent();

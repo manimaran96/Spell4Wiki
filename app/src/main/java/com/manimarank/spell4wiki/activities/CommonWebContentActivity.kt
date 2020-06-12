@@ -12,6 +12,7 @@ import android.webkit.*
 import androidx.appcompat.app.AppCompatActivity
 import com.manimarank.spell4wiki.R
 import com.manimarank.spell4wiki.utils.GeneralUtils
+import com.manimarank.spell4wiki.utils.SnackBarUtils
 import com.manimarank.spell4wiki.utils.constants.AppConstants
 import kotlinx.android.synthetic.main.activity_web_view_content.*
 
@@ -37,9 +38,9 @@ class CommonWebContentActivity : AppCompatActivity() {
                     if (GeneralUtils.isNetworkConnected(applicationContext))
                         loadWebPageContent()
                     else
-                        GeneralUtils.showSnack(webView, getString(R.string.check_internet))
+                        SnackBarUtils.showLong(webView, getString(R.string.check_internet))
                 else
-                    GeneralUtils.showToast(applicationContext, getString(R.string.something_went_wrong))
+                    SnackBarUtils.showNormal(webView, getString(R.string.something_went_wrong))
             }
         }
     }

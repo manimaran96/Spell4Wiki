@@ -22,6 +22,7 @@ import com.manimarank.spell4wiki.models.Contributors;
 import com.manimarank.spell4wiki.models.CoreContributors;
 import com.manimarank.spell4wiki.utils.GeneralUtils;
 import com.manimarank.spell4wiki.utils.ShowCasePref;
+import com.manimarank.spell4wiki.utils.SnackBarUtils;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -137,7 +138,7 @@ public class ContributorsActivity extends AppCompatActivity {
                 }
             });
         } else {
-            GeneralUtils.showSnack(recyclerViewCodeContributors, getString(R.string.check_internet));
+            SnackBarUtils.INSTANCE.showLong(recyclerViewCodeContributors, getString(R.string.check_internet));
         }
     }
 

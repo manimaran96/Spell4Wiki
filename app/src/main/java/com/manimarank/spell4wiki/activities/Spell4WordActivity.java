@@ -26,6 +26,7 @@ import com.manimarank.spell4wiki.listerners.OnLanguageSelectionListener;
 import com.manimarank.spell4wiki.utils.GeneralUtils;
 import com.manimarank.spell4wiki.utils.PrefManager;
 import com.manimarank.spell4wiki.utils.ShowCasePref;
+import com.manimarank.spell4wiki.utils.SnackBarUtils;
 import com.manimarank.spell4wiki.utils.constants.AppConstants;
 import com.manimarank.spell4wiki.utils.constants.Urls;
 
@@ -84,7 +85,7 @@ public class Spell4WordActivity extends AppCompatActivity {
                     if (!TextUtils.isEmpty(editSpell4Word.getText()) && editSpell4Word.getText().length() < 30)
                         openWiktionaryPage(editSpell4Word.getText().toString());
                     else
-                        GeneralUtils.showSnack(editSpell4Word, getString(R.string.enter_valid_word));
+                        SnackBarUtils.INSTANCE.showLong(editSpell4Word, getString(R.string.enter_valid_word));
                     return true;
                 }
             }
@@ -98,9 +99,9 @@ public class Spell4WordActivity extends AppCompatActivity {
                 if(isAllowRecord(word))
                     GeneralUtils.showRecordDialog(Spell4WordActivity.this, word, languageCode);
                 else
-                    GeneralUtils.showSnack(editSpell4Word, String.format(getString(R.string.audio_file_already_exist), word));
+                    SnackBarUtils.INSTANCE.showLong(editSpell4Word, String.format(getString(R.string.audio_file_already_exist), word));
             } else
-                GeneralUtils.showSnack(editSpell4Word, getString(R.string.enter_valid_word));
+                SnackBarUtils.INSTANCE.showLong(editSpell4Word, getString(R.string.enter_valid_word));
         });
     }
 
