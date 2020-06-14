@@ -83,7 +83,6 @@ public class WiktionarySearchActivity extends AppCompatActivity implements Endle
             }
         });
 
-        resultListView.setLoadingView(R.layout.loading_row);
         resultListView.setAdapter(new EndlessAdapter(this, new ArrayList<>(), ListMode.WIKTIONARY));
         resultListView.setListener(this);
         resultListView.setVisibility(View.INVISIBLE);

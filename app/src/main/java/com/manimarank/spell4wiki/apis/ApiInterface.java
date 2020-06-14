@@ -58,7 +58,7 @@ public interface ApiInterface {
 
 
     // Fetch un audio records - Wiktionary
-    @GET("w/api.php?action=query&format=json&list=categorymembers&utf8=1&cmlimit=50&cmsort=timestamp&cmdir=desc")
+    @GET("w/api.php?action=query&format=json&list=categorymembers&utf8=1&cmlimit=150&cmsort=timestamp&cmdir=desc")
     Call<WikiWordsWithoutAudio> fetchUnAudioRecords(
             @Query("cmtitle") String noAudioTitle,
             @Query("cmcontinue") String offsetContinue

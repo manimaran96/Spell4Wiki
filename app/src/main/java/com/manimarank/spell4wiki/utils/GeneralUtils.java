@@ -94,30 +94,33 @@ public class GeneralUtils {
     }
 
     public static void showRecordDialog(Activity activity, String word, String langCode) {
-        WikimediaCommonsUtils.INSTANCE.checkFileAvailability(activity, word, langCode, fileExist -> {
-            if (!activity.isDestroyed() && !activity.isFinishing()) {
-                if (fileExist) {
-                    WordsHaveAudioDao wordsHaveAudioDao = DBHelper.getInstance(activity).getAppDatabase().getWordsHaveAudioDao();
-                    wordsHaveAudioDao.insert(new WordsHaveAudio(word, langCode));
-                    if (activity instanceof Spell4Wiktionary)
-                        ((Spell4Wiktionary) activity).updateList(word);
-                    else if (activity instanceof Spell4WordListActivity)
-                        ((Spell4WordListActivity) activity).updateList(word);
-                    else if (activity instanceof Spell4WordActivity)
-                        ((Spell4WordActivity) activity).updateList(word);
-                    else if (activity instanceof CommonWebActivity)
-                        ((CommonWebActivity) activity).updateList(word);
+        if(NetworkUtils.INSTANCE.isConnected(activity)) {
+            WikimediaCommonsUtils.INSTANCE.checkFileAvailability(activity, word, langCode, fileExist -> {
+                if (!activity.isDestroyed() && !activity.isFinishing()) {
+                    if (fileExist) {
+                        WordsHaveAudioDao wordsHaveAudioDao = DBHelper.getInstance(activity).getAppDatabase().getWordsHaveAudioDao();
+                        wordsHaveAudioDao.insert(new WordsHaveAudio(word, langCode));
+                        if (activity instanceof Spell4Wiktionary)
+                            ((Spell4Wiktionary) activity).updateList(word);
+                        else if (activity instanceof Spell4WordListActivity)
+                            ((Spell4WordListActivity) activity).updateList(word);
+                        else if (activity instanceof Spell4WordActivity)
+                            ((Spell4WordActivity) activity).updateList(word);
+                        else if (activity instanceof CommonWebActivity)
+                            ((CommonWebActivity) activity).updateList(word);
 
-                    ToastUtils.INSTANCE.showLong(String.format(activity.getString(R.string.audio_file_already_exist), word));
-                } else {
-                    Intent intent = new Intent(activity, RecordAudioActivity.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                    intent.putExtra(AppConstants.WORD, word);
-                    intent.putExtra(AppConstants.LANGUAGE_CODE, langCode);
-                    activity.startActivityForResult(intent, AppConstants.RC_UPLOAD_DIALOG);
+                        ToastUtils.INSTANCE.showLong(String.format(activity.getString(R.string.audio_file_already_exist), word));
+                    } else {
+                        Intent intent = new Intent(activity, RecordAudioActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                        intent.putExtra(AppConstants.WORD, word);
+                        intent.putExtra(AppConstants.LANGUAGE_CODE, langCode);
+                        activity.startActivityForResult(intent, AppConstants.RC_UPLOAD_DIALOG);
+                    }
                 }
-            }
-        });
+            });
+        }else
+            ToastUtils.INSTANCE.showLong(activity.getString(R.string.check_internet));
     }
 
     public static void openMarkdownUrl(Activity activity, String url, String title) {

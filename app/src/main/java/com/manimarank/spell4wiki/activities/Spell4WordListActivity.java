@@ -112,7 +112,6 @@ public class Spell4WordListActivity extends AppCompatActivity {
 
         });
 
-        resultListView.setLoadingView(R.layout.loading_row);
 
         layoutSelect.setVisibility(View.VISIBLE);
         layoutEdit.setVisibility(View.GONE);

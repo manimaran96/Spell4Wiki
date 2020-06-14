@@ -37,7 +37,6 @@ import static com.manimarank.spell4wiki.utils.constants.EnumTypeDef.ListMode;
 
 public class EndlessAdapter extends ArrayAdapter<String> {
 
-    private static final int RECORD_AUDIO_REQUEST_CODE = 101;
     private List<String> itemList;
     private List<String> wordsAlreadyHaveAudio = new ArrayList<>();
     private Activity activity;
@@ -49,7 +48,7 @@ public class EndlessAdapter extends ArrayAdapter<String> {
     private View rootView;
 
     public EndlessAdapter(Context ctx, List<String> itemList, @ListMode int mode) {
-        super(ctx, R.layout.search_result_row, itemList);
+        super(ctx, R.layout.item_result_row, itemList);
         this.itemList = itemList;
         this.activity = (Activity) ctx;
         this.pref = new PrefManager(ctx);
@@ -78,7 +77,7 @@ public class EndlessAdapter extends ArrayAdapter<String> {
         if (convertView == null) {
             LayoutInflater inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             if (inflater != null)
-                rootView = inflater.inflate(R.layout.search_result_row, parent, false);
+                rootView = inflater.inflate(R.layout.item_result_row, parent, false);
         } else
             rootView = convertView;
 
@@ -87,10 +86,10 @@ public class EndlessAdapter extends ArrayAdapter<String> {
         rootView.setBackgroundColor(ContextCompat.getColor(activity, isHaveAudio ? R.color.record_have_audio : R.color.record_normal));
 
         // We should use class holder pattern
-        TextView tv = rootView.findViewById(R.id.txt1);
-        tv.setText(word);
+        TextView txtWord = rootView.findViewById(R.id.txtWord);
+        txtWord.setText(word);
 
-        tv.setOnClickListener(view -> {
+        txtWord.setOnClickListener(view -> {
 
             switch (mode) {
                 case ListMode.SPELL_4_WIKI:
@@ -116,7 +115,7 @@ public class EndlessAdapter extends ArrayAdapter<String> {
             }
         });
 
-        LinearLayout btnWiki = rootView.findViewById(R.id.btn_wiki_meaning);
+        View btnWiki = rootView.findViewById(R.id.btnWikiMeaning);
         btnWiki.setVisibility(View.VISIBLE);
         btnWiki.setOnClickListener(v -> openWiktionaryWebView(position));
 
@@ -162,7 +161,7 @@ public class EndlessAdapter extends ArrayAdapter<String> {
                         Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.RECORD_AUDIO,
                         Manifest.permission.WRITE_EXTERNAL_STORAGE
                 }
-                , RECORD_AUDIO_REQUEST_CODE);
+                , AppConstants.RC_PERMISSIONS);
     }
 
     private void showAppSettingsPageHint() {

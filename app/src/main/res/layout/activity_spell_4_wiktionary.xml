@@ -12,11 +12,11 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.manimarank.spell4wiki.views.EndlessListView
-            android:id="@+id/search_result_list"
+        <com.manimarank.spell4wiki.views.EndlessRecyclerView
+            android:id="@+id/recyclerView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:divider="@null" />
+            android:layout_height="match_parent"/>
+
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     <include layout="@layout/empty_state_ui"

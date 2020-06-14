@@ -83,7 +83,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     nextClass = Spell4Wiktionary.class;
                 break;
             case R.id.card_spell4wordlist:
-                ToastUtils.INSTANCE.showLong("Hello how are you?");
                 nextClass = Spell4WordListActivity.class;
                 break;
             case R.id.card_spell4word:

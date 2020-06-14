@@ -25,6 +25,11 @@ public class AppConstants {
     public static final String UPLOAD_FILE_EXIST_FORBIDDEN = "fileexists-forbidden";
     public static final String UPLOAD_INVALID_TOKEN = "badtoken";
 
+    public static final int API_MAX_RETRY = 3;
+    public static final int API_MAX_FAIL_RETRY = 3;
+    public static final int API_LOOP_MAX_SECS = 40;
+    public static final int API_LOOP_MINIMUM_COUNT_IN_LIST = 15;
+
     // Record & Storage related
     public static final String AUDIO_MAIN_PATH = "Spell4Wiki_Audios";
     public static final String AUDIO_FILEPATH = "/RecordedAudios";

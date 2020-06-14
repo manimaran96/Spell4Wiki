@@ -110,7 +110,7 @@
 
 
     <string name="check_internet">Please check your internet connection!</string>
-    <string name="record_fetch_fail">Please check your connection!\nScroll to try again!</string>
+    <string name="record_fetch_fail">Please check your connection!\nSwipe down/Scroll to try again!</string>
     <string name="something_went_wrong">Something went wrong.</string>
     <string name="something_went_wrong_try_again">Something went wrong. Please try again.</string>
     <string name="web_page_not_found">Page not found.\nTry again.</string>
@@ -186,11 +186,13 @@
 
     <string name="sc_d_spell4wordlist">You can upload audio files for your own word list directly from copy &amp; paste contents or from a text file.</string>
     <string name="checking_file_availability">Checking File Availability\n(%s)</string>
-    <string name="word_list_no_record_found">No record found.\n(or)\nAudio file already exist/uploaded for all the words.</string>
+    <string name="word_list_no_record_found">No words found.\n(or)\nAudio file already exist/uploaded for all the words.\n(or)\nContribute to other language.</string>
     <string name="temporary">Temporary</string>
     <string name="do_you_want_continue">Do you want to Continue?</string>
-    <string name="spell4wiktionary_load_more_confirmation">Take more time for finding the Wiktionary words haven\'t audio. Because, lot of words are may have audio already.\n\nIf you want to finding with more Wiktionary words then click continue.\nOtherwise click the not now for avoid load more.</string>
-    <string name="yes_continue">Yes, Continue</string>
-    <string name="not_now">Not now</string>
+    <string name="spell4wiktionary_load_more_confirmation">Take more time for finding the Wiktionary words haven\'t audio. Because, lot of words are may have audio already.\n\nYou can retry now or later to find with more Wiktionary words.</string>
+    <string name="spell4wiktionary_load_more_failed_confirmation">Something went wrong. Please try again later.</string>
+    <string name="retry_now">Retry now</string>
+    <string name="not_now">Later</string>
+    <string name="no_more_data_found">No more data found</string>
 
 </resources>

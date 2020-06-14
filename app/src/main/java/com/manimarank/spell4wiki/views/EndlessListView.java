@@ -8,6 +8,7 @@ import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.ListView;
 
+import com.manimarank.spell4wiki.R;
 import com.manimarank.spell4wiki.adapters.EndlessAdapter;
 
 import java.util.List;
@@ -57,15 +58,16 @@ public class EndlessListView extends ListView implements OnScrollListener {
     public void onScrollStateChanged(AbsListView view, int scrollState) {
     }
 
-    public void setLoadingView(int resId) {
+    private void setLoadingView() {
         final LayoutInflater inflater = (LayoutInflater) super.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        footer = inflater != null ? inflater.inflate(resId, null)  : null;
+        footer = inflater != null ? inflater.inflate(R.layout.item_loading_row, null)  : null; // TODO
         this.addFooterView(footer);
     }
 
     public void setAdapter(EndlessAdapter adapter) {
         super.setAdapter(adapter);
         this.adapter = adapter;
+        setLoadingView();
         this.removeFooterView(footer);
     }
 
