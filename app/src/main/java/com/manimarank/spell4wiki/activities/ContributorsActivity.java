@@ -20,7 +20,7 @@ import com.manimarank.spell4wiki.apis.ApiInterface;
 import com.manimarank.spell4wiki.models.ContributorData;
 import com.manimarank.spell4wiki.models.Contributors;
 import com.manimarank.spell4wiki.models.CoreContributors;
-import com.manimarank.spell4wiki.utils.GeneralUtils;
+import com.manimarank.spell4wiki.utils.NetworkUtils;
 import com.manimarank.spell4wiki.utils.ShowCasePref;
 import com.manimarank.spell4wiki.utils.SnackBarUtils;
 
@@ -99,7 +99,7 @@ public class ContributorsActivity extends AppCompatActivity {
         layoutCoreContributors.setVisibility(View.GONE);
         recyclerViewCodeContributors.setVisibility(View.GONE);
 
-        if (GeneralUtils.isNetworkConnected(getApplicationContext())) {
+        if (NetworkUtils.INSTANCE.isConnected(getApplicationContext())) {
 
             ApiInterface api = ApiClient.getApi().create(ApiInterface.class);
             Call<ContributorData> call = api.fetchContributorData();

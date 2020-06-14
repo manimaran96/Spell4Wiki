@@ -12,7 +12,7 @@
         android:id="@+id/txtWord"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_toStartOf="@+id/btn_wiki_meaning"
+        android:layout_toStartOf="@+id/btnWikiMeaning"
         android:maxLines="2"
         android:padding="@dimen/space20dp" />
 

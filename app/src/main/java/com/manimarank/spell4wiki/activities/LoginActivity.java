@@ -14,18 +14,19 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
-import com.google.android.material.snackbar.Snackbar;
 import com.manimarank.spell4wiki.R;
 import com.manimarank.spell4wiki.apis.ApiClient;
 import com.manimarank.spell4wiki.apis.ApiInterface;
 import com.manimarank.spell4wiki.auth.AccountUtils;
-import com.manimarank.spell4wiki.utils.constants.AppConstants;
-import com.manimarank.spell4wiki.utils.constants.Urls;
 import com.manimarank.spell4wiki.models.WikiLogin;
 import com.manimarank.spell4wiki.models.WikiToken;
 import com.manimarank.spell4wiki.models.WikiUser;
 import com.manimarank.spell4wiki.utils.GeneralUtils;
+import com.manimarank.spell4wiki.utils.NetworkUtils;
 import com.manimarank.spell4wiki.utils.PrefManager;
+import com.manimarank.spell4wiki.utils.SnackBarUtils;
+import com.manimarank.spell4wiki.utils.constants.AppConstants;
+import com.manimarank.spell4wiki.utils.constants.Urls;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -71,10 +72,13 @@ public class LoginActivity extends AppCompatActivity {
              */
             btnLogin.setOnClickListener(view -> {
                 if (!TextUtils.isEmpty(editUserName.getText()) && !TextUtils.isEmpty(editPassword.getText())) {
-                    GeneralUtils.hideKeyboard(LoginActivity.this);
-                    btnLogin.startAnimation();
-                    isDuringLogin = true;
-                    callToken(editUserName.getText().toString(), editPassword.getText().toString());
+                    if(NetworkUtils.INSTANCE.isConnected(getApplicationContext())) {
+                        GeneralUtils.hideKeyboard(LoginActivity.this);
+                        btnLogin.startAnimation();
+                        isDuringLogin = true;
+                        callToken(editUserName.getText().toString(), editPassword.getText().toString());
+                    }else
+                        showMsg(getString(R.string.check_internet));
                 } else
                     showMsg(getString(R.string.invalid_credential));
             });
@@ -223,7 +227,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void showMsg(String msg) {
-        Snackbar.make(btnLogin, msg, Snackbar.LENGTH_LONG).show();
+        SnackBarUtils.INSTANCE.showLong(btnLogin, msg);
     }
 
     private void init() {
@@ -246,7 +250,10 @@ public class LoginActivity extends AppCompatActivity {
         if (isDuringLogin()) {
             showMsg(getString(R.string.please_wait));
         } else {
-            GeneralUtils.openUrl(LoginActivity.this, url, title);
+            if (NetworkUtils.INSTANCE.isConnected(getApplicationContext()))
+                GeneralUtils.openUrl(LoginActivity.this, url, title);
+            else
+                showMsg(getString(R.string.check_internet));
         }
     }
 

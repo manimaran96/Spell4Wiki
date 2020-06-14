@@ -33,10 +33,10 @@
         android:ellipsize="end"
         android:text="@string/result_not_found"/>
 
-    <com.manimarank.spell4wiki.views.EndlessListView
-        android:id="@+id/search_result_list"
+    <com.manimarank.spell4wiki.views.EndlessRecyclerView
+        android:id="@+id/recyclerView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/search_bar"
         android:divider="@null" />
 

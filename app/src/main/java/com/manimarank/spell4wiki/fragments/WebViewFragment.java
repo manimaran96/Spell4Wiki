@@ -10,12 +10,6 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
-import androidx.fragment.app.Fragment;
-
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,14 +21,20 @@ import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.manimarank.spell4wiki.R;
 import com.manimarank.spell4wiki.databases.DBHelper;
 import com.manimarank.spell4wiki.databases.dao.WordsHaveAudioDao;
+import com.manimarank.spell4wiki.utils.GeneralUtils;
+import com.manimarank.spell4wiki.utils.NetworkUtils;
+import com.manimarank.spell4wiki.utils.PrefManager;
 import com.manimarank.spell4wiki.utils.SnackBarUtils;
 import com.manimarank.spell4wiki.utils.constants.AppConstants;
 import com.manimarank.spell4wiki.utils.constants.Urls;
-import com.manimarank.spell4wiki.utils.GeneralUtils;
-import com.manimarank.spell4wiki.utils.PrefManager;
 
 import java.util.List;
 
@@ -60,7 +60,7 @@ public class WebViewFragment extends Fragment {
 
         initUI();
 
-        if(getActivity() != null) {
+        if (getActivity() != null) {
             Bundle bundle = getActivity().getIntent().getExtras();
             if (bundle != null) {
                 if (bundle.containsKey(AppConstants.URL))
@@ -77,15 +77,15 @@ public class WebViewFragment extends Fragment {
         return rootView;
     }
 
-    private Boolean isAllowRecord(){
+    private Boolean isAllowRecord() {
         boolean isValid = false;
         try {
-            if(isWitionaryWord && !pref.getIsAnonymous() && !TextUtils.isEmpty(word)){
+            if (isWitionaryWord && !pref.getIsAnonymous() && !TextUtils.isEmpty(word)) {
                 WordsHaveAudioDao wordsHaveAudioDao = DBHelper.getInstance(getContext()).getAppDatabase().getWordsHaveAudioDao();
                 List<String> wordsAlreadyHaveAudio = wordsHaveAudioDao.getWordsAlreadyHaveAudioByLanguage(languageCode);
                 isValid = !wordsAlreadyHaveAudio.contains(word);
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return isValid;
@@ -94,12 +94,7 @@ public class WebViewFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-        if (getActivity() != null && GeneralUtils.isNetworkConnected(getActivity()))
-            loadWebPage(url);
-        else
-            SnackBarUtils.INSTANCE.showLong(webView, getString(R.string.check_internet));
-
+        loadWebPage(url);
         recordButtonInit();
 
     }
@@ -110,9 +105,14 @@ public class WebViewFragment extends Fragment {
             fabShow = true;
 
             fabRecord.setOnClickListener(v -> {
-                if (word != null)
-                    GeneralUtils.showRecordDialog(getActivity(), word.trim(), languageCode);
-                else
+                if (word != null) {
+                    if (getActivity() != null) {
+                        if (NetworkUtils.INSTANCE.isConnected(getActivity()))
+                            GeneralUtils.showRecordDialog(getActivity(), word.trim(), languageCode);
+                        else
+                            SnackBarUtils.INSTANCE.showLong(fabRecord, getString(R.string.check_internet));
+                    }
+                } else
                     SnackBarUtils.INSTANCE.showLong(fabRecord, getString(R.string.provide_valid_word));
             });
 
@@ -130,7 +130,7 @@ public class WebViewFragment extends Fragment {
                     }
                 });
             }
-        }else
+        } else
             fabRecord.hide();
     }
 
@@ -160,7 +160,7 @@ public class WebViewFragment extends Fragment {
             @Override
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
-                if(!isWebPageNotFound)
+                if (!isWebPageNotFound)
                     loadingVisibility(View.GONE);
                 if (getActivity() != null)
                     getActivity().invalidateOptionsMenu();
@@ -177,11 +177,13 @@ public class WebViewFragment extends Fragment {
         });
     }
 
-    private void showPageNotFound(){
+    private void showPageNotFound() {
         webView.setVisibility(View.INVISIBLE);
         txtLoading.setVisibility(View.INVISIBLE);
         progressBar.setVisibility(View.INVISIBLE);
         layoutWebPageNotFound.setVisibility(View.VISIBLE);
+        if (getActivity() != null && !NetworkUtils.INSTANCE.isConnected(getActivity()))
+            SnackBarUtils.INSTANCE.showLong(fabRecord, getString(R.string.check_internet));
     }
 
     private void loadingVisibility(int visibility) {
@@ -231,12 +233,12 @@ public class WebViewFragment extends Fragment {
     }
 
     public void copyLink() {
-        if(isAdded() && getActivity() != null){
+        if (isAdded() && getActivity() != null) {
             ClipboardManager clipboardManager = (ClipboardManager) getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
             // Create a new ClipData.
             ClipData clipData = ClipData.newPlainText(AppConstants.URL, Uri.decode(webView.getUrl()));
             // Set it as primary clip data to copy text to system clipboard.
-            if(clipboardManager != null)
+            if (clipboardManager != null)
                 clipboardManager.setPrimaryClip(clipData);
             // Popup a snack bar.
             SnackBarUtils.INSTANCE.showLong(webView, getString(R.string.link_copied));
@@ -259,17 +261,17 @@ public class WebViewFragment extends Fragment {
     }
 
     public void loadWordWithOtherLang(String langCode) {
-        if(isWitionaryWord && word != null) {
+        if (isWitionaryWord && word != null) {
             webView.loadUrl(String.format(Urls.WIKTIONARY_WEB, langCode, word));
             recordButtonInit();
         }
     }
 
     public void hideRecordButton(String wordDone) {
-        if(word.equals(wordDone)){
-            if(isAdded()){
+        if (word.equals(wordDone)) {
+            if (isAdded()) {
                 fabShow = false;
-                if(fabRecord != null){
+                if (fabRecord != null) {
                     fabRecord.hide();
                 }
             }

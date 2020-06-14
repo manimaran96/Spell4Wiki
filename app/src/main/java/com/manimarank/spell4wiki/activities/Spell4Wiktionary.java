@@ -278,7 +278,6 @@ public class Spell4Wiktionary extends AppCompatActivity implements EndlessRecycl
     private void searchFailed(String msg) {
         if (!isDestroyed() && !isFinishing()) {
             resetApiResultTime();
-
             if (NetworkUtils.INSTANCE.isConnected(getApplicationContext())) {
                 apiFailRetryCount += 1;
                 snackbar.setText(msg);
@@ -287,7 +286,7 @@ public class Spell4Wiktionary extends AppCompatActivity implements EndlessRecycl
                     layoutEmpty.setVisibility(View.VISIBLE);
                 }
             } else {
-                snackbar.setText(getString(recyclerView.getVisibility() != View.VISIBLE ? R.string.check_internet : R.string.record_fetch_fail));
+                snackbar.setText(getString(adapter != null && adapter.getItemCount() < 15 ? R.string.record_fetch_fail : R.string.check_internet));
             }
             if (recyclerView != null)
                 recyclerView.removeLoader();
@@ -348,8 +347,10 @@ public class Spell4Wiktionary extends AppCompatActivity implements EndlessRecycl
 
     @Override
     public boolean loadData() {
-        // Triggered only when new data needs to be appended to the list
-        // Return true if loading is in progress, false if there is no more data to load
+        /*
+         * Triggered only when new data needs to be appended to the list
+         * Return true if loading is in progress, false if there is no more data to load
+         */
         if (nextOffsetObj != null) {
             loadDataFromServer();
             return true;

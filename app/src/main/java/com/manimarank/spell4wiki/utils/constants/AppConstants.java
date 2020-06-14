@@ -30,6 +30,9 @@ public class AppConstants {
     public static final int API_LOOP_MAX_SECS = 40;
     public static final int API_LOOP_MINIMUM_COUNT_IN_LIST = 15;
 
+    public static final int MAX_RETRIES_FOR_FORCE_LOGIN = 1;
+    public static final int MAX_RETRIES_FOR_CSRF_TOKEN = 2;
+
     // Record & Storage related
     public static final String AUDIO_MAIN_PATH = "Spell4Wiki_Audios";
     public static final String AUDIO_FILEPATH = "/RecordedAudios";
@@ -40,6 +43,7 @@ public class AppConstants {
     // Request Code
     public static final int RC_UPLOAD_DIALOG = 1001;
     public static final int RC_PERMISSIONS = 1000;
+    public static final int RC_EDIT_REQUEST_CODE = 42;
 
     // Mail Ids
     public static final String CONTACT_MAIL = "manimarankumar96@gmail.com";

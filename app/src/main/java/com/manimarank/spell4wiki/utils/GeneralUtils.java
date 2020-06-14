@@ -5,17 +5,13 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.Toast;
 
 import androidx.core.content.ContextCompat;
 
-import com.google.android.material.snackbar.Snackbar;
 import com.manimarank.spell4wiki.R;
-import com.manimarank.spell4wiki.Spell4WikiApp;
 import com.manimarank.spell4wiki.activities.CommonWebActivity;
 import com.manimarank.spell4wiki.activities.CommonWebContentActivity;
 import com.manimarank.spell4wiki.activities.RecordAudioActivity;
@@ -59,24 +55,18 @@ public class GeneralUtils {
         }
     }
 
-    public static boolean isNetworkConnected(Context context) {
-        ConnectivityManager connectivityManager = ((ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE));
-        return connectivityManager.getActiveNetworkInfo() != null && connectivityManager.getActiveNetworkInfo().isConnected();
-    }
-
     public static void openUrl(Context context, String url, String title) {
         try {
-            View view = ((Activity) context).findViewById(android.R.id.content);
-            if (GeneralUtils.isNetworkConnected(context)) {
+            if (NetworkUtils.INSTANCE.isConnected(context)) {
                 if (url != null && !url.isEmpty()) {
                     Intent intent = new Intent(context, CommonWebActivity.class);
                     intent.putExtra(AppConstants.TITLE, title);
                     intent.putExtra(AppConstants.URL, url);
                     context.startActivity(intent);
                 } else
-                    SnackBarUtils.INSTANCE.showLong(view, context.getString(R.string.check_url));
+                    ToastUtils.INSTANCE.showLong(context.getString(R.string.check_url));
             } else
-                SnackBarUtils.INSTANCE.showLong(view, context.getString(R.string.check_internet));
+                ToastUtils.INSTANCE.showLong(context.getString(R.string.check_internet));
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -94,7 +84,7 @@ public class GeneralUtils {
     }
 
     public static void showRecordDialog(Activity activity, String word, String langCode) {
-        if(NetworkUtils.INSTANCE.isConnected(activity)) {
+        if (NetworkUtils.INSTANCE.isConnected(activity)) {
             WikimediaCommonsUtils.INSTANCE.checkFileAvailability(activity, word, langCode, fileExist -> {
                 if (!activity.isDestroyed() && !activity.isFinishing()) {
                     if (fileExist) {
@@ -119,7 +109,7 @@ public class GeneralUtils {
                     }
                 }
             });
-        }else
+        } else
             ToastUtils.INSTANCE.showLong(activity.getString(R.string.check_internet));
     }
 

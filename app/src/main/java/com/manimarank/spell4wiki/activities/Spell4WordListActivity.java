@@ -21,9 +21,10 @@ import android.widget.TextView;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.interpolator.view.animation.FastOutSlowInInterpolator;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.manimarank.spell4wiki.R;
-import com.manimarank.spell4wiki.adapters.EndlessAdapter;
+import com.manimarank.spell4wiki.adapters.EndlessRecyclerAdapter;
 import com.manimarank.spell4wiki.databases.DBHelper;
 import com.manimarank.spell4wiki.databases.dao.WordsHaveAudioDao;
 import com.manimarank.spell4wiki.databases.entities.WordsHaveAudio;
@@ -35,7 +36,7 @@ import com.manimarank.spell4wiki.utils.RealPathUtil;
 import com.manimarank.spell4wiki.utils.ShowCasePref;
 import com.manimarank.spell4wiki.utils.SnackBarUtils;
 import com.manimarank.spell4wiki.utils.constants.AppConstants;
-import com.manimarank.spell4wiki.views.EndlessListView;
+import com.manimarank.spell4wiki.views.EndlessRecyclerView;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -54,12 +55,12 @@ import static com.manimarank.spell4wiki.utils.constants.EnumTypeDef.ListMode.SPE
 public class Spell4WordListActivity extends AppCompatActivity {
 
 
-    private static final int EDIT_REQUEST_CODE = 42;
-    EndlessAdapter adapter;
     private EditText editFile;
     private TextView txtFileInfo;
     private View layoutEdit, layoutSelect, layoutEmpty;
-    private EndlessListView resultListView;
+
+    private EndlessRecyclerView recyclerView;
+    private EndlessRecyclerAdapter adapter;
     private String languageCode = "";
     private WordsHaveAudioDao wordsHaveAudioDao;
 
@@ -88,7 +89,7 @@ public class Spell4WordListActivity extends AppCompatActivity {
         Button btnDone = findViewById(R.id.btnDone);
         editFile = findViewById(R.id.editFile);
         txtFileInfo = findViewById(R.id.txtFileInfo);
-        resultListView = findViewById(R.id.listView);
+        recyclerView = findViewById(R.id.recyclerView);
         layoutSelect = findViewById(R.id.layoutSelect);
         layoutEdit = findViewById(R.id.layoutEdit);
         layoutEmpty = findViewById(R.id.layoutEmpty);
@@ -115,7 +116,7 @@ public class Spell4WordListActivity extends AppCompatActivity {
 
         layoutSelect.setVisibility(View.VISIBLE);
         layoutEdit.setVisibility(View.GONE);
-        resultListView.setVisibility(View.GONE);
+        recyclerView.setVisibility(View.GONE);
         layoutEmpty.setVisibility(View.GONE);
 
     }
@@ -137,7 +138,7 @@ public class Spell4WordListActivity extends AppCompatActivity {
         // Filter to show only text files.
         intent.setType("text/plain");
 
-        startActivityForResult(intent, EDIT_REQUEST_CODE);
+        startActivityForResult(intent, AppConstants.RC_EDIT_REQUEST_CODE);
     }
 
     public void updateList(String word) {
@@ -145,10 +146,8 @@ public class Spell4WordListActivity extends AppCompatActivity {
             wordsHaveAudioDao.insert(new WordsHaveAudio(word, languageCode));
             adapter.addWordInWordsHaveAudioList(word);
             adapter.remove(word);
-            adapter.notifyDataSetChanged();
-            if (adapter.getCount() == 0) {
+            if (adapter.getItemCount() == 0)
                 showEmptyView();
-            }
         }
     }
 
@@ -161,7 +160,7 @@ public class Spell4WordListActivity extends AppCompatActivity {
         // response to some other intent, and the code below shouldn't run at all.
 
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == EDIT_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+        if (requestCode == AppConstants.RC_EDIT_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
             // The document selected by the user won't be returned in the intent.
             // Instead, a URI to that document will be contained in the return intent
             // provided to this method as a parameter.
@@ -180,7 +179,8 @@ public class Spell4WordListActivity extends AppCompatActivity {
                 if (adapter != null) {
                     adapter.addWordInWordsHaveAudioList(data.getStringExtra(AppConstants.WORD));
                     adapter.remove(data.getStringExtra(AppConstants.WORD));
-                    adapter.notifyDataSetChanged();
+                    if (adapter.getItemCount() == 0)
+                        showEmptyView();
                 }
             }
         }
@@ -190,7 +190,7 @@ public class Spell4WordListActivity extends AppCompatActivity {
 
         layoutSelect.setVisibility(View.GONE);
         layoutEdit.setVisibility(View.VISIBLE);
-        resultListView.setVisibility(View.GONE);
+        recyclerView.setVisibility(View.GONE);
         layoutEmpty.setVisibility(View.GONE);
 
         txtFileInfo.setText(getString(R.string.hint_select_file_next));
@@ -200,7 +200,7 @@ public class Spell4WordListActivity extends AppCompatActivity {
     private void showDirectContentAlignMode() {
         layoutSelect.setVisibility(View.GONE);
         layoutEdit.setVisibility(View.VISIBLE);
-        resultListView.setVisibility(View.GONE);
+        recyclerView.setVisibility(View.GONE);
         layoutEmpty.setVisibility(View.GONE);
 
         txtFileInfo.setText(getString(R.string.hint_direct_copy_next));
@@ -214,16 +214,19 @@ public class Spell4WordListActivity extends AppCompatActivity {
         if (items.size() > 0) {
             layoutSelect.setVisibility(View.GONE);
             layoutEdit.setVisibility(View.GONE);
-            resultListView.setVisibility(View.VISIBLE);
+            recyclerView.setVisibility(View.VISIBLE);
             layoutEmpty.setVisibility(View.GONE);
 
+            recyclerView.setHasFixedSize(true);
+            LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+            recyclerView.setLayoutManager(layoutManager);
 
-            adapter = new EndlessAdapter(this, items, SPELL_4_WORD_LIST);
-            resultListView.setAdapter(adapter);
-            resultListView.setVisibility(View.VISIBLE);
+            adapter = new EndlessRecyclerAdapter(this, items, SPELL_4_WORD_LIST);
+            recyclerView.setAdapter(adapter, layoutManager);
             adapter.setWordsHaveAudioList(wordsHaveAudioDao.getWordsAlreadyHaveAudioByLanguage(languageCode));
 
-            new Handler().post(this::callShowCaseUI);
+            if (ShowCasePref.INSTANCE.isNotShowed(ShowCasePref.LIST_ITEM_SPELL_4_WIKI))
+                new Handler().post(this::callShowCaseUI);
         } else {
             showEmptyView();
         }
@@ -232,7 +235,7 @@ public class Spell4WordListActivity extends AppCompatActivity {
     private void showEmptyView() {
         layoutSelect.setVisibility(View.GONE);
         layoutEdit.setVisibility(View.GONE);
-        resultListView.setVisibility(View.GONE);
+        recyclerView.setVisibility(View.GONE);
         layoutEmpty.setVisibility(View.VISIBLE);
     }
 
@@ -358,7 +361,7 @@ public class Spell4WordListActivity extends AppCompatActivity {
             if (!languageCode.equals(langCode)) {
                 languageCode = langCode;
                 invalidateOptionsMenu();
-                if (resultListView.getVisibility() == View.VISIBLE || layoutEmpty.getVisibility() == View.VISIBLE) {
+                if (recyclerView.getVisibility() == View.VISIBLE || layoutEmpty.getVisibility() == View.VISIBLE) {
                     if (!TextUtils.isEmpty(editFile.getText())) {
                         List<String> items = getWordListFromString(editFile.getText().toString());
                         showWordsInRecordMode(items);
@@ -392,9 +395,9 @@ public class Spell4WordListActivity extends AppCompatActivity {
     }
 
     private void callBackPress() {
-        if (resultListView.getVisibility() == View.VISIBLE || layoutEmpty.getVisibility() == View.VISIBLE) {
+        if (recyclerView.getVisibility() == View.VISIBLE || layoutEmpty.getVisibility() == View.VISIBLE) {
             layoutEdit.setVisibility(View.VISIBLE);
-            resultListView.setVisibility(View.GONE);
+            recyclerView.setVisibility(View.GONE);
             layoutEmpty.setVisibility(View.GONE);
         } else if (layoutEdit.getVisibility() == View.VISIBLE) {
             if (!TextUtils.isEmpty(editFile.getText())) {
@@ -420,10 +423,10 @@ public class Spell4WordListActivity extends AppCompatActivity {
 
     private void callShowCaseUI() {
         if (!isFinishing() && !isDestroyed()) {
-            if (ShowCasePref.INSTANCE.isNotShowed(ShowCasePref.LIST_ITEM_SPELL_4_WIKI) && resultListView != null && resultListView.getVisibility() == View.VISIBLE && resultListView.getChildAt(0) != null) {
+            if (ShowCasePref.INSTANCE.isNotShowed(ShowCasePref.LIST_ITEM_SPELL_4_WIKI) && recyclerView != null && recyclerView.getVisibility() == View.VISIBLE && recyclerView.getChildAt(0) != null) {
                 MaterialTapTargetSequence sequence = new MaterialTapTargetSequence().setSequenceCompleteListener(() -> ShowCasePref.INSTANCE.showed(ShowCasePref.LIST_ITEM_SPELL_4_WIKI));
                 sequence.addPrompt(getPromptBuilder()
-                        .setTarget(resultListView.getChildAt(0))
+                        .setTarget(recyclerView.getChildAt(0))
                         .setPrimaryText(R.string.sc_t_spell4wiki_list_item)
                         .setSecondaryText(R.string.sc_d_spell4wiki_list_item));
                 sequence.show();

@@ -10,23 +10,24 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.interpolator.view.animation.FastOutSlowInInterpolator;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.manimarank.spell4wiki.R;
-import com.manimarank.spell4wiki.adapters.EndlessAdapter;
+import com.manimarank.spell4wiki.adapters.EndlessRecyclerAdapter;
 import com.manimarank.spell4wiki.apis.ApiClient;
 import com.manimarank.spell4wiki.apis.ApiInterface;
 import com.manimarank.spell4wiki.databases.DBHelper;
 import com.manimarank.spell4wiki.databases.dao.WikiLangDao;
-import com.manimarank.spell4wiki.utils.ShowCasePref;
-import com.manimarank.spell4wiki.utils.constants.AppConstants;
-import com.manimarank.spell4wiki.utils.constants.EnumTypeDef.ListMode;
 import com.manimarank.spell4wiki.fragments.LanguageSelectionFragment;
 import com.manimarank.spell4wiki.listerners.OnLanguageSelectionListener;
 import com.manimarank.spell4wiki.models.WikiSearchWords;
-import com.manimarank.spell4wiki.utils.GeneralUtils;
+import com.manimarank.spell4wiki.utils.NetworkUtils;
 import com.manimarank.spell4wiki.utils.PrefManager;
-import com.manimarank.spell4wiki.views.EndlessListView;
+import com.manimarank.spell4wiki.utils.ShowCasePref;
+import com.manimarank.spell4wiki.utils.constants.AppConstants;
+import com.manimarank.spell4wiki.utils.constants.EnumTypeDef.ListMode;
+import com.manimarank.spell4wiki.views.EndlessRecyclerView;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -39,9 +40,10 @@ import uk.co.samuelwall.materialtaptargetprompt.MaterialTapTargetPrompt;
 import uk.co.samuelwall.materialtaptargetprompt.MaterialTapTargetSequence;
 import uk.co.samuelwall.materialtaptargetprompt.extras.focals.RectanglePromptFocal;
 
-public class WiktionarySearchActivity extends AppCompatActivity implements EndlessListView.EndlessListener {
+public class WiktionarySearchActivity extends AppCompatActivity implements EndlessRecyclerView.EndlessListener {
 
-    private EndlessListView resultListView;
+    private EndlessRecyclerView recyclerView;
+    private EndlessRecyclerAdapter adapter;
     private TextView txtNotFound;
     private Snackbar snackbar;
 
@@ -65,7 +67,7 @@ public class WiktionarySearchActivity extends AppCompatActivity implements Endle
         // Views
         txtNotFound = findViewById(R.id.txtNotFound);
         SearchView searchView = findViewById(R.id.search_bar);
-        resultListView = findViewById(R.id.search_result_list);
+        recyclerView = findViewById(R.id.recyclerView);
         snackbar = Snackbar.make(searchView, getString(R.string.something_went_wrong), Snackbar.LENGTH_LONG);
 
         searchView.setIconifiedByDefault(false);
@@ -83,9 +85,13 @@ public class WiktionarySearchActivity extends AppCompatActivity implements Endle
             }
         });
 
-        resultListView.setAdapter(new EndlessAdapter(this, new ArrayList<>(), ListMode.WIKTIONARY));
-        resultListView.setListener(this);
-        resultListView.setVisibility(View.INVISIBLE);
+        recyclerView.setHasFixedSize(true);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(layoutManager);
+        adapter = new EndlessRecyclerAdapter(this, new ArrayList<>(), ListMode.WIKTIONARY);
+        recyclerView.setAdapter(adapter, layoutManager);
+        recyclerView.setListener(this);
+        recyclerView.setVisibility(View.INVISIBLE);
 
         if (getSupportActionBar() != null) {
             getSupportActionBar().setTitle(getString(R.string.wiktionary));
@@ -104,8 +110,8 @@ public class WiktionarySearchActivity extends AppCompatActivity implements Endle
         queryString = s;
         nextOffset = 0;
         txtNotFound.setVisibility(View.GONE);
-        resultListView.setVisibility(View.VISIBLE);
-        resultListView.reset();
+        recyclerView.setVisibility(View.VISIBLE);
+        recyclerView.reset();
 
         search(queryString);
     }
@@ -133,7 +139,7 @@ public class WiktionarySearchActivity extends AppCompatActivity implements Endle
 
     private void loadLanguages() {
         OnLanguageSelectionListener callback = langCode -> {
-            if(!languageCode.equals(langCode)) {
+            if (!languageCode.equals(langCode)) {
                 languageCode = langCode;
                 invalidateOptionsMenu();
                 api = ApiClient.getWiktionaryApi(getApplicationContext(), languageCode).create(ApiInterface.class);
@@ -161,78 +167,88 @@ public class WiktionarySearchActivity extends AppCompatActivity implements Endle
     }
 
     private void search(String query) {
-        Call<WikiSearchWords> call = api.fetchRecords(query, nextOffset);
+        if (!isDestroyed() && !isFinishing()) {
+            if (NetworkUtils.INSTANCE.isConnected(getApplicationContext())) {
+                Call<WikiSearchWords> call = api.fetchRecords(query, nextOffset);
 
-        call.enqueue(new Callback<WikiSearchWords>() {
-            @Override
-            public void onResponse(@NotNull Call<WikiSearchWords> call, @NotNull Response<WikiSearchWords> response) {
-                if (response.isSuccessful() && response.body() != null) {
-                    processSearchResult(response.body());
-                } else
-                    searchFailed(getString(R.string.something_went_wrong));
-            }
+                call.enqueue(new Callback<WikiSearchWords>() {
+                    @Override
+                    public void onResponse(@NotNull Call<WikiSearchWords> call, @NotNull Response<WikiSearchWords> response) {
+                        if (response.isSuccessful() && response.body() != null) {
+                            processSearchResult(response.body());
+                        } else
+                            searchFailed(getString(R.string.something_went_wrong));
+                    }
 
-            @Override
-            public void onFailure(@NotNull Call<WikiSearchWords> call, @NotNull Throwable t) {
-                searchFailed(getString(R.string.something_went_wrong));
-            }
-        });
+                    @Override
+                    public void onFailure(@NotNull Call<WikiSearchWords> call, @NotNull Throwable t) {
+                        searchFailed(getString(R.string.something_went_wrong));
+                    }
+                });
+            } else
+                searchFailed(getString(R.string.check_internet));
+        }
     }
 
     private void searchFailed(String msg) {
-        if (resultListView != null) { // Footer loader consume count = 1
-            if (resultListView.getAdapter() != null && resultListView.getAdapter().getCount() < 2) {
-                resultListView.setVisibility(View.INVISIBLE);
-                txtNotFound.setText(getString(R.string.result_not_found));
-                txtNotFound.setVisibility(View.VISIBLE);
-            } else {
-                txtNotFound.setVisibility(View.GONE);
-                resultListView.loadLaterOnScroll();
-            }
-        }
-        if (GeneralUtils.isNetworkConnected(getApplicationContext())) {
-            snackbar.setText(msg);
-        } else
-            snackbar.setText(getString(resultListView.getVisibility() != View.VISIBLE ? R.string.check_internet : R.string.record_fetch_fail));
+        if (!isDestroyed() && !isFinishing()) {
+            if (NetworkUtils.INSTANCE.isConnected(getApplicationContext())) {
+                snackbar.setText(msg);
+                if (recyclerView != null && adapter != null && adapter.getItemCount() < 1) {
+                    recyclerView.setVisibility(View.INVISIBLE);
+                    txtNotFound.setText(getString(R.string.result_not_found));
+                    txtNotFound.setVisibility(View.VISIBLE);
+                } else
+                    txtNotFound.setVisibility(View.GONE);
+            } else
+                snackbar.setText(getString(R.string.check_internet));
 
-        if (!msg.equals(getString(R.string.result_not_found)) && !snackbar.isShown())
-            snackbar.show();
+            if (!msg.equals(getString(R.string.result_not_found)) && !snackbar.isShown())
+                snackbar.show();
+        }
     }
 
     private void processSearchResult(WikiSearchWords wikiSearchWords) {
-        ArrayList<String> titleList = new ArrayList<>();
+        if (!isDestroyed() && !isFinishing()) {
 
-        if (snackbar.isShown())
-            snackbar.dismiss();
+            ArrayList<String> titleList = new ArrayList<>();
 
-        boolean isEmptyResponse;
-        if (wikiSearchWords != null) {
-            if (wikiSearchWords.getOffset() != null && wikiSearchWords.getOffset().getNextOffset() != null) {
-                nextOffset = wikiSearchWords.getOffset().getNextOffset();
-            } else
-                nextOffset = null;
+            if (snackbar.isShown())
+                snackbar.dismiss();
 
-            if (wikiSearchWords.getQuery() != null && wikiSearchWords.getQuery().getWikiTitleList() != null) {
-                for (WikiSearchWords.WikiWord wikiWord : wikiSearchWords.getQuery().getWikiTitleList()) {
-                    titleList.add(wikiWord.getTitle());
+            boolean isEmptyResponse;
+            if (wikiSearchWords != null) {
+                if (wikiSearchWords.getOffset() != null && wikiSearchWords.getOffset().getNextOffset() != null) {
+                    nextOffset = wikiSearchWords.getOffset().getNextOffset();
+                } else {
+                    recyclerView.setLastPage();
+                    nextOffset = null;
                 }
-                isEmptyResponse = titleList.isEmpty();
-            } else
-                isEmptyResponse = true;
 
-            if (isEmptyResponse) {
-                searchFailed(getString(R.string.result_not_found));
-            } else {
-                resultListView.addNewData(titleList);
-            }
-        } else
-            searchFailed(getString(R.string.something_went_wrong));
+                if (wikiSearchWords.getQuery() != null && wikiSearchWords.getQuery().getWikiTitleList() != null) {
+                    for (WikiSearchWords.WikiWord wikiWord : wikiSearchWords.getQuery().getWikiTitleList()) {
+                        titleList.add(wikiWord.getTitle());
+                    }
+                    isEmptyResponse = titleList.isEmpty();
+                } else
+                    isEmptyResponse = true;
+
+                if (isEmptyResponse) {
+                    searchFailed(getString(R.string.result_not_found));
+                } else {
+                    recyclerView.addNewData(titleList);
+                }
+            } else
+                searchFailed(getString(R.string.something_went_wrong));
+        }
     }
 
     @Override
     public boolean loadData() {
-        // Triggered only when new data needs to be appended to the list
-        // Return true if loading is in progress, false if there is no more data to load
+        /*
+         * Triggered only when new data needs to be appended to the list
+         * Return true if loading is in progress, false if there is no more data to load
+         */
         if (nextOffset != null) {
             search(queryString);
             return true;
@@ -240,8 +256,16 @@ public class WiktionarySearchActivity extends AppCompatActivity implements Endle
             return false;
     }
 
-    private void callShowCaseUI(){
-        if(!isFinishing() && !isDestroyed() && ShowCasePref.INSTANCE.isNotShowed(ShowCasePref.WIKTIONARY_PAGE)){
+    @Override
+    public void loadFail() {
+        if (!NetworkUtils.INSTANCE.isConnected(getApplicationContext()))
+            searchFailed(getString(R.string.check_internet));
+        else if (recyclerView != null && recyclerView.isLastPage())
+            searchFailed(getString(R.string.no_more_data_found));
+    }
+
+    private void callShowCaseUI() {
+        if (!isFinishing() && !isDestroyed() && ShowCasePref.INSTANCE.isNotShowed(ShowCasePref.WIKTIONARY_PAGE)) {
             WikiLangDao wikiLangDao = DBHelper.getInstance(getApplicationContext()).getAppDatabase().getWikiLangDao();
             MaterialTapTargetSequence sequence = new MaterialTapTargetSequence().setSequenceCompleteListener(() -> ShowCasePref.INSTANCE.showed(ShowCasePref.WIKTIONARY_PAGE));
             sequence.addPrompt(new MaterialTapTargetPrompt.Builder(WiktionarySearchActivity.this)

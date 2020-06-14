@@ -7,14 +7,17 @@ import com.google.android.material.snackbar.Snackbar
 object SnackBarUtils {
 
     private fun showSnackBar(view: View, msg: String, duration: Int) {
-        Snackbar.make(view, msg, duration).show()
+        try {
+            Snackbar.make(view, msg, duration).show()
+        }catch (e : Exception){
+        }
     }
 
-    public fun showLong(view: View, msg: String) {
+    fun showLong(view: View, msg: String) {
         showSnackBar(view, msg, Snackbar.LENGTH_LONG)
     }
 
-    public fun showNormal(view: View, msg: String) {
+    fun showNormal(view: View, msg: String) {
         showSnackBar(view, msg, Snackbar.LENGTH_SHORT)
     }
 }

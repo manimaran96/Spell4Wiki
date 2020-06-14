@@ -47,6 +47,7 @@ import com.manimarank.spell4wiki.record.ogg.WavToOggConverter;
 import com.manimarank.spell4wiki.record.wav.WAVPlayer;
 import com.manimarank.spell4wiki.record.wav.WAVRecorder;
 import com.manimarank.spell4wiki.utils.GeneralUtils;
+import com.manimarank.spell4wiki.utils.NetworkUtils;
 import com.manimarank.spell4wiki.utils.PrefManager;
 import com.manimarank.spell4wiki.utils.Print;
 import com.manimarank.spell4wiki.utils.ShowCasePref;
@@ -72,11 +73,12 @@ import retrofit2.Response;
 import uk.co.samuelwall.materialtaptargetprompt.MaterialTapTargetPrompt;
 import uk.co.samuelwall.materialtaptargetprompt.extras.focals.RectanglePromptFocal;
 
+import static com.manimarank.spell4wiki.utils.constants.AppConstants.MAX_RETRIES_FOR_CSRF_TOKEN;
+import static com.manimarank.spell4wiki.utils.constants.AppConstants.MAX_RETRIES_FOR_FORCE_LOGIN;
+
 
 public class RecordAudioActivity extends AppCompatActivity {
 
-    private static final int MAX_RETRIES_FOR_FORCE_LOGIN = 1;
-    private static final int MAX_RETRIES_FOR_CSRF_TOKEN = 2;
     // Views
     private View layoutUploadPopUp, layoutRecordControls;
     private ImageView btnRecord, btnPlayPause;
@@ -234,14 +236,17 @@ public class RecordAudioActivity extends AppCompatActivity {
         runnable = this::seekUpdate;
 
         btnUpload.setOnClickListener(v -> {
-            if (ShowCasePref.INSTANCE.isNotShowed(ShowCasePref.RECORD_UPLOAD_UI)) {
-                showCaseShowed = false;
-                callShowCaseUI();
-            } else if (!showCaseShowed) {
-                // For avoid re-click
-                showCaseShowed = true;
+            if (NetworkUtils.INSTANCE.isConnected(getApplicationContext())) {
+                if (ShowCasePref.INSTANCE.isNotShowed(ShowCasePref.RECORD_UPLOAD_UI)) {
+                    showCaseShowed = false;
+                    callShowCaseUI();
+                } else if (!showCaseShowed) {
+                    // For avoid re-click
+                    showCaseShowed = true;
+                } else
+                    uploadAudioProcess();
             } else
-                uploadAudioProcess();
+                ToastUtils.INSTANCE.showLong(getString(R.string.check_internet));
         });
 
         btnClose.setOnClickListener(v -> closePopUp());
@@ -301,13 +306,15 @@ public class RecordAudioActivity extends AppCompatActivity {
     }
 
     private void seekUpdate() {
-        if (player != null) {
-            int mCurrentPosition = player.getCurrentPosition();
-            seekBar.setProgress(mCurrentPosition);
-            lastProgress = mCurrentPosition;
+        if (!isDestroyed() && !isFinishing()) {
+            if (player != null) {
+                int mCurrentPosition = player.getCurrentPosition();
+                seekBar.setProgress(mCurrentPosition);
+                lastProgress = mCurrentPosition;
+            }
+            if (mHandler != null)
+                mHandler.postDelayed(runnable, 100);
         }
-        if (mHandler != null)
-            mHandler.postDelayed(runnable, 100);
     }
 
     @Override
@@ -538,8 +545,9 @@ public class RecordAudioActivity extends AppCompatActivity {
 
     private void uploadFailed(String msg) {
         Print.error(TAG + "UPLOAD FAIL MESSAGE " + msg);
-        if (GeneralUtils.isNetworkConnected(getApplicationContext())) {
-            if (pref.getCsrfToken() == null) { // CSRF Invalid then get new csrf and try again
+        if (NetworkUtils.INSTANCE.isConnected(getApplicationContext())) {
+            if (pref.getCsrfToken() == null) {
+                // CSRF Invalid then get new csrf and try again
                 if (retryCountForCsrf < MAX_RETRIES_FOR_CSRF_TOKEN) {
                     uploadAudioToWikiServer();
                     return;

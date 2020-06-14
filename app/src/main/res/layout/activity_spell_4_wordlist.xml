@@ -183,10 +183,10 @@
 
     </RelativeLayout>
 
-    <com.manimarank.spell4wiki.views.EndlessListView
-        android:id="@+id/listView"
+    <com.manimarank.spell4wiki.views.EndlessRecyclerView
+        android:id="@+id/recyclerView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:divider="@null"
         android:visibility="gone" />
 

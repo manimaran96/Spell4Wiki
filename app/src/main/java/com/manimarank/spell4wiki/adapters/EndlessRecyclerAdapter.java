@@ -23,9 +23,11 @@ import com.manimarank.spell4wiki.R;
 import com.manimarank.spell4wiki.activities.CommonWebActivity;
 import com.manimarank.spell4wiki.adapters.base.BaseViewHolder;
 import com.manimarank.spell4wiki.utils.GeneralUtils;
+import com.manimarank.spell4wiki.utils.NetworkUtils;
 import com.manimarank.spell4wiki.utils.PrefManager;
 import com.manimarank.spell4wiki.utils.ShowCasePref;
 import com.manimarank.spell4wiki.utils.SnackBarUtils;
+import com.manimarank.spell4wiki.utils.ToastUtils;
 import com.manimarank.spell4wiki.utils.constants.AppConstants;
 import com.manimarank.spell4wiki.utils.constants.Urls;
 
@@ -46,6 +48,7 @@ public class EndlessRecyclerAdapter extends RecyclerView.Adapter<BaseViewHolder>
     private List<String> mItems;
     private Context mContext;
     private Activity mActivity;
+    private View rootView;
 
     private List<String> wordsAlreadyHaveAudio = new ArrayList<>();
     private PrefManager pref;
@@ -151,18 +154,29 @@ public class EndlessRecyclerAdapter extends RecyclerView.Adapter<BaseViewHolder>
         this.wordsAlreadyHaveAudio.add(wordsAlreadyHaveAudio);
     }
 
-    private void openWiktionaryWebView(String word) {
-        Intent intent = new Intent(mContext, CommonWebActivity.class);
-        String langCode = getLanguageCode();
-        if (langCode == null)
-            langCode = AppConstants.DEFAULT_LANGUAGE_CODE;
+    private void showNetworkProblem() {
+        if (rootView != null)
+            SnackBarUtils.INSTANCE.showLong(rootView, mActivity.getString(R.string.check_internet));
+        else
+            ToastUtils.INSTANCE.showLong(mActivity.getString(R.string.check_internet));
+    }
 
-        String url = String.format(Urls.WIKTIONARY_WEB, langCode, word);
-        intent.putExtra(AppConstants.TITLE, word);
-        intent.putExtra(AppConstants.URL, url);
-        intent.putExtra(AppConstants.IS_WIKTIONARY_WORD, true);
-        intent.putExtra(AppConstants.LANGUAGE_CODE, langCode);
-        mActivity.startActivity(intent);
+    private void openWiktionaryWebView(String word) {
+        if (NetworkUtils.INSTANCE.isConnected(mActivity)) {
+            Intent intent = new Intent(mContext, CommonWebActivity.class);
+            String langCode = getLanguageCode();
+            if (langCode == null)
+                langCode = AppConstants.DEFAULT_LANGUAGE_CODE;
+
+            String url = String.format(Urls.WIKTIONARY_WEB, langCode, word);
+            intent.putExtra(AppConstants.TITLE, word);
+            intent.putExtra(AppConstants.URL, url);
+            intent.putExtra(AppConstants.IS_WIKTIONARY_WORD, true);
+            intent.putExtra(AppConstants.LANGUAGE_CODE, langCode);
+            mActivity.startActivity(intent);
+        } else {
+            showNetworkProblem();
+        }
     }
 
     private String getLanguageCode() {
@@ -197,6 +211,7 @@ public class EndlessRecyclerAdapter extends RecyclerView.Adapter<BaseViewHolder>
 
         DataViewHolder(View itemView) {
             super(itemView);
+            rootView = itemView;
             txtWord = itemView.findViewById(R.id.txtWord);
             btnWikMeaning = itemView.findViewById(R.id.btnWikiMeaning);
         }
@@ -225,7 +240,10 @@ public class EndlessRecyclerAdapter extends RecyclerView.Adapter<BaseViewHolder>
                             return;
                         if (!isHaveAudio) {
                             if (GeneralUtils.checkPermissionGranted(mActivity)) {
-                                GeneralUtils.showRecordDialog(mActivity, word, getLanguageCode());
+                                if (NetworkUtils.INSTANCE.isConnected(mActivity))
+                                    GeneralUtils.showRecordDialog(mActivity, word, getLanguageCode());
+                                else
+                                    showNetworkProblem();
                             } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                                 getPermissionToRecordAudio();
                             }

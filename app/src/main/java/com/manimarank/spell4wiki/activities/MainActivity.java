@@ -14,10 +14,10 @@ import androidx.interpolator.view.animation.FastOutSlowInInterpolator;
 
 import com.manimarank.spell4wiki.R;
 import com.manimarank.spell4wiki.utils.GeneralUtils;
+import com.manimarank.spell4wiki.utils.NetworkUtils;
 import com.manimarank.spell4wiki.utils.PrefManager;
 import com.manimarank.spell4wiki.utils.ShowCasePref;
 import com.manimarank.spell4wiki.utils.SnackBarUtils;
-import com.manimarank.spell4wiki.utils.ToastUtils;
 import com.manimarank.spell4wiki.utils.constants.AppConstants;
 import com.manimarank.spell4wiki.utils.constants.Urls;
 
@@ -69,6 +69,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View view) {
+        if (!NetworkUtils.INSTANCE.isConnected(getApplicationContext())) {
+            SnackBarUtils.INSTANCE.showLong(view, getString(R.string.check_internet));
+            return;
+        }
+
         if (pref.getIsAnonymous()) {
             SnackBarUtils.INSTANCE.showLong(view, getString(R.string.login_to_contribute));
             return;
@@ -119,8 +124,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         TextView btnMyContributions = findViewById(R.id.txtViewMyContribution);
         TextView btnLogin = findViewById(R.id.txtLogin);
 
-        btnMyContributions.setOnClickListener(v -> GeneralUtils.openUrl(MainActivity.this, urlMyContribution, getString(R.string.view_my_contribution)));
-        btnLogin.setOnClickListener(v -> pref.logoutUser());
+        btnMyContributions.setOnClickListener(v -> {
+            if (NetworkUtils.INSTANCE.isConnected(getApplicationContext()))
+                GeneralUtils.openUrl(MainActivity.this, urlMyContribution, getString(R.string.view_my_contribution));
+            else
+                SnackBarUtils.INSTANCE.showNormal(btnMyContributions, getString(R.string.check_internet));
+        });
+        btnLogin.setOnClickListener(v -> {
+            if (NetworkUtils.INSTANCE.isConnected(getApplicationContext()))
+                pref.logoutUser();
+            else
+                SnackBarUtils.INSTANCE.showNormal(searchView, getString(R.string.check_internet));
+        });
 
         View viewContribute = findViewById(R.id.layoutContributeOptions);
         View viewLogin = findViewById(R.id.layoutLogin);
@@ -134,16 +149,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void logoutUser() {
-        new AlertDialog.Builder(this)
-                .setTitle(R.string.logout_confirmation)
-                .setMessage(R.string.logout_message)
-                .setPositiveButton(getString(R.string.yes), (dialog, which) -> {
-                    // Logout user
-                    logoutApi();
-                    pref.logoutUser();
-                })
-                .setNegativeButton(R.string.no, null)
-                .show();
+        if (NetworkUtils.INSTANCE.isConnected(getApplicationContext())) {
+            new AlertDialog.Builder(this)
+                    .setTitle(R.string.logout_confirmation)
+                    .setMessage(R.string.logout_message)
+                    .setPositiveButton(getString(R.string.yes), (dialog, which) -> {
+                        // Logout user
+                        logoutApi();
+                        pref.logoutUser();
+                    })
+                    .setNegativeButton(R.string.no, null)
+                    .show();
+        } else
+            SnackBarUtils.INSTANCE.showNormal(searchView, getString(R.string.check_internet));
     }
 
     private void logoutApi() {
@@ -156,6 +174,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             searchView.clearFocus();
             GeneralUtils.hideKeyboard(this);
         }
+        if (!NetworkUtils.INSTANCE.isConnected(getApplicationContext()))
+            SnackBarUtils.INSTANCE.showNormal(searchView, getString(R.string.check_internet));
     }
 
     @Override

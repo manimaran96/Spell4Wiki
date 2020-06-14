@@ -19,6 +19,7 @@ import com.manimaran.crash_reporter.utils.AppUtils;
 import com.manimarank.spell4wiki.BuildConfig;
 import com.manimarank.spell4wiki.R;
 import com.manimarank.spell4wiki.utils.GeneralUtils;
+import com.manimarank.spell4wiki.utils.NetworkUtils;
 import com.manimarank.spell4wiki.utils.PrefManager;
 import com.manimarank.spell4wiki.utils.SnackBarUtils;
 import com.manimarank.spell4wiki.utils.constants.AppConstants;
@@ -92,6 +93,10 @@ public class AboutActivity extends AppCompatActivity implements View.OnClickList
 
     @Override
     public void onClick(View v) {
+        if(!NetworkUtils.INSTANCE.isConnected(getApplicationContext())){
+            SnackBarUtils.INSTANCE.showLong(findViewById(R.id.txt_rate_app), getString(R.string.check_internet));
+            return;
+        }
         switch (v.getId()) {
             case R.id.txt_rate_app:
                 GeneralUtils.openUrlInBrowser(this, Urls.APP_LINK);

@@ -11,7 +11,7 @@ import android.view.View
 import android.webkit.*
 import androidx.appcompat.app.AppCompatActivity
 import com.manimarank.spell4wiki.R
-import com.manimarank.spell4wiki.utils.GeneralUtils
+import com.manimarank.spell4wiki.utils.NetworkUtils
 import com.manimarank.spell4wiki.utils.SnackBarUtils
 import com.manimarank.spell4wiki.utils.constants.AppConstants
 import kotlinx.android.synthetic.main.activity_web_view_content.*
@@ -35,7 +35,7 @@ class CommonWebContentActivity : AppCompatActivity() {
             if (bundle.containsKey(AppConstants.URL)) {
                 url = bundle.getString(AppConstants.URL)
                 if (!TextUtils.isEmpty(url))
-                    if (GeneralUtils.isNetworkConnected(applicationContext))
+                    if (NetworkUtils.isConnected(applicationContext))
                         loadWebPageContent()
                     else
                         SnackBarUtils.showLong(webView, getString(R.string.check_internet))

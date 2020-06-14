@@ -24,6 +24,7 @@ import com.manimarank.spell4wiki.databases.dao.WordsHaveAudioDao;
 import com.manimarank.spell4wiki.fragments.LanguageSelectionFragment;
 import com.manimarank.spell4wiki.listerners.OnLanguageSelectionListener;
 import com.manimarank.spell4wiki.utils.GeneralUtils;
+import com.manimarank.spell4wiki.utils.NetworkUtils;
 import com.manimarank.spell4wiki.utils.PrefManager;
 import com.manimarank.spell4wiki.utils.ShowCasePref;
 import com.manimarank.spell4wiki.utils.SnackBarUtils;
@@ -95,11 +96,14 @@ public class Spell4WordActivity extends AppCompatActivity {
 
         btnRecord.setOnClickListener(v -> {
             if (!TextUtils.isEmpty(editSpell4Word.getText()) && editSpell4Word.getText().length() < 30) {
-                String word = editSpell4Word.getText().toString().trim();
-                if(isAllowRecord(word))
-                    GeneralUtils.showRecordDialog(Spell4WordActivity.this, word, languageCode);
-                else
-                    SnackBarUtils.INSTANCE.showLong(editSpell4Word, String.format(getString(R.string.audio_file_already_exist), word));
+                if(NetworkUtils.INSTANCE.isConnected(getApplicationContext())) {
+                    String word = editSpell4Word.getText().toString().trim();
+                    if (isAllowRecord(word))
+                        GeneralUtils.showRecordDialog(Spell4WordActivity.this, word, languageCode);
+                    else
+                        SnackBarUtils.INSTANCE.showLong(editSpell4Word, String.format(getString(R.string.audio_file_already_exist), word));
+                }else
+                    SnackBarUtils.INSTANCE.showLong(editSpell4Word, getString(R.string.check_internet));
             } else
                 SnackBarUtils.INSTANCE.showLong(editSpell4Word, getString(R.string.enter_valid_word));
         });
