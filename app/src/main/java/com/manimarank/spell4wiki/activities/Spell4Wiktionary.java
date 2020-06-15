@@ -117,7 +117,7 @@ public class Spell4Wiktionary extends AppCompatActivity implements EndlessRecycl
     private void loadDataFromServer() {
         if (!isFinishing() && !isDestroyed()) {
             if (NetworkUtils.INSTANCE.isConnected(getApplicationContext())) {
-                /**
+                /*
                  * Check if user reach the end of api data.
                  * Show empty UI If no data exist. Otherwise show message.
                  */
@@ -126,7 +126,7 @@ public class Spell4Wiktionary extends AppCompatActivity implements EndlessRecycl
                     return;
                 }
 
-                /**
+                /*
                  * Set basic information on both very first time and after language change
                  */
                 String wiktionaryTitleOfWordsWithoutAudio = null;
@@ -147,7 +147,7 @@ public class Spell4Wiktionary extends AppCompatActivity implements EndlessRecycl
                 }
 
 
-                /**
+                /*
                  * For Avoiding multiple api calls
                  * Time limit for loop api call max 30 to 40 secs.
                  * Checked cases
@@ -372,21 +372,25 @@ public class Spell4Wiktionary extends AppCompatActivity implements EndlessRecycl
     }
 
     public void updateList(String word) {
-        if (adapter != null) {
-            wordsHaveAudioDao.insert(new WordsHaveAudio(word, languageCode));
-            adapter.addWordInWordsHaveAudioList(word);
-            adapter.remove(word);
+        if(!isDestroyed() && !isFinishing()) {
+            if (adapter != null) {
+                wordsHaveAudioDao.insert(new WordsHaveAudio(word, languageCode));
+                adapter.addWordInWordsHaveAudioList(word);
+                adapter.remove(word);
+            }
         }
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == AppConstants.RC_UPLOAD_DIALOG) {
-            if (data != null && data.hasExtra(AppConstants.WORD)) {
-                if (adapter != null) {
-                    adapter.addWordInWordsHaveAudioList(data.getStringExtra(AppConstants.WORD));
-                    adapter.remove(data.getStringExtra(AppConstants.WORD));
+        if(!isDestroyed() && !isFinishing()) {
+            if (requestCode == AppConstants.RC_UPLOAD_DIALOG) {
+                if (data != null && data.hasExtra(AppConstants.WORD)) {
+                    if (adapter != null) {
+                        adapter.addWordInWordsHaveAudioList(data.getStringExtra(AppConstants.WORD));
+                        adapter.remove(data.getStringExtra(AppConstants.WORD));
+                    }
                 }
             }
         }

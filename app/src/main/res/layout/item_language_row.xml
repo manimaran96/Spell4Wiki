@@ -1,5 +1,5 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/layout_lang_item"
+    android:id="@+id/layoutItem"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="@dimen/space10dp"
@@ -7,7 +7,7 @@
     android:orientation="vertical">
 
     <androidx.appcompat.widget.AppCompatRadioButton
-        android:id="@+id/radio_select"
+        android:id="@+id/radioSelect"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
@@ -18,11 +18,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:layout_toEndOf="@+id/radio_select"
+        android:layout_toEndOf="@+id/radioSelect"
         android:orientation="vertical">
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/txt_lang_name"
+            android:id="@+id/txtLanguage"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/space10dp"
@@ -32,7 +32,7 @@
             android:textSize="@dimen/text_normal" />
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/txt_local_name"
+            android:id="@+id/txtLocalName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/space10dp"

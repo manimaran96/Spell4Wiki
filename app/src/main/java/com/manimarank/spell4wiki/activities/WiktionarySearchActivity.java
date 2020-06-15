@@ -107,13 +107,15 @@ public class WiktionarySearchActivity extends AppCompatActivity implements Endle
     }
 
     private void submitQuery(String s) {
-        queryString = s;
-        nextOffset = 0;
-        txtNotFound.setVisibility(View.GONE);
-        recyclerView.setVisibility(View.VISIBLE);
-        recyclerView.reset();
+        if(!isDestroyed() && !isFinishing()) {
+            queryString = s;
+            nextOffset = 0;
+            txtNotFound.setVisibility(View.GONE);
+            recyclerView.setVisibility(View.VISIBLE);
+            recyclerView.reset();
 
-        search(queryString);
+            search(queryString);
+        }
     }
 
     @Override

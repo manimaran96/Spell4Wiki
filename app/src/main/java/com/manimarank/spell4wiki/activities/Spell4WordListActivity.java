@@ -142,12 +142,14 @@ public class Spell4WordListActivity extends AppCompatActivity {
     }
 
     public void updateList(String word) {
-        if (adapter != null) {
-            wordsHaveAudioDao.insert(new WordsHaveAudio(word, languageCode));
-            adapter.addWordInWordsHaveAudioList(word);
-            adapter.remove(word);
-            if (adapter.getItemCount() == 0)
-                showEmptyView();
+        if(!isDestroyed() && !isFinishing()) {
+            if (adapter != null) {
+                wordsHaveAudioDao.insert(new WordsHaveAudio(word, languageCode));
+                adapter.addWordInWordsHaveAudioList(word);
+                adapter.remove(word);
+                if (adapter.getItemCount() == 0)
+                    showEmptyView();
+            }
         }
     }
 
@@ -160,27 +162,29 @@ public class Spell4WordListActivity extends AppCompatActivity {
         // response to some other intent, and the code below shouldn't run at all.
 
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == AppConstants.RC_EDIT_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
-            // The document selected by the user won't be returned in the intent.
-            // Instead, a URI to that document will be contained in the return intent
-            // provided to this method as a parameter.
-            // Pull that URI using resultData.getData().
-            Uri uri = null;
-            if (data != null) {
-                uri = data.getData();
-                assert uri != null;
-                File file = new File(RealPathUtil.getRealPath(getApplicationContext(), uri));
-                openFileInAlignMode(file.getAbsolutePath());
+        if(!isDestroyed() && !isFinishing()) {
+            if (requestCode == AppConstants.RC_EDIT_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+                // The document selected by the user won't be returned in the intent.
+                // Instead, a URI to that document will be contained in the return intent
+                // provided to this method as a parameter.
+                // Pull that URI using resultData.getData().
+                Uri uri = null;
+                if (data != null) {
+                    uri = data.getData();
+                    assert uri != null;
+                    File file = new File(RealPathUtil.getRealPath(getApplicationContext(), uri));
+                    openFileInAlignMode(file.getAbsolutePath());
+                }
             }
-        }
 
-        if (requestCode == AppConstants.RC_UPLOAD_DIALOG) {
-            if (data != null && data.hasExtra(AppConstants.WORD)) {
-                if (adapter != null) {
-                    adapter.addWordInWordsHaveAudioList(data.getStringExtra(AppConstants.WORD));
-                    adapter.remove(data.getStringExtra(AppConstants.WORD));
-                    if (adapter.getItemCount() == 0)
-                        showEmptyView();
+            if (requestCode == AppConstants.RC_UPLOAD_DIALOG) {
+                if (data != null && data.hasExtra(AppConstants.WORD)) {
+                    if (adapter != null) {
+                        adapter.addWordInWordsHaveAudioList(data.getStringExtra(AppConstants.WORD));
+                        adapter.remove(data.getStringExtra(AppConstants.WORD));
+                        if (adapter.getItemCount() == 0)
+                            showEmptyView();
+                    }
                 }
             }
         }

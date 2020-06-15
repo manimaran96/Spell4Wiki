@@ -7,24 +7,28 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.view.View;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.SearchView;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.manimarank.spell4wiki.R;
-import com.manimarank.spell4wiki.adapters.LangAdapter;
-import com.manimarank.spell4wiki.utils.constants.EnumTypeDef.ListMode;
+import com.manimarank.spell4wiki.adapters.LanguageAdapter;
 import com.manimarank.spell4wiki.databases.DBHelper;
 import com.manimarank.spell4wiki.databases.entities.WikiLang;
 import com.manimarank.spell4wiki.listerners.OnLanguageSelectionListener;
+import com.manimarank.spell4wiki.utils.GeneralUtils;
+import com.manimarank.spell4wiki.utils.NetworkUtils;
 import com.manimarank.spell4wiki.utils.PrefManager;
+import com.manimarank.spell4wiki.utils.SnackBarUtils;
+import com.manimarank.spell4wiki.utils.constants.EnumTypeDef.ListMode;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -37,7 +41,7 @@ public class LanguageSelectionFragment extends BottomSheetDialogFragment {
     private PrefManager pref;
     private OnLanguageSelectionListener callback;
     private List<WikiLang> wikiLanguageList = new ArrayList<>();
-    private LangAdapter adapter;
+    private LanguageAdapter adapter;
     @ListMode
     private int listMode;
     private String preSelectedLanguageCode = null;
@@ -77,13 +81,15 @@ public class LanguageSelectionFragment extends BottomSheetDialogFragment {
         dialog.setContentView(R.layout.bottom_sheet_language_selection);
 
         TextView txtTitle = dialog.findViewById(R.id.text_select_lang_title);
-        if(!TextUtils.isEmpty(getSubTitleInfo()) && txtTitle != null) {
+        if (!TextUtils.isEmpty(getSubTitleInfo()) && txtTitle != null) {
             txtTitle.setVisibility(View.VISIBLE);
             txtTitle.setText(getSubTitleInfo());
         }
-        final ListView listView = dialog.findViewById(R.id.list_view_lang);
+        final RecyclerView recyclerView = dialog.findViewById(R.id.recyclerView);
         ImageView btnClose = dialog.findViewById(R.id.btn_close);
         final SearchView searchView = dialog.findViewById(R.id.search_view);
+        View layoutAddLanguage = dialog.findViewById(R.id.layoutAddLanguage);
+        Button btnAddMyLanguage = dialog.findViewById(R.id.btnAddMyLanguage);
 
         DBHelper dbHelper = DBHelper.getInstance(getContext());
 
@@ -96,8 +102,22 @@ public class LanguageSelectionFragment extends BottomSheetDialogFragment {
         wikiLanguageList.clear();
         if (listMode == ListMode.SPELL_4_WIKI) {
             wikiLanguageList = dbHelper.getAppDatabase().getWikiLangDao().getWikiLanguageListForWordsWithoutAudio();
+            if (layoutAddLanguage != null) {
+                layoutAddLanguage.setVisibility(View.VISIBLE);
+            }
+            if (btnAddMyLanguage != null) {
+                btnAddMyLanguage.setOnClickListener(v -> {
+                    if (getActivity() != null && NetworkUtils.INSTANCE.isConnected(getActivity())) {
+                        GeneralUtils.openUrl(getActivity(), "https://docs.google.com/forms/d/e/1FAIpQLSciqHNw1ZtH1kp2zz2DlKFmIbRZw2K7fhcJdxYNAr6TiAsN2A/viewform", "Add Language");
+                    } else
+                        SnackBarUtils.INSTANCE.showNormal(btnAddMyLanguage, getString(R.string.check_internet));
+                });
+            }
         } else {
             wikiLanguageList = dbHelper.getAppDatabase().getWikiLangDao().getWikiLanguageList();
+            if (layoutAddLanguage != null) {
+                layoutAddLanguage.setVisibility(View.GONE);
+            }
         }
 
         OnLanguageSelectionListener languageSelectionListener = langCode -> {
@@ -123,9 +143,9 @@ public class LanguageSelectionFragment extends BottomSheetDialogFragment {
             dismiss();
         };
 
-        adapter = new LangAdapter(getActivity(), wikiLanguageList, languageSelectionListener, preSelectedLanguageCode);
-        if (listView != null) {
-            listView.setAdapter(adapter);
+        adapter = new LanguageAdapter(getActivity(), wikiLanguageList, languageSelectionListener, preSelectedLanguageCode);
+        if (recyclerView != null) {
+            recyclerView.setAdapter(adapter);
         }
 
         if (btnClose != null) {
@@ -204,7 +224,7 @@ public class LanguageSelectionFragment extends BottomSheetDialogFragment {
             case ListMode.TEMP:
                 info = getString(R.string.temporary);
         }
-        if(info != null){
+        if (info != null) {
             info = String.format(getString(R.string.language_for_note), info);
         }
         return info;

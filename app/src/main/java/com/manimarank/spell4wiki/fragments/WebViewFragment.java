@@ -229,7 +229,7 @@ public class WebViewFragment extends Fragment {
     }
 
     public void openInAppBrowser() {
-        GeneralUtils.openUrlInBrowser(getContext(), webView.getUrl());
+        GeneralUtils.openUrlInBrowser(getActivity(), webView.getUrl());
     }
 
     public void copyLink() {

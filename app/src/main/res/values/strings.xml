@@ -194,5 +194,6 @@
     <string name="retry_now">Retry now</string>
     <string name="not_now">Later</string>
     <string name="no_more_data_found">No more data found</string>
+    <string name="ask_to_add_language">Do you want to add your language?</string>
 
 </resources>

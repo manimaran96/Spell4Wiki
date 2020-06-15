@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/layout_bottom_sheet"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:background="@color/white"
     android:orientation="vertical"
     app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
@@ -44,14 +44,10 @@
 
         </LinearLayout>
 
-
-
-
-
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/btn_close"
-            android:layout_width="@dimen/action_icon"
-            android:layout_height="@dimen/action_icon"
+            android:layout_width="@dimen/lang_close"
+            android:layout_height="@dimen/lang_close"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:contentDescription="@string/cancel"
@@ -74,26 +70,52 @@
         android:queryHint="@string/search"
         app:iconifiedByDefault="false" />
 
-    <LinearLayout
+    <RelativeLayout
+        android:id="@+id/layoutAddLanguage"
+        android:visibility="gone"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:descendantFocusability="blocksDescendants"
-        android:layout_marginEnd="@dimen/space4dp"
-        android:layout_marginStart="@dimen/space4dp"
-        android:orientation="vertical">
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/space10dp"
+        android:layout_marginEnd="@dimen/space10dp"
+        android:background="@drawable/bg_line_border"
+        android:padding="@dimen/space4dp">
 
-        <ListView
-            android:id="@+id/list_view_lang"
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/txtAddLangInfo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_centerVertical="true"
+            android:layout_toStartOf="@+id/btnAddMyLanguage"
+            android:text="@string/ask_to_add_language" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnAddMyLanguage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:divider="@null"
-            android:dividerHeight="0dp" />
+            android:layout_alignParentEnd="true"
+            android:layout_margin="@dimen/space4dp"
+            android:layout_centerInParent="true"
+            android:background="@drawable/bg_blue"
+            android:minHeight="@dimen/btn_height"
+            android:paddingStart="@dimen/space20dp"
+            android:paddingEnd="@dimen/space20dp"
+            android:text="Add"
+            android:textColor="@color/white" />
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+    </RelativeLayout>
 
-    </LinearLayout>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        android:divider="@null"
+        android:dividerHeight="0dp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 
 
 </LinearLayout>
