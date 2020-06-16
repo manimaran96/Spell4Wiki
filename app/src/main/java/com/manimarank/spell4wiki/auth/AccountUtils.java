@@ -13,6 +13,7 @@ import androidx.annotation.Nullable;
 import com.manimarank.spell4wiki.R;
 import com.manimarank.spell4wiki.Spell4WikiApp;
 import com.manimarank.spell4wiki.models.WikiUser;
+import com.manimarank.spell4wiki.utils.CryptUtils;
 import com.manimarank.spell4wiki.utils.Print;
 
 public class AccountUtils {
@@ -46,8 +47,6 @@ public class AccountUtils {
         }
 
         setPassword(wikiUser.getPassword());
-        //putUserIdForLanguage(result.getSite().languageCode(), result.getUserId());
-        //setGroups(result.getGroups());
     }
 
     @Nullable
@@ -89,13 +88,16 @@ public class AccountUtils {
     @Nullable
     public static String getPassword() {
         Account account = account();
-        return account == null ? null : accountManager().getPassword(account);
+        if(account != null && accountManager().getPassword(account)!=null){
+            return CryptUtils.INSTANCE.decrypt(accountManager().getPassword(account));
+        }else
+            return account == null ? null : accountManager().getPassword(account);
     }
 
     private static void setPassword(@NonNull String password) {
         Account account = account();
         if (account != null) {
-            accountManager().setPassword(account, password);
+            accountManager().setPassword(account, CryptUtils.INSTANCE.encrypt(password));
         }
     }
 

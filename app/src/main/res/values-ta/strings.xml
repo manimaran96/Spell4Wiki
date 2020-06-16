@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Spell4Wiki</string>
     <string name="file_content_description">%2$s என்ற %1$s வார்த்தையின் ஒலிப்புக்கோப்பு</string> //Don't use full stop
-    <string name="about_kaniyam">தமிழ் மொழி மற்றும் இனக்குழுக்கள் சார்ந்த மெய்நிகர்வளங்கள், கருவிகள் மற்றும் அறிவுத்தொகுதிகள், அனைவருக்கும்  கட்டற்ற அணுக்கத்தில் கிடைக்கும் சூழல்</string>
+    <string name="about_kaniyam">கணியம் அறக்கட்டளை என்பது அறிவியல் மற்றும் சமூகப் பொருளாதார வளர்ச்சிக்கு ஒப்ப, தமிழ் மொழியின் பயன்பாடு வளர்வதை உறுதிப்படுத்துவதும், அனைத்து அறிவுத் தொகுதிகளும், வளங்களும் கட்டற்ற அணுக்கத்தில் அனைவருக்கும் கிடைக்கச்செய்வதற்க்குமான அமைப்பாகும்.</string>
     <string name="view_my_contribution">எனது பங்களிப்புகள்</string>
     <string name="settings">அமைப்புகள்</string>
     <string name="language">மொழி</string>
