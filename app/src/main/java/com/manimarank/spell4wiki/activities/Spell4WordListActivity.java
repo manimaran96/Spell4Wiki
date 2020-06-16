@@ -30,6 +30,7 @@ import com.manimarank.spell4wiki.databases.dao.WordsHaveAudioDao;
 import com.manimarank.spell4wiki.databases.entities.WordsHaveAudio;
 import com.manimarank.spell4wiki.fragments.LanguageSelectionFragment;
 import com.manimarank.spell4wiki.listerners.OnLanguageSelectionListener;
+import com.manimarank.spell4wiki.utils.ExtensionsKt;
 import com.manimarank.spell4wiki.utils.GeneralUtils;
 import com.manimarank.spell4wiki.utils.PrefManager;
 import com.manimarank.spell4wiki.utils.RealPathUtil;
@@ -88,6 +89,8 @@ public class Spell4WordListActivity extends BaseActivity {
         Button btnDirectContent = findViewById(R.id.btnDirectContent);
         Button btnDone = findViewById(R.id.btnDone);
         editFile = findViewById(R.id.editFile);
+        // Remove styles after paste/added content
+        ExtensionsKt.removeStyleAfterPaste(editFile);
         txtFileInfo = findViewById(R.id.txtFileInfo);
         recyclerView = findViewById(R.id.recyclerView);
         layoutSelect = findViewById(R.id.layoutSelect);
