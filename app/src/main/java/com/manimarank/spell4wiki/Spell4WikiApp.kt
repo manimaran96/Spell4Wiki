@@ -1,17 +1,23 @@
 package com.manimarank.spell4wiki
 
 import android.app.Application
+import android.content.Context
 import androidx.appcompat.app.AppCompatDelegate
 import com.manimaran.crash_reporter.CrashReporter
 import com.manimaran.crash_reporter.CrashReporterConfiguration
+import com.manimarank.spell4wiki.utils.AppLanguageUtils
 import com.manimarank.spell4wiki.utils.PrefManager
 
 class Spell4WikiApp : Application() {
     companion object {
         lateinit var instance: Spell4WikiApp
-        fun getApplicationContext() : Spell4WikiApp{
+        fun getApplicationContext(): Spell4WikiApp {
             return instance
         }
+    }
+
+    init {
+        instance = this
     }
 
     override fun onCreate() {
@@ -21,14 +27,14 @@ class Spell4WikiApp : Application() {
             val sharedPref = PrefManager(applicationContext)
             val emailIds = arrayOf("manimarankumar96@gmail.com")
             var extraInfo = ""
-            if(sharedPref.isAnonymous)
+            if (sharedPref.isAnonymous)
                 extraInfo = "User Name : Anonymous User"
-            else if(sharedPref.name != null)
+            else if (sharedPref.name != null)
                 extraInfo = "User Name : ${sharedPref.name}"
 
             val config = CrashReporterConfiguration()
                     .setExtraInformation(extraInfo)
-                    .setMaxNumberOfCrashToBeReport(15)
+                    .setMaxNumberOfCrashToBeReport(5)
                     .setAlertDialogTitle(getString(R.string.crash_report_alert_title))
                     .setAlertDialogMessage(getString(R.string.crash_report_alert_message))
                     .setAlertDialogPositiveButton(getString(R.string.send))
@@ -38,12 +44,12 @@ class Spell4WikiApp : Application() {
                     .setCrashReportSendEmailIds(emailIds)
 
             CrashReporter.initialize(applicationContext, config)
-        }catch (e :Exception){
+        } catch (e: Exception) {
             e.printStackTrace()
         }
     }
 
-    init {
-        instance = this
+    override fun attachBaseContext(base: Context) {
+        super.attachBaseContext(AppLanguageUtils.applyLanguageConfig(base))
     }
 }

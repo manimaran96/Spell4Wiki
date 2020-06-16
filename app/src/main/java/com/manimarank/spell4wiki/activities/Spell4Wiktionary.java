@@ -13,13 +13,13 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.interpolator.view.animation.FastOutSlowInInterpolator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.manimarank.spell4wiki.R;
+import com.manimarank.spell4wiki.activities.base.BaseActivity;
 import com.manimarank.spell4wiki.adapters.EndlessRecyclerAdapter;
 import com.manimarank.spell4wiki.apis.ApiClient;
 import com.manimarank.spell4wiki.apis.ApiInterface;
@@ -49,7 +49,7 @@ import uk.co.samuelwall.materialtaptargetprompt.MaterialTapTargetPrompt;
 import uk.co.samuelwall.materialtaptargetprompt.MaterialTapTargetSequence;
 import uk.co.samuelwall.materialtaptargetprompt.extras.focals.RectanglePromptFocal;
 
-public class Spell4Wiktionary extends AppCompatActivity implements EndlessRecyclerView.EndlessListener {
+public class Spell4Wiktionary extends BaseActivity implements EndlessRecyclerView.EndlessListener {
 
     WordsHaveAudioDao wordsHaveAudioDao;
     List<String> wordsListAlreadyHaveAudio = new ArrayList<>();
@@ -154,7 +154,7 @@ public class Spell4Wiktionary extends AppCompatActivity implements EndlessRecycl
                  *      1. Words count below the view port(approximate 15) & apiRetryCount reach 3 and more -> Lot of Words already have audios
                  *      2. apiRetryCount only 3 and above -> After getting some data may fail, Some user recorded words between records limits
                  *      3. apiFailRetryCount only 3 and above -> Continous api fail
-                */
+                 */
                 long duration = System.currentTimeMillis() - apiResultTime;
                 if (TimeUnit.MILLISECONDS.toSeconds(duration) > AppConstants.API_LOOP_MAX_SECS || apiFailRetryCount >= AppConstants.API_MAX_FAIL_RETRY) { // TODO update time
                     if ((adapter.getItemCount() < AppConstants.API_LOOP_MINIMUM_COUNT_IN_LIST && apiRetryCount >= AppConstants.API_MAX_RETRY) || apiRetryCount >= AppConstants.API_MAX_RETRY || apiFailRetryCount >= AppConstants.API_MAX_FAIL_RETRY) {
@@ -372,7 +372,7 @@ public class Spell4Wiktionary extends AppCompatActivity implements EndlessRecycl
     }
 
     public void updateList(String word) {
-        if(!isDestroyed() && !isFinishing()) {
+        if (!isDestroyed() && !isFinishing()) {
             if (adapter != null) {
                 wordsHaveAudioDao.insert(new WordsHaveAudio(word, languageCode));
                 adapter.addWordInWordsHaveAudioList(word);
@@ -384,7 +384,7 @@ public class Spell4Wiktionary extends AppCompatActivity implements EndlessRecycl
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(!isDestroyed() && !isFinishing()) {
+        if (!isDestroyed() && !isFinishing()) {
             if (requestCode == AppConstants.RC_UPLOAD_DIALOG) {
                 if (data != null && data.hasExtra(AppConstants.WORD)) {
                     if (adapter != null) {

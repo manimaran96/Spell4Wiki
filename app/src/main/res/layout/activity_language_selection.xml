@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/introLayout"
+    android:background="@color/white"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/txtTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_marginStart="@dimen/space10dp"
+        android:layout_marginEnd="@dimen/space10dp"
+        android:textSize="@dimen/text_x_large"
+        android:lineSpacingExtra="5dp"
+        android:textColor="@color/w_blue"
+        android:layout_marginBottom="@dimen/space32dp"
+        android:layout_above="@+id/imgLanguage"
+        android:text="@string/language_selection" />
+
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/imgLanguage"
+        app:srcCompat="@drawable/ic_language"
+        android:layout_width="@dimen/logo_large"
+        android:layout_margin="@dimen/space24dp"
+        android:layout_centerInParent="true"
+        android:layout_height="@dimen/logo_large"/>
+
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/txtAddLangInfo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_below="@+id/imgLanguage"
+        android:layout_margin="@dimen/space10dp"
+        android:paddingStart="@dimen/space20dp"
+        android:paddingEnd="@dimen/space20dp"
+        android:layout_centerHorizontal="true"
+        android:textSize="@dimen/text_normal"
+        android:lineSpacingExtra="5dp"
+        android:text="@string/choose_your_preferred_language" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnAddMyLanguage"
+        android:layout_below="@+id/txtAddLangInfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_blue"
+        android:minHeight="@dimen/btn_height"
+        android:paddingStart="@dimen/space20dp"
+        android:layout_margin="@dimen/space4dp"
+        android:paddingEnd="@dimen/space20dp"
+        android:layout_centerHorizontal="true"
+        android:text="@string/choose_language"
+        android:textColor="@color/white" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/btnNext"
+        android:layout_width="@dimen/round_icon"
+        android:padding="@dimen/space12dp"
+        app:srcCompat="@drawable/ic_navigate_next"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="@dimen/space24dp"
+        android:background="@drawable/bg_round_border"
+        android:layout_height="@dimen/round_icon"/>
+
+</RelativeLayout>

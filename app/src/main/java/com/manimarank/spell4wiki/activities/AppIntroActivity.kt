@@ -5,18 +5,18 @@ import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.view.View
-import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager.widget.ViewPager
 import androidx.viewpager.widget.ViewPager.OnPageChangeListener
 import com.manimarank.spell4wiki.R
+import com.manimarank.spell4wiki.activities.base.BaseActivity
 import com.manimarank.spell4wiki.adapters.AppIntroTabsPagerAdapter
-import com.manimarank.spell4wiki.utils.constants.AppConstants
 import com.manimarank.spell4wiki.models.AppIntroData
 import com.manimarank.spell4wiki.utils.GeneralUtils
 import com.manimarank.spell4wiki.utils.PrefManager
+import com.manimarank.spell4wiki.utils.constants.AppConstants
 import kotlinx.android.synthetic.main.activity_app_intro.*
 
-class AppIntroActivity : AppCompatActivity() {
+class AppIntroActivity : BaseActivity() {
 
     private lateinit var pref: PrefManager
     private var isDoneCalled = false
@@ -89,9 +89,9 @@ class AppIntroActivity : AppCompatActivity() {
     private fun openMainActivity() {
         isDoneCalled = false
         pref.isFirstTimeLaunch = false
-        finish()
         val intent = Intent(applicationContext, LoginActivity::class.java)
         startActivity(intent)
+        finish()
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String?>, grantResults: IntArray) {

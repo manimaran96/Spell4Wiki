@@ -19,11 +19,11 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.interpolator.view.animation.FastOutSlowInInterpolator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.manimarank.spell4wiki.R;
+import com.manimarank.spell4wiki.activities.base.BaseActivity;
 import com.manimarank.spell4wiki.adapters.EndlessRecyclerAdapter;
 import com.manimarank.spell4wiki.databases.DBHelper;
 import com.manimarank.spell4wiki.databases.dao.WordsHaveAudioDao;
@@ -52,7 +52,7 @@ import uk.co.samuelwall.materialtaptargetprompt.extras.focals.RectanglePromptFoc
 import static com.manimarank.spell4wiki.utils.constants.EnumTypeDef.ListMode.SPELL_4_WORD_LIST;
 
 
-public class Spell4WordListActivity extends AppCompatActivity {
+public class Spell4WordListActivity extends BaseActivity {
 
 
     private EditText editFile;

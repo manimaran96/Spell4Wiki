@@ -15,6 +15,7 @@
     <dimen name="img_normal">70dp</dimen>
     <dimen name="action_icon">24dp</dimen>
     <dimen name="lang_close">28dp</dimen>
+    <dimen name="round_icon">50dp</dimen>
 
     <!--Text size-->
     <dimen name="text_semi_small">10sp</dimen>

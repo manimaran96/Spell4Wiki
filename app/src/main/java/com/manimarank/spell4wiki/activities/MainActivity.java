@@ -1,18 +1,22 @@
 package com.manimarank.spell4wiki.activities;
 
 import android.app.AlertDialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
 import android.widget.TextView;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.cardview.widget.CardView;
 import androidx.interpolator.view.animation.FastOutSlowInInterpolator;
 
 import com.manimarank.spell4wiki.R;
+import com.manimarank.spell4wiki.activities.base.BaseActivity;
+import com.manimarank.spell4wiki.utils.AppLanguageUtils;
 import com.manimarank.spell4wiki.utils.GeneralUtils;
 import com.manimarank.spell4wiki.utils.NetworkUtils;
 import com.manimarank.spell4wiki.utils.PrefManager;
@@ -24,21 +28,33 @@ import com.manimarank.spell4wiki.utils.constants.Urls;
 import uk.co.samuelwall.materialtaptargetprompt.MaterialTapTargetPrompt;
 import uk.co.samuelwall.materialtaptargetprompt.extras.focals.RectanglePromptFocal;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     // Views
     SearchView searchView;
+    IntentFilter filter = new IntentFilter(AppLanguageUtils.INSTANCE.getLANGUAGE_FILTER());
+    BroadcastReceiver languageChangeReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (!isDestroyed() && !isFinishing() && intent != null && intent.getExtras() != null) {
+                String value = intent.getExtras().getString(AppLanguageUtils.INSTANCE.getSELECTED_LANGUAGE(), "");
+                if (value != null) {
+                    recreate();
+                }
+            }
+        }
+    };
     private boolean doubleBackToExitPressedOnce = false;
     private PrefManager pref;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        pref = new PrefManager(MainActivity.this);
         setContentView(R.layout.activity_main);
 
-        pref = new PrefManager(MainActivity.this);
-
         initViews();
+        registerReceiver(languageChangeReceiver, filter);
 
         searchView.setQueryHint(getString(R.string.wiktionary_search));
         searchView.setIconifiedByDefault(false);
@@ -209,5 +225,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     }).show();
         }
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (languageChangeReceiver != null)
+            unregisterReceiver(languageChangeReceiver);
     }
 }

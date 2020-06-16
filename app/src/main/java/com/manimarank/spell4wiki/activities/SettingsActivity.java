@@ -9,10 +9,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
 import com.manimarank.spell4wiki.R;
+import com.manimarank.spell4wiki.activities.base.BaseActivity;
+import com.manimarank.spell4wiki.utils.AppLanguageUtils;
 import com.manimarank.spell4wiki.utils.constants.EnumTypeDef.ListMode;
 import com.manimarank.spell4wiki.databases.DBHelper;
 import com.manimarank.spell4wiki.databases.dao.WikiLangDao;
@@ -25,7 +26,7 @@ import com.manimarank.spell4wiki.utils.WikiLicense;
 import java.util.Arrays;
 
 
-public class SettingsActivity extends AppCompatActivity {
+public class SettingsActivity extends BaseActivity {
 
     private PrefManager pref;
     private WikiLangDao wikiLangDao = null;
@@ -47,6 +48,7 @@ public class SettingsActivity extends AppCompatActivity {
         TextView txtWiktionaryLang = findViewById(R.id.txtWiktionaryLang);
         TextView txtLicenseOfUploadAudio = findViewById(R.id.txtLicenseOfUploadAudio);
         TextView txtLicenseOfUploadAudioLegalCode = findViewById(R.id.txtLicenseOfUploadAudioLegalCode);
+        TextView txtAppLanguage = findViewById(R.id.txtAppLanguage);
 
 
         View layoutSpell4WikiLang = findViewById(R.id.layoutSpell4WikiLang);
@@ -54,6 +56,7 @@ public class SettingsActivity extends AppCompatActivity {
         View layoutSpell4WordLang = findViewById(R.id.layoutSpell4WordLang);
         View layoutWiktionaryLang = findViewById(R.id.layoutWiktionaryLang);
         View layoutLicenseOfUploadAudio = findViewById(R.id.layoutLicenseOfUploadAudio);
+        View layoutLanguageOfApp = findViewById(R.id.layoutLanguageOfApp);
 
         pref = new PrefManager(getApplicationContext());
         wikiLangDao = DBHelper.getInstance(getApplicationContext()).getAppDatabase().getWikiLangDao();
@@ -140,6 +143,9 @@ public class SettingsActivity extends AppCompatActivity {
             dialog.show();
         });
 
+        txtAppLanguage.setText(AppLanguageUtils.INSTANCE.getSelectedLanguage());
+        layoutLanguageOfApp.setOnClickListener(v -> AppLanguageUtils.INSTANCE.showAppLanguageSelectionDialog(SettingsActivity.this));
+
     }
 
     private void updateLanguageView(TextView txtView, String languageCode) {
@@ -158,7 +164,6 @@ public class SettingsActivity extends AppCompatActivity {
         String ccLegalInfo = "(<a href=" + WikiLicense.licenseUrlFor(pref.getUploadAudioLicense()) + "><font color='" + ContextCompat.getColor(getApplicationContext(), R.color.w_green) + "'>legal code</font></a>)";
         txtLicenseOfUploadAudioLegalCode.setText(Html.fromHtml(ccLegalInfo));
     }
-
 
     @Override
     public boolean onOptionsItemSelected(MenuItem menuItem) {

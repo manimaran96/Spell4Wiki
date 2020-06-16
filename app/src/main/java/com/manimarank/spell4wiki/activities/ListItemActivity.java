@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.manimarank.spell4wiki.R;
+import com.manimarank.spell4wiki.activities.base.BaseActivity;
 import com.manimarank.spell4wiki.adapters.ListItemAdapter;
 import com.manimarank.spell4wiki.utils.constants.AppConstants;
 import com.manimarank.spell4wiki.utils.constants.Urls;
@@ -17,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class ListItemActivity extends AppCompatActivity {
+public class ListItemActivity extends BaseActivity {
 
     private List<ItemsModel> listItems = new ArrayList<>();
 

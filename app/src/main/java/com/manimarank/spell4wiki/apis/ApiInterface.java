@@ -44,7 +44,7 @@ public interface ApiInterface {
             @Field("logintoken") String token
     );
 
-    @POST("w/api.php?action=logout")
+    @POST("w/api.php?action=logout&format=json")
     Call<ResponseBody> logOut(
             @Field("token") String csrfToken
     );
@@ -74,7 +74,7 @@ public interface ApiInterface {
 
     // Upload - commons
     @Multipart
-    @POST("w/api.php?action=upload")
+    @POST("w/api.php?action=upload&format=json")
     Call<WikiUpload> uploadFile(
             @Part("filename") RequestBody filename,
             @Part("token") RequestBody token,

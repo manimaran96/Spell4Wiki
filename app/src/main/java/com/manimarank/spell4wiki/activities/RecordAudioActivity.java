@@ -32,6 +32,7 @@ import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
 import com.manimarank.spell4wiki.BuildConfig;
 import com.manimarank.spell4wiki.R;
+import com.manimarank.spell4wiki.activities.base.BaseActivity;
 import com.manimarank.spell4wiki.apis.ApiClient;
 import com.manimarank.spell4wiki.apis.ApiInterface;
 import com.manimarank.spell4wiki.auth.AccountUtils;
@@ -77,7 +78,7 @@ import static com.manimarank.spell4wiki.utils.constants.AppConstants.MAX_RETRIES
 import static com.manimarank.spell4wiki.utils.constants.AppConstants.MAX_RETRIES_FOR_FORCE_LOGIN;
 
 
-public class RecordAudioActivity extends AppCompatActivity {
+public class RecordAudioActivity extends BaseActivity {
 
     // Views
     private View layoutUploadPopUp, layoutRecordControls;

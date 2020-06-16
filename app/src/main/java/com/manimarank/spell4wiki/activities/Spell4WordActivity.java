@@ -15,10 +15,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.interpolator.view.animation.FastOutSlowInInterpolator;
 
 import com.manimarank.spell4wiki.R;
+import com.manimarank.spell4wiki.activities.base.BaseActivity;
 import com.manimarank.spell4wiki.databases.DBHelper;
 import com.manimarank.spell4wiki.databases.dao.WordsHaveAudioDao;
 import com.manimarank.spell4wiki.fragments.LanguageSelectionFragment;
@@ -40,7 +40,7 @@ import uk.co.samuelwall.materialtaptargetprompt.extras.focals.RectanglePromptFoc
 import static com.manimarank.spell4wiki.utils.constants.EnumTypeDef.ListMode;
 
 
-public class Spell4WordActivity extends AppCompatActivity {
+public class Spell4WordActivity extends BaseActivity {
 
     private EditText editSpell4Word;
 
@@ -96,28 +96,28 @@ public class Spell4WordActivity extends AppCompatActivity {
 
         btnRecord.setOnClickListener(v -> {
             if (!TextUtils.isEmpty(editSpell4Word.getText()) && editSpell4Word.getText().length() < 30) {
-                if(NetworkUtils.INSTANCE.isConnected(getApplicationContext())) {
+                if (NetworkUtils.INSTANCE.isConnected(getApplicationContext())) {
                     String word = editSpell4Word.getText().toString().trim();
                     if (isAllowRecord(word))
                         GeneralUtils.showRecordDialog(Spell4WordActivity.this, word, languageCode);
                     else
                         SnackBarUtils.INSTANCE.showLong(editSpell4Word, String.format(getString(R.string.audio_file_already_exist), word));
-                }else
+                } else
                     SnackBarUtils.INSTANCE.showLong(editSpell4Word, getString(R.string.check_internet));
             } else
                 SnackBarUtils.INSTANCE.showLong(editSpell4Word, getString(R.string.enter_valid_word));
         });
     }
 
-    private Boolean isAllowRecord(String word){
+    private Boolean isAllowRecord(String word) {
         boolean isValid = false;
         try {
-            if(!pref.getIsAnonymous() && !TextUtils.isEmpty(word)){
+            if (!pref.getIsAnonymous() && !TextUtils.isEmpty(word)) {
                 WordsHaveAudioDao wordsHaveAudioDao = DBHelper.getInstance(getApplicationContext()).getAppDatabase().getWordsHaveAudioDao();
                 List<String> wordsAlreadyHaveAudio = wordsHaveAudioDao.getWordsAlreadyHaveAudioByLanguage(languageCode);
                 isValid = !wordsAlreadyHaveAudio.contains(word);
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return isValid;
@@ -129,14 +129,14 @@ public class Spell4WordActivity extends AppCompatActivity {
         if (menuItem.getItemId() == android.R.id.home) {
             callBackPress();
             return true;
-        }else
+        } else
             return (super.onOptionsItemSelected(menuItem));
     }
 
 
     private void loadLanguages() {
         OnLanguageSelectionListener callback = langCode -> {
-            if(!languageCode.equals(langCode)) {
+            if (!languageCode.equals(langCode)) {
                 languageCode = langCode;
                 invalidateOptionsMenu();
             }
@@ -203,7 +203,8 @@ public class Spell4WordActivity extends AppCompatActivity {
             builder.setMessage(R.string.confirm_to_back);
             builder.setCancelable(false);
             builder.setPositiveButton(getString(R.string.yes), (dialog, which) -> super.onBackPressed());
-            builder.setNegativeButton(getString(R.string.cancel), (dialog, which) -> { });
+            builder.setNegativeButton(getString(R.string.cancel), (dialog, which) -> {
+            });
             AlertDialog dialog = builder.create();
             dialog.show();
         } else {

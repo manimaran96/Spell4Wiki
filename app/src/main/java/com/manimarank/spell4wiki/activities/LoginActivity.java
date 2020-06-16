@@ -15,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
 import com.manimarank.spell4wiki.R;
+import com.manimarank.spell4wiki.activities.base.BaseActivity;
 import com.manimarank.spell4wiki.apis.ApiClient;
 import com.manimarank.spell4wiki.apis.ApiInterface;
 import com.manimarank.spell4wiki.auth.AccountUtils;
@@ -36,7 +37,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends BaseActivity {
 
     // Views
     EditText editUserName, editPassword;
@@ -205,7 +206,7 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(@NotNull Call<WikiLogin> call, @NotNull Throwable t) {
-                showErrorMsg("Please check your connection!");
+                showErrorMsg(getString(R.string.something_went_wrong_try_again));
             }
         });
 

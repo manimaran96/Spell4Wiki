@@ -10,13 +10,13 @@ import android.view.View;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.manimarank.spell4wiki.R;
+import com.manimarank.spell4wiki.activities.base.BaseActivity;
 import com.manimarank.spell4wiki.fragments.LanguageSelectionFragment;
 import com.manimarank.spell4wiki.fragments.WebViewFragment;
 import com.manimarank.spell4wiki.listerners.OnLanguageSelectionListener;
@@ -24,7 +24,7 @@ import com.manimarank.spell4wiki.utils.PrefManager;
 import com.manimarank.spell4wiki.utils.constants.AppConstants;
 import com.manimarank.spell4wiki.utils.constants.EnumTypeDef.ListMode;
 
-public class CommonWebActivity extends AppCompatActivity {
+public class CommonWebActivity extends BaseActivity {
 
     private boolean isWiktionaryWord = false;
     private WebViewFragment fragment = new WebViewFragment();

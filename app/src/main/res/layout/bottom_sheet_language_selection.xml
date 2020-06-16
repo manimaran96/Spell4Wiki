@@ -100,7 +100,7 @@
             android:minHeight="@dimen/btn_height"
             android:paddingStart="@dimen/space20dp"
             android:paddingEnd="@dimen/space20dp"
-            android:text="Add"
+            android:text="@string/action_add"
             android:textColor="@color/white" />
 
     </RelativeLayout>

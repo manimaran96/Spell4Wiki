@@ -7,13 +7,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.interpolator.view.animation.FastOutSlowInInterpolator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.manimarank.spell4wiki.R;
+import com.manimarank.spell4wiki.activities.base.BaseActivity;
 import com.manimarank.spell4wiki.adapters.EndlessRecyclerAdapter;
 import com.manimarank.spell4wiki.apis.ApiClient;
 import com.manimarank.spell4wiki.apis.ApiInterface;
@@ -40,7 +40,7 @@ import uk.co.samuelwall.materialtaptargetprompt.MaterialTapTargetPrompt;
 import uk.co.samuelwall.materialtaptargetprompt.MaterialTapTargetSequence;
 import uk.co.samuelwall.materialtaptargetprompt.extras.focals.RectanglePromptFocal;
 
-public class WiktionarySearchActivity extends AppCompatActivity implements EndlessRecyclerView.EndlessListener {
+public class WiktionarySearchActivity extends BaseActivity implements EndlessRecyclerView.EndlessListener {
 
     private EndlessRecyclerView recyclerView;
     private EndlessRecyclerAdapter adapter;
@@ -107,7 +107,7 @@ public class WiktionarySearchActivity extends AppCompatActivity implements Endle
     }
 
     private void submitQuery(String s) {
-        if(!isDestroyed() && !isFinishing()) {
+        if (!isDestroyed() && !isFinishing()) {
             queryString = s;
             nextOffset = 0;
             txtNotFound.setVisibility(View.GONE);

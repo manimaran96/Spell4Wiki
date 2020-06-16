@@ -24,6 +24,7 @@
         android:fullBackupContent="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:configChanges="locale"
         android:name="com.manimarank.spell4wiki.Spell4WikiApp"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
@@ -49,12 +50,14 @@
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize"
-            android:theme="@style/AppTheme.FullScreen">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
+            android:theme="@style/AppTheme.FullScreen"/>
+
+        <activity
+            android:name="com.manimarank.spell4wiki.activities.LanguageSelectionActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustResize"
+            tools:ignore="LockedOrientationActivity" />
 
         <activity
             android:name="com.manimarank.spell4wiki.activities.LoginActivity"

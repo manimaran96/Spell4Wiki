@@ -2,5 +2,14 @@
     <string name="app_name">Spell4Wiki</string>
     <string name="file_content_description">%2$s என்ற %1$s வார்த்தையின் ஒலிப்புக்கோப்பு</string> //Don't use full stop
     <string name="about_kaniyam">தமிழ் மொழி மற்றும் இனக்குழுக்கள் சார்ந்த மெய்நிகர்வளங்கள், கருவிகள் மற்றும் அறிவுத்தொகுதிகள், அனைவருக்கும்  கட்டற்ற அணுக்கத்தில் கிடைக்கும் சூழல்</string>
+    <string name="view_my_contribution">எனது பங்களிப்புகள்</string>
+    <string name="settings">அமைப்புகள்</string>
+    <string name="language">மொழி</string>
+    <string name="select_language">மொழியை தேர்ந்தெடுங்கள்</string>
+    <string name="direct_content">நேரடி உள்ளடக்கம்</string>
+
+
+    <string name="choose_your_preferred_language">நீங்கள் விரும்பும் மொழியைத் தேர்வுசெய்க.\nதற்போதைய மொழி : %s</string>
+    <string name="choose_language">மொழியைத் தேர்வுசெய்க</string>
 
 </resources>

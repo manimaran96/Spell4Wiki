@@ -8,15 +8,12 @@ import com.franmontiel.persistentcookiejar.ClearableCookieJar;
 import com.franmontiel.persistentcookiejar.PersistentCookieJar;
 import com.franmontiel.persistentcookiejar.cache.SetCookieCache;
 import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersistor;
-import com.manimarank.spell4wiki.utils.constants.Urls;
 import com.manimarank.spell4wiki.utils.PrefManager;
+import com.manimarank.spell4wiki.utils.constants.Urls;
 
 import java.util.Objects;
 
-import okhttp3.HttpUrl;
-import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
-import okhttp3.Request;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -26,19 +23,6 @@ public class ApiClient {
     private static Retrofit retrofitApi = null;
     @SuppressLint("StaticFieldLeak")
     private static PrefManager pref;
-    private static Interceptor queryParamInterceptor = chain -> {
-        Request original = chain.request();
-        HttpUrl originalHttpUrl = original.url();
-
-        HttpUrl url = originalHttpUrl.newBuilder().addQueryParameter("format", "json").build();
-
-        // Request customization: add request headers
-        Request.Builder requestBuilder = original.newBuilder().url(url);
-
-        Request request = requestBuilder.build();
-        // TODO Test
-        return chain.proceed(request);
-    };
 
     public static Retrofit getCommonsApi(Context context) {
         if (retrofitCommons == null) {
@@ -82,10 +66,6 @@ public class ApiClient {
 
         ClearableCookieJar cookieJar = new PersistentCookieJar(new SetCookieCache(), new SharedPrefsCookiePersistor(context));
         okHttpClient.cookieJar(cookieJar);
-
-        if (!okHttpClient.interceptors().contains(queryParamInterceptor)) {
-            okHttpClient.addInterceptor(queryParamInterceptor);
-        }
 
         return okHttpClient.build();
     }

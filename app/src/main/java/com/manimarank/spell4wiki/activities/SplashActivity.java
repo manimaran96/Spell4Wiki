@@ -14,6 +14,7 @@ import com.manimaran.crash_reporter.CrashReporter;
 import com.manimaran.crash_reporter.interfaces.CrashAlertClickListener;
 import com.manimaran.crash_reporter.utils.CrashUtil;
 import com.manimarank.spell4wiki.R;
+import com.manimarank.spell4wiki.activities.base.BaseActivity;
 import com.manimarank.spell4wiki.utils.NetworkUtils;
 import com.manimarank.spell4wiki.utils.PrefManager;
 import com.manimarank.spell4wiki.utils.SnackBarUtils;
@@ -22,7 +23,7 @@ import com.manimarank.spell4wiki.utils.SyncHelper;
 /**
  * Splash screen activity
  */
-public class SplashActivity extends Activity {
+public class SplashActivity extends BaseActivity {
 
     private PrefManager pref;
     private Button btnStart;
@@ -44,21 +45,21 @@ public class SplashActivity extends Activity {
 
         btnStart = findViewById(R.id.btnStart);
         btnStart.setOnClickListener(v -> {
-            if(NetworkUtils.INSTANCE.isConnected(getApplicationContext())){
+            if (NetworkUtils.INSTANCE.isConnected(getApplicationContext())) {
                 btnStart.setVisibility(View.GONE);
-                if(isNetworkFail) {
+                if (isNetworkFail) {
                     loadSplash();
-                }else{
+                } else {
                     callNextScreen();
                 }
-            }else
+            } else
                 SnackBarUtils.INSTANCE.showNormal(btnStart, getString(R.string.check_internet));
         });
         btnStart.setVisibility(View.GONE);
 
-        if(NetworkUtils.INSTANCE.isConnected(getApplicationContext())) {
+        if (NetworkUtils.INSTANCE.isConnected(getApplicationContext())) {
             loadSplash();
-        }else {
+        } else {
             SnackBarUtils.INSTANCE.showNormal(btnStart, getString(R.string.check_internet));
             isNetworkFail = true;
             btnStart.setVisibility(View.VISIBLE);
@@ -99,8 +100,8 @@ public class SplashActivity extends Activity {
     }
 
     private void callNextScreen() {
-        // If app launch very first time to show the app intro. Other wise got ot login page
-        Intent mainIntent = new Intent(SplashActivity.this, pref.isFirstTimeLaunch() ? AppIntroActivity.class : LoginActivity.class);
+        // If app launch very first time to show the language selection and app intro. Other wise go to login page
+        Intent mainIntent = new Intent(SplashActivity.this, pref.isFirstTimeLaunch() ? LanguageSelectionActivity.class : LoginActivity.class);
         startActivity(mainIntent);
         finish();
     }

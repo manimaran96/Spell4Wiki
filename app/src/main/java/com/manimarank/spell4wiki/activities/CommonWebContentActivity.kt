@@ -9,15 +9,15 @@ import android.text.TextUtils
 import android.view.MenuItem
 import android.view.View
 import android.webkit.*
-import androidx.appcompat.app.AppCompatActivity
 import com.manimarank.spell4wiki.R
+import com.manimarank.spell4wiki.activities.base.BaseActivity
 import com.manimarank.spell4wiki.utils.NetworkUtils
 import com.manimarank.spell4wiki.utils.SnackBarUtils
 import com.manimarank.spell4wiki.utils.constants.AppConstants
 import kotlinx.android.synthetic.main.activity_web_view_content.*
 
 
-class CommonWebContentActivity : AppCompatActivity() {
+class CommonWebContentActivity : BaseActivity() {
     private var url: String? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

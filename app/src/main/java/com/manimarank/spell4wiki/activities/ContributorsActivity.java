@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.tabs.TabLayout;
 import com.manimarank.spell4wiki.R;
+import com.manimarank.spell4wiki.activities.base.BaseActivity;
 import com.manimarank.spell4wiki.adapters.ContributorsAdapter;
 import com.manimarank.spell4wiki.adapters.CoreContributorsAdapter;
 import com.manimarank.spell4wiki.apis.ApiClient;
@@ -37,7 +38,7 @@ import uk.co.samuelwall.materialtaptargetprompt.MaterialTapTargetSequence;
 import uk.co.samuelwall.materialtaptargetprompt.extras.focals.RectanglePromptFocal;
 
 
-public class ContributorsActivity extends AppCompatActivity {
+public class ContributorsActivity extends BaseActivity {
 
     private List<Contributors> contributorsList = new ArrayList<>();
     private List<CoreContributors> coreContributorsList = new ArrayList<>();
