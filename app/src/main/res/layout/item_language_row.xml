@@ -2,7 +2,7 @@
     android:id="@+id/layoutItem"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="@dimen/space10dp"
+    android:layout_marginTop="@dimen/space4dp"
     android:gravity="center"
     android:orientation="vertical">
 

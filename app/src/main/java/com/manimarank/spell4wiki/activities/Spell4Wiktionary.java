@@ -323,7 +323,7 @@ public class Spell4Wiktionary extends BaseActivity implements EndlessRecyclerVie
         };
         LanguageSelectionFragment languageSelectionFragment = new LanguageSelectionFragment(this);
         languageSelectionFragment.init(callback, ListMode.SPELL_4_WIKI);
-        languageSelectionFragment.show(getSupportFragmentManager(), languageSelectionFragment.getTag());
+        languageSelectionFragment.show(getSupportFragmentManager());
     }
 
     private void setupLanguageSelectorMenuItem(Menu menu) {

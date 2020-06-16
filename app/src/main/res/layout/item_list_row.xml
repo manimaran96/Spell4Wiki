@@ -3,23 +3,45 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="4dp">
+    android:paddingStart="4dp"
+    android:paddingEnd="4dp">
 
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/imgIcon"
-        android:layout_width="@dimen/img_normal"
-        android:layout_height="@dimen/img_normal"
-        app:srcCompat="@drawable/ic_contact_us"
-        android:scaleType="fitCenter"
-        android:padding="@dimen/space12dp"
-        android:visibility="gone"
-        android:contentDescription="@string/credits"
-        android:layout_marginEnd="@dimen/space4dp" />
+    <RelativeLayout
+        android:id="@+id/imgLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/lottieAnimationView"
+            android:layout_width="@dimen/img_normal"
+            android:layout_height="@dimen/img_normal"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
+            android:visibility="gone"
+            android:paddingStart="@dimen/space8dp"
+            android:paddingEnd="@dimen/space8dp"
+            android:layout_marginEnd="@dimen/space4dp"
+            app:lottie_rawRes="@raw/check_file_availability"
+            app:lottie_speed="2.5" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/imgIcon"
+            android:layout_width="@dimen/img_normal"
+            android:layout_height="@dimen/img_normal"
+            app:srcCompat="@drawable/ic_contact_us"
+            android:scaleType="fitCenter"
+            android:paddingStart="@dimen/space16dp"
+            android:paddingEnd="@dimen/space16dp"
+            android:visibility="gone"
+            android:contentDescription="@string/credits"
+            android:layout_marginEnd="@dimen/space4dp" />
+
+    </RelativeLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_toEndOf="@+id/imgIcon"
+        android:layout_toEndOf="@+id/imgLayout"
         android:layout_toStartOf="@+id/btn_option"
         android:layout_centerInParent="true"
         android:paddingStart="@dimen/space2dp"
@@ -33,7 +55,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center_vertical"
-            android:ellipsize="middle"
+            android:ellipsize="end"
+            android:maxLines="1"
             android:singleLine="true"
             android:text="@string/contributors"
             android:textSize="@dimen/text_semi_normal"
@@ -43,7 +66,8 @@
             android:id="@+id/txt_about"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:ellipsize="middle"
+            android:ellipsize="end"
+            android:maxLines="1"
             android:linksClickable="true"
             android:autoLink="all"
             android:text="@string/sample_url"

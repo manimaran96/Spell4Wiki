@@ -79,7 +79,7 @@ public class SettingsActivity extends BaseActivity {
             };
             LanguageSelectionFragment languageSelectionFragment = new LanguageSelectionFragment(this);
             languageSelectionFragment.init(callback, ListMode.SPELL_4_WIKI);
-            languageSelectionFragment.show(getSupportFragmentManager(), languageSelectionFragment.getTag());
+            languageSelectionFragment.show(getSupportFragmentManager());
         });
 
         layoutSpell4WordListLang.setOnClickListener(v -> {
@@ -88,7 +88,7 @@ public class SettingsActivity extends BaseActivity {
             };
             LanguageSelectionFragment languageSelectionFragment = new LanguageSelectionFragment(this);
             languageSelectionFragment.init(callback, ListMode.SPELL_4_WORD_LIST);
-            languageSelectionFragment.show(getSupportFragmentManager(), languageSelectionFragment.getTag());
+            languageSelectionFragment.show(getSupportFragmentManager());
         });
 
 
@@ -98,7 +98,7 @@ public class SettingsActivity extends BaseActivity {
             };
             LanguageSelectionFragment languageSelectionFragment = new LanguageSelectionFragment(this);
             languageSelectionFragment.init(callback, ListMode.SPELL_4_WORD);
-            languageSelectionFragment.show(getSupportFragmentManager(), languageSelectionFragment.getTag());
+            languageSelectionFragment.show(getSupportFragmentManager());
         });
 
         layoutWiktionaryLang.setOnClickListener(v -> {
@@ -107,7 +107,7 @@ public class SettingsActivity extends BaseActivity {
             };
             LanguageSelectionFragment languageSelectionFragment = new LanguageSelectionFragment(this);
             languageSelectionFragment.init(callback, ListMode.WIKTIONARY);
-            languageSelectionFragment.show(getSupportFragmentManager(), languageSelectionFragment.getTag());
+            languageSelectionFragment.show(getSupportFragmentManager());
         });
 
         updateLicenseView(txtLicenseOfUploadAudio, txtLicenseOfUploadAudioLegalCode);

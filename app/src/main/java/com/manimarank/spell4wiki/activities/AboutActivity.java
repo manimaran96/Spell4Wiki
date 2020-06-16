@@ -46,6 +46,7 @@ public class AboutActivity extends BaseActivity implements View.OnClickListener 
         TextView txtThirdPartyLib = findViewById(R.id.txt_third_party_lib);
         TextView txtCredits = findViewById(R.id.txt_credits);
         TextView txtHelpDevelopment = findViewById(R.id.txt_help_development);
+        TextView txtTelegram = findViewById(R.id.txtTelegram);
         TextView txtFeedback = findViewById(R.id.txtFeedback);
         TextView txtPrivacyPolicy = findViewById(R.id.txtPrivacyPolicy);
         TextView txtTermsOfUse = findViewById(R.id.txtTermsOfUse);
@@ -70,6 +71,7 @@ public class AboutActivity extends BaseActivity implements View.OnClickListener 
         txtCredits.setOnClickListener(this);
         txtHelpDevelopment.setOnClickListener(this);
         txtFeedback.setOnClickListener(this);
+        txtTelegram.setOnClickListener(this);
         txtPrivacyPolicy.setOnClickListener(this);
         txtTermsOfUse.setOnClickListener(this);
         layoutKaniyam.setOnClickListener(this);
@@ -128,6 +130,9 @@ public class AboutActivity extends BaseActivity implements View.OnClickListener 
                 break;
             case R.id.txtFeedback:
                 feedback();
+                break;
+            case R.id.txtTelegram:
+                GeneralUtils.openUrlInBrowser(this, Urls.TELEGRAM_CHANNEL);
                 break;
             case R.id.txtPrivacyPolicy:
                 GeneralUtils.openUrlInBrowser(this, Urls.PRIVACY_POLICY);

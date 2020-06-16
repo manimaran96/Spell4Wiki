@@ -14,28 +14,28 @@ import java.util.*
 
 object AppLanguageUtils {
 
-    val LANGUAGE_FILTER = BuildConfig.APPLICATION_ID + ".LANGUAGE_CHANGE"
-    val SELECTED_LANGUAGE = "selected_language"
+    const val LANGUAGE_FILTER = BuildConfig.APPLICATION_ID + ".LANGUAGE_CHANGE"
+    const val SELECTED_LANGUAGE = "selected_language"
 
-    val languageCodeList by lazy {
+    private val languageCodeList by lazy {
         arrayOf(
                 "en",
                 "ta"
         )
     }
 
-    val languageList by lazy {
+    private val languageList by lazy {
         arrayOf(
                 "English",
                 "தமிழ்"
         )
     }
 
-    fun setAppLanguageCode(languageCode: String) {
+    private fun setAppLanguageCode(languageCode: String) {
         PrefManager(Spell4WikiApp.instance).appLanguage = languageCode
     }
 
-    fun getSelectedLanguageCode(): String {
+    private fun getSelectedLanguageCode(): String {
         return PrefManager(Spell4WikiApp.instance).appLanguage
     }
 

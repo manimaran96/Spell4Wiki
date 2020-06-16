@@ -32,12 +32,12 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     // Views
     SearchView searchView;
-    IntentFilter filter = new IntentFilter(AppLanguageUtils.INSTANCE.getLANGUAGE_FILTER());
+    IntentFilter filter = new IntentFilter(AppLanguageUtils.LANGUAGE_FILTER);
     BroadcastReceiver languageChangeReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             if (!isDestroyed() && !isFinishing() && intent != null && intent.getExtras() != null) {
-                String value = intent.getExtras().getString(AppLanguageUtils.INSTANCE.getSELECTED_LANGUAGE(), "");
+                String value = intent.getExtras().getString(AppLanguageUtils.SELECTED_LANGUAGE, "");
                 if (value != null) {
                     recreate();
                 }

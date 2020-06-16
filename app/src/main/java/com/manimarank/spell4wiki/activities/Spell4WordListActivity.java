@@ -378,7 +378,7 @@ public class Spell4WordListActivity extends BaseActivity {
         };
         LanguageSelectionFragment languageSelectionFragment = new LanguageSelectionFragment(this);
         languageSelectionFragment.init(callback, SPELL_4_WORD_LIST);
-        languageSelectionFragment.show(getSupportFragmentManager(), languageSelectionFragment.getTag());
+        languageSelectionFragment.show(getSupportFragmentManager());
     }
 
     private void setupLanguageSelectorMenuItem(Menu menu) {

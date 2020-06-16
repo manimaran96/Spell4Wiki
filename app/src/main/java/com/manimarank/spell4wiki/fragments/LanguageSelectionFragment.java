@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.SearchView;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
@@ -29,6 +30,7 @@ import com.manimarank.spell4wiki.utils.NetworkUtils;
 import com.manimarank.spell4wiki.utils.PrefManager;
 import com.manimarank.spell4wiki.utils.SnackBarUtils;
 import com.manimarank.spell4wiki.utils.constants.EnumTypeDef.ListMode;
+import com.manimarank.spell4wiki.utils.constants.Urls;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -108,7 +110,7 @@ public class LanguageSelectionFragment extends BottomSheetDialogFragment {
             if (btnAddMyLanguage != null) {
                 btnAddMyLanguage.setOnClickListener(v -> {
                     if (getActivity() != null && NetworkUtils.INSTANCE.isConnected(getActivity())) {
-                        GeneralUtils.openUrl(getActivity(), "https://docs.google.com/forms/d/e/1FAIpQLSciqHNw1ZtH1kp2zz2DlKFmIbRZw2K7fhcJdxYNAr6TiAsN2A/viewform", "Add Language");
+                        GeneralUtils.openUrlInBrowser(getActivity(), Urls.FORM_ADD_MY_LANGUAGE);
                     } else
                         SnackBarUtils.INSTANCE.showNormal(btnAddMyLanguage, getString(R.string.check_internet));
                 });
@@ -233,5 +235,19 @@ public class LanguageSelectionFragment extends BottomSheetDialogFragment {
     @Override
     public void onCancel(@NotNull DialogInterface dialog) {
         super.onCancel(dialog);
+    }
+
+    public void show(FragmentManager fragmentManager) {
+        try {
+            if (fragmentManager.findFragmentByTag(getTagValue()) != null)
+                return;
+        } catch (Exception e) {
+
+        }
+        show(fragmentManager, getTagValue());
+    }
+
+    public String getTagValue() {
+        return "LANGUAGE_FRAGMENT";
     }
 }

@@ -146,7 +146,7 @@ public class Spell4WordActivity extends BaseActivity {
         };
         LanguageSelectionFragment languageSelectionFragment = new LanguageSelectionFragment(this);
         languageSelectionFragment.init(callback, ListMode.SPELL_4_WORD);
-        languageSelectionFragment.show(getSupportFragmentManager(), languageSelectionFragment.getTag());
+        languageSelectionFragment.show(getSupportFragmentManager());
     }
 
     @Override

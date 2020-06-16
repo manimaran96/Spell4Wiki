@@ -65,7 +65,6 @@ dependencies {
     // Crash Reporter
     implementation 'com.gitlab.manimaran:crashreporter:v0.1'
 
-    // TODO USE third party library show
     // Show case
     implementation 'uk.co.samuelwall:material-tap-target-prompt:3.0.0'
 

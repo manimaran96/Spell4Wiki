@@ -3,6 +3,7 @@ package com.manimarank.spell4wiki.models;
 public class ItemsModel {
     private int icon = -1;
     private String name, about, url;
+    private boolean isLottie = false;
 
     public ItemsModel(String name, String about, String url) {
         this.name = name;
@@ -10,11 +11,20 @@ public class ItemsModel {
         this.url = url;
     }
 
-    public ItemsModel(int icon, String name, String about, String url) {
+    public ItemsModel(int icon,  String name, String about, String url) {
         this.icon = icon;
         this.name = name;
         this.about = about;
         this.url = url;
+        this.isLottie = false;
+    }
+
+    public ItemsModel(int icon,  String name, String about, String url, Boolean isLottie) {
+        this.icon = icon;
+        this.name = name;
+        this.about = about;
+        this.url = url;
+        this.isLottie = isLottie;
     }
 
     public String getName() {
@@ -43,5 +53,13 @@ public class ItemsModel {
 
     public int getIcon() {
         return icon;
+    }
+
+    public boolean isLottie() {
+        return isLottie;
+    }
+
+    public void setLottie(boolean lottie) {
+        isLottie = lottie;
     }
 }

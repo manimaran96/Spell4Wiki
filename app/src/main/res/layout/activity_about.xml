@@ -324,7 +324,7 @@
                 android:textSize="@dimen/text_semi_normal" />
 
             <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/txt_third_party_lib"
+                android:id="@+id/txtTelegram"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/space10dp"
@@ -333,22 +333,8 @@
                 android:drawablePadding="@dimen/space24dp"
                 android:gravity="center_vertical"
                 android:maxLines="1"
-                android:text="@string/third_party_libraries"
-                app:drawableStartCompat="@drawable/ic_third_party_library"
-                android:textSize="@dimen/text_semi_normal" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/txt_credits"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="@dimen/space10dp"
-                android:paddingStart="@dimen/space20dp"
-                android:paddingEnd="@dimen/space10dp"
-                android:drawablePadding="@dimen/space24dp"
-                android:gravity="center_vertical"
-                android:maxLines="1"
-                android:text="@string/credits"
-                app:drawableStartCompat="@drawable/ic_credits"
+                android:text="@string/join_telegram"
+                app:drawableStartCompat="@drawable/ic_telegram"
                 android:textSize="@dimen/text_semi_normal" />
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -366,7 +352,7 @@
                 android:textSize="@dimen/text_semi_normal" />
 
             <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/txtPrivacyPolicy"
+                android:id="@+id/txt_credits"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/space10dp"
@@ -375,9 +361,24 @@
                 android:drawablePadding="@dimen/space24dp"
                 android:gravity="center_vertical"
                 android:maxLines="1"
-                android:text="@string/privacy_policy"
-                app:drawableStartCompat="@drawable/ic_privacy_policy"
+                android:text="@string/credits"
+                app:drawableStartCompat="@drawable/ic_credits"
                 android:textSize="@dimen/text_semi_normal" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/txt_third_party_lib"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/space10dp"
+                android:paddingStart="@dimen/space20dp"
+                android:paddingEnd="@dimen/space10dp"
+                android:drawablePadding="@dimen/space24dp"
+                android:gravity="center_vertical"
+                android:maxLines="1"
+                android:text="@string/third_party_libraries"
+                app:drawableStartCompat="@drawable/ic_third_party_library"
+                android:textSize="@dimen/text_semi_normal" />
+
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/txtTermsOfUse"
@@ -393,6 +394,19 @@
                 app:drawableStartCompat="@drawable/ic_terms_of_use"
                 android:textSize="@dimen/text_semi_normal" />
 
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/txtPrivacyPolicy"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/space10dp"
+                android:paddingStart="@dimen/space20dp"
+                android:paddingEnd="@dimen/space10dp"
+                android:drawablePadding="@dimen/space24dp"
+                android:gravity="center_vertical"
+                android:maxLines="1"
+                android:text="@string/privacy_policy"
+                app:drawableStartCompat="@drawable/ic_privacy_policy"
+                android:textSize="@dimen/text_semi_normal" />
 
         </LinearLayout>
 

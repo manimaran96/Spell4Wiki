@@ -33,7 +33,7 @@
     <string name="link_share_message">Visit : %s\nLink share from Spell4Wiki App.</string>
     <string name="link_share_title">Share Link to your friends…</string>
     <string name="app_share_title">Share Spell4Wiki App to your friends…</string>
-    <string name="app_share_message">Spell4Wiki is an mobile application to record and upload audio to wiki commons for Wiktionary words.\nSpell4Wiki also act as dictionary words meanings are come from Wiktionary.\n\nApp Link :\n%s</string>
+    <string name="app_share_message">Spell4Wiki is an mobile application to record and upload audio to Wikimedia commons for Wiktionary words.\nSpell4Wiki also act as dictionary words meanings are come from Wiktionary.\n\nApp Link :\n%s</string>
     <string name="upload">Upload</string>
     <string name="before_record">Hold the Mic to Record</string>
     <string name="during_record">Recording…  %s</string>
@@ -201,5 +201,6 @@
     <string name="choose_your_preferred_language">Choose your preferred language.\nCurrent language : %s</string>
     <string name="choose_language">Choose language</string>
     <string name="language_selection">Language Selection</string>
+    <string name="join_telegram">Join Telegram Group</string>
 
 </resources>

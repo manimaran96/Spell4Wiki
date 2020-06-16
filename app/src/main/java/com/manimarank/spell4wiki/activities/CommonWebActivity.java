@@ -132,7 +132,7 @@ public class CommonWebActivity extends BaseActivity {
             };
             LanguageSelectionFragment languageSelectionFragment = new LanguageSelectionFragment(this);
             languageSelectionFragment.init(callback, ListMode.TEMP, languageCode);
-            languageSelectionFragment.show(getSupportFragmentManager(), languageSelectionFragment.getTag());
+            languageSelectionFragment.show(getSupportFragmentManager());
         }
     }
 

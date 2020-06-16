@@ -151,7 +151,7 @@ public class WiktionarySearchActivity extends BaseActivity implements EndlessRec
         };
         LanguageSelectionFragment languageSelectionFragment = new LanguageSelectionFragment(this);
         languageSelectionFragment.init(callback, ListMode.WIKTIONARY);
-        languageSelectionFragment.show(getSupportFragmentManager(), languageSelectionFragment.getTag());
+        languageSelectionFragment.show(getSupportFragmentManager());
     }
 
     private void setupLanguageSelectorMenuItem(Menu menu) {

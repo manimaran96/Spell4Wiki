@@ -92,9 +92,10 @@ public class PrefManager {
      */
     public void logoutUser() {
         boolean isFirstTime = isFirstTimeLaunch();
+        String appLanguage = getAppLanguage();
         editor.clear();
         setFirstTimeLaunch(isFirstTime);
-        editor.apply();
+        setAppLanguage(appLanguage);
 
         // Remove sync - authenticator account
         AccountUtils.removeAccount();
