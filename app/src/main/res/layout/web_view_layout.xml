@@ -41,6 +41,7 @@
                 app:lottie_rawRes="@raw/web_page_load_error"
                 app:lottie_autoPlay="true"
                 app:lottie_loop="true"
+                app:lottie_enableMergePathsForKitKatAndAbove="true"
                 app:lottie_speed="2"
                 android:layout_centerInParent="true"/>
 

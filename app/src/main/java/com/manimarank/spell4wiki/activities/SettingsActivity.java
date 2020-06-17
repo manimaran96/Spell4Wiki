@@ -74,18 +74,14 @@ public class SettingsActivity extends BaseActivity {
         updateLanguageView(txtWiktionaryLang, pref.getLanguageCodeWiktionary());
 
         layoutSpell4WikiLang.setOnClickListener(v -> {
-            OnLanguageSelectionListener callback = langCode -> {
-                updateLanguageView(txtSpell4WikiLang, pref.getLanguageCodeSpell4Wiki());
-            };
+            OnLanguageSelectionListener callback = langCode -> updateLanguageView(txtSpell4WikiLang, pref.getLanguageCodeSpell4Wiki());
             LanguageSelectionFragment languageSelectionFragment = new LanguageSelectionFragment(this);
             languageSelectionFragment.init(callback, ListMode.SPELL_4_WIKI);
             languageSelectionFragment.show(getSupportFragmentManager());
         });
 
         layoutSpell4WordListLang.setOnClickListener(v -> {
-            OnLanguageSelectionListener callback = langCode -> {
-                updateLanguageView(txtSpell4WordListLang, pref.getLanguageCodeSpell4WordList());
-            };
+            OnLanguageSelectionListener callback = langCode -> updateLanguageView(txtSpell4WordListLang, pref.getLanguageCodeSpell4WordList());
             LanguageSelectionFragment languageSelectionFragment = new LanguageSelectionFragment(this);
             languageSelectionFragment.init(callback, ListMode.SPELL_4_WORD_LIST);
             languageSelectionFragment.show(getSupportFragmentManager());
@@ -93,18 +89,14 @@ public class SettingsActivity extends BaseActivity {
 
 
         layoutSpell4WordLang.setOnClickListener(v -> {
-            OnLanguageSelectionListener callback = langCode -> {
-                updateLanguageView(txtSpell4WordLang, pref.getLanguageCodeSpell4Word());
-            };
+            OnLanguageSelectionListener callback = langCode -> updateLanguageView(txtSpell4WordLang, pref.getLanguageCodeSpell4Word());
             LanguageSelectionFragment languageSelectionFragment = new LanguageSelectionFragment(this);
             languageSelectionFragment.init(callback, ListMode.SPELL_4_WORD);
             languageSelectionFragment.show(getSupportFragmentManager());
         });
 
         layoutWiktionaryLang.setOnClickListener(v -> {
-            OnLanguageSelectionListener callback = langCode -> {
-                updateLanguageView(txtWiktionaryLang, pref.getLanguageCodeWiktionary());
-            };
+            OnLanguageSelectionListener callback = langCode -> updateLanguageView(txtWiktionaryLang, pref.getLanguageCodeWiktionary());
             LanguageSelectionFragment languageSelectionFragment = new LanguageSelectionFragment(this);
             languageSelectionFragment.init(callback, ListMode.WIKTIONARY);
             languageSelectionFragment.show(getSupportFragmentManager());

@@ -16,6 +16,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="@dimen/space20dp"
         android:layout_marginBottom="@dimen/space4dp"
+        app:lottie_enableMergePathsForKitKatAndAbove="true"
         android:tint="@color/white"
         app:lottie_autoPlay="true"
         app:lottie_loop="true"

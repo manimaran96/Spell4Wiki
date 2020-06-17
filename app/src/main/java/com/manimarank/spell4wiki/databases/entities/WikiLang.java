@@ -45,10 +45,6 @@ public class WikiLang implements Serializable {
         this.categories = categories;
     }
 
-    public WikiLang() {
-
-    }
-
     @NotNull
     public String getCode() {
         return code;

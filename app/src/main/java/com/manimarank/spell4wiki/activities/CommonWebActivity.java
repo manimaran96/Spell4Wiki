@@ -46,7 +46,7 @@ public class CommonWebActivity extends BaseActivity {
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
 
-            String title = "";
+            String title;
             if (bundle.containsKey(AppConstants.TITLE)) {
                 title = bundle.getString(AppConstants.TITLE);
                 setTitle(title);
@@ -114,9 +114,7 @@ public class CommonWebActivity extends BaseActivity {
             View rootView = item.getActionView();
             TextView selectedLang = rootView.findViewById(R.id.txtSelectedLanguage);
             selectedLang.setText(this.languageCode.toUpperCase());
-            rootView.setOnClickListener(v -> {
-                loadLanguages();
-            });
+            rootView.setOnClickListener(v -> loadLanguages());
         }
     }
 

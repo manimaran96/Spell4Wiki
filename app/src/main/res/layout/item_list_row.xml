@@ -18,6 +18,7 @@
             app:lottie_autoPlay="true"
             app:lottie_loop="true"
             android:visibility="gone"
+            app:lottie_enableMergePathsForKitKatAndAbove="true"
             android:paddingStart="@dimen/space8dp"
             android:paddingEnd="@dimen/space8dp"
             android:layout_marginEnd="@dimen/space4dp"

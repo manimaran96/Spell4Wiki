@@ -18,12 +18,12 @@ public interface WordsHaveAudioDao {
     void insert(WordsHaveAudio... wordsHaveAudios);
 
     @Update
-    public void update(WordsHaveAudio... wordsHaveAudios);
+    void update(WordsHaveAudio... wordsHaveAudios);
 
     @Delete
-    public void delete(WordsHaveAudio wordsHaveAudio);
+    void delete(WordsHaveAudio wordsHaveAudio);
 
     @Query("SELECT word FROM words_already_have_audio WHERE language_code = :code")
-    public List<String> getWordsAlreadyHaveAudioByLanguage(String code);
+    List<String> getWordsAlreadyHaveAudioByLanguage(String code);
 
 }

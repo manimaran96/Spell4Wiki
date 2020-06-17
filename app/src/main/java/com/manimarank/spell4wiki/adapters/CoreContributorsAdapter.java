@@ -41,9 +41,7 @@ public class CoreContributorsAdapter extends RecyclerView.Adapter<CoreContributo
         holder.txtContribution.setText(model.getContribution());
         holder.txtAbout.setText(Html.fromHtml(model.getAbout()));
 
-        holder.btnOption.setOnClickListener(v -> {
-            GeneralUtils.openUrlInBrowser(mContext, model.getLink());
-        });
+        holder.btnOption.setOnClickListener(v -> GeneralUtils.openUrlInBrowser(mContext, model.getLink()));
 
         holder.itemView.setOnClickListener(v -> holder.txtAbout.setVisibility(holder.txtAbout.getVisibility() != View.VISIBLE ? View.VISIBLE : View.GONE));
     }

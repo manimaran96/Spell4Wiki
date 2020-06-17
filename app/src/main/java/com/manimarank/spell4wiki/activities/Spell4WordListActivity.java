@@ -171,7 +171,7 @@ public class Spell4WordListActivity extends BaseActivity {
                 // Instead, a URI to that document will be contained in the return intent
                 // provided to this method as a parameter.
                 // Pull that URI using resultData.getData().
-                Uri uri = null;
+                Uri uri;
                 if (data != null) {
                     uri = data.getData();
                     assert uri != null;

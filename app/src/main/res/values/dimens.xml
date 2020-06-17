@@ -59,6 +59,7 @@
     <dimen name="space24dp">24dp</dimen>
     <dimen name="space30dp">30dp</dimen>
     <dimen name="show_case_focal_padding">40dp</dimen>
+    <dimen name="icon_language">60dp</dimen>
 
 
 </resources>

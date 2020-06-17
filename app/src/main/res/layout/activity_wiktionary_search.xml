@@ -40,4 +40,7 @@
         android:layout_below="@+id/search_bar"
         android:divider="@null" />
 
+    <include layout="@layout/loading_info"
+        android:visibility="gone"/>
+
 </RelativeLayout>

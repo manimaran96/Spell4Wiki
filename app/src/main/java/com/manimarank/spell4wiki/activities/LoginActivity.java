@@ -11,7 +11,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
 import com.manimarank.spell4wiki.R;
@@ -99,16 +98,12 @@ public class LoginActivity extends BaseActivity {
             /*
              *  Hit Forgot Password Button
              */
-            btnForgotPassword.setOnClickListener(v -> {
-                openUrl(Urls.FORGOT_PASSWORD, getString(R.string.forgot_password));
-            });
+            btnForgotPassword.setOnClickListener(v -> openUrl(Urls.FORGOT_PASSWORD, getString(R.string.forgot_password)));
 
             /*
              *  Hit Join Wikipedia Button
              */
-            btnJoinWikipedia.setOnClickListener(v -> {
-                openUrl(Urls.JOIN_WIKI, getString(R.string.join_wiki));
-            });
+            btnJoinWikipedia.setOnClickListener(v -> openUrl(Urls.JOIN_WIKI, getString(R.string.join_wiki)));
 
 
         }
@@ -144,7 +139,7 @@ public class LoginActivity extends BaseActivity {
             @Override
             public void onFailure(@NonNull Call<WikiToken> call, @NonNull Throwable t) {
                 t.printStackTrace();
-                showErrorMsg(getString(R.string.check_internet));
+                showErrorMsg(getString(R.string.something_went_wrong_try_again));
             }
         });
     }
@@ -222,7 +217,10 @@ public class LoginActivity extends BaseActivity {
     }
 
     private void showErrorMsg(String msg) {
-        showMsg(msg);
+        if(NetworkUtils.INSTANCE.isConnected(getApplicationContext()))
+            showMsg(msg);
+        else
+            showMsg(getString(R.string.check_internet));
         btnLogin.revertAnimation();
         isDuringLogin = false;
     }

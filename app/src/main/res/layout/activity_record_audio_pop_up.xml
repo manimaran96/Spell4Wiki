@@ -209,6 +209,7 @@
                     android:layout_height="@dimen/icon_normal"
                     android:layout_marginTop="@dimen/space20dp"
                     android:layout_marginBottom="@dimen/space4dp"
+                    app:lottie_enableMergePathsForKitKatAndAbove="true"
                     app:lottie_rawRes="@raw/uploading_file"
                     app:lottie_autoPlay="true"
                     app:lottie_loop="true"

@@ -15,6 +15,7 @@ import com.manimarank.spell4wiki.utils.NetworkUtils
 import com.manimarank.spell4wiki.utils.SnackBarUtils
 import com.manimarank.spell4wiki.utils.constants.AppConstants
 import kotlinx.android.synthetic.main.activity_web_view_content.*
+import java.lang.Exception
 
 
 class CommonWebContentActivity : BaseActivity() {
@@ -27,10 +28,8 @@ class CommonWebContentActivity : BaseActivity() {
         }
         val bundle = intent.extras
         if (bundle != null) {
-            var title: String? = ""
             if (bundle.containsKey(AppConstants.TITLE)) {
                 title = bundle.getString(AppConstants.TITLE)
-                setTitle(title)
             }
             if (bundle.containsKey(AppConstants.URL)) {
                 url = bundle.getString(AppConstants.URL)
@@ -53,19 +52,23 @@ class CommonWebContentActivity : BaseActivity() {
         // Enable Javascript
         webView.settings.javaScriptEnabled = true
         webView.isHorizontalScrollBarEnabled = false
-        webView.settings.useWideViewPort = true
+        webView.settings.useWideViewPort = false
         webView.settings.loadWithOverviewMode = true
-        webView.settings.setSupportZoom(true)
-        webView.settings.builtInZoomControls = true
+        webView.settings.setSupportZoom(false)
+        webView.settings.builtInZoomControls = false
         webView.settings.displayZoomControls = false
-        webView.settings.cacheMode = WebSettings.LOAD_NO_CACHE;
-        webView.settings.domStorageEnabled = true;
+        webView.settings.cacheMode = WebSettings.LOAD_NO_CACHE
+        webView.settings.domStorageEnabled = true
         webView.webViewClient = object : WebViewClient() {
 
             override fun shouldOverrideUrlLoading(view: WebView?, url: String?): Boolean {
-                val deepLinkUri: Uri = Uri.parse(url)
-                val intent = Intent(Intent.ACTION_VIEW, deepLinkUri)
-                startActivity(intent)
+                try {
+                    val deepLinkUri: Uri = Uri.parse(url)
+                    val intent = Intent(Intent.ACTION_VIEW, deepLinkUri)
+                    startActivity(intent)
+                }catch (e : Exception){
+                    SnackBarUtils.showNormal(webView, getString(R.string.something_went_wrong))
+                }
                 return true
             }
 

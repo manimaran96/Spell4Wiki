@@ -13,16 +13,8 @@ object ToastUtils {
         }
     }
 
-    fun showNormal(msg: String) {
-        showToast(msg, Toast.LENGTH_SHORT)
-    }
-
     fun showLong(msg: String) {
         showToast(msg, Toast.LENGTH_LONG)
-    }
-
-    fun showCustom(msg: String, duration: Int) {
-        showToast(msg, duration)
     }
 
 }

@@ -202,12 +202,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             this.doubleBackToExitPressedOnce = true;
             SnackBarUtils.INSTANCE.showLong(searchView, getString(R.string.alert_to_exit));
         }
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                doubleBackToExitPressedOnce = false;
-            }
-        }, 2000);
+        new Handler().postDelayed(() -> doubleBackToExitPressedOnce = false, 2000);
     }
 
     private void callShowCase() {

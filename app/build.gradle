@@ -59,7 +59,8 @@ dependencies {
     // Networking libraries
     implementation 'com.squareup.retrofit2:retrofit:2.7.1'
     implementation 'com.squareup.retrofit2:converter-gson:2.6.2'
-    implementation("com.squareup.okhttp3:okhttp:3.12.8") {
+    //noinspection GradleDependency
+    implementation("com.squareup.okhttp3:okhttp:3.12.8") { // support older versions
         force = true
     }
     implementation 'com.github.franmontiel:PersistentCookieJar:v1.0.1'
@@ -72,7 +73,7 @@ dependencies {
     implementation 'com.airbnb.android:lottie:3.4.0'
 
     // Crash Reporter
-    implementation 'com.gitlab.manimaran:crashreporter:v0.1'
+    implementation 'com.gitlab.manimaran:crashreporter:v1.0'
 
     // Show case
     implementation 'uk.co.samuelwall:material-tap-target-prompt:3.0.0'

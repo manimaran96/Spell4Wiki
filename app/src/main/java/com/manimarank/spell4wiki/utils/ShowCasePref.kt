@@ -35,10 +35,4 @@ object ShowCasePref {
         }
     }
 
-    fun reset() {
-        val editor = prefs.edit()
-        editor.clear()
-        editor.apply()
-    }
-
 }

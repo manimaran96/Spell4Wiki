@@ -2,6 +2,7 @@ package com.manimarank.spell4wiki
 
 import android.app.Application
 import android.content.Context
+import android.os.Build
 import androidx.appcompat.app.AppCompatDelegate
 import com.manimaran.crash_reporter.CrashReporter
 import com.manimaran.crash_reporter.CrashReporterConfiguration
@@ -34,7 +35,8 @@ class Spell4WikiApp : Application() {
 
             val config = CrashReporterConfiguration()
                     .setExtraInformation(extraInfo)
-                    .setMaxNumberOfCrashToBeReport(5)
+                    .setMaxNumberOfCrashToBeReport(if(Build.VERSION.SDK_INT >= 23) 8 else 5)
+                    .setMaxNoOfLineInCrash(if(Build.VERSION.SDK_INT >= 23) 25 else 15)
                     .setAlertDialogTitle(getString(R.string.crash_report_alert_title))
                     .setAlertDialogMessage(getString(R.string.crash_report_alert_message))
                     .setAlertDialogPositiveButton(getString(R.string.send))

@@ -13,6 +13,7 @@ import com.manimarank.spell4wiki.models.WikiLanguage;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -49,18 +50,14 @@ public class SyncHelper {
                         if (languageList != null && languageList.size() > 0) {
                             dbHelper.getAppDatabase().getWikiLangDao().deleteAll();
                             for (WikiLanguage lang : languageList) {
-                                WikiLang dbLang = new WikiLang();
-                                dbLang.setCode(lang.getCode());
-                                dbLang.setName(lang.getName());
-                                dbLang.setLocalName(lang.getLocalName());
+                                String titleOfWordsWithoutAudio = null;
                                 if (!TextUtils.isEmpty(lang.getTitleOfWordsWithoutAudio()))
-                                    dbLang.setTitleOfWordsWithoutAudio(lang.getTitleOfWordsWithoutAudio());
-                                if (lang.getDirection() != null && lang.getDirection().equals("rtr"))
-                                    dbLang.setIsLeftDirection(false);
-                                else
-                                    dbLang.setIsLeftDirection(true);
+                                    titleOfWordsWithoutAudio = lang.getTitleOfWordsWithoutAudio();
+                                Boolean isLeftToRightDirection = lang.getDirection() != null && lang.getDirection().equals("ltr");
+                                List<String> categories = new ArrayList<>();
                                 if(lang.getCategory() != null && lang.getCategory().size() > 0)
-                                    dbLang.setCategories(lang.getCategory());
+                                    categories = lang.getCategory();
+                                WikiLang dbLang = new WikiLang(lang.getCode(), lang.getName(), lang.getLocalName(), titleOfWordsWithoutAudio, isLeftToRightDirection, categories);
                                 dbHelper.getAppDatabase().getWikiLangDao().insert(dbLang);
                             }
                         }

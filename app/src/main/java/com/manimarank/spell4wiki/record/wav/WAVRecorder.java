@@ -3,7 +3,6 @@ package com.manimarank.spell4wiki.record.wav;
 import android.media.AudioFormat;
 import android.media.AudioRecord;
 import android.media.MediaRecorder;
-import android.util.Log;
 
 import com.manimarank.spell4wiki.utils.Print;
 

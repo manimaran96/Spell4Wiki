@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 
-import com.manimarank.spell4wiki.R;
 import com.manimarank.spell4wiki.activities.LoginActivity;
 import com.manimarank.spell4wiki.auth.AccountUtils;
 

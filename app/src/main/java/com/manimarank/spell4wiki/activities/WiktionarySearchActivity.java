@@ -45,6 +45,7 @@ public class WiktionarySearchActivity extends BaseActivity implements EndlessRec
     private EndlessRecyclerView recyclerView;
     private EndlessRecyclerAdapter adapter;
     private TextView txtNotFound;
+    private View layoutProgress;
     private Snackbar snackbar;
 
     private String queryString;
@@ -66,6 +67,7 @@ public class WiktionarySearchActivity extends BaseActivity implements EndlessRec
 
         // Views
         txtNotFound = findViewById(R.id.txtNotFound);
+        layoutProgress = findViewById(R.id.layoutProgress);
         SearchView searchView = findViewById(R.id.search_bar);
         recyclerView = findViewById(R.id.recyclerView);
         snackbar = Snackbar.make(searchView, getString(R.string.something_went_wrong), Snackbar.LENGTH_LONG);
@@ -111,6 +113,7 @@ public class WiktionarySearchActivity extends BaseActivity implements EndlessRec
             queryString = s;
             nextOffset = 0;
             txtNotFound.setVisibility(View.GONE);
+            layoutProgress.setVisibility(View.VISIBLE);
             recyclerView.setVisibility(View.VISIBLE);
             recyclerView.reset();
 
@@ -196,6 +199,8 @@ public class WiktionarySearchActivity extends BaseActivity implements EndlessRec
         if (!isDestroyed() && !isFinishing()) {
             if (NetworkUtils.INSTANCE.isConnected(getApplicationContext())) {
                 snackbar.setText(msg);
+                if(layoutProgress.getVisibility() == View.VISIBLE)
+                    layoutProgress.setVisibility(View.GONE);
                 if (recyclerView != null && adapter != null && adapter.getItemCount() < 1) {
                     recyclerView.setVisibility(View.INVISIBLE);
                     txtNotFound.setText(getString(R.string.result_not_found));
@@ -214,6 +219,9 @@ public class WiktionarySearchActivity extends BaseActivity implements EndlessRec
         if (!isDestroyed() && !isFinishing()) {
 
             ArrayList<String> titleList = new ArrayList<>();
+
+            if(layoutProgress.getVisibility() == View.VISIBLE)
+                layoutProgress.setVisibility(View.GONE);
 
             if (snackbar.isShown())
                 snackbar.dismiss();
@@ -262,7 +270,7 @@ public class WiktionarySearchActivity extends BaseActivity implements EndlessRec
     public void loadFail() {
         if (!NetworkUtils.INSTANCE.isConnected(getApplicationContext()))
             searchFailed(getString(R.string.check_internet));
-        else if (recyclerView != null && recyclerView.isLastPage())
+        else if (recyclerView != null && recyclerView.isLastPage() && adapter != null && adapter.getItemCount() > 10)
             searchFailed(getString(R.string.no_more_data_found));
     }
 
