@@ -246,11 +246,16 @@ public class WebViewFragment extends Fragment {
     }
 
     public void shareLink() {
-        Intent intent = new Intent(Intent.ACTION_SEND);
-        intent.setType("text/plain");
-        String shareMsg = String.format(getString(R.string.link_share_message), Uri.decode(webView.getUrl())) + "\n\n" + String.format(getString(R.string.app_share_message), Urls.APP_LINK);
-        intent.putExtra(Intent.EXTRA_TEXT, shareMsg);
-        startActivity(Intent.createChooser(intent, getString(R.string.link_share_title)));
+        try {
+            Intent intent = new Intent(Intent.ACTION_SEND);
+            intent.setType("text/plain");
+            String appInfo = getString(R.string.app_description) + "\n\n" + String.format(getString(R.string.app_share_link), Urls.APP_LINK);
+            String shareMsg = String.format(getString(R.string.link_share_message), Uri.decode(webView.getUrl())) + "\n\n" + appInfo;
+            intent.putExtra(Intent.EXTRA_TEXT, shareMsg);
+            startActivity(Intent.createChooser(intent, getString(R.string.link_share_title)));
+        }catch (Exception e){
+            SnackBarUtils.INSTANCE.showLong(webView, getString(R.string.something_went_wrong));
+        }
     }
 
     @Override

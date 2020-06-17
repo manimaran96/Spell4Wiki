@@ -95,7 +95,7 @@ public class AboutActivity extends BaseActivity implements View.OnClickListener 
 
     @Override
     public void onClick(View v) {
-        if(!NetworkUtils.INSTANCE.isConnected(getApplicationContext())){
+        if (!NetworkUtils.INSTANCE.isConnected(getApplicationContext())) {
             SnackBarUtils.INSTANCE.showLong(findViewById(R.id.txt_rate_app), getString(R.string.check_internet));
             return;
         }
@@ -154,10 +154,16 @@ public class AboutActivity extends BaseActivity implements View.OnClickListener 
     }
 
     private void shareApp() {
-        Intent intent = new Intent(Intent.ACTION_SEND);
-        intent.setType("text/plain");
-        intent.putExtra(Intent.EXTRA_TEXT, String.format(getString(R.string.app_share_message), Urls.APP_LINK));
-        startActivity(Intent.createChooser(intent, getString(R.string.app_share_title)));
+        try {
+            Intent intent = new Intent(Intent.ACTION_SEND);
+            intent.setType("text/plain");
+            String appInfo = getString(R.string.app_description) + "\n\n" + String.format(getString(R.string.app_share_link), Urls.APP_LINK);
+            intent.putExtra(Intent.EXTRA_TEXT, appInfo);
+            startActivity(Intent.createChooser(intent, getString(R.string.app_share_title)));
+        } catch (Exception e) {
+            SnackBarUtils.INSTANCE.showLong(findViewById(R.id.txt_share), getString(R.string.something_went_wrong));
+        }
+
     }
 
     @SuppressLint("IntentReset")

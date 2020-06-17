@@ -163,13 +163,13 @@ public class Spell4Wiktionary extends BaseActivity implements EndlessRecyclerVie
                         boolean isFail = apiFailRetryCount >= AppConstants.API_MAX_FAIL_RETRY;
                         builder.setMessage(isFail ? R.string.spell4wiktionary_load_more_failed_confirmation : R.string.spell4wiktionary_load_more_confirmation);
                         builder.setCancelable(false);
-                        builder.setPositiveButton(R.string.retry_now, (dialog, which) -> {
+                        builder.setPositiveButton(R.string.yes_continue, (dialog, which) -> {
                             recyclerView.enableLoadMore();
                             resetApiResultTime();
                             apiFailRetryCount = 0;
                             loadDataFromServer();
                         });
-                        builder.setNegativeButton(R.string.not_now, ((dialog, which) -> {
+                        builder.setNegativeButton(R.string.later, ((dialog, which) -> {
                             recyclerView.disableLoadMore();
                             dialog.dismiss();
                         }));

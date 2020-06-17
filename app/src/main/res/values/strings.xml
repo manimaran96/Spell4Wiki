@@ -25,15 +25,16 @@
     <string name="search">Search</string>
     <string name="settings">Settings</string>
     <string name="login_to_contribute">Login to contribute</string>
-    <string name="do_you_like_contribute_to_wiki_commons">Donate voice to Wikimedia commons?</string>
+    <string name="contribute_to_wiki_commons">Contribute to Wikimedia commons?</string>
     <string name="logout">Logout</string>
     <string name="about">About</string>
     <string name="record">Record</string>
     <string name="link_copied">Link copied</string>
     <string name="link_share_message">Visit : %s\nLink share from Spell4Wiki App.</string>
-    <string name="link_share_title">Share Link to your friends…</string>
+    <string name="link_share_title">Share link to your friends…</string>
     <string name="app_share_title">Share Spell4Wiki App to your friends…</string>
-    <string name="app_share_message">Spell4Wiki is an mobile application to record and upload audio to Wikimedia commons for Wiktionary words.\nSpell4Wiki also act as dictionary words meanings are come from Wiktionary.\n\nApp Link :\n%s</string>
+    <string name="app_description">Spell4Wiki is a mobile application to record and upload audio for Wiktionary words to Wikimedia commons. This is also act as a Wiki-Dictionary.</string>
+    <string name="app_share_link">App Link :\n%s</string>
     <string name="upload">Upload</string>
     <string name="before_record">Hold the Mic to Record</string>
     <string name="during_record">Recording…  %s</string>
@@ -51,17 +52,17 @@
     <string name="crash_report_alert_message">A previous crash was collected. Would you like to send the crash logs to developer to fix this issue in the future?</string>
     <string name="send">Send</string>
     <string name="cancel">Cancel</string>
-    <string name="upload_success">Successfully Uploaded\nPronunciation audio of %s</string>
+    <string name="upload_success">Successfully uploaded the pronunciation of %s</string>
     <string name="select_file">Select file</string>
     <string name="next">Next</string>
     <string name="type_word">Type or Paste your words here</string>
-    <string name="enter_word">Enter word</string>
-    <string name="hint_select_file">Select .txt file with contains list of words to upload audio.</string>
-    <string name="hint_select_file_next">Align the file content(One word per line).</string>
+    <string name="enter_word">Type word</string>
+    <string name="hint_select_file">Select .txt file which contains list of words to contribute.</string>
+    <string name="hint_select_file_next">Make sure that you have one word per line.</string>
     <string name="direct_content">Direct content</string>
-    <string name="hint_direct_copy">Copy and paste or type words to upload audio.</string>
-    <string name="hint_direct_copy_next">Type or Paste in below box then Align the words(One word per line).</string>
-    <string name="hint_common_steps">---------- NOTE ----------\nEach word must be in separate line.\nAlign words properly If necessary.\n</string>
+    <string name="hint_direct_copy">Copy &amp; paste or Type words to contribute.</string>
+    <string name="hint_direct_copy_next">Type or Paste in below box\n(One word per line).</string>
+    <string name="hint_common_steps">---------- NOTE ----------\nEach word must be in a separate line.\nAlign words properly If necessary.\n</string>
     <string name="confirmation">Confirmation</string>
     <string name="confirm_to_back">Do you want to go back?</string>
     <string name="select_language">Select Language</string>
@@ -72,10 +73,10 @@
     <string name="share">Share</string>
     <string name="powered_by">Powered By</string>
     <string name="kaniyam">Kaniyam</string>
-    <string name="about_kaniyam">The Kaniyam Foundation is an organization for ensuring the development of the use of Tamil language in all aspects of science and socio-economic development and making all knowledge and resources available to all in free access.</string>
+    <string name="about_kaniyam">The Kaniyam Foundation is an organization for ensuring the development of the use of Tamil language in all aspects of science and socio-economic development and making knowledge &amp; resources available in free access.</string>
     <string name="vglug">VGLUG</string>
-    <string name="about_vglug">Villupuram GNU/Linux Users Group (Villupuram GLUG) is a non profit organization started in 2013, Impression of Free and open-source software (FOSS).</string>
-    <string name="how_to_contribute">How To Contribute?</string>
+    <string name="about_vglug">Villupuram GNU/Linux Users Group (Villupuram GLUG) is a non profit organization started in 2013, inspired from Free and open-source software (FOSS).</string>
+    <string name="how_to_contribute">How to Contribute?</string>
     <string name="source_code">Source Code</string>
     <string name="help_development">Help Development</string>
     <string name="contributors">Contributors</string>
@@ -83,17 +84,18 @@
     <string name="third_party_libraries">Third Party Libraries</string>
     <string name="feedback">Feedback</string>
     <string name="privacy_policy">Privacy Policy</string>
-    <string name="terms_of_use">Terms Of Use</string>
-    <string name="about_app">@string/app_intro_slide_1_description</string>
+    <string name="terms_of_use">Terms of Use</string>
+    <string name="join_telegram">Join Telegram Group</string>
+    <string name="about_app">@string/app_intro_slide_1_description </string>
     <string name="version">Version</string>
     <string name="license">License</string>
     <string name="copy_link">Copy link</string>
     <string name="favorite">Favorite</string>
     <string name="forward">Forward</string>
     <string name="backward">Backward</string>
-    <string name="select_language_response_msg">%s - Language Selected.</string>
+    <string name="select_language_response_msg">%s - language selected.</string>
     <string name="visit_web_page">Visit web page</string>
-    <string name="go_to_license_url">Go to License URL</string>
+    <string name="go_to_license_url">Go to license URL</string>
     <string name="refresh">Refresh</string>
     <string name="open_in_browser">Open in browser</string>
     <string name="logout_confirmation">Logout Confirmation</string>
@@ -105,8 +107,20 @@
     <string name="core_contributors">Core Contributors</string>
     <string name="code_contributors">Code Contributors</string>
     <string name="wiki_tech_helpers">Wikimedia &amp; Tech Helpers</string>
-    <string name="language_for_note">Note : Language For %s</string>
+    <string name="language_for_note">Note : Language for %s option.</string>
     <string name="wiktionary_search">Wiktionary search</string>
+    <string name="app_settings">App Settings</string>
+    <string name="app_language">App Language</string>
+    <string name="action_add">Add</string>
+    <string name="choose_your_preferred_language">Choose your preferred language.\nCurrent language : %s</string>
+    <string name="choose_language">Choose language</string>
+    <string name="language_selection">Language Selection</string>
+    <string name="yes_continue">Yes, Continue</string>
+    <string name="later">Later</string>
+    <string name="temporary">Temporary</string>
+    <string name="checking_file_availability">Checking file availability\n(%s)</string>
+    <string name="ask_to_add_language">Do you want to add your language?</string>
+    <string name="do_you_want_continue">Do you want to load more?</string>
 
 
     <string name="check_internet">Please check your internet connection!</string>
@@ -122,9 +136,9 @@
     <string name="invalid_language">Select valid language.</string>
     <string name="confirm_declaration">Please check and confirm the declaration.</string>
     <string name="invalid_csrf">You are not logged in! \nPlease login to continue.</string>
-    <string name="invalid_csrf_try_again">Invalid CSRF Token. Please Try again.</string>
-    <string name="invalid_response">Invalid response. Please Try again</string>
-    <string name="upload_failed">Upload failed. Please Try again.</string>
+    <string name="invalid_csrf_try_again">Invalid CSRF Token. Please try again.</string>
+    <string name="invalid_response">Invalid response. Please try again</string>
+    <string name="upload_failed">Upload failed. Please try again.</string>
     <string name="file_already_exist">The upload file already exist in same/another format</string>
     <string name="audio_file_already_exist">Audio file already exist for %s.</string>
     <string name="login_expired">Login expired. Please login and continue.</string>
@@ -135,6 +149,10 @@
     <string name="no_email_client">No email client</string>
     <string name="result_not_found">Result Not Found</string>
     <string name="server_misbehaved">Server misbehaved! Please try again later.</string>
+    <string name="word_list_no_record_found">No words found.\n(or)\nAudio file already exist/uploaded for all the words.\n(or)\nContribute to other language.</string>
+    <string name="spell4wiktionary_load_more_confirmation">It seems like it will take more time to find words without audio. Do you really want to continue?</string>
+    <string name="spell4wiktionary_load_more_failed_confirmation">@string/something_went_wrong_try_again</string>
+    <string name="no_more_data_found">No more data found</string>
 
 
     <!-- App Intro Screen -->
@@ -144,11 +162,11 @@
     <string name="app_intro_slide_4_title">Spell For Word</string>
     <string name="app_intro_slide_5_title">Permission Request</string>
 
-    <string name="app_intro_slide_1_description">Spell4Wiki is an mobile application to record and upload audio to Wikimedia commons for Wiktionary words.</string>
-    <string name="app_intro_slide_2_description">You can search and view word meanings from Wikitionary for any languages.</string>
-    <string name="app_intro_slide_3_description">You can upload audio for your own word list from text file or directly copy &amp; paste the content.</string>
-    <string name="app_intro_slide_4_description">You can upload audio file for your own single word.</string>
-    <string name="app_intro_slide_5_description">Spell4Wiki requires storage and record audio permissions.\nAllow those permissions</string>
+    <string name="app_intro_slide_1_description">@string/app_description</string>
+    <string name="app_intro_slide_2_description">You can search meaning from Wikitionary for any words in any languages.</string>
+    <string name="app_intro_slide_3_description">You can upload for your own list of words from a text file or copy &amp; paste.</string>
+    <string name="app_intro_slide_4_description">You can spell and upload for a single word.</string>
+    <string name="app_intro_slide_5_description">Spell4Wiki require storage and record audio permissions without violating your privacy.</string>
 
 
     <!--Don't translate-->
@@ -161,46 +179,28 @@
     <string name="license_name_cc_zero" translatable="false">CC0(release all rights)</string>
     <string name="sample_url" translatable="false">https://manimaran96.wordpress.com</string>
 
-    <!-- Don't use full stop,  %1$s - language name, %2$s - word.-->
-    <string name="file_content_description">Pronunciation of %1$s Language word %2$s</string>
+    <string name="file_content_description">Pronunciation of %s</string>
+    <!-- Wikipedia page about language
+     For English : https://en.wikipedia.org/wiki/English_language -> English_language
+     For Tamil : https://en.wikipedia.org/wiki/Tamil_language -> Tamil_language-->
+    <string name="language_page_in_wikipedia">English_language</string>
+
 
     <!-- App Show case -->
     <string name="sc_t_spell4wiki">@string/spell4wiktionary</string>
-    <string name="sc_d_spell4wiki">Wiktionary words are listed here. You can record and upload audio to Wikimedia commons for this words.</string>
+    <string name="sc_d_spell4wiki">You can record &amp; upload audio for the list of words to Wikimedia commons.</string>
     <string name="sc_t_spell4wordlist">@string/spell4wordlist</string>
-
-
     <string name="sc_t_spell4wiki_page_language">Language switch</string>
-    <string name="sc_d_spell4wiki_page_language">You can change the language for Spell4Wiki. The audio will be uploaded based on the selected language.\n\nCurrently selected language is %s\n\nNote :\nCurrently few languages only supported for this feature.</string>
-    <string name="sc_t_spell4wiki_list_item">Word To Record</string>
-    <string name="sc_d_spell4wiki_list_item">Click the word to record audio. Click dictionary icon to view word meaning from Wiktionary</string>
-    <string name="sc_t_spell4word_page_edit_word">Enter Word To Record</string>
-    <string name="sc_d_spell4word_page_edit_word">Type or Paste your single word here. Click dictionary icon to view word meaning from Wiktionary</string>
+    <string name="sc_d_spell4wiki_page_language">You can switch your language in order to contribute. The audio will be uploaded based on the selected language.\n\nCurrent selected language is %s\n\nNote :\nA few languages only supported now.</string>
+    <string name="sc_t_spell4wiki_list_item">To Record</string>
+    <string name="sc_d_spell4wiki_list_item">Click the word to record the audio or click the dictionary icon to view the meaning from Wiktionary</string>
+    <string name="sc_t_spell4word_page_edit_word">Type a word to record</string>
+    <string name="sc_d_spell4word_page_edit_word">Type your word and hit record or click the dictionary icon to view the meaning from Wiktionary</string>
     <string name="sc_t_wiktionary_page_language">@string/sc_t_spell4wiki_page_language</string>
-    <string name="sc_d_wiktionary_page_language">You can select any language for Wiktionary. The results and word meanings will be based on the selected language.\n\nCurrently selected language is %s</string>
+    <string name="sc_d_wiktionary_page_language">You can select any language for Wiktionary. The results and meanings will be based on the selected language.\n\nCurrent selected language is %s</string>
     <string name="sc_t_record_upload">Verify before Upload</string>
-    <string name="sc_d_record_upload">1. Verify the word and language\n2. Play and verify the recorded audio\n3. Then upload to Wikimedia commons</string>
-    <string name="sc_t_core_contributors_list_item">More About Contributor</string>
-    <string name="sc_d_core_contributors_list_item">Click the name and you can get more details about contributor</string>
-
-
-    <string name="sc_d_spell4wordlist">You can upload audio files for your own word list directly from copy &amp; paste contents or from a text file.</string>
-    <string name="checking_file_availability">Checking File Availability\n(%s)</string>
-    <string name="word_list_no_record_found">No words found.\n(or)\nAudio file already exist/uploaded for all the words.\n(or)\nContribute to other language.</string>
-    <string name="temporary">Temporary</string>
-    <string name="do_you_want_continue">Do you want to Continue?</string>
-    <string name="spell4wiktionary_load_more_confirmation">Take more time for finding the Wiktionary words haven\'t audio. Because, lot of words are may have audio already.\n\nYou can retry now or later to find with more Wiktionary words.</string>
-    <string name="spell4wiktionary_load_more_failed_confirmation">Something went wrong. Please try again later.</string>
-    <string name="retry_now">Retry now</string>
-    <string name="not_now">Later</string>
-    <string name="no_more_data_found">No more data found</string>
-    <string name="ask_to_add_language">Do you want to add your language?</string>
-    <string name="app_settings">App Settings</string>
-    <string name="app_language">App Language</string>
-    <string name="action_add">Add</string>
-    <string name="choose_your_preferred_language">Choose your preferred language.\nCurrent language : %s</string>
-    <string name="choose_language">Choose language</string>
-    <string name="language_selection">Language Selection</string>
-    <string name="join_telegram">Join Telegram Group</string>
+    <string name="sc_d_record_upload">1. Verify the word and language\n2. Play and verify the recorded audio\n3. Press upload to Wikimedia commons</string>
+    <string name="sc_t_core_contributors_list_item">More about Contributor</string>
+    <string name="sc_d_core_contributors_list_item">Click the name for more details about the contributor.</string>
 
 </resources>

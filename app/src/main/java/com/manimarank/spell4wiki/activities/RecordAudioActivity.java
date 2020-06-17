@@ -753,26 +753,35 @@ public class RecordAudioActivity extends BaseActivity {
         StringBuilder sb = new StringBuilder();
         try {
             WikiLang wikiLang = wikiLangDao.getWikiLanguageWithCode(langCode);
-            String enDescriptionFormat = getStringByLocalLang("en");
-            String contributedLangDescriptionFormat = getStringByLocalLang(langCode);
+            String enDescriptionFormat = getStringByLocalLang("en", R.string.file_content_description);
+            String contributedLangDescriptionFormat = getStringByLocalLang(langCode, R.string.file_content_description);
             if (contributedLangDescriptionFormat != null) {
                 if (!langCode.equals("en") && enDescriptionFormat != null && !contributedLangDescriptionFormat.equalsIgnoreCase(enDescriptionFormat))
-                    sb.append("{{").append(langCode).append("|1=").append(String.format(contributedLangDescriptionFormat, wikiLang.getLocalName(), word)).append("}}");
+                    sb.append("{{").append(langCode).append("|1=").append(String.format(contributedLangDescriptionFormat, word)).append("}}");
             }
-            if (enDescriptionFormat != null)
-                sb.append("{{en|1=").append(String.format(enDescriptionFormat, wikiLang.getName(), word)).append("}}");
+            if (enDescriptionFormat != null) {
+                sb.append("{{en|1=").append(String.format(enDescriptionFormat, word)).append(getLanguageWikipediaPage(wikiLang.getName())).append("}}");
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
         return TextUtils.isEmpty(sb.toString()) ? null : sb.toString();
     }
 
-    private String getStringByLocalLang(String locale) {
+    private String getLanguageWikipediaPage(String languageName){
+        String langPage = getStringByLocalLang(langCode, R.string.language_page_in_wikipedia);
+        if(!getString(R.string.language_page_in_wikipedia).equals(langPage)){
+            return "([[w:" + langPage + "|" + languageName + " Language]])";
+        }
+        return "";
+    }
+
+    private String getStringByLocalLang(String locale, int stringRes) {
         String result = null;
         try {
             Configuration config = new Configuration(getResources().getConfiguration());
             config.setLocale(new Locale(locale));
-            result = createConfigurationContext(config).getResources().getString(R.string.file_content_description);
+            result = createConfigurationContext(config).getResources().getString(stringRes);
         } catch (Exception e) {
             e.printStackTrace();
         }

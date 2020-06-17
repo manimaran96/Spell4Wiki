@@ -201,7 +201,7 @@
                 android:layout_height="wrap_content"
                 android:textAlignment="center"
                 android:textSize="@dimen/text_semi_normal"
-                android:text="@string/do_you_like_contribute_to_wiki_commons"/>
+                android:text="@string/contribute_to_wiki_commons"/>
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/txtLogin"
