@@ -238,7 +238,7 @@
 
 
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/space16dp"
@@ -249,10 +249,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/space8dp"
+                android:layout_toStartOf="@+id/btn_settings"
                 app:drawableTopCompat="@drawable/ic_about"
                 android:text="@string/about"
                 android:textAlignment="center"
-                android:drawablePadding="@dimen/space2dp"/>
+                android:drawablePadding="@dimen/space2dp"
+                tools:ignore="RelativeOverlap" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/btn_settings"
@@ -260,6 +262,7 @@
                 android:layout_height="wrap_content"
                 app:drawableTopCompat="@drawable/ic_settings"
                 android:drawablePadding="@dimen/space2dp"
+                android:layout_centerHorizontal="true"
                 android:padding="@dimen/space8dp"
                 android:text="@string/settings"
                 android:textAlignment="center" />
@@ -269,12 +272,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/space8dp"
+                android:layout_toEndOf="@+id/btn_settings"
                 app:drawableTopCompat="@drawable/ic_logout"
                 android:text="@string/logout"
                 android:textAlignment="center"
                 android:drawablePadding="@dimen/space2dp"/>
 
-        </LinearLayout>
+        </RelativeLayout>
 
 
     </LinearLayout>

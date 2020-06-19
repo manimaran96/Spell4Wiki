@@ -1,21 +1,10 @@
 <resources>
-    <string name="app_name">Spell4Wiki</string>
-
-    <string name="file_content_description">%s என்பதன் ஒலிப்புக்கோப்பு</string>
+    <!--Wikimedia Commons/Wiktionary Related-->
+    <string name="language_code">ta</string>
+    <string name="file_content_description">%s என்பதன் ஒலிப்புக்கோப்பு</string> <!--Don't use full stop-->
     <!-- Wikipedia page about language
      For English : https://en.wikipedia.org/wiki/English_language -> English_language
      For Tamil : https://en.wikipedia.org/wiki/Tamil_language -> Tamil_language-->
     <string name="language_page_in_wikipedia">Tamil_language</string>
-
-    <string name="about_kaniyam">கணியம் அறக்கட்டளை என்பது அறிவியல் மற்றும் சமூகப் பொருளாதார வளர்ச்சிக்கு ஒப்ப, தமிழ் மொழியின் பயன்பாடு வளர்வதை உறுதிப்படுத்துவதும், அனைத்து அறிவுத் தொகுதிகளும், வளங்களும் கட்டற்ற அணுக்கத்தில் அனைவருக்கும் கிடைக்கச்செய்வதற்க்குமான அமைப்பாகும்.</string>
-    <string name="view_my_contribution">எனது பங்களிப்புகள்</string>
-    <string name="settings">அமைப்புகள்</string>
-    <string name="language">மொழி</string>
-    <string name="select_language">மொழியை தேர்ந்தெடுங்கள்</string>
-    <string name="direct_content">நேரடி உள்ளடக்கம்</string>
-
-
-    <string name="choose_your_preferred_language">நீங்கள் விரும்பும் மொழியைத் தேர்வுசெய்க.\nதற்போதைய மொழி : %s</string>
-    <string name="choose_language">மொழியைத் தேர்வுசெய்க</string>
-
+    <string name="wiktionary_url">https://ta.wiktionary.org/</string>
 </resources>

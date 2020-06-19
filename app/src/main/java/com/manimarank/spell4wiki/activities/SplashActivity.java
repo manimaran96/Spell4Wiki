@@ -6,7 +6,6 @@ import android.os.Handler;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.Button;
 import android.widget.ImageView;
 
 import com.manimaran.crash_reporter.CrashReporter;
@@ -25,7 +24,7 @@ import com.manimarank.spell4wiki.utils.SyncHelper;
 public class SplashActivity extends BaseActivity {
 
     private PrefManager pref;
-    private Button btnStart;
+    private ImageView btnNext;
     private boolean isNetworkFail = false;
 
     /**
@@ -42,26 +41,26 @@ public class SplashActivity extends BaseActivity {
         ImageView splash = findViewById(R.id.img_splash);
         splash.startAnimation(animation);
 
-        btnStart = findViewById(R.id.btnStart);
-        btnStart.setOnClickListener(v -> {
+        btnNext = findViewById(R.id.btnNext);
+        btnNext.setOnClickListener(v -> {
             if (NetworkUtils.INSTANCE.isConnected(getApplicationContext())) {
-                btnStart.setVisibility(View.GONE);
+                btnNext.setVisibility(View.GONE);
                 if (isNetworkFail) {
                     loadSplash();
                 } else {
                     callNextScreen();
                 }
             } else
-                SnackBarUtils.INSTANCE.showNormal(btnStart, getString(R.string.check_internet));
+                SnackBarUtils.INSTANCE.showNormal(btnNext, getString(R.string.check_internet));
         });
-        btnStart.setVisibility(View.GONE);
+        btnNext.setVisibility(View.GONE);
 
         if (NetworkUtils.INSTANCE.isConnected(getApplicationContext())) {
             loadSplash();
         } else {
-            SnackBarUtils.INSTANCE.showNormal(btnStart, getString(R.string.check_internet));
+            SnackBarUtils.INSTANCE.showNormal(btnNext, getString(R.string.check_internet));
             isNetworkFail = true;
-            btnStart.setVisibility(View.VISIBLE);
+            btnNext.setVisibility(View.VISIBLE);
         }
 
     }
@@ -76,7 +75,7 @@ public class SplashActivity extends BaseActivity {
                 CrashAlertClickListener listener = new CrashAlertClickListener() {
                     @Override
                     public void onOkClick() {
-                        btnStart.setVisibility(View.VISIBLE);
+                        btnNext.setVisibility(View.VISIBLE);
                     }
 
                     @Override

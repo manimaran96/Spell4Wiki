@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/white">
 
     <androidx.appcompat.widget.AppCompatImageView
@@ -27,20 +28,16 @@
         android:textSize="@dimen/text_x_large"
         android:textStyle="bold" />
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btnStart"
-        android:layout_width="wrap_content"
-        android:layout_height="@dimen/btn_height"
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/btnNext"
+        android:layout_width="@dimen/round_icon"
+        android:padding="@dimen/space12dp"
+        app:srcCompat="@drawable/ic_navigate_next"
         android:layout_alignParentBottom="true"
-        android:layout_centerInParent="true"
-        android:layout_gravity="center"
+        android:layout_centerHorizontal="true"
         android:layout_marginTop="@dimen/space12dp"
         android:layout_marginBottom="@dimen/space32dp"
-        android:background="@drawable/bg_button"
-        android:paddingStart="@dimen/space32dp"
-        android:paddingEnd="@dimen/space32dp"
-        android:text="@string/start"
-        android:textAllCaps="false"
-        android:textColor="@color/white" />
+        android:background="@drawable/bg_round_border"
+        android:layout_height="@dimen/round_icon"/>
 
 </RelativeLayout>

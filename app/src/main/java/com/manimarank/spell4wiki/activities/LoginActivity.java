@@ -72,12 +72,12 @@ public class LoginActivity extends BaseActivity {
              */
             btnLogin.setOnClickListener(view -> {
                 if (!TextUtils.isEmpty(editUserName.getText()) && !TextUtils.isEmpty(editPassword.getText())) {
-                    if(NetworkUtils.INSTANCE.isConnected(getApplicationContext())) {
+                    if (NetworkUtils.INSTANCE.isConnected(getApplicationContext())) {
                         GeneralUtils.hideKeyboard(LoginActivity.this);
                         btnLogin.startAnimation();
                         isDuringLogin = true;
                         callToken(editUserName.getText().toString(), editPassword.getText().toString());
-                    }else
+                    } else
                         showMsg(getString(R.string.check_internet));
                 } else
                     showMsg(getString(R.string.invalid_credential));
@@ -217,7 +217,7 @@ public class LoginActivity extends BaseActivity {
     }
 
     private void showErrorMsg(String msg) {
-        if(NetworkUtils.INSTANCE.isConnected(getApplicationContext()))
+        if (NetworkUtils.INSTANCE.isConnected(getApplicationContext()))
             showMsg(msg);
         else
             showMsg(getString(R.string.check_internet));
@@ -241,8 +241,10 @@ public class LoginActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (btnLogin != null)
+        if (btnLogin != null) {
+            btnLogin.revertAnimation();
             btnLogin.dispose();
+        }
     }
 
     private void openUrl(String url, String title) {

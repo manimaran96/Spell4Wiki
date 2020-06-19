@@ -27,5 +27,5 @@ public class Urls {
     public static final String HOW_TO_CONTRIBUTE = "https://manimaran.gitlab.io/projects/spell4wiki/how_to_contribute.html";
     public static final String HELP_DEVELOPMENT = "https://manimaran.gitlab.io/projects/spell4wiki/help_development.html";
     public static final String FORM_ADD_MY_LANGUAGE = "https://docs.google.com/forms/d/e/1FAIpQLSciqHNw1ZtH1kp2zz2DlKFmIbRZw2K7fhcJdxYNAr6TiAsN2A/viewform";
-    public static final String TELEGRAM_CHANNEL = "https://t.me/joinchat/A_s5uRoBfbCdmrgGzap-Xw";
+    public static final String TELEGRAM_CHANNEL = "https://t.me/spell4wiki";
 }

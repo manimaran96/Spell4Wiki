@@ -1,12 +1,42 @@
 <resources>
-    <string name="app_name">Spell4Wiki</string>
 
-    <string name="start">Start</string>
-    <string name="done">Done</string>
+    <!--
+    ######## Don't translate - Because this are unique name for understand that feature. #########
+    Spell4Wiki, Spell4WordList, Spell4Word,
+    Spell for Wiki, Spell for WordList, Spell for Word,
+
+    ######## Optional to translate #########
+    Wiktionary, Wikimedia Commons
+
+    ######## NOTE ############
+    - Keep %s, \n and @string/......... values
+    - That %s will be replaced with some word.
+    - For ambracene symbol(&) use &amp;
+    - If translatable="false" mentioned in string tag then don't translate that word.
+    -->
+
+    <!--Don't translate-->
+    <string name="app_name" translatable="false">Spell4Wiki</string>
+    <string name="spell4wiktionary" translatable="false">Spell for Wiktionary</string>
+    <string name="spell4wordlist" translatable="false">Spell for WordList</string>
+    <string name="spell4word" translatable="false">Spell for Word</string>
+    <string name="record_duration" translatable="false">00:10</string>
+    <string name="account_name" translatable="false">Spell4Wiki</string>
+    <string name="account_type" translatable="false">com.manimarank.spell4wiki</string>
+    <string name="license_name_cc_by_three" translatable="false">Attribution 3.0</string>
+    <string name="license_name_cc_by_four" translatable="false">Attribution 4.0</string>
+    <string name="license_name_cc_by_sa_three" translatable="false">Attribution-ShareAlike 3.0</string>
+    <string name="license_name_cc_by_sa_four" translatable="false">Attribution-ShareAlike 4.0</string>
+    <string name="license_name_cc_zero" translatable="false">CC0(release all rights)</string>
+    <string name="sample_url" translatable="false">https://manimaran96.wordpress.com</string>
+
+    <string name="wiktionary">Wiktionary</string>
+    <string name="search_on_wiktionary">Search on Wiktionary</string>
     <string name="wiki_login">Wiki Login</string>
     <string name="username">Username</string>
     <string name="password">Password</string>
     <string name="login">Login</string>
+    <string name="done">Done</string>
     <string name="please_wait">Please wait</string>
     <string name="forgot_password">Forgot your password?</string>
     <string name="join_wiki">Join Wiki</string>
@@ -16,11 +46,6 @@
     <string name="skip_login">Skip Login</string>
     <string name="welcome_user">Welcome, %s</string>
     <string name="loading">Loading…</string>
-    <string name="spell4wiktionary">Spell for Wiktionary</string>
-    <string name="spell4wordlist">Spell for WordList</string>
-    <string name="spell4word">Spell for Word</string>
-    <string name="wiktionary">Wiktionary</string>
-    <string name="search_on_wiktionary">Search on Wiktionary</string>
     <string name="view_my_contribution">My Contributions</string>
     <string name="search">Search</string>
     <string name="settings">Settings</string>
@@ -39,15 +64,13 @@
     <string name="before_record">Hold the Mic to Record</string>
     <string name="during_record">Recording…  %s</string>
     <string name="after_record">Hold the Mic to Re-Record</string>
-    <string name="record_duration">00:10</string>
     <string name="declaration_note">I declare, This is my own work and anyone can use it under the %s license.</string>
     <string name="record_audio_not_found">Please record audio first.</string>
-    <string name="recorded_audio_too_short">Recorded audio too short.</string>
+    <string name="recorded_audio_too_short">Check Recorded audio.</string>
     <string name="recording_under_process">Recording under process</string>
     <string name="permission_required">Microphone and Storage permissions required.</string>
     <string name="go_settings">GO SETTINGS</string>
-    <string name="title_upload_audio">Upload Audio</string>
-    <string name="message_upload_info">Uploading \n%s</string>
+    <string name="message_upload_info">Uploading…\n%s</string>
     <string name="crash_report_alert_title">Do you like to share crash information?</string>
     <string name="crash_report_alert_message">A previous crash was collected. Would you like to send the crash logs to developer to fix this issue in the future?</string>
     <string name="send">Send</string>
@@ -66,23 +89,22 @@
     <string name="confirmation">Confirmation</string>
     <string name="confirm_to_back">Do you want to go back?</string>
     <string name="select_language">Select Language</string>
-    <string name="language_code">TA</string>
     <string name="uploading">Uploading…</string>
-    <string name="rate_app">Rate App</string>
-    <string name="share_app">Share App</string>
+    <string name="rate_app">Rate the App</string>
+    <string name="share_app">Share the App</string>
     <string name="share">Share</string>
     <string name="powered_by">Powered By</string>
     <string name="kaniyam">Kaniyam</string>
     <string name="about_kaniyam">The Kaniyam Foundation is an organization for ensuring the development of the use of Tamil language in all aspects of science and socio-economic development and making knowledge &amp; resources available in free access.</string>
     <string name="vglug">VGLUG</string>
-    <string name="about_vglug">Villupuram GNU/Linux Users Group (Villupuram GLUG) is a non profit organization started in 2013, inspired from Free and open-source software (FOSS).</string>
+    <string name="about_vglug">Villupuram GNU/Linux Users Group (Villupuram GLUG) is a non profit organization started in 2013, inspired by Free and open-source software (FOSS).</string>
     <string name="how_to_contribute">How to Contribute?</string>
-    <string name="source_code">Source Code</string>
-    <string name="help_development">Help Development</string>
+    <string name="source_code">See Source Code</string>
+    <string name="help_development">Donate for Developers</string>
     <string name="contributors">Contributors</string>
     <string name="credits">Credits</string>
     <string name="third_party_libraries">Third Party Libraries</string>
-    <string name="feedback">Feedback</string>
+    <string name="feedback">Feedback &amp; Contact us</string>
     <string name="privacy_policy">Privacy Policy</string>
     <string name="terms_of_use">Terms of Use</string>
     <string name="join_telegram">Join Telegram Group</string>
@@ -146,7 +168,7 @@
     <string name="check_url">Invalid Link</string>
     <string name="alert_to_exit">Again click back to Exit</string>
     <string name="invalid_credential">Provide Valid Username &amp; Password</string>
-    <string name="no_email_client">No email client</string>
+    <string name="no_email_client">No Email client found</string>
     <string name="result_not_found">Result Not Found</string>
     <string name="server_misbehaved">Server misbehaved! Please try again later.</string>
     <string name="word_list_no_record_found">No words found.\n(or)\nAudio file already exist/uploaded for all the words.\n(or)\nContribute to other language.</string>
@@ -154,12 +176,11 @@
     <string name="spell4wiktionary_load_more_failed_confirmation">@string/something_went_wrong_try_again</string>
     <string name="no_more_data_found">No more data found</string>
 
-
     <!-- App Intro Screen -->
     <string name="app_intro_slide_1_title">Welcome</string>
     <string name="app_intro_slide_2_title">Wiktionary Explore</string>
-    <string name="app_intro_slide_3_title">Spell For Word List</string>
-    <string name="app_intro_slide_4_title">Spell For Word</string>
+    <string name="app_intro_slide_3_title">@string/spell4wordlist</string>
+    <string name="app_intro_slide_4_title">@string/spell4word</string>
     <string name="app_intro_slide_5_title">Permission Request</string>
 
     <string name="app_intro_slide_1_description">@string/app_description</string>
@@ -169,21 +190,14 @@
     <string name="app_intro_slide_5_description">Spell4Wiki require storage and record audio permissions without violating your privacy.</string>
 
 
-    <!--Don't translate-->
-    <string name="account_name" translatable="false">Spell4Wiki</string>
-    <string name="account_type" translatable="false">com.manimarank.spell4wiki</string>
-    <string name="license_name_cc_by_three" translatable="false">Attribution 3.0</string>
-    <string name="license_name_cc_by_four" translatable="false">Attribution 4.0</string>
-    <string name="license_name_cc_by_sa_three" translatable="false">Attribution-ShareAlike 3.0</string>
-    <string name="license_name_cc_by_sa_four" translatable="false">Attribution-ShareAlike 4.0</string>
-    <string name="license_name_cc_zero" translatable="false">CC0(release all rights)</string>
-    <string name="sample_url" translatable="false">https://manimaran96.wordpress.com</string>
-
-    <string name="file_content_description">Pronunciation of %s</string>
+    <!--Wikimedia Commons/Wiktionary Related-->
+    <string name="language_code">en</string>
+    <string name="file_content_description">Pronunciation of %s</string> <!--Don't use full stop-->
     <!-- Wikipedia page about language
      For English : https://en.wikipedia.org/wiki/English_language -> English_language
      For Tamil : https://en.wikipedia.org/wiki/Tamil_language -> Tamil_language-->
     <string name="language_page_in_wikipedia">English_language</string>
+    <string name="wiktionary_url">https://en.wiktionary.org/</string>
 
 
     <!-- App Show case -->
@@ -193,9 +207,9 @@
     <string name="sc_t_spell4wiki_page_language">Language switch</string>
     <string name="sc_d_spell4wiki_page_language">You can switch your language in order to contribute. The audio will be uploaded based on the selected language.\n\nCurrent selected language is %s\n\nNote :\nA few languages only supported now.</string>
     <string name="sc_t_spell4wiki_list_item">To Record</string>
-    <string name="sc_d_spell4wiki_list_item">Click the word to record the audio or click the dictionary icon to view the meaning from Wiktionary</string>
+    <string name="sc_d_spell4wiki_list_item">Click the word to record the audio or click the dictionary icon to view the meaning from Wiktionary.</string>
     <string name="sc_t_spell4word_page_edit_word">Type a word to record</string>
-    <string name="sc_d_spell4word_page_edit_word">Type your word and hit record or click the dictionary icon to view the meaning from Wiktionary</string>
+    <string name="sc_d_spell4word_page_edit_word">Type your word and hit record button to record audio or click the dictionary icon to view the meaning from Wiktionary.</string>
     <string name="sc_t_wiktionary_page_language">@string/sc_t_spell4wiki_page_language</string>
     <string name="sc_d_wiktionary_page_language">You can select any language for Wiktionary. The results and meanings will be based on the selected language.\n\nCurrent selected language is %s</string>
     <string name="sc_t_record_upload">Verify before Upload</string>

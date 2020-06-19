@@ -61,7 +61,7 @@
                 android:linksClickable="false"
                 android:textSize="@dimen/text_small" />
 
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/space10dp"
@@ -80,6 +80,7 @@
                     android:minHeight="@dimen/btn_height"
                     android:paddingStart="@dimen/space10dp"
                     android:paddingEnd="@dimen/space10dp"
+                    android:layout_toStartOf="@id/viewTemp"
                     app:drawableStartCompat="@drawable/ic_rate_us"
                     android:drawablePadding="@dimen/space8dp"
                     android:background="@drawable/bg_line_border"
@@ -88,6 +89,12 @@
                     android:maxLines="2"
                     android:textSize="@dimen/text_semi_normal"
                     tools:ignore="RelativeOverlap" />
+
+                <View
+                    android:id="@+id/viewTemp"
+                    android:layout_width="0dp"
+                    android:layout_centerInParent="true"
+                    android:layout_height="0dp"/>
 
 
                 <androidx.appcompat.widget.AppCompatTextView
@@ -101,12 +108,13 @@
                     android:background="@drawable/bg_line_border"
                     app:drawableStartCompat="@drawable/ic_share"
                     android:drawablePadding="@dimen/space8dp"
+                    android:layout_toEndOf="@id/viewTemp"
                     android:gravity="center"
                     android:layout_marginStart="@dimen/space4dp"
                     android:maxLines="2"
                     android:textSize="@dimen/text_semi_normal"
                     tools:ignore="RelativeOverlap" />
-            </LinearLayout>
+            </RelativeLayout>
         </LinearLayout>
 
         <LinearLayout
