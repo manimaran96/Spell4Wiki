@@ -49,7 +49,7 @@ public class AboutActivity extends BaseActivity implements View.OnClickListener 
         TextView txtTelegram = findViewById(R.id.txtTelegram);
         TextView txtFeedback = findViewById(R.id.txtFeedback);
         TextView txtPrivacyPolicy = findViewById(R.id.txtPrivacyPolicy);
-        TextView txtTermsOfUse = findViewById(R.id.txtTermsOfUse);
+        TextView txtTermsOfUse = findViewById(R.id.txtHelpTranslate);
         TextView txtPoweredByLink = findViewById(R.id.txtPoweredByLink);
         TextView txtInitiatedByLink = findViewById(R.id.txtInitiatedByLink);
 
@@ -107,7 +107,7 @@ public class AboutActivity extends BaseActivity implements View.OnClickListener 
                 shareApp();
                 break;
             case R.id.txt_how_to_contribute:
-                GeneralUtils.openMarkdownUrl(this, Urls.HOW_TO_CONTRIBUTE, getString(R.string.how_to_contribute));
+                GeneralUtils.openUrl(this, Urls.HOW_TO_CONTRIBUTE, getString(R.string.how_to_contribute));
                 break;
             case R.id.txt_source_code:
                 GeneralUtils.openUrlInBrowser(this, Urls.SOURCE_CODE);
@@ -126,7 +126,7 @@ public class AboutActivity extends BaseActivity implements View.OnClickListener 
                 startActivity(intentCredits);
                 break;
             case R.id.txt_help_development:
-                GeneralUtils.openMarkdownUrl(this, Urls.HELP_DEVELOPMENT, getString(R.string.help_development));
+                GeneralUtils.openUrl(this, Urls.HELP_DEVELOPMENT, getString(R.string.help_development));
                 break;
             case R.id.txtFeedback:
                 feedback();
@@ -137,8 +137,8 @@ public class AboutActivity extends BaseActivity implements View.OnClickListener 
             case R.id.txtPrivacyPolicy:
                 GeneralUtils.openUrlInBrowser(this, Urls.PRIVACY_POLICY);
                 break;
-            case R.id.txtTermsOfUse:
-                GeneralUtils.openUrlInBrowser(this, Urls.TERMS_OF_USE);
+            case R.id.txtHelpTranslate:
+                GeneralUtils.openUrlInBrowser(this, Urls.HELP_US_TRANSLATE);
                 break;
             case R.id.layout_kaniyam:
                 GeneralUtils.openUrlInBrowser(this, Urls.KANIYAM);

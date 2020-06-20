@@ -156,7 +156,7 @@ public class Spell4Wiktionary extends BaseActivity implements EndlessRecyclerVie
                  *      3. apiFailRetryCount only 3 and above -> Continous api fail
                  */
                 long duration = System.currentTimeMillis() - apiResultTime;
-                if (TimeUnit.MILLISECONDS.toSeconds(duration) > AppConstants.API_LOOP_MAX_SECS || apiFailRetryCount >= AppConstants.API_MAX_FAIL_RETRY) { // TODO update time
+                if (TimeUnit.MILLISECONDS.toSeconds(duration) > AppConstants.API_LOOP_MAX_SECS || apiFailRetryCount >= AppConstants.API_MAX_FAIL_RETRY) {
                     if ((adapter.getItemCount() < AppConstants.API_LOOP_MINIMUM_COUNT_IN_LIST && apiRetryCount >= AppConstants.API_MAX_RETRY) || apiRetryCount >= AppConstants.API_MAX_RETRY || apiFailRetryCount >= AppConstants.API_MAX_FAIL_RETRY) {
                         AlertDialog.Builder builder = new AlertDialog.Builder(this);
                         builder.setTitle(R.string.do_you_want_continue);

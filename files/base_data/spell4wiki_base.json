@@ -106,12 +106,6 @@
          "local_lang":"Boarisch"
       },
       {
-         "code":"bat-smg",
-         "lang":"Samogitian",
-         "dir":"ltr",
-         "local_lang":"Žemaitėška"
-      },
-      {
          "code":"bcl",
          "lang":"Bikol",
          "dir":"ltr",
@@ -122,12 +116,6 @@
          "lang":"Belarusian",
          "dir":"ltr",
          "local_lang":"Беларуская"
-      },
-      {
-         "code":"be-x-old",
-         "lang":"Belarusian (Taraškievica)",
-         "dir":"ltr",
-         "local_lang":"Беларуская (тарашкевіца)"
       },
       {
          "code":"bg",
@@ -386,12 +374,6 @@
          "lang":"Finnish",
          "dir":"ltr",
          "local_lang":"Suomi"
-      },
-      {
-         "code":"fiu-vro",
-         "lang":"Võro",
-         "dir":"ltr",
-         "local_lang":"Võro"
       },
       {
          "code":"fj",
@@ -826,12 +808,6 @@
          "local_lang":"Latviešu"
       },
       {
-         "code":"map-bms",
-         "lang":"Banyumasan",
-         "dir":"ltr",
-         "local_lang":"Basa Banyumasan"
-      },
-      {
          "code":"mg",
          "lang":"Malagasy",
          "dir":"ltr",
@@ -950,12 +926,6 @@
          "lang":"Low German / Low Saxon",
          "dir":"ltr",
          "local_lang":"Plattdüütsch"
-      },
-      {
-         "code":"nds-nl",
-         "lang":"Dutch Low Saxon",
-         "dir":"ltr",
-         "local_lang":"Nedersaksisch"
       },
       {
          "code":"ne",
@@ -1150,12 +1120,6 @@
          "local_lang":"Română"
       },
       {
-         "code":"roa-rup",
-         "lang":"Aromanian",
-         "dir":"ltr",
-         "local_lang":"Armâneashti"
-      },
-      {
          "code":"ru",
          "lang":"Russian",
          "dir":"ltr",
@@ -1220,12 +1184,6 @@
          "lang":"Sinhalese",
          "dir":"ltr",
          "local_lang":"සිංහල"
-      },
-      {
-         "code":"simple",
-         "lang":"Simple English",
-         "dir":"ltr",
-         "local_lang":"Simple English"
       },
       {
          "code":"sk",
@@ -1530,19 +1488,7 @@
          "local_lang":"中文"
       },
       {
-         "code":"zh-classical",
-         "lang":"Classical Chinese",
-         "dir":"ltr",
-         "local_lang":"文言"
-      },
-      {
-         "code":"zh-min-nan",
-         "lang":"Minnan",
-         "dir":"ltr",
-         "local_lang":"Bân-lâm-gú"
-      },
-      {
-         "code":"zh-yue",
+         "code":"yue",
          "lang":"Cantonese",
          "dir":"ltr",
          "local_lang":"粵語 / 粤语"

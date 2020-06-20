@@ -31,9 +31,8 @@ hasn't been reported/requested before.
 
 ## Translation
 
-Follow the <a href="#code-contribution">instructions</a> and <a herf="#getting-started">steps to start changes</a>.
-
-* Create new branch ex : ```language-ta``` 
+* Follow the <a href="#code-contribution">instructions</a> and <a herf="#getting-started">steps to start changes</a>.
+* Create new branch. Ex : ```language-ta``` 
 * Checkout this new branch.
 * Then, Create ```vales-language-code``` folder inside the ```app/src/main/res/``` folder. (Ex : ```values-ta```, ```values-hi```, ... etc.)
 * Create ```strings.xml``` file inside the ```vales-language-code``` folder.
