@@ -107,9 +107,7 @@ public interface ApiInterface {
     Call<WikiBaseData> fetchWikiBaseData();
 
     // Contributor data - Static API
-    // TODO change
-    //@GET("https://raw.githubusercontent.com/manimaran96/Spell4Wiki/master/files/base_data/spell4wiki_contributors.json")
-    @GET("https://raw.githubusercontent.com/keerthichandran/Project-Check/master/temp/contributors.json")
+    @GET("https://raw.githubusercontent.com/manimaran96/Spell4Wiki/master/files/base_data/spell4wiki_contributors.json")
     Call<ContributorData> fetchContributorData();
 
     // Contributors List - Github API

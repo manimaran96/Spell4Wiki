@@ -2,7 +2,7 @@
 Spell4Wiki > Spell For Wiktionary
 </h1>
 
-<p align="center"><img width="120" height="120" src="https://github.com/manimaran96/Spell4Wiki/blob/master/app/src/main/res/drawable/ic_spell4wiki_main.png" alt="logo"/></p>
+<p align="center"><img width="120" height="120" src="https://raw.githubusercontent.com/manimaran96/Spell4Wiki/master/files/assets/icons/spell4wiki-playstore.png" alt="logo"/></p>
 
 <p align="center">
 Spell4Wiki is a mobile application to record and upload audio for Wiktionary words to Wikimedia commons.<br/>
@@ -15,11 +15,11 @@ Spell4Wiki also act as a Wiki-Dictionary(Word meaning from Wiktionary).
 <a href="https://manimaran96.wordpress.com" alt="Developer badge"><img src="https://img.shields.io/badge/developed%20by-Manimaran-blue.svg" ></a>
 </p>
 
-<p align="center"><a href="https://play.google.com/store/apps/details?id=com.manimarank.spell4wiki"><img src="https://raw.githubusercontent.com/manimaran96/Spell4Wiki/master/files/assets/badge/google_paly_button.png" width="200px"></a></p> 
+<p align="center"><a href="https://play.google.com/store/apps/details?id=com.manimarank.spell4wiki"><img src="https://raw.githubusercontent.com/manimaran96/Spell4Wiki/master/files/assets/images/badges/google_play.png" width="200px"></a></p> 
 
 ## Features
 
-<p align="center"><img src="https://raw.githubusercontent.com/manimaran96/Spell4Wiki/master/files/assets/banner/spell4wiki_banner.png" width="800"/></p>
+<p align="center"><img src="https://raw.githubusercontent.com/manimaran96/Spell4Wiki/master/files/assets/images/spell4wiki_banner.png" width="800"/></p>
 
 ## Screenshots
 
@@ -29,10 +29,10 @@ Spell4Wiki also act as a Wiki-Dictionary(Word meaning from Wiktionary).
 
 Whether you have ideas, translations, design changes, bugs, code cleaning, or real heavy code changes, help is always welcome. The more is done the better it gets!
 
-If you'd like to get involved, check our [contribution](https://github.com/manimaran96/Spell4Wiki/blob/master/CONTRIBUTING.md) notes.
+If you'd like to get involved, check our [contribution](https://github.com/manimaran96/Spell4Wiki/blob/master/docs/CONTRIBUTING.md#spell4wiki-contribution-guidelines) notes.
 
 ## Donation for Development
- - To support developers, you can do a donation : [Donation details](http://manimaran.gitlab.io/projects/spell4wiki/help_development.html)
+ - To support developers, you can do a donation : [Donation details](https://github.com/manimaran96/Spell4Wiki/blob/master/docs/CONTRIBUTING.md#spell4wiki-contribution-guidelines)
 
 ## Credits To
 #### Initiated & Powered By
@@ -61,7 +61,7 @@ More contributors : [look here](https://github.com/manimaran96/Spell4Wiki/graphs
 
 ## License
 
-<img src="https://raw.githubusercontent.com/manimaran96/Spell4Wiki/master/files/assets/badge/gplv3_logo.svg" width="100px"></img>
+<img src="https://raw.githubusercontent.com/manimaran96/Spell4Wiki/master/files/assets/images/badges/gplv3.svg" width="100px"></img>
 
 Spell4Wiki is Free Software: You can use, study share and improve it at your will. 
 Specifically you can redistribute and/or modify it under the terms of the [GNU General Public License](https://www.gnu.org/licenses/gpl.html) as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
