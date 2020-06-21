@@ -3,7 +3,6 @@ package com.manimarank.spell4wiki.utils;
 import android.app.Activity;
 import android.text.TextUtils;
 
-import com.manimarank.spell4wiki.Spell4WikiApp;
 import com.manimarank.spell4wiki.apis.ApiClient;
 import com.manimarank.spell4wiki.apis.ApiInterface;
 import com.manimarank.spell4wiki.databases.DBHelper;

@@ -98,7 +98,7 @@ public class ApiClient {
                 if (trustManagers.length != 1 || !(trustManagers[0] instanceof X509TrustManager)) {
                     throw new IllegalStateException("Unexpected default trust managers:" + Arrays.toString(trustManagers));
                 }
-                X509TrustManager trustManager = (X509TrustManager) trustManagers[0];;
+                X509TrustManager trustManager = (X509TrustManager) trustManagers[0];
 
 
                 SSLContext sc = SSLContext.getInstance("TLSv1.2");

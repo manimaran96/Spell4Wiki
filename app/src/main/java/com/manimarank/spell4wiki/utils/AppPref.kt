@@ -28,16 +28,14 @@ class AppPref {
         private const val UPDATE_TYPE = "update_type"
         private const val UPDATE_SHOWED = "update_showed"
 
-        private const val DEFAULT_UPDATE_TYPE = "once"
-
         // Fetch Config
         private const val FETCH_BY = "fetch_by"
         private const val FETCH_DIR = "fetch_dir"
         private const val FETCH_LIMIT = "fetch_limit"
 
-        const val DEFAULT_FETCH_BY = "timestamp"
-        const val DEFAULT_FETCH_DIR = "desc"
-        const val DEFAULT_FETCH_LIMIT = 150
+        private const val DEFAULT_FETCH_BY = "timestamp"
+        private const val DEFAULT_FETCH_DIR = "desc"
+        private const val DEFAULT_FETCH_LIMIT = 150
 
         // Record
         private const val RECORD_INFO_SHOWED = "record_info_showed"
@@ -110,7 +108,7 @@ class AppPref {
             }
         }
 
-        fun getUpdateAppVersion(): Int {
+        private fun getUpdateAppVersion(): Int {
             return pref.getInt(UPDATE_VERSION, 0)
         }
 
@@ -119,10 +117,6 @@ class AppPref {
                 putString(UPDATE_TYPE, type)
                 apply()
             }
-        }
-
-        fun getUpdateAppType(): String {
-            return if (pref.getString(UPDATE_TYPE, DEFAULT_UPDATE_TYPE) != null) pref.getString(UPDATE_TYPE, DEFAULT_UPDATE_TYPE)!! else DEFAULT_UPDATE_TYPE
         }
 
         fun setUpdateShowed() {

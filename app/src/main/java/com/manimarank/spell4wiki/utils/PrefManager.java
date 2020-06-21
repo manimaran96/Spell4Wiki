@@ -8,8 +8,6 @@ import android.content.SharedPreferences;
 import com.manimarank.spell4wiki.activities.LoginActivity;
 import com.manimarank.spell4wiki.auth.AccountUtils;
 
-import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 public class PrefManager {

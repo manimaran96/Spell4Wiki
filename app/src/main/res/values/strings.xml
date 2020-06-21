@@ -40,7 +40,6 @@
     <string name="please_wait">Please wait</string>
     <string name="forgot_password">Forgot your password?</string>
     <string name="join_wiki">Join Wiki</string>
-    <string name="or">OR</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="skip_login">Skip Login</string>
@@ -89,7 +88,6 @@
     <string name="confirmation">Confirmation</string>
     <string name="confirm_to_back">Do you want to go back?</string>
     <string name="select_language">Select Language</string>
-    <string name="uploading">Uploading…</string>
     <string name="rate_app">Rate the App</string>
     <string name="share_app">Share the App</string>
     <string name="share">Share</string>
@@ -116,8 +114,6 @@
     <string name="forward">Forward</string>
     <string name="backward">Backward</string>
     <string name="select_language_response_msg">%s - language selected.</string>
-    <string name="visit_web_page">Visit web page</string>
-    <string name="go_to_license_url">Go to license URL</string>
     <string name="refresh">Refresh</string>
     <string name="open_in_browser">Open in browser</string>
     <string name="logout_confirmation">Logout Confirmation</string>
@@ -168,7 +164,6 @@
     <string name="forward_nothing">Forward nothing</string>
     <string name="invalid_language">Select valid language.</string>
     <string name="confirm_declaration">Please check and confirm the declaration.</string>
-    <string name="invalid_csrf">You are not logged in! \nPlease login to continue.</string>
     <string name="invalid_csrf_try_again">Invalid CSRF Token. Please try again.</string>
     <string name="invalid_response">Invalid response. Please try again</string>
     <string name="upload_failed">Upload failed. Please try again.</string>
@@ -212,7 +207,6 @@
 
 
     <!-- App Show case -->
-    <string name="sc_t_spell4wordlist">@string/spell4wordlist</string>
     <string name="sc_t_spell4wiki_page_language">Language switch</string>
     <string name="sc_d_spell4wiki_page_language">You can switch your language in order to contribute. The audio will be uploaded based on the selected language.\n\nCurrent selected language is %s\n\nNote :\nA few languages only supported now.</string>
     <string name="sc_t_spell4wiki_list_item">To Record</string>

@@ -373,11 +373,6 @@ public class Spell4Wiktionary extends BaseActivity implements EndlessRecyclerVie
             searchFailed(getString(R.string.no_more_data_found));
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-    }
-
     public void updateList(String word) {
         if (!isDestroyed() && !isFinishing()) {
             if (adapter != null) {

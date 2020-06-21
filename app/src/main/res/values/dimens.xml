@@ -41,7 +41,6 @@
     <!--Fab -->
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="fab_size">54dp</dimen>
-    <dimen name="fab_icon_size">42dp</dimen>
     <dimen name="mic_expand">100dp</dimen>
     <dimen name="mic_normal">70dp</dimen>
     <dimen name="icon_record_play">30dp</dimen>

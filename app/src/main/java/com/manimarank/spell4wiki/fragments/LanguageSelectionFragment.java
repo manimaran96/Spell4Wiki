@@ -241,7 +241,7 @@ public class LanguageSelectionFragment extends BottomSheetDialogFragment {
         try {
             if (fragmentManager.findFragmentByTag(getTagValue()) != null)
                 return;
-        } catch (Exception e) {
+        } catch (Exception ignore) {
 
         }
         show(fragmentManager, getTagValue());
