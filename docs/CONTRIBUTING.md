@@ -1,15 +1,57 @@
-Spell4Wiki contribution guidelines
+Spell4Wiki Contribution Guidelines
 ==================================
 
 PLEASE READ THESE GUIDELINES CAREFULLY BEFORE ANY CONTRIBUTION!
 
-## Add your Wikimedia language into Spell4Wiki
+## How to Use Spell4Wiki
+
+Watch the tuttorial videos below and make your contribution.
+
+| Language        | Video Link           |
+| ------------- |:-------------:|
+| Tamil     | [Play Video](https://youtu.be/4y5I1sUW1ys) |
+
+
+You are always welcome to make video for your language.
+
+
+## Spell4Wiki Improvements
+
+### Add your Wiktionary language into Spell4Wiki
 
 We need some basic information for adding your contribution language into Spell4Wiki.
 So, please fill [this](https://docs.google.com/forms/d/e/1FAIpQLSciqHNw1ZtH1kp2zz2DlKFmIbRZw2K7fhcJdxYNAr6TiAsN2A/viewform) form.
 
+**FORM LINK** - [Click Here](https://docs.google.com/forms/d/e/1FAIpQLSciqHNw1ZtH1kp2zz2DlKFmIbRZw2K7fhcJdxYNAr6TiAsN2A/viewform)
+
+Needed Data
+ 
+| Field        | Data           |
+| ------------- |:-------------:|
+| Language name     | Tamil |  |
+| Language code      | ta      |
+| Language direction | LTR     |
+| Local name | தமிழ் |
+| Category name<br/>(in Wiktionary) | பகுப்பு:தமிழ்-ஒலிக்கோப்புகளில்லை |
+
+Here,
+* Language name -> Like Tamil, English, ...etc
+* Language code -> Like ta, en, fr, ... etc
+* Language direction -> Like English - LTR(LTR - Left To Right), Arabic - RTL(LTR - Right To Left)
+* Local name -> Like தமிழ், English, Français...etc
+* Category name(in Wiktionary) -> Better to mention in category of words without have audio or mention any category to be need audio. <br/>
+Ex : <br/>
+பகுப்பு:தமிழ்-ஒலிக்கோப்புகளில்லை - https://ta.wiktionary.org/wiki/பகுப்பு:தமிழ்-ஒலிக்கோப்புகளில்லை, <br/>
+Category:en:Fruits - https://en.wiktionary.org/wiki/Category:en:Fruits, <br/>
+Category:Apple cultivars - https://en.wiktionary.org/wiki/Category:Apple_cultivars
+
+
+### Create Category for your language in Commons
+
 In [Files uploaded by spell4wiki](https://commons.wikimedia.org/wiki/Category:Files_uploaded_by_spell4wiki) category contains all the files uploaded using Spell4Wiki.
 So, create one subcategory for your language specific(```Files uploaded by spell4wiki in language-code```). Like ```Files uploaded by spell4wiki in ta```.
+
+Ex : For Tamil - https://commons.wikimedia.org/wiki/Category:Files_uploaded_by_spell4wiki_in_ta
  
 
 ## Issue reporting/feature requests
@@ -31,7 +73,7 @@ hasn't been reported/requested before.
 
 ## Translation
 
-* Follow the <a href="#code-contribution">instructions</a> and <a herf="#getting-started">steps to start changes</a>.
+* Follow the [instructions](#code-contribution) and [steps to start changes](#getting-started).
 * Create new branch. Ex : ```language-ta``` 
 * Checkout this new branch.
 * Then, Create ```vales-language-code``` folder inside the ```app/src/main/res/``` folder. (Ex : ```values-ta```, ```values-hi```, ... etc.)
@@ -110,4 +152,4 @@ Please also ask before you start implementing a new big feature.
 * Feel free to post suggestions, changes, ideas etc. on GitHub or Telegram!
 
 ## Donation for Development
-* To support developers, you can do a donation : [Donation details](http://manimaran.gitlab.io/projects/spell4wiki/help_development.html)
+* To support developers, you can do a donation : [Donation details](https://github.com/manimaran96/Spell4Wiki/blob/master/docs/CONTRIBUTING.md#spell4wiki-contribution-guidelines)
