@@ -2,7 +2,6 @@ package com.manimarank.spell4wiki.apis;
 
 
 import com.manimarank.spell4wiki.models.ContributorData;
-import com.manimarank.spell4wiki.utils.constants.Urls;
 import com.manimarank.spell4wiki.models.Contributors;
 import com.manimarank.spell4wiki.models.WikiBaseData;
 import com.manimarank.spell4wiki.models.WikiLogin;
@@ -10,6 +9,7 @@ import com.manimarank.spell4wiki.models.WikiSearchWords;
 import com.manimarank.spell4wiki.models.WikiToken;
 import com.manimarank.spell4wiki.models.WikiUpload;
 import com.manimarank.spell4wiki.models.WikiWordsWithoutAudio;
+import com.manimarank.spell4wiki.utils.constants.Urls;
 
 import java.util.List;
 
@@ -57,11 +57,14 @@ public interface ApiInterface {
     );
 
 
-    // Fetch un audio records - Wiktionary
-    @GET("w/api.php?action=query&format=json&list=categorymembers&utf8=1&cmlimit=150&cmsort=timestamp&cmdir=desc")
+    // Fetch un audio records - Wiktionary - https://www.mediawiki.org/wiki/API:Categorymembers
+    @GET("w/api.php?action=query&format=json&list=categorymembers&utf8=1")
     Call<WikiWordsWithoutAudio> fetchUnAudioRecords(
             @Query("cmtitle") String noAudioTitle,
-            @Query("cmcontinue") String offsetContinue
+            @Query("cmcontinue") String offsetContinue,
+            @Query("cmlimit") Integer limit,
+            @Query("cmsort") String sortBy,
+            @Query("cmdir") String sortDirection
     );
 
     // Edit Token - Commons

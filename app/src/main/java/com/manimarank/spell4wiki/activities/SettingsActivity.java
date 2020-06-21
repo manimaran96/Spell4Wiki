@@ -13,7 +13,7 @@ import androidx.core.content.ContextCompat;
 
 import com.manimarank.spell4wiki.R;
 import com.manimarank.spell4wiki.activities.base.BaseActivity;
-import com.manimarank.spell4wiki.utils.AppLanguageUtils;
+import com.manimarank.spell4wiki.utils.dialogs.AppLanguageDialog;
 import com.manimarank.spell4wiki.utils.constants.EnumTypeDef.ListMode;
 import com.manimarank.spell4wiki.databases.DBHelper;
 import com.manimarank.spell4wiki.databases.dao.WikiLangDao;
@@ -135,8 +135,8 @@ public class SettingsActivity extends BaseActivity {
             dialog.show();
         });
 
-        txtAppLanguage.setText(AppLanguageUtils.INSTANCE.getSelectedLanguage());
-        layoutLanguageOfApp.setOnClickListener(v -> AppLanguageUtils.INSTANCE.showAppLanguageSelectionDialog(SettingsActivity.this));
+        txtAppLanguage.setText(AppLanguageDialog.INSTANCE.getSelectedLanguage());
+        layoutLanguageOfApp.setOnClickListener(v -> AppLanguageDialog.INSTANCE.show(SettingsActivity.this));
 
     }
 

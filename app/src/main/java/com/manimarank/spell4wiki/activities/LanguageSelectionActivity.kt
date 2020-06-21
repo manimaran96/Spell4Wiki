@@ -4,8 +4,8 @@ import android.content.Intent
 import android.os.Bundle
 import com.manimarank.spell4wiki.R
 import com.manimarank.spell4wiki.activities.base.BaseActivity
-import com.manimarank.spell4wiki.utils.AppLanguageUtils
 import com.manimarank.spell4wiki.utils.PrefManager
+import com.manimarank.spell4wiki.utils.dialogs.AppLanguageDialog
 import kotlinx.android.synthetic.main.activity_language_selection.*
 import kotlinx.android.synthetic.main.bottom_sheet_language_selection.btnAddMyLanguage
 import kotlinx.android.synthetic.main.bottom_sheet_language_selection.txtAddLangInfo
@@ -20,13 +20,13 @@ class LanguageSelectionActivity : BaseActivity() {
 
         pref = PrefManager(applicationContext)
 
-        txtAddLangInfo.text = String.format(getString(R.string.choose_your_preferred_language), AppLanguageUtils.getSelectedLanguage())
+        txtAddLangInfo.text = String.format(getString(R.string.choose_your_preferred_language), AppLanguageDialog.getSelectedLanguage())
 
         btnAddMyLanguage.setOnClickListener {
-            AppLanguageUtils.showAppLanguageSelectionDialog(this)
+            AppLanguageDialog.show(this)
         }
 
-        btnNext.setOnClickListener{
+        btnNext.setOnClickListener {
             openMainActivity()
         }
     }

@@ -42,9 +42,26 @@ public class SyncHelper {
                 try {
                     if (response.isSuccessful() && response.body() != null) {
                         WikiBaseData data = response.body();
-                        PrefManager prefManager = new PrefManager(Spell4WikiApp.Companion.getApplicationContext());
-                        prefManager.setCommonCategories(data.getCategoryCommon());
 
+                        AppPref.INSTANCE.setCommonCategories(data.getCategoryCommon());
+
+                        if(data.getUpdateApp() != null){
+                            if(data.getUpdateApp().getType() != null && data.getUpdateApp().getVersion() != null){
+                                AppPref.INSTANCE.setUpdateAppType(data.getUpdateApp().getType());
+                                AppPref.INSTANCE.setUpdateAppVersion(data.getUpdateApp().getVersion());
+                            }
+                        }
+
+                        if(data.getFetchConfig() != null){
+                            if(data.getFetchConfig().getBy() != null)
+                                AppPref.INSTANCE.setFetchBy(data.getFetchConfig().getBy());
+
+                            if(data.getFetchConfig().getDir() != null)
+                                AppPref.INSTANCE.setFetchDir(data.getFetchConfig().getDir());
+
+                            if(data.getFetchConfig().getLimit() != null)
+                                AppPref.INSTANCE.setFetchLimit(data.getFetchConfig().getLimit());
+                        }
 
                         List<WikiLanguage> languageList = data.getLanguageWiseData();
                         if (languageList != null && languageList.size() > 0) {

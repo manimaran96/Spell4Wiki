@@ -46,6 +46,7 @@ import com.manimarank.spell4wiki.models.WikiUpload;
 import com.manimarank.spell4wiki.record.ogg.WavToOggConverter;
 import com.manimarank.spell4wiki.record.wav.WAVPlayer;
 import com.manimarank.spell4wiki.record.wav.WAVRecorder;
+import com.manimarank.spell4wiki.utils.AppPref;
 import com.manimarank.spell4wiki.utils.GeneralUtils;
 import com.manimarank.spell4wiki.utils.NetworkUtils;
 import com.manimarank.spell4wiki.utils.PrefManager;
@@ -729,8 +730,8 @@ public class RecordAudioActivity extends BaseActivity {
                     sb.append("[[Category:").append(category).append("]]").append("\n");
             }
         } else {
-            if (pref.getCommonCategories() != null && pref.getCommonCategories().size() > 0) {
-                for (String category : pref.getCommonCategories()) {
+            if (AppPref.INSTANCE.getCommonCategories() != null && AppPref.INSTANCE.getCommonCategories().size() > 0) {
+                for (String category : AppPref.INSTANCE.getCommonCategories()) {
                     if (!TextUtils.isEmpty(category))
                         sb.append("[[Category:").append(category).append("]]").append("\n");
                 }
@@ -739,7 +740,6 @@ public class RecordAudioActivity extends BaseActivity {
 
         if (TextUtils.isEmpty(sb.toString())) {
             sb.append("[[Category:Files uploaded by spell4wiki]]").append("\n");
-            sb.append("[[Category:Files uploaded by spell4wiki in ").append(langCode).append("]]").append("\n");
         }
 
         return sb.toString();
@@ -770,7 +770,9 @@ public class RecordAudioActivity extends BaseActivity {
 
     private String getLanguageWikipediaPage(String languageName){
         String langPage = getStringByLocalLang(langCode, R.string.language_page_in_wikipedia);
-        if(!getString(R.string.language_page_in_wikipedia).equals(langPage)){
+        String enLangPage = getStringByLocalLang("en", R.string.language_page_in_wikipedia);
+
+        if(enLangPage != null && !enLangPage.equals(langPage)){
             return "([[w:" + langPage + "|" + languageName + " Language]])";
         }
         return "";

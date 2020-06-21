@@ -143,7 +143,18 @@
     <string name="checking_file_availability">Checking file availability\n(%s)</string>
     <string name="ask_to_add_language">Do you want to add your language?</string>
     <string name="do_you_want_continue">Do you want to load more?</string>
-
+    <string name="rta_dialog_title">@string/rate_app</string>
+    <string name="rta_dialog_message">If you enjoy using this app, would you mind taking a moment to rate it? It won\'t take more than a minute. Thank you for your support!</string>
+    <string name="rta_dialog_ok">Rate now</string>
+    <string name="rta_dialog_cancel">@string/later</string>
+    <string name="rta_dialog_no">No, thanks</string>
+    <string name="update_dialog_title">Update the App</string>
+    <string name="update_dialog_message">New version is available. Please update application.</string>
+    <string name="update_dialog_ok">Update</string>
+    <string name="update_dialog_no">@string/later</string>
+    <string name="record_info_dialog_title">Sorry for the Inconvenience</string>
+    <string name="record_info_dialog_message">To avoid re-uploading/duplicating the audio, we check whether the audio file already exists or not before recording. Because some of words already having the audio.\n\nAfter click the word, If you see audio file already exist message, please move to another word</string>
+    <string name="record_info_dialog_ok">OK</string>
 
     <string name="check_internet">Please check your internet connection!</string>
     <string name="record_fetch_fail">Please check your connection!\nSwipe down/Scroll to try again!</string>
@@ -201,8 +212,6 @@
 
 
     <!-- App Show case -->
-    <string name="sc_t_spell4wiki">@string/spell4wiktionary</string>
-    <string name="sc_d_spell4wiki">You can record &amp; upload audio for the list of words to Wikimedia commons.</string>
     <string name="sc_t_spell4wordlist">@string/spell4wordlist</string>
     <string name="sc_t_spell4wiki_page_language">Language switch</string>
     <string name="sc_d_spell4wiki_page_language">You can switch your language in order to contribute. The audio will be uploaded based on the selected language.\n\nCurrent selected language is %s\n\nNote :\nA few languages only supported now.</string>

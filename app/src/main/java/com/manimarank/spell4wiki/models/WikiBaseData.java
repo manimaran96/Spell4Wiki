@@ -13,6 +13,14 @@ public class WikiBaseData {
     @Expose
     private List<WikiLanguage> languageWiseData = null;
 
+    @SerializedName("update_content")
+    @Expose
+    private UpdateApp updateApp = null;
+
+    @SerializedName("fetch_config")
+    @Expose
+    private FetchConfig fetchConfig = null;
+
     public List<String> getCategoryCommon() {
         return categoryCommon;
     }
@@ -27,5 +35,13 @@ public class WikiBaseData {
 
     public void setLanguageWiseData(List<WikiLanguage> languageWiseData) {
         this.languageWiseData = languageWiseData;
+    }
+
+    public UpdateApp getUpdateApp() {
+        return updateApp;
+    }
+
+    public FetchConfig getFetchConfig() {
+        return fetchConfig;
     }
 }

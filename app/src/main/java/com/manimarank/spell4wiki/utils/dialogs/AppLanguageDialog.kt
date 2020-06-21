@@ -1,4 +1,4 @@
-package com.manimarank.spell4wiki.utils
+package com.manimarank.spell4wiki.utils.dialogs
 
 import android.app.Activity
 import android.app.AlertDialog
@@ -8,11 +8,11 @@ import android.content.Intent
 import android.content.res.Configuration
 import com.manimarank.spell4wiki.BuildConfig
 import com.manimarank.spell4wiki.R
-import com.manimarank.spell4wiki.Spell4WikiApp
+import com.manimarank.spell4wiki.utils.AppPref
 import java.util.*
 
 
-object AppLanguageUtils {
+object AppLanguageDialog {
 
     const val LANGUAGE_FILTER = BuildConfig.APPLICATION_ID + ".LANGUAGE_CHANGE"
     const val SELECTED_LANGUAGE = "selected_language"
@@ -32,18 +32,18 @@ object AppLanguageUtils {
     }
 
     private fun setAppLanguageCode(languageCode: String) {
-        PrefManager(Spell4WikiApp.instance).appLanguage = languageCode
+        AppPref.setAppLanguage(languageCode)
     }
 
     private fun getSelectedLanguageCode(): String {
-        return PrefManager(Spell4WikiApp.instance).appLanguage
+        return if (AppPref.getAppLanguage() != null) AppPref.getAppLanguage()!! else "en"
     }
 
     fun getSelectedLanguage(): String {
         return languageList[languageCodeList.indexOf(getSelectedLanguageCode())]
     }
 
-    fun showAppLanguageSelectionDialog(activity: Activity) {
+    fun show(activity: Activity) {
         val builder = AlertDialog.Builder(activity)
         builder.setTitle(R.string.select_language) // add a radio button list
 
@@ -66,7 +66,8 @@ object AppLanguageUtils {
     }
 
     fun applyLanguageConfig(context: Context): Context {
-        val languageCode = PrefManager(context).appLanguage
+        AppPref.init(context)
+        val languageCode = getSelectedLanguageCode()
         val locale = Locale(languageCode)
         Locale.setDefault(locale)
         val newConfiguration = Configuration()

@@ -12,32 +12,30 @@ import android.widget.TextView;
 
 import androidx.appcompat.widget.SearchView;
 import androidx.cardview.widget.CardView;
-import androidx.interpolator.view.animation.FastOutSlowInInterpolator;
 
 import com.manimarank.spell4wiki.R;
 import com.manimarank.spell4wiki.activities.base.BaseActivity;
-import com.manimarank.spell4wiki.utils.AppLanguageUtils;
+import com.manimarank.spell4wiki.utils.AppPref;
 import com.manimarank.spell4wiki.utils.GeneralUtils;
 import com.manimarank.spell4wiki.utils.NetworkUtils;
 import com.manimarank.spell4wiki.utils.PrefManager;
-import com.manimarank.spell4wiki.utils.ShowCasePref;
 import com.manimarank.spell4wiki.utils.SnackBarUtils;
 import com.manimarank.spell4wiki.utils.constants.AppConstants;
 import com.manimarank.spell4wiki.utils.constants.Urls;
-
-import uk.co.samuelwall.materialtaptargetprompt.MaterialTapTargetPrompt;
-import uk.co.samuelwall.materialtaptargetprompt.extras.focals.RectanglePromptFocal;
+import com.manimarank.spell4wiki.utils.dialogs.AppLanguageDialog;
+import com.manimarank.spell4wiki.utils.dialogs.RateAppDialog;
+import com.manimarank.spell4wiki.utils.dialogs.UpdateAppDialog;
 
 public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     // Views
     SearchView searchView;
-    IntentFilter filter = new IntentFilter(AppLanguageUtils.LANGUAGE_FILTER);
+    IntentFilter filter = new IntentFilter(AppLanguageDialog.LANGUAGE_FILTER);
     BroadcastReceiver languageChangeReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             if (!isDestroyed() && !isFinishing() && intent != null && intent.getExtras() != null) {
-                String value = intent.getExtras().getString(AppLanguageUtils.SELECTED_LANGUAGE, "");
+                String value = intent.getExtras().getString(AppLanguageDialog.SELECTED_LANGUAGE, "");
                 if (value != null) {
                     recreate();
                 }
@@ -81,6 +79,12 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
         new Handler().post(() -> GeneralUtils.hideKeyboard(MainActivity.this));
 
+        // Update and Rate the app
+        if (AppPref.INSTANCE.checkAppUpdateAvailable(MainActivity.this))
+            UpdateAppDialog.INSTANCE.show(MainActivity.this);
+        else
+            RateAppDialog.INSTANCE.show(MainActivity.this);
+
     }
 
     @Override
@@ -94,25 +98,23 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             SnackBarUtils.INSTANCE.showLong(view, getString(R.string.login_to_contribute));
             return;
         }
-        Class nextClass = WiktionarySearchActivity.class;
         switch (view.getId()) {
             case R.id.card_spell4wiki:
-                if (ShowCasePref.INSTANCE.isNotShowed(ShowCasePref.SPELL_4_WIKI)) {
-                    callShowCase();
-                    return;
-                } else
-                    nextClass = Spell4Wiktionary.class;
+                Intent intentWiki = new Intent(getApplicationContext(), Spell4Wiktionary.class);
+                intentWiki.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                startActivity(intentWiki);
                 break;
             case R.id.card_spell4wordlist:
-                nextClass = Spell4WordListActivity.class;
+                Intent intentWordList = new Intent(getApplicationContext(), Spell4WordListActivity.class);
+                intentWordList.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                startActivity(intentWordList);
                 break;
             case R.id.card_spell4word:
-                nextClass = Spell4WordActivity.class;
+                Intent intentWord = new Intent(getApplicationContext(), Spell4WordActivity.class);
+                intentWord.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                startActivity(intentWord);
                 break;
         }
-        Intent intent = new Intent(getApplicationContext(), nextClass);
-        intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-        startActivity(intent);
     }
 
     /**
@@ -203,23 +205,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             SnackBarUtils.INSTANCE.showLong(searchView, getString(R.string.alert_to_exit));
         }
         new Handler().postDelayed(() -> doubleBackToExitPressedOnce = false, 2000);
-    }
-
-    private void callShowCase() {
-        if (!isFinishing() && !isDestroyed() && ShowCasePref.INSTANCE.isNotShowed(ShowCasePref.SPELL_4_WIKI)) {
-            new MaterialTapTargetPrompt.Builder(MainActivity.this)
-                    .setPromptFocal(new RectanglePromptFocal())
-                    .setAnimationInterpolator(new FastOutSlowInInterpolator())
-                    .setTarget(R.id.card_spell4wiki)
-                    .setPrimaryText(R.string.sc_t_spell4wiki)
-                    .setSecondaryText(R.string.sc_d_spell4wiki)
-                    .setFocalPadding(R.dimen.show_case_focal_padding)
-                    .setPromptStateChangeListener((prompt, state) -> {
-                        if (state == MaterialTapTargetPrompt.STATE_FOCAL_PRESSED || state == MaterialTapTargetPrompt.STATE_NON_FOCAL_PRESSED)
-                            ShowCasePref.INSTANCE.showed(ShowCasePref.SPELL_4_WIKI);
-                    }).show();
-        }
-
     }
 
     @Override

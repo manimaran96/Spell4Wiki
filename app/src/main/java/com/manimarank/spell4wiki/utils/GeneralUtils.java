@@ -23,6 +23,7 @@ import com.manimarank.spell4wiki.databases.DBHelper;
 import com.manimarank.spell4wiki.databases.dao.WordsHaveAudioDao;
 import com.manimarank.spell4wiki.databases.entities.WordsHaveAudio;
 import com.manimarank.spell4wiki.utils.constants.AppConstants;
+import com.manimarank.spell4wiki.utils.dialogs.RecordInfoDialog;
 
 public class GeneralUtils {
 
@@ -79,6 +80,7 @@ public class GeneralUtils {
                 context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
             }
         } catch (Exception e) {
+            ToastUtils.INSTANCE.showLong(context.getString(R.string.something_went_wrong));
             e.printStackTrace();
         }
     }
@@ -100,6 +102,7 @@ public class GeneralUtils {
                             ((CommonWebActivity) activity).updateList(word);
 
                         ToastUtils.INSTANCE.showLong(String.format(activity.getString(R.string.audio_file_already_exist), word));
+                        RecordInfoDialog.INSTANCE.show(activity);
                     } else {
                         Intent intent = new Intent(activity, RecordAudioActivity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);

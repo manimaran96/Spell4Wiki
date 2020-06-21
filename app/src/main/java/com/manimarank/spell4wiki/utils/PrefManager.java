@@ -25,9 +25,7 @@ public class PrefManager {
     private static final String LANGUAGE_CODE_SPELL_4_WORD_LIST = "language_code_spell_4_word_list";
     private static final String LANGUAGE_CODE_SPELL_4_WORD = "language_code_spell_4_word";
     private static final String LANGUAGE_CODE_WIKTIONARY = "language_code_wiktionary";
-    private static final String LANGUAGE_CODE_APP = "language_code_app";
     private static final String UPLOAD_AUDIO_LICENSE = "upload_audio_license";
-    private static final String COMMON_CATEGORIES = "common_categories";
     private static final String CSRF_TOKEN = "csrf_token";
     private static final String COOKIE = "cookie";
     private SharedPreferences pref;
@@ -91,10 +89,8 @@ public class PrefManager {
      */
     public void logoutUser() {
         boolean isFirstTime = isFirstTimeLaunch();
-        String appLanguage = getAppLanguage();
         editor.clear();
         setFirstTimeLaunch(isFirstTime);
-        setAppLanguage(appLanguage);
 
         // Remove sync - authenticator account
         AccountUtils.removeAccount();
@@ -162,24 +158,5 @@ public class PrefManager {
     public void setUploadAudioLicense(String uploadAudioLicense) {
         editor.putString(UPLOAD_AUDIO_LICENSE, uploadAudioLicense);
         editor.apply();
-    }
-
-    void setCommonCategories(List<String> categoryCommon) {
-        editor.putStringSet(COMMON_CATEGORIES, new HashSet<>(categoryCommon));
-        editor.apply();
-    }
-
-    public void setAppLanguage(String language){
-        editor.putString(LANGUAGE_CODE_APP, language);
-        editor.apply();
-    }
-
-    public String getAppLanguage() {
-        return pref.getString(LANGUAGE_CODE_APP, "en");
-    }
-
-
-    public Set<String> getCommonCategories(){
-        return pref.getStringSet(COMMON_CATEGORIES, null);
     }
 }

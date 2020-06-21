@@ -6,8 +6,8 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatDelegate
 import com.manimaran.crash_reporter.CrashReporter
 import com.manimaran.crash_reporter.CrashReporterConfiguration
-import com.manimarank.spell4wiki.utils.AppLanguageUtils
 import com.manimarank.spell4wiki.utils.PrefManager
+import com.manimarank.spell4wiki.utils.dialogs.AppLanguageDialog
 
 class Spell4WikiApp : Application() {
     companion object {
@@ -35,8 +35,8 @@ class Spell4WikiApp : Application() {
 
             val config = CrashReporterConfiguration()
                     .setExtraInformation(extraInfo)
-                    .setMaxNumberOfCrashToBeReport(if(Build.VERSION.SDK_INT >= 23) 8 else 5)
-                    .setMaxNoOfLineInCrash(if(Build.VERSION.SDK_INT >= 23) 25 else 15)
+                    .setMaxNumberOfCrashToBeReport(if (Build.VERSION.SDK_INT >= 23) 8 else 5)
+                    .setMaxNoOfLineInCrash(if (Build.VERSION.SDK_INT >= 23) 25 else 15)
                     .setAlertDialogTitle(getString(R.string.crash_report_alert_title))
                     .setAlertDialogMessage(getString(R.string.crash_report_alert_message))
                     .setAlertDialogPositiveButton(getString(R.string.send))
@@ -52,6 +52,6 @@ class Spell4WikiApp : Application() {
     }
 
     override fun attachBaseContext(base: Context) {
-        super.attachBaseContext(AppLanguageUtils.applyLanguageConfig(base))
+        super.attachBaseContext(AppLanguageDialog.applyLanguageConfig(base))
     }
 }

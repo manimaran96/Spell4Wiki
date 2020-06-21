@@ -11,7 +11,6 @@ object ShowCasePref {
 
     private const val PREFS_NAME = "Show_Case_Preference"
 
-    const val SPELL_4_WIKI = "spell4wiki"
     const val SPELL_4_WIKI_PAGE = "spell4wiki_page"
     const val SPELL_4_WORD_PAGE = "spell4word_page"
     const val WIKTIONARY_PAGE = "wiktionary_page"

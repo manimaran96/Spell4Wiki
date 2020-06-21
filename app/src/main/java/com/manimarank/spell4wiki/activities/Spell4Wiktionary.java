@@ -31,6 +31,7 @@ import com.manimarank.spell4wiki.databases.entities.WordsHaveAudio;
 import com.manimarank.spell4wiki.fragments.LanguageSelectionFragment;
 import com.manimarank.spell4wiki.listerners.OnLanguageSelectionListener;
 import com.manimarank.spell4wiki.models.WikiWordsWithoutAudio;
+import com.manimarank.spell4wiki.utils.AppPref;
 import com.manimarank.spell4wiki.utils.NetworkUtils;
 import com.manimarank.spell4wiki.utils.PrefManager;
 import com.manimarank.spell4wiki.utils.ShowCasePref;
@@ -195,7 +196,13 @@ public class Spell4Wiktionary extends BaseActivity implements EndlessRecyclerVie
                 //wiktionaryTitleOfWordsWithoutAudio = "பகுப்பு:அரிசமய. உள்ள பக்கங்கள்"; // https://ta.wiktionary.org/wiki/பகுப்பு:சென்னைப்_பேரகரமுதலியின்_சொற்சுருக்கப்_பகுப்புகள்-தமிழ்
 
                 ApiInterface api = ApiClient.getWiktionaryApi(getApplicationContext(), languageCode).create(ApiInterface.class);
-                Call<WikiWordsWithoutAudio> call = api.fetchUnAudioRecords(wiktionaryTitleOfWordsWithoutAudio, nextOffsetObj);
+                Call<WikiWordsWithoutAudio> call = api.fetchUnAudioRecords(
+                        wiktionaryTitleOfWordsWithoutAudio,
+                        nextOffsetObj,
+                        AppPref.INSTANCE.getFetchLimit(),
+                        AppPref.INSTANCE.getFetchBy(),
+                        AppPref.INSTANCE.getFetchDir()
+                );
 
                 call.enqueue(new Callback<WikiWordsWithoutAudio>() {
                     @Override
