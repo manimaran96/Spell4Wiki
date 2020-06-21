@@ -63,7 +63,7 @@
     <string name="select_file">கோப்பைத் தேர்ந்தெடு</string>
     <string name="next">அடுத்து</string>
     <string name="type_word">உங்கள் சொற்களை இங்கே தட்டச்சு செய்யவும் அல்லது ஒட்டவும்</string>
-    <string name="enter_word">வார்த்தையைத் உள்ளிடு</string>
+    <string name="enter_word">வார்த்தையை உள்ளிடு</string>
     <string name="hint_select_file">பங்களிக்க வார்த்தைகளின் பட்டியலைக் கொண்ட .txt கோப்பைத் தேர்ந்தெடுக்கவும். </string>
     <string name="hint_select_file_next">உங்களிடம் ஒரு வரியில் ஒரு சொல் இருப்பதை உறுதிப்படுத்திக் கொள்ளுங்கள்.</string>
     <string name="direct_content">நேரடி உள்ளடக்கம்</string>
@@ -136,8 +136,7 @@
     <string name="record_info_dialog_title">சிரமத்திற்கு மன்னிக்கவும்</string>
     <string name="record_info_dialog_message">ஆடியோவின் மறு-பதிவேற்றத்தை/நகலை தவிர்ப்பதற்க்காக, பதிவு செய்வதற்கு முன் ஆடியோ ஏற்கனவே இருக்கிறதா இல்லையா என்பதை நாங்கள் சரிபார்க்கிறோம். ஏனென்றால் சில சொற்கள் ஏற்கனவே ஆடியோவை கொண்டுள்ளன.\n\nநீங்கள் வார்த்தையைக் கிளிக் செய்த பிறகு, ஆடியோ ஏற்கனவே இருப்பதைக் காட்டினால். தயவுசெய்து வேறு வார்த்தைக்குச் செல்லுங்கள்.</string>
     <string name="record_info_dialog_ok">சரி</string>
-    
-    
+
     <string name="check_internet">தயவுசெய்து உங்கள் இணைய இணைப்பை சரிபார்க்கவும்!</string>
     <string name="record_fetch_fail">தயவுசெய்து உங்கள் இணைப்பைச் சரிபார்க்கவும்!\nகீழே உருட்டி மீண்டும் முயற்சிக்கவும்!</string>
     <string name="something_went_wrong">ஏதோ தவறு ஏற்பட்டுள்ளது.</string>
@@ -170,13 +169,13 @@
 
     <!-- App Intro Screen -->
     <string name="app_intro_slide_1_title">வணக்கம், வரவேற்கிறோம்</string>
-    <string name="app_intro_slide_2_title">விக்டனரி தேடல்</string>
+    <string name="app_intro_slide_2_title">விக்சனரி தேடல்</string>
     <string name="app_intro_slide_3_title">@string/spell4wordlist</string>
     <string name="app_intro_slide_4_title">@string/spell4word</string>
     <string name="app_intro_slide_5_title">அனுமதி கோரிக்கை</string>
 
     <string name="app_intro_slide_1_description">@string/app_description</string>
-    <string name="app_intro_slide_2_description">எந்தவொரு மொழியிலும் உள்ள எந்த சொற்களுக்கும் விக்கிஷனரியிலிருந்து அர்த்தத்தைத் தேடலாம்.</string>
+    <string name="app_intro_slide_2_description">எந்தவொரு மொழியிலும் உள்ள எந்த சொற்களுக்கும் விக்சனரியிலிருந்து அர்த்தத்தைத் தேடலாம்.</string>
     <string name="app_intro_slide_3_description">உங்கள் சொந்த சொற்பட்டியலை உரை கோப்பிலிருந்து அல்லது நகலெடுத்து ஒட்டி நீங்கள் பதிவேற்றலாம்.</string>
     <string name="app_intro_slide_4_description">ஒரு வார்த்தைக்காக நீங்கள் உச்சரித்து பதிவேற்றலாம்.</string>
     <string name="app_intro_slide_5_description">Spell4Wiki-க்கு உங்கள் தனியுரிமையை மீறாமல் சேமிக்க மற்றும் ஆடியோவை பதிவுசெய்ய அனுமதிகள் தேவை.</string>
@@ -205,5 +204,5 @@
     <string name="sc_d_record_upload">1. சொல் மற்றும் மொழியை சரிபார்க்கவும்\n2. பதிவுசெய்யப்பட்ட ஆடியோவை இயக்கி சரிபார்க்கவும்\n3. பதிவேற்று பொத்தானை அழுத்தி பொதுவகத்தில் பதிவெற்றவும்.</string>
     <string name="sc_t_core_contributors_list_item">பங்களிப்பாளரைப் பற்றி மேலும்</string>
     <string name="sc_d_core_contributors_list_item">பங்களிப்பாளரைப் பற்றிய கூடுதல் விவரங்களுக்கு பெயரின் மீது அழுத்தவும்.</string>
-    
+
 </resources>
