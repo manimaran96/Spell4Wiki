@@ -152,4 +152,4 @@ Please also ask before you start implementing a new big feature.
 * Feel free to post suggestions, changes, ideas etc. on GitHub or Telegram!
 
 ## Donation for Development
-* To support developers, you can do a donation : [Donation details](https://github.com/manimaran96/Spell4Wiki/blob/master/docs/CONTRIBUTING.md#spell4wiki-contribution-guidelines)
+* To support developers, you can do a donation : [Donation details](https://github.com/manimaran96/Spell4Wiki/blob/master/docs/DONATION.md#donation--spell4wiki-app)
