@@ -15,6 +15,7 @@ Spell4Wiki also act as a Wiki-Dictionary(Word meaning from Wiktionary).
 <a href="https://manimaran96.wordpress.com" alt="Developer badge"><img src="https://img.shields.io/badge/developed%20by-Manimaran-blue.svg" ></a>
 </p>
 
+
 <p align="center"><a href="https://play.google.com/store/apps/details?id=com.manimarank.spell4wiki"><img src="https://raw.githubusercontent.com/manimaran96/Spell4Wiki/master/files/assets/images/badges/google_play.png" width="200px"></a></p> 
 
 ## Features
@@ -23,8 +24,11 @@ Spell4Wiki also act as a Wiki-Dictionary(Word meaning from Wiktionary).
 
 ## Screenshots
 
-<p align="center"><img src="https://raw.githubusercontent.com/manimaran96/Spell4Wiki/master/files/assets/screenshots/spell4wiki_ui.gif" width="300"/></p>
 
+   <kbd align="center">
+<p align="center">
+<img src="https://raw.githubusercontent.com/manimaran96/Spell4Wiki/master/files/assets/screenshots/spell4wiki_ui.gif" width="300"/></p></kbd>
+  
 ## Contribution
 
 Whether you have ideas, translations, design changes, bugs, code cleaning, or real heavy code changes, help is always welcome. The more is done the better it gets!
@@ -32,7 +36,7 @@ Whether you have ideas, translations, design changes, bugs, code cleaning, or re
 If you'd like to get involved, check our [contribution](https://github.com/manimaran96/Spell4Wiki/blob/master/docs/CONTRIBUTING.md#spell4wiki-contribution-guidelines) notes.
 
 ## Donation for Development
- - To support developers, you can do a donation : [Donation details](https://github.com/manimaran96/Spell4Wiki/blob/master/docs/CONTRIBUTING.md#spell4wiki-contribution-guidelines)
+ - To support developers, you can do a donation : [Donation details](https://github.com/manimaran96/Spell4Wiki/blob/master/docs/DONATION.md#donation--spell4wiki-app)
 
 ## Credits To
 #### Initiated & Powered By
