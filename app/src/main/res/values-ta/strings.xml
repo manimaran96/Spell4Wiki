@@ -136,4 +136,74 @@
     <string name="record_info_dialog_title">சிரமத்திற்கு மன்னிக்கவும்</string>
     <string name="record_info_dialog_message">ஆடியோவின் மறு-பதிவேற்றத்தை/நகலை தவிர்ப்பதற்க்காக, பதிவு செய்வதற்கு முன் ஆடியோ ஏற்கனவே இருக்கிறதா இல்லையா என்பதை நாங்கள் சரிபார்க்கிறோம். ஏனென்றால் சில சொற்கள் ஏற்கனவே ஆடியோவை கொண்டுள்ளன.\n\nநீங்கள் வார்த்தையைக் கிளிக் செய்த பிறகு, ஆடியோ ஏற்கனவே இருப்பதைக் காட்டினால். தயவுசெய்து வேறு வார்த்தைக்குச் செல்லுங்கள்.</string>
     <string name="record_info_dialog_ok">சரி</string>
+    
+    
+    <string name="check_internet">தயவுசெய்து உங்கள் இணைய இணைப்பை சரிபார்க்கவும்!</string>
+    <string name="record_fetch_fail">தயவுசெய்து உங்கள் இணைப்பைச் சரிபார்க்கவும்!\nகீழே உருட்டி மீண்டும் முயற்சிக்கவும்!</string>
+    <string name="something_went_wrong">ஏதோ தவறு ஏற்பட்டுள்ளது.</string>
+    <string name="something_went_wrong_try_again">ஏதோ தவறு ஏற்பட்டது. மீண்டும் முயற்சிக்கவும்.</string>
+    <string name="web_page_not_found">பக்கம் கிடைக்கவில்லை.\nமீண்டும் முயற்சிக்கவும்.</string>
+    <string name="enter_valid_word">சரியான வார்த்தையை உள்ளிடவும்(அதிகபட்சம்: 30 எழுத்துக்கள்).</string>
+    <string name="provide_valid_word">சரியான வார்த்தையை வழங்கவும்</string>
+    <string name="provide_valid_content">செல்லுபடியாகும் உள்ளடக்கத்தை வழங்கவும்</string>
+    <string name="backward_nothing">பின்னோக்க ஏதுமில்லை</string>
+    <string name="forward_nothing">முன்னோக்க ஏதுமில்லை</string>
+    <string name="invalid_language">சரியான மொழியைத் தேர்ந்தெடுக்கவும்.</string>
+    <string name="confirm_declaration">தயவுசெய்து அறிவிப்பை சரிபார்த்து உறுதிப்படுத்தவும்.</string>
+    <string name="invalid_csrf_try_again">தவறான CSRF டோக்கன். தயவுசெய்து மீண்டும் முயற்சி செய்க.</string>
+    <string name="invalid_response">தவறான பதில். தயவுசெய்து மீண்டும் முயற்சி செய்க</string>
+    <string name="upload_failed">பதிவேற்றம் தோல்வியுற்றது. தயவுசெய்து மீண்டும் முயற்சி செய்க.</string>
+    <string name="file_already_exist">பதிவேற்ற கோப்பு ஏற்கனவே அதே/மற்றொரு வடிவத்தில் உள்ளது.</string>
+    <string name="audio_file_already_exist">%s-க்கு ஆடியோ(ஒலிப்பு) கோப்பு ஏற்கனவே உள்ளது.</string>
+    <string name="login_expired">உள்நுழைவு காலாவதியானது. தயவுசெய்து உள்நுழைந்து தொடரவும்.</string>
+    <string name="two_factor_login">Two-Factor அங்கீகாரம் செயலியில் செயல்படுத்தப்படவில்லை.</string>
+    <string name="check_url">தவறான இணைப்பு</string>
+    <string name="alert_to_exit">வெளியேறுவதற்கு மீண்டும் அழுத்தவும்</string>
+    <string name="invalid_credential">சரியான பயனர்பெயர் மற்றும் கடவுச்சொல்லை வழங்கவும்</string>
+    <string name="no_email_client">மின்னஞ்சல் செயலி ஏதுமில்லை</string>
+    <string name="result_not_found">முடிவுகள் ஏதுமில்லை</string>
+    <string name="server_misbehaved">சேவையகம் தவறாக நடந்து கொண்டது! பின்னர் மீண்டும் முயற்சிக்கவும்.</string>
+    <string name="word_list_no_record_found">சொற்கள் எதுவும் கிடைக்கவில்லை.\n(அல்லது)\nஎல்லா வார்த்தைகளுக்கும் ஆடியோ(ஒலிப்பு) கோப்பு ஏற்கனவே உள்ளது/பதிவேற்றப்பட்டுள்ளது.\n(அல்லது)\nபிற மொழிக்கு பங்களிக்கவும்.</string>
+    <string name="spell4wiktionary_load_more_confirmation">ஆடியோ(ஒலிப்புக்கோப்பு) இல்லாத சொற்களைக் கண்டுபிடிக்க அதிக நேரம் எடுக்கும் என்று தெரிகிறது. நீங்கள் மேலும் தொடர விரும்புகிறீர்களா?</string>
+    <string name="spell4wiktionary_load_more_failed_confirmation">@string/something_went_wrong_try_again</string>
+    <string name="no_more_data_found">மேலும் தரவு எதுவும் கிடைக்கவில்லை</string>
+
+    <!-- App Intro Screen -->
+    <string name="app_intro_slide_1_title">வணக்கம், வரவேற்கிறோம்</string>
+    <string name="app_intro_slide_2_title">விக்டனரி தேடல்</string>
+    <string name="app_intro_slide_3_title">@string/spell4wordlist</string>
+    <string name="app_intro_slide_4_title">@string/spell4word</string>
+    <string name="app_intro_slide_5_title">அனுமதி கோரிக்கை</string>
+
+    <string name="app_intro_slide_1_description">@string/app_description</string>
+    <string name="app_intro_slide_2_description">எந்தவொரு மொழியிலும் உள்ள எந்த சொற்களுக்கும் விக்கிஷனரியிலிருந்து அர்த்தத்தைத் தேடலாம்.</string>
+    <string name="app_intro_slide_3_description">உங்கள் சொந்த சொற்பட்டியலை உரை கோப்பிலிருந்து அல்லது நகலெடுத்து ஒட்டி நீங்கள் பதிவேற்றலாம்.</string>
+    <string name="app_intro_slide_4_description">ஒரு வார்த்தைக்காக நீங்கள் உச்சரித்து பதிவேற்றலாம்.</string>
+    <string name="app_intro_slide_5_description">Spell4Wiki-க்கு உங்கள் தனியுரிமையை மீறாமல் சேமிக்க மற்றும் ஆடியோவை பதிவுசெய்ய அனுமதிகள் தேவை.</string>
+
+
+    <!--Wikimedia Commons/Wiktionary Related-->
+    <string name="language_code">ta</string>
+    <string name="file_content_description">%s என்பதன் ஒலிப்புக்கோப்பு</string> <!--Don't use full stop-->
+    <!-- Wikipedia page about language
+     For English : https://en.wikipedia.org/wiki/English_language -> English_language
+     For Tamil : https://en.wikipedia.org/wiki/Tamil_language -> Tamil_language-->
+    <string name="language_page_in_wikipedia">Tamil_language</string>
+    <string name="wiktionary_url">https://ta.wiktionary.org/</string>
+
+
+    <!-- App Show case -->
+    <string name="sc_t_spell4wiki_page_language">மொழி மாற்றி</string>
+    <string name="sc_d_spell4wiki_page_language">நீங்கள் பங்களிக்க விரும்பும் மொழியை மாற்றிக்கொள்ளலாம். தேர்ந்தெடுக்கப்பட்ட மொழியின் அடிப்படையில் ஆடியோ(ஒலிப்புக்கோப்பு) பதிவேற்றப்படும்.\n\nதற்போதைய மொழி %s \n\nகுறிப்பு :\nசில மொழிகள் மட்டுமே இப்போது சேர்க்கபட்டுள்ளன.</string>
+    <string name="sc_t_spell4wiki_list_item">பதிவு செய்ய</string>
+    <string name="sc_d_spell4wiki_list_item">ஆடியோவைப்(ஒலிப்புக்கோப்பினை) பதிவுசெய்ய வார்த்தை மீது அழுத்தவும் அல்லது விக்சனரியிலிருந்து பொருளைக் காண அகராதி பொத்தானை அழுத்தவும்.</string>
+    <string name="sc_t_spell4word_page_edit_word">பதிவு செய்ய ஒரு வார்த்தையைத் தட்டச்சு செய்க</string>
+    <string name="sc_d_spell4word_page_edit_word">உங்கள் வார்த்தையைத் தட்டச்சு செய்து ஆடியோவைப் பதிவுசெய்ய பதிவு பொத்தானை அழுத்தவும் அல்லது விக்சனரியிலிருந்து பொருளைக் காண அகராதி பொத்தானை அழுத்தவும்.</string>
+    <string name="sc_t_wiktionary_page_language">@string/sc_t_spell4wiki_page_language</string>
+    <string name="sc_d_wiktionary_page_language">விக்சனரிக்கு எந்த மொழியையும் தேர்ந்தெடுக்கலாம். முடிவுகள் மற்றும் அர்த்தங்கள் தேர்ந்தெடுக்கப்பட்ட மொழியை அடிப்படையாகக் கொண்டு இருக்கும்.\n\nதற்போதைய மொழி %s ஆகும்.</string>
+    <string name="sc_t_record_upload">பதிவேற்றுவதற்கு முன் சரிபார்க்கவும்</string>
+    <string name="sc_d_record_upload">1. சொல் மற்றும் மொழியை சரிபார்க்கவும்\n2. பதிவுசெய்யப்பட்ட ஆடியோவை இயக்கி சரிபார்க்கவும்\n3. பதிவேற்று பொத்தானை அழுத்தி பொதுவகத்தில் பதிவெற்றவும்.</string>
+    <string name="sc_t_core_contributors_list_item">பங்களிப்பாளரைப் பற்றி மேலும்</string>
+    <string name="sc_d_core_contributors_list_item">பங்களிப்பாளரைப் பற்றிய கூடுதல் விவரங்களுக்கு பெயரின் மீது அழுத்தவும்.</string>
+    
 </resources>
