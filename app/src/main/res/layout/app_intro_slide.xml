@@ -31,7 +31,6 @@
         android:id="@+id/txtAppIntroDescription"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="70dp"
         android:gravity="center"
         android:paddingStart="@dimen/space20dp"
         android:paddingEnd="@dimen/space20dp"
@@ -39,7 +38,9 @@
         android:text="@string/app_intro_slide_1_description"
         android:textAlignment="center"
         android:textColor="@color/app_intro_description"
-        android:layout_below="@+id/imgAppIntro"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/space30dp"
+        android:layout_marginTop="@dimen/space10dp"
         android:textSize="@dimen/text_normal" />
 
 
