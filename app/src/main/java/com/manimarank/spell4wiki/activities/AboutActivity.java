@@ -157,7 +157,7 @@ public class AboutActivity extends BaseActivity implements View.OnClickListener 
         try {
             Intent intent = new Intent(Intent.ACTION_SEND);
             intent.setType("text/plain");
-            String appInfo = getString(R.string.app_description) + "\n\n" + String.format(getString(R.string.app_share_link), Urls.APP_LINK);
+            String appInfo = String.format(getString(R.string.app_share_invite_message), getString(R.string.app_description)) + "\n\n" + String.format(getString(R.string.app_share_link), Urls.APP_LINK);
             intent.putExtra(Intent.EXTRA_TEXT, appInfo);
             startActivity(Intent.createChooser(intent, getString(R.string.app_share_title)));
         } catch (Exception e) {

@@ -57,6 +57,7 @@
     <string name="link_share_message">Visit : %s\nLink share from Spell4Wiki App.</string>
     <string name="link_share_title">Share link to your friends…</string>
     <string name="app_share_title">Share Spell4Wiki App to your friends…</string>
+    <string name="app_share_invite_message">🎊🎉 I am happy to invite you to contribute your voice for wiktionary words using Spell4Wiki android application. 🎉🎊\n\n%s\nSpell4Wiki is a Free Software(GPLv3).</string>
     <string name="app_description">Spell4Wiki is a mobile application to record and upload audio for Wiktionary words to Wikimedia commons. This is also act as a Wiki-Dictionary.</string>
     <string name="app_share_link">App Link :\n%s</string>
     <string name="upload">Upload</string>
