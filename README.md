@@ -35,6 +35,16 @@ Whether you have ideas, translations, design changes, bugs, code cleaning, or re
 
 If you'd like to get involved, check our [contribution](https://github.com/manimaran96/Spell4Wiki/blob/master/docs/CONTRIBUTING.md#spell4wiki-contribution-guidelines) notes.
 
+Watch the tuttorial videos below and make your contribution.
+
+| Title | Video Link |
+| :------- | :---------: |
+|     Introduction & What is Spell4Wiki App?    | [Play Video](https://youtu.be/IMku3FL7s3I) |
+|     How to use Spell4Wiki App?    | [Play Video](https://youtu.be/Fu4kQcv04kA) |
+
+More videos for other language [check here](https://github.com/manimaran96/Spell4Wiki/blob/master/docs/CONTRIBUTING.md#how-to-use-spell4wiki)
+
+
 ## Donation for Development
  - To support developers, you can do a donation : [Donation details](https://github.com/manimaran96/Spell4Wiki/blob/master/docs/DONATION.md#donation--spell4wiki-app)
 
