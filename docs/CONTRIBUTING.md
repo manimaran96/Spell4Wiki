@@ -7,9 +7,10 @@ PLEASE READ THESE GUIDELINES CAREFULLY BEFORE ANY CONTRIBUTION!
 
 Watch the tuttorial videos below and make your contribution.
 
-| Language        | Video Link           |
-| ------------- |:-------------:|
-| Tamil     | [Play Video](https://youtu.be/4y5I1sUW1ys) |
+| Language        | Video Link     | Creator |
+| :------------- | :-------------: | :------------- |
+| Tamil     | [Play Video](https://youtu.be/4y5I1sUW1ys) | [Manimaran](https://commons.wikimedia.org/wiki/User:Manimaran96) |
+| English   | [Introduction](https://youtu.be/IMku3FL7s3I)<br/>[Play Video](https://youtu.be/Fu4kQcv04kA) | [Ganesh](https://commons.wikimedia.org/wiki/User:Libreaim)
 
 
 You are always welcome to make video for your language.
