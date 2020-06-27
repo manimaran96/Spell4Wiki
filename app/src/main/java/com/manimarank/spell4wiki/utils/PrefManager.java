@@ -86,12 +86,7 @@ public class PrefManager {
      * Clear session details when click logout
      */
     public void logoutUser() {
-        boolean isFirstTime = isFirstTimeLaunch();
-        editor.clear();
-        setFirstTimeLaunch(isFirstTime);
-
-        // Remove sync - authenticator account
-        AccountUtils.removeAccount();
+        clearLoginData();
 
         if (mContext != null && mContext instanceof Activity) {
             Activity activity = (Activity) mContext;
@@ -99,6 +94,15 @@ public class PrefManager {
             activity.finishAffinity();
             activity.startActivity(new Intent(mContext, LoginActivity.class));
         }
+    }
+
+    public void clearLoginData(){
+        boolean isFirstTime = isFirstTimeLaunch();
+        editor.clear();
+        setFirstTimeLaunch(isFirstTime);
+
+        // Remove sync - authenticator account
+        AccountUtils.removeAccount();
     }
 
     private Set<String> getCookies() {

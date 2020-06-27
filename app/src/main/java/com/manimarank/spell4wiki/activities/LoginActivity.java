@@ -21,10 +21,13 @@ import com.manimarank.spell4wiki.auth.AccountUtils;
 import com.manimarank.spell4wiki.models.WikiLogin;
 import com.manimarank.spell4wiki.models.WikiToken;
 import com.manimarank.spell4wiki.models.WikiUser;
+import com.manimarank.spell4wiki.utils.AppPref;
+import com.manimarank.spell4wiki.utils.ExtensionsKt;
 import com.manimarank.spell4wiki.utils.GeneralUtils;
 import com.manimarank.spell4wiki.utils.NetworkUtils;
 import com.manimarank.spell4wiki.utils.PrefManager;
 import com.manimarank.spell4wiki.utils.SnackBarUtils;
+import com.manimarank.spell4wiki.utils.ToastUtils;
 import com.manimarank.spell4wiki.utils.constants.AppConstants;
 import com.manimarank.spell4wiki.utils.constants.Urls;
 
@@ -54,6 +57,15 @@ public class LoginActivity extends BaseActivity {
         setContentView(R.layout.activity_login);
 
         pref = new PrefManager(getApplicationContext());
+
+        // Force logout below version 4
+        if (ExtensionsKt.getAppVersion(this) < 4 && !AppPref.INSTANCE.getVc4ForceLogout()) {
+            AppPref.INSTANCE.setVc4ForceLogoutDone();
+            if (pref.isLoggedIn()) {
+                ToastUtils.INSTANCE.showLong(getString(R.string.login_expired));
+                pref.clearLoginData();
+            }
+        }
 
         /*
          * Check Already login or not
