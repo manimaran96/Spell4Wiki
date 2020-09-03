@@ -35,7 +35,7 @@ Whether you have ideas, translations, design changes, bugs, code cleaning, or re
 
 If you'd like to get involved, check our [contribution](https://github.com/manimaran96/Spell4Wiki/blob/master/docs/CONTRIBUTING.md#spell4wiki-contribution-guidelines) notes.
 
-Watch the tuttorial videos below and make your contribution.
+Watch the tutorial videos below and make your contribution.
 
 | Title | Video Link |
 | :------- | :---------: |

@@ -5,7 +5,7 @@ PLEASE READ THESE GUIDELINES CAREFULLY BEFORE ANY CONTRIBUTION!
 
 ## How to Use Spell4Wiki
 
-Watch the tuttorial videos below and make your contribution.
+Watch the tutorial videos below and make your contribution.
 
 | Language        | Video Link     | Creator |
 | :------------- | :-------------: | :------------- |
@@ -13,7 +13,7 @@ Watch the tuttorial videos below and make your contribution.
 | English   | [Introduction](https://youtu.be/IMku3FL7s3I)<br/>[Play Video](https://youtu.be/Fu4kQcv04kA) | [Ganesh](https://commons.wikimedia.org/wiki/User:Libreaim)
 
 
-You are always welcome to make video for your language.
+You are always welcome to make video for your language. then share link or video file by <a href="#communication">communication mediums</a> 
 
 
 ## Spell4Wiki Improvements

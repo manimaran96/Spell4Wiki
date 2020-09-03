@@ -2,7 +2,6 @@
     android:id="@+id/layoutItem"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="@dimen/space4dp"
     android:gravity="center"
     android:orientation="vertical">
 
@@ -11,7 +10,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:layout_margin="@dimen/space10dp"
+        android:layout_marginTop="@dimen/space4dp"
+        android:layout_marginRight="@dimen/space8dp"
+        android:layout_marginLeft="@dimen/space8dp"
+        android:layout_marginBottom="@dimen/space4dp"
         android:clickable="false" />
 
     <LinearLayout
