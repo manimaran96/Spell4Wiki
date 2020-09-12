@@ -81,10 +81,14 @@ More contributors : [look here](https://github.com/manimaran96/Spell4Wiki/graphs
  * [Blog about Spell4Wiki](https://manimaran96.wordpress.com/category/android-apps/spell4wiki/)
  
 ## More Screenshots 
-[<img src="fastlane/metadata/android/en-US/images/phoneScreenshots/1.png" width=160>](fastlane/metadata/android/en-US/images/phoneScreenshots/1.png)
-[<img src="fastlane/metadata/android/en-US/images/phoneScreenshots/2.png" width=160>](fastlane/metadata/android/en-US/images/phoneScreenshots/2.png)
-[<img src="fastlane/metadata/android/en-US/images/phoneScreenshots/3.png" width=160>](fastlane/metadata/android/en-US/images/phoneScreenshots/3.png)
 
+| Login | Main | Words List | Record & Upload |
+|:-:|:-:|:-:|:-:|
+| ![First](fastlane/metadata/android/en-US/images/phoneScreenshots/1.png?raw=true) | ![Sec](fastlane/metadata/android/en-US/images/phoneScreenshots/2.png?raw=true) | ![Third](fastlane/metadata/android/en-US/images/phoneScreenshots/3.png?raw=true) | ![Fourth](fastlane/metadata/android/en-US/images/phoneScreenshots/4.png?raw=true) |
+
+| Settings | License | Word-Details | Wiktionary |
+|:-:|:-:|:-:|:-:|
+| ![Fifth](fastlane/metadata/android/en-US/images/phoneScreenshots/5.png?raw=true) | ![Sixth](fastlane/metadata/android/en-US/images/phoneScreenshots/6.png?raw=true) | ![Seventh](fastlane/metadata/android/en-US/images/phoneScreenshots/7.png?raw=true) | ![Eighth](fastlane/metadata/android/en-US/images/phoneScreenshots/8.png?raw=true) |
 
 
 
