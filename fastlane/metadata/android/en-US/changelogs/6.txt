@@ -1,0 +1,13 @@
+- Release Spell4Wiki App
+- New UI/UX implemented
+- Checking audio file availability before recording
+- Implemented some best way to show words
+- Custom configuration implemented
+- Contribution guidelines added
+- App show case & App Intro added
+- Crash reporter added
+- Tamil localisation done
+- Most of defects fixed
+- Update share message & configuration
+- Network related issues fixed
+- Code contributors details added

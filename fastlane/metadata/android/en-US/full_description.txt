@@ -1,0 +1,42 @@
+<b>Wikimedia Commons Audio Upload Tool.</b>
+
+<p>
+Spell4Wiki is a mobile application to record and upload ogg audio files for Wiktionary words to Wikimedia commons.<br>
+Spell4Wiki also act as a Wiki-Dictionary(Word meaning from Wiktionary). 
+</p>
+
+<p>
+<b>App Features:</b>
+
+<ol>
+<li><i>Spell For Wiktionary</i> - You can record & upload audio for the list of Wiktionary words to Wikimedia commons.</li><br>
+<li><i>Spell For WordList</i> - You can upload for your own list of words from a text file or copy & paste.</li><br>
+<li><i>Spell For Word</i> - You can spell and upload for a single word.</li><br>
+<li><i>Wiktionary Explore</i> - You can search meaning from Wikitionary for any words in any languages.</li><br>
+</ol>
+</p>
+
+
+<b>Purpose of this application</b>
+<p>
+There are plenty of words in the Wiktionary. But they do not have enough pronunciation audio files. So we can upload pronunciation audio for words in a simple way.
+And we can use those pronunciation for wiki data planning and other technologies like machine learning under CC-license. And other linguists can learn how to pronounce a word.
+</p>
+
+<p>
+<b>Powered By</b>
+<ul>
+<li><a href="http://www.kaniyam.com/">Kaniyam Foundation, TamilNadu</a>,</li>
+<li><a href="https://vglug.org/">VGLUG</a>, Free Software Activists and </li>
+<li><a href="https://en.wikipedia.org/wiki/Tamil_Wikipedia">Tamil Wikimedia Community</a></li>
+</ul>
+</p>
+
+<p>
+<b>Useful Links</b>
+<ul>
+<li>Join the Telegram group: <a href="https://t.me/spell4wiki">@spell4wiki</a></li>
+<li>Spell4Wiki Commons Page : <a href="https://commons.wikimedia.org/wiki/Commons:Spell4Wiki">Commons:Spell4Wiki</a></li>
+<li>More details about development : <a href="https://manimaran96.wordpress.com/category/android-apps/spell4wiki/|Spell4Wiki">Blog Post about Spell4Wiki</a></li>
+<li>Tuttorial & Demo Videos : <a href="https://www.youtube.com/playlist?list=PLpASUeEWdwvFJFlOlXicYef4gu9xS2P4C">Play Videos</a></li>
+</p>
