@@ -47,6 +47,14 @@ More videos for other language [check here](https://github.com/manimaran96/Spell
 
 ## Donation for Development
  - To support developers, you can do a donation : [Donation details](https://github.com/manimaran96/Spell4Wiki/blob/master/docs/DONATION.md#donation--spell4wiki-app)
+ 
+#### By Paypal
+
+<a href="https://www.paypal.me/manimaran24"><img src="https://raw.githubusercontent.com/manimaran96/Spell4Wiki/master/files/assets/images/badges/paypal.png" width="200px"/></a>
+
+#### By BHIM UPI Payment 
+
+Pay using **`spell4wiki@ybl`** BHIM UPI ID.
 
 ## Credits To
 #### Initiated & Powered By
@@ -71,6 +79,13 @@ More contributors : [look here](https://github.com/manimaran96/Spell4Wiki/graphs
  * [Commons:Spell4Wiki](https://commons.wikimedia.org/wiki/Commons:Spell4Wiki)
  * [Files uploaded by Spell4Wiki](https://commons.wikimedia.org/wiki/Category:Files_uploaded_by_spell4wiki)
  * [Blog about Spell4Wiki](https://manimaran96.wordpress.com/category/android-apps/spell4wiki/)
+ 
+## More Screenshots 
+[<img src="fastlane/metadata/android/en-US/images/phoneScreenshots/1.png" width=160>](fastlane/metadata/android/en-US/images/phoneScreenshots/1.png)
+[<img src="fastlane/metadata/android/en-US/images/phoneScreenshots/2.png" width=160>](fastlane/metadata/android/en-US/images/phoneScreenshots/2.png)
+[<img src="fastlane/metadata/android/en-US/images/phoneScreenshots/3.png" width=160>](fastlane/metadata/android/en-US/images/phoneScreenshots/3.png)
+
+
 
 
 ## License
@@ -86,3 +101,5 @@ Specifically you can redistribute and/or modify it under the terms of the [GNU G
 3. Custom category list from Wiktionary.
 4. Resolve issues.
 5. Support to other languages.
+6. Dark mode UI
+7. Update with android latest technologies
