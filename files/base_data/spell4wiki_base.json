@@ -285,7 +285,9 @@
          "code":"de",
          "lang":"German",
          "dir":"ltr",
-         "local_lang":"Deutsch"
+         "local_lang":"Deutsch",
+         "title_of_words_list":"Category:Nachname (Deutsch)",
+         "category": ["Files uploaded by spell4wiki in de", "German pronunciation"] 
       },
       {
          "code":"diq",
