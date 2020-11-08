@@ -1134,7 +1134,9 @@
          "code":"ru",
          "lang":"Russian",
          "dir":"ltr",
-         "local_lang":"Русский"
+         "local_lang":"Русский",
+         "title_of_words_list":"Категория:Животные/ru",
+         "category": ["Files uploaded by spell4wiki in ru", "Russian pronunciation"]
       },
       {
          "code":"rw",
