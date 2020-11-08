@@ -282,6 +282,13 @@
          "local_lang":"Dansk"
       },
       {
+         "code":"dag",
+         "lang":"Dagbani",
+         "dir":"ltr",
+         "local_lang":"Dagbanli",
+         "category": ["Files uploaded by spell4wiki in dag", "Dagbani words"]
+      },
+      {
          "code":"de",
          "lang":"German",
          "dir":"ltr",
