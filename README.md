@@ -56,6 +56,8 @@ More videos for other language [check here](https://github.com/manimaran96/Spell
 
 Pay using **`spell4wiki@ybl`** BHIM UPI ID.
 
+*Share the donation details to `manimarankumar96@gmail.com`
+
 ## Credits To
 #### Initiated & Powered By
 * [Kaniyam](http://www.kaniyam.com/) Foundation - [Project idea](https://github.com/KaniyamFoundation/ProjectIdeas/wiki/Project-Ideas)
@@ -107,3 +109,9 @@ Specifically you can redistribute and/or modify it under the terms of the [GNU G
 5. Support to other languages.
 6. Dark mode UI
 7. Update with android latest technologies
+
+## Communication
+
+* Join Telegram Group - [Spell4Wiki Telegram Group](https://t.me/spell4wiki) 
+* If you want to get in touch with the developer you can send an email to <a href="mailto:manimarankumar96@gmail.com">manimarankumar96@gmail.com</a> or [@manimarank](https://t.me/manimaran_k) in Telegram.
+* Feel free to post suggestions, changes, ideas etc. on GitHub or Telegram!
