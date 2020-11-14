@@ -39,7 +39,7 @@
             android:paddingStart="@dimen/space32dp"
             android:paddingEnd="@dimen/space32dp"
             android:text="@string/word_list_no_record_found"
-            android:textSize="@dimen/text_x_normal" />
+            android:textSize="@dimen/text_normal" />
     </LinearLayout>
 
 </RelativeLayout>

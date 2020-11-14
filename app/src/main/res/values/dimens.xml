@@ -9,7 +9,7 @@
     <dimen name="login_logo">100dp</dimen>
     <dimen name="icon_normal">100dp</dimen>
     <dimen name="option_icon_size">75dp</dimen>
-    <dimen name="app_intro_icon">200dp</dimen>
+    <dimen name="app_intro_icon">170dp</dimen>
     <dimen name="app_intro_navigation">48dp</dimen>
     <dimen name="lottie_icon">300dp</dimen>
     <dimen name="img_normal">70dp</dimen>
@@ -22,9 +22,8 @@
     <dimen name="text_small">12sp</dimen>
     <dimen name="text_semi_normal">14sp</dimen>
     <dimen name="text_normal">16sp</dimen>
-    <dimen name="text_x_normal">16sp</dimen>
     <dimen name="text_large">22sp</dimen>
-    <dimen name="text_x_large">28sp</dimen>
+    <dimen name="text_x_large">26sp</dimen>
     <dimen name="text_heading">18sp</dimen>
 
     <!--Button-->
