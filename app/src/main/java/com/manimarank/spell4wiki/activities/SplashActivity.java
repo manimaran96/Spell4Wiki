@@ -92,12 +92,12 @@ public class SplashActivity extends BaseActivity {
                 callNextScreen();
             }
         }, SPLASH_DISPLAY_TIME);
-
-        // Sync Wiki Languages
-        new SyncHelper(this).syncWikiLanguages();
     }
 
     private void callNextScreen() {
+        // Sync Wiki Languages
+        new SyncHelper(this).syncWikiLanguages();
+
         // If app launch very first time to show the language selection and app intro. Other wise go to login page
         Intent mainIntent = new Intent(SplashActivity.this, pref.isFirstTimeLaunch() ? LanguageSelectionActivity.class : LoginActivity.class);
         startActivity(mainIntent);
