@@ -24,6 +24,7 @@ public class PrefManager {
     private static final String LANGUAGE_CODE_SPELL_4_WORD = "language_code_spell_4_word";
     private static final String LANGUAGE_CODE_WIKTIONARY = "language_code_wiktionary";
     private static final String UPLOAD_AUDIO_LICENSE = "upload_audio_license";
+    private static final String ABORT_ALERT_STATUS = "abort_alert_status";
     private static final String CSRF_TOKEN = "csrf_token";
     private static final String COOKIE = "cookie";
     private SharedPreferences pref;
@@ -159,6 +160,15 @@ public class PrefManager {
 
     public void setUploadAudioLicense(String uploadAudioLicense) {
         editor.putString(UPLOAD_AUDIO_LICENSE, uploadAudioLicense);
+        editor.apply();
+    }
+
+    public Boolean getAbortAlertStatus() {
+        return pref.getBoolean(ABORT_ALERT_STATUS, true);
+    }
+
+    public void setAbortAlertStatus(Boolean show) {
+        editor.putBoolean(ABORT_ALERT_STATUS, show);
         editor.apply();
     }
 }

@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import androidx.appcompat.widget.SwitchCompat;
 import androidx.core.content.ContextCompat;
 
 import com.manimarank.spell4wiki.R;
@@ -49,7 +50,8 @@ public class SettingsActivity extends BaseActivity {
         TextView txtLicenseOfUploadAudio = findViewById(R.id.txtLicenseOfUploadAudio);
         TextView txtLicenseOfUploadAudioLegalCode = findViewById(R.id.txtLicenseOfUploadAudioLegalCode);
         TextView txtAppLanguage = findViewById(R.id.txtAppLanguage);
-
+        SwitchCompat switchAbortAlertStatus = findViewById(R.id.switchAbortAlerts);
+        TextView txtAbortAlertStatus = findViewById(R.id.txtAbortAlertStatus);
 
         View layoutSpell4WikiLang = findViewById(R.id.layoutSpell4WikiLang);
         View layoutSpell4WordListLang = findViewById(R.id.layoutSpell4WordListLang);
@@ -57,6 +59,7 @@ public class SettingsActivity extends BaseActivity {
         View layoutWiktionaryLang = findViewById(R.id.layoutWiktionaryLang);
         View layoutLicenseOfUploadAudio = findViewById(R.id.layoutLicenseOfUploadAudio);
         View layoutLanguageOfApp = findViewById(R.id.layoutLanguageOfApp);
+        View layoutAbortDialog = findViewById(R.id.layoutAbortAlert);
 
         pref = new PrefManager(getApplicationContext());
         wikiLangDao = DBHelper.getInstance(getApplicationContext()).getAppDatabase().getWikiLangDao();
@@ -138,6 +141,15 @@ public class SettingsActivity extends BaseActivity {
         txtAppLanguage.setText(AppLanguageDialog.INSTANCE.getSelectedLanguage());
         layoutLanguageOfApp.setOnClickListener(v -> AppLanguageDialog.INSTANCE.show(SettingsActivity.this));
 
+        updateAbortAlertStatus(switchAbortAlertStatus, txtAbortAlertStatus, pref.getAbortAlertStatus());
+        layoutAbortDialog.setOnClickListener(view -> updateAbortAlertStatus(switchAbortAlertStatus, txtAbortAlertStatus, !pref.getAbortAlertStatus()));
+        switchAbortAlertStatus.setOnCheckedChangeListener((compoundButton, show) -> updateAbortAlertStatus(switchAbortAlertStatus, txtAbortAlertStatus, show));
+    }
+
+    private void updateAbortAlertStatus(SwitchCompat switchAbortAlertStatus, TextView txtAbortAlertStatus, Boolean show) {
+        switchAbortAlertStatus.setChecked(show);
+        pref.setAbortAlertStatus(show);
+        txtAbortAlertStatus.setText(getString(show ? R.string.show_exit_alerts_in_spell4wiki_options : R.string.hide_exit_alerts_in_spell4wiki_options));
     }
 
     private void updateLanguageView(TextView txtView, String languageCode) {

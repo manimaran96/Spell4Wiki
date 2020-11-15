@@ -35,6 +35,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
                 android:maxLines="1"
+                android:textColor="@color/settings_label_text"
                 android:text="@string/spell4wiktionary"
                 android:textSize="@dimen/text_normal" />
 
@@ -46,7 +47,7 @@
                 android:gravity="center_vertical"
                 android:maxLines="1"
                 android:text="@string/language"
-                android:textColor="@color/label_text"
+                android:textColor="@color/settings_status_text"
                 android:textSize="@dimen/text_semi_normal" />
 
         </LinearLayout>
@@ -63,6 +64,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
                 android:maxLines="1"
+                android:textColor="@color/settings_label_text"
                 android:text="@string/spell4wordlist"
                 android:textSize="@dimen/text_normal" />
 
@@ -74,7 +76,7 @@
                 android:gravity="center_vertical"
                 android:maxLines="1"
                 android:text="@string/language"
-                android:textColor="@color/label_text"
+                android:textColor="@color/settings_status_text"
                 android:textSize="@dimen/text_semi_normal" />
 
 
@@ -92,6 +94,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
                 android:maxLines="1"
+                android:textColor="@color/settings_label_text"
                 android:text="@string/spell4word"
                 android:textSize="@dimen/text_normal" />
 
@@ -103,7 +106,7 @@
                 android:gravity="center_vertical"
                 android:maxLines="1"
                 android:text="@string/language"
-                android:textColor="@color/label_text"
+                android:textColor="@color/settings_status_text"
                 android:textSize="@dimen/text_semi_normal" />
 
         </LinearLayout>
@@ -120,6 +123,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
                 android:maxLines="1"
+                android:textColor="@color/settings_label_text"
                 android:text="@string/wiktionary"
                 android:textSize="@dimen/text_normal" />
 
@@ -131,7 +135,7 @@
                 android:gravity="center_vertical"
                 android:maxLines="1"
                 android:text="@string/language"
-                android:textColor="@color/label_text"
+                android:textColor="@color/settings_status_text"
                 android:textSize="@dimen/text_semi_normal" />
 
         </LinearLayout>
@@ -160,6 +164,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
                 android:maxLines="1"
+                android:textColor="@color/settings_label_text"
                 android:text="@string/license_of_upload_audio"
                 android:textSize="@dimen/text_normal" />
 
@@ -177,7 +182,7 @@
                     android:gravity="center_vertical"
                     android:maxLines="1"
                     android:text="@string/language"
-                    android:textColor="@color/label_text"
+                    android:textColor="@color/settings_status_text"
                     android:textSize="@dimen/text_semi_normal" />
 
                 <androidx.appcompat.widget.AppCompatTextView
@@ -187,7 +192,7 @@
                     android:gravity="center_vertical"
                     android:maxLines="1"
                     android:text="@string/language"
-                    android:textColor="@color/label_text"
+                    android:textColor="@color/settings_status_text"
                     android:textSize="@dimen/text_semi_normal" />
 
             </LinearLayout>
@@ -219,6 +224,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
                 android:maxLines="1"
+                android:textColor="@color/settings_label_text"
                 android:text="@string/app_language"
                 android:textSize="@dimen/text_normal" />
 
@@ -230,7 +236,40 @@
                 android:gravity="center_vertical"
                 android:maxLines="1"
                 android:text="@string/language"
-                android:textColor="@color/label_text"
+                android:textColor="@color/settings_status_text"
+                android:textSize="@dimen/text_semi_normal" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layoutAbortAlert"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/space8dp">
+
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/switchAbortAlerts"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/text_normal"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:textColor="@color/settings_label_text"
+                android:checked="true"
+                android:text="@string/abort_exit_alerts" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/txtAbortAlertStatus"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space2dp"
+                android:gravity="center_vertical"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:layout_marginEnd="@dimen/space32dp"
+                android:text="@string/show_exit_alerts_in_spell4wiki_options"
+                android:textColor="@color/settings_status_text"
                 android:textSize="@dimen/text_semi_normal" />
 
         </LinearLayout>

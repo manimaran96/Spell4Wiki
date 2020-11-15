@@ -200,7 +200,7 @@ public class Spell4WordActivity extends BaseActivity {
     }
 
     private void callBackPress() {
-        if (!TextUtils.isEmpty(editSpell4Word.getText())) {
+        if (!TextUtils.isEmpty(editSpell4Word.getText()) && pref.getAbortAlertStatus()) {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setTitle(R.string.confirmation);
             builder.setMessage(R.string.confirm_to_back);

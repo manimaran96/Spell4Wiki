@@ -221,4 +221,8 @@
     <string name="sc_t_core_contributors_list_item">More about Contributor</string>
     <string name="sc_d_core_contributors_list_item">Click the name for more details about the contributor.</string>
 
+    <string name="abort_exit_alerts">Abort exit alerts</string>
+    <string name="show_exit_alerts_in_spell4wiki_options">Show: Exit alert in Spell4Wiki options</string>
+    <string name="hide_exit_alerts_in_spell4wiki_options">Hide: Exit alert in Spell4Wiki options</string>
+
 </resources>

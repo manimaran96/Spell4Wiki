@@ -18,6 +18,8 @@
     <color name="app_intro_description">@color/w_blue</color>
     <color name="ic_launcher_background">#ffffff</color>
     <color name="label_text">#A09D9D</color>
+    <color name="settings_label_text">#5E5E5E</color>
+    <color name="settings_status_text">#878787</color>
     <color name="txt_light">#DFDCDC</color>
     <color name="fab_close">#FF5722</color>
     <color name="record_normal">#FFFFFF</color>

@@ -439,7 +439,7 @@ public class Spell4Wiktionary extends BaseActivity implements EndlessRecyclerVie
     }
 
     private void callBackPress() {
-        if (adapter != null && adapter.getItemCount() > 0) {
+        if (adapter != null && adapter.getItemCount() > 0 && pref.getAbortAlertStatus()) {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setTitle(R.string.confirmation);
             builder.setMessage(R.string.confirm_to_back);

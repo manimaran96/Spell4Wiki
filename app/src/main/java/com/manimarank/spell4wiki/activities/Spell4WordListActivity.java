@@ -65,12 +65,14 @@ public class Spell4WordListActivity extends BaseActivity {
     private String languageCode = "";
     private WordsHaveAudioDao wordsHaveAudioDao;
 
+    private PrefManager pref;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_spell_4_wordlist);
 
-        PrefManager pref = new PrefManager(getApplicationContext());
+        pref = new PrefManager(getApplicationContext());
         languageCode = pref.getLanguageCodeSpell4WordList();
 
         initUI();
@@ -406,7 +408,7 @@ public class Spell4WordListActivity extends BaseActivity {
             layoutEdit.setVisibility(View.VISIBLE);
             recyclerView.setVisibility(View.GONE);
             layoutEmpty.setVisibility(View.GONE);
-        } else if (layoutEdit.getVisibility() == View.VISIBLE) {
+        } else if (layoutEdit.getVisibility() == View.VISIBLE && pref.getAbortAlertStatus()) {
             if (!TextUtils.isEmpty(editFile.getText())) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
                 builder.setTitle(R.string.confirmation);

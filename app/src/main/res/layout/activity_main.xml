@@ -101,6 +101,8 @@
                         android:layout_marginTop="@dimen/space8dp"
                         android:layout_centerHorizontal="true"
                         android:gravity="center"
+                        android:maxLines="2"
+                        android:ellipsize="end"
                         android:text="@string/spell4wiktionary"
                         android:textSize="@dimen/text_normal" />
 
@@ -138,6 +140,8 @@
                         android:gravity="center"
                         android:layout_below="@+id/img_spell4wordlist"
                         android:layout_marginTop="@dimen/space8dp"
+                        android:maxLines="2"
+                        android:ellipsize="end"
                         android:text="@string/spell4wordlist"
                         android:textSize="@dimen/text_normal"
                         />
@@ -176,6 +180,8 @@
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="@dimen/space8dp"
                         android:gravity="center"
+                        android:maxLines="2"
+                        android:ellipsize="end"
                         android:text="@string/spell4word"
                         android:textSize="@dimen/text_normal" />
 
