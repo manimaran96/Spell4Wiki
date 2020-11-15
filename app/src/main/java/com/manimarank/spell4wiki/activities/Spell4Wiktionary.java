@@ -324,6 +324,8 @@ public class Spell4Wiktionary extends BaseActivity implements EndlessRecyclerVie
             if (!languageCode.equals(langCode)) {
                 languageCode = langCode;
                 invalidateOptionsMenu();
+                if (recyclerView != null)
+                    recyclerView.reset();
                 nextOffsetObj = null;
                 loadDataFromServer();
             }
