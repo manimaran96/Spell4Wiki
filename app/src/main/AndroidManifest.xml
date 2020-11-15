@@ -130,7 +130,7 @@
 
         <activity
             android:name="com.manimarank.spell4wiki.activities.RecordAudioActivity"
-            android:screenOrientation="portrait"
+            android:screenOrientation="unspecified"
             tools:ignore="LockedOrientationActivity"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize"
             android:theme="@style/RecordAudioDialogTheme" />
