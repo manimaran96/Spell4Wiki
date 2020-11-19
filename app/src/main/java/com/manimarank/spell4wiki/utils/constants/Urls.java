@@ -18,7 +18,7 @@ public class Urls {
     public static final String MIT = "https://opensource.org/licenses/MIT";
 
     public static final String VGLUG = "https://vglug.org/";
-    public static final String KANIYAM = "https://www.kaniyam.com/";
+    public static final String KANIYAM = "http://www.kaniyam.com/";
 
     private static final String DOC_BASE = "https://github.com/manimaran96/Spell4Wiki/blob/master/docs/";
     public static final String HOW_TO_CONTRIBUTE = DOC_BASE + "CONTRIBUTING.md#spell4wiki-contribution-guidelines";

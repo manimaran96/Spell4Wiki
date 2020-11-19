@@ -61,10 +61,10 @@ dependencies {
     def retrofit_version = "2.9.0"
     implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
     implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
-   /* //noinspection GradleDependency
-    implementation("com.squareup.okhttp3:okhttp:3.12.8") { // support older versions
+    //noinspection GradleDependency
+    implementation("com.squareup.okhttp3:okhttp:3.12.8") { // support kitkat versions
         force = true
-    }*/
+    }
     implementation 'com.github.franmontiel:PersistentCookieJar:v1.0.1'
 
     // Room components
