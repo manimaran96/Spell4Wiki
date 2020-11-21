@@ -36,7 +36,7 @@ Needed Data
 | Language direction | LTR     |
 | Local name | தமிழ் |
 | Category name<br/>in Wiktionary | பகுப்பு:தமிழ்-ஒலிக்கோப்புகளில்லை |
-| Category name<br/>in Commons | Files uploaded by spell4wiki in ta, Tamil pronunciation of the words with Tamil script |
+| Category name<br/>in Commons | Files uploaded by spell4wiki in ta,<br/>Tamil pronunciation of the words with Tamil script |
 
 Here,
 * Language name -> Like Tamil, English, ...etc
