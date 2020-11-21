@@ -1,0 +1,4 @@
+- New Languages(German, Russian Bengali & Dagbani) configuration added for Spell4Wiki
+- Crash and Defect fix
+- New settings added
+- UI/UX improvement
