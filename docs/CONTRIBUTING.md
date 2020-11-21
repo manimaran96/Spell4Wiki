@@ -21,9 +21,9 @@ You are always welcome to make video for your language. then share link or video
 ### Add your Wiktionary language into Spell4Wiki
 
 We need some basic information for adding your contribution language into Spell4Wiki.
-So, please fill [this](https://docs.google.com/forms/d/e/1FAIpQLSciqHNw1ZtH1kp2zz2DlKFmIbRZw2K7fhcJdxYNAr6TiAsN2A/viewform) form.
+So, please fill [this form](https://docs.google.com/forms/d/e/1FAIpQLSciqHNw1ZtH1kp2zz2DlKFmIbRZw2K7fhcJdxYNAr6TiAsN2A/viewform) or raise [issue here](https://github.com/manimaran96/Spell4Wiki/issues/new?assignees=manimaran96&labels=add+new+language&template=add_language_request.md&title=).
 
-**FORM LINK** - [Click Here](https://docs.google.com/forms/d/e/1FAIpQLSciqHNw1ZtH1kp2zz2DlKFmIbRZw2K7fhcJdxYNAr6TiAsN2A/viewform)<br/>
+**Provide details** - [Fill this form](https://docs.google.com/forms/d/e/1FAIpQLSciqHNw1ZtH1kp2zz2DlKFmIbRZw2K7fhcJdxYNAr6TiAsN2A/viewform) or [Raise issue](https://github.com/manimaran96/Spell4Wiki/issues/new?assignees=manimaran96&labels=add+new+language&template=add_language_request.md&title=)<br/><br/>
 **Existing language details** - [Form responses](https://docs.google.com/spreadsheets/d/14c8s7UN-8eCDA-qU73l_yXhLdxdjYfuzubAl9RrehuQ/edit?usp=sharing) & [Github issues](https://github.com/manimaran96/Spell4Wiki/issues?q=label:"add+new+language")
 
 
