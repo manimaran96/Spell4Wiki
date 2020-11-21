@@ -7,7 +7,7 @@ assignees: 'manimaran96'
 
 ---
 
-**Language informations**
+**Provide following information**
 
 * Language name :
 * Language code :
