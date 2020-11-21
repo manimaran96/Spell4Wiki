@@ -23,7 +23,9 @@ You are always welcome to make video for your language. then share link or video
 We need some basic information for adding your contribution language into Spell4Wiki.
 So, please fill [this](https://docs.google.com/forms/d/e/1FAIpQLSciqHNw1ZtH1kp2zz2DlKFmIbRZw2K7fhcJdxYNAr6TiAsN2A/viewform) form.
 
-**FORM LINK** - [Click Here](https://docs.google.com/forms/d/e/1FAIpQLSciqHNw1ZtH1kp2zz2DlKFmIbRZw2K7fhcJdxYNAr6TiAsN2A/viewform)
+**FORM LINK** - [Click Here](https://docs.google.com/forms/d/e/1FAIpQLSciqHNw1ZtH1kp2zz2DlKFmIbRZw2K7fhcJdxYNAr6TiAsN2A/viewform)<br/>
+**Existing language details** - [Form responses](https://docs.google.com/spreadsheets/d/14c8s7UN-8eCDA-qU73l_yXhLdxdjYfuzubAl9RrehuQ/edit?usp=sharing) & [Github issues](https://github.com/manimaran96/Spell4Wiki/issues?q=label:"add+new+language")
+
 
 Needed Data
  
@@ -33,18 +35,20 @@ Needed Data
 | Language code      | ta      |
 | Language direction | LTR     |
 | Local name | தமிழ் |
-| Category name<br/>(in Wiktionary) | பகுப்பு:தமிழ்-ஒலிக்கோப்புகளில்லை |
+| Category name<br/>in Wiktionary | பகுப்பு:தமிழ்-ஒலிக்கோப்புகளில்லை |
+| Category name<br/>in Commons | Files uploaded by spell4wiki in ta, Tamil pronunciation of the words with Tamil script |
 
 Here,
 * Language name -> Like Tamil, English, ...etc
 * Language code -> Like ta, en, fr, ... etc
 * Language direction -> Like English - LTR(LTR - Left To Right), Arabic - RTL(LTR - Right To Left)
 * Local name -> Like தமிழ், English, Français...etc
-* Category name(in Wiktionary) -> Better to mention in category of words without have audio or mention any category to be need audio. <br/>
+* Category name in Wiktionary -> Better to mention in category of words without have audio or mention any category to be need audio. <br/>
 Ex : <br/>
 பகுப்பு:தமிழ்-ஒலிக்கோப்புகளில்லை - https://ta.wiktionary.org/wiki/பகுப்பு:தமிழ்-ஒலிக்கோப்புகளில்லை, <br/>
 Category:en:Fruits - https://en.wiktionary.org/wiki/Category:en:Fruits, <br/>
 Category:Apple cultivars - https://en.wiktionary.org/wiki/Category:Apple_cultivars
+* Category name in Commons -> All audio files are uploaded under this commons category. More category then separate with coma(,). 
 
 
 ### Create Category for your language in Commons
