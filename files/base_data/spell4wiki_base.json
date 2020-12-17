@@ -1262,7 +1262,9 @@
          "code":"sv",
          "lang":"Swedish",
          "dir":"ltr",
-         "local_lang":"Svenska"
+         "local_lang":"Svenska",
+         "title_of_words_list":"Kategori:Svenska/Alla uppslag",
+         "category": ["Files uploaded by spell4wiki in sv"]
       },
       {
          "code":"sw",
