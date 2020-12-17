@@ -62,9 +62,7 @@ dependencies {
     implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
     implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
     //noinspection GradleDependency
-    implementation("com.squareup.okhttp3:okhttp:3.12.8") { // support kitkat versions
-        force = true
-    }
+    implementation "com.squareup.okhttp3:okhttp:3.12.8"
     implementation 'com.github.franmontiel:PersistentCookieJar:v1.0.1'
 
     // Room components

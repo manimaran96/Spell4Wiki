@@ -117,7 +117,7 @@ public class ContributorsActivity extends BaseActivity {
                         response.body().getWiki_tech_helpers();
                         if (response.body().getWiki_tech_helpers().size() > 0) {
                             for (String helper : response.body().getWiki_tech_helpers()) {
-                                wikiTechHelpers.append(helper).append("\n");
+                                wikiTechHelpers.append("- ").append(helper).append("\n");
                             }
                             txtHelpers.setText(wikiTechHelpers.toString());
                         }

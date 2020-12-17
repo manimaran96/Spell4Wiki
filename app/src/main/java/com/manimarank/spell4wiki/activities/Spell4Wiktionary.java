@@ -68,6 +68,7 @@ public class Spell4Wiktionary extends BaseActivity implements EndlessRecyclerVie
     private Long apiResultTime = 0L;
     private int apiRetryCount = 0;
     private int apiFailRetryCount = 0;
+    String wiktionaryTitleOfWordsWithoutAudio = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -130,7 +131,6 @@ public class Spell4Wiktionary extends BaseActivity implements EndlessRecyclerVie
                 /*
                  * Set basic information on both very first time and after language change
                  */
-                String wiktionaryTitleOfWordsWithoutAudio = null;
                 if (nextOffsetObj == null) {
                     if (!refreshLayout.isRefreshing())
                         refreshLayout.setRefreshing(true);
