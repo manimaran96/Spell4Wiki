@@ -1,4 +1,8 @@
 {
+   "update_content":{
+      "type":"once",
+      "version":8
+   },
    "category_common":[
       "Files uploaded by spell4wiki"
    ],
