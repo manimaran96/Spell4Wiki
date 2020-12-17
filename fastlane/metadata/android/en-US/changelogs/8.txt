@@ -1,0 +1,2 @@
+- New Language(Swedish) configuration added for Spell4Wiki
+- Minor Defect fix and UI changes
