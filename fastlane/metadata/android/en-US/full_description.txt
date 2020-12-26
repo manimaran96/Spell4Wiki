@@ -33,6 +33,11 @@ And we can use those pronunciation for wiki data planning and other technologies
 </p>
 
 <p>
+<b>Note</b>
+This app load some configuration(available language list, categories & contributors) details from the app's repo.
+</p>
+
+<p>
 <b>Useful Links</b>
 <ul>
 <li>Join the Telegram group: <a href="https://t.me/spell4wiki">@spell4wiki</a></li>
