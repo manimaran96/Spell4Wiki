@@ -16,7 +16,10 @@ Spell4Wiki also act as a Wiki-Dictionary(Word meaning from Wiktionary).
 </p>
 
 
-<p align="center"><a href="https://play.google.com/store/apps/details?id=com.manimarank.spell4wiki"><img src="https://raw.githubusercontent.com/manimaran96/Spell4Wiki/master/files/assets/images/badges/google_play.png" width="200px"></a></p> 
+<p align="center">
+   <a href="https://f-droid.org/en/packages/com.manimarank.spell4wiki/"><img src="https://raw.githubusercontent.com/manimaran96/Spell4Wiki/master/files/assets/images/badges/fdroid.png" width="200px"></a>
+   <a href="https://play.google.com/store/apps/details?id=com.manimarank.spell4wiki"><img src="https://raw.githubusercontent.com/manimaran96/Spell4Wiki/master/files/assets/images/badges/google_play.png" width="200px"></a>
+</p> 
 
 ## Features
 
