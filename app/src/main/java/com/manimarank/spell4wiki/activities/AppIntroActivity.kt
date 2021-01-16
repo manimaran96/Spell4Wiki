@@ -10,7 +10,7 @@ import androidx.viewpager.widget.ViewPager.OnPageChangeListener
 import com.manimarank.spell4wiki.R
 import com.manimarank.spell4wiki.activities.base.BaseActivity
 import com.manimarank.spell4wiki.adapters.AppIntroTabsPagerAdapter
-import com.manimarank.spell4wiki.models.AppIntroData
+import com.manimarank.spell4wiki.data.model.AppIntroData
 import com.manimarank.spell4wiki.utils.GeneralUtils
 import com.manimarank.spell4wiki.utils.PrefManager
 import com.manimarank.spell4wiki.utils.constants.AppConstants

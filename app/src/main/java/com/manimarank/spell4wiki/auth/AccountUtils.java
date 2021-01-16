@@ -12,7 +12,7 @@ import androidx.annotation.Nullable;
 
 import com.manimarank.spell4wiki.R;
 import com.manimarank.spell4wiki.Spell4WikiApp;
-import com.manimarank.spell4wiki.models.WikiUser;
+import com.manimarank.spell4wiki.data.model.WikiUser;
 import com.manimarank.spell4wiki.utils.Print;
 
 public class AccountUtils {

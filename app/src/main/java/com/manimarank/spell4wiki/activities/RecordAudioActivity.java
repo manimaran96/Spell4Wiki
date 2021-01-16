@@ -35,14 +35,16 @@ import com.manimarank.spell4wiki.activities.base.BaseActivity;
 import com.manimarank.spell4wiki.apis.ApiClient;
 import com.manimarank.spell4wiki.apis.ApiInterface;
 import com.manimarank.spell4wiki.auth.AccountUtils;
+import com.manimarank.spell4wiki.data.model.ClientLogin;
+import com.manimarank.spell4wiki.data.model.WikiError;
 import com.manimarank.spell4wiki.databases.DBHelper;
 import com.manimarank.spell4wiki.databases.dao.WikiLangDao;
 import com.manimarank.spell4wiki.databases.dao.WordsHaveAudioDao;
 import com.manimarank.spell4wiki.databases.entities.WikiLang;
 import com.manimarank.spell4wiki.databases.entities.WordsHaveAudio;
-import com.manimarank.spell4wiki.models.WikiLogin;
-import com.manimarank.spell4wiki.models.WikiToken;
-import com.manimarank.spell4wiki.models.WikiUpload;
+import com.manimarank.spell4wiki.data.model.WikiLogin;
+import com.manimarank.spell4wiki.data.model.WikiToken;
+import com.manimarank.spell4wiki.data.model.WikiUpload;
 import com.manimarank.spell4wiki.record.ogg.WavToOggConverter;
 import com.manimarank.spell4wiki.record.wav.WAVPlayer;
 import com.manimarank.spell4wiki.record.wav.WAVRecorder;
@@ -494,7 +496,7 @@ public class RecordAudioActivity extends BaseActivity {
                         if (wikiUpload.getSuccess() != null && wikiUpload.getSuccess().getResult() != null) {
                             completeUploadFinalProcess(wikiUpload.getSuccess().getResult());
                         } else if (wikiUpload.getError() != null && wikiUpload.getError().getCode() != null) {
-                            WikiUpload.WikiError wikiError = wikiUpload.getError();
+                            WikiError wikiError = wikiUpload.getError();
                             Print.error(TAG + "UPLOAD FAIL RESPONSE -- " + new Gson().toJson(wikiError));
                             if (wikiError.getCode().equalsIgnoreCase(AppConstants.UPLOAD_FILE_EXIST) || wikiError.getCode().equalsIgnoreCase(AppConstants.UPLOAD_FILE_EXIST_FORBIDDEN) || wikiError.getCode().equalsIgnoreCase(AppConstants.UPLOAD_INVALID_TOKEN))
                                 completeUploadFinalProcess(wikiError.getCode());
@@ -609,7 +611,7 @@ public class RecordAudioActivity extends BaseActivity {
                             public void onResponse(@NonNull Call<WikiLogin> call, @NonNull Response<WikiLogin> response) {
                                 if (response.isSuccessful() && response.body() != null) {
                                     try {
-                                        WikiLogin.ClientLogin login = response.body().getClientLogin();
+                                        ClientLogin login = response.body().getClientLogin();
                                         if (login != null && login.getStatus() != null && AppConstants.PASS.equals(login.getStatus())) {
                                             pref.setUserSession(login.getUsername());
                                             uploadAudioProcess();

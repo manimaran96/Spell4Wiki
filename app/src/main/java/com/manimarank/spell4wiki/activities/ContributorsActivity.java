@@ -17,9 +17,9 @@ import com.manimarank.spell4wiki.adapters.ContributorsAdapter;
 import com.manimarank.spell4wiki.adapters.CoreContributorsAdapter;
 import com.manimarank.spell4wiki.apis.ApiClient;
 import com.manimarank.spell4wiki.apis.ApiInterface;
-import com.manimarank.spell4wiki.models.ContributorData;
-import com.manimarank.spell4wiki.models.Contributors;
-import com.manimarank.spell4wiki.models.CoreContributors;
+import com.manimarank.spell4wiki.data.model.ContributorData;
+import com.manimarank.spell4wiki.data.model.CodeContributors;
+import com.manimarank.spell4wiki.data.model.CoreContributors;
 import com.manimarank.spell4wiki.utils.NetworkUtils;
 import com.manimarank.spell4wiki.utils.ShowCasePref;
 import com.manimarank.spell4wiki.utils.SnackBarUtils;
@@ -39,7 +39,7 @@ import uk.co.samuelwall.materialtaptargetprompt.extras.focals.RectanglePromptFoc
 
 public class ContributorsActivity extends BaseActivity {
 
-    private List<Contributors> contributorsList = new ArrayList<>();
+    private List<CodeContributors> codeContributorsList = new ArrayList<>();
     private List<CoreContributors> coreContributorsList = new ArrayList<>();
     private RecyclerView recyclerViewCodeContributors, recyclerViewCoreContributors;
     private AppCompatTextView txtHelpers;
@@ -62,7 +62,7 @@ public class ContributorsActivity extends BaseActivity {
         loadingContributors = findViewById(R.id.loadingContributors);
         layoutCoreContributors = findViewById(R.id.layoutCoreContributors);
 
-        ContributorsAdapter contributorsAdapter = new ContributorsAdapter(this, contributorsList);
+        ContributorsAdapter contributorsAdapter = new ContributorsAdapter(this, codeContributorsList);
         recyclerViewCodeContributors.setAdapter(contributorsAdapter);
         recyclerViewCodeContributors.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
 
@@ -148,14 +148,14 @@ public class ContributorsActivity extends BaseActivity {
         layoutCoreContributors.setVisibility(View.GONE);
 
         ApiInterface api = ApiClient.getApi().create(ApiInterface.class);
-        Call<List<Contributors>> call = api.fetchCodeContributorsList();
+        Call<List<CodeContributors>> call = api.fetchCodeContributorsList();
 
-        call.enqueue(new Callback<List<Contributors>>() {
+        call.enqueue(new Callback<List<CodeContributors>>() {
             @Override
-            public void onResponse(@NotNull Call<List<Contributors>> call, @NotNull Response<List<Contributors>> response) {
+            public void onResponse(@NotNull Call<List<CodeContributors>> call, @NotNull Response<List<CodeContributors>> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    contributorsList.clear();
-                    contributorsList.addAll(response.body());
+                    codeContributorsList.clear();
+                    codeContributorsList.addAll(response.body());
                     if (recyclerViewCodeContributors != null && recyclerViewCodeContributors.getAdapter() != null)
                         recyclerViewCodeContributors.getAdapter().notifyDataSetChanged();
                 }
@@ -167,7 +167,7 @@ public class ContributorsActivity extends BaseActivity {
             }
 
             @Override
-            public void onFailure(@NotNull Call<List<Contributors>> call, @NotNull Throwable t) {
+            public void onFailure(@NotNull Call<List<CodeContributors>> call, @NotNull Throwable t) {
                 t.printStackTrace();
             }
         });

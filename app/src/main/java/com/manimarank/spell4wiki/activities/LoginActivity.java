@@ -18,9 +18,10 @@ import com.manimarank.spell4wiki.activities.base.BaseActivity;
 import com.manimarank.spell4wiki.apis.ApiClient;
 import com.manimarank.spell4wiki.apis.ApiInterface;
 import com.manimarank.spell4wiki.auth.AccountUtils;
-import com.manimarank.spell4wiki.models.WikiLogin;
-import com.manimarank.spell4wiki.models.WikiToken;
-import com.manimarank.spell4wiki.models.WikiUser;
+import com.manimarank.spell4wiki.data.model.ClientLogin;
+import com.manimarank.spell4wiki.data.model.WikiLogin;
+import com.manimarank.spell4wiki.data.model.WikiToken;
+import com.manimarank.spell4wiki.data.model.WikiUser;
 import com.manimarank.spell4wiki.utils.AppPref;
 import com.manimarank.spell4wiki.utils.ExtensionsKt;
 import com.manimarank.spell4wiki.utils.GeneralUtils;
@@ -171,7 +172,7 @@ public class LoginActivity extends BaseActivity {
             public void onResponse(@NonNull Call<WikiLogin> call, @NonNull Response<WikiLogin> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     try {
-                        WikiLogin.ClientLogin login = response.body().getClientLogin();
+                        ClientLogin login = response.body().getClientLogin();
                         if (login != null && login.getStatus() != null) {
                             switch (login.getStatus()) {
                                 case AppConstants.PASS:

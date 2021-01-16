@@ -23,6 +23,7 @@ import com.manimarank.spell4wiki.activities.base.BaseActivity;
 import com.manimarank.spell4wiki.adapters.EndlessRecyclerAdapter;
 import com.manimarank.spell4wiki.apis.ApiClient;
 import com.manimarank.spell4wiki.apis.ApiInterface;
+import com.manimarank.spell4wiki.data.model.WikiTitle;
 import com.manimarank.spell4wiki.databases.DBHelper;
 import com.manimarank.spell4wiki.databases.dao.WikiLangDao;
 import com.manimarank.spell4wiki.databases.dao.WordsHaveAudioDao;
@@ -30,7 +31,7 @@ import com.manimarank.spell4wiki.databases.entities.WikiLang;
 import com.manimarank.spell4wiki.databases.entities.WordsHaveAudio;
 import com.manimarank.spell4wiki.fragments.LanguageSelectionFragment;
 import com.manimarank.spell4wiki.listerners.OnLanguageSelectionListener;
-import com.manimarank.spell4wiki.models.WikiWordsWithoutAudio;
+import com.manimarank.spell4wiki.data.model.WikiWordsWithoutAudio;
 import com.manimarank.spell4wiki.utils.AppPref;
 import com.manimarank.spell4wiki.utils.NetworkUtils;
 import com.manimarank.spell4wiki.utils.PrefManager;
@@ -248,7 +249,7 @@ public class Spell4Wiktionary extends BaseActivity implements EndlessRecyclerVie
                 }
 
                 if (wikiWordsWithoutAudio.getQuery() != null && wikiWordsWithoutAudio.getQuery().getWikiTitleList() != null) {
-                    for (WikiWordsWithoutAudio.WikiTitle wikiTitle : wikiWordsWithoutAudio.getQuery().getWikiTitleList()) {
+                    for (WikiTitle wikiTitle : wikiWordsWithoutAudio.getQuery().getWikiTitleList()) {
                         titleList.add(wikiTitle.getTitle());
                     }
                     isEmptyResponse = titleList.isEmpty();

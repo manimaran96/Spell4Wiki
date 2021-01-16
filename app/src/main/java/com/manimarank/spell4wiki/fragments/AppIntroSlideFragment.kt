@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.manimarank.spell4wiki.R
-import com.manimarank.spell4wiki.models.AppIntroData
+import com.manimarank.spell4wiki.data.model.AppIntroData
 import kotlinx.android.synthetic.main.app_intro_slide.*
 
 class AppIntroSlideFragment : Fragment() {

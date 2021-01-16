@@ -7,8 +7,8 @@ import com.manimarank.spell4wiki.apis.ApiClient;
 import com.manimarank.spell4wiki.apis.ApiInterface;
 import com.manimarank.spell4wiki.databases.DBHelper;
 import com.manimarank.spell4wiki.databases.entities.WikiLang;
-import com.manimarank.spell4wiki.models.WikiBaseData;
-import com.manimarank.spell4wiki.models.WikiLanguage;
+import com.manimarank.spell4wiki.data.model.WikiBaseData;
+import com.manimarank.spell4wiki.data.model.WikiLanguage;
 
 import org.jetbrains.annotations.NotNull;
 

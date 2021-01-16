@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.manimarank.spell4wiki.R;
-import com.manimarank.spell4wiki.models.CoreContributors;
+import com.manimarank.spell4wiki.data.model.CoreContributors;
 import com.manimarank.spell4wiki.utils.GeneralUtils;
 
 import java.util.List;

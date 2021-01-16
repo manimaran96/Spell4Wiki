@@ -6,7 +6,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import androidx.fragment.app.FragmentStatePagerAdapter
 import com.manimarank.spell4wiki.fragments.AppIntroSlideFragment
-import com.manimarank.spell4wiki.models.AppIntroData
+import com.manimarank.spell4wiki.data.model.AppIntroData
 
 @SuppressLint("WrongConstant")
 class AppIntroTabsPagerAdapter(fm: FragmentManager?, list: List<AppIntroData>) :

@@ -13,17 +13,17 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.manimarank.spell4wiki.R;
-import com.manimarank.spell4wiki.models.Contributors;
+import com.manimarank.spell4wiki.data.model.CodeContributors;
 import com.manimarank.spell4wiki.utils.GeneralUtils;
 
 import java.util.List;
 
 public class ContributorsAdapter extends RecyclerView.Adapter<ContributorsAdapter.ViewHolder> {
 
-    private List<Contributors> mList;
+    private List<CodeContributors> mList;
     private Context mContext;
 
-    public ContributorsAdapter(Context context, List<Contributors> list) {
+    public ContributorsAdapter(Context context, List<CodeContributors> list) {
         this.mContext = context;
         this.mList = list;
     }
@@ -32,7 +32,7 @@ public class ContributorsAdapter extends RecyclerView.Adapter<ContributorsAdapte
     public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
 
         int pos = holder.getAdapterPosition();
-        final Contributors model = mList.get(pos);
+        final CodeContributors model = mList.get(pos);
         holder.txtName.setText(model.getName());
 
         Glide.with(mContext).load(model.getAvatarUrl()).apply(RequestOptions.circleCropTransform()).into(holder.imgIcon);

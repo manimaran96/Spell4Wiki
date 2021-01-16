@@ -19,7 +19,7 @@ import com.airbnb.lottie.SimpleColorFilter;
 import com.airbnb.lottie.model.KeyPath;
 import com.airbnb.lottie.value.LottieValueCallback;
 import com.manimarank.spell4wiki.R;
-import com.manimarank.spell4wiki.models.ItemsModel;
+import com.manimarank.spell4wiki.data.model.ItemsModel;
 import com.manimarank.spell4wiki.utils.GeneralUtils;
 
 import java.util.List;

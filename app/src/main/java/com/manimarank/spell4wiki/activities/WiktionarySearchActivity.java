@@ -17,11 +17,12 @@ import com.manimarank.spell4wiki.activities.base.BaseActivity;
 import com.manimarank.spell4wiki.adapters.EndlessRecyclerAdapter;
 import com.manimarank.spell4wiki.apis.ApiClient;
 import com.manimarank.spell4wiki.apis.ApiInterface;
+import com.manimarank.spell4wiki.data.model.WikiWord;
 import com.manimarank.spell4wiki.databases.DBHelper;
 import com.manimarank.spell4wiki.databases.dao.WikiLangDao;
 import com.manimarank.spell4wiki.fragments.LanguageSelectionFragment;
 import com.manimarank.spell4wiki.listerners.OnLanguageSelectionListener;
-import com.manimarank.spell4wiki.models.WikiSearchWords;
+import com.manimarank.spell4wiki.data.model.WikiSearchWords;
 import com.manimarank.spell4wiki.utils.NetworkUtils;
 import com.manimarank.spell4wiki.utils.PrefManager;
 import com.manimarank.spell4wiki.utils.ShowCasePref;
@@ -236,7 +237,7 @@ public class WiktionarySearchActivity extends BaseActivity implements EndlessRec
                 }
 
                 if (wikiSearchWords.getQuery() != null && wikiSearchWords.getQuery().getWikiTitleList() != null) {
-                    for (WikiSearchWords.WikiWord wikiWord : wikiSearchWords.getQuery().getWikiTitleList()) {
+                    for (WikiWord wikiWord : wikiSearchWords.getQuery().getWikiTitleList()) {
                         titleList.add(wikiWord.getTitle());
                     }
                     isEmptyResponse = titleList.isEmpty();

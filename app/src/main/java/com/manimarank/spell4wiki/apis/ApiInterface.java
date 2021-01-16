@@ -1,14 +1,14 @@
 package com.manimarank.spell4wiki.apis;
 
 
-import com.manimarank.spell4wiki.models.ContributorData;
-import com.manimarank.spell4wiki.models.Contributors;
-import com.manimarank.spell4wiki.models.WikiBaseData;
-import com.manimarank.spell4wiki.models.WikiLogin;
-import com.manimarank.spell4wiki.models.WikiSearchWords;
-import com.manimarank.spell4wiki.models.WikiToken;
-import com.manimarank.spell4wiki.models.WikiUpload;
-import com.manimarank.spell4wiki.models.WikiWordsWithoutAudio;
+import com.manimarank.spell4wiki.data.model.ContributorData;
+import com.manimarank.spell4wiki.data.model.CodeContributors;
+import com.manimarank.spell4wiki.data.model.WikiBaseData;
+import com.manimarank.spell4wiki.data.model.WikiLogin;
+import com.manimarank.spell4wiki.data.model.WikiSearchWords;
+import com.manimarank.spell4wiki.data.model.WikiToken;
+import com.manimarank.spell4wiki.data.model.WikiUpload;
+import com.manimarank.spell4wiki.data.model.WikiWordsWithoutAudio;
 import com.manimarank.spell4wiki.utils.constants.Urls;
 
 import java.util.List;
@@ -112,5 +112,5 @@ public interface ApiInterface {
 
     // Contributors List - Github API
     @GET("https://api.github.com/repos/manimaran96/Spell4Wiki/contributors")
-    Call<List<Contributors>> fetchCodeContributorsList();
+    Call<List<CodeContributors>> fetchCodeContributorsList();
 }
