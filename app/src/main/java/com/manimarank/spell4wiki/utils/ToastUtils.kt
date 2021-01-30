@@ -3,7 +3,9 @@ package com.manimarank.spell4wiki.utils
 import android.widget.Toast
 import com.manimarank.spell4wiki.Spell4WikiApp
 
-
+/**
+ * Utility class for Toast message
+ */
 object ToastUtils {
 
     private fun showToast(msg: String, duration: Int) {
@@ -16,5 +18,4 @@ object ToastUtils {
     fun showLong(msg: String) {
         showToast(msg, Toast.LENGTH_LONG)
     }
-
 }

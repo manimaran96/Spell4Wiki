@@ -20,9 +20,9 @@ import com.manimarank.spell4wiki.activities.base.BaseActivity;
 import com.manimarank.spell4wiki.fragments.LanguageSelectionFragment;
 import com.manimarank.spell4wiki.fragments.WebViewFragment;
 import com.manimarank.spell4wiki.listerners.OnLanguageSelectionListener;
-import com.manimarank.spell4wiki.utils.PrefManager;
+import com.manimarank.spell4wiki.utils.pref.PrefManager;
 import com.manimarank.spell4wiki.utils.constants.AppConstants;
-import com.manimarank.spell4wiki.utils.constants.EnumTypeDef.ListMode;
+import com.manimarank.spell4wiki.utils.constants.ListMode;
 
 public class CommonWebActivity extends BaseActivity {
 

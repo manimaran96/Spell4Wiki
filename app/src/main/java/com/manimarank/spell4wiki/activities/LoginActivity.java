@@ -22,11 +22,11 @@ import com.manimarank.spell4wiki.data.model.ClientLogin;
 import com.manimarank.spell4wiki.data.model.WikiLogin;
 import com.manimarank.spell4wiki.data.model.WikiToken;
 import com.manimarank.spell4wiki.data.model.WikiUser;
-import com.manimarank.spell4wiki.utils.AppPref;
+import com.manimarank.spell4wiki.utils.pref.AppPref;
 import com.manimarank.spell4wiki.utils.ExtensionsKt;
 import com.manimarank.spell4wiki.utils.GeneralUtils;
 import com.manimarank.spell4wiki.utils.NetworkUtils;
-import com.manimarank.spell4wiki.utils.PrefManager;
+import com.manimarank.spell4wiki.utils.pref.PrefManager;
 import com.manimarank.spell4wiki.utils.SnackBarUtils;
 import com.manimarank.spell4wiki.utils.ToastUtils;
 import com.manimarank.spell4wiki.utils.constants.AppConstants;
@@ -73,7 +73,7 @@ public class LoginActivity extends BaseActivity {
          * If yes - Open Main screen
          * Else - Ask to login
          */
-        if (pref.isLoggedIn() || pref.getIsAnonymous()) {
+        if (pref.isLoggedIn() || pref.isAnonymous()) {
             launchActivity();
         } else {
             init();
@@ -103,7 +103,7 @@ public class LoginActivity extends BaseActivity {
                 if (isDuringLogin()) {
                     showMsg(getString(R.string.please_wait));
                 } else {
-                    pref.setIsAnonymous(true);
+                    pref.setAnonymous(true);
                     launchActivity();
                 }
             });

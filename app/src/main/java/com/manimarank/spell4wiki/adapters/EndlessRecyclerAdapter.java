@@ -24,8 +24,8 @@ import com.manimarank.spell4wiki.activities.CommonWebActivity;
 import com.manimarank.spell4wiki.adapters.base.BaseViewHolder;
 import com.manimarank.spell4wiki.utils.GeneralUtils;
 import com.manimarank.spell4wiki.utils.NetworkUtils;
-import com.manimarank.spell4wiki.utils.PrefManager;
-import com.manimarank.spell4wiki.utils.ShowCasePref;
+import com.manimarank.spell4wiki.utils.pref.PrefManager;
+import com.manimarank.spell4wiki.utils.pref.ShowCasePref;
 import com.manimarank.spell4wiki.utils.SnackBarUtils;
 import com.manimarank.spell4wiki.utils.ToastUtils;
 import com.manimarank.spell4wiki.utils.constants.AppConstants;
@@ -36,7 +36,8 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.manimarank.spell4wiki.utils.constants.EnumTypeDef.ListMode;
+import com.manimarank.spell4wiki.utils.constants.ListMode;
+import com.manimarank.spell4wiki.utils.constants.ListMode.Companion.EnumListMode;
 
 
 public class EndlessRecyclerAdapter extends RecyclerView.Adapter<BaseViewHolder> {
@@ -52,10 +53,10 @@ public class EndlessRecyclerAdapter extends RecyclerView.Adapter<BaseViewHolder>
 
     private List<String> wordsAlreadyHaveAudio = new ArrayList<>();
     private PrefManager pref;
-    @ListMode
+    @EnumListMode
     private int mode;
 
-    public EndlessRecyclerAdapter(Context context, List<String> wordItems, @ListMode int mode) {
+    public EndlessRecyclerAdapter(Context context, List<String> wordItems, @EnumListMode int mode) {
         this.mContext = context;
         this.mActivity = (Activity) context;
         this.mItems = wordItems;

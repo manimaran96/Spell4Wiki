@@ -32,12 +32,12 @@ import com.manimarank.spell4wiki.fragments.LanguageSelectionFragment;
 import com.manimarank.spell4wiki.listerners.OnLanguageSelectionListener;
 import com.manimarank.spell4wiki.utils.ExtensionsKt;
 import com.manimarank.spell4wiki.utils.GeneralUtils;
-import com.manimarank.spell4wiki.utils.PrefManager;
+import com.manimarank.spell4wiki.utils.pref.PrefManager;
 import com.manimarank.spell4wiki.utils.RealPathUtil;
-import com.manimarank.spell4wiki.utils.ShowCasePref;
+import com.manimarank.spell4wiki.utils.pref.ShowCasePref;
 import com.manimarank.spell4wiki.utils.SnackBarUtils;
 import com.manimarank.spell4wiki.utils.constants.AppConstants;
-import com.manimarank.spell4wiki.views.EndlessRecyclerView;
+import com.manimarank.spell4wiki.ui.widget.EndlessRecyclerView;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -50,7 +50,7 @@ import uk.co.samuelwall.materialtaptargetprompt.MaterialTapTargetPrompt;
 import uk.co.samuelwall.materialtaptargetprompt.MaterialTapTargetSequence;
 import uk.co.samuelwall.materialtaptargetprompt.extras.focals.RectanglePromptFocal;
 
-import static com.manimarank.spell4wiki.utils.constants.EnumTypeDef.ListMode.SPELL_4_WORD_LIST;
+import static com.manimarank.spell4wiki.utils.constants.ListMode.SPELL_4_WORD_LIST;
 
 
 public class Spell4WordListActivity extends BaseActivity {

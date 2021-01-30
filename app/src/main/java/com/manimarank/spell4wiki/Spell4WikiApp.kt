@@ -6,12 +6,21 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatDelegate
 import com.manimaran.crash_reporter.CrashReporter
 import com.manimaran.crash_reporter.CrashReporterConfiguration
-import com.manimarank.spell4wiki.utils.PrefManager
-import com.manimarank.spell4wiki.utils.dialogs.AppLanguageDialog
+import com.manimarank.spell4wiki.utils.pref.PrefManager
+import com.manimarank.spell4wiki.ui.dialogs.AppLanguageDialog
+import kotlin.Exception as KotlinException
 
+/**
+ * Application class for Spell4Wiki
+ */
 class Spell4WikiApp : Application() {
     companion object {
         lateinit var instance: Spell4WikiApp
+
+        /**
+         * Getting common app level context value
+         * @return Spell4WikiApp
+         */
         fun getApplicationContext(): Spell4WikiApp {
             return instance
         }
@@ -28,7 +37,7 @@ class Spell4WikiApp : Application() {
             val sharedPref = PrefManager(applicationContext)
             val emailIds = arrayOf("manimarankumar96@gmail.com")
             var extraInfo = ""
-            if (sharedPref.isAnonymous)
+            if (sharedPref.isAnonymous == true)
                 extraInfo = "User Name : Anonymous User"
             else if (sharedPref.name != null)
                 extraInfo = "User Name : ${sharedPref.name}"
@@ -46,7 +55,7 @@ class Spell4WikiApp : Application() {
                     .setCrashReportSendEmailIds(emailIds)
 
             CrashReporter.initialize(applicationContext, config)
-        } catch (e: Exception) {
+        } catch (e: KotlinException) {
             e.printStackTrace()
         }
     }

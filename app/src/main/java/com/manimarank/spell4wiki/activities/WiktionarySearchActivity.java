@@ -24,11 +24,12 @@ import com.manimarank.spell4wiki.fragments.LanguageSelectionFragment;
 import com.manimarank.spell4wiki.listerners.OnLanguageSelectionListener;
 import com.manimarank.spell4wiki.data.model.WikiSearchWords;
 import com.manimarank.spell4wiki.utils.NetworkUtils;
-import com.manimarank.spell4wiki.utils.PrefManager;
-import com.manimarank.spell4wiki.utils.ShowCasePref;
+import com.manimarank.spell4wiki.utils.pref.PrefManager;
+import com.manimarank.spell4wiki.utils.pref.ShowCasePref;
 import com.manimarank.spell4wiki.utils.constants.AppConstants;
-import com.manimarank.spell4wiki.utils.constants.EnumTypeDef.ListMode;
-import com.manimarank.spell4wiki.views.EndlessRecyclerView;
+import com.manimarank.spell4wiki.utils.constants.ListMode;
+import com.manimarank.spell4wiki.utils.constants.ListMode.Companion.EnumListMode;
+import com.manimarank.spell4wiki.ui.widget.EndlessRecyclerView;
 
 import org.jetbrains.annotations.NotNull;
 

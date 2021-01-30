@@ -1,4 +1,4 @@
-package com.manimarank.spell4wiki.utils.dialogs
+package com.manimarank.spell4wiki.ui.dialogs
 
 import android.app.Activity
 import android.app.AlertDialog
@@ -8,7 +8,7 @@ import android.content.Intent
 import android.content.res.Configuration
 import com.manimarank.spell4wiki.BuildConfig
 import com.manimarank.spell4wiki.R
-import com.manimarank.spell4wiki.utils.AppPref
+import com.manimarank.spell4wiki.utils.pref.AppPref
 import java.util.*
 
 

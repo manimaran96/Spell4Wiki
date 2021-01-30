@@ -1,11 +1,13 @@
-package com.manimarank.spell4wiki.utils
+package com.manimarank.spell4wiki.utils.pref
 
 import android.content.Context
 import android.content.SharedPreferences
 import com.manimarank.spell4wiki.Spell4WikiApp
 
+/**
+ * Preference utility class for Show case related
+ */
 object ShowCasePref {
-
 
     private var prefs: SharedPreferences
 
@@ -33,5 +35,4 @@ object ShowCasePref {
             apply()
         }
     }
-
 }

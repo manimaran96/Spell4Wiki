@@ -26,8 +26,8 @@ import com.manimarank.spell4wiki.listerners.OnLanguageSelectionListener;
 import com.manimarank.spell4wiki.utils.ExtensionsKt;
 import com.manimarank.spell4wiki.utils.GeneralUtils;
 import com.manimarank.spell4wiki.utils.NetworkUtils;
-import com.manimarank.spell4wiki.utils.PrefManager;
-import com.manimarank.spell4wiki.utils.ShowCasePref;
+import com.manimarank.spell4wiki.utils.pref.PrefManager;
+import com.manimarank.spell4wiki.utils.pref.ShowCasePref;
 import com.manimarank.spell4wiki.utils.SnackBarUtils;
 import com.manimarank.spell4wiki.utils.constants.AppConstants;
 import com.manimarank.spell4wiki.utils.constants.Urls;
@@ -38,7 +38,7 @@ import uk.co.samuelwall.materialtaptargetprompt.MaterialTapTargetPrompt;
 import uk.co.samuelwall.materialtaptargetprompt.MaterialTapTargetSequence;
 import uk.co.samuelwall.materialtaptargetprompt.extras.focals.RectanglePromptFocal;
 
-import static com.manimarank.spell4wiki.utils.constants.EnumTypeDef.ListMode;
+import com.manimarank.spell4wiki.utils.constants.ListMode;
 
 
 public class Spell4WordActivity extends BaseActivity {
@@ -115,7 +115,7 @@ public class Spell4WordActivity extends BaseActivity {
     private Boolean isAllowRecord(String word) {
         boolean isValid = false;
         try {
-            if (!pref.getIsAnonymous() && !TextUtils.isEmpty(word)) {
+            if (!pref.isAnonymous() && !TextUtils.isEmpty(word)) {
                 WordsHaveAudioDao wordsHaveAudioDao = DBHelper.getInstance(getApplicationContext()).getAppDatabase().getWordsHaveAudioDao();
                 List<String> wordsAlreadyHaveAudio = wordsHaveAudioDao.getWordsAlreadyHaveAudioByLanguage(languageCode);
                 isValid = !wordsAlreadyHaveAudio.contains(word);

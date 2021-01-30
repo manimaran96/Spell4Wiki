@@ -14,7 +14,7 @@ import com.manimaran.crash_reporter.utils.CrashUtil;
 import com.manimarank.spell4wiki.R;
 import com.manimarank.spell4wiki.activities.base.BaseActivity;
 import com.manimarank.spell4wiki.utils.NetworkUtils;
-import com.manimarank.spell4wiki.utils.PrefManager;
+import com.manimarank.spell4wiki.utils.pref.PrefManager;
 import com.manimarank.spell4wiki.utils.SnackBarUtils;
 import com.manimarank.spell4wiki.utils.SyncHelper;
 
@@ -96,7 +96,7 @@ public class SplashActivity extends BaseActivity {
 
     private void callNextScreen() {
         // Sync Wiki Languages
-        new SyncHelper(this).syncWikiLanguages();
+        new SyncHelper().syncWikiLanguages();
 
         // If app launch very first time to show the language selection and app intro. Other wise go to login page
         Intent mainIntent = new Intent(SplashActivity.this, pref.isFirstTimeLaunch() ? LanguageSelectionActivity.class : LoginActivity.class);

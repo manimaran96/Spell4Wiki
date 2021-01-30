@@ -51,7 +51,7 @@ public class LanguageAdapter extends RecyclerView.Adapter<LanguageAdapter.ViewHo
         holder.layout.setOnClickListener(view1 -> {
             holder.radioSelect.setChecked(true);
             ToastUtils.INSTANCE.showLong(String.format(mActivity.getString(R.string.select_language_response_msg), model.getName()));
-            mListener.OnCallBackListener(model.getCode());
+            mListener.onCallBackListener(model.getCode());
         });
 
     }

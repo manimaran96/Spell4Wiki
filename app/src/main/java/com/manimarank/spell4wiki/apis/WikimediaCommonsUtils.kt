@@ -15,7 +15,6 @@ import java.net.URL
 object WikimediaCommonsUtils {
     fun checkFileAvailability(activity: Activity, word: String, langCode: String, callback: FileAvailabilityCallback) {
 
-
         val fileAvailabilityTask = @SuppressLint("StaticFieldLeak")
         object : AsyncTask<Void, Void, Boolean>() {
 
@@ -59,7 +58,6 @@ object WikimediaCommonsUtils {
                 }
                 return fileExist
             }
-
 
             override fun onPostExecute(fileExist: Boolean) {
                 super.onPostExecute(fileExist)

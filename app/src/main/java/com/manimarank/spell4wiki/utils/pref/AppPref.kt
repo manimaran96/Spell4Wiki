@@ -1,14 +1,19 @@
-package com.manimarank.spell4wiki.utils
+package com.manimarank.spell4wiki.utils.pref
 
 import android.content.Context
 import android.content.SharedPreferences
-import android.os.Build
 import android.text.TextUtils
+import com.manimarank.spell4wiki.utils.getAppVersion
 
+/**
+ * Preference utility class for App level base configurations preference
+ */
 class AppPref {
 
+    /**
+     * Companion - Preference utility class for App level base configurations preference
+     */
     companion object INSTANCE {
-
 
         private const val PREF_NAME = "app_pref"
 
@@ -48,7 +53,10 @@ class AppPref {
             pref = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
         }
 
-
+        /**
+         * Set common categories for uploaded words like Files uploaded by spell4wiki
+         * @return Set<String>?
+         */
         fun setCommonCategories(commonCategoryList: List<String>) {
             pref.edit()?.apply {
                 putStringSet(COMMON_CATEGORIES, commonCategoryList.toSet())
@@ -56,10 +64,18 @@ class AppPref {
             }
         }
 
+        /**
+         * Get common categories for uploaded words like Files uploaded by spell4wiki
+         * @return Set<String>?
+         */
         fun getCommonCategories(): Set<String>? {
             return pref.getStringSet(COMMON_CATEGORIES, null)
         }
 
+        /**
+         * Set app language code
+         * @param langCode String
+         */
         fun setAppLanguage(langCode: String) {
             pref.edit().apply {
                 putString(APP_LANGUAGE_CODE, langCode)
@@ -67,10 +83,17 @@ class AppPref {
             }
         }
 
+        /**
+         * Get app language code
+         * @return String?
+         */
         fun getAppLanguage(): String? {
             return pref.getString(APP_LANGUAGE_CODE, "en")
         }
 
+        /**
+         * Set Flag for app rate dialog show restrict
+         */
         fun setDontShowAgain() {
             pref.edit()?.apply {
                 putBoolean(DONT_SHOW_AGAIN, true)
@@ -78,10 +101,18 @@ class AppPref {
             }
         }
 
+        /**
+         * Get Flag for app rate dialog show restrict
+         * @return Boolean
+         */
         fun getDontShowAgain(): Boolean {
             return pref.getBoolean(DONT_SHOW_AGAIN, false)
         }
 
+        /**
+         * Set app last launch time stamp
+         * @param timestamp Long
+         */
         fun setLastLaunchTimeStamp(timestamp: Long) {
             pref.edit()?.apply {
                 putLong(LAST_LAUNCH_TIMESTAMP, timestamp)
@@ -89,10 +120,18 @@ class AppPref {
             }
         }
 
+        /**
+         * Getting app last launch time stamp
+         * @return Long
+         */
         fun getLastLaunchTimeStamp(): Long {
             return pref.getLong(LAST_LAUNCH_TIMESTAMP, 0)
         }
 
+        /**
+         * Set Maximum app launch count value for showing rate app dialog
+         * @param count Int
+         */
         fun setLaunchCount(count: Int) {
             pref.edit()?.apply {
                 putInt(LAUNCH_COUNT, count)
@@ -100,10 +139,18 @@ class AppPref {
             }
         }
 
+        /**
+         * Getting Maximum app launch count value for showing rate app dialog
+         * @return Int
+         */
         fun getLaunchCount(): Int {
             return pref.getInt(LAUNCH_COUNT, 0)
         }
 
+        /**
+         * Set latest app version code from API
+         * @param count Int
+         */
         fun setUpdateAppVersion(count: Int) {
             pref.edit()?.apply {
                 putInt(UPDATE_VERSION, count)
@@ -111,10 +158,18 @@ class AppPref {
             }
         }
 
+        /**
+         * Getting latest app version code
+         * @return Int
+         */
         private fun getUpdateAppVersion(): Int {
             return pref.getInt(UPDATE_VERSION, 0)
         }
 
+        /**
+         * Set app update type once or force
+         * @param type String
+         */
         fun setUpdateAppType(type: String) {
             pref.edit().apply {
                 putString(UPDATE_TYPE, type)
@@ -122,6 +177,9 @@ class AppPref {
             }
         }
 
+        /**
+         * Set app update flag as true
+         */
         fun setUpdateShowed() {
             pref.edit().apply {
                 putBoolean(UPDATE_SHOWED, true)
@@ -129,30 +187,27 @@ class AppPref {
             }
         }
 
+        /**
+         * Get app update flag value
+         * @return Boolean
+         */
         private fun getUpdateShowed(): Boolean {
             return pref.getBoolean(UPDATE_SHOWED, false)
         }
 
-
+        /**
+         * Check app update dialog already showed or not
+         * @param context Context
+         * @return Boolean
+         */
         fun checkAppUpdateAvailable(context: Context): Boolean {
-            return !getUpdateShowed() && getUpdateAppVersion() > getAppVersion(context)
+            return !getUpdateShowed() && getUpdateAppVersion() > context.getAppVersion()
         }
 
-        private fun getAppVersion(context: Context): Long {
-            val pInfo = context.packageManager.getPackageInfo(context.packageName, 0)
-            var versionCode: Long = 0
-            try {
-                versionCode = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-                    pInfo.longVersionCode
-                } else {
-                    pInfo.versionCode.toLong()
-                }
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }
-            return versionCode
-        }
-
+        /**
+         * Set fetch limit from API max 1 to 500 max
+         * @param limit Int
+         */
         fun setFetchLimit(limit: Int) {
             pref.edit().apply {
                 putInt(FETCH_LIMIT, limit)
@@ -160,10 +215,18 @@ class AppPref {
             }
         }
 
+        /**
+         * Getting words fetch limit count 1 to 500 max
+         * @return Int
+         */
         fun getFetchLimit(): Int {
             return if (pref.getInt(FETCH_LIMIT, DEFAULT_FETCH_LIMIT) > 0) pref.getInt(FETCH_LIMIT, DEFAULT_FETCH_LIMIT) else 150
         }
 
+        /**
+         * Set fetch sort by property value Name/Time
+         * @param fetchBy String
+         */
         fun setFetchBy(fetchBy: String) {
             pref.edit().apply {
                 putString(FETCH_BY, fetchBy)
@@ -171,6 +234,10 @@ class AppPref {
             }
         }
 
+        /**
+         * Getting fetch sort by property value Name/Time
+         * @return String
+         */
         fun getFetchBy(): String {
             return if (TextUtils.isEmpty(pref.getString(FETCH_BY, DEFAULT_FETCH_BY)))
                 DEFAULT_FETCH_BY
@@ -178,6 +245,10 @@ class AppPref {
                 pref.getString(FETCH_BY, DEFAULT_FETCH_BY)!!
         }
 
+        /**
+         * Set fetch sorting direction value Ascending / Descending
+         * @param fetchDir String
+         */
         fun setFetchDir(fetchDir: String) {
             pref.edit().apply {
                 putString(FETCH_DIR, fetchDir)
@@ -185,6 +256,10 @@ class AppPref {
             }
         }
 
+        /**
+         * Getting fetch sorting direction value Ascending / Descending
+         * @return String
+         */
         fun getFetchDir(): String {
             return if (TextUtils.isEmpty(pref.getString(FETCH_DIR, DEFAULT_FETCH_DIR)))
                 DEFAULT_FETCH_DIR
@@ -192,6 +267,9 @@ class AppPref {
                 pref.getString(FETCH_DIR, DEFAULT_FETCH_DIR)!!
         }
 
+        /**
+         * Set - Recorded audio already exist then show info message
+         */
         fun setRecordInfoShowed() {
             pref.edit().apply {
                 putBoolean(RECORD_INFO_SHOWED, true)
@@ -199,10 +277,17 @@ class AppPref {
             }
         }
 
+        /**
+         * Getting force update flag value for version 4
+         * @return Boolean
+         */
         fun getRecordInfoShowed(): Boolean {
             return pref.getBoolean(RECORD_INFO_SHOWED, false)
         }
 
+        /**
+         * Set force update flag value for version 4
+         */
         fun setVc4ForceLogoutDone() {
             pref.edit().apply {
                 putBoolean(VC_4_FORCE_LOGOUT, true)
@@ -210,6 +295,10 @@ class AppPref {
             }
         }
 
+        /**
+         * Getting force update flag value for version 4
+         * @return Boolean
+         */
         fun getVc4ForceLogout(): Boolean {
             return pref.getBoolean(VC_4_FORCE_LOGOUT, false)
         }

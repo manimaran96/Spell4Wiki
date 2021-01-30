@@ -21,7 +21,7 @@ import com.manimarank.spell4wiki.data.model.ContributorData;
 import com.manimarank.spell4wiki.data.model.CodeContributors;
 import com.manimarank.spell4wiki.data.model.CoreContributors;
 import com.manimarank.spell4wiki.utils.NetworkUtils;
-import com.manimarank.spell4wiki.utils.ShowCasePref;
+import com.manimarank.spell4wiki.utils.pref.ShowCasePref;
 import com.manimarank.spell4wiki.utils.SnackBarUtils;
 
 import org.jetbrains.annotations.NotNull;

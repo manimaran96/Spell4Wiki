@@ -15,16 +15,16 @@ import androidx.cardview.widget.CardView;
 
 import com.manimarank.spell4wiki.R;
 import com.manimarank.spell4wiki.activities.base.BaseActivity;
-import com.manimarank.spell4wiki.utils.AppPref;
+import com.manimarank.spell4wiki.utils.pref.AppPref;
 import com.manimarank.spell4wiki.utils.GeneralUtils;
 import com.manimarank.spell4wiki.utils.NetworkUtils;
-import com.manimarank.spell4wiki.utils.PrefManager;
+import com.manimarank.spell4wiki.utils.pref.PrefManager;
 import com.manimarank.spell4wiki.utils.SnackBarUtils;
 import com.manimarank.spell4wiki.utils.constants.AppConstants;
 import com.manimarank.spell4wiki.utils.constants.Urls;
-import com.manimarank.spell4wiki.utils.dialogs.AppLanguageDialog;
-import com.manimarank.spell4wiki.utils.dialogs.RateAppDialog;
-import com.manimarank.spell4wiki.utils.dialogs.UpdateAppDialog;
+import com.manimarank.spell4wiki.ui.dialogs.AppLanguageDialog;
+import com.manimarank.spell4wiki.ui.dialogs.RateAppDialog;
+import com.manimarank.spell4wiki.ui.dialogs.UpdateAppDialog;
 
 public class MainActivity extends BaseActivity implements View.OnClickListener {
 
@@ -94,7 +94,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             return;
         }
 
-        if (pref.getIsAnonymous()) {
+        if (pref.isAnonymous()) {
             SnackBarUtils.INSTANCE.showLong(view, getString(R.string.login_to_contribute));
             return;
         }
@@ -157,7 +157,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
         View viewContribute = findViewById(R.id.layoutContributeOptions);
         View viewLogin = findViewById(R.id.layoutLogin);
-        if (pref.getIsAnonymous()) {
+        if (pref.isAnonymous()) {
             //viewContribute.setVisibility(View.GONE);
             btnMyContributions.setVisibility(View.GONE);
             txtWelcomeUser.setVisibility(View.GONE);

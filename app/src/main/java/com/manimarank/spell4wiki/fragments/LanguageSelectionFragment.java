@@ -27,9 +27,10 @@ import com.manimarank.spell4wiki.databases.entities.WikiLang;
 import com.manimarank.spell4wiki.listerners.OnLanguageSelectionListener;
 import com.manimarank.spell4wiki.utils.GeneralUtils;
 import com.manimarank.spell4wiki.utils.NetworkUtils;
-import com.manimarank.spell4wiki.utils.PrefManager;
+import com.manimarank.spell4wiki.utils.pref.PrefManager;
 import com.manimarank.spell4wiki.utils.SnackBarUtils;
-import com.manimarank.spell4wiki.utils.constants.EnumTypeDef.ListMode;
+import com.manimarank.spell4wiki.utils.constants.ListMode;
+import com.manimarank.spell4wiki.utils.constants.ListMode.Companion.EnumListMode;
 import com.manimarank.spell4wiki.utils.constants.Urls;
 
 import org.jetbrains.annotations.NotNull;
@@ -44,7 +45,7 @@ public class LanguageSelectionFragment extends BottomSheetDialogFragment {
     private OnLanguageSelectionListener callback;
     private List<WikiLang> wikiLanguageList = new ArrayList<>();
     private LanguageAdapter adapter;
-    @ListMode
+    @EnumListMode
     private int listMode;
     private String preSelectedLanguageCode = null;
 
@@ -54,11 +55,11 @@ public class LanguageSelectionFragment extends BottomSheetDialogFragment {
         this.mActivity = activity;
     }
 
-    public void init(OnLanguageSelectionListener callback, @ListMode int mode) {
+    public void init(OnLanguageSelectionListener callback, @EnumListMode int mode) {
         init(callback, mode, null);
     }
 
-    public void init(OnLanguageSelectionListener callback, @ListMode int mode, String preSelectedLanguageCode) {
+    public void init(OnLanguageSelectionListener callback, @EnumListMode int mode, String preSelectedLanguageCode) {
         this.callback = callback;
         this.listMode = mode;
         this.preSelectedLanguageCode = preSelectedLanguageCode;
@@ -141,7 +142,7 @@ public class LanguageSelectionFragment extends BottomSheetDialogFragment {
             }
 
             if (callback != null)
-                callback.OnCallBackListener(langCode);
+                callback.onCallBackListener(langCode);
             dismiss();
         };
 

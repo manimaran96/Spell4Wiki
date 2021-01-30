@@ -1,11 +1,11 @@
-package com.manimarank.spell4wiki.utils.dialogs
+package com.manimarank.spell4wiki.ui.dialogs
 
 import android.app.Activity
 import android.app.AlertDialog
 import com.manimarank.spell4wiki.R
-import com.manimarank.spell4wiki.utils.AppPref
-import com.manimarank.spell4wiki.utils.AppPref.INSTANCE.DAYS_UNTIL_WAIT
-import com.manimarank.spell4wiki.utils.AppPref.INSTANCE.MAX_LAUNCHES
+import com.manimarank.spell4wiki.utils.pref.AppPref
+import com.manimarank.spell4wiki.utils.pref.AppPref.INSTANCE.DAYS_UNTIL_WAIT
+import com.manimarank.spell4wiki.utils.pref.AppPref.INSTANCE.MAX_LAUNCHES
 import com.manimarank.spell4wiki.utils.GeneralUtils
 import com.manimarank.spell4wiki.utils.constants.Urls
 import java.util.concurrent.TimeUnit
@@ -58,7 +58,6 @@ object RateAppDialog {
                 } else {
                     AppPref.setDontShowAgain()
                 }
-
             }
         } catch (e: Exception) {
             e.printStackTrace()

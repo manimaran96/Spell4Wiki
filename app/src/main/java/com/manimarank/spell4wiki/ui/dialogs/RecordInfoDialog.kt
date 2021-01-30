@@ -1,9 +1,9 @@
-package com.manimarank.spell4wiki.utils.dialogs
+package com.manimarank.spell4wiki.ui.dialogs
 
 import android.app.Activity
 import android.app.AlertDialog
 import com.manimarank.spell4wiki.R
-import com.manimarank.spell4wiki.utils.AppPref
+import com.manimarank.spell4wiki.utils.pref.AppPref
 
 object RecordInfoDialog {
 

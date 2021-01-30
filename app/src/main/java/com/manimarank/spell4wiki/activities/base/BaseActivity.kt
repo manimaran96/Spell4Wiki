@@ -2,7 +2,7 @@ package com.manimarank.spell4wiki.activities.base
 
 import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
-import com.manimarank.spell4wiki.utils.dialogs.AppLanguageDialog
+import com.manimarank.spell4wiki.ui.dialogs.AppLanguageDialog
 
 abstract class BaseActivity : AppCompatActivity() {
 

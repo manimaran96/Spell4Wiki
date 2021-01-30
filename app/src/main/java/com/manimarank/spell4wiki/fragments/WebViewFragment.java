@@ -32,7 +32,7 @@ import com.manimarank.spell4wiki.databases.DBHelper;
 import com.manimarank.spell4wiki.databases.dao.WordsHaveAudioDao;
 import com.manimarank.spell4wiki.utils.GeneralUtils;
 import com.manimarank.spell4wiki.utils.NetworkUtils;
-import com.manimarank.spell4wiki.utils.PrefManager;
+import com.manimarank.spell4wiki.utils.pref.PrefManager;
 import com.manimarank.spell4wiki.utils.SnackBarUtils;
 import com.manimarank.spell4wiki.utils.constants.AppConstants;
 import com.manimarank.spell4wiki.utils.constants.Urls;
@@ -81,7 +81,7 @@ public class WebViewFragment extends Fragment {
     private Boolean isAllowRecord() {
         boolean isValid = false;
         try {
-            if (isWitionaryWord && !pref.getIsAnonymous() && !TextUtils.isEmpty(word)) {
+            if (isWitionaryWord && !pref.isAnonymous() && !TextUtils.isEmpty(word)) {
                 WordsHaveAudioDao wordsHaveAudioDao = DBHelper.getInstance(getContext()).getAppDatabase().getWordsHaveAudioDao();
                 List<String> wordsAlreadyHaveAudio = wordsHaveAudioDao.getWordsAlreadyHaveAudioByLanguage(languageCode);
                 isValid = !wordsAlreadyHaveAudio.contains(word);

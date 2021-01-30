@@ -20,7 +20,7 @@ import com.manimarank.spell4wiki.R;
 import com.manimarank.spell4wiki.activities.base.BaseActivity;
 import com.manimarank.spell4wiki.utils.GeneralUtils;
 import com.manimarank.spell4wiki.utils.NetworkUtils;
-import com.manimarank.spell4wiki.utils.PrefManager;
+import com.manimarank.spell4wiki.utils.pref.PrefManager;
 import com.manimarank.spell4wiki.utils.SnackBarUtils;
 import com.manimarank.spell4wiki.utils.constants.AppConstants;
 import com.manimarank.spell4wiki.utils.constants.Urls;
@@ -193,7 +193,7 @@ public class AboutActivity extends BaseActivity implements View.OnClickListener 
         PrefManager prefManager = new PrefManager(getApplicationContext());
         // Getting Username
         builder.append("User name: ")
-                .append(prefManager.getIsAnonymous() ? "Anonymous User" : prefManager.getName())
+                .append(prefManager.isAnonymous() ? "Anonymous User" : prefManager.getName())
                 .append("\n");
 
 

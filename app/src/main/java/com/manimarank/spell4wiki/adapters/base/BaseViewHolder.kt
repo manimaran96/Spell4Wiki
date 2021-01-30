@@ -11,5 +11,4 @@ abstract class BaseViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView
         currentPosition = position
         clear()
     }
-
 }

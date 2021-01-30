@@ -14,14 +14,14 @@ import androidx.core.content.ContextCompat;
 
 import com.manimarank.spell4wiki.R;
 import com.manimarank.spell4wiki.activities.base.BaseActivity;
-import com.manimarank.spell4wiki.utils.dialogs.AppLanguageDialog;
-import com.manimarank.spell4wiki.utils.constants.EnumTypeDef.ListMode;
+import com.manimarank.spell4wiki.ui.dialogs.AppLanguageDialog;
+import com.manimarank.spell4wiki.utils.constants.ListMode;
 import com.manimarank.spell4wiki.databases.DBHelper;
 import com.manimarank.spell4wiki.databases.dao.WikiLangDao;
 import com.manimarank.spell4wiki.databases.entities.WikiLang;
 import com.manimarank.spell4wiki.fragments.LanguageSelectionFragment;
 import com.manimarank.spell4wiki.listerners.OnLanguageSelectionListener;
-import com.manimarank.spell4wiki.utils.PrefManager;
+import com.manimarank.spell4wiki.utils.pref.PrefManager;
 import com.manimarank.spell4wiki.utils.WikiLicense;
 
 import java.util.Arrays;
@@ -63,7 +63,7 @@ public class SettingsActivity extends BaseActivity {
 
         pref = new PrefManager(getApplicationContext());
         wikiLangDao = DBHelper.getInstance(getApplicationContext()).getAppDatabase().getWikiLangDao();
-        if (pref.getIsAnonymous()) {
+        if (pref.isAnonymous()) {
             txtTitleLicense.setVisibility(View.GONE);
             layoutSpell4WikiLang.setVisibility(View.GONE);
             layoutSpell4WordListLang.setVisibility(View.GONE);

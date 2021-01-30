@@ -4,8 +4,8 @@ import android.content.Intent
 import android.os.Bundle
 import com.manimarank.spell4wiki.R
 import com.manimarank.spell4wiki.activities.base.BaseActivity
-import com.manimarank.spell4wiki.utils.PrefManager
-import com.manimarank.spell4wiki.utils.dialogs.AppLanguageDialog
+import com.manimarank.spell4wiki.utils.pref.PrefManager
+import com.manimarank.spell4wiki.ui.dialogs.AppLanguageDialog
 import kotlinx.android.synthetic.main.activity_language_selection.*
 import kotlinx.android.synthetic.main.bottom_sheet_language_selection.btnAddMyLanguage
 import kotlinx.android.synthetic.main.bottom_sheet_language_selection.txtAddLangInfo
