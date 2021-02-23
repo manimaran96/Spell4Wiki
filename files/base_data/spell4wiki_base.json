@@ -866,7 +866,9 @@
          "code":"ml",
          "lang":"Malayalam",
          "dir":"ltr",
-         "local_lang":"മലയാളം"
+         "local_lang":"മലയാളം",
+         "title_of_words_list":"വർഗ്ഗം:മലയാളം ധാതുരൂപങ്ങൾ",
+         "category": ["Files uploaded by spell4wiki in ml", "Malayalam pronunciation of the words with Malayalam script", "Malayalam pronunciation"]
       },
       {
          "code":"mn",
