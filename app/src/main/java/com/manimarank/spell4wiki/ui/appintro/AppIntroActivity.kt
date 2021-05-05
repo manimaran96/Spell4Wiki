@@ -1,4 +1,4 @@
-package com.manimarank.spell4wiki.activities
+package com.manimarank.spell4wiki.ui.appintro
 
 import android.Manifest
 import android.content.Intent
@@ -8,8 +8,8 @@ import android.view.View
 import androidx.viewpager.widget.ViewPager
 import androidx.viewpager.widget.ViewPager.OnPageChangeListener
 import com.manimarank.spell4wiki.R
+import com.manimarank.spell4wiki.activities.LoginActivity
 import com.manimarank.spell4wiki.ui.common.BaseActivity
-import com.manimarank.spell4wiki.adapters.AppIntroTabsPagerAdapter
 import com.manimarank.spell4wiki.data.model.AppIntroData
 import com.manimarank.spell4wiki.utils.GeneralUtils
 import com.manimarank.spell4wiki.utils.pref.PrefManager

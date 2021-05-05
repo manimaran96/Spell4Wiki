@@ -1,4 +1,4 @@
-package com.manimarank.spell4wiki.adapters
+package com.manimarank.spell4wiki.ui.appintro
 
 import android.annotation.SuppressLint
 import androidx.fragment.app.Fragment

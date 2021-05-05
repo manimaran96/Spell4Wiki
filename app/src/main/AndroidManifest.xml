@@ -34,7 +34,7 @@
         tools:ignore="GoogleAppIndexingWarning">
 
         <activity
-            android:name="com.manimarank.spell4wiki.activities.SplashActivity"
+            android:name="com.manimarank.spell4wiki.ui.splash.SplashActivity"
             android:label="@string/app_name"
             tools:ignore="LockedOrientationActivity"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize"
@@ -46,7 +46,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name="com.manimarank.spell4wiki.activities.AppIntroActivity"
+        <activity android:name="com.manimarank.spell4wiki.ui.appintro.AppIntroActivity"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize"
