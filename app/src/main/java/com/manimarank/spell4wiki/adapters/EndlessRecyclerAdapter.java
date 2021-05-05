@@ -21,7 +21,7 @@ import com.google.android.material.snackbar.Snackbar;
 import com.manimarank.spell4wiki.BuildConfig;
 import com.manimarank.spell4wiki.R;
 import com.manimarank.spell4wiki.activities.CommonWebActivity;
-import com.manimarank.spell4wiki.adapters.base.BaseViewHolder;
+import com.manimarank.spell4wiki.ui.common.BaseViewHolder;
 import com.manimarank.spell4wiki.utils.GeneralUtils;
 import com.manimarank.spell4wiki.utils.NetworkUtils;
 import com.manimarank.spell4wiki.utils.pref.PrefManager;

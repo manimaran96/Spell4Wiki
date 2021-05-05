@@ -3,7 +3,7 @@ package com.manimarank.spell4wiki.utils.pref
 import android.content.Context
 import android.content.SharedPreferences
 import android.text.TextUtils
-import com.manimarank.spell4wiki.utils.getAppVersion
+import com.manimarank.spell4wiki.utils.extensions.getAppVersion
 
 /**
  * Preference utility class for App level base configurations preference

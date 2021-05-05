@@ -23,14 +23,14 @@ import androidx.interpolator.view.animation.FastOutSlowInInterpolator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.manimarank.spell4wiki.R;
-import com.manimarank.spell4wiki.activities.base.BaseActivity;
+import com.manimarank.spell4wiki.ui.common.BaseActivity;
 import com.manimarank.spell4wiki.adapters.EndlessRecyclerAdapter;
 import com.manimarank.spell4wiki.databases.DBHelper;
 import com.manimarank.spell4wiki.databases.dao.WordsHaveAudioDao;
 import com.manimarank.spell4wiki.databases.entities.WordsHaveAudio;
 import com.manimarank.spell4wiki.fragments.LanguageSelectionFragment;
 import com.manimarank.spell4wiki.listerners.OnLanguageSelectionListener;
-import com.manimarank.spell4wiki.utils.ExtensionsKt;
+import com.manimarank.spell4wiki.utils.ViewExtensionsKt;
 import com.manimarank.spell4wiki.utils.GeneralUtils;
 import com.manimarank.spell4wiki.utils.pref.PrefManager;
 import com.manimarank.spell4wiki.utils.RealPathUtil;
@@ -92,7 +92,7 @@ public class Spell4WordListActivity extends BaseActivity {
         Button btnDone = findViewById(R.id.btnDone);
         editFile = findViewById(R.id.editFile);
         // Remove styles after paste/added content
-        ExtensionsKt.removeStyleAfterPaste(editFile);
+        ViewExtensionsKt.removeStyleAfterPaste(editFile);
         txtFileInfo = findViewById(R.id.txtFileInfo);
         recyclerView = findViewById(R.id.recyclerView);
         layoutSelect = findViewById(R.id.layoutSelect);

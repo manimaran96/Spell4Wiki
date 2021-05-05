@@ -19,7 +19,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.manimarank.spell4wiki.R;
-import com.manimarank.spell4wiki.activities.base.BaseActivity;
+import com.manimarank.spell4wiki.ui.common.BaseActivity;
 import com.manimarank.spell4wiki.adapters.EndlessRecyclerAdapter;
 import com.manimarank.spell4wiki.apis.ApiClient;
 import com.manimarank.spell4wiki.apis.ApiInterface;
@@ -38,7 +38,6 @@ import com.manimarank.spell4wiki.utils.pref.PrefManager;
 import com.manimarank.spell4wiki.utils.pref.ShowCasePref;
 import com.manimarank.spell4wiki.utils.constants.AppConstants;
 import com.manimarank.spell4wiki.utils.constants.ListMode;
-import com.manimarank.spell4wiki.utils.constants.ListMode.Companion.EnumListMode;
 import com.manimarank.spell4wiki.ui.widget.EndlessRecyclerView;
 
 import java.util.ArrayList;

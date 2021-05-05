@@ -1,12 +1,11 @@
-package com.manimarank.spell4wiki.activities
+package com.manimarank.spell4wiki.ui.about
 
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.manimarank.spell4wiki.R
-import com.manimarank.spell4wiki.activities.base.BaseActivity
-import com.manimarank.spell4wiki.adapters.ListItemAdapter
+import com.manimarank.spell4wiki.ui.common.BaseActivity
 import com.manimarank.spell4wiki.data.model.ItemsModel
 import com.manimarank.spell4wiki.utils.constants.AppConstants
 import com.manimarank.spell4wiki.utils.constants.Urls

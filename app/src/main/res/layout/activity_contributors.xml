@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     android:background="@color/white"
     android:orientation="vertical"
-    tools:context=".activities.ContributorsActivity">
+    tools:context=".ui.about.ContributorsActivity">
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabLayout"

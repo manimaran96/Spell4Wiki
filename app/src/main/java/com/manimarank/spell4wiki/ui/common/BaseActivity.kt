@@ -1,4 +1,4 @@
-package com.manimarank.spell4wiki.activities.base
+package com.manimarank.spell4wiki.ui.common
 
 import android.content.Context
 import androidx.appcompat.app.AppCompatActivity

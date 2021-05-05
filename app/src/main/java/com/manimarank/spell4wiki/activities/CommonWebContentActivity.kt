@@ -10,7 +10,7 @@ import android.view.MenuItem
 import android.view.View
 import android.webkit.*
 import com.manimarank.spell4wiki.R
-import com.manimarank.spell4wiki.activities.base.BaseActivity
+import com.manimarank.spell4wiki.ui.common.BaseActivity
 import com.manimarank.spell4wiki.utils.NetworkUtils
 import com.manimarank.spell4wiki.utils.SnackBarUtils
 import com.manimarank.spell4wiki.utils.constants.AppConstants

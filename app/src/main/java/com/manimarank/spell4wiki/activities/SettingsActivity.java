@@ -13,7 +13,7 @@ import androidx.appcompat.widget.SwitchCompat;
 import androidx.core.content.ContextCompat;
 
 import com.manimarank.spell4wiki.R;
-import com.manimarank.spell4wiki.activities.base.BaseActivity;
+import com.manimarank.spell4wiki.ui.common.BaseActivity;
 import com.manimarank.spell4wiki.ui.dialogs.AppLanguageDialog;
 import com.manimarank.spell4wiki.utils.constants.ListMode;
 import com.manimarank.spell4wiki.databases.DBHelper;

@@ -1,10 +1,9 @@
 package com.manimarank.spell4wiki.utils
 
-import android.content.Context
-import android.os.Build
 import android.text.Editable
 import android.text.TextWatcher
 import android.text.style.MetricAffectingSpan
+import android.view.View
 import android.widget.TextView
 import kotlin.Exception as KotlinException
 
@@ -31,19 +30,22 @@ fun TextView.removeStyleAfterPaste() {
 }
 
 /**
- * Get App version
+ * View Gone extension
  */
-fun Context.getAppVersion(): Long {
-    val pInfo = this.packageManager.getPackageInfo(this.packageName, 0)
-    var versionCode: Long = 0
-    try {
-        versionCode = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-            pInfo.longVersionCode
-        } else {
-            pInfo.versionCode.toLong()
-        }
-    } catch (e: KotlinException) {
-        e.printStackTrace()
-    }
-    return versionCode
+fun View?.makeGone() {
+    this?.visibility = View.GONE
+}
+
+/**
+ * View Visible extension
+ */
+fun View?.makeVisible() {
+    this?.visibility = View.VISIBLE
+}
+
+/**
+ * View In-Visible extension
+ */
+fun View?.makeInVisible() {
+    this?.visibility = View.INVISIBLE
 }

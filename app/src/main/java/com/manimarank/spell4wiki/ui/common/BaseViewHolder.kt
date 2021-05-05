@@ -1,4 +1,4 @@
-package com.manimarank.spell4wiki.adapters.base
+package com.manimarank.spell4wiki.ui.common
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView

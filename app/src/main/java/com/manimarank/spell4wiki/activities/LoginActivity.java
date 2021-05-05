@@ -14,7 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 
 import com.manimarank.spell4wiki.R;
-import com.manimarank.spell4wiki.activities.base.BaseActivity;
+import com.manimarank.spell4wiki.ui.common.BaseActivity;
 import com.manimarank.spell4wiki.apis.ApiClient;
 import com.manimarank.spell4wiki.apis.ApiInterface;
 import com.manimarank.spell4wiki.auth.AccountUtils;
@@ -22,8 +22,8 @@ import com.manimarank.spell4wiki.data.model.ClientLogin;
 import com.manimarank.spell4wiki.data.model.WikiLogin;
 import com.manimarank.spell4wiki.data.model.WikiToken;
 import com.manimarank.spell4wiki.data.model.WikiUser;
+import com.manimarank.spell4wiki.utils.extensions.ContextExtentionsKt;
 import com.manimarank.spell4wiki.utils.pref.AppPref;
-import com.manimarank.spell4wiki.utils.ExtensionsKt;
 import com.manimarank.spell4wiki.utils.GeneralUtils;
 import com.manimarank.spell4wiki.utils.NetworkUtils;
 import com.manimarank.spell4wiki.utils.pref.PrefManager;
@@ -60,7 +60,7 @@ public class LoginActivity extends BaseActivity {
         pref = new PrefManager(getApplicationContext());
 
         // Force logout below version 4
-        if (ExtensionsKt.getAppVersion(this) < 4 && !AppPref.INSTANCE.getVc4ForceLogout()) {
+        if (ContextExtentionsKt.getAppVersion(this) < 4 && !AppPref.INSTANCE.getVc4ForceLogout()) {
             AppPref.INSTANCE.setVc4ForceLogoutDone();
             if (pref.isLoggedIn()) {
                 ToastUtils.INSTANCE.showLong(getString(R.string.login_expired));

@@ -12,7 +12,7 @@ import com.manimaran.crash_reporter.CrashReporter;
 import com.manimaran.crash_reporter.interfaces.CrashAlertClickListener;
 import com.manimaran.crash_reporter.utils.CrashUtil;
 import com.manimarank.spell4wiki.R;
-import com.manimarank.spell4wiki.activities.base.BaseActivity;
+import com.manimarank.spell4wiki.ui.common.BaseActivity;
 import com.manimarank.spell4wiki.utils.NetworkUtils;
 import com.manimarank.spell4wiki.utils.pref.PrefManager;
 import com.manimarank.spell4wiki.utils.SnackBarUtils;

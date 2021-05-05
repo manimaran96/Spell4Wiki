@@ -14,7 +14,8 @@ import androidx.appcompat.widget.SearchView;
 import androidx.cardview.widget.CardView;
 
 import com.manimarank.spell4wiki.R;
-import com.manimarank.spell4wiki.activities.base.BaseActivity;
+import com.manimarank.spell4wiki.ui.common.BaseActivity;
+import com.manimarank.spell4wiki.ui.about.AboutActivity;
 import com.manimarank.spell4wiki.utils.pref.AppPref;
 import com.manimarank.spell4wiki.utils.GeneralUtils;
 import com.manimarank.spell4wiki.utils.NetworkUtils;

@@ -1,4 +1,4 @@
-package com.manimarank.spell4wiki.activities;
+package com.manimarank.spell4wiki.ui.about;
 
 import android.annotation.SuppressLint;
 import android.content.ActivityNotFoundException;
@@ -17,7 +17,7 @@ import androidx.core.content.ContextCompat;
 import com.manimaran.crash_reporter.utils.AppUtils;
 import com.manimarank.spell4wiki.BuildConfig;
 import com.manimarank.spell4wiki.R;
-import com.manimarank.spell4wiki.activities.base.BaseActivity;
+import com.manimarank.spell4wiki.ui.common.BaseActivity;
 import com.manimarank.spell4wiki.utils.GeneralUtils;
 import com.manimarank.spell4wiki.utils.NetworkUtils;
 import com.manimarank.spell4wiki.utils.pref.PrefManager;

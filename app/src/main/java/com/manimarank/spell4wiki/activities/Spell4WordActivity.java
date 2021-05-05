@@ -18,12 +18,12 @@ import android.widget.TextView;
 import androidx.interpolator.view.animation.FastOutSlowInInterpolator;
 
 import com.manimarank.spell4wiki.R;
-import com.manimarank.spell4wiki.activities.base.BaseActivity;
+import com.manimarank.spell4wiki.ui.common.BaseActivity;
 import com.manimarank.spell4wiki.databases.DBHelper;
 import com.manimarank.spell4wiki.databases.dao.WordsHaveAudioDao;
 import com.manimarank.spell4wiki.fragments.LanguageSelectionFragment;
 import com.manimarank.spell4wiki.listerners.OnLanguageSelectionListener;
-import com.manimarank.spell4wiki.utils.ExtensionsKt;
+import com.manimarank.spell4wiki.utils.ViewExtensionsKt;
 import com.manimarank.spell4wiki.utils.GeneralUtils;
 import com.manimarank.spell4wiki.utils.NetworkUtils;
 import com.manimarank.spell4wiki.utils.pref.PrefManager;
@@ -95,7 +95,7 @@ public class Spell4WordActivity extends BaseActivity {
         });
 
         // Remove styles after paste content
-        ExtensionsKt.removeStyleAfterPaste(editSpell4Word);
+        ViewExtensionsKt.removeStyleAfterPaste(editSpell4Word);
 
         btnRecord.setOnClickListener(v -> {
             if (!TextUtils.isEmpty(editSpell4Word.getText()) && editSpell4Word.getText().length() < 30) {
