@@ -1,94 +1,69 @@
-package com.manimarank.spell4wiki.data.auth;
+package com.manimarank.spell4wiki.data.auth
 
-import android.accounts.AbstractAccountAuthenticator;
-import android.accounts.Account;
-import android.accounts.AccountAuthenticatorResponse;
-import android.accounts.AccountManager;
-import android.accounts.NetworkErrorException;
-import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
+import android.accounts.*
+import android.content.Context
+import android.content.Intent
+import android.os.Bundle
+import com.manimarank.spell4wiki.R
+import com.manimarank.spell4wiki.ui.login.LoginActivity
+import com.manimarank.spell4wiki.utils.Print.log
 
-import androidx.annotation.Nullable;
-
-import com.manimarank.spell4wiki.R;
-import com.manimarank.spell4wiki.ui.login.LoginActivity;
-import com.manimarank.spell4wiki.utils.Print;
-
-import static android.accounts.AccountManager.KEY_BOOLEAN_RESULT;
-
-public class WikiAuthenticator extends AbstractAccountAuthenticator {
-
-    private final Context mContext;
-    private String TAG = WikiAuthenticator.class.getSimpleName() + " --> ";
-
-    WikiAuthenticator(Context context) {
-        super(context);
-        this.mContext = context;
+class WikiAuthenticator internal constructor(private val mContext: Context) : AbstractAccountAuthenticator(mContext) {
+    private val TAG = WikiAuthenticator::class.java.simpleName + " --> "
+    private fun supportedAccountType(type: String?): Boolean {
+        return AccountUtils.accountType() == type
     }
 
-    private boolean supportedAccountType(@Nullable String type) {
-        return AccountUtils.accountType().equals(type);
+    @Throws(NetworkErrorException::class)
+    override fun addAccount(response: AccountAuthenticatorResponse, accountType: String, authTokenType: String, requiredFeatures: Array<String>, options: Bundle): Bundle {
+        log(TAG + "Add Account Main")
+        return if (!supportedAccountType(accountType) || AccountUtils.account() != null) {
+            unsupportedOperation()
+        } else addAccount(response)
     }
 
-    @Override
-    public Bundle addAccount(AccountAuthenticatorResponse response, String accountType, String authTokenType, String[] requiredFeatures, Bundle options) throws NetworkErrorException {
-        Print.log(TAG + "Add Account Main");
-        if (!supportedAccountType(accountType) || AccountUtils.account() != null) {
-            return unsupportedOperation();
-        }
-        return addAccount(response);
+    private fun addAccount(response: AccountAuthenticatorResponse): Bundle {
+        log(TAG + "Add Account Sub")
+        val intent = Intent(mContext, LoginActivity::class.java)
+        intent.putExtra(AccountManager.KEY_ACCOUNT_AUTHENTICATOR_RESPONSE, response)
+        val bundle = Bundle()
+        bundle.putParcelable(AccountManager.KEY_INTENT, intent)
+        return bundle
     }
 
-    private Bundle addAccount(AccountAuthenticatorResponse response) {
-        Print.log(TAG + "Add Account Sub");
-        Intent intent = new Intent(mContext, LoginActivity.class);
-        intent.putExtra(AccountManager.KEY_ACCOUNT_AUTHENTICATOR_RESPONSE, response);
-        Bundle bundle = new Bundle();
-        bundle.putParcelable(AccountManager.KEY_INTENT, intent);
-        return bundle;
+    override fun getAuthTokenLabel(authTokenType: String): String {
+        log(TAG + "Get Auth Token Label - " + authTokenType)
+        return if (supportedAccountType(authTokenType)) mContext.getString(R.string.account_name) else ""
     }
 
-
-    @Override
-    public String getAuthTokenLabel(String authTokenType) {
-        Print.log(TAG + "Get Auth Token Label - " + authTokenType);
-        return supportedAccountType(authTokenType) ? mContext.getString(R.string.account_name) : null;
+    override fun hasFeatures(response: AccountAuthenticatorResponse, account: Account, features: Array<String>): Bundle {
+        val result = Bundle()
+        result.putBoolean(AccountManager.KEY_BOOLEAN_RESULT, false)
+        return result
     }
 
-    @Override
-    public Bundle hasFeatures(AccountAuthenticatorResponse response, Account account, String[] features) {
-        final Bundle result = new Bundle();
-        result.putBoolean(KEY_BOOLEAN_RESULT, false);
-        return result;
+    override fun editProperties(response: AccountAuthenticatorResponse, accountType: String): Bundle {
+        return unsupportedOperation()
     }
 
-    @Override
-    public Bundle editProperties(AccountAuthenticatorResponse response, String accountType) {
-        return unsupportedOperation();
+    override fun confirmCredentials(response: AccountAuthenticatorResponse, account: Account, options: Bundle): Bundle {
+        return unsupportedOperation()
     }
 
-    @Override
-    public Bundle confirmCredentials(AccountAuthenticatorResponse response, Account account, Bundle options) {
-        return unsupportedOperation();
+    override fun getAuthToken(response: AccountAuthenticatorResponse, account: Account, authTokenType: String, options: Bundle): Bundle {
+        return unsupportedOperation()
     }
 
-    @Override
-    public Bundle getAuthToken(AccountAuthenticatorResponse response, Account account, String authTokenType, Bundle options) {
-        return unsupportedOperation();
+    override fun updateCredentials(response: AccountAuthenticatorResponse, account: Account, authTokenType: String, options: Bundle): Bundle {
+        return unsupportedOperation()
     }
 
-    @Override
-    public Bundle updateCredentials(AccountAuthenticatorResponse response, Account account, String authTokenType, Bundle options) {
-        return unsupportedOperation();
-    }
-
-    private Bundle unsupportedOperation() {
-        Print.log(TAG + "unsupportedOperation");
-        Bundle bundle = new Bundle();
-        bundle.putInt(AccountManager.KEY_ERROR_CODE, AccountManager.ERROR_CODE_UNSUPPORTED_OPERATION);
+    private fun unsupportedOperation(): Bundle {
+        log(TAG + "unsupportedOperation")
+        val bundle = Bundle()
+        bundle.putInt(AccountManager.KEY_ERROR_CODE, AccountManager.ERROR_CODE_UNSUPPORTED_OPERATION)
         // HACK: the docs indicate that this is a required key bit it's not displayed to the user.
-        bundle.putString(AccountManager.KEY_ERROR_MESSAGE, "");
-        return bundle;
+        bundle.putString(AccountManager.KEY_ERROR_MESSAGE, "")
+        return bundle
     }
 }

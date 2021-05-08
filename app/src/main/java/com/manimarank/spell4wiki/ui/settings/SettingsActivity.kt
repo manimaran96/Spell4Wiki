@@ -15,7 +15,7 @@ import com.manimarank.spell4wiki.R
 import com.manimarank.spell4wiki.data.db.DBHelper
 import com.manimarank.spell4wiki.data.db.dao.WikiLangDao
 import com.manimarank.spell4wiki.ui.languageselector.LanguageSelectionFragment
-import com.manimarank.spell4wiki.listerners.OnLanguageSelectionListener
+import com.manimarank.spell4wiki.ui.listerners.OnLanguageSelectionListener
 import com.manimarank.spell4wiki.ui.common.BaseActivity
 import com.manimarank.spell4wiki.ui.dialogs.AppLanguageDialog.getSelectedLanguage
 import com.manimarank.spell4wiki.ui.dialogs.AppLanguageDialog.show

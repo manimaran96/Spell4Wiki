@@ -29,7 +29,7 @@ class PrefManager(private val mContext: Context?) {
     val name: String?
         get() = pref.getString(USERNAME, null)
     val isLoggedIn: Boolean
-        get() = !pref.getBoolean(IS_ANONYMOUS_USER, false) && pref.getBoolean(IS_LOGGED_IN_USER, false) && AccountUtils.isLoggedIn()
+        get() = !pref.getBoolean(IS_ANONYMOUS_USER, false) && pref.getBoolean(IS_LOGGED_IN_USER, false) && AccountUtils.isLoggedIn
 
     // First time launch for App Intro
     var isFirstTimeLaunch: Boolean

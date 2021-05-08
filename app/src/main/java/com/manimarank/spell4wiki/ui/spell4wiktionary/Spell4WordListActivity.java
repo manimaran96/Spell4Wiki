@@ -28,7 +28,7 @@ import com.manimarank.spell4wiki.data.db.DBHelper;
 import com.manimarank.spell4wiki.data.db.dao.WordsHaveAudioDao;
 import com.manimarank.spell4wiki.data.db.entities.WordsHaveAudio;
 import com.manimarank.spell4wiki.ui.languageselector.LanguageSelectionFragment;
-import com.manimarank.spell4wiki.listerners.OnLanguageSelectionListener;
+import com.manimarank.spell4wiki.ui.listerners.OnLanguageSelectionListener;
 import com.manimarank.spell4wiki.utils.ViewExtensionsKt;
 import com.manimarank.spell4wiki.utils.GeneralUtils;
 import com.manimarank.spell4wiki.data.prefs.PrefManager;

@@ -23,7 +23,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.manimarank.spell4wiki.R;
 import com.manimarank.spell4wiki.data.db.DBHelper;
 import com.manimarank.spell4wiki.data.db.entities.WikiLang;
-import com.manimarank.spell4wiki.listerners.OnLanguageSelectionListener;
+import com.manimarank.spell4wiki.ui.listerners.OnLanguageSelectionListener;
 import com.manimarank.spell4wiki.utils.GeneralUtils;
 import com.manimarank.spell4wiki.utils.NetworkUtils;
 import com.manimarank.spell4wiki.data.prefs.PrefManager;

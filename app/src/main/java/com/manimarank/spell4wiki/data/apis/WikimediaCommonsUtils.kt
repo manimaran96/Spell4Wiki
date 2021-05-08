@@ -7,7 +7,7 @@ import android.os.AsyncTask
 import android.view.Window
 import android.widget.TextView
 import com.manimarank.spell4wiki.R
-import com.manimarank.spell4wiki.listerners.FileAvailabilityCallback
+import com.manimarank.spell4wiki.ui.listerners.FileAvailabilityCallback
 import com.manimarank.spell4wiki.utils.constants.Urls
 import java.net.HttpURLConnection
 import java.net.URL

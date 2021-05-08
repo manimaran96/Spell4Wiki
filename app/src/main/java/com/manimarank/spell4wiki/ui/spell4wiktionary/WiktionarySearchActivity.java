@@ -20,7 +20,7 @@ import com.manimarank.spell4wiki.data.model.WikiWord;
 import com.manimarank.spell4wiki.data.db.DBHelper;
 import com.manimarank.spell4wiki.data.db.dao.WikiLangDao;
 import com.manimarank.spell4wiki.ui.languageselector.LanguageSelectionFragment;
-import com.manimarank.spell4wiki.listerners.OnLanguageSelectionListener;
+import com.manimarank.spell4wiki.ui.listerners.OnLanguageSelectionListener;
 import com.manimarank.spell4wiki.data.model.WikiSearchWords;
 import com.manimarank.spell4wiki.utils.NetworkUtils;
 import com.manimarank.spell4wiki.data.prefs.PrefManager;

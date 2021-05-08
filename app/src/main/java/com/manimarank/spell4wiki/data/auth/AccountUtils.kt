@@ -1,113 +1,102 @@
-package com.manimarank.spell4wiki.data.auth;
+package com.manimarank.spell4wiki.data.auth
 
-import android.accounts.Account;
-import android.accounts.AccountAuthenticatorResponse;
-import android.accounts.AccountManager;
-import android.os.Build;
-import android.os.Bundle;
-import android.text.TextUtils;
+import android.accounts.Account
+import android.accounts.AccountAuthenticatorResponse
+import android.accounts.AccountManager
+import android.os.Build
+import android.os.Bundle
+import android.text.TextUtils
+import com.manimarank.spell4wiki.R
+import com.manimarank.spell4wiki.Spell4WikiApp
+import com.manimarank.spell4wiki.Spell4WikiApp.Companion.getApplicationContext
+import com.manimarank.spell4wiki.data.model.WikiUser
+import com.manimarank.spell4wiki.utils.Print.error
+import com.manimarank.spell4wiki.utils.Print.log
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-
-import com.manimarank.spell4wiki.R;
-import com.manimarank.spell4wiki.Spell4WikiApp;
-import com.manimarank.spell4wiki.data.model.WikiUser;
-import com.manimarank.spell4wiki.utils.Print;
-
-public class AccountUtils {
-
-    private static boolean createAccount(@NonNull String userName, @NonNull String password) {
-        Account account = account();
-        Print.log("ACCOUNT - CREATE CALL");
-        if (account == null || TextUtils.isEmpty(account.name) || !account.name.equals(userName)) {
-            removeAccount();
-            account = new Account(userName, accountType());
-            return accountManager().addAccountExplicitly(account, password, null);
+object AccountUtils {
+    private fun createAccount(userName: String, password: String): Boolean {
+        var account = account()
+        log("ACCOUNT - CREATE CALL")
+        if (account == null || TextUtils.isEmpty(account.name) || account.name != userName) {
+            removeAccount()
+            account = Account(userName, accountType())
+            return accountManager().addAccountExplicitly(account, password, null)
         }
-        return true;
+        return true
     }
 
-    public static void updateAccount(@Nullable AccountAuthenticatorResponse response, WikiUser wikiUser) {
-        if (createAccount(wikiUser.getUserName(), wikiUser.getPassword())) {
+    fun updateAccount(response: AccountAuthenticatorResponse?, wikiUser: WikiUser) {
+        if (createAccount(wikiUser.userName, wikiUser.password)) {
             if (response != null) {
-                Bundle bundle = new Bundle();
-                bundle.putString(AccountManager.KEY_ACCOUNT_NAME, wikiUser.getUserName());
-                bundle.putString(AccountManager.KEY_ACCOUNT_TYPE, accountType());
-                response.onResult(bundle);
+                val bundle = Bundle()
+                bundle.putString(AccountManager.KEY_ACCOUNT_NAME, wikiUser.userName)
+                bundle.putString(AccountManager.KEY_ACCOUNT_TYPE, accountType())
+                response.onResult(bundle)
             }
-            Print.log("ACCOUNT - CREATED -- response " + (response != null));
+            log("ACCOUNT - CREATED -- response " + (response != null))
         } else {
-            if (response != null) {
-                response.onError(AccountManager.ERROR_CODE_REMOTE_EXCEPTION, "");
-            }
-            Print.error("ACCOUNT - CREATION FAIL");
-            return;
+            response?.onError(AccountManager.ERROR_CODE_REMOTE_EXCEPTION, "")
+            error("ACCOUNT - CREATION FAIL")
+            return
         }
-
-        setPassword(wikiUser.getPassword());
+        setPassword(wikiUser.password)
     }
 
-    @Nullable
-    static Account account() {
+    fun account(): Account? {
         try {
-            Account[] accounts = accountManager().getAccountsByType(accountType());
-            if (accounts.length > 0) {
-                return accounts[0];
+            val accounts = accountManager().getAccountsByType(accountType())
+            if (accounts.isNotEmpty()) {
+                return accounts[0]
             }
-        } catch (SecurityException e) {
-            e.printStackTrace();
+        } catch (e: SecurityException) {
+            e.printStackTrace()
         }
-        return null;
+        return null
     }
 
-    @NonNull
-    static String accountType() {
-        return app().getString(R.string.account_type);
+    fun accountType(): String {
+        return app().getString(R.string.account_type)
     }
 
-    private static AccountManager accountManager() {
-        return AccountManager.get(app());
+    private fun accountManager(): AccountManager {
+        return AccountManager.get(app())
     }
 
-    @NonNull
-    private static Spell4WikiApp app() {
-        return Spell4WikiApp.Companion.getApplicationContext();
+    private fun app(): Spell4WikiApp {
+        return getApplicationContext()
     }
 
-    public static boolean isLoggedIn() {
-        return account() != null;
-    }
+    val isLoggedIn: Boolean
+        get() = account() != null
+    @JvmStatic
+    val userName: String?
+        get() {
+            val account = account()
+            return account?.name
+        }
+    @JvmStatic
+    val password: String?
+        get() {
+            val account = account()
+            return if (account == null) null else accountManager().getPassword(account)
+        }
 
-    @Nullable
-    public static String getUserName() {
-        Account account = account();
-        return account == null ? null : account.name;
-    }
-
-    @Nullable
-    public static String getPassword() {
-        Account account = account();
-        return account == null ? null : accountManager().getPassword(account);
-    }
-
-    private static void setPassword(@NonNull String password) {
-        Account account = account();
+    private fun setPassword(password: String) {
+        val account = account()
         if (account != null) {
-            accountManager().setPassword(account, password);
+            accountManager().setPassword(account, password)
         }
     }
 
-    public static void removeAccount() {
-        Print.log("ACCOUNT - REMOVE");
-        Account account = account();
+    fun removeAccount() {
+        log("ACCOUNT - REMOVE")
+        val account = account()
         if (account != null) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {
-                accountManager().removeAccountExplicitly(account);
+                accountManager().removeAccountExplicitly(account)
             } else {
-                accountManager().removeAccount(account, null, null);
+                accountManager().removeAccount(account, null, null)
             }
         }
     }
-
 }
