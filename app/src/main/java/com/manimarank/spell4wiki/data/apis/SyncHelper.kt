@@ -1,18 +1,16 @@
-package com.manimarank.spell4wiki.utils
+package com.manimarank.spell4wiki.data.apis
 
 import android.text.TextUtils
 import com.manimarank.spell4wiki.Spell4WikiApp
-import com.manimarank.spell4wiki.apis.ApiClient
-import com.manimarank.spell4wiki.apis.ApiInterface
 import com.manimarank.spell4wiki.data.model.WikiBaseData
-import com.manimarank.spell4wiki.databases.DBHelper
-import com.manimarank.spell4wiki.databases.entities.WikiLang
-import com.manimarank.spell4wiki.utils.pref.AppPref.INSTANCE.setCommonCategories
-import com.manimarank.spell4wiki.utils.pref.AppPref.INSTANCE.setFetchBy
-import com.manimarank.spell4wiki.utils.pref.AppPref.INSTANCE.setFetchDir
-import com.manimarank.spell4wiki.utils.pref.AppPref.INSTANCE.setFetchLimit
-import com.manimarank.spell4wiki.utils.pref.AppPref.INSTANCE.setUpdateAppType
-import com.manimarank.spell4wiki.utils.pref.AppPref.INSTANCE.setUpdateAppVersion
+import com.manimarank.spell4wiki.data.db.DBHelper
+import com.manimarank.spell4wiki.data.db.entities.WikiLang
+import com.manimarank.spell4wiki.data.prefs.AppPref.INSTANCE.setCommonCategories
+import com.manimarank.spell4wiki.data.prefs.AppPref.INSTANCE.setFetchBy
+import com.manimarank.spell4wiki.data.prefs.AppPref.INSTANCE.setFetchDir
+import com.manimarank.spell4wiki.data.prefs.AppPref.INSTANCE.setFetchLimit
+import com.manimarank.spell4wiki.data.prefs.AppPref.INSTANCE.setUpdateAppType
+import com.manimarank.spell4wiki.data.prefs.AppPref.INSTANCE.setUpdateAppVersion
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

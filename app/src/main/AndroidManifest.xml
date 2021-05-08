@@ -142,7 +142,7 @@
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize"
             android:theme="@style/AppTheme" />
 
-        <service android:name="com.manimarank.spell4wiki.auth.WikiAuthenticatorService"
+        <service android:name=".data.auth.WikiAuthenticatorService"
             android:exported="false">
             <intent-filter>
                 <action android:name="android.accounts.AccountAuthenticator" />

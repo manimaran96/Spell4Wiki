@@ -1,4 +1,4 @@
-package com.manimarank.spell4wiki.ui.widget
+package com.manimarank.spell4wiki.ui.custom
 
 import android.content.Context
 import android.util.AttributeSet

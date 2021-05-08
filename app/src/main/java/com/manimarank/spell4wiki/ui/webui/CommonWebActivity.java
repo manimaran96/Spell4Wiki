@@ -19,7 +19,7 @@ import com.manimarank.spell4wiki.R;
 import com.manimarank.spell4wiki.ui.common.BaseActivity;
 import com.manimarank.spell4wiki.ui.languageselector.LanguageSelectionFragment;
 import com.manimarank.spell4wiki.listerners.OnLanguageSelectionListener;
-import com.manimarank.spell4wiki.utils.pref.PrefManager;
+import com.manimarank.spell4wiki.data.prefs.PrefManager;
 import com.manimarank.spell4wiki.utils.constants.AppConstants;
 import com.manimarank.spell4wiki.utils.constants.ListMode;
 

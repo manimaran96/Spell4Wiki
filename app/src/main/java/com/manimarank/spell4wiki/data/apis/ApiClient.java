@@ -1,4 +1,4 @@
-package com.manimarank.spell4wiki.apis;
+package com.manimarank.spell4wiki.data.apis;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -9,7 +9,7 @@ import com.franmontiel.persistentcookiejar.ClearableCookieJar;
 import com.franmontiel.persistentcookiejar.PersistentCookieJar;
 import com.franmontiel.persistentcookiejar.cache.SetCookieCache;
 import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersistor;
-import com.manimarank.spell4wiki.utils.pref.PrefManager;
+import com.manimarank.spell4wiki.data.prefs.PrefManager;
 import com.manimarank.spell4wiki.utils.Print;
 import com.manimarank.spell4wiki.utils.constants.Urls;
 

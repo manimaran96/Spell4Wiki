@@ -1,4 +1,4 @@
-package com.manimarank.spell4wiki.apis;
+package com.manimarank.spell4wiki.data.apis;
 
 import java.io.IOException;
 import java.net.InetAddress;

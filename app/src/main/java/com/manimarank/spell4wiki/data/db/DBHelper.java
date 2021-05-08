@@ -1,4 +1,4 @@
-package com.manimarank.spell4wiki.databases;
+package com.manimarank.spell4wiki.data.db;
 
 import android.content.Context;
 

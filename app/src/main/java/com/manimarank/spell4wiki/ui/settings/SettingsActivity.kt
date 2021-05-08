@@ -12,8 +12,8 @@ import androidx.appcompat.widget.SwitchCompat
 import androidx.core.content.ContextCompat
 import androidx.core.text.HtmlCompat
 import com.manimarank.spell4wiki.R
-import com.manimarank.spell4wiki.databases.DBHelper
-import com.manimarank.spell4wiki.databases.dao.WikiLangDao
+import com.manimarank.spell4wiki.data.db.DBHelper
+import com.manimarank.spell4wiki.data.db.dao.WikiLangDao
 import com.manimarank.spell4wiki.ui.languageselector.LanguageSelectionFragment
 import com.manimarank.spell4wiki.listerners.OnLanguageSelectionListener
 import com.manimarank.spell4wiki.ui.common.BaseActivity
@@ -24,7 +24,7 @@ import com.manimarank.spell4wiki.utils.WikiLicense.licenseNameId
 import com.manimarank.spell4wiki.utils.WikiLicense.licenseUrlFor
 import com.manimarank.spell4wiki.utils.constants.ListMode
 import com.manimarank.spell4wiki.utils.makeGone
-import com.manimarank.spell4wiki.utils.pref.PrefManager
+import com.manimarank.spell4wiki.data.prefs.PrefManager
 import kotlinx.android.synthetic.main.activity_settings.*
 import java.util.*
 

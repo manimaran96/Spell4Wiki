@@ -1,4 +1,4 @@
-package com.manimarank.spell4wiki.databases.entities;
+package com.manimarank.spell4wiki.data.db.entities;
 
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
@@ -7,7 +7,7 @@ import androidx.room.Index;
 import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
 
-import com.manimarank.spell4wiki.databases.converters.ListTypeConverters;
+import com.manimarank.spell4wiki.data.db.converters.ListTypeConverters;
 
 import org.jetbrains.annotations.NotNull;
 

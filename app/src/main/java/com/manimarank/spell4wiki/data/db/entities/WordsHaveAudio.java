@@ -1,4 +1,4 @@
-package com.manimarank.spell4wiki.databases.entities;
+package com.manimarank.spell4wiki.data.db.entities;
 
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;

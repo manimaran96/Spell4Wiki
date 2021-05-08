@@ -14,10 +14,10 @@ import com.manimarank.spell4wiki.ui.login.LoginActivity
 import com.manimarank.spell4wiki.ui.common.BaseActivity
 import com.manimarank.spell4wiki.utils.NetworkUtils.isConnected
 import com.manimarank.spell4wiki.utils.SnackBarUtils.showNormal
-import com.manimarank.spell4wiki.utils.SyncHelper
+import com.manimarank.spell4wiki.data.apis.SyncHelper
 import com.manimarank.spell4wiki.utils.makeGone
 import com.manimarank.spell4wiki.utils.makeVisible
-import com.manimarank.spell4wiki.utils.pref.PrefManager
+import com.manimarank.spell4wiki.data.prefs.PrefManager
 import kotlinx.android.synthetic.main.activity_splash.*
 
 /**

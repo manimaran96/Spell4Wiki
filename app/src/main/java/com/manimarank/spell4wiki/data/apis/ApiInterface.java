@@ -1,4 +1,4 @@
-package com.manimarank.spell4wiki.apis;
+package com.manimarank.spell4wiki.data.apis;
 
 
 import com.manimarank.spell4wiki.data.model.ContributorData;

@@ -8,7 +8,7 @@ import android.content.Intent
 import android.content.res.Configuration
 import com.manimarank.spell4wiki.BuildConfig
 import com.manimarank.spell4wiki.R
-import com.manimarank.spell4wiki.utils.pref.AppPref
+import com.manimarank.spell4wiki.data.prefs.AppPref
 import java.util.*
 
 

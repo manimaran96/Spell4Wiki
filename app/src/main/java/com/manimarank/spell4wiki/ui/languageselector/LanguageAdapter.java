@@ -14,7 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.manimarank.spell4wiki.R;
-import com.manimarank.spell4wiki.databases.entities.WikiLang;
+import com.manimarank.spell4wiki.data.db.entities.WikiLang;
 import com.manimarank.spell4wiki.listerners.OnLanguageSelectionListener;
 import com.manimarank.spell4wiki.utils.ToastUtils;
 

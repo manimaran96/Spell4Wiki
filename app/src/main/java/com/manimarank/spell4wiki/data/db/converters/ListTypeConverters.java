@@ -1,4 +1,4 @@
-package com.manimarank.spell4wiki.databases.converters;
+package com.manimarank.spell4wiki.data.db.converters;
 
 import androidx.room.TypeConverter;
 

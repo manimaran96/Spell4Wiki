@@ -1,11 +1,11 @@
-package com.manimarank.spell4wiki.utils.pref
+package com.manimarank.spell4wiki.data.prefs
 
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import com.manimarank.spell4wiki.ui.login.LoginActivity
-import com.manimarank.spell4wiki.auth.AccountUtils
+import com.manimarank.spell4wiki.data.auth.AccountUtils
 import com.manimarank.spell4wiki.utils.WikiLicense
 
 /**

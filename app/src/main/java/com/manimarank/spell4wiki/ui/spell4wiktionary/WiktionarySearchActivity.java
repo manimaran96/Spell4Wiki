@@ -14,20 +14,20 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.google.android.material.snackbar.Snackbar;
 import com.manimarank.spell4wiki.R;
 import com.manimarank.spell4wiki.ui.common.BaseActivity;
-import com.manimarank.spell4wiki.apis.ApiClient;
-import com.manimarank.spell4wiki.apis.ApiInterface;
+import com.manimarank.spell4wiki.data.apis.ApiClient;
+import com.manimarank.spell4wiki.data.apis.ApiInterface;
 import com.manimarank.spell4wiki.data.model.WikiWord;
-import com.manimarank.spell4wiki.databases.DBHelper;
-import com.manimarank.spell4wiki.databases.dao.WikiLangDao;
+import com.manimarank.spell4wiki.data.db.DBHelper;
+import com.manimarank.spell4wiki.data.db.dao.WikiLangDao;
 import com.manimarank.spell4wiki.ui.languageselector.LanguageSelectionFragment;
 import com.manimarank.spell4wiki.listerners.OnLanguageSelectionListener;
 import com.manimarank.spell4wiki.data.model.WikiSearchWords;
 import com.manimarank.spell4wiki.utils.NetworkUtils;
-import com.manimarank.spell4wiki.utils.pref.PrefManager;
-import com.manimarank.spell4wiki.utils.pref.ShowCasePref;
+import com.manimarank.spell4wiki.data.prefs.PrefManager;
+import com.manimarank.spell4wiki.data.prefs.ShowCasePref;
 import com.manimarank.spell4wiki.utils.constants.AppConstants;
 import com.manimarank.spell4wiki.utils.constants.ListMode;
-import com.manimarank.spell4wiki.ui.widget.EndlessRecyclerView;
+import com.manimarank.spell4wiki.ui.custom.EndlessRecyclerView;
 
 import org.jetbrains.annotations.NotNull;
 

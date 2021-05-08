@@ -1,4 +1,4 @@
-package com.manimarank.spell4wiki.utils.pref
+package com.manimarank.spell4wiki.data.prefs
 
 import android.content.Context
 import android.content.SharedPreferences

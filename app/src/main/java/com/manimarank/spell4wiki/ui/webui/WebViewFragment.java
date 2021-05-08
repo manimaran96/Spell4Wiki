@@ -28,11 +28,11 @@ import androidx.fragment.app.Fragment;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.manimarank.spell4wiki.R;
-import com.manimarank.spell4wiki.databases.DBHelper;
-import com.manimarank.spell4wiki.databases.dao.WordsHaveAudioDao;
+import com.manimarank.spell4wiki.data.db.DBHelper;
+import com.manimarank.spell4wiki.data.db.dao.WordsHaveAudioDao;
 import com.manimarank.spell4wiki.utils.GeneralUtils;
 import com.manimarank.spell4wiki.utils.NetworkUtils;
-import com.manimarank.spell4wiki.utils.pref.PrefManager;
+import com.manimarank.spell4wiki.data.prefs.PrefManager;
 import com.manimarank.spell4wiki.utils.SnackBarUtils;
 import com.manimarank.spell4wiki.utils.constants.AppConstants;
 import com.manimarank.spell4wiki.utils.constants.Urls;

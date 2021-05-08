@@ -1,4 +1,4 @@
-package com.manimarank.spell4wiki.auth;
+package com.manimarank.spell4wiki.data.auth;
 
 import android.accounts.AbstractAccountAuthenticator;
 import android.app.Service;

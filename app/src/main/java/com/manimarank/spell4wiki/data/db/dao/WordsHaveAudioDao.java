@@ -1,4 +1,4 @@
-package com.manimarank.spell4wiki.databases.dao;
+package com.manimarank.spell4wiki.data.db.dao;
 
 import androidx.room.Dao;
 import androidx.room.Delete;
@@ -7,7 +7,7 @@ import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Update;
 
-import com.manimarank.spell4wiki.databases.entities.WordsHaveAudio;
+import com.manimarank.spell4wiki.data.db.entities.WordsHaveAudio;
 
 import java.util.List;
 

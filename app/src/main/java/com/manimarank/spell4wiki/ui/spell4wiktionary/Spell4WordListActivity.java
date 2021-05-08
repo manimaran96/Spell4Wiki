@@ -24,19 +24,19 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.manimarank.spell4wiki.R;
 import com.manimarank.spell4wiki.ui.common.BaseActivity;
-import com.manimarank.spell4wiki.databases.DBHelper;
-import com.manimarank.spell4wiki.databases.dao.WordsHaveAudioDao;
-import com.manimarank.spell4wiki.databases.entities.WordsHaveAudio;
+import com.manimarank.spell4wiki.data.db.DBHelper;
+import com.manimarank.spell4wiki.data.db.dao.WordsHaveAudioDao;
+import com.manimarank.spell4wiki.data.db.entities.WordsHaveAudio;
 import com.manimarank.spell4wiki.ui.languageselector.LanguageSelectionFragment;
 import com.manimarank.spell4wiki.listerners.OnLanguageSelectionListener;
 import com.manimarank.spell4wiki.utils.ViewExtensionsKt;
 import com.manimarank.spell4wiki.utils.GeneralUtils;
-import com.manimarank.spell4wiki.utils.pref.PrefManager;
+import com.manimarank.spell4wiki.data.prefs.PrefManager;
 import com.manimarank.spell4wiki.utils.RealPathUtil;
-import com.manimarank.spell4wiki.utils.pref.ShowCasePref;
+import com.manimarank.spell4wiki.data.prefs.ShowCasePref;
 import com.manimarank.spell4wiki.utils.SnackBarUtils;
 import com.manimarank.spell4wiki.utils.constants.AppConstants;
-import com.manimarank.spell4wiki.ui.widget.EndlessRecyclerView;
+import com.manimarank.spell4wiki.ui.custom.EndlessRecyclerView;
 
 import java.io.BufferedReader;
 import java.io.File;

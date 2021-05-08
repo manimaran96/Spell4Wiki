@@ -12,7 +12,7 @@ import com.manimarank.spell4wiki.ui.login.LoginActivity
 import com.manimarank.spell4wiki.ui.common.BaseActivity
 import com.manimarank.spell4wiki.data.model.AppIntroData
 import com.manimarank.spell4wiki.utils.GeneralUtils
-import com.manimarank.spell4wiki.utils.pref.PrefManager
+import com.manimarank.spell4wiki.data.prefs.PrefManager
 import com.manimarank.spell4wiki.utils.constants.AppConstants
 import kotlinx.android.synthetic.main.activity_app_intro.*
 

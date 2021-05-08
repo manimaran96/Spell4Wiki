@@ -6,7 +6,7 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatDelegate
 import com.manimaran.crash_reporter.CrashReporter
 import com.manimaran.crash_reporter.CrashReporterConfiguration
-import com.manimarank.spell4wiki.utils.pref.PrefManager
+import com.manimarank.spell4wiki.data.prefs.PrefManager
 import com.manimarank.spell4wiki.ui.dialogs.AppLanguageDialog
 import kotlin.Exception as KotlinException
 

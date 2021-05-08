@@ -10,9 +10,9 @@ import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.core.content.ContextCompat
 import com.manimarank.spell4wiki.R
-import com.manimarank.spell4wiki.apis.WikimediaCommonsUtils.checkFileAvailability
-import com.manimarank.spell4wiki.databases.DBHelper
-import com.manimarank.spell4wiki.databases.entities.WordsHaveAudio
+import com.manimarank.spell4wiki.data.apis.WikimediaCommonsUtils.checkFileAvailability
+import com.manimarank.spell4wiki.data.db.DBHelper
+import com.manimarank.spell4wiki.data.db.entities.WordsHaveAudio
 import com.manimarank.spell4wiki.listerners.FileAvailabilityCallback
 import com.manimarank.spell4wiki.ui.dialogs.RecordInfoDialog.show
 import com.manimarank.spell4wiki.ui.recordaudio.RecordAudioActivity
