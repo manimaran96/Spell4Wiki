@@ -1,4 +1,4 @@
-package com.manimarank.spell4wiki.activities;
+package com.manimarank.spell4wiki.ui.spell4wiktionary;
 
 import android.app.AlertDialog;
 import android.content.Intent;
@@ -20,7 +20,6 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.google.android.material.snackbar.Snackbar;
 import com.manimarank.spell4wiki.R;
 import com.manimarank.spell4wiki.ui.common.BaseActivity;
-import com.manimarank.spell4wiki.adapters.EndlessRecyclerAdapter;
 import com.manimarank.spell4wiki.apis.ApiClient;
 import com.manimarank.spell4wiki.apis.ApiInterface;
 import com.manimarank.spell4wiki.data.model.WikiTitle;
@@ -29,7 +28,7 @@ import com.manimarank.spell4wiki.databases.dao.WikiLangDao;
 import com.manimarank.spell4wiki.databases.dao.WordsHaveAudioDao;
 import com.manimarank.spell4wiki.databases.entities.WikiLang;
 import com.manimarank.spell4wiki.databases.entities.WordsHaveAudio;
-import com.manimarank.spell4wiki.fragments.LanguageSelectionFragment;
+import com.manimarank.spell4wiki.ui.languageselector.LanguageSelectionFragment;
 import com.manimarank.spell4wiki.listerners.OnLanguageSelectionListener;
 import com.manimarank.spell4wiki.data.model.WikiWordsWithoutAudio;
 import com.manimarank.spell4wiki.utils.pref.AppPref;

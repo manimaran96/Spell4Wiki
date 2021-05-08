@@ -9,7 +9,7 @@ import android.os.Handler
 import android.text.TextUtils
 import androidx.core.content.ContextCompat
 import com.manimarank.spell4wiki.R
-import com.manimarank.spell4wiki.activities.MainActivity
+import com.manimarank.spell4wiki.ui.main.MainActivity
 import com.manimarank.spell4wiki.apis.ApiClient
 import com.manimarank.spell4wiki.apis.ApiInterface
 import com.manimarank.spell4wiki.auth.AccountUtils

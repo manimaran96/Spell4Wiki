@@ -14,7 +14,7 @@ import androidx.core.text.HtmlCompat
 import com.manimarank.spell4wiki.R
 import com.manimarank.spell4wiki.databases.DBHelper
 import com.manimarank.spell4wiki.databases.dao.WikiLangDao
-import com.manimarank.spell4wiki.fragments.LanguageSelectionFragment
+import com.manimarank.spell4wiki.ui.languageselector.LanguageSelectionFragment
 import com.manimarank.spell4wiki.listerners.OnLanguageSelectionListener
 import com.manimarank.spell4wiki.ui.common.BaseActivity
 import com.manimarank.spell4wiki.ui.dialogs.AppLanguageDialog.getSelectedLanguage

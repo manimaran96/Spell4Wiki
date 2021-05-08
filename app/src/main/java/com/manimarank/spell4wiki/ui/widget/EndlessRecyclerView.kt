@@ -4,7 +4,7 @@ import android.content.Context
 import android.util.AttributeSet
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.manimarank.spell4wiki.adapters.EndlessRecyclerAdapter
+import com.manimarank.spell4wiki.ui.spell4wiktionary.EndlessRecyclerAdapter
 import com.manimarank.spell4wiki.utils.NetworkUtils.isConnected
 
 /**

@@ -1,4 +1,4 @@
-package com.manimarank.spell4wiki.activities
+package com.manimarank.spell4wiki.ui.webui
 
 import android.annotation.SuppressLint
 import android.content.Intent

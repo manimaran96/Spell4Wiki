@@ -1,4 +1,4 @@
-package com.manimarank.spell4wiki.activities;
+package com.manimarank.spell4wiki.ui.spell4wiktionary;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
@@ -18,10 +18,11 @@ import android.widget.TextView;
 import androidx.interpolator.view.animation.FastOutSlowInInterpolator;
 
 import com.manimarank.spell4wiki.R;
+import com.manimarank.spell4wiki.ui.webui.CommonWebActivity;
 import com.manimarank.spell4wiki.ui.common.BaseActivity;
 import com.manimarank.spell4wiki.databases.DBHelper;
 import com.manimarank.spell4wiki.databases.dao.WordsHaveAudioDao;
-import com.manimarank.spell4wiki.fragments.LanguageSelectionFragment;
+import com.manimarank.spell4wiki.ui.languageselector.LanguageSelectionFragment;
 import com.manimarank.spell4wiki.listerners.OnLanguageSelectionListener;
 import com.manimarank.spell4wiki.utils.ViewExtensionsKt;
 import com.manimarank.spell4wiki.utils.GeneralUtils;

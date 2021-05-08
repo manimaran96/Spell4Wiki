@@ -1,4 +1,4 @@
-package com.manimarank.spell4wiki.activities;
+package com.manimarank.spell4wiki.ui.recordaudio;
 
 import android.Manifest;
 import android.annotation.SuppressLint;

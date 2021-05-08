@@ -1,4 +1,4 @@
-package com.manimarank.spell4wiki.activities;
+package com.manimarank.spell4wiki.ui.webui;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,8 +17,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.manimarank.spell4wiki.R;
 import com.manimarank.spell4wiki.ui.common.BaseActivity;
-import com.manimarank.spell4wiki.fragments.LanguageSelectionFragment;
-import com.manimarank.spell4wiki.fragments.WebViewFragment;
+import com.manimarank.spell4wiki.ui.languageselector.LanguageSelectionFragment;
 import com.manimarank.spell4wiki.listerners.OnLanguageSelectionListener;
 import com.manimarank.spell4wiki.utils.pref.PrefManager;
 import com.manimarank.spell4wiki.utils.constants.AppConstants;

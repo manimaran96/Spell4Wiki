@@ -1,4 +1,4 @@
-package com.manimarank.spell4wiki.fragments;
+package com.manimarank.spell4wiki.ui.languageselector;
 
 import android.app.Activity;
 import android.app.Dialog;
@@ -21,7 +21,6 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.manimarank.spell4wiki.R;
-import com.manimarank.spell4wiki.adapters.LanguageAdapter;
 import com.manimarank.spell4wiki.databases.DBHelper;
 import com.manimarank.spell4wiki.databases.entities.WikiLang;
 import com.manimarank.spell4wiki.listerners.OnLanguageSelectionListener;

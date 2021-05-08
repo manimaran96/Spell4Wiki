@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context=".activities.WiktionarySearchActivity">
+    tools:context=".ui.spell4wiktionary.WiktionarySearchActivity">
 
     <androidx.appcompat.widget.SearchView
         android:id="@+id/search_bar"

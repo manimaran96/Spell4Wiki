@@ -1,4 +1,4 @@
-package com.manimarank.spell4wiki.adapters;
+package com.manimarank.spell4wiki.ui.languageselector;
 
 import android.app.Activity;
 import android.view.Gravity;

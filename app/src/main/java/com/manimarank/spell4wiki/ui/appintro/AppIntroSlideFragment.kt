@@ -1,4 +1,4 @@
-package com.manimarank.spell4wiki.fragments
+package com.manimarank.spell4wiki.ui.appintro
 
 import android.os.Bundle
 import android.text.method.ScrollingMovementMethod
