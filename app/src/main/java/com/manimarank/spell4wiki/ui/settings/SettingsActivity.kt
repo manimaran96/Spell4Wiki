@@ -1,181 +1,158 @@
-package com.manimarank.spell4wiki.activities;
+package com.manimarank.spell4wiki.ui.settings
 
-import android.app.AlertDialog;
-import android.os.Bundle;
-import android.text.Html;
-import android.text.TextUtils;
-import android.text.method.LinkMovementMethod;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.TextView;
+import android.app.AlertDialog
+import android.content.DialogInterface
+import android.os.Bundle
+import android.text.TextUtils
+import android.text.method.LinkMovementMethod
+import android.view.MenuItem
+import android.widget.CompoundButton
+import android.widget.TextView
+import androidx.appcompat.widget.SwitchCompat
+import androidx.core.content.ContextCompat
+import androidx.core.text.HtmlCompat
+import com.manimarank.spell4wiki.R
+import com.manimarank.spell4wiki.databases.DBHelper
+import com.manimarank.spell4wiki.databases.dao.WikiLangDao
+import com.manimarank.spell4wiki.fragments.LanguageSelectionFragment
+import com.manimarank.spell4wiki.listerners.OnLanguageSelectionListener
+import com.manimarank.spell4wiki.ui.common.BaseActivity
+import com.manimarank.spell4wiki.ui.dialogs.AppLanguageDialog.getSelectedLanguage
+import com.manimarank.spell4wiki.ui.dialogs.AppLanguageDialog.show
+import com.manimarank.spell4wiki.utils.WikiLicense
+import com.manimarank.spell4wiki.utils.WikiLicense.licenseNameId
+import com.manimarank.spell4wiki.utils.WikiLicense.licenseUrlFor
+import com.manimarank.spell4wiki.utils.constants.ListMode
+import com.manimarank.spell4wiki.utils.makeGone
+import com.manimarank.spell4wiki.utils.pref.PrefManager
+import kotlinx.android.synthetic.main.activity_settings.*
+import java.util.*
 
-import androidx.appcompat.widget.SwitchCompat;
-import androidx.core.content.ContextCompat;
+class SettingsActivity : BaseActivity() {
+    private lateinit var pref: PrefManager
+    private lateinit var wikiLangDao: WikiLangDao
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_settings)
+        title = getString(R.string.settings)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-import com.manimarank.spell4wiki.R;
-import com.manimarank.spell4wiki.ui.common.BaseActivity;
-import com.manimarank.spell4wiki.ui.dialogs.AppLanguageDialog;
-import com.manimarank.spell4wiki.utils.constants.ListMode;
-import com.manimarank.spell4wiki.databases.DBHelper;
-import com.manimarank.spell4wiki.databases.dao.WikiLangDao;
-import com.manimarank.spell4wiki.databases.entities.WikiLang;
-import com.manimarank.spell4wiki.fragments.LanguageSelectionFragment;
-import com.manimarank.spell4wiki.listerners.OnLanguageSelectionListener;
-import com.manimarank.spell4wiki.utils.pref.PrefManager;
-import com.manimarank.spell4wiki.utils.WikiLicense;
-
-import java.util.Arrays;
-
-
-public class SettingsActivity extends BaseActivity {
-
-    private PrefManager pref;
-    private WikiLangDao wikiLangDao = null;
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_settings);
-        setTitle(getString(R.string.settings));
-
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        pref = PrefManager(applicationContext)
+        wikiLangDao = DBHelper.getInstance(applicationContext).appDatabase.wikiLangDao
+        if (pref.isAnonymous == true) {
+            txtTitleLicense.makeGone()
+            layoutSpell4WikiLang.makeGone()
+            layoutSpell4WordListLang.makeGone()
+            layoutSpell4WordLang.makeGone()
+            layoutLicenseOfUploadAudio.makeGone()
         }
-
-        TextView txtTitleLicense = findViewById(R.id.txtTitleLicense);
-        TextView txtSpell4WikiLang = findViewById(R.id.txtSpell4WikiLang);
-        TextView txtSpell4WordListLang = findViewById(R.id.txtSpell4WordListLang);
-        TextView txtSpell4WordLang = findViewById(R.id.txtSpell4WordLang);
-        TextView txtWiktionaryLang = findViewById(R.id.txtWiktionaryLang);
-        TextView txtLicenseOfUploadAudio = findViewById(R.id.txtLicenseOfUploadAudio);
-        TextView txtLicenseOfUploadAudioLegalCode = findViewById(R.id.txtLicenseOfUploadAudioLegalCode);
-        TextView txtAppLanguage = findViewById(R.id.txtAppLanguage);
-        SwitchCompat switchAbortAlertStatus = findViewById(R.id.switchAbortAlerts);
-        TextView txtAbortAlertStatus = findViewById(R.id.txtAbortAlertStatus);
-
-        View layoutSpell4WikiLang = findViewById(R.id.layoutSpell4WikiLang);
-        View layoutSpell4WordListLang = findViewById(R.id.layoutSpell4WordListLang);
-        View layoutSpell4WordLang = findViewById(R.id.layoutSpell4WordLang);
-        View layoutWiktionaryLang = findViewById(R.id.layoutWiktionaryLang);
-        View layoutLicenseOfUploadAudio = findViewById(R.id.layoutLicenseOfUploadAudio);
-        View layoutLanguageOfApp = findViewById(R.id.layoutLanguageOfApp);
-        View layoutAbortDialog = findViewById(R.id.layoutAbortAlert);
-
-        pref = new PrefManager(getApplicationContext());
-        wikiLangDao = DBHelper.getInstance(getApplicationContext()).getAppDatabase().getWikiLangDao();
-        if (pref.isAnonymous()) {
-            txtTitleLicense.setVisibility(View.GONE);
-            layoutSpell4WikiLang.setVisibility(View.GONE);
-            layoutSpell4WordListLang.setVisibility(View.GONE);
-            layoutSpell4WordLang.setVisibility(View.GONE);
-            layoutLicenseOfUploadAudio.setVisibility(View.GONE);
+        updateLanguageView(txtSpell4WikiLang, pref.languageCodeSpell4Wiki)
+        updateLanguageView(txtSpell4WordListLang, pref.languageCodeSpell4WordList)
+        updateLanguageView(txtSpell4WordLang, pref.languageCodeSpell4Word)
+        updateLanguageView(txtWiktionaryLang, pref.languageCodeWiktionary)
+        layoutSpell4WikiLang.setOnClickListener {
+            val callback = object : OnLanguageSelectionListener {
+                override fun onCallBackListener(langCode: String?) {
+                    updateLanguageView(txtSpell4WikiLang, pref.languageCodeSpell4Wiki)
+                }
+            }
+            val languageSelectionFragment = LanguageSelectionFragment(this)
+            languageSelectionFragment.init(callback, ListMode.SPELL_4_WIKI)
+            languageSelectionFragment.show(supportFragmentManager)
         }
-
-        updateLanguageView(txtSpell4WikiLang, pref.getLanguageCodeSpell4Wiki());
-        updateLanguageView(txtSpell4WordListLang, pref.getLanguageCodeSpell4WordList());
-        updateLanguageView(txtSpell4WordLang, pref.getLanguageCodeSpell4Word());
-        updateLanguageView(txtWiktionaryLang, pref.getLanguageCodeWiktionary());
-
-        layoutSpell4WikiLang.setOnClickListener(v -> {
-            OnLanguageSelectionListener callback = langCode -> updateLanguageView(txtSpell4WikiLang, pref.getLanguageCodeSpell4Wiki());
-            LanguageSelectionFragment languageSelectionFragment = new LanguageSelectionFragment(this);
-            languageSelectionFragment.init(callback, ListMode.SPELL_4_WIKI);
-            languageSelectionFragment.show(getSupportFragmentManager());
-        });
-
-        layoutSpell4WordListLang.setOnClickListener(v -> {
-            OnLanguageSelectionListener callback = langCode -> updateLanguageView(txtSpell4WordListLang, pref.getLanguageCodeSpell4WordList());
-            LanguageSelectionFragment languageSelectionFragment = new LanguageSelectionFragment(this);
-            languageSelectionFragment.init(callback, ListMode.SPELL_4_WORD_LIST);
-            languageSelectionFragment.show(getSupportFragmentManager());
-        });
-
-
-        layoutSpell4WordLang.setOnClickListener(v -> {
-            OnLanguageSelectionListener callback = langCode -> updateLanguageView(txtSpell4WordLang, pref.getLanguageCodeSpell4Word());
-            LanguageSelectionFragment languageSelectionFragment = new LanguageSelectionFragment(this);
-            languageSelectionFragment.init(callback, ListMode.SPELL_4_WORD);
-            languageSelectionFragment.show(getSupportFragmentManager());
-        });
-
-        layoutWiktionaryLang.setOnClickListener(v -> {
-            OnLanguageSelectionListener callback = langCode -> updateLanguageView(txtWiktionaryLang, pref.getLanguageCodeWiktionary());
-            LanguageSelectionFragment languageSelectionFragment = new LanguageSelectionFragment(this);
-            languageSelectionFragment.init(callback, ListMode.WIKTIONARY);
-            languageSelectionFragment.show(getSupportFragmentManager());
-        });
-
-        updateLicenseView(txtLicenseOfUploadAudio, txtLicenseOfUploadAudioLegalCode);
-        layoutLicenseOfUploadAudio.setOnClickListener(v -> {
+        layoutSpell4WordListLang.setOnClickListener {
+            val callback = object : OnLanguageSelectionListener {
+                override fun onCallBackListener(langCode: String?) {
+                    updateLanguageView(txtSpell4WordListLang, pref.languageCodeSpell4WordList)
+                }
+            }
+            val languageSelectionFragment = LanguageSelectionFragment(this)
+            languageSelectionFragment.init(callback, ListMode.SPELL_4_WORD_LIST)
+            languageSelectionFragment.show(supportFragmentManager)
+        }
+        layoutSpell4WordLang.setOnClickListener {
+            val callback = object : OnLanguageSelectionListener {
+                override fun onCallBackListener(langCode: String?) {
+                    updateLanguageView(txtSpell4WordLang, pref.languageCodeSpell4Word)
+                }
+            }
+            val languageSelectionFragment = LanguageSelectionFragment(this)
+            languageSelectionFragment.init(callback, ListMode.SPELL_4_WORD)
+            languageSelectionFragment.show(supportFragmentManager)
+        }
+        layoutWiktionaryLang.setOnClickListener {
+            val callback = object : OnLanguageSelectionListener {
+                override fun onCallBackListener(langCode: String?) {
+                    updateLanguageView(txtWiktionaryLang, pref.languageCodeWiktionary)
+                }
+            }
+            val languageSelectionFragment = LanguageSelectionFragment(this)
+            languageSelectionFragment.init(callback, ListMode.WIKTIONARY)
+            languageSelectionFragment.show(supportFragmentManager)
+        }
+        updateLicenseView(txtLicenseOfUploadAudio, txtLicenseOfUploadAudioLegalCode)
+        layoutLicenseOfUploadAudio.setOnClickListener {
             // setup the alert builder
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setTitle(R.string.license_choose_alert);// add a radio button list
-
-            String[] licensePrefList = {
+            val builder = AlertDialog.Builder(this)
+            builder.setTitle(R.string.license_choose_alert) // add a radio button list
+            val licensePrefList = arrayOf(
                     WikiLicense.LicensePrefs.CC_0,
                     WikiLicense.LicensePrefs.CC_BY_3,
                     WikiLicense.LicensePrefs.CC_BY_SA_3,
                     WikiLicense.LicensePrefs.CC_BY_4,
                     WikiLicense.LicensePrefs.CC_BY_SA_4
-            };
-
-            String[] licenseList = {
+            )
+            val licenseList = arrayOf(
                     getString(R.string.license_name_cc_zero),
                     getString(R.string.license_name_cc_by_three),
                     getString(R.string.license_name_cc_by_sa_three),
                     getString(R.string.license_name_cc_by_four),
                     getString(R.string.license_name_cc_by_sa_four)
-            };
-
-            int checkedItem = Arrays.asList(licensePrefList).indexOf(pref.getUploadAudioLicense());
-            builder.setSingleChoiceItems(licenseList, checkedItem, (dialog, which) -> {
-                pref.setUploadAudioLicense(licensePrefList[which]);
-                updateLicenseView(txtLicenseOfUploadAudio, txtLicenseOfUploadAudioLegalCode);
-                dialog.dismiss();
-            });
-            builder.setNegativeButton(getString(R.string.cancel), null);
-            AlertDialog dialog = builder.create();
-            dialog.show();
-        });
-
-        txtAppLanguage.setText(AppLanguageDialog.INSTANCE.getSelectedLanguage());
-        layoutLanguageOfApp.setOnClickListener(v -> AppLanguageDialog.INSTANCE.show(SettingsActivity.this));
-
-        updateAbortAlertStatus(switchAbortAlertStatus, txtAbortAlertStatus, pref.getAbortAlertStatus());
-        layoutAbortDialog.setOnClickListener(view -> updateAbortAlertStatus(switchAbortAlertStatus, txtAbortAlertStatus, !pref.getAbortAlertStatus()));
-        switchAbortAlertStatus.setOnCheckedChangeListener((compoundButton, show) -> updateAbortAlertStatus(switchAbortAlertStatus, txtAbortAlertStatus, show));
+            )
+            val checkedItem = licensePrefList.indexOf(pref.uploadAudioLicense)
+            builder.setSingleChoiceItems(licenseList, checkedItem) { dialog: DialogInterface, which: Int ->
+                pref.uploadAudioLicense = licensePrefList[which]
+                updateLicenseView(txtLicenseOfUploadAudio, txtLicenseOfUploadAudioLegalCode)
+                dialog.dismiss()
+            }
+            builder.setNegativeButton(getString(R.string.cancel), null)
+            val dialog = builder.create()
+            dialog.show()
+        }
+        txtAppLanguage.text = getSelectedLanguage()
+        layoutLanguageOfApp.setOnClickListener { show(this@SettingsActivity) }
+        updateAbortAlertStatus(switchAbortAlerts, txtAbortAlertStatus, pref.abortAlertStatus)
+        layoutAbortAlert.setOnClickListener { updateAbortAlertStatus(switchAbortAlerts, txtAbortAlertStatus, pref.abortAlertStatus?.not()) }
+        switchAbortAlerts.setOnCheckedChangeListener { _: CompoundButton?, show: Boolean -> updateAbortAlertStatus(switchAbortAlerts, txtAbortAlertStatus, show) }
     }
 
-    private void updateAbortAlertStatus(SwitchCompat switchAbortAlertStatus, TextView txtAbortAlertStatus, Boolean show) {
-        switchAbortAlertStatus.setChecked(show);
-        pref.setAbortAlertStatus(show);
-        txtAbortAlertStatus.setText(getString(show ? R.string.show_exit_alerts_in_spell4wiki_options : R.string.hide_exit_alerts_in_spell4wiki_options));
+    private fun updateAbortAlertStatus(switchAbortAlerts: SwitchCompat, txtAbortAlertStatus: TextView, show: Boolean?) {
+        switchAbortAlerts.isChecked = show ?: false
+        pref.abortAlertStatus = show ?: false
+        txtAbortAlertStatus.text = getString(if (show == true) R.string.show_exit_alerts_in_spell4wiki_options else R.string.hide_exit_alerts_in_spell4wiki_options)
     }
 
-    private void updateLanguageView(TextView txtView, String languageCode) {
-        if (languageCode != null && txtView != null && wikiLangDao != null) {
-            WikiLang wikiLang = wikiLangDao.getWikiLanguageWithCode(languageCode);
-            String value = "";
-            if (wikiLang != null && !TextUtils.isEmpty(wikiLang.getName()))
-                value = wikiLang.getLocalName() + " - " + wikiLang.getName() + " : " + languageCode;
-            txtView.setText(value);
+    private fun updateLanguageView(txtView: TextView, languageCode: String?) {
+        if (languageCode != null) {
+            val wikiLang = wikiLangDao.getWikiLanguageWithCode(languageCode)
+            var value = ""
+            if (wikiLang != null && !TextUtils.isEmpty(wikiLang.name)) value = wikiLang.localName + " - " + wikiLang.name + " : " + languageCode
+            txtView.text = value
         }
     }
 
-    private void updateLicenseView(TextView txtLicenseOfUploadAudio, TextView txtLicenseOfUploadAudioLegalCode) {
-        txtLicenseOfUploadAudio.setText(getString(WikiLicense.licenseNameId(pref.getUploadAudioLicense())));
-        txtLicenseOfUploadAudioLegalCode.setMovementMethod(LinkMovementMethod.getInstance());
-        String ccLegalInfo = "(<a href=" + WikiLicense.licenseUrlFor(pref.getUploadAudioLicense()) + "><font color='" + ContextCompat.getColor(getApplicationContext(), R.color.w_green) + "'>legal code</font></a>)";
-        txtLicenseOfUploadAudioLegalCode.setText(Html.fromHtml(ccLegalInfo));
+    private fun updateLicenseView(txtLicenseOfUploadAudio: TextView, txtLicenseOfUploadAudioLegalCode: TextView) {
+        txtLicenseOfUploadAudio.text = getString(licenseNameId(pref.uploadAudioLicense))
+        txtLicenseOfUploadAudioLegalCode.movementMethod = LinkMovementMethod.getInstance()
+        val ccLegalInfo = "(<a href=" + licenseUrlFor(pref.uploadAudioLicense) + "><font color='" + ContextCompat.getColor(applicationContext, R.color.w_green) + "'>legal code</font></a>)"
+        txtLicenseOfUploadAudioLegalCode.text = HtmlCompat.fromHtml(ccLegalInfo, HtmlCompat.FROM_HTML_MODE_LEGACY)
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem menuItem) {
-        if (menuItem.getItemId() == android.R.id.home) {
-            finish();
-            return true;
+    override fun onOptionsItemSelected(menuItem: MenuItem): Boolean {
+        if (menuItem.itemId == android.R.id.home) {
+            finish()
+            return true
         }
-        return (super.onOptionsItemSelected(menuItem));
+        return super.onOptionsItemSelected(menuItem)
     }
-
 }

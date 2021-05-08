@@ -53,14 +53,14 @@
             android:theme="@style/AppTheme.FullScreen"/>
 
         <activity
-            android:name="com.manimarank.spell4wiki.activities.LanguageSelectionActivity"
+            android:name="com.manimarank.spell4wiki.ui.settings.LanguageSelectionActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize"
             tools:ignore="LockedOrientationActivity" />
 
         <activity
-            android:name="com.manimarank.spell4wiki.activities.LoginActivity"
+            android:name="com.manimarank.spell4wiki.ui.login.LoginActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize"
@@ -122,7 +122,7 @@
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize"
             android:theme="@style/AppTheme" />
         <activity
-            android:name="com.manimarank.spell4wiki.activities.SettingsActivity"
+            android:name="com.manimarank.spell4wiki.ui.settings.SettingsActivity"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize"

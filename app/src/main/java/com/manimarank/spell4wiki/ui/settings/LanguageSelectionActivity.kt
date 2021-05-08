@@ -1,4 +1,4 @@
-package com.manimarank.spell4wiki.activities
+package com.manimarank.spell4wiki.ui.settings
 
 import android.content.Intent
 import android.os.Bundle
@@ -23,18 +23,13 @@ class LanguageSelectionActivity : BaseActivity() {
 
         txtAddLangInfo.text = String.format(getString(R.string.choose_your_preferred_language), AppLanguageDialog.getSelectedLanguage())
 
-        btnAddMyLanguage.setOnClickListener {
-            AppLanguageDialog.show(this)
-        }
+        btnAddMyLanguage.setOnClickListener { AppLanguageDialog.show(this) }
 
-        btnNext.setOnClickListener {
-            openMainActivity()
-        }
+        btnNext.setOnClickListener { openMainActivity() }
     }
 
     private fun openMainActivity() {
-        val intent = Intent(applicationContext, AppIntroActivity::class.java)
-        startActivity(intent)
+        startActivity(Intent(applicationContext, AppIntroActivity::class.java))
         finish()
     }
 }

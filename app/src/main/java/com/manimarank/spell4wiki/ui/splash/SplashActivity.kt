@@ -9,8 +9,8 @@ import com.manimaran.crash_reporter.CrashReporter.showAlertDialogForShareCrash
 import com.manimaran.crash_reporter.interfaces.CrashAlertClickListener
 import com.manimaran.crash_reporter.utils.CrashUtil.Companion.isHaveCrashData
 import com.manimarank.spell4wiki.R
-import com.manimarank.spell4wiki.activities.LanguageSelectionActivity
-import com.manimarank.spell4wiki.activities.LoginActivity
+import com.manimarank.spell4wiki.ui.settings.LanguageSelectionActivity
+import com.manimarank.spell4wiki.ui.login.LoginActivity
 import com.manimarank.spell4wiki.ui.common.BaseActivity
 import com.manimarank.spell4wiki.utils.NetworkUtils.isConnected
 import com.manimarank.spell4wiki.utils.SnackBarUtils.showNormal

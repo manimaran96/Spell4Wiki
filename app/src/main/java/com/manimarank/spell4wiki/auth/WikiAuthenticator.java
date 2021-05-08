@@ -12,7 +12,7 @@ import android.os.Bundle;
 import androidx.annotation.Nullable;
 
 import com.manimarank.spell4wiki.R;
-import com.manimarank.spell4wiki.activities.LoginActivity;
+import com.manimarank.spell4wiki.ui.login.LoginActivity;
 import com.manimarank.spell4wiki.utils.Print;
 
 import static android.accounts.AccountManager.KEY_BOOLEAN_RESULT;
