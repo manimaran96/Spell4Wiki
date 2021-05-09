@@ -27,7 +27,7 @@ class SyncHelper {
     fun syncWikiLanguages() {
         // Sync Wiki Language List
         val dbHelper = DBHelper.getInstance(Spell4WikiApp.getApplicationContext())
-        val api = ApiClient.getApi().create(ApiInterface::class.java)
+        val api = ApiClient.api.create(ApiInterface::class.java)
         val wikiBaseDataCall = api.fetchWikiBaseData()
         wikiBaseDataCall.enqueue(object : Callback<WikiBaseData?> {
             override fun onResponse(call: Call<WikiBaseData?>, response: Response<WikiBaseData?>) {

@@ -65,7 +65,7 @@ class ContributorsActivity : BaseActivity() {
         layoutCoreContributors.makeGone()
         recyclerViewCodeContributors.makeGone()
         if (isConnected(applicationContext)) {
-            val api = ApiClient.getApi().create(ApiInterface::class.java)
+            val api = ApiClient.api.create(ApiInterface::class.java)
             val call = api.fetchContributorData()
             call.enqueue(object : Callback<ContributorData?> {
                 override fun onResponse(call: Call<ContributorData?>, response: Response<ContributorData?>) {
@@ -98,20 +98,22 @@ class ContributorsActivity : BaseActivity() {
         loadingContributors.makeVisible()
         recyclerViewCodeContributors.makeGone()
         layoutCoreContributors.makeGone()
-        val api = ApiClient.getApi().create(ApiInterface::class.java)
+        val api = ApiClient.api.create(ApiInterface::class.java)
         val call = api.fetchCodeContributorsList()
-        call.enqueue(object : Callback<List<CodeContributors>?> {
-            override fun onResponse(call: Call<List<CodeContributors>?>, response: Response<List<CodeContributors>?>) {
+        call.enqueue(object : Callback<List<CodeContributors?>?> {
+            override fun onResponse(call: Call<List<CodeContributors?>?>, response: Response<List<CodeContributors?>?>) {
                 if (response.isSuccessful && response.body() != null) {
                     codeContributorsList.clear()
-                    codeContributorsList.addAll(response.body()!!)
+                    response.body()?.filterNotNull()?.forEach { cc ->
+                        codeContributorsList.add(cc)
+                    }
                     recyclerViewCodeContributors.adapter?.notifyDataSetChanged()
                 }
                 loadingContributors.makeGone()
                 recyclerViewCodeContributors.makeVisible()
             }
 
-            override fun onFailure(call: Call<List<CodeContributors>?>, t: Throwable) {
+            override fun onFailure(call: Call<List<CodeContributors?>?>, t: Throwable) {
                 t.printStackTrace()
             }
         })
