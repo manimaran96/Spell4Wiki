@@ -1,130 +1,93 @@
-package com.manimarank.spell4wiki.ui.languageselector;
+package com.manimarank.spell4wiki.ui.languageselector
 
-import android.app.Activity;
-import android.view.Gravity;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Filter;
-import android.widget.Filterable;
-import android.widget.RadioButton;
-import android.widget.TextView;
+import android.view.Gravity
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.Filter
+import android.widget.Filterable
+import android.widget.RadioButton
+import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
+import com.manimarank.spell4wiki.R
+import com.manimarank.spell4wiki.data.db.entities.WikiLang
+import com.manimarank.spell4wiki.ui.listerners.OnLanguageSelectionListener
+import com.manimarank.spell4wiki.utils.ToastUtils.showLong
+import java.util.*
 
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
-
-import com.manimarank.spell4wiki.R;
-import com.manimarank.spell4wiki.data.db.entities.WikiLang;
-import com.manimarank.spell4wiki.ui.listerners.OnLanguageSelectionListener;
-import com.manimarank.spell4wiki.utils.ToastUtils;
-
-import java.util.ArrayList;
-import java.util.List;
-
-public class LanguageAdapter extends RecyclerView.Adapter<LanguageAdapter.ViewHolder> implements Filterable {
-
-    private Activity mActivity;
-    private List<WikiLang> mList;
-    private List<WikiLang> mBackUpList;
-    private String existLangCode;
-    private OnLanguageSelectionListener mListener;
-
-    public LanguageAdapter(Activity activity, List<WikiLang> list, OnLanguageSelectionListener listener, String existLangCode) {
-        this.mActivity = activity;
-        this.mList = list;
-        this.mBackUpList = list;
-        this.existLangCode = existLangCode;
-        this.mListener = listener;
+class LanguageAdapter(private var mList: List<WikiLang>, listener: OnLanguageSelectionListener, private val existLangCode: String?) : RecyclerView.Adapter<LanguageAdapter.ViewHolder>(), Filterable {
+    private val mBackUpList: List<WikiLang> = mList
+    private val mListener: OnLanguageSelectionListener = listener
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        val pos = holder.adapterPosition
+        val model = mList[pos]
+        val localName = model.localName + " : " + model.code
+        holder.txtLanguage.text = model.name
+        holder.txtLocalName.text = localName
+        holder.txtLocalName.gravity = if (model.isLeftDirection) Gravity.START else Gravity.END
+        holder.radioSelect.isChecked = existLangCode == model.code
+        holder.layout.setOnClickListener {
+            holder.radioSelect.isChecked = true
+            showLong(String.format(it.context.getString(R.string.select_language_response_msg), model.name))
+            mListener.onCallBackListener(model.code)
+        }
     }
 
-    @Override
-    public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
-        int pos = holder.getAdapterPosition();
-        final WikiLang model = mList.get(pos);
-
-        String localName = model.getLocalName() + " : " + model.getCode();
-        holder.txtLanguage.setText(model.getName());
-        holder.txtLocalName.setText(localName);
-        holder.txtLocalName.setGravity(model.getIsLeftDirection() ? Gravity.START : Gravity.END);
-        holder.radioSelect.setChecked(existLangCode != null && existLangCode.equals(model.getCode()));
-
-        holder.layout.setOnClickListener(view1 -> {
-            holder.radioSelect.setChecked(true);
-            ToastUtils.INSTANCE.showLong(String.format(mActivity.getString(R.string.select_language_response_msg), model.getName()));
-            mListener.onCallBackListener(model.getCode());
-        });
-
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_language_row, parent, false)
+        return ViewHolder(view)
     }
 
-    @NonNull
-    @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_language_row, parent, false);
-        return new ViewHolder(view);
+    override fun getItemCount(): Int {
+        return mList.size
     }
 
-    @Override
-    public int getItemCount() {
-        return mList.size();
-    }
-
-    @Override
-    public Filter getFilter() {
-        return new Filter() {
-            @Override
-            protected FilterResults performFiltering(CharSequence constraint) {
-                FilterResults results = new FilterResults();
-
-                if (constraint != null && constraint.length() > 0) {
-                    List<WikiLang> filterList = new ArrayList<>();
-                    for (WikiLang l : mBackUpList) {
-                        if ((l.getName().toLowerCase() + " " + l.getLocalName().toLowerCase() + " " + l.getCode().toLowerCase()).contains(constraint.toString().toLowerCase())) {
-                            filterList.add(l);
+    override fun getFilter(): Filter {
+        return object : Filter() {
+            override fun performFiltering(constraint: CharSequence): FilterResults {
+                val results = FilterResults()
+                if (constraint.isNotEmpty()) {
+                    val filterList: MutableList<WikiLang> = ArrayList()
+                    mBackUpList.forEach { l ->
+                        if ((l.name.toLowerCase(Locale.ROOT) + " " + l.localName.toLowerCase(Locale.ROOT) + " " + l.code.toLowerCase(Locale.ROOT)).contains(constraint.toString().toLowerCase(Locale.ROOT))) {
+                            filterList.add(l)
                         }
                     }
-                    results.count = filterList.size();
-                    results.values = filterList;
+                    results.count = filterList.size
+                    results.values = filterList
                 } else {
-                    results.count = mBackUpList.size();
-                    results.values = mBackUpList;
+                    results.count = mBackUpList.size
+                    results.values = mBackUpList
                 }
-                return results;
+                return results
             }
 
-            @Override
-            protected void publishResults(CharSequence constraint, FilterResults results) {
-                mList = castList(results.values, WikiLang.class);
-                notifyDataSetChanged();
+            override fun publishResults(constraint: CharSequence, results: FilterResults) {
+                mList = castList(results.values, WikiLang::class.java).filterNotNull()
+                notifyDataSetChanged()
             }
-        };
-    }
-
-    public static <T> List<T> castList(Object obj, Class<T> clazz) {
-        List<T> result = new ArrayList<>();
-        if(obj instanceof List<?>) {
-            for (Object o : (List<?>) obj) {
-                result.add(clazz.cast(o));
-            }
-            return result;
         }
-        return result;
     }
 
     /* adapter view holder */
-    static class ViewHolder extends RecyclerView.ViewHolder {
+    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val txtLanguage: TextView = itemView.findViewById(R.id.txtLanguage)
+        val txtLocalName: TextView = itemView.findViewById(R.id.txtLocalName)
+        val radioSelect: RadioButton = itemView.findViewById(R.id.radioSelect)
+        val layout: View = itemView.findViewById(R.id.layoutItem)
+    }
 
-        private TextView txtLanguage, txtLocalName;
-        private RadioButton radioSelect;
-        private View layout;
-
-        ViewHolder(@NonNull View itemView) {
-            super(itemView);
-            txtLanguage = itemView.findViewById(R.id.txtLanguage);
-            txtLocalName = itemView.findViewById(R.id.txtLocalName);
-            radioSelect = itemView.findViewById(R.id.radioSelect);
-            layout = itemView.findViewById(R.id.layoutItem);
+    companion object {
+        fun <T> castList(obj: Any?, clazz: Class<T>): List<T?> {
+            val result: MutableList<T?> = ArrayList()
+            if (obj is List<*>) {
+                for (o in obj) {
+                    result.add(clazz.cast(o))
+                }
+                return result
+            }
+            return result
         }
-
     }
 
 }

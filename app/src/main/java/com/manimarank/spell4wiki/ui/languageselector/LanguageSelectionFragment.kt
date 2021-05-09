@@ -1,99 +1,71 @@
-package com.manimarank.spell4wiki.ui.languageselector;
+package com.manimarank.spell4wiki.ui.languageselector
 
-import android.app.Activity;
-import android.app.Dialog;
-import android.content.DialogInterface;
-import android.os.Bundle;
-import android.text.TextUtils;
-import android.util.DisplayMetrics;
-import android.view.View;
-import android.widget.Button;
-import android.widget.FrameLayout;
-import android.widget.ImageView;
-import android.widget.TextView;
+import android.app.Activity
+import android.app.Dialog
+import android.content.DialogInterface
+import android.os.Bundle
+import android.text.TextUtils
+import android.util.DisplayMetrics
+import android.view.View
+import android.widget.Button
+import android.widget.FrameLayout
+import android.widget.ImageView
+import android.widget.TextView
+import androidx.appcompat.widget.SearchView
+import androidx.fragment.app.FragmentManager
+import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.manimarank.spell4wiki.R
+import com.manimarank.spell4wiki.data.db.DBHelper
+import com.manimarank.spell4wiki.data.db.entities.WikiLang
+import com.manimarank.spell4wiki.data.prefs.PrefManager
+import com.manimarank.spell4wiki.ui.listerners.OnLanguageSelectionListener
+import com.manimarank.spell4wiki.utils.GeneralUtils.openUrlInBrowser
+import com.manimarank.spell4wiki.utils.NetworkUtils.isConnected
+import com.manimarank.spell4wiki.utils.SnackBarUtils.showNormal
+import com.manimarank.spell4wiki.utils.constants.ListMode
+import com.manimarank.spell4wiki.utils.constants.ListMode.Companion.EnumListMode
+import com.manimarank.spell4wiki.utils.constants.Urls
+import com.manimarank.spell4wiki.utils.makeGone
+import com.manimarank.spell4wiki.utils.makeVisible
+import java.util.*
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.widget.SearchView;
-import androidx.fragment.app.FragmentManager;
-import androidx.recyclerview.widget.RecyclerView;
+class LanguageSelectionFragment(private val mActivity: Activity) : BottomSheetDialogFragment() {
+    private lateinit var pref: PrefManager
+    private var callback: OnLanguageSelectionListener? = null
+    private var wikiLanguageList: MutableList<WikiLang> = ArrayList()
+    private var adapter: LanguageAdapter? = null
 
-import com.google.android.material.bottomsheet.BottomSheetBehavior;
-import com.google.android.material.bottomsheet.BottomSheetDialog;
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
-import com.manimarank.spell4wiki.R;
-import com.manimarank.spell4wiki.data.db.DBHelper;
-import com.manimarank.spell4wiki.data.db.entities.WikiLang;
-import com.manimarank.spell4wiki.ui.listerners.OnLanguageSelectionListener;
-import com.manimarank.spell4wiki.utils.GeneralUtils;
-import com.manimarank.spell4wiki.utils.NetworkUtils;
-import com.manimarank.spell4wiki.data.prefs.PrefManager;
-import com.manimarank.spell4wiki.utils.SnackBarUtils;
-import com.manimarank.spell4wiki.utils.constants.ListMode;
-import com.manimarank.spell4wiki.utils.constants.ListMode.Companion.EnumListMode;
-import com.manimarank.spell4wiki.utils.constants.Urls;
-
-import org.jetbrains.annotations.NotNull;
-
-import java.util.ArrayList;
-import java.util.List;
-
-
-public class LanguageSelectionFragment extends BottomSheetDialogFragment {
-
-    private PrefManager pref;
-    private OnLanguageSelectionListener callback;
-    private List<WikiLang> wikiLanguageList = new ArrayList<>();
-    private LanguageAdapter adapter;
     @EnumListMode
-    private int listMode;
-    private String preSelectedLanguageCode = null;
+    private var listMode = 0
+    private var preSelectedLanguageCode: String? = null
 
-    private Activity mActivity;
-
-    public LanguageSelectionFragment(Activity activity) {
-        this.mActivity = activity;
+    @JvmOverloads
+    fun init(callback: OnLanguageSelectionListener?, @EnumListMode mode: Int, preSelectedLanguageCode: String? = null) {
+        this.callback = callback
+        listMode = mode
+        this.preSelectedLanguageCode = preSelectedLanguageCode
+        isCancelable = true
     }
 
-    public void init(OnLanguageSelectionListener callback, @EnumListMode int mode) {
-        init(callback, mode, null);
-    }
-
-    public void init(OnLanguageSelectionListener callback, @EnumListMode int mode, String preSelectedLanguageCode) {
-        this.callback = callback;
-        this.listMode = mode;
-        this.preSelectedLanguageCode = preSelectedLanguageCode;
-        setCancelable(true);
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
-    @NonNull
-    @Override
-    public Dialog onCreateDialog(Bundle savedInstanceState) {
-
-        pref = new PrefManager(getContext());
-        if (TextUtils.isEmpty(preSelectedLanguageCode))
-            preSelectedLanguageCode = getExistingLanguageCode();
-
-        final BottomSheetDialog dialog = new BottomSheetDialog(mActivity, R.style.AppTheme);
-
-        dialog.setContentView(R.layout.bottom_sheet_language_selection);
-
-        TextView txtTitle = dialog.findViewById(R.id.text_select_lang_title);
-        if (!TextUtils.isEmpty(getSubTitleInfo()) && txtTitle != null) {
-            txtTitle.setVisibility(View.VISIBLE);
-            txtTitle.setText(getSubTitleInfo());
+    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+        pref = PrefManager(context)
+        if (TextUtils.isEmpty(preSelectedLanguageCode)) preSelectedLanguageCode = existingLanguageCode
+        val dialog = BottomSheetDialog(mActivity, R.style.AppTheme)
+        dialog.setContentView(R.layout.bottom_sheet_language_selection)
+        val txtTitle = dialog.findViewById<TextView>(R.id.text_select_lang_title)
+        if (!TextUtils.isEmpty(subTitleInfo) && txtTitle != null) {
+            txtTitle.makeVisible()
+            txtTitle.text = subTitleInfo
         }
-        final RecyclerView recyclerView = dialog.findViewById(R.id.recyclerView);
-        ImageView btnClose = dialog.findViewById(R.id.btn_close);
-        final SearchView searchView = dialog.findViewById(R.id.search_view);
-        View layoutAddLanguage = dialog.findViewById(R.id.layoutAddLanguage);
-        Button btnAddMyLanguage = dialog.findViewById(R.id.btnAddMyLanguage);
-
-        DBHelper dbHelper = DBHelper.getInstance(getContext());
+        val recyclerView = dialog.findViewById<RecyclerView>(R.id.recyclerView)
+        val btnClose = dialog.findViewById<ImageView>(R.id.btn_close)
+        val searchView = dialog.findViewById<SearchView>(R.id.search_view)
+        val layoutAddLanguage = dialog.findViewById<View>(R.id.layoutAddLanguage)
+        val btnAddMyLanguage = dialog.findViewById<Button>(R.id.btnAddMyLanguage)
+        val dbHelper = DBHelper.getInstance(context)
 
         /*
          * Check Wiktionary mode or not
@@ -101,153 +73,101 @@ public class LanguageSelectionFragment extends BottomSheetDialogFragment {
          * If Contribution mode show only language have "title_words_without_audio" key-value
          * "title_words_without_audio" - category of words without audio in wiktionary
          */
-        wikiLanguageList.clear();
+        wikiLanguageList.clear()
         if (listMode == ListMode.SPELL_4_WIKI) {
-            wikiLanguageList = dbHelper.getAppDatabase().getWikiLangDao().getWikiLanguageListForWordsWithoutAudio();
-            if (layoutAddLanguage != null) {
-                layoutAddLanguage.setVisibility(View.VISIBLE);
-            }
-            if (btnAddMyLanguage != null) {
-                btnAddMyLanguage.setOnClickListener(v -> {
-                    if (getActivity() != null && NetworkUtils.INSTANCE.isConnected(getActivity())) {
-                        GeneralUtils.openUrlInBrowser(getActivity(), Urls.FORM_ADD_MY_LANGUAGE);
-                    } else
-                        SnackBarUtils.INSTANCE.showNormal(btnAddMyLanguage, getString(R.string.check_internet));
-                });
+            wikiLanguageList = dbHelper.appDatabase.wikiLangDao.wikiLanguageListForWordsWithoutAudio
+            layoutAddLanguage.makeVisible()
+            btnAddMyLanguage?.setOnClickListener {
+                if (isAdded && isConnected(requireContext())) {
+                    openUrlInBrowser(requireContext(), Urls.FORM_ADD_MY_LANGUAGE)
+                } else showNormal(btnAddMyLanguage, getString(R.string.check_internet))
             }
         } else {
-            wikiLanguageList = dbHelper.getAppDatabase().getWikiLangDao().getWikiLanguageList();
-            if (layoutAddLanguage != null) {
-                layoutAddLanguage.setVisibility(View.GONE);
+            wikiLanguageList = dbHelper.appDatabase.wikiLangDao.wikiLanguageList
+            layoutAddLanguage.makeGone()
+        }
+        val languageSelectionListener = object : OnLanguageSelectionListener {
+            override fun onCallBackListener(langCode: String?) {
+                when (listMode) {
+                    ListMode.SPELL_4_WIKI -> pref.languageCodeSpell4Wiki = langCode
+                    ListMode.SPELL_4_WORD_LIST -> pref.languageCodeSpell4WordList = langCode
+                    ListMode.SPELL_4_WORD -> pref.languageCodeSpell4Word = langCode
+                    ListMode.WIKTIONARY -> pref.languageCodeWiktionary = langCode
+                    ListMode.TEMP -> {
+                    }
+                }
+                callback?.onCallBackListener(langCode)
+                dismiss()
             }
         }
-
-        OnLanguageSelectionListener languageSelectionListener = langCode -> {
-            switch (listMode) {
-                case ListMode.SPELL_4_WIKI:
-                    pref.setLanguageCodeSpell4Wiki(langCode);
-                    break;
-                case ListMode.SPELL_4_WORD_LIST:
-                    pref.setLanguageCodeSpell4WordList(langCode);
-                    break;
-                case ListMode.SPELL_4_WORD:
-                    pref.setLanguageCodeSpell4Word(langCode);
-                    break;
-                case ListMode.WIKTIONARY:
-                    pref.setLanguageCodeWiktionary(langCode);
-                    break;
-                case ListMode.TEMP:
-                    break;
-            }
-
-            if (callback != null)
-                callback.onCallBackListener(langCode);
-            dismiss();
-        };
-
-        adapter = new LanguageAdapter(getActivity(), wikiLanguageList, languageSelectionListener, preSelectedLanguageCode);
-        if (recyclerView != null) {
-            recyclerView.setAdapter(adapter);
-        }
-
-        if (btnClose != null) {
-            btnClose.setOnClickListener(view -> dismiss());
-        }
-
-        dialog.setOnShowListener(dialog1 -> {
-            BottomSheetDialog d = (BottomSheetDialog) dialog1;
-
-            FrameLayout bottomSheet = d.findViewById(R.id.design_bottom_sheet);
+        adapter = LanguageAdapter(wikiLanguageList, languageSelectionListener, preSelectedLanguageCode)
+        recyclerView?.adapter = adapter
+        btnClose?.setOnClickListener { dismiss() }
+        dialog.setOnShowListener { dialog1: DialogInterface ->
+            val d = dialog1 as BottomSheetDialog
+            val bottomSheet = d.findViewById<FrameLayout>(R.id.design_bottom_sheet)
             if (bottomSheet != null) {
-                BottomSheetBehavior behavior = BottomSheetBehavior.from(bottomSheet);
-                behavior.setHideable(false);
-                behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+                val behavior: BottomSheetBehavior<*> = BottomSheetBehavior.from(bottomSheet)
+                behavior.isHideable = false
+                behavior.state = BottomSheetBehavior.STATE_EXPANDED
 
                 // Full screen mode no collapse
-                DisplayMetrics displaymetrics = new DisplayMetrics();
-                mActivity.getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
-                int screenHeight = displaymetrics.heightPixels;
-                behavior.setPeekHeight(screenHeight);
+                val displayMetrics = DisplayMetrics()
+                mActivity.windowManager.defaultDisplay.getMetrics(displayMetrics)
+                val screenHeight = displayMetrics.heightPixels
+                behavior.peekHeight = screenHeight
+            }
+        }
+
+        searchView?.queryHint = getString(R.string.search)
+        searchView?.isQueryRefinementEnabled = true
+        searchView?.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String): Boolean {
+                return false
             }
 
-        });
+            override fun onQueryTextChange(newText: String): Boolean {
+                adapter?.filter?.filter(newText)
+                return false
+            }
+        })
 
-        if (searchView != null) {
-            searchView.setQueryHint(getString(R.string.search));
-            searchView.setQueryRefinementEnabled(true);
-            searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-                @Override
-                public boolean onQueryTextSubmit(String query) {
-                    return false;
-                }
-
-                @Override
-                public boolean onQueryTextChange(String newText) {
-                    if (adapter != null)
-                        adapter.getFilter().filter(newText);
-                    return false;
-                }
-            });
-        }
-        return dialog;
+        return dialog
     }
 
-    private String getExistingLanguageCode() {
-        switch (listMode) {
-            case ListMode.SPELL_4_WIKI:
-                return pref.getLanguageCodeSpell4Wiki();
-            case ListMode.SPELL_4_WORD_LIST:
-                return pref.getLanguageCodeSpell4WordList();
-            case ListMode.SPELL_4_WORD:
-                return pref.getLanguageCodeSpell4Word();
-            case ListMode.WIKTIONARY:
-                return pref.getLanguageCodeWiktionary();
-            case ListMode.TEMP:
-            default:
-                return null;
+    private val existingLanguageCode: String?
+        get() = when (listMode) {
+            ListMode.SPELL_4_WIKI -> pref.languageCodeSpell4Wiki
+            ListMode.SPELL_4_WORD_LIST -> pref.languageCodeSpell4WordList
+            ListMode.SPELL_4_WORD -> pref.languageCodeSpell4Word
+            ListMode.WIKTIONARY -> pref.languageCodeWiktionary
+            ListMode.TEMP -> null
+            else -> null
         }
-    }
-
-    private String getSubTitleInfo() {
-        String info = null;
-        switch (listMode) {
-            case ListMode.SPELL_4_WIKI:
-                info = getString(R.string.spell4wiktionary);
-                break;
-            case ListMode.SPELL_4_WORD_LIST:
-                info = getString(R.string.spell4wordlist);
-                break;
-            case ListMode.SPELL_4_WORD:
-                info = getString(R.string.spell4word);
-                break;
-            case ListMode.WIKTIONARY:
-                info = getString(R.string.wiktionary);
-                break;
-            case ListMode.TEMP:
-                info = getString(R.string.temporary);
+    private val subTitleInfo: String?
+        get() {
+            var info: String? = null
+            when (listMode) {
+                ListMode.SPELL_4_WIKI -> info = getString(R.string.spell4wiktionary)
+                ListMode.SPELL_4_WORD_LIST -> info = getString(R.string.spell4wordlist)
+                ListMode.SPELL_4_WORD -> info = getString(R.string.spell4word)
+                ListMode.WIKTIONARY -> info = getString(R.string.wiktionary)
+                ListMode.TEMP -> info = getString(R.string.temporary)
+            }
+            if (info != null) {
+                info = String.format(getString(R.string.language_for_note), info)
+            }
+            return info
         }
-        if (info != null) {
-            info = String.format(getString(R.string.language_for_note), info);
-        }
-        return info;
-    }
 
-    @Override
-    public void onCancel(@NotNull DialogInterface dialog) {
-        super.onCancel(dialog);
-    }
-
-    public void show(FragmentManager fragmentManager) {
+    fun show(fragmentManager: FragmentManager) {
         try {
-            if (fragmentManager.findFragmentByTag(getTagValue()) != null)
-                return;
-        } catch (Exception ignore) {
-
+            if (fragmentManager.findFragmentByTag(tagValue) != null) return
+        } catch (ignore: Exception) {
         }
-        show(fragmentManager, getTagValue());
+        show(fragmentManager, tagValue)
     }
 
-    public String getTagValue() {
-        return "LANGUAGE_FRAGMENT";
-    }
+    val tagValue: String
+        get() = "LANGUAGE_FRAGMENT"
 }
