@@ -15,18 +15,16 @@ import androidx.loader.content.CursorLoader
  * Utility class for File explore paths
  */
 object RealPathUtil {
-    @JvmStatic
+
     fun getRealPath(context: Context, fileUri: Uri): String? {
-        val realPath: String?
         // SDK < API11
-        realPath = if (Build.VERSION.SDK_INT < 11) {
+        return if (Build.VERSION.SDK_INT < 11) {
             getRealPathFromURI_BelowAPI11(context, fileUri)
         } else if (Build.VERSION.SDK_INT < 19) {
             getRealPathFromURI_API11to18(context, fileUri)
         } else {
             getRealPathFromURI_API19(context, fileUri)
         }
-        return realPath
     }
 
     @SuppressLint("NewApi")

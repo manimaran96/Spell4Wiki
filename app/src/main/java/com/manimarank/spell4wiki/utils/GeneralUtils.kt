@@ -9,6 +9,7 @@ import android.net.Uri
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.core.content.ContextCompat
+import androidx.interpolator.view.animation.FastOutSlowInInterpolator
 import com.manimarank.spell4wiki.R
 import com.manimarank.spell4wiki.data.apis.WikimediaCommonsUtils.checkFileAvailability
 import com.manimarank.spell4wiki.data.db.DBHelper
@@ -24,6 +25,8 @@ import com.manimarank.spell4wiki.ui.webui.CommonWebContentActivity
 import com.manimarank.spell4wiki.utils.NetworkUtils.isConnected
 import com.manimarank.spell4wiki.utils.ToastUtils.showLong
 import com.manimarank.spell4wiki.utils.constants.AppConstants
+import uk.co.samuelwall.materialtaptargetprompt.MaterialTapTargetPrompt
+import uk.co.samuelwall.materialtaptargetprompt.extras.focals.RectanglePromptFocal
 import kotlin.Exception as KotlinException
 
 /**
@@ -114,5 +117,12 @@ object GeneralUtils {
         intent.putExtra(AppConstants.TITLE, title)
         intent.putExtra(AppConstants.URL, url)
         activity.startActivityForResult(intent, AppConstants.RC_UPLOAD_DIALOG)
+    }
+
+    fun getPromptBuilder(activity: Activity): MaterialTapTargetPrompt.Builder {
+        return MaterialTapTargetPrompt.Builder(activity)
+            .setPromptFocal(RectanglePromptFocal())
+            .setAnimationInterpolator(FastOutSlowInInterpolator())
+            .setFocalPadding(R.dimen.show_case_focal_padding)
     }
 }

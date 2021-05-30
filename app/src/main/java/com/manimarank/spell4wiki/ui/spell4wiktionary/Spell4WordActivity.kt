@@ -9,7 +9,6 @@ import android.os.Handler
 import android.text.TextUtils
 import android.view.*
 import android.widget.TextView
-import androidx.interpolator.view.animation.FastOutSlowInInterpolator
 import com.manimarank.spell4wiki.R
 import com.manimarank.spell4wiki.data.db.DBHelper
 import com.manimarank.spell4wiki.data.prefs.PrefManager
@@ -20,6 +19,7 @@ import com.manimarank.spell4wiki.ui.common.BaseActivity
 import com.manimarank.spell4wiki.ui.languageselector.LanguageSelectionFragment
 import com.manimarank.spell4wiki.ui.listerners.OnLanguageSelectionListener
 import com.manimarank.spell4wiki.ui.webui.CommonWebActivity
+import com.manimarank.spell4wiki.utils.GeneralUtils.getPromptBuilder
 import com.manimarank.spell4wiki.utils.GeneralUtils.showRecordDialog
 import com.manimarank.spell4wiki.utils.NetworkUtils.isConnected
 import com.manimarank.spell4wiki.utils.SnackBarUtils.showLong
@@ -28,9 +28,7 @@ import com.manimarank.spell4wiki.utils.constants.ListMode
 import com.manimarank.spell4wiki.utils.constants.Urls
 import com.manimarank.spell4wiki.utils.removeStyleAfterPaste
 import kotlinx.android.synthetic.main.activity_spell_4_word.*
-import uk.co.samuelwall.materialtaptargetprompt.MaterialTapTargetPrompt
 import uk.co.samuelwall.materialtaptargetprompt.MaterialTapTargetSequence
-import uk.co.samuelwall.materialtaptargetprompt.extras.focals.RectanglePromptFocal
 import java.util.*
 
 class Spell4WordActivity : BaseActivity() {
@@ -142,19 +140,14 @@ class Spell4WordActivity : BaseActivity() {
     private fun callShowCaseUI() {
         if (!isFinishing && !isDestroyed && isNotShowed(ShowCasePref.SPELL_4_WORD_PAGE)) {
             val sequence = MaterialTapTargetSequence().setSequenceCompleteListener { showed(ShowCasePref.SPELL_4_WORD_PAGE) }
-            sequence.addPrompt(promptBuilder
+            sequence.addPrompt(
+                getPromptBuilder(this@Spell4WordActivity)
                     .setTarget(R.id.editSpell4Word)
                     .setPrimaryText(R.string.sc_t_spell4word_page_edit_word)
                     .setSecondaryText(R.string.sc_d_spell4word_page_edit_word))
                     .show()
         }
     }
-
-    private val promptBuilder: MaterialTapTargetPrompt.Builder
-        get() = MaterialTapTargetPrompt.Builder(this@Spell4WordActivity)
-                .setPromptFocal(RectanglePromptFocal())
-                .setAnimationInterpolator(FastOutSlowInInterpolator())
-                .setFocalPadding(R.dimen.show_case_focal_padding)
 
     fun updateList(word: String?) {}
 
