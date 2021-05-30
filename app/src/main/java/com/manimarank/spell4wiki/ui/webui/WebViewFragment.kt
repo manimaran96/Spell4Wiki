@@ -140,18 +140,22 @@ class WebViewFragment : Fragment() {
     }
 
     private fun showPageNotFound() {
-        webView.makeInVisible()
-        txtLoading.makeInVisible()
-        progressBar.makeInVisible()
-        layoutWebPageNotFound.makeVisible()
-        if (!isConnected(requireContext())) showLong(fabRecord, getString(R.string.check_internet))
+        if (isAdded) {
+            webView.makeInVisible()
+            txtLoading.makeInVisible()
+            progressBar.makeInVisible()
+            layoutWebPageNotFound.makeVisible()
+            if (!isConnected(requireContext())) showLong(fabRecord, getString(R.string.check_internet))
+        }
     }
 
     private fun loadingVisibility(visibility: Int) {
-        txtLoading.visibility = visibility
-        progressBar.visibility = visibility
-        webView.visibility = if (visibility == View.VISIBLE) View.INVISIBLE else View.VISIBLE
-        layoutWebPageNotFound.visibility = View.INVISIBLE
+        if (isAdded) {
+            txtLoading.visibility = visibility
+            progressBar.visibility = visibility
+            webView.visibility = if (visibility == View.VISIBLE) View.INVISIBLE else View.VISIBLE
+            layoutWebPageNotFound.visibility = View.INVISIBLE
+        }
     }
 
     fun backwardWebPage() {

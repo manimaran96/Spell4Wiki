@@ -121,9 +121,9 @@ class PrefManager(private val mContext: Context?) {
             editor.apply()
         }
     var abortAlertStatus: Boolean?
-        get() = pref.getBoolean(ABORT_ALERT_STATUS, true)
+        get() = pref.getBoolean(ABORT_ALERT_STATUS, false)
         set(show) {
-            editor.putBoolean(ABORT_ALERT_STATUS, show!!)
+            editor.putBoolean(ABORT_ALERT_STATUS, show ?: false)
             editor.apply()
         }
 
