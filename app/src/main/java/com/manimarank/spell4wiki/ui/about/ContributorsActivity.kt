@@ -22,6 +22,7 @@ import com.manimarank.spell4wiki.utils.makeVisible
 import com.manimarank.spell4wiki.data.prefs.ShowCasePref
 import com.manimarank.spell4wiki.data.prefs.ShowCasePref.isNotShowed
 import com.manimarank.spell4wiki.data.prefs.ShowCasePref.showed
+import com.manimarank.spell4wiki.utils.GeneralUtils
 import kotlinx.android.synthetic.main.activity_contributors.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -72,7 +73,9 @@ class ContributorsActivity : BaseActivity() {
                     if (response.isSuccessful && response.body() != null) {
                         val resBody = response.body()
                         coreContributorsList.clear()
-                        coreContributorsList.addAll(response.body()!!.core_contributors)
+                        resBody?.core_contributors?.forEach { coreContributors ->
+                            coreContributorsList.add(coreContributors)
+                        }
                         coreContributorsAdapter.notifyDataSetChanged()
                         val wikiTechHelpers = StringBuilder()
                         resBody?.wiki_tech_helpers?.forEach { helper ->
@@ -90,7 +93,7 @@ class ContributorsActivity : BaseActivity() {
                 }
             })
         } else {
-            showLong(recyclerViewCodeContributors!!, getString(R.string.check_internet))
+            showLong(recyclerViewCodeContributors, getString(R.string.check_internet))
         }
     }
 
@@ -130,11 +133,8 @@ class ContributorsActivity : BaseActivity() {
     private fun callShowCaseUI() {
         if (!isFinishing && !isDestroyed && isNotShowed(ShowCasePref.CORE_CONTRIBUTORS_LIST_ITEM) && recyclerViewCoreContributors.visibility == View.VISIBLE && recyclerViewCoreContributors.getChildAt(0) != null) {
             val sequence = MaterialTapTargetSequence().setSequenceCompleteListener { showed(ShowCasePref.CORE_CONTRIBUTORS_LIST_ITEM) }
-            sequence.addPrompt(MaterialTapTargetPrompt.Builder(this@ContributorsActivity)
-                    .setPromptFocal(RectanglePromptFocal())
-                    .setAnimationInterpolator(FastOutSlowInInterpolator())
-                    .setFocalPadding(R.dimen.show_case_focal_padding)
-                    .setTarget(recyclerViewCoreContributors!!.getChildAt(0))
+            sequence.addPrompt(GeneralUtils.getPromptBuilder(this)
+                    .setTarget(recyclerViewCoreContributors.getChildAt(0))
                     .setPrimaryText(R.string.sc_t_core_contributors_list_item)
                     .setSecondaryText(R.string.sc_d_core_contributors_list_item))
             sequence.show()

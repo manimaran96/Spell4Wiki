@@ -1,292 +1,246 @@
-package com.manimarank.spell4wiki.ui.spell4wiktionary;
+package com.manimarank.spell4wiki.ui.spell4wiktionary
 
-import android.os.Bundle;
-import android.os.Handler;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.TextView;
+import android.os.Bundle
+import android.os.Handler
+import android.view.Menu
+import android.view.MenuItem
+import android.view.View
+import android.widget.TextView
+import androidx.appcompat.widget.SearchView
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.snackbar.Snackbar
+import com.manimarank.spell4wiki.R
+import com.manimarank.spell4wiki.data.apis.ApiClient.getWiktionaryApi
+import com.manimarank.spell4wiki.data.apis.ApiInterface
+import com.manimarank.spell4wiki.data.db.DBHelper
+import com.manimarank.spell4wiki.data.model.WikiSearchWords
+import com.manimarank.spell4wiki.data.prefs.PrefManager
+import com.manimarank.spell4wiki.data.prefs.ShowCasePref
+import com.manimarank.spell4wiki.data.prefs.ShowCasePref.isNotShowed
+import com.manimarank.spell4wiki.data.prefs.ShowCasePref.showed
+import com.manimarank.spell4wiki.ui.common.BaseActivity
+import com.manimarank.spell4wiki.ui.custom.EndlessRecyclerView.EndlessListener
+import com.manimarank.spell4wiki.ui.languageselector.LanguageSelectionFragment
+import com.manimarank.spell4wiki.ui.listerners.OnLanguageSelectionListener
+import com.manimarank.spell4wiki.utils.GeneralUtils
+import com.manimarank.spell4wiki.utils.NetworkUtils.isConnected
+import com.manimarank.spell4wiki.utils.constants.AppConstants
+import com.manimarank.spell4wiki.utils.constants.ListMode
+import com.manimarank.spell4wiki.utils.makeGone
+import com.manimarank.spell4wiki.utils.makeInVisible
+import com.manimarank.spell4wiki.utils.makeVisible
+import kotlinx.android.synthetic.main.activity_wiktionary_search.*
+import kotlinx.android.synthetic.main.loading_info.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import uk.co.samuelwall.materialtaptargetprompt.MaterialTapTargetSequence
+import java.util.*
 
-import androidx.appcompat.widget.SearchView;
-import androidx.interpolator.view.animation.FastOutSlowInInterpolator;
-import androidx.recyclerview.widget.LinearLayoutManager;
+class WiktionarySearchActivity : BaseActivity(), EndlessListener {
 
-import com.google.android.material.snackbar.Snackbar;
-import com.manimarank.spell4wiki.R;
-import com.manimarank.spell4wiki.ui.common.BaseActivity;
-import com.manimarank.spell4wiki.data.apis.ApiClient;
-import com.manimarank.spell4wiki.data.apis.ApiInterface;
-import com.manimarank.spell4wiki.data.model.WikiWord;
-import com.manimarank.spell4wiki.data.db.DBHelper;
-import com.manimarank.spell4wiki.data.db.dao.WikiLangDao;
-import com.manimarank.spell4wiki.ui.languageselector.LanguageSelectionFragment;
-import com.manimarank.spell4wiki.ui.listerners.OnLanguageSelectionListener;
-import com.manimarank.spell4wiki.data.model.WikiSearchWords;
-import com.manimarank.spell4wiki.utils.NetworkUtils;
-import com.manimarank.spell4wiki.data.prefs.PrefManager;
-import com.manimarank.spell4wiki.data.prefs.ShowCasePref;
-import com.manimarank.spell4wiki.utils.constants.AppConstants;
-import com.manimarank.spell4wiki.utils.constants.ListMode;
-import com.manimarank.spell4wiki.ui.custom.EndlessRecyclerView;
+    private var adapter: EndlessRecyclerAdapter? = null
+    private lateinit var snackBar: Snackbar
+    private var queryString: String? = null
+    private var nextOffset: Int? = null
+    private lateinit var api: ApiInterface
+    private var languageCode: String? = ""
 
-import org.jetbrains.annotations.NotNull;
-
-import java.util.ArrayList;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import uk.co.samuelwall.materialtaptargetprompt.MaterialTapTargetPrompt;
-import uk.co.samuelwall.materialtaptargetprompt.MaterialTapTargetSequence;
-import uk.co.samuelwall.materialtaptargetprompt.extras.focals.RectanglePromptFocal;
-
-public class WiktionarySearchActivity extends BaseActivity implements EndlessRecyclerView.EndlessListener {
-
-    private EndlessRecyclerView recyclerView;
-    private EndlessRecyclerAdapter adapter;
-    private TextView txtNotFound;
-    private View layoutProgress;
-    private Snackbar snackbar;
-
-    private String queryString;
-    private Integer nextOffset;
-    private ApiInterface api;
-    private String languageCode = "";
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_wiktionary_search);
-        init();
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_wiktionary_search)
+        init()
     }
 
-    private void init() {
-        PrefManager pref = new PrefManager(WiktionarySearchActivity.this);
-        languageCode = pref.getLanguageCodeWiktionary();
-        api = ApiClient.getWiktionaryApi(getApplicationContext(), languageCode).create(ApiInterface.class);
+    private fun init() {
+        val pref = PrefManager(this@WiktionarySearchActivity)
+        languageCode = pref.languageCodeWiktionary
+        api = getWiktionaryApi(applicationContext, languageCode ?: AppConstants.DEFAULT_LANGUAGE_CODE).create(ApiInterface::class.java)
 
         // Views
-        txtNotFound = findViewById(R.id.txtNotFound);
-        layoutProgress = findViewById(R.id.layoutProgress);
-        SearchView searchView = findViewById(R.id.search_bar);
-        recyclerView = findViewById(R.id.recyclerView);
-        snackbar = Snackbar.make(searchView, getString(R.string.something_went_wrong), Snackbar.LENGTH_LONG);
-
-        searchView.setIconifiedByDefault(false);
-        searchView.setQueryHint(getResources().getString(R.string.search));
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String s) {
-                submitQuery(s);
-                return true;
+        snackBar = Snackbar.make(search_bar, getString(R.string.something_went_wrong), Snackbar.LENGTH_LONG)
+        search_bar.setIconifiedByDefault(false)
+        search_bar.queryHint = resources.getString(R.string.search)
+        search_bar.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(s: String): Boolean {
+                submitQuery(s)
+                return true
             }
 
-            @Override
-            public boolean onQueryTextChange(String s) {
-                return false;
+            override fun onQueryTextChange(s: String): Boolean {
+                return false
             }
-        });
+        })
+        recyclerView.setHasFixedSize(true)
+        val layoutManager = LinearLayoutManager(this)
+        recyclerView.layoutManager = layoutManager
+        adapter = EndlessRecyclerAdapter(this, ArrayList(), ListMode.WIKTIONARY)
+        recyclerView.setAdapter(adapter, layoutManager)
+        recyclerView.setListener(this)
+        recyclerView.makeInVisible()
+        supportActionBar?.title = getString(R.string.wiktionary)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        recyclerView.setHasFixedSize(true);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(layoutManager);
-        adapter = new EndlessRecyclerAdapter(this, new ArrayList<>(), ListMode.WIKTIONARY);
-        recyclerView.setAdapter(adapter, layoutManager);
-        recyclerView.setListener(this);
-        recyclerView.setVisibility(View.INVISIBLE);
 
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setTitle(getString(R.string.wiktionary));
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        if (intent.extras?.containsKey(AppConstants.SEARCH_TEXT) == true) {
+            val text = intent.extras?.getString(AppConstants.SEARCH_TEXT)
+            search_bar.setQuery(text, true)
         }
 
-        if (getIntent() != null && getIntent().getExtras() != null) {
-            if (getIntent().getExtras().containsKey(AppConstants.SEARCH_TEXT)) {
-                String text = getIntent().getExtras().getString(AppConstants.SEARCH_TEXT);
-                searchView.setQuery(text, true);
-            }
-        }
     }
 
-    private void submitQuery(String s) {
-        if (!isDestroyed() && !isFinishing()) {
-            queryString = s;
-            nextOffset = 0;
-            txtNotFound.setVisibility(View.GONE);
-            layoutProgress.setVisibility(View.VISIBLE);
-            recyclerView.setVisibility(View.VISIBLE);
-            recyclerView.reset();
-
-            search(queryString);
+    private fun submitQuery(s: String) {
+        if (!isDestroyed && !isFinishing) {
+            queryString = s
+            nextOffset = 0
+            txtNotFound.makeGone()
+            layoutProgress.makeVisible()
+            recyclerView.makeVisible()
+            recyclerView.reset()
+            search(queryString)
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.spell4wiki_view_menu, menu);
-        new Handler().post(this::callShowCaseUI);
-        return true;
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.spell4wiki_view_menu, menu)
+        Handler().post { callShowCaseUI() }
+        return true
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == android.R.id.home) {
-            finish();
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == android.R.id.home) {
+            finish()
         }
-        return super.onOptionsItemSelected(item);
+        return super.onOptionsItemSelected(item)
     }
 
-    @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
-        setupLanguageSelectorMenuItem(menu);
-        return super.onPrepareOptionsMenu(menu);
+    override fun onPrepareOptionsMenu(menu: Menu): Boolean {
+        setupLanguageSelectorMenuItem(menu)
+        return super.onPrepareOptionsMenu(menu)
     }
 
-    private void loadLanguages() {
-        OnLanguageSelectionListener callback = langCode -> {
-            if (!languageCode.equals(langCode)) {
-                languageCode = langCode;
-                invalidateOptionsMenu();
-                api = ApiClient.getWiktionaryApi(getApplicationContext(), languageCode).create(ApiInterface.class);
-                if (queryString != null)
-                    submitQuery(queryString);
+    private fun loadLanguages() {
+        val callback = object : OnLanguageSelectionListener {
+            override fun onCallBackListener(langCode: String?) {
+                if (languageCode != langCode) {
+                    languageCode = langCode
+                    invalidateOptionsMenu()
+                    api = getWiktionaryApi(applicationContext, languageCode!!).create(ApiInterface::class.java)
+                    queryString?.let { qs -> submitQuery(qs) }
+                }
             }
-        };
-        LanguageSelectionFragment languageSelectionFragment = new LanguageSelectionFragment(this);
-        languageSelectionFragment.init(callback, ListMode.WIKTIONARY);
-        languageSelectionFragment.show(getSupportFragmentManager());
+        }
+        val languageSelectionFragment = LanguageSelectionFragment(this)
+        languageSelectionFragment.init(callback, ListMode.WIKTIONARY)
+        languageSelectionFragment.show(supportFragmentManager)
     }
 
-    private void setupLanguageSelectorMenuItem(Menu menu) {
-        MenuItem item = menu.findItem(R.id.menu_lang_selector);
-        item.setVisible(true);
-        View rootView = item.getActionView();
-        TextView selectedLang = rootView.findViewById(R.id.txtSelectedLanguage);
-        selectedLang.setText(this.languageCode.toUpperCase());
-        rootView.setOnClickListener(v -> {
-            if (ShowCasePref.INSTANCE.isNotShowed(ShowCasePref.WIKTIONARY_PAGE))
-                return;
-            loadLanguages();
-        });
-
+    private fun setupLanguageSelectorMenuItem(menu: Menu) {
+        val item = menu.findItem(R.id.menu_lang_selector)
+        item.isVisible = true
+        val rootView = item.actionView
+        val selectedLang = rootView.findViewById<TextView>(R.id.txtSelectedLanguage)
+        selectedLang.text = languageCode?.toUpperCase(Locale.ROOT) ?: ""
+        rootView.setOnClickListener {
+            if (isNotShowed(ShowCasePref.WIKTIONARY_PAGE))
+                return@setOnClickListener
+            loadLanguages()
+        }
     }
 
-    private void search(String query) {
-        if (!isDestroyed() && !isFinishing()) {
-            if (NetworkUtils.INSTANCE.isConnected(getApplicationContext())) {
-                Call<WikiSearchWords> call = api.fetchRecords(query, nextOffset);
-
-                call.enqueue(new Callback<WikiSearchWords>() {
-                    @Override
-                    public void onResponse(@NotNull Call<WikiSearchWords> call, @NotNull Response<WikiSearchWords> response) {
-                        if (response.isSuccessful() && response.body() != null) {
-                            processSearchResult(response.body());
-                        } else
-                            searchFailed(getString(R.string.something_went_wrong));
+    private fun search(query: String?) {
+        if (!isDestroyed && !isFinishing) {
+            if (isConnected(applicationContext)) {
+                val call = api.fetchRecords(query, nextOffset)
+                call.enqueue(object : Callback<WikiSearchWords?> {
+                    override fun onResponse(
+                        call: Call<WikiSearchWords?>,
+                        response: Response<WikiSearchWords?>
+                    ) {
+                        if (response.isSuccessful && response.body() != null) {
+                            processSearchResult(response.body())
+                        } else searchFailed(getString(R.string.something_went_wrong))
                     }
 
-                    @Override
-                    public void onFailure(@NotNull Call<WikiSearchWords> call, @NotNull Throwable t) {
-                        searchFailed(getString(R.string.something_went_wrong));
+                    override fun onFailure(call: Call<WikiSearchWords?>, t: Throwable) {
+                        searchFailed(getString(R.string.something_went_wrong))
                     }
-                });
-            } else
-                searchFailed(getString(R.string.check_internet));
+                })
+            } else searchFailed(getString(R.string.check_internet))
         }
     }
 
-    private void searchFailed(String msg) {
-        if (!isDestroyed() && !isFinishing()) {
-            if (NetworkUtils.INSTANCE.isConnected(getApplicationContext())) {
-                snackbar.setText(msg);
-                if(layoutProgress.getVisibility() == View.VISIBLE)
-                    layoutProgress.setVisibility(View.GONE);
-                if (recyclerView != null && adapter != null && adapter.getItemCount() < 1) {
-                    recyclerView.setVisibility(View.INVISIBLE);
-                    txtNotFound.setText(getString(R.string.result_not_found));
-                    txtNotFound.setVisibility(View.VISIBLE);
-                } else
-                    txtNotFound.setVisibility(View.GONE);
-            } else
-                snackbar.setText(getString(R.string.check_internet));
-
-            if (!msg.equals(getString(R.string.result_not_found)) && !snackbar.isShown())
-                snackbar.show();
+    private fun searchFailed(msg: String) {
+        if (!isDestroyed && !isFinishing) {
+            if (isConnected(applicationContext)) {
+                snackBar.setText(msg)
+                if (layoutProgress.visibility == View.VISIBLE)
+                    layoutProgress.makeGone()
+                if (recyclerView != null && adapter?.itemCount ?: 0 < 1) {
+                    recyclerView.makeInVisible()
+                    txtNotFound.text = getString(R.string.result_not_found)
+                    txtNotFound.makeVisible()
+                } else txtNotFound.makeGone()
+            } else snackBar.setText(getString(R.string.check_internet))
+            if (msg != getString(R.string.result_not_found) && !snackBar.isShown)
+                snackBar.show()
         }
     }
 
-    private void processSearchResult(WikiSearchWords wikiSearchWords) {
-        if (!isDestroyed() && !isFinishing()) {
-
-            ArrayList<String> titleList = new ArrayList<>();
-
-            if(layoutProgress.getVisibility() == View.VISIBLE)
-                layoutProgress.setVisibility(View.GONE);
-
-            if (snackbar.isShown())
-                snackbar.dismiss();
-
-            boolean isEmptyResponse;
+    private fun processSearchResult(wikiSearchWords: WikiSearchWords?) {
+        if (!isDestroyed && !isFinishing) {
+            val titleList = ArrayList<String?>()
+            if (layoutProgress.visibility == View.VISIBLE) layoutProgress.makeGone()
+            if (snackBar.isShown) snackBar.dismiss()
             if (wikiSearchWords != null) {
-                if (wikiSearchWords.getOffset() != null && wikiSearchWords.getOffset().getNextOffset() != null) {
-                    nextOffset = wikiSearchWords.getOffset().getNextOffset();
-                } else {
-                    recyclerView.setLastPage();
-                    nextOffset = null;
-                }
-
-                if (wikiSearchWords.getQuery() != null && wikiSearchWords.getQuery().getWikiTitleList() != null) {
-                    for (WikiWord wikiWord : wikiSearchWords.getQuery().getWikiTitleList()) {
-                        titleList.add(wikiWord.getTitle());
+                nextOffset = if (wikiSearchWords.offset?.nextOffset != null) {
+                        wikiSearchWords.offset?.nextOffset
+                    } else {
+                        recyclerView.setLastPage()
+                        null
                     }
-                    isEmptyResponse = titleList.isEmpty();
-                } else
-                    isEmptyResponse = true;
 
-                if (isEmptyResponse) {
-                    searchFailed(getString(R.string.result_not_found));
-                } else {
-                    recyclerView.addNewData(titleList);
+                wikiSearchWords.query?.wikiTitleList?.filter { it.title != null }?.forEach { wikiWord ->
+                    titleList.add(wikiWord.title)
                 }
-            } else
-                searchFailed(getString(R.string.something_went_wrong));
+                if (titleList.isEmpty()) {
+                    searchFailed(getString(R.string.result_not_found))
+                } else {
+                    recyclerView.addNewData(titleList)
+                }
+            } else searchFailed(getString(R.string.something_went_wrong))
         }
     }
 
-    @Override
-    public boolean loadData() {
+    override fun loadData(): Boolean {
         /*
          * Triggered only when new data needs to be appended to the list
          * Return true if loading is in progress, false if there is no more data to load
          */
-        if (nextOffset != null) {
-            search(queryString);
-            return true;
-        } else
-            return false;
+        return if (nextOffset != null) {
+            search(queryString)
+            true
+        } else false
     }
 
-    @Override
-    public void loadFail() {
-        if (!NetworkUtils.INSTANCE.isConnected(getApplicationContext()))
-            searchFailed(getString(R.string.check_internet));
-        else if (recyclerView != null && recyclerView.isLastPage() && adapter != null && adapter.getItemCount() > 10)
-            searchFailed(getString(R.string.no_more_data_found));
+    override fun loadFail() {
+        if (!isConnected(applicationContext))
+            searchFailed(getString(R.string.check_internet))
+        else if (recyclerView != null && recyclerView.isLastPage && adapter?.itemCount ?: 0 > 10)
+            searchFailed(getString(R.string.no_more_data_found))
     }
 
-    private void callShowCaseUI() {
-        if (!isFinishing() && !isDestroyed() && ShowCasePref.INSTANCE.isNotShowed(ShowCasePref.WIKTIONARY_PAGE)) {
-            WikiLangDao wikiLangDao = DBHelper.getInstance(getApplicationContext()).getAppDatabase().getWikiLangDao();
-            MaterialTapTargetSequence sequence = new MaterialTapTargetSequence().setSequenceCompleteListener(() -> ShowCasePref.INSTANCE.showed(ShowCasePref.WIKTIONARY_PAGE));
-            sequence.addPrompt(new MaterialTapTargetPrompt.Builder(WiktionarySearchActivity.this)
-                    .setPromptFocal(new RectanglePromptFocal())
-                    .setAnimationInterpolator(new FastOutSlowInInterpolator())
-                    .setFocalPadding(R.dimen.show_case_focal_padding)
+    private fun callShowCaseUI() {
+        if (!isFinishing && !isDestroyed && isNotShowed(ShowCasePref.WIKTIONARY_PAGE)) {
+            val wikiLangDao = DBHelper.getInstance(applicationContext).appDatabase.wikiLangDao
+            val sequence = MaterialTapTargetSequence().setSequenceCompleteListener { showed(ShowCasePref.WIKTIONARY_PAGE) }
+            sequence.addPrompt(
+                GeneralUtils.getPromptBuilder(this)
                     .setTarget(R.id.layoutSelectLanguage)
                     .setPrimaryText(R.string.sc_t_wiktionary_page_language)
-                    .setSecondaryText(String.format(getString(R.string.sc_d_wiktionary_page_language), wikiLangDao.getWikiLanguageWithCode(languageCode).getName())));
-            sequence.show();
+                    .setSecondaryText(String.format(getString(R.string.sc_d_wiktionary_page_language), wikiLangDao.getWikiLanguageWithCode(languageCode).name))
+            )
+            sequence.show()
         }
     }
 }
-
