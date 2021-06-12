@@ -18,6 +18,7 @@ import com.airbnb.lottie.value.LottieValueCallback
 import com.manimarank.spell4wiki.R
 import com.manimarank.spell4wiki.data.model.ItemsModel
 import com.manimarank.spell4wiki.utils.GeneralUtils.openUrlInBrowser
+import com.manimarank.spell4wiki.utils.makeGone
 import com.manimarank.spell4wiki.utils.makeVisible
 
 class ListItemAdapter(private val mContext: Context, private val mList: List<ItemsModel>) : RecyclerView.Adapter<ListItemAdapter.ViewHolder>() {
@@ -38,15 +39,15 @@ class ListItemAdapter(private val mContext: Context, private val mList: List<Ite
                     e.printStackTrace()
                 }
             } else {
-                holder.imgIcon.visibility = View.VISIBLE
+                holder.imgIcon.makeVisible()
                 holder.imgIcon.setImageDrawable(ContextCompat.getDrawable(mContext, item.icon))
             }
         } else {
-            holder.imgIcon.visibility = View.GONE
-            holder.lottieAnimationView.visibility = View.GONE
+            holder.imgIcon.makeGone()
+            holder.lottieAnimationView.makeGone()
         }
         holder.txtAbout.text = item.about
-        holder.btnOption.setOnClickListener { v: View? ->
+        holder.btnOption.setOnClickListener {
             (mContext as? Activity)?.let { activity ->
                 openUrlInBrowser(activity, item.url)
             }

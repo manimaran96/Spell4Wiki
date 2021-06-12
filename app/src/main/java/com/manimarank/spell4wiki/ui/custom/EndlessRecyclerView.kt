@@ -23,16 +23,15 @@ class EndlessRecyclerView : RecyclerView {
         private set
     private var loadMoreEnabled = true
 
-    constructor(context: Context?, attrs: AttributeSet?, defStyle: Int) : super(context!!, attrs, defStyle)
-    constructor(context: Context?, attrs: AttributeSet?) : super(context!!, attrs)
-    constructor(context: Context?) : super(context!!)
+    constructor(context: Context, attrs: AttributeSet, defStyle: Int) : super(context, attrs, defStyle)
+    constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
+    constructor(context: Context) : super(context)
 
     fun setAdapter(mAdapter: EndlessRecyclerAdapter?, layoutManager: LinearLayoutManager) {
         super.setAdapter(mAdapter)
         adapter = mAdapter
         removeLoader()
         addOnScrollListener(object : OnScrollListener() {
-
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
                 val visibleItemCount = layoutManager.childCount
@@ -40,30 +39,34 @@ class EndlessRecyclerView : RecyclerView {
                 val firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition()
                 if (!isLoading && loadMoreEnabled) {
                     if (visibleItemCount + firstVisibleItemPosition >= totalItemCount && firstVisibleItemPosition >= 0 && listener != null) {
-                        if (isLastPage || !isConnected(context)) listener!!.loadFail() else if (listener!!.loadData()) addLoaded()
+                        if (isLastPage || !isConnected(context))
+                            listener?.loadFail()
+                        else if (listener?.loadData() == true)
+                            addLoaded()
                     }
                 }
             }
         })
     }
 
-    fun addNewData(data: List<String?>?) {
+    fun addNewData(data: MutableList<String>?) {
         removeLoader()
-        adapter!!.addItems(data)
+        if (data != null)
+            adapter?.addItems(data)
     }
 
     fun removeLoader() {
         isLoading = false
-        adapter!!.removeLoading()
+        adapter?.removeLoading()
     }
 
     private fun addLoaded() {
         isLoading = true
-        adapter!!.addLoading()
+        adapter?.addLoading()
     }
 
     fun reset() {
-        adapter!!.clear()
+        adapter?.clear()
         addLoaded()
         isLastPage = false
         enableLoadMore()

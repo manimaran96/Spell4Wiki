@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.os.Handler
 import android.view.MenuItem
 import android.view.View
-import androidx.interpolator.view.animation.FastOutSlowInInterpolator
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
@@ -14,22 +13,20 @@ import com.manimarank.spell4wiki.data.apis.ApiInterface
 import com.manimarank.spell4wiki.data.model.CodeContributors
 import com.manimarank.spell4wiki.data.model.ContributorData
 import com.manimarank.spell4wiki.data.model.CoreContributors
+import com.manimarank.spell4wiki.data.prefs.ShowCasePref
+import com.manimarank.spell4wiki.data.prefs.ShowCasePref.isNotShowed
+import com.manimarank.spell4wiki.data.prefs.ShowCasePref.showed
 import com.manimarank.spell4wiki.ui.common.BaseActivity
+import com.manimarank.spell4wiki.utils.GeneralUtils
 import com.manimarank.spell4wiki.utils.NetworkUtils.isConnected
 import com.manimarank.spell4wiki.utils.SnackBarUtils.showLong
 import com.manimarank.spell4wiki.utils.makeGone
 import com.manimarank.spell4wiki.utils.makeVisible
-import com.manimarank.spell4wiki.data.prefs.ShowCasePref
-import com.manimarank.spell4wiki.data.prefs.ShowCasePref.isNotShowed
-import com.manimarank.spell4wiki.data.prefs.ShowCasePref.showed
-import com.manimarank.spell4wiki.utils.GeneralUtils
 import kotlinx.android.synthetic.main.activity_contributors.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import uk.co.samuelwall.materialtaptargetprompt.MaterialTapTargetPrompt
 import uk.co.samuelwall.materialtaptargetprompt.MaterialTapTargetSequence
-import uk.co.samuelwall.materialtaptargetprompt.extras.focals.RectanglePromptFocal
 import java.util.*
 
 class ContributorsActivity : BaseActivity() {

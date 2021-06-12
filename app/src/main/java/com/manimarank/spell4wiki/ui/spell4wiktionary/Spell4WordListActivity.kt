@@ -132,11 +132,10 @@ class Spell4WordListActivity : BaseActivity() {
             }
             if (requestCode == AppConstants.RC_UPLOAD_DIALOG) {
                 if (data != null && data.hasExtra(AppConstants.WORD)) {
-                    if (adapter != null) {
-                        adapter?.addWordInWordsHaveAudioList(data.getStringExtra(AppConstants.WORD))
-                        adapter?.remove(data.getStringExtra(AppConstants.WORD))
-                        if (adapter?.itemCount == 0) showEmptyView()
-                    }
+                    adapter?.addWordInWordsHaveAudioList(data.getStringExtra(AppConstants.WORD))
+                    adapter?.remove(data.getStringExtra(AppConstants.WORD))
+                    if (adapter?.itemCount == 0)
+                        showEmptyView()
                 }
             }
         }
@@ -176,7 +175,8 @@ class Spell4WordListActivity : BaseActivity() {
             adapter = EndlessRecyclerAdapter(this, items, ListMode.SPELL_4_WORD_LIST)
             recyclerView.setAdapter(adapter, layoutManager)
             adapter?.setWordsHaveAudioList(wordsHaveAudioDao?.getWordsAlreadyHaveAudioByLanguage(languageCode))
-            if (isNotShowed(ShowCasePref.LIST_ITEM_SPELL_4_WIKI)) Handler().post { callShowCaseUI() }
+            if (isNotShowed(ShowCasePref.LIST_ITEM_SPELL_4_WIKI))
+                Handler().post { callShowCaseUI() }
         } else {
             showEmptyView()
         }

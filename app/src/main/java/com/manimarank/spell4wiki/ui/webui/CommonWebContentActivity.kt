@@ -14,6 +14,8 @@ import com.manimarank.spell4wiki.ui.common.BaseActivity
 import com.manimarank.spell4wiki.utils.NetworkUtils
 import com.manimarank.spell4wiki.utils.SnackBarUtils
 import com.manimarank.spell4wiki.utils.constants.AppConstants
+import com.manimarank.spell4wiki.utils.makeGone
+import com.manimarank.spell4wiki.utils.makeVisible
 import kotlinx.android.synthetic.main.activity_web_view_content.*
 import java.lang.Exception
 
@@ -75,23 +77,23 @@ class CommonWebContentActivity : BaseActivity() {
             override fun onPageStarted(view: WebView, url: String, favicon: Bitmap?) {
                 super.onPageStarted(view, url, favicon)
                 isWebPageNotFound = false
-                webView.visibility = View.GONE
-                loadingProgress.visibility = View.VISIBLE
+                webView.makeGone()
+                loadingProgress.makeVisible()
             }
 
             override fun onPageFinished(view: WebView, url: String) {
                 super.onPageFinished(view, url)
                 if (!isWebPageNotFound) {
-                    webView.visibility = View.VISIBLE
-                    loadingProgress.visibility = View.GONE
+                    webView.makeVisible()
+                    loadingProgress.makeGone()
                 }
             }
 
             override fun onReceivedError(view: WebView, request: WebResourceRequest, error: WebResourceError) {
                 super.onReceivedError(view, request, error)
                 isWebPageNotFound = true
-                layoutWebPageNotFound.visibility = View.VISIBLE
-                loadingProgress.visibility = View.GONE
+                layoutWebPageNotFound.makeVisible()
+                loadingProgress.makeGone()
             }
         }
     }

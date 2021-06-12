@@ -154,7 +154,7 @@ class WebViewFragment : Fragment() {
             txtLoading.visibility = visibility
             progressBar.visibility = visibility
             webView.visibility = if (visibility == View.VISIBLE) View.INVISIBLE else View.VISIBLE
-            layoutWebPageNotFound.visibility = View.INVISIBLE
+            layoutWebPageNotFound.makeInVisible()
         }
     }
 

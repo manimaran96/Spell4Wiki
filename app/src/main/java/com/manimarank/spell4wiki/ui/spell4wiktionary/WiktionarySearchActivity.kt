@@ -36,6 +36,7 @@ import retrofit2.Callback
 import retrofit2.Response
 import uk.co.samuelwall.materialtaptargetprompt.MaterialTapTargetSequence
 import java.util.*
+import kotlin.collections.ArrayList
 
 class WiktionarySearchActivity : BaseActivity(), EndlessListener {
 
@@ -189,7 +190,7 @@ class WiktionarySearchActivity : BaseActivity(), EndlessListener {
 
     private fun processSearchResult(wikiSearchWords: WikiSearchWords?) {
         if (!isDestroyed && !isFinishing) {
-            val titleList = ArrayList<String?>()
+            val titleList: MutableList<String> = ArrayList()
             if (layoutProgress.visibility == View.VISIBLE) layoutProgress.makeGone()
             if (snackBar.isShown) snackBar.dismiss()
             if (wikiSearchWords != null) {
@@ -201,7 +202,7 @@ class WiktionarySearchActivity : BaseActivity(), EndlessListener {
                     }
 
                 wikiSearchWords.query?.wikiTitleList?.filter { it.title != null }?.forEach { wikiWord ->
-                    titleList.add(wikiWord.title)
+                    titleList.add(wikiWord.title!!)
                 }
                 if (titleList.isEmpty()) {
                     searchFailed(getString(R.string.result_not_found))
