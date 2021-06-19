@@ -16,6 +16,7 @@ import com.manimarank.spell4wiki.data.prefs.ShowCasePref
 import com.manimarank.spell4wiki.data.prefs.ShowCasePref.isNotShowed
 import com.manimarank.spell4wiki.data.prefs.ShowCasePref.showed
 import com.manimarank.spell4wiki.ui.common.BaseActivity
+import com.manimarank.spell4wiki.ui.dialogs.showConfirmBackDialog
 import com.manimarank.spell4wiki.ui.languageselector.LanguageSelectionFragment
 import com.manimarank.spell4wiki.ui.listerners.OnLanguageSelectionListener
 import com.manimarank.spell4wiki.ui.webui.CommonWebActivity
@@ -157,14 +158,7 @@ class Spell4WordActivity : BaseActivity() {
 
     private fun callBackPress() {
         if (!TextUtils.isEmpty(editSpell4Word.text) && pref.abortAlertStatus == true) {
-            val builder = AlertDialog.Builder(this)
-            builder.setTitle(R.string.confirmation)
-            builder.setMessage(R.string.confirm_to_back)
-            builder.setCancelable(false)
-            builder.setPositiveButton(getString(R.string.yes)) { _: DialogInterface?, _: Int -> super.onBackPressed() }
-            builder.setNegativeButton(getString(R.string.cancel)) { _: DialogInterface?, _: Int -> }
-            val dialog = builder.create()
-            dialog.show()
+            this.showConfirmBackDialog { super.onBackPressed() }
         } else {
             super.onBackPressed()
         }

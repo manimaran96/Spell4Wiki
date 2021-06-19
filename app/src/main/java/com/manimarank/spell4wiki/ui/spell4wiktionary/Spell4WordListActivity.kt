@@ -22,6 +22,7 @@ import com.manimarank.spell4wiki.data.prefs.ShowCasePref
 import com.manimarank.spell4wiki.data.prefs.ShowCasePref.isNotShowed
 import com.manimarank.spell4wiki.data.prefs.ShowCasePref.showed
 import com.manimarank.spell4wiki.ui.common.BaseActivity
+import com.manimarank.spell4wiki.ui.dialogs.showConfirmBackDialog
 import com.manimarank.spell4wiki.ui.languageselector.LanguageSelectionFragment
 import com.manimarank.spell4wiki.ui.listerners.OnLanguageSelectionListener
 import com.manimarank.spell4wiki.utils.GeneralUtils.getPromptBuilder
@@ -292,17 +293,10 @@ class Spell4WordListActivity : BaseActivity() {
             layoutEmpty.makeGone()
         } else if (layoutEdit.visibility == View.VISIBLE && pref.abortAlertStatus == true) {
             if (!TextUtils.isEmpty(editFile.text)) {
-                val builder = AlertDialog.Builder(this)
-                builder.setTitle(R.string.confirmation)
-                builder.setMessage(R.string.confirm_to_back)
-                builder.setCancelable(false)
-                builder.setPositiveButton(getString(R.string.yes)) { _: DialogInterface?, _: Int ->
+                this.showConfirmBackDialog {
                     layoutSelect.makeVisible()
                     layoutEdit.makeGone()
                 }
-                builder.setNegativeButton(getString(R.string.cancel)) { _: DialogInterface?, _: Int -> }
-                val dialog = builder.create()
-                dialog.show()
             } else {
                 layoutSelect.makeVisible()
                 layoutEdit.makeGone()
