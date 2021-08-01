@@ -9,7 +9,6 @@ object WikiLicense {
      * @param licensePref License ID
      * @return Name of license
      */
-    @JvmStatic
     fun licenseNameId(licensePref: String?): Int {
         return when (licensePref) {
             LicensePrefs.CC_BY_3 -> string.license_name_cc_by_three
@@ -27,7 +26,6 @@ object WikiLicense {
      * @param licensePref License ID
      * @return Url of license
      */
-    @JvmStatic
     fun licenseUrlFor(licensePref: String?): String {
         return when (licensePref) {
             LicensePrefs.CC_BY_3 -> "https://creativecommons.org/licenses/by/3.0/"
@@ -39,7 +37,6 @@ object WikiLicense {
         }
     }
 
-    @JvmStatic
     fun getLicenseTemplateInWiki(licensePref: String?): String {
         return when (licensePref) {
             LicensePrefs.CC_BY_3 -> LicenseTemplateInWiki.CC_BY_3

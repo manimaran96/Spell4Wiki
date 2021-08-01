@@ -36,17 +36,15 @@ import kotlin.Exception as KotlinException
  * Common utility class
  */
 object GeneralUtils {
-    @JvmStatic
+
     fun checkPermissionGranted(activity: Activity?): Boolean {
         return ContextCompat.checkSelfPermission(activity!!, Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(activity, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED
     }
 
-    @JvmStatic
     fun permissionDenied(activity: Activity?): Boolean {
         return ContextCompat.checkSelfPermission(activity!!, Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_DENIED || ContextCompat.checkSelfPermission(activity, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED || ContextCompat.checkSelfPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED
     }
 
-    @JvmStatic
     fun hideKeyboard(activity: Activity) {
         try {
             val inputMethodManager = activity.getSystemService(Activity.INPUT_METHOD_SERVICE) as? InputMethodManager
@@ -62,26 +60,22 @@ object GeneralUtils {
         }
     }
 
-    @JvmStatic
-    fun openUrl(context: Context, url: String?, title: String?) {
-        try {
-            if (isConnected(context)) {
-                if (url != null && !url.isEmpty()) {
-                    val intent = Intent(context, CommonWebActivity::class.java)
-                    intent.putExtra(AppConstants.TITLE, title)
-                    intent.putExtra(AppConstants.URL, url)
-                    context.startActivity(intent)
-                } else showLong(context.getString(R.string.check_url))
-            } else showLong(context.getString(R.string.check_internet))
-        } catch (e: KotlinException) {
-            e.printStackTrace()
-        }
+    fun openUrl(context: Context, url: String?, title: String?) = try {
+        if (isConnected(context)) {
+            if (url?.isNotEmpty() == true) {
+                val intent = Intent(context, CommonWebActivity::class.java)
+                intent.putExtra(AppConstants.TITLE, title)
+                intent.putExtra(AppConstants.URL, url)
+                context.startActivity(intent)
+            } else showLong(context.getString(R.string.check_url))
+        } else showLong(context.getString(R.string.check_internet))
+    } catch (e: KotlinException) {
+        e.printStackTrace()
     }
 
-    @JvmStatic
     fun openUrlInBrowser(context: Context, url: String?) {
         try {
-            if (url != null && !url.isEmpty()) {
+            if (url?.isNotEmpty() == true) {
                 context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
             }
         } catch (e: KotlinException) {
@@ -90,7 +84,6 @@ object GeneralUtils {
         }
     }
 
-    @JvmStatic
     fun showRecordDialog(activity: Activity, word: String?, langCode: String?) {
         if (isConnected(activity)) {
             checkFileAvailability(activity, word!!, langCode!!, object : FileAvailabilityCallback {

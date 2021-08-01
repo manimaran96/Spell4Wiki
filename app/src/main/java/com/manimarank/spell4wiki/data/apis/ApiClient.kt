@@ -29,7 +29,7 @@ object ApiClient {
 
     @SuppressLint("StaticFieldLeak")
     private var pref: PrefManager? = null
-    @JvmStatic
+
     fun getCommonsApi(context: Context): Retrofit {
         if (retrofitCommons == null) {
             retrofitCommons = Retrofit.Builder()
@@ -41,7 +41,6 @@ object ApiClient {
         return retrofitCommons!!
     }
 
-    @JvmStatic
     fun getWiktionaryApi(context: Context, langCode: String): Retrofit {
         return Retrofit.Builder()
                 .baseUrl(getWiktionaryApiUrl(langCode))

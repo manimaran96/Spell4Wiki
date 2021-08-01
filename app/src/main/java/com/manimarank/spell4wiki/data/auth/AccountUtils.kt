@@ -68,13 +68,13 @@ object AccountUtils {
 
     val isLoggedIn: Boolean
         get() = account() != null
-    @JvmStatic
+
     val userName: String?
         get() {
             val account = account()
             return account?.name
         }
-    @JvmStatic
+
     val password: String?
         get() {
             val account = account()
