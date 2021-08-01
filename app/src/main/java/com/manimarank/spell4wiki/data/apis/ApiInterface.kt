@@ -48,12 +48,8 @@ interface ApiInterface {
     ): Call<WikiWordsWithoutAudio?>
 
     // Edit Token - Commons
-    @get:GET("w/api.php?action=query&meta=tokens&format=json&type=csrf")
-    val editToken: Call<WikiToken?>
-
-    // Edit Token - Commons
-    @get:GET("w/api.php?action=query&meta=tokens&format=json&type=csrf")
-    val editTokenEx: Call<ResponseBody?>
+    @GET("w/api.php?action=query&meta=tokens&format=json&type=csrf")
+    fun getCsrfEditToken(): Call<WikiToken?>
 
     // Upload - commons
     @Multipart

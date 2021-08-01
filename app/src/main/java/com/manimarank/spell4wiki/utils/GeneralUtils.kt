@@ -6,16 +6,19 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
+import android.provider.Settings
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.core.content.ContextCompat
 import androidx.interpolator.view.animation.FastOutSlowInInterpolator
+import com.google.android.material.snackbar.Snackbar
+import com.manimarank.spell4wiki.BuildConfig
 import com.manimarank.spell4wiki.R
 import com.manimarank.spell4wiki.data.apis.WikimediaCommonsUtils.checkFileAvailability
 import com.manimarank.spell4wiki.data.db.DBHelper
 import com.manimarank.spell4wiki.data.db.entities.WordsHaveAudio
-import com.manimarank.spell4wiki.ui.listerners.FileAvailabilityCallback
 import com.manimarank.spell4wiki.ui.dialogs.RecordInfoDialog.show
+import com.manimarank.spell4wiki.ui.listerners.FileAvailabilityCallback
 import com.manimarank.spell4wiki.ui.recordaudio.RecordAudioActivity
 import com.manimarank.spell4wiki.ui.spell4wiktionary.Spell4Wiktionary
 import com.manimarank.spell4wiki.ui.spell4wiktionary.Spell4WordActivity
@@ -124,5 +127,17 @@ object GeneralUtils {
             .setPromptFocal(RectanglePromptFocal())
             .setAnimationInterpolator(FastOutSlowInInterpolator())
             .setFocalPadding(R.dimen.show_case_focal_padding)
+    }
+
+    fun showAppSettingsPageSnackBar(view: View) {
+        view.context.run {
+            Snackbar.make(view, getString(R.string.permission_required), Snackbar.LENGTH_LONG)
+                .setAction(getString(R.string.go_settings)) {
+                    val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, Uri.fromParts("package", BuildConfig.APPLICATION_ID, null))
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                    startActivity(intent)
+                }
+                .show()
+        }
     }
 }

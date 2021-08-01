@@ -33,6 +33,9 @@ object AppConstants {
     const val MAX_RETRIES_FOR_FORCE_LOGIN = 1
     const val MAX_RETRIES_FOR_CSRF_TOKEN = 2
 
+    // Record
+    const val MAX_SEC_FOR_RECORDING: Long = 10
+
     // Record & Storage related
     const val AUDIO_MAIN_PATH = "Spell4Wiki_Audios"
     const val AUDIO_FILEPATH = "/RecordedAudios"
@@ -44,6 +47,7 @@ object AppConstants {
     const val RC_UPLOAD_DIALOG = 1001
     const val RC_PERMISSIONS = 1000
     const val RC_EDIT_REQUEST_CODE = 42
+    const val RC_STORAGE_AUDIO_PERMISSION = 100
 
     // Mail Ids
     const val CONTACT_MAIL = "manimarankumar96@gmail.com"

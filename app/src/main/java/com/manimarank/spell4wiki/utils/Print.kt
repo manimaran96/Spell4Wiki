@@ -8,14 +8,12 @@ import com.manimarank.spell4wiki.BuildConfig
  */
 object Print {
     private const val TAG = "Spell4Wiki - App"
-    @JvmStatic
     fun log(message: String?) {
         if (BuildConfig.DEBUG) {
             Log.d(TAG, message ?: "")
         }
     }
 
-    @JvmStatic
     fun error(message: String?) {
         if (BuildConfig.DEBUG) {
             Log.e(TAG, message ?: "")
