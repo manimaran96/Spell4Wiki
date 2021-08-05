@@ -1296,6 +1296,13 @@
          "category": ["Files uploaded by spell4wiki in ta", "Tamil pronunciation of the words with Tamil script"]
       },
       {
+         "code":"tcy",
+         "lang":"Tulu",
+         "dir":"ltr",
+         "local_lang":"ತುಳು",
+         "category": ["Files uploaded by spell4wiki in tcy", "Tulu pronunciation of the words with Tulu script"]
+      },
+      {
          "code":"te",
          "lang":"Telugu",
          "dir":"ltr",
