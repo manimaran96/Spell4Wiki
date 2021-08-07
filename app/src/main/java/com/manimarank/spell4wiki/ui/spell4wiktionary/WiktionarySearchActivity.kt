@@ -239,7 +239,7 @@ class WiktionarySearchActivity : BaseActivity(), EndlessListener {
                 GeneralUtils.getPromptBuilder(this)
                     .setTarget(R.id.layoutSelectLanguage)
                     .setPrimaryText(R.string.sc_t_wiktionary_page_language)
-                    .setSecondaryText(String.format(getString(R.string.sc_d_wiktionary_page_language), wikiLangDao.getWikiLanguageWithCode(languageCode).name))
+                    .setSecondaryText(String.format(getString(R.string.sc_d_wiktionary_page_language), wikiLangDao?.getWikiLanguageWithCode(languageCode)?.name ?: ""))
             )
             sequence.show()
         }

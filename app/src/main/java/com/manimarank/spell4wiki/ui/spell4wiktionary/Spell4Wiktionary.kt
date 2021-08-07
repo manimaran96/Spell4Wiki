@@ -121,7 +121,7 @@ class Spell4Wiktionary : BaseActivity(), EndlessListener {
                     apiFailRetryCount = 0
                     if (recyclerView != null) recyclerView.reset()
                     val dbHelper = DBHelper.getInstance(applicationContext)
-                    val wikiLang = dbHelper.appDatabase.wikiLangDao.getWikiLanguageWithCode(languageCode)
+                    val wikiLang = dbHelper.appDatabase.wikiLangDao?.getWikiLanguageWithCode(languageCode)
                     if (wikiLang != null && !TextUtils.isEmpty(wikiLang.titleOfWordsWithoutAudio))
                         wiktionaryTitleOfWordsWithoutAudio = wikiLang.titleOfWordsWithoutAudio
                     wordsHaveAudioDao = dbHelper.appDatabase.wordsHaveAudioDao
@@ -369,7 +369,7 @@ class Spell4Wiktionary : BaseActivity(), EndlessListener {
                             .setSecondaryText(
                                 String.format(
                                     getString(R.string.sc_d_spell4wiki_page_language),
-                                    wikiLangDao.getWikiLanguageWithCode(languageCode).name
+                                    wikiLangDao?.getWikiLanguageWithCode(languageCode)?.name ?: ""
                                 )
                             )
                     )

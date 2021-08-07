@@ -65,7 +65,7 @@ class LanguageSelectionFragment(private val mActivity: Activity) : BottomSheetDi
         val searchView = dialog.findViewById<SearchView>(R.id.search_view)
         val layoutAddLanguage = dialog.findViewById<View>(R.id.layoutAddLanguage)
         val btnAddMyLanguage = dialog.findViewById<Button>(R.id.btnAddMyLanguage)
-        val dbHelper = DBHelper.getInstance(context)
+        val dbHelper = DBHelper.getInstance(requireContext())
 
         /*
          * Check Wiktionary mode or not
@@ -75,7 +75,7 @@ class LanguageSelectionFragment(private val mActivity: Activity) : BottomSheetDi
          */
         wikiLanguageList.clear()
         if (listMode == ListMode.SPELL_4_WIKI) {
-            wikiLanguageList = dbHelper.appDatabase.wikiLangDao.wikiLanguageListForWordsWithoutAudio
+            wikiLanguageList = dbHelper.appDatabase.wikiLangDao?.wikiLanguageListForWordsWithoutAudio ?: arrayListOf()
             layoutAddLanguage.makeVisible()
             btnAddMyLanguage?.setOnClickListener {
                 if (isAdded && isConnected(requireContext())) {
@@ -83,7 +83,7 @@ class LanguageSelectionFragment(private val mActivity: Activity) : BottomSheetDi
                 } else showNormal(btnAddMyLanguage, getString(R.string.check_internet))
             }
         } else {
-            wikiLanguageList = dbHelper.appDatabase.wikiLangDao.wikiLanguageList
+            wikiLanguageList = dbHelper.appDatabase.wikiLangDao?.wikiLanguageList ?: arrayListOf()
             layoutAddLanguage.makeGone()
         }
         val languageSelectionListener = object : OnLanguageSelectionListener {
@@ -168,6 +168,6 @@ class LanguageSelectionFragment(private val mActivity: Activity) : BottomSheetDi
         show(fragmentManager, tagValue)
     }
 
-    val tagValue: String
+    private val tagValue: String
         get() = "LANGUAGE_FRAGMENT"
 }

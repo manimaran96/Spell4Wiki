@@ -47,16 +47,16 @@ class SyncHelper {
                             if (data.fetchConfig.limit != null) setFetchLimit(data.fetchConfig.limit)
                         }
                         val languageList = data.languageWiseData
-                        if (languageList != null && languageList.size > 0) {
-                            dbHelper.appDatabase.wikiLangDao.deleteAll()
+                        if (languageList != null && languageList.isNotEmpty()) {
+                            dbHelper.appDatabase.wikiLangDao?.deleteAll()
                             for ((code, name, direction, localName, titleOfWordsWithoutAudio1, category) in languageList) {
                                 var titleOfWordsWithoutAudio: String? = null
                                 if (!TextUtils.isEmpty(titleOfWordsWithoutAudio1)) titleOfWordsWithoutAudio = titleOfWordsWithoutAudio1
                                 val isLeftToRightDirection = direction != null && direction == "ltr"
                                 var categories: List<String?>? = ArrayList()
-                                if (category != null && category.size > 0) categories = category
+                                if (category != null && category.isNotEmpty()) categories = category
                                 val dbLang = WikiLang(code!!, name, localName, titleOfWordsWithoutAudio, isLeftToRightDirection, categories)
-                                dbHelper.appDatabase.wikiLangDao.insert(dbLang)
+                                dbHelper.appDatabase.wikiLangDao?.insert(dbLang)
                             }
                         }
                     }

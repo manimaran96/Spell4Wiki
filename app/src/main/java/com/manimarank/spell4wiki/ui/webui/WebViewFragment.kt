@@ -57,9 +57,9 @@ class WebViewFragment : Fragment() {
             var isValid = false
             try {
                 if (isWiktionaryWord && pref?.isAnonymous != true && !TextUtils.isEmpty(word)) {
-                    val wordsHaveAudioDao = DBHelper.getInstance(context).appDatabase.wordsHaveAudioDao
-                    val wordsAlreadyHaveAudio = wordsHaveAudioDao.getWordsAlreadyHaveAudioByLanguage(languageCode)
-                    isValid = !wordsAlreadyHaveAudio.contains(word)
+                    val wordsHaveAudioDao = DBHelper.getInstance(requireContext()).appDatabase.wordsHaveAudioDao
+                    val wordsAlreadyHaveAudio = wordsHaveAudioDao?.getWordsAlreadyHaveAudioByLanguage(languageCode)
+                    isValid = wordsAlreadyHaveAudio?.contains(word) != true
                 }
             } catch (e: Exception) {
                 e.printStackTrace()

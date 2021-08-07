@@ -87,8 +87,8 @@ class Spell4WordActivity : BaseActivity() {
         try {
             if (pref.isAnonymous != true && !TextUtils.isEmpty(word)) {
                 val wordsHaveAudioDao = DBHelper.getInstance(applicationContext).appDatabase.wordsHaveAudioDao
-                val wordsAlreadyHaveAudio = wordsHaveAudioDao.getWordsAlreadyHaveAudioByLanguage(languageCode)
-                isValid = !wordsAlreadyHaveAudio.contains(word)
+                val wordsAlreadyHaveAudio = wordsHaveAudioDao?.getWordsAlreadyHaveAudioByLanguage(languageCode)
+                isValid = wordsAlreadyHaveAudio?.contains(word) != true
             }
         } catch (e: Exception) {
             e.printStackTrace()

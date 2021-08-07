@@ -30,7 +30,7 @@ import java.util.*
 
 class SettingsActivity : BaseActivity() {
     private lateinit var pref: PrefManager
-    private lateinit var wikiLangDao: WikiLangDao
+    private var wikiLangDao: WikiLangDao? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_settings)
@@ -134,7 +134,7 @@ class SettingsActivity : BaseActivity() {
 
     private fun updateLanguageView(txtView: TextView, languageCode: String?) {
         if (languageCode != null) {
-            val wikiLang = wikiLangDao.getWikiLanguageWithCode(languageCode)
+            val wikiLang = wikiLangDao?.getWikiLanguageWithCode(languageCode)
             var value = ""
             if (wikiLang != null && !TextUtils.isEmpty(wikiLang.name)) value = wikiLang.localName + " - " + wikiLang.name + " : " + languageCode
             txtView.text = value

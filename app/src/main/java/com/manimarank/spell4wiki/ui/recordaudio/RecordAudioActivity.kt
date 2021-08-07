@@ -87,8 +87,8 @@ class RecordAudioActivity : BaseActivity() {
     private var retryCountForCsrf = 0
 
     private lateinit var pref: PrefManager
-    private lateinit var wikiLangDao: WikiLangDao
-    private lateinit var wordsHaveAudioDao: WordsHaveAudioDao
+    private var wikiLangDao: WikiLangDao? = null
+    private var wordsHaveAudioDao: WordsHaveAudioDao? = null
 
     private lateinit var api: ApiInterface
     private lateinit var apiWiki: ApiInterface
@@ -117,8 +117,8 @@ class RecordAudioActivity : BaseActivity() {
         api = getCommonsApi(applicationContext).create(ApiInterface::class.java)
         apiWiki = getWiktionaryApi(applicationContext, langCode!!).create(ApiInterface::class.java)
         txtWord.text = word
-        val wikiLang = wikiLangDao.getWikiLanguageWithCode(langCode)
-        txtLanguage.text = ("(" + wikiLang.localName + " - " + wikiLang.name + ")")
+        val wikiLang = wikiLangDao?.getWikiLanguageWithCode(langCode)
+        txtLanguage.text = ("(" + wikiLang?.localName + " - " + wikiLang?.name + ")")
         txtRecordHint.text = getString(R.string.before_record)
         txtDuration.text = getDurationValue(0)
         checkboxDeclaration.text = String.format(getString(R.string.declaration_note), getString(licenseNameId(pref.uploadAudioLicense)))
@@ -407,18 +407,22 @@ class RecordAudioActivity : BaseActivity() {
                 if (response.isSuccessful && response.body() != null) {
                     try {
                         val wikiUpload = response.body()
-                        if (wikiUpload?.success?.result != null) {
-                            completeUploadFinalProcess(wikiUpload.success?.result)
-                        } else if (wikiUpload?.error?.code != null) {
-                            val wikiError = wikiUpload.error
-                            error(TAG + "UPLOAD FAIL RESPONSE -- " + Gson().toJson(wikiError))
-                            val uploadError = listOf(AppConstants.UPLOAD_FILE_EXIST, AppConstants.UPLOAD_FILE_EXIST_FORBIDDEN, AppConstants.UPLOAD_INVALID_TOKEN)
-                            when {
-                                uploadError.map { it.toLowerCase(Locale.ENGLISH) }.contains(wikiError?.code) -> completeUploadFinalProcess(wikiError?.code)
-                                wikiError?.code?.contains("exists") == true -> completeUploadFinalProcess(AppConstants.UPLOAD_FILE_EXIST)
-                                else -> completeUploadFinalProcess(wikiError?.info)
+                        when {
+                            wikiUpload?.success?.result != null -> {
+                                completeUploadFinalProcess(wikiUpload.success?.result)
                             }
-                        } else completeUploadFinalProcess("")
+                            wikiUpload?.error?.code != null -> {
+                                val wikiError = wikiUpload.error
+                                error(TAG + "UPLOAD FAIL RESPONSE -- " + Gson().toJson(wikiError))
+                                val uploadError = listOf(AppConstants.UPLOAD_FILE_EXIST, AppConstants.UPLOAD_FILE_EXIST_FORBIDDEN, AppConstants.UPLOAD_INVALID_TOKEN)
+                                when {
+                                    uploadError.map { it.toLowerCase(Locale.ENGLISH) }.contains(wikiError?.code) -> completeUploadFinalProcess(wikiError?.code)
+                                    wikiError?.code?.contains("exists") == true -> completeUploadFinalProcess(AppConstants.UPLOAD_FILE_EXIST)
+                                    else -> completeUploadFinalProcess(wikiError?.info)
+                                }
+                            }
+                            else -> completeUploadFinalProcess("")
+                        }
                     } catch (e: Exception) {
                         completeUploadFinalProcess(if (TextUtils.isEmpty(e.message)) "" else e.message)
                         e.printStackTrace()
@@ -583,7 +587,7 @@ class RecordAudioActivity : BaseActivity() {
     }
 
     private fun purgeWiktionaryPage(msg: String) {
-        wordsHaveAudioDao.insert(WordsHaveAudio(word, langCode))
+        wordsHaveAudioDao?.insert(WordsHaveAudio(word, langCode))
         val call = apiWiki.purgePage(word)
         call.enqueue(object : Callback<ResponseBody?> {
             override fun onResponse(call: Call<ResponseBody?>, response: Response<ResponseBody?>) {
@@ -637,7 +641,7 @@ class RecordAudioActivity : BaseActivity() {
     private fun getFileDescription(): String? {
         val sb = StringBuilder()
         try {
-            val wikiLang = wikiLangDao.getWikiLanguageWithCode(langCode)
+            val wikiLang = wikiLangDao?.getWikiLanguageWithCode(langCode)
             val enDescriptionFormat = getStringByLocalLang("en", R.string.file_content_description)
             val contributedLangDescriptionFormat = getStringByLocalLang(langCode, R.string.file_content_description)
             if (contributedLangDescriptionFormat != null) {
@@ -651,7 +655,7 @@ class RecordAudioActivity : BaseActivity() {
             }
             if (enDescriptionFormat != null) {
                 sb.append("{{en|1=").append(String.format(enDescriptionFormat, word))
-                    .append(getLanguageWikipediaPage(wikiLang.name)).append("}}")
+                    .append(getLanguageWikipediaPage(wikiLang?.name ?: "")).append("}}")
             }
         } catch (e: Exception) {
             e.printStackTrace()
@@ -669,8 +673,8 @@ class RecordAudioActivity : BaseActivity() {
 
     private fun getCategoryInfo(): String {
         val sb = StringBuilder()
-        if (wikiLangDao.getWikiLanguageWithCode(langCode)?.categories?.size ?: 0 > 0) {
-            wikiLangDao.getWikiLanguageWithCode(langCode).categories?.forEach { category ->
+        if (wikiLangDao?.getWikiLanguageWithCode(langCode)?.categories?.size ?: 0 > 0) {
+            wikiLangDao?.getWikiLanguageWithCode(langCode)?.categories?.forEach { category ->
                 if (!TextUtils.isEmpty(category))
                     sb.append("[[Category:").append(category).append("]]").append("\n")
             }
