@@ -1,29 +1,19 @@
-package com.manimarank.spell4wiki.data.db.dao;
+package com.manimarank.spell4wiki.data.db.dao
 
-import androidx.room.Dao;
-import androidx.room.Delete;
-import androidx.room.Insert;
-import androidx.room.OnConflictStrategy;
-import androidx.room.Query;
-import androidx.room.Update;
-
-import com.manimarank.spell4wiki.data.db.entities.WordsHaveAudio;
-
-import java.util.List;
+import androidx.room.*
+import com.manimarank.spell4wiki.data.db.entities.WordsHaveAudio
 
 @Dao
-public interface WordsHaveAudioDao {
-
+interface WordsHaveAudioDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insert(WordsHaveAudio... wordsHaveAudios);
+    fun insert(vararg wordsHaveAudios: WordsHaveAudio?)
 
     @Update
-    void update(WordsHaveAudio... wordsHaveAudios);
+    fun update(vararg wordsHaveAudios: WordsHaveAudio?)
 
     @Delete
-    void delete(WordsHaveAudio wordsHaveAudio);
+    fun delete(wordsHaveAudio: WordsHaveAudio?)
 
     @Query("SELECT word FROM words_already_have_audio WHERE language_code = :code")
-    List<String> getWordsAlreadyHaveAudioByLanguage(String code);
-
+    fun getWordsAlreadyHaveAudioByLanguage(code: String?): List<String>?
 }

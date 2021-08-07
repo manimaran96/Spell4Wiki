@@ -1,38 +1,28 @@
-package com.manimarank.spell4wiki.data.db.dao;
+package com.manimarank.spell4wiki.data.db.dao
 
-import androidx.room.Dao;
-import androidx.room.Delete;
-import androidx.room.Insert;
-import androidx.room.OnConflictStrategy;
-import androidx.room.Query;
-import androidx.room.Update;
-
-import com.manimarank.spell4wiki.data.db.entities.WikiLang;
-
-import java.util.List;
+import androidx.room.*
+import com.manimarank.spell4wiki.data.db.entities.WikiLang
 
 @Dao
-public interface WikiLangDao {
-
+interface WikiLangDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insert(WikiLang... wikiLangs);
+    fun insert(vararg wikiLangs: WikiLang?)
 
     @Update
-    void update(WikiLang... wikiLangs);
+    fun update(vararg wikiLangs: WikiLang?)
 
     @Delete
-    void delete(WikiLang wikiLang);
+    fun delete(wikiLang: WikiLang?)
 
+    @get:Query("SELECT * FROM wiki_language")
+    val wikiLanguageList: List<WikiLang?>?
 
-    @Query("SELECT * FROM wiki_language")
-    List<WikiLang> getWikiLanguageList();
-
-    @Query("SELECT * FROM wiki_language WHERE title_of_words_without_audio NOTNULL")
-    List<WikiLang> getWikiLanguageListForWordsWithoutAudio();
+    @get:Query("SELECT * FROM wiki_language WHERE title_of_words_without_audio NOTNULL")
+    val wikiLanguageListForWordsWithoutAudio: List<WikiLang?>?
 
     @Query("SELECT * FROM wiki_language WHERE code = :code")
-    WikiLang getWikiLanguageWithCode(String code);
+    fun getWikiLanguageWithCode(code: String?): WikiLang?
 
-    @Query(("DELETE FROM wiki_language"))
-    void deleteAll();
+    @Query("DELETE FROM wiki_language")
+    fun deleteAll()
 }

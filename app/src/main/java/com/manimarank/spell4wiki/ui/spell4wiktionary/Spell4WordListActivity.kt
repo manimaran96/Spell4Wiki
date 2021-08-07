@@ -175,7 +175,7 @@ class Spell4WordListActivity : BaseActivity() {
             recyclerView.layoutManager = layoutManager
             adapter = EndlessRecyclerAdapter(this, items, ListMode.SPELL_4_WORD_LIST)
             recyclerView.setAdapter(adapter, layoutManager)
-            adapter?.setWordsHaveAudioList(wordsHaveAudioDao?.getWordsAlreadyHaveAudioByLanguage(languageCode))
+            adapter?.setWordsHaveAudioList(wordsHaveAudioDao?.getWordsAlreadyHaveAudioByLanguage(languageCode)?.toMutableList())
             if (isNotShowed(ShowCasePref.LIST_ITEM_SPELL_4_WIKI))
                 Handler().post { callShowCaseUI() }
         } else {
@@ -291,8 +291,8 @@ class Spell4WordListActivity : BaseActivity() {
             layoutEdit.makeVisible()
             recyclerView.makeGone()
             layoutEmpty.makeGone()
-        } else if (layoutEdit.visibility == View.VISIBLE && pref.abortAlertStatus == true) {
-            if (!TextUtils.isEmpty(editFile.text)) {
+        } else if (layoutEdit.visibility == View.VISIBLE) {
+            if (!TextUtils.isEmpty(editFile.text) || pref.abortAlertStatus == true) {
                 this.showConfirmBackDialog {
                     layoutSelect.makeVisible()
                     layoutEdit.makeGone()
