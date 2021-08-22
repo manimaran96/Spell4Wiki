@@ -15,10 +15,10 @@ interface WikiLangDao {
     fun delete(wikiLang: WikiLang?)
 
     @get:Query("SELECT * FROM wiki_language")
-    val wikiLanguageList: List<WikiLang?>?
+    val wikiLanguageList: ArrayList<WikiLang?>?
 
     @get:Query("SELECT * FROM wiki_language WHERE title_of_words_without_audio NOTNULL")
-    val wikiLanguageListForWordsWithoutAudio: List<WikiLang?>?
+    val wikiLanguageListForWordsWithoutAudio: ArrayList<WikiLang?>?
 
     @Query("SELECT * FROM wiki_language WHERE code = :code")
     fun getWikiLanguageWithCode(code: String?): WikiLang?

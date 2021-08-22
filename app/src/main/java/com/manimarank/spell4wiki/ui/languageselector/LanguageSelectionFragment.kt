@@ -30,12 +30,11 @@ import com.manimarank.spell4wiki.utils.constants.ListMode.Companion.EnumListMode
 import com.manimarank.spell4wiki.utils.constants.Urls
 import com.manimarank.spell4wiki.utils.makeGone
 import com.manimarank.spell4wiki.utils.makeVisible
-import java.util.*
 
 class LanguageSelectionFragment(private val mActivity: Activity) : BottomSheetDialogFragment() {
     private lateinit var pref: PrefManager
     private var callback: OnLanguageSelectionListener? = null
-    private var wikiLanguageList: MutableList<WikiLang> = ArrayList()
+    private var wikiLanguageList = ArrayList<WikiLang>()
     private var adapter: LanguageAdapter? = null
 
     @EnumListMode
@@ -75,7 +74,7 @@ class LanguageSelectionFragment(private val mActivity: Activity) : BottomSheetDi
          */
         wikiLanguageList.clear()
         if (listMode == ListMode.SPELL_4_WIKI) {
-            wikiLanguageList = dbHelper.appDatabase.wikiLangDao?.wikiLanguageListForWordsWithoutAudio ?: arrayListOf()
+            dbHelper.appDatabase.wikiLangDao?.wikiLanguageListForWordsWithoutAudio?.filterNotNull()?.forEach { item -> wikiLanguageList.add(item) }
             layoutAddLanguage.makeVisible()
             btnAddMyLanguage?.setOnClickListener {
                 if (isAdded && isConnected(requireContext())) {
@@ -83,7 +82,7 @@ class LanguageSelectionFragment(private val mActivity: Activity) : BottomSheetDi
                 } else showNormal(btnAddMyLanguage, getString(R.string.check_internet))
             }
         } else {
-            wikiLanguageList = dbHelper.appDatabase.wikiLangDao?.wikiLanguageList ?: arrayListOf()
+            dbHelper.appDatabase.wikiLangDao?.wikiLanguageList?.filterNotNull()?.forEach { item -> wikiLanguageList.add(item) }
             layoutAddLanguage.makeGone()
         }
         val languageSelectionListener = object : OnLanguageSelectionListener {

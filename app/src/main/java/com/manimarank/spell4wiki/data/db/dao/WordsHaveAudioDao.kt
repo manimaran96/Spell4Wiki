@@ -15,5 +15,5 @@ interface WordsHaveAudioDao {
     fun delete(wordsHaveAudio: WordsHaveAudio?)
 
     @Query("SELECT word FROM words_already_have_audio WHERE language_code = :code")
-    fun getWordsAlreadyHaveAudioByLanguage(code: String?): List<String>?
+    fun getWordsAlreadyHaveAudioByLanguage(code: String?): ArrayList<String>?
 }
