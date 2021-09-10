@@ -29,7 +29,8 @@
          "code":"ak",
          "lang":"Akan",
          "dir":"ltr",
-         "local_lang":"Akana"
+         "local_lang":"Akana",
+         "category": ["Files uploaded by spell4wiki in ak"]
       },
       {
          "code":"als",
@@ -113,7 +114,9 @@
          "code":"bcl",
          "lang":"Bikol",
          "dir":"ltr",
-         "local_lang":"Bikol Central"
+         "local_lang":"Bikol Central",
+         "title_of_words_list":"Kategorya:Gabos na tataramon",
+         "category": ["Files uploaded by spell4wiki in bcl"]
       },
       {
          "code":"be",
@@ -616,7 +619,9 @@
          "code":"it",
          "lang":"Italian",
          "dir":"ltr",
-         "local_lang":"Italiano"
+         "local_lang":"Italiano",
+         "title_of_words_list":"Categoria:Sostantivi in italiano",
+         "category": ["Files uploaded by spell4wiki in it"]
       },
       {
          "code":"iu",
@@ -864,7 +869,9 @@
          "code":"ml",
          "lang":"Malayalam",
          "dir":"ltr",
-         "local_lang":"മലയാളം"
+         "local_lang":"മലയാളം",
+         "title_of_words_list":"വർഗ്ഗം:മലയാളം ധാതുരൂപങ്ങൾ",
+         "category": ["Files uploaded by spell4wiki in ml", "Malayalam pronunciation of the words with Malayalam script", "Malayalam pronunciation"]
       },
       {
          "code":"mn",
@@ -1030,9 +1037,11 @@
       },
       {
          "code":"or",
-         "lang":"Oriya",
+         "lang":"Odia",
          "dir":"ltr",
-         "local_lang":"ଓଡ଼ିଆ"
+         "local_lang":"ଓଡ଼ିଆ",
+         "title_of_words_list":"ଶ୍ରେଣୀ:ଓଡ଼ିଆ ଭାଷା",
+         "category": ["Files uploaded by spell4wiki in or"]
       },
       {
          "code":"os",
@@ -1285,6 +1294,13 @@
          "local_lang":"தமிழ்",
          "title_of_words_list":"பகுப்பு:தமிழ்-ஒலிக்கோப்புகளில்லை",
          "category": ["Files uploaded by spell4wiki in ta", "Tamil pronunciation of the words with Tamil script"]
+      },
+      {
+         "code":"tcy",
+         "lang":"Tulu",
+         "dir":"ltr",
+         "local_lang":"ತುಳು",
+         "category": ["Files uploaded by spell4wiki in tcy", "Tulu pronunciation of the words with Tulu script"]
       },
       {
          "code":"te",
