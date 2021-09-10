@@ -1,0 +1,2 @@
+- New Language(Tulu, Central Bikol) configuration added for Spell4Wiki
+- Spell4Wiki app java code converted into kotlin
