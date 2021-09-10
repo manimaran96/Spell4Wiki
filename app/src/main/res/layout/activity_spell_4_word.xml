@@ -9,7 +9,7 @@
     android:orientation="vertical"
     android:layout_gravity="center"
     android:gravity="center_horizontal"
-    tools:context=".activities.WiktionarySearchActivity">
+    tools:context=".ui.spell4wiktionary.WiktionarySearchActivity">
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/wiktionary_logo"
@@ -20,7 +20,7 @@
         app:srcCompat="@drawable/ic_spell4word" />
 
     <androidx.appcompat.widget.AppCompatEditText
-        android:id="@+id/editWord"
+        android:id="@+id/editSpell4Word"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/space16dp"

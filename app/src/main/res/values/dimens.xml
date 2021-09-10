@@ -1,63 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <dimen name="app_bar_height">56dp</dimen>
-    <dimen name="search_view_height">40dp</dimen>
+	<dimen name="app_bar_height">56dp</dimen>
+	<dimen name="search_view_height">40dp</dimen>
 
-    <!-- Icon size-->
-    <dimen name="logo_large">120dp</dimen>
-    <dimen name="login_logo">100dp</dimen>
-    <dimen name="icon_normal">100dp</dimen>
-    <dimen name="option_icon_size">75dp</dimen>
-    <dimen name="app_intro_icon">170dp</dimen>
-    <dimen name="app_intro_navigation">48dp</dimen>
-    <dimen name="lottie_icon">300dp</dimen>
-    <dimen name="img_normal">70dp</dimen>
-    <dimen name="action_icon">24dp</dimen>
-    <dimen name="lang_close">28dp</dimen>
-    <dimen name="round_icon">50dp</dimen>
+	<!-- Icon size-->
+	<dimen name="logo_large">120dp</dimen>
+	<dimen name="login_logo">100dp</dimen>
+	<dimen name="icon_normal">100dp</dimen>
+	<dimen name="option_icon_size">75dp</dimen>
+	<dimen name="app_intro_icon">170dp</dimen>
+	<dimen name="app_intro_navigation">48dp</dimen>
+	<dimen name="lottie_icon">300dp</dimen>
+	<dimen name="img_normal">70dp</dimen>
+	<dimen name="action_icon">24dp</dimen>
+	<dimen name="lang_close">28dp</dimen>
+	<dimen name="round_icon">50dp</dimen>
 
-    <!--Text size-->
-    <dimen name="text_semi_small">10sp</dimen>
-    <dimen name="text_small">12sp</dimen>
-    <dimen name="text_semi_normal">14sp</dimen>
-    <dimen name="text_normal">16sp</dimen>
-    <dimen name="text_large">22sp</dimen>
-    <dimen name="text_x_large">26sp</dimen>
-    <dimen name="text_heading">18sp</dimen>
+	<!--Text size-->
+	<dimen name="text_semi_small">10sp</dimen>
+	<dimen name="text_small">12sp</dimen>
+	<dimen name="text_semi_normal">14sp</dimen>
+	<dimen name="text_normal">16sp</dimen>
+	<dimen name="text_large">22sp</dimen>
+	<dimen name="text_x_large">26sp</dimen>
+	<dimen name="text_heading">18sp</dimen>
 
-    <!--Button-->
-    <dimen name="btn_height">40dp</dimen>
-    <dimen name="btn_padding_start">10dp</dimen>
-    <dimen name="btn_padding_end">10dp</dimen>
+	<!--Button-->
+	<dimen name="btn_height">40dp</dimen>
+	<dimen name="btn_padding_start">10dp</dimen>
+	<dimen name="btn_padding_end">10dp</dimen>
 
-    <!-- Card params -->
-    <dimen name="card_radius">4dp</dimen>
-    <dimen name="card_elevation">2dp</dimen>
-    <dimen name="card_margin">4dp</dimen>
-    <dimen name="space10dp">10dp</dimen>
+	<!-- Card params -->
+	<dimen name="card_radius">4dp</dimen>
+	<dimen name="card_elevation">2dp</dimen>
+	<dimen name="card_margin">4dp</dimen>
+	<dimen name="space10dp">10dp</dimen>
 
-    <!--Fab -->
-    <dimen name="fab_margin">16dp</dimen>
-    <dimen name="fab_size">54dp</dimen>
-    <dimen name="mic_expand">100dp</dimen>
-    <dimen name="mic_normal">70dp</dimen>
-    <dimen name="icon_record_play">30dp</dimen>
-    <dimen name="record_close_btn_margin">-24dp</dimen>
-    <dimen name="record_close_btn_size">48dp</dimen>
+	<!--Fab -->
+	<dimen name="fab_margin">16dp</dimen>
+	<dimen name="fab_size">54dp</dimen>
+	<dimen name="mic_expand">100dp</dimen>
+	<dimen name="mic_normal">70dp</dimen>
+	<dimen name="icon_record_play">30dp</dimen>
+	<dimen name="record_close_btn_margin">-24dp</dimen>
+	<dimen name="record_close_btn_size">48dp</dimen>
 
-    <!--Space Margin, Padding -->
-    <dimen name="space12dp">12dp</dimen>
-    <dimen name="space32dp">32dp</dimen>
-    <dimen name="space16dp">16dp</dimen>
-    <dimen name="space20dp">20dp</dimen>
-    <dimen name="space8dp">8dp</dimen>
-    <dimen name="space4dp">4dp</dimen>
-    <dimen name="space2dp">2dp</dimen>
-    <dimen name="space24dp">24dp</dimen>
-    <dimen name="space30dp">30dp</dimen>
-    <dimen name="show_case_focal_padding">40dp</dimen>
-    <dimen name="icon_language">60dp</dimen>
+	<!--Space Margin, Padding -->
+	<dimen name="space12dp">12dp</dimen>
+	<dimen name="space32dp">32dp</dimen>
+	<dimen name="space16dp">16dp</dimen>
+	<dimen name="space20dp">20dp</dimen>
+	<dimen name="space8dp">8dp</dimen>
+	<dimen name="space4dp">4dp</dimen>
+	<dimen name="space2dp">2dp</dimen>
+	<dimen name="space24dp">24dp</dimen>
+	<dimen name="space30dp">30dp</dimen>
+	<dimen name="show_case_focal_padding">40dp</dimen>
+	<dimen name="icon_language">60dp</dimen>
 
 
 </resources>

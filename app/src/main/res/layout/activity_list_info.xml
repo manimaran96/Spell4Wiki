@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/white"
     android:padding="@dimen/space8dp"
-    tools:context=".activities.ListItemActivity">
+    tools:context=".ui.about.ListItemActivity">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"

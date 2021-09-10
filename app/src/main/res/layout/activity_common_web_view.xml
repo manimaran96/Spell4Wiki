@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.CommonWebActivity">
+    tools:context=".ui.webui.CommonWebActivity">
     <FrameLayout
         android:id="@+id/frameLayout"
         android:layout_width="match_parent"

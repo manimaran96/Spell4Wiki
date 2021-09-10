@@ -34,7 +34,7 @@
         tools:ignore="GoogleAppIndexingWarning">
 
         <activity
-            android:name="com.manimarank.spell4wiki.activities.SplashActivity"
+            android:name="com.manimarank.spell4wiki.ui.splash.SplashActivity"
             android:label="@string/app_name"
             tools:ignore="LockedOrientationActivity"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize"
@@ -46,103 +46,103 @@
             </intent-filter>
         </activity>
 
-        <activity android:name="com.manimarank.spell4wiki.activities.AppIntroActivity"
+        <activity android:name="com.manimarank.spell4wiki.ui.appintro.AppIntroActivity"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize"
             android:theme="@style/AppTheme.FullScreen"/>
 
         <activity
-            android:name="com.manimarank.spell4wiki.activities.LanguageSelectionActivity"
+            android:name="com.manimarank.spell4wiki.ui.settings.LanguageSelectionActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize"
             tools:ignore="LockedOrientationActivity" />
 
         <activity
-            android:name="com.manimarank.spell4wiki.activities.LoginActivity"
+            android:name="com.manimarank.spell4wiki.ui.login.LoginActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name="com.manimarank.spell4wiki.activities.Spell4Wiktionary"
+            android:name="com.manimarank.spell4wiki.ui.spell4wiktionary.Spell4Wiktionary"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize"
             android:theme="@style/AppTheme" />
         <activity
-            android:name="com.manimarank.spell4wiki.activities.WiktionarySearchActivity"
+            android:name="com.manimarank.spell4wiki.ui.spell4wiktionary.WiktionarySearchActivity"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize"
             android:theme="@style/AppTheme" />
         <activity
-            android:name="com.manimarank.spell4wiki.activities.MainActivity"
+            android:name="com.manimarank.spell4wiki.ui.main.MainActivity"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.manimarank.spell4wiki.activities.AboutActivity"
+            android:name="com.manimarank.spell4wiki.ui.about.AboutActivity"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize"
             android:theme="@style/AppTheme" />
         <activity
-            android:name="com.manimarank.spell4wiki.activities.ListItemActivity"
+            android:name="com.manimarank.spell4wiki.ui.about.ListItemActivity"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize"
             android:theme="@style/AppTheme" />
         <activity
-            android:name="com.manimarank.spell4wiki.activities.ContributorsActivity"
+            android:name="com.manimarank.spell4wiki.ui.about.ContributorsActivity"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize"
             android:theme="@style/AppTheme"/>
         <activity
-            android:name="com.manimarank.spell4wiki.activities.Spell4WordListActivity"
+            android:name="com.manimarank.spell4wiki.ui.spell4wiktionary.Spell4WordListActivity"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize"
             android:theme="@style/AppTheme" />
         <activity
-            android:name="com.manimarank.spell4wiki.activities.Spell4WordActivity"
+            android:name="com.manimarank.spell4wiki.ui.spell4wiktionary.Spell4WordActivity"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity"
-            android:parentActivityName="com.manimarank.spell4wiki.activities.MainActivity"
-            android:windowSoftInputMode="stateAlwaysHidden|adjustResize"
-            android:theme="@style/AppTheme" />
-
-        <activity
-            android:name="com.manimarank.spell4wiki.activities.CommonWebActivity"
-            android:screenOrientation="portrait"
-            tools:ignore="LockedOrientationActivity"
-            android:windowSoftInputMode="stateAlwaysHidden|adjustResize"
-            android:theme="@style/AppTheme" />
-        <activity
-            android:name="com.manimarank.spell4wiki.activities.SettingsActivity"
-            android:screenOrientation="portrait"
-            tools:ignore="LockedOrientationActivity"
+            android:parentActivityName="com.manimarank.spell4wiki.ui.main.MainActivity"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize"
             android:theme="@style/AppTheme" />
 
         <activity
-            android:name="com.manimarank.spell4wiki.activities.RecordAudioActivity"
+            android:name="com.manimarank.spell4wiki.ui.webui.CommonWebActivity"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustResize"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name="com.manimarank.spell4wiki.ui.settings.SettingsActivity"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustResize"
+            android:theme="@style/AppTheme" />
+
+        <activity
+            android:name="com.manimarank.spell4wiki.ui.recordaudio.RecordAudioActivity"
             android:screenOrientation="unspecified"
             tools:ignore="LockedOrientationActivity"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize"
             android:theme="@style/RecordAudioDialogTheme" />
 
         <activity
-            android:name="com.manimarank.spell4wiki.activities.CommonWebContentActivity"
+            android:name="com.manimarank.spell4wiki.ui.webui.CommonWebContentActivity"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize"
             android:theme="@style/AppTheme" />
 
-        <service android:name="com.manimarank.spell4wiki.auth.WikiAuthenticatorService"
+        <service android:name=".data.auth.WikiAuthenticatorService"
             android:exported="false">
             <intent-filter>
                 <action android:name="android.accounts.AccountAuthenticator" />

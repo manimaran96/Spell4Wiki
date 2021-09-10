@@ -2,9 +2,11 @@ package com.manimarank.spell4wiki.utils
 
 import android.content.Context
 import android.net.ConnectivityManager
-import android.net.NetworkCapabilities
 import android.os.Build
 
+/**
+ * Utility class for Network/Internet related functions
+ */
 object NetworkUtils {
 
     fun isConnected(context: Context): Boolean {

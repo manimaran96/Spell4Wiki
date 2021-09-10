@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/white"
-    tools:context=".activities.CommonWebActivity">
+    tools:context=".ui.webui.CommonWebActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"

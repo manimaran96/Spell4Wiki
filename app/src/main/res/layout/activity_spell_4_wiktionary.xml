@@ -4,15 +4,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context=".activities.Spell4Wiktionary">
+    tools:context=".ui.spell4wiktionary.Spell4Wiktionary">
 
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-        android:id="@+id/layout_swipe"
+        android:id="@+id/refreshLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.manimarank.spell4wiki.views.EndlessRecyclerView
+        <com.manimarank.spell4wiki.ui.custom.EndlessRecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
