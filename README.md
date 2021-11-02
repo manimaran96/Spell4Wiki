@@ -5,8 +5,8 @@ Spell4Wiki > Spell For Wiktionary
 <p align="center"><img width="120" height="120" src="https://raw.githubusercontent.com/manimaran96/Spell4Wiki/master/files/assets/icons/spell4wiki-playstore.png" alt="logo"/></p>
 
 <p align="center">
-Spell4Wiki is a mobile application to record and upload audio for Wiktionary words to Wikimedia commons.<br/>
-Spell4Wiki also act as a Wiki-Dictionary(Word meaning from Wiktionary).
+Spell4Wiki is a mobile application to record and upload audio for Wiktionary words to Wikimedia Commons.<br/>
+Spell4Wiki also act as a Wiki-Dictionary (word meaning from Wiktionary).
 </p>
 
 <p align="center">
