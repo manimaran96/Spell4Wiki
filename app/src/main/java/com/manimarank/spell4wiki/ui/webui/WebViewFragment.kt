@@ -103,7 +103,7 @@ class WebViewFragment : Fragment() {
 
     @SuppressLint("SetJavaScriptEnabled")
     private fun loadWebPage(url: String?) {
-        webView.loadUrl(url)
+        webView.loadUrl(url.toString())
 
         // Enable Javascript
         webView.settings.javaScriptEnabled = true

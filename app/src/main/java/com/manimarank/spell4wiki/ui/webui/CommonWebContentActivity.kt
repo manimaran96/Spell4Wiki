@@ -50,7 +50,7 @@ class CommonWebContentActivity : BaseActivity() {
     @SuppressLint("SetJavaScriptEnabled")
     private fun loadWebPageContent() {
         var isWebPageNotFound = false
-        webView.loadUrl(url)
+        webView.loadUrl(url.toString())
         // Enable Javascript
         webView.settings.javaScriptEnabled = true
         webView.isHorizontalScrollBarEnabled = false
