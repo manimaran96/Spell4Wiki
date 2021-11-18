@@ -45,9 +45,6 @@ class AppPref {
         // Record
         private const val RECORD_INFO_SHOWED = "record_info_showed"
 
-        // Flag
-        private const val VC_4_FORCE_LOGOUT = "vc_4_force_logout"
-
         lateinit var pref: SharedPreferences
         fun init(context: Context) {
             pref = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
@@ -283,24 +280,6 @@ class AppPref {
          */
         fun getRecordInfoShowed(): Boolean {
             return pref.getBoolean(RECORD_INFO_SHOWED, false)
-        }
-
-        /**
-         * Set force update flag value for version 4
-         */
-        fun setVc4ForceLogoutDone() {
-            pref.edit().apply {
-                putBoolean(VC_4_FORCE_LOGOUT, true)
-                apply()
-            }
-        }
-
-        /**
-         * Getting force update flag value for version 4
-         * @return Boolean
-         */
-        fun getVc4ForceLogout(): Boolean {
-            return pref.getBoolean(VC_4_FORCE_LOGOUT, false)
         }
     }
 }

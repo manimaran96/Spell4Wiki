@@ -9,25 +9,21 @@ import android.os.Handler
 import android.text.TextUtils
 import androidx.core.content.ContextCompat
 import com.manimarank.spell4wiki.R
-import com.manimarank.spell4wiki.ui.main.MainActivity
 import com.manimarank.spell4wiki.data.apis.ApiClient
 import com.manimarank.spell4wiki.data.apis.ApiInterface
 import com.manimarank.spell4wiki.data.auth.AccountUtils
 import com.manimarank.spell4wiki.data.model.WikiLogin
 import com.manimarank.spell4wiki.data.model.WikiToken
 import com.manimarank.spell4wiki.data.model.WikiUser
+import com.manimarank.spell4wiki.data.prefs.PrefManager
 import com.manimarank.spell4wiki.ui.common.BaseActivity
+import com.manimarank.spell4wiki.ui.main.MainActivity
 import com.manimarank.spell4wiki.utils.GeneralUtils.hideKeyboard
 import com.manimarank.spell4wiki.utils.GeneralUtils.openUrl
 import com.manimarank.spell4wiki.utils.NetworkUtils.isConnected
 import com.manimarank.spell4wiki.utils.SnackBarUtils.showLong
-import com.manimarank.spell4wiki.utils.ToastUtils.showLong
 import com.manimarank.spell4wiki.utils.constants.AppConstants
 import com.manimarank.spell4wiki.utils.constants.Urls
-import com.manimarank.spell4wiki.utils.extensions.getAppVersion
-import com.manimarank.spell4wiki.data.prefs.AppPref.INSTANCE.getVc4ForceLogout
-import com.manimarank.spell4wiki.data.prefs.AppPref.INSTANCE.setVc4ForceLogoutDone
-import com.manimarank.spell4wiki.data.prefs.PrefManager
 import kotlinx.android.synthetic.main.activity_login.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -41,15 +37,6 @@ class LoginActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
         pref = PrefManager(applicationContext)
-
-        // Force logout below version 4
-        if (this.getAppVersion() < 4 && !getVc4ForceLogout()) {
-            setVc4ForceLogoutDone()
-            if (pref.isLoggedIn) {
-                showLong(getString(R.string.login_expired))
-                pref.clearLoginData()
-            }
-        }
 
         /*
          * Check Already login or not
