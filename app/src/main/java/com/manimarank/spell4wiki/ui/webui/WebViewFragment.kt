@@ -101,6 +101,9 @@ class WebViewFragment : Fragment() {
             fabRecord.hide()
     }
 
+    // Unwanted div tag in Wiktionary page
+    private val hideDivListForWiktionaryWebPage = listOf("header-container", "mw-footer", "page-actions-menu", "mw-editsection", "pre-content heading-holder", "disambig-see-also")
+
     @SuppressLint("SetJavaScriptEnabled")
     private fun loadWebPage(url: String?) {
         webView.loadUrl(url.toString())
@@ -124,7 +127,12 @@ class WebViewFragment : Fragment() {
             }
 
             override fun onPageFinished(view: WebView, url: String) {
-                super.onPageFinished(view, url)
+                // super.onPageFinished(view, url)
+                if (isWiktionaryWord) {
+                    hideDivListForWiktionaryWebPage.forEach { divClass ->
+                        webView.loadUrl("javascript:(function() { document.getElementsByClassName('${divClass}')[0].style.display='none'; })()")
+                    }
+                }
                 if (!isWebPageNotFound)
                     loadingVisibility(View.GONE)
                 activity?.invalidateOptionsMenu()
