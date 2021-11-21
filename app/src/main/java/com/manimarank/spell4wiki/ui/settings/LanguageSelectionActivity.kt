@@ -21,7 +21,7 @@ class LanguageSelectionActivity : BaseActivity() {
 
         pref = PrefManager(applicationContext)
 
-        txtAddLangInfo.text = String.format(getString(R.string.choose_your_preferred_language), AppLanguageDialog.getSelectedLanguage())
+        txtAddLangInfo.text = String.format(getString(R.string.choose_your_preferred_app_language), AppLanguageDialog.getSelectedLanguage())
 
         btnAddMyLanguage.setOnClickListener { AppLanguageDialog.show(this) }
 

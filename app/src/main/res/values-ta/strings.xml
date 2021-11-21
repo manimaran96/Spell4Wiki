@@ -116,9 +116,9 @@
     <string name="app_settings">செயலி அமைப்புகள்</string>
     <string name="app_language">செயலி மொழி</string>
     <string name="action_add">சேர்</string>
-    <string name="choose_your_preferred_language">நீங்கள் விரும்பும் மொழியைத் தேர்வுசெய்க.\nதற்போதைய மொழி : %s</string>
-    <string name="choose_language">மொழியைத் தேர்வுசெய்க</string>
-    <string name="language_selection">மொழி தேர்வு</string>
+    <string name="choose_your_preferred_app_language">நீங்கள் விரும்பும் மொழியைத் தேர்வுசெய்க.\nசெயலியின் தற்போதைய மொழி : %s</string>
+    <string name="choose_app_language">செயலியின் மொழியைத் தேர்வுசெய்க</string>
+    <string name="app_language_selection">செயலிக்கான மொழி தேர்வு</string>
     <string name="yes_continue">ஆம், தொடரவும்</string>
     <string name="later">பிறகு</string>
     <string name="temporary">தற்காலிக</string>
