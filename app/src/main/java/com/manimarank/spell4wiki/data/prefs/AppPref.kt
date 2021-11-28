@@ -217,7 +217,7 @@ class AppPref {
          * @return Int
          */
         fun getFetchLimit(): Int {
-            return if (pref.getInt(FETCH_LIMIT, DEFAULT_FETCH_LIMIT) > 0) pref.getInt(FETCH_LIMIT, DEFAULT_FETCH_LIMIT) else 150
+            return if (pref.getInt(FETCH_LIMIT, DEFAULT_FETCH_LIMIT) > 0) pref.getInt(FETCH_LIMIT, DEFAULT_FETCH_LIMIT) else DEFAULT_FETCH_LIMIT
         }
 
         /**

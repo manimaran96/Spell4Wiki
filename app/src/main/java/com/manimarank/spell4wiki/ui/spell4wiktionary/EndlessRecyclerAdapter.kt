@@ -102,6 +102,11 @@ class EndlessRecyclerAdapter(
         }
     }
 
+
+    fun getList(): MutableList<String> {
+        return mItems
+    }
+
     fun addLoading() {
         if (!isLoaderVisible && mItems.size > 0) {
             isLoaderVisible = true

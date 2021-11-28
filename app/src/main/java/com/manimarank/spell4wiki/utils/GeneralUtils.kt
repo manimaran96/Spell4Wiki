@@ -92,7 +92,12 @@ object GeneralUtils {
                         if (fileExist) {
                             val wordsHaveAudioDao = DBHelper.getInstance(activity).appDatabase.wordsHaveAudioDao
                             wordsHaveAudioDao?.insert(WordsHaveAudio(word, langCode))
-                            if (activity is Spell4Wiktionary) activity.updateList(word) else if (activity is Spell4WordListActivity) activity.updateList(word) else if (activity is Spell4WordActivity) activity.updateList(word) else if (activity is CommonWebActivity) activity.updateList(word)
+                            when (activity) {
+                                is Spell4Wiktionary -> activity.updateList(word)
+                                is Spell4WordListActivity -> activity.updateList(word)
+                                is Spell4WordActivity -> activity.updateList(word)
+                                is CommonWebActivity -> activity.updateList(word)
+                            }
                             showLong(String.format(activity.getString(R.string.audio_file_already_exist), word))
                             show(activity)
                         } else {

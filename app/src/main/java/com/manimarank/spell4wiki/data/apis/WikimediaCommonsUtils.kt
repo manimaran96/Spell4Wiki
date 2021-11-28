@@ -53,8 +53,8 @@ object WikimediaCommonsUtils {
                     e.printStackTrace()
                 }
                 val duration = System.currentTimeMillis() - startTime
-                if (duration < 1000) {
-                    Thread.sleep(1000 - duration)
+                if (duration < 500) {
+                    Thread.sleep(500 - duration)
                 }
                 return fileExist
             }

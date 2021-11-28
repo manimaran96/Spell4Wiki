@@ -1,6 +1,7 @@
 package com.manimarank.spell4wiki.ui.spell4wiktionary
 
 import android.app.AlertDialog
+import android.app.Dialog
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
@@ -9,8 +10,10 @@ import android.text.TextUtils
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.view.Window
 import android.widget.TextView
 import androidx.interpolator.view.animation.FastOutSlowInInterpolator
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.manimarank.spell4wiki.R
@@ -29,15 +32,14 @@ import com.manimarank.spell4wiki.data.prefs.ShowCasePref.isNotShowed
 import com.manimarank.spell4wiki.data.prefs.ShowCasePref.showed
 import com.manimarank.spell4wiki.ui.common.BaseActivity
 import com.manimarank.spell4wiki.ui.custom.EndlessRecyclerView.EndlessListener
+import com.manimarank.spell4wiki.ui.dialogs.CommonDialog.openInfoDialog
 import com.manimarank.spell4wiki.ui.dialogs.showConfirmBackDialog
 import com.manimarank.spell4wiki.ui.languageselector.LanguageSelectionFragment
 import com.manimarank.spell4wiki.ui.listerners.OnLanguageSelectionListener
+import com.manimarank.spell4wiki.utils.*
 import com.manimarank.spell4wiki.utils.NetworkUtils.isConnected
 import com.manimarank.spell4wiki.utils.constants.AppConstants
 import com.manimarank.spell4wiki.utils.constants.ListMode
-import com.manimarank.spell4wiki.utils.makeGone
-import com.manimarank.spell4wiki.utils.makeInVisible
-import com.manimarank.spell4wiki.utils.makeVisible
 import kotlinx.android.synthetic.main.activity_spell_4_wiktionary.*
 import kotlinx.android.synthetic.main.empty_state_ui.*
 import retrofit2.Call
@@ -66,6 +68,11 @@ class Spell4Wiktionary : BaseActivity(), EndlessListener {
     private var apiRetryCount = 0
     private var apiFailRetryCount = 0
     private var wiktionaryTitleOfWordsWithoutAudio: String? = null
+
+    private val filterRemovedWords = ArrayList<String>()
+
+    private lateinit var viewModel: MainViewModel
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_spell_4_wiktionary)
@@ -84,6 +91,11 @@ class Spell4Wiktionary : BaseActivity(), EndlessListener {
         supportActionBar?.title = getString(R.string.spell4wiktionary)
         snackBar = Snackbar.make(recyclerView, getString(R.string.record_fetch_fail), Snackbar.LENGTH_LONG)
         recyclerView.setHasFixedSize(true)
+
+        viewModel = ViewModelProvider(this)[MainViewModel::class.java]
+
+        setupFilterWordOption()
+
         val layoutManager = LinearLayoutManager(this)
         recyclerView.layoutManager = layoutManager
         adapter = EndlessRecyclerAdapter(this@Spell4Wiktionary, ArrayList(), ListMode.SPELL_4_WIKI)
@@ -91,6 +103,57 @@ class Spell4Wiktionary : BaseActivity(), EndlessListener {
         recyclerView.setListener(this)
         recyclerView.makeVisible()
         refreshLayout.setOnRefreshListener { loadDataFromServer() }
+    }
+
+    private fun setupFilterWordOption() {
+        val dialog = Dialog(this, R.style.RecordAudioDialogTheme)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setContentView(R.layout.loading_file_availability)
+        val txtInfo = dialog.findViewById<TextView>(R.id.txtFileName)
+        val txtProgress = dialog.findViewById<TextView>(R.id.txtProgress)
+        txtProgress.makeVisible()
+        txtInfo.text = getFilterText("")
+        dialog.setCancelable(false)
+
+        var itemList: List<String> = ArrayList()
+        filterRemovedWords.clear()
+
+        viewModel.progressForFilter.observe(this, { index ->
+            // val progress = ((index+1) * 100) / itemList.size
+            txtProgress.text = ("${index+1}/${itemList.size}")
+            txtInfo.text = getFilterText(itemList[index])
+        })
+
+        viewModel.wordAlreadyHaveAudio.observe(this, { word ->
+            updateList(word)
+        })
+
+        viewModel.wordsWithoutAudioList.observe(this, { list ->
+            val diff = itemList.size - list.size
+            SnackBarUtils.showLong(recyclerView,
+                if (diff > 0) getString(R.string.words_filter_success, diff) else getString(R.string.no_words_filtered))
+            filterRemovedWords.addAll(list)
+            dialog.dismiss()
+        })
+
+        btnRunFilter.setOnClickListener {
+            itemList = adapter.getList().filter { filterRemovedWords.contains(it).not() }.take(AppConstants.MAX_WORD_FILTER_COUNT)
+            if (itemList.isNotEmpty() && languageCode != null) {
+                txtProgress.text = ("0/${itemList.size}")
+                dialog.show()
+                viewModel.checkWordsAvailability(itemList, languageCode!!)
+            } else
+                SnackBarUtils.showLong(recyclerView, getString(R.string.no_words_scroll_to_get_new_words))
+        }
+
+        btnRunFilterInfo.setOnClickListener {
+            this.openInfoDialog(getString(R.string.run_filter_use) , getString(R.string.run_filter_info))
+        }
+    }
+
+    private fun getFilterText(word: String?): String {
+        val fileName = "$languageCode-$word.ogg"
+        return String.format(getString(R.string.checking_file_availability), fileName)
     }
 
     private fun resetApiResultTime() {

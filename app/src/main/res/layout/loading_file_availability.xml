@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/layoutUploadPopUp"
     android:layout_width="@dimen/lottie_icon"
     android:layout_height="wrap_content"
@@ -31,13 +32,31 @@
         android:layout_centerHorizontal="true"
         android:layout_gravity="center"
         android:layout_marginTop="@dimen/space4dp"
-        android:layout_marginBottom="@dimen/space20dp"
+        android:layout_marginBottom="@dimen/space4dp"
         android:ellipsize="middle"
         android:gravity="center"
         android:maxLines="4"
         android:text="@string/checking_file_availability"
         android:textColor="@color/white"
         android:textSize="@dimen/text_semi_normal" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/txtProgress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txtFileName"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center"
+        android:visibility="gone"
+        tools:visibility="visible"
+        android:layout_marginTop="@dimen/space4dp"
+        android:layout_marginBottom="@dimen/space4dp"
+        android:ellipsize="middle"
+        android:gravity="center"
+        android:maxLines="4"
+        tools:text="0/100"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_heading" />
 
 
 </RelativeLayout>
