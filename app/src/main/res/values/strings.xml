@@ -161,6 +161,7 @@
     <string name="words_filter_success">Success! %d words filtered from this list.</string>
     <string name="run_filter_use">Use of Run Filter</string>
     <string name="run_filter_info">To avoid re-uploading/duplicating the audio, we check whether the audio file already exists or not before recording. Because some of words already having the audio in Commons.\n\nThis Run filter option helps to filter the words which doesn\'t have audio file in a simple way. After applying filter, you can start to record the audio for listed words or To get more words, please scroll the list.</string>
+    <string name="run_filter_settings_count">Run filter - Number of words to check: %d</string>
 
     <string name="check_internet">Please check your internet connection!</string>
     <string name="record_fetch_fail">Please check your connection!\nSwipe down/Scroll to try again!</string>

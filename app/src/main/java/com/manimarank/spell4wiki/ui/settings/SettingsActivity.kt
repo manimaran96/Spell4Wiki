@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.text.TextUtils
 import android.text.method.LinkMovementMethod
 import android.view.MenuItem
+import android.widget.SeekBar
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.core.text.HtmlCompat
@@ -21,6 +22,7 @@ import com.manimarank.spell4wiki.ui.listerners.OnLanguageSelectionListener
 import com.manimarank.spell4wiki.utils.WikiLicense
 import com.manimarank.spell4wiki.utils.WikiLicense.licenseNameId
 import com.manimarank.spell4wiki.utils.WikiLicense.licenseUrlFor
+import com.manimarank.spell4wiki.utils.constants.AppConstants
 import com.manimarank.spell4wiki.utils.constants.ListMode
 import com.manimarank.spell4wiki.utils.makeGone
 import kotlinx.android.synthetic.main.activity_settings.*
@@ -119,6 +121,23 @@ class SettingsActivity : BaseActivity() {
         }
         txtAppLanguage.text = getSelectedLanguage()
         layoutLanguageOfApp.setOnClickListener { show(this@SettingsActivity) }
+
+        txtRfCount.text = getString(R.string.run_filter_settings_count, pref.runFilterNumberOfWordsToCheck ?: AppConstants.RUN_FILTER_NO_OF_WORDS_CHECK_COUNT)
+        seekBarRunFilterCount.progress = pref.runFilterNumberOfWordsToCheck ?: AppConstants.RUN_FILTER_NO_OF_WORDS_CHECK_COUNT
+        seekBarRunFilterCount.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+            var finalProgress = pref.runFilterNumberOfWordsToCheck ?: AppConstants.RUN_FILTER_NO_OF_WORDS_CHECK_COUNT
+            override fun onProgressChanged(p0: SeekBar?, progress: Int, p2: Boolean) {
+                finalProgress = if (progress <= 0) 1 else progress
+                txtRfCount.text = getString(R.string.run_filter_settings_count, finalProgress)
+            }
+
+            override fun onStartTrackingTouch(p0: SeekBar?) = Unit
+
+            override fun onStopTrackingTouch(p0: SeekBar?) {
+                pref.runFilterNumberOfWordsToCheck = finalProgress
+            }
+
+        })
     }
 
     private fun updateLanguageView(txtView: TextView, languageCode: String?) {

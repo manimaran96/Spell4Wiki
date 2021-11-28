@@ -7,6 +7,7 @@ import android.content.SharedPreferences
 import com.manimarank.spell4wiki.ui.login.LoginActivity
 import com.manimarank.spell4wiki.data.auth.AccountUtils
 import com.manimarank.spell4wiki.utils.WikiLicense
+import com.manimarank.spell4wiki.utils.constants.AppConstants
 
 /**
  * Preference utility class for App level settings and login related preference
@@ -121,6 +122,13 @@ class PrefManager(private val mContext: Context?) {
             editor.apply()
         }
 
+    var runFilterNumberOfWordsToCheck: Int?
+        get() = pref.getInt(RUN_FILTER_NO_OF_WORDS_TO_CHECK, AppConstants.RUN_FILTER_NO_OF_WORDS_CHECK_COUNT)
+        set(noOfWordCount) {
+            editor.putInt(RUN_FILTER_NO_OF_WORDS_TO_CHECK, noOfWordCount ?: AppConstants.RUN_FILTER_NO_OF_WORDS_CHECK_COUNT)
+            editor.apply()
+        }
+
     companion object {
         // shared pref
         private const val PREF_NAME = "spell4wiki_pref"
@@ -135,6 +143,7 @@ class PrefManager(private val mContext: Context?) {
         private const val LANGUAGE_CODE_SPELL_4_WORD = "language_code_spell_4_word"
         private const val LANGUAGE_CODE_WIKTIONARY = "language_code_wiktionary"
         private const val UPLOAD_AUDIO_LICENSE = "upload_audio_license"
+        private const val RUN_FILTER_NO_OF_WORDS_TO_CHECK = "run_filter_no_of_words_to_check"
         private const val CSRF_TOKEN = "csrf_token"
         private const val COOKIE = "cookie"
     }

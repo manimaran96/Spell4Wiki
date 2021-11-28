@@ -137,11 +137,12 @@ class Spell4Wiktionary : BaseActivity(), EndlessListener {
         })
 
         btnRunFilter.setOnClickListener {
-            itemList = adapter.getList().filter { filterRemovedWords.contains(it).not() }.take(AppConstants.MAX_WORD_FILTER_COUNT)
+            val runFilterNoOfWordsCheckCount = pref.runFilterNumberOfWordsToCheck ?: AppConstants.RUN_FILTER_NO_OF_WORDS_CHECK_COUNT
+            itemList = adapter.getList().filter { filterRemovedWords.contains(it).not() }.take(runFilterNoOfWordsCheckCount)
             if (itemList.isNotEmpty() && languageCode != null) {
                 txtProgress.text = ("0/${itemList.size}")
                 dialog.show()
-                viewModel.checkWordsAvailability(itemList, languageCode!!)
+                viewModel.checkWordsAvailability(itemList, languageCode!!, runFilterNoOfWordsCheckCount)
             } else
                 SnackBarUtils.showLong(recyclerView, getString(R.string.no_words_scroll_to_get_new_words))
         }

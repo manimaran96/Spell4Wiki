@@ -241,6 +241,70 @@
 
         </LinearLayout>
 
+        <LinearLayout
+            android:id="@+id/layoutRunFilter"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/space8dp">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/txtRfCount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/text_normal"
+                android:maxLines="2"
+                android:ellipsize="middle"
+                android:textColor="@color/settings_label_text"
+                android:text="@string/run_filter_settings_count" />
+
+            <RelativeLayout
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/txtRfStartCount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/space2dp"
+                    android:gravity="center_vertical"
+                    android:maxLines="1"
+                    android:text="1"
+                    android:textColor="@color/settings_status_text"
+                    android:textSize="@dimen/text_semi_normal"
+                    tools:ignore="HardcodedText" />
+
+                <SeekBar
+                    android:id="@+id/seekBarRunFilterCount"
+                    android:max="50"
+                    android:progress="25"
+                    android:layout_centerInParent="true"
+                    android:layout_marginTop="@dimen/space8dp"
+                    android:layout_width="match_parent"
+                    android:layout_toStartOf="@+id/txtRfEndCount"
+                    android:layout_toEndOf="@+id/txtRfStartCount"
+                    android:layout_height="wrap_content"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/txtRfEndCount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/space2dp"
+                    android:gravity="center_vertical"
+                    android:maxLines="1"
+                    android:layout_alignParentEnd="true"
+                    android:text="50"
+                    android:textColor="@color/settings_status_text"
+                    android:textSize="@dimen/text_semi_normal"
+                    tools:ignore="HardcodedText" />
+
+            </RelativeLayout>
+
+
+        </LinearLayout>
+
     </LinearLayout>
 
 

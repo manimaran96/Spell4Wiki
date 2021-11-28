@@ -36,7 +36,7 @@ object AppConstants {
     // Record
     const val MAX_SEC_FOR_RECORDING: Long = 10
 
-    const val MAX_WORD_FILTER_COUNT = 25
+    const val RUN_FILTER_NO_OF_WORDS_CHECK_COUNT = 25
 
     // Record & Storage related
     const val AUDIO_MAIN_PATH = "Spell4Wiki_Audios"
