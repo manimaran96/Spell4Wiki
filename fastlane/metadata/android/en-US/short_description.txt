@@ -1,1 +1,1 @@
-Wiki-Dictionary, Audio Upload Tool for Wiktionary Words and Wikimedia Commons.
+Audio Upload Tool for Wiktionary Words and Wikimedia Commons & Wiki-Dictionary.
