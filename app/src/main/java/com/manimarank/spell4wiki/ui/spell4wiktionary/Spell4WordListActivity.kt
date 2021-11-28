@@ -292,7 +292,7 @@ class Spell4WordListActivity : BaseActivity() {
             recyclerView.makeGone()
             layoutEmpty.makeGone()
         } else if (layoutEdit.visibility == View.VISIBLE) {
-            if (!TextUtils.isEmpty(editFile.text) || pref.abortAlertStatus == true) {
+            if (!TextUtils.isEmpty(editFile.text)) {
                 this.showConfirmBackDialog {
                     layoutSelect.makeVisible()
                     layoutEdit.makeGone()

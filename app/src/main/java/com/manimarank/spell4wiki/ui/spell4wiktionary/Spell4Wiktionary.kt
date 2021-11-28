@@ -464,7 +464,7 @@ class Spell4Wiktionary : BaseActivity(), EndlessListener {
     }
 
     private fun callBackPress() {
-        if (adapter.itemCount > 0 && pref.abortAlertStatus == true) {
+        if (adapter.itemCount > 0) {
             this.showConfirmBackDialog { super.onBackPressed() }
         } else super.onBackPressed()
     }

@@ -120,17 +120,10 @@ class PrefManager(private val mContext: Context?) {
             editor.putString(UPLOAD_AUDIO_LICENSE, uploadAudioLicense)
             editor.apply()
         }
-    var abortAlertStatus: Boolean?
-        get() = pref.getBoolean(ABORT_ALERT_STATUS, false)
-        set(show) {
-            editor.putBoolean(ABORT_ALERT_STATUS, show ?: false)
-            editor.apply()
-        }
 
     companion object {
         // shared pref
         private const val PREF_NAME = "spell4wiki_pref"
-        private const val PRIVATE_MODE = 0
 
         // Key values
         private const val USERNAME = "username"
@@ -142,13 +135,12 @@ class PrefManager(private val mContext: Context?) {
         private const val LANGUAGE_CODE_SPELL_4_WORD = "language_code_spell_4_word"
         private const val LANGUAGE_CODE_WIKTIONARY = "language_code_wiktionary"
         private const val UPLOAD_AUDIO_LICENSE = "upload_audio_license"
-        private const val ABORT_ALERT_STATUS = "abort_alert_status"
         private const val CSRF_TOKEN = "csrf_token"
         private const val COOKIE = "cookie"
     }
 
     init {
-        pref = mContext!!.getSharedPreferences(PREF_NAME, PRIVATE_MODE)
+        pref = mContext!!.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
         editor = pref.edit()
         editor.apply()
     }

@@ -6,25 +6,23 @@ import android.os.Bundle
 import android.text.TextUtils
 import android.text.method.LinkMovementMethod
 import android.view.MenuItem
-import android.widget.CompoundButton
 import android.widget.TextView
-import androidx.appcompat.widget.SwitchCompat
 import androidx.core.content.ContextCompat
 import androidx.core.text.HtmlCompat
 import com.manimarank.spell4wiki.R
 import com.manimarank.spell4wiki.data.db.DBHelper
 import com.manimarank.spell4wiki.data.db.dao.WikiLangDao
-import com.manimarank.spell4wiki.ui.languageselector.LanguageSelectionFragment
-import com.manimarank.spell4wiki.ui.listerners.OnLanguageSelectionListener
+import com.manimarank.spell4wiki.data.prefs.PrefManager
 import com.manimarank.spell4wiki.ui.common.BaseActivity
 import com.manimarank.spell4wiki.ui.dialogs.AppLanguageDialog.getSelectedLanguage
 import com.manimarank.spell4wiki.ui.dialogs.AppLanguageDialog.show
+import com.manimarank.spell4wiki.ui.languageselector.LanguageSelectionFragment
+import com.manimarank.spell4wiki.ui.listerners.OnLanguageSelectionListener
 import com.manimarank.spell4wiki.utils.WikiLicense
 import com.manimarank.spell4wiki.utils.WikiLicense.licenseNameId
 import com.manimarank.spell4wiki.utils.WikiLicense.licenseUrlFor
 import com.manimarank.spell4wiki.utils.constants.ListMode
 import com.manimarank.spell4wiki.utils.makeGone
-import com.manimarank.spell4wiki.data.prefs.PrefManager
 import kotlinx.android.synthetic.main.activity_settings.*
 import java.util.*
 
@@ -121,15 +119,6 @@ class SettingsActivity : BaseActivity() {
         }
         txtAppLanguage.text = getSelectedLanguage()
         layoutLanguageOfApp.setOnClickListener { show(this@SettingsActivity) }
-        updateAbortAlertStatus(switchAbortAlerts, txtAbortAlertStatus, pref.abortAlertStatus)
-        layoutAbortAlert.setOnClickListener { updateAbortAlertStatus(switchAbortAlerts, txtAbortAlertStatus, pref.abortAlertStatus?.not()) }
-        switchAbortAlerts.setOnCheckedChangeListener { _: CompoundButton?, show: Boolean -> updateAbortAlertStatus(switchAbortAlerts, txtAbortAlertStatus, show) }
-    }
-
-    private fun updateAbortAlertStatus(switchAbortAlerts: SwitchCompat, txtAbortAlertStatus: TextView, show: Boolean?) {
-        switchAbortAlerts.isChecked = show ?: false
-        pref.abortAlertStatus = show ?: false
-        txtAbortAlertStatus.text = getString(if (show == true) R.string.show_exit_alerts_in_spell4wiki_options else R.string.hide_exit_alerts_in_spell4wiki_options)
     }
 
     private fun updateLanguageView(txtView: TextView, languageCode: String?) {

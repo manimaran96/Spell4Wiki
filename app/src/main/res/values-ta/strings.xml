@@ -215,8 +215,4 @@
     <string name="sc_t_core_contributors_list_item">பங்களிப்பாளரைப் பற்றி மேலும்</string>
     <string name="sc_d_core_contributors_list_item">பங்களிப்பாளரைப் பற்றிய கூடுதல் விவரங்களுக்கு பெயரின் மீது அழுத்தவும்.</string>
 
-    <string name="abort_exit_alerts">வெளியேறும் விழிப்பூட்டல்களை நிறுத்த</string>
-    <string name="show_exit_alerts_in_spell4wiki_options">காட்டு: வெளியேறும் எச்சரிக்கையை Spell4Wiki விருப்பங்களில்</string>
-    <string name="hide_exit_alerts_in_spell4wiki_options">மறை: வெளியேறும் எச்சரிக்கையை Spell4Wiki விருப்பங்களில்</string>
-
 </resources>

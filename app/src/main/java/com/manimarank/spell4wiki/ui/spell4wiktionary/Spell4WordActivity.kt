@@ -157,7 +157,7 @@ class Spell4WordActivity : BaseActivity() {
     }
 
     private fun callBackPress() {
-        if (!TextUtils.isEmpty(editSpell4Word.text) && pref.abortAlertStatus == true) {
+        if (!TextUtils.isEmpty(editSpell4Word.text)) {
             this.showConfirmBackDialog { super.onBackPressed() }
         } else {
             super.onBackPressed()
