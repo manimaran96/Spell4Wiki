@@ -1,4 +1,4 @@
-- Improve: Wiktionary UI looks
+- Improved: Wiktionary UI looks
 - Added: Run filter option for filter the words that doesn't have audio
 - Added: Settings for Run filter
 - Improve: App language selection UI info
