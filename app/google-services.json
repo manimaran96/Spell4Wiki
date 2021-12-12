@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "672390596574",
+    "project_id": "spell4wiki",
+    "storage_bucket": "spell4wiki.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:672390596574:android:7b0e19f11169a80512bf4f",
+        "android_client_info": {
+          "package_name": "com.manimarank.spell4wiki"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "672390596574-02ff5ungmc72spcjl9rrgunqnjrb7pa1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDrFXf99ORbjHfsowT68Utj_nx63fMHePI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "672390596574-02ff5ungmc72spcjl9rrgunqnjrb7pa1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
