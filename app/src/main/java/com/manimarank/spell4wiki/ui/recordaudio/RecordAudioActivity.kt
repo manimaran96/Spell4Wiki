@@ -626,16 +626,16 @@ class RecordAudioActivity : BaseActivity() {
     // File License
     // File Category
     private fun getCommonsContentAndLicense(): String {
-        return """
-               == {{int:filedesc}} ==
-               {{Information
-               ${if (getFileDescription() != null) "|description=${getFileDescription()}\n" else ""}|source={{own}}|author=[[User:${pref.name}|${pref.name}]]
-               |date=${getDateToString(DF_YYYY_MM_DD)}
-               }}
-               == {{int:license-header}} ==
-               ${getLicenseTemplateInWiki(pref.uploadAudioLicense)}
-               ${getCategoryInfo()}
-               """.trimIndent()
+        val sb:StringBuilder = StringBuilder()
+        sb.append("== {{int:filedesc}} ==").append("\n")
+        sb.append("{{Information").append("\n")
+        sb.append(if (getFileDescription() != null) "|description=${getFileDescription()}\n" else "")
+        sb.append("|source={{own}}").append("|author=[[User:${pref.name}|${pref.name}]]").append("|date=${getDateToString(DF_YYYY_MM_DD)}").append("\n")
+        sb.append("}}").append("\n")
+        sb.append("== {{int:license-header}} ==").append("\n")
+        sb.append(getLicenseTemplateInWiki(pref.uploadAudioLicense)).append("\n")
+        sb.append(getCategoryInfo())
+        return sb.toString()
     }
 
     private fun getFileDescription(): String? {
