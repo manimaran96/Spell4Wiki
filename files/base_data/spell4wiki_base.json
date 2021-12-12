@@ -343,19 +343,22 @@
          "code":"en",
          "lang":"English",
          "dir":"ltr",
-         "local_lang":"English"
+         "local_lang":"English",
+         "category": ["Files uploaded by spell4wiki in en"]
       },
       {
          "code":"eo",
          "lang":"Esperanto",
          "dir":"ltr",
-         "local_lang":"Esperanto"
+         "local_lang":"Esperanto",
+         "category": ["Files uploaded by spell4wiki in eo"]
       },
       {
          "code":"es",
          "lang":"Spanish",
          "dir":"ltr",
-         "local_lang":"Español"
+         "local_lang":"Español",
+         "category": ["Files uploaded by spell4wiki in es"]
       },
       {
          "code":"et",
@@ -409,7 +412,8 @@
          "code":"fr",
          "lang":"French",
          "dir":"ltr",
-         "local_lang":"Français"
+         "local_lang":"Français",
+         "category": ["Files uploaded by spell4wiki in fr"]
       },
       {
          "code":"frp",
@@ -484,6 +488,13 @@
          "local_lang":"ગુજરાતી"
       },
       {
+         "code":"guw",
+         "lang":"Gun",
+         "dir":"ltr",
+         "local_lang":"Gungbe",
+         "category": ["Files uploaded by spell4wiki in guw"]
+      },
+      {
          "code":"gv",
          "lang":"Manx",
          "dir":"ltr",
@@ -493,7 +504,8 @@
          "code":"ha",
          "lang":"Hausa",
          "dir":"rtl",
-         "local_lang":"هَوُسَ"
+         "local_lang":"هَوُسَ",
+         "category": ["Files uploaded by spell4wiki in ha"]
       },
       {
          "code":"hak",
@@ -511,13 +523,15 @@
          "code":"he",
          "lang":"Hebrew",
          "dir":"rtl",
-         "local_lang":"עברית"
+         "local_lang":"עברית",
+         "category": ["Files uploaded by spell4wiki in he"]
       },
       {
          "code":"hi",
          "lang":"Hindi",
          "dir":"ltr",
-         "local_lang":"हिन्दी"
+         "local_lang":"हिन्दी",
+         "category": ["Files uploaded by spell4wiki in hi"]
       },
       {
          "code":"ho",
@@ -979,7 +993,8 @@
          "code":"nn",
          "lang":"Norwegian Nynorsk",
          "dir":"ltr",
-         "local_lang":"Norsk (nynorsk)"
+         "local_lang":"Norsk (nynorsk)",
+         "category": ["Files uploaded by spell4wiki in nn"]
       },
       {
          "code":"no",
@@ -1372,7 +1387,8 @@
          "code":"tr",
          "lang":"Turkish",
          "dir":"ltr",
-         "local_lang":"Türkçe"
+         "local_lang":"Türkçe",
+         "category": ["Files uploaded by spell4wiki in tr"]
       },
       {
          "code":"ts",
@@ -1396,7 +1412,8 @@
          "code":"tw",
          "lang":"Twi",
          "dir":"ltr",
-         "local_lang":"Twi"
+         "local_lang":"Twi",
+         "category": ["Files uploaded by spell4wiki in tw"]
       },
       {
          "code":"ty",
@@ -1510,7 +1527,8 @@
          "code":"yo",
          "lang":"Yoruba",
          "dir":"ltr",
-         "local_lang":"Yorùbá"
+         "local_lang":"Yorùbá",
+         "category": ["Files uploaded by spell4wiki in yo"]
       },
       {
          "code":"za",
