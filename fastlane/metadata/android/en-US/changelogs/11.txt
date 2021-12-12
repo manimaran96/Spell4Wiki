@@ -1,0 +1,7 @@
+- Improved: Wiktionary UI looks
+- Added: Run filter option for filter the words that doesn't have audio
+- Added: Settings for Run filter
+- Improved: App language selection UI info
+- Improved: Updating SDK libraries
+- Removed: Back alert & v4 Force logout
+- Added: Crash reporting
