@@ -1443,7 +1443,9 @@
          "code":"ur",
          "lang":"Urdu",
          "dir":"rtl",
-         "local_lang":"اردو"
+         "local_lang":"اردو",
+         "title_of_words_list":"زمرہ:اسم",
+         "category": ["Files uploaded by spell4wiki in ur", "Urdu Script"]
       },
       {
          "code":"uz",
