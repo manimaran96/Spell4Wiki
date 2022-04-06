@@ -35,11 +35,11 @@
 
         <activity
             android:name="com.manimarank.spell4wiki.ui.splash.SplashActivity"
-            android:label="@string/app_name"
             tools:ignore="LockedOrientationActivity"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.FullScreen">
+            android:theme="@style/AppTheme.FullScreen"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
