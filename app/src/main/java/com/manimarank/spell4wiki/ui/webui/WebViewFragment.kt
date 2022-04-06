@@ -122,27 +122,33 @@ class WebViewFragment : Fragment() {
             override fun onPageStarted(view: WebView, url: String, favicon: Bitmap?) {
                 super.onPageStarted(view, url, favicon)
                 isWebPageNotFound = false
-                loadingVisibility(View.VISIBLE)
-                activity?.invalidateOptionsMenu()
+                if (isAdded) {
+                    loadingVisibility(View.VISIBLE)
+                    activity?.invalidateOptionsMenu()
+                }
             }
 
             override fun onPageFinished(view: WebView, url: String) {
                 // super.onPageFinished(view, url)
-                if (isWiktionaryWord) {
-                    hideDivListForWiktionaryWebPage.forEach { divClass ->
-                        webView.loadUrl("javascript:(function() { document.getElementsByClassName('${divClass}')[0].style.display='none'; })()")
+                if (isAdded) {
+                    if (isWiktionaryWord) {
+                        hideDivListForWiktionaryWebPage.forEach { divClass ->
+                            webView?.loadUrl("javascript:(function() { document.getElementsByClassName('${divClass}')[0].style.display='none'; })()")
+                        }
                     }
+                    if (!isWebPageNotFound)
+                        loadingVisibility(View.GONE)
+                    activity?.invalidateOptionsMenu()
                 }
-                if (!isWebPageNotFound)
-                    loadingVisibility(View.GONE)
-                activity?.invalidateOptionsMenu()
             }
 
             override fun onReceivedError(view: WebView, request: WebResourceRequest, error: WebResourceError) {
                 super.onReceivedError(view, request, error)
                 isWebPageNotFound = true
-                showPageNotFound()
-                activity?.invalidateOptionsMenu()
+                if (isAdded) {
+                    showPageNotFound()
+                    activity?.invalidateOptionsMenu()
+                }
             }
         }
     }
