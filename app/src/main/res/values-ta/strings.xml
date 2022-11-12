@@ -11,7 +11,7 @@
     ######## NOTE ############
     - Keep %s, \n and @string/......... values
     - That %s will be replaced with some word.
-    - For ambracene symbol(&) use &amp;
+    - For ampersand symbol(&) use &amp;
     - If translatable="false" mentioned in string tag then don't translate that word.
     -->
 
@@ -34,7 +34,7 @@
     <string name="search">தேட</string>
     <string name="settings">அமைப்புகள்</string>
     <string name="login_to_contribute">பங்களிக்க உள்நுழைக</string>
-    <string name="contribute_to_wiki_commons">விக்கிமீடியா பொதுவகத்திற்க்கு பங்களிக்க விருப்பமா?</string>
+    <string name="contribute_to_wiki_commons">விக்கிமீடியா பொதுவகத்திற்கு பங்களிக்க விருப்பமா?</string>
     <string name="logout">வெளியேறு</string>
     <string name="about">பற்றி</string>
     <string name="record">பதிவு செய்</string>
@@ -48,19 +48,19 @@
     <string name="upload">பதிவேற்று</string>
     <string name="before_record">பதிவு செய்ய மைக்கை அழுத்திப் பிடிக்கவும்</string>
     <string name="during_record">பதிவு செய்யப்படுகிறது… %s</string>
-    <string name="after_record">மறு பதிவு செய்ய மைக்கை அழுத்திப் பிடிக்கவும்</string>
+    <string name="after_record">மறுபதிவு செய்ய மைக்கை அழுத்திப் பிடிக்கவும்</string>
     <string name="declaration_note">நான் அறிவிக்கிறேன், இது எனது சொந்த வேலை, எவரும் %s உரிமத்தின் கீழ் இதைப் பயன்படுத்தலாம்.</string>
     <string name="record_audio_not_found">முதலில் ஆடியோவை பதிவுசெய்க.</string>
     <string name="recorded_audio_too_short">பதிவுசெய்யப்பட்ட ஆடியோவை சரிபார்க்கவும்.</string>
-    <string name="recording_under_process">ஆடியோ பதிவு செய்யபட்டு கொண்டிருக்கிறது.</string>
+    <string name="recording_under_process">ஆடியோ பதிவாகிறது.</string>
     <string name="permission_required">மைக்ரோஃபோன் மற்றும் சேமிப்பக அனுமதிகள் தேவை.</string>
-    <string name="go_settings">அமைப்புகள்-க்கு </string>
+    <string name="go_settings">அமைப்புகளுக்கு </string>
     <string name="message_upload_info">பதிவேற்றுகிறது…\n%s</string>
     <string name="crash_report_alert_title">செயலிழப்பு தகவலைப் பகிர விரும்புகிறீர்களா?</string>
     <string name="crash_report_alert_message">முந்தைய செயலிழப்புக்கான காரணம் சேகரிக்கப்பட்டுள்ளது. எதிர்காலத்தில் இந்த சிக்கலை சரிசெய்ய செயலி உருவாக்குநருக்கு செயலிழப்பு தகவலை அனுப்ப விரும்புகிறீர்களா?</string>
     <string name="send">அனுப்பு</string>
     <string name="cancel">ரத்துசெய்</string>
-    <string name="upload_success">%s வார்த்தையின் உச்சரிப் வெற்றிகரமாக பதிவேற்றபட்டது.</string>
+    <string name="upload_success">%s வார்த்தையின் உச்சரிப்பு வெற்றிகரமாக பதிவேற்றபட்டது.</string>
     <string name="select_file">கோப்பைத் தேர்ந்தெடு</string>
     <string name="next">அடுத்து</string>
     <string name="type_word">உங்கள் சொற்களை இங்கே தட்டச்சு செய்யவும் அல்லது ஒட்டவும்</string>
@@ -69,7 +69,7 @@
     <string name="hint_select_file_next">உங்களிடம் ஒரு வரியில் ஒரு சொல் இருப்பதை உறுதிப்படுத்திக் கொள்ளுங்கள்.</string>
     <string name="direct_content">நேரடி உள்ளடக்கம்</string>
     <string name="hint_direct_copy">பங்களிக்க வார்த்தைகளை நகலெடுத்து ஒட்டவும் அல்லது தட்டச்சு செய்யவும்.</string>
-    <string name="hint_direct_copy_next">கீழே உள்ள பெட்டியில் தட்டச்சு செய்க அல்லது ஒட்டவும் \n(ஒரு வரிக்கு ஒரு சொல்).</string>
+    <string name="hint_direct_copy_next">கீழே உள்ள பெட்டியில் தட்டச்சு செய்க அல்லது ஒட்டுக \n(ஒரு வரிக்கு ஒரு சொல்).</string>
     <string name="hint_common_steps">---------- குறிப்பு ----------\nஒவ்வொரு வார்த்தையும் ஒரு தனி வரியில் இருக்க வேண்டும்.\nதேவைப்பட்டால் சொற்களை சரியாக சீரமைக்கவும்.\n</string>
     <string name="confirmation">உறுதிப்படுத்தல்</string>
     <string name="confirm_to_back">நீங்கள் திரும்பிச் செல்ல விரும்புகிறீர்களா?</string>
@@ -79,14 +79,14 @@
     <string name="share">பகிர்</string>
     <string name="powered_by">உருவாக்கம்</string>
     <string name="kaniyam">கணியம்</string>
-    <string name="about_kaniyam">கணியம்(Kaniyam) அறக்கட்டளை என்பது அறிவியல் மற்றும் சமூகப் பொருளாதார வளர்ச்சிக்கு ஒப்ப, தமிழ் மொழியின் பயன்பாடு வளர்வதை உறுதிப்படுத்துவதும், அனைத்து அறிவுத் தொகுதிகளும், வளங்களும் கட்டற்ற அணுக்கத்தில் அனைவருக்கும் கிடைக்கச்செய்வதற்க்குமான அமைப்பாகும்.</string>
+    <string name="about_kaniyam">கணியம்(Kaniyam) அறக்கட்டளை என்பது அறிவியல் மற்றும் சமூகப் பொருளாதார வளர்ச்சிக்கு ஒப்ப, தமிழ் மொழியின் பயன்பாடு வளர்வதை உறுதிப்படுத்துவதும், அனைத்து அறிவுத் தொகுதிகளும், வளங்களும் கட்டற்ற அணுக்கத்தில் அனைவருக்கும் கிடைக்கச்செய்வதற்குமான அமைப்பாகும்.</string>
     <string name="vglug">VGLUG</string>
     <string name="about_vglug">விழுப்புரம் கட்டற்ற மென்பொருள் பயனர் குழுமம்(Villupuram GLUG) என்பது ஒரு இலாப நோக்கற்ற அமைப்பாகும், இது கட்டற்ற மென்பொருளின்(FOSS) தேவையினால் ஈர்க்கப்பட்டு உருவாக்கபட்டது.</string>
     <string name="how_to_contribute">எவ்வாறு பங்களிப்பது?</string>
-    <string name="source_code">மூலக் நிரலைக் காண</string>
+    <string name="source_code">மூல நிரலைக் காண</string>
     <string name="help_development">உருவாக்குனர்களுக்காக நன்கொடை</string>
     <string name="contributors">பங்களிப்பாளர்கள்</string>
-    <string name="credits">நன் மதிப்பு</string>
+    <string name="credits">நன்மதிப்பு</string>
     <string name="third_party_libraries">மூன்றாம் தரப்பு மூலங்கள்</string>
     <string name="feedback">எங்களை தொடர்பு கொள்ள &amp; கருத்து</string>
     <string name="privacy_policy">தனியுரிமைக் கொள்கை</string>
@@ -106,7 +106,7 @@
     <string name="logout_message">நீங்கள் வெளியேற விரும்புகிறீர்களா?</string>
     <string name="contributions">பங்களிப்புகள் : %s</string>
     <string name="language">மொழி</string>
-    <string name="license_of_upload_audio">பதிவேற்றபடும் ஆடியோவின் - உரிமம்</string>
+    <string name="license_of_upload_audio">பதிவேற்றபடும் ஆடியோவின் உரிமம்</string>
     <string name="license_choose_alert">CC உரிமத்தைத் தேர்வுசெய்க</string>
     <string name="core_contributors">முதன்மை பங்களிப்பாளர்கள்</string>
     <string name="code_contributors">நிரல் பங்களிப்பாளர்கள்</string>
@@ -135,7 +135,7 @@
     <string name="update_dialog_ok">புதுப்பி</string>
     <string name="update_dialog_no">@string/later</string>
     <string name="record_info_dialog_title">சிரமத்திற்கு மன்னிக்கவும்</string>
-    <string name="record_info_dialog_message">ஆடியோவின் மறு-பதிவேற்றத்தை/நகலை தவிர்ப்பதற்க்காக, பதிவு செய்வதற்கு முன் ஆடியோ ஏற்கனவே இருக்கிறதா இல்லையா என்பதை நாங்கள் சரிபார்க்கிறோம். ஏனென்றால் சில சொற்கள் ஏற்கனவே ஆடியோவை கொண்டுள்ளன.\n\nநீங்கள் வார்த்தையைக் கிளிக் செய்த பிறகு, ஆடியோ ஏற்கனவே இருப்பதைக் காட்டினால். தயவுசெய்து வேறு வார்த்தைக்குச் செல்லுங்கள்.</string>
+    <string name="record_info_dialog_message">ஆடியோவின் மறுபதிவேற்றத்தை/நகலை தவிர்ப்பதற்காக, பதிவு செய்வதற்கு முன் ஆடியோ ஏற்கனவே இருக்கிறதா இல்லையா என்பதை நாங்கள் சரிபார்க்கிறோம். ஏனென்றால் சில சொற்கள் ஏற்கனவே ஆடியோவை கொண்டுள்ளன.\n\nநீங்கள் வார்த்தையைக் கிளிக் செய்த பிறகு, ஆடியோ ஏற்கனவே இருப்பதைக் காட்டினால். தயவுசெய்து வேறு வார்த்தைக்குச் செல்லுங்கள்.</string>
     <string name="record_info_dialog_ok">சரி</string>
 
     <!-- Run Filter Option -->
@@ -145,7 +145,7 @@
     <string name="no_words_filtered">வார்த்தைகள் ஏதும் வடிகட்டப்படவில்லை. நீங்கள் ஆடியோவைப் பதிவு செய்யலாம் அல்லது வேறு வார்த்தைகளுக்கு மீண்டும் வடிகட்டியை இயக்கலாம்.</string>
     <string name="words_filter_success">வெற்றி! இந்தப் பட்டியலில் இருந்து %d வார்த்தைகள் வடிகட்டப்பட்டன.</string>
     <string name="run_filter_use">வடிகட்டி இயக்கு - பயன்பாடு</string>
-    <string name="run_filter_info">ஆடியோவின் மறு-பதிவேற்றத்தை/நகலை தவிர்ப்பதற்க்காக, பதிவு செய்வதற்கு முன் ஆடியோ ஏற்கனவே இருக்கிறதா இல்லையா என்பதை நாங்கள் சரிபார்க்கிறோம். ஏனென்றால் சில சொற்கள் ஏற்கனவே பொதுவகத்தில் ஆடியோவை கொண்டுள்ளன. \n\nஇந்த வடிகட்டி இயக்கு செயல்முறை, ஆடியோ கோப்பு இல்லாத வார்த்தைகளை எளிய முறையில் வடிகட்ட உதவுகிறது. வடிப்பானைப் பயன்படுத்திய பிறகு, பட்டியலிடப்பட்ட சொற்களுக்கான ஆடியோவைப் பதிவுசெய்யத் தொடங்கலாம் அல்லது கூடுதல் சொற்களைப் பெற, பட்டியலை உருட்டவும்.</string>
+    <string name="run_filter_info">ஆடியோவின் மறுபதிவேற்றத்தை/நகலை தவிர்ப்பதற்காக, பதிவு செய்வதற்கு முன் ஆடியோ ஏற்கனவே இருக்கிறதா இல்லையா என்பதை நாங்கள் சரிபார்க்கிறோம். ஏனென்றால் சில சொற்கள் ஏற்கனவே பொதுவகத்தில் ஆடியோவை கொண்டுள்ளன. \n\nஇந்த வடிகட்டி இயக்கு செயல்முறை, ஆடியோ கோப்பு இல்லாத வார்த்தைகளை எளிய முறையில் வடிகட்ட உதவுகிறது. வடிப்பானைப் பயன்படுத்திய பிறகு, பட்டியலிடப்பட்ட சொற்களுக்கான ஆடியோவைப் பதிவுசெய்யத் தொடங்கலாம் அல்லது கூடுதல் சொற்களைப் பெற, பட்டியலை உருட்டவும்.</string>
     <string name="run_filter_settings_count">வடிகட்டி இயக்கு - சரிபார்க்கப்படும் வார்த்தைகளின் எண்ணிக்கை: %d</string>
 
     <string name="check_internet">தயவுசெய்து உங்கள் இணைய இணைப்பை சரிபார்க்கவும்!</string>
@@ -169,7 +169,7 @@
     <string name="two_factor_login">Two-Factor அங்கீகாரம் செயலியில் செயல்படுத்தப்படவில்லை.</string>
     <string name="check_url">தவறான இணைப்பு</string>
     <string name="alert_to_exit">வெளியேறுவதற்கு மீண்டும் அழுத்தவும்</string>
-    <string name="invalid_credential">சரியான பயனர்பெயர் மற்றும் கடவுச்சொல்லை வழங்கவும்</string>
+    <string name="invalid_credential">சரியான பயனர்பெயரையும் கடவுச்சொல்லையும் வழங்கவும்</string>
     <string name="no_email_client">மின்னஞ்சல் செயலி ஏதுமில்லை</string>
     <string name="result_not_found">முடிவுகள் ஏதுமில்லை</string>
     <string name="server_misbehaved">சேவையகம் தவறாக நடந்து கொண்டது! பின்னர் மீண்டும் முயற்சிக்கவும்.</string>
@@ -189,7 +189,7 @@
     <string name="app_intro_slide_2_description">எந்தவொரு மொழியிலும் உள்ள எந்த சொற்களுக்கும் விக்சனரியிலிருந்து அர்த்தத்தைத் தேடலாம்.</string>
     <string name="app_intro_slide_3_description">உங்கள் சொந்த சொற்பட்டியலை உரை கோப்பிலிருந்து அல்லது நகலெடுத்து ஒட்டி நீங்கள் பதிவேற்றலாம்.</string>
     <string name="app_intro_slide_4_description">ஒரு வார்த்தைக்காக நீங்கள் உச்சரித்து பதிவேற்றலாம்.</string>
-    <string name="app_intro_slide_5_description">Spell4Wiki-க்கு உங்கள் தனியுரிமையை மீறாமல் சேமிக்க மற்றும் ஆடியோவை பதிவுசெய்ய அனுமதிகள் தேவை.</string>
+    <string name="app_intro_slide_5_description">Spell4Wiki-க்கு உங்கள் தனியுரிமையை மீறாமல் சேமிக்கவும் ஆடியோவை பதிவுசெய்யவும் அனுமதிகள் தேவை.</string>
 
 
     <!--Wikimedia Commons/Wiktionary Related-->
@@ -210,9 +210,9 @@
     <string name="sc_t_spell4word_page_edit_word">பதிவு செய்ய ஒரு வார்த்தையைத் தட்டச்சு செய்க</string>
     <string name="sc_d_spell4word_page_edit_word">உங்கள் வார்த்தையைத் தட்டச்சு செய்து ஆடியோவைப் பதிவுசெய்ய பதிவு பொத்தானை அழுத்தவும் அல்லது விக்சனரியிலிருந்து பொருளைக் காண அகராதி பொத்தானை அழுத்தவும்.</string>
     <string name="sc_t_wiktionary_page_language">@string/sc_t_spell4wiki_page_language</string>
-    <string name="sc_d_wiktionary_page_language">விக்சனரிக்கு எந்த மொழியையும் தேர்ந்தெடுக்கலாம். முடிவுகள் மற்றும் அர்த்தங்கள் தேர்ந்தெடுக்கப்பட்ட மொழியை அடிப்படையாகக் கொண்டு இருக்கும்.\n\nதற்போதைய மொழி %s ஆகும்.</string>
+    <string name="sc_d_wiktionary_page_language">விக்சனரிக்கு எந்த மொழியையும் தேர்ந்தெடுக்கலாம். முடிவுகளும் அர்த்தங்களும் தேர்ந்தெடுக்கப்பட்ட மொழியை அடிப்படையாகக் கொண்டு இருக்கும்.\n\nதற்போதைய மொழி %s ஆகும்.</string>
     <string name="sc_t_record_upload">பதிவேற்றுவதற்கு முன் சரிபார்க்கவும்</string>
-    <string name="sc_d_record_upload">1. சொல் மற்றும் மொழியை சரிபார்க்கவும்\n2. பதிவுசெய்யப்பட்ட ஆடியோவை இயக்கி சரிபார்க்கவும்\n3. பதிவேற்று பொத்தானை அழுத்தி பொதுவகத்தில் பதிவெற்றவும்.</string>
+    <string name="sc_d_record_upload">1. சொல்லையும் மொழியையும் சரிபார்க்கவும்\n2. பதிவுசெய்யப்பட்ட ஆடியோவை இயக்கி சரிபார்க்கவும்\n3. பதிவேற்று பொத்தானை அழுத்தி பொதுவகத்தில் பதிவேற்றவும்.</string>
     <string name="sc_t_core_contributors_list_item">பங்களிப்பாளரைப் பற்றி மேலும்</string>
     <string name="sc_d_core_contributors_list_item">பங்களிப்பாளரைப் பற்றிய கூடுதல் விவரங்களுக்கு பெயரின் மீது அழுத்தவும்.</string>
 
