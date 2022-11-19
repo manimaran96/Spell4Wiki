@@ -1,0 +1,2 @@
+- Fixed: Wiktionary page load issue
+- Fixed: Android version 12 installation issue

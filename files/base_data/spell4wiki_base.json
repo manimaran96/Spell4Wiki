@@ -488,6 +488,13 @@
          "local_lang":"ગુજરાતી"
       },
       {
+         "code":"gur",
+         "lang":"Gurene",
+         "dir":"ltr",
+         "local_lang":"Frafra",
+         "category": ["Files uploaded by spell4wiki in gur"]
+      },
+      {
          "code":"guw",
          "lang":"Gun",
          "dir":"ltr",
