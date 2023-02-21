@@ -135,8 +135,8 @@ object RealPathUtil {
                 column
         )
         try {
-            cursor = context.contentResolver.query(uri!!, projection, selection, selectionArgs,
-                    null)
+            if (uri != null)
+                cursor = context.contentResolver.query(uri, projection, selection, selectionArgs, null)
             if (cursor != null && cursor.moveToFirst()) {
                 val index = cursor.getColumnIndexOrThrow(column)
                 return cursor.getString(index)
