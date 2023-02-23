@@ -103,6 +103,7 @@ class WebViewFragment : Fragment() {
 
     // Unwanted div tag in Wiktionary page
     private val hideDivListForWiktionaryWebPage = listOf("header-container", "mw-footer", "page-actions-menu", "mw-editsection", "pre-content heading-holder", "disambig-see-also")
+    private val hideDivIdListForWiktionaryWebPage = listOf("mw-page-base", "siteNotice", "mw-head-base", "mw-indicators", "mw-navigation")
 
     @SuppressLint("SetJavaScriptEnabled")
     private fun loadWebPage(url: String?) {
@@ -135,6 +136,10 @@ class WebViewFragment : Fragment() {
                         hideDivListForWiktionaryWebPage.forEach { divClass ->
                             webView?.loadUrl("javascript:(function() { document.getElementsByClassName('${divClass}')[0].style.display='none'; })()")
                         }
+                        hideDivIdListForWiktionaryWebPage.forEach { divClass ->
+                            webView?.loadUrl("javascript:(function() { document.getElementById('${divClass}')[0].style.display='none'; })()")
+                        }
+
                     }
                     if (!isWebPageNotFound)
                         loadingVisibility(View.GONE)
