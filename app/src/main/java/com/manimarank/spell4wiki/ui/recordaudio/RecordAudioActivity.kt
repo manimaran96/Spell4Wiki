@@ -41,6 +41,7 @@ import com.manimarank.spell4wiki.record.wav.WAVPlayer
 import com.manimarank.spell4wiki.record.wav.WAVRecorder
 import com.manimarank.spell4wiki.ui.common.BaseActivity
 import com.manimarank.spell4wiki.ui.recordaudio.WikiDataUtils.getUploadName
+import com.manimarank.spell4wiki.ui.settings.SettingsActivity
 import com.manimarank.spell4wiki.utils.DateUtils.DF_YYYY_MM_DD
 import com.manimarank.spell4wiki.utils.DateUtils.getDateToString
 import com.manimarank.spell4wiki.utils.GeneralUtils.checkPermissionGranted
@@ -49,12 +50,15 @@ import com.manimarank.spell4wiki.utils.GeneralUtils.showAppSettingsPageSnackBar
 import com.manimarank.spell4wiki.utils.NetworkUtils.isConnected
 import com.manimarank.spell4wiki.utils.Print.error
 import com.manimarank.spell4wiki.utils.Print.log
+import com.manimarank.spell4wiki.utils.RealPathUtil
 import com.manimarank.spell4wiki.utils.ToastUtils.showLong
 import com.manimarank.spell4wiki.utils.WikiLicense.getLicenseTemplateInWiki
 import com.manimarank.spell4wiki.utils.WikiLicense.licenseNameId
 import com.manimarank.spell4wiki.utils.constants.AppConstants
 import com.manimarank.spell4wiki.utils.constants.AppConstants.MAX_RETRIES_FOR_CSRF_TOKEN
 import com.manimarank.spell4wiki.utils.constants.AppConstants.MAX_RETRIES_FOR_FORCE_LOGIN
+import com.manimarank.spell4wiki.utils.constants.AppConstants.RC_EDIT_REQUEST_CODE
+import com.manimarank.spell4wiki.utils.constants.AppConstants.RC_LICENCE_CHANGE
 import kotlinx.android.synthetic.main.activity_record_audio_pop_up.*
 import okhttp3.MediaType
 import okhttp3.MultipartBody
@@ -123,6 +127,9 @@ class RecordAudioActivity : BaseActivity() {
         txtDuration.text = getDurationValue(0)
         checkboxDeclaration.text = String.format(getString(R.string.declaration_note), getString(licenseNameId(pref.uploadAudioLicense)))
 
+        btnSettings.setOnClickListener {
+            startActivityForResult(Intent(applicationContext, SettingsActivity::class.java), RC_LICENCE_CHANGE)
+        }
 
         // Set 10 sec only for recording
         countDownTimer = object : CountDownTimer(AppConstants.MAX_SEC_FOR_RECORDING * 1000, 1000) {
@@ -701,4 +708,18 @@ class RecordAudioActivity : BaseActivity() {
         }
         return if (TextUtils.isEmpty(result)) null else result
     }
+
+    public override fun onActivityResult(
+        requestCode: Int, resultCode: Int,
+        data: Intent?
+    ) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (!isDestroyed && !isFinishing) {
+            if (requestCode == RC_LICENCE_CHANGE) {
+                checkboxDeclaration.text = String.format(getString(R.string.declaration_note), getString(licenseNameId(pref.uploadAudioLicense)))
+            }
+        }
+    }
+
+
 }

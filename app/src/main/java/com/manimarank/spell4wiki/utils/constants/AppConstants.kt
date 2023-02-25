@@ -50,6 +50,7 @@ object AppConstants {
     const val RC_PERMISSIONS = 1000
     const val RC_EDIT_REQUEST_CODE = 42
     const val RC_STORAGE_AUDIO_PERMISSION = 100
+    const val RC_LICENCE_CHANGE = 1002
 
     // Mail Ids
     const val CONTACT_MAIL = "manimarankumar96@gmail.com"
