@@ -7,28 +7,43 @@ import android.text.style.ForegroundColorSpan
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.TextView
+import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.manimarank.spell4wiki.R
+import com.manimarank.spell4wiki.data.db.DBHelper
+import com.manimarank.spell4wiki.data.db.dao.WikiLangDao
 import com.manimarank.spell4wiki.data.prefs.PrefManager
 import com.manimarank.spell4wiki.ui.common.BaseActivity
 import com.manimarank.spell4wiki.ui.languageselector.LanguageSelectionFragment
 import com.manimarank.spell4wiki.ui.listerners.OnLanguageSelectionListener
+import com.manimarank.spell4wiki.utils.GeneralUtils
 import com.manimarank.spell4wiki.utils.constants.AppConstants
 import com.manimarank.spell4wiki.utils.constants.ListMode
 import java.util.*
 
 class CommonWebActivity : BaseActivity() {
+    private var wikiLangDao: WikiLangDao? = null
     private var isWiktionaryWord = false
     private val fragment: WebViewFragment = WebViewFragment()
     private var languageCode: String? = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_common_web_view)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         val pref = PrefManager(applicationContext)
         languageCode = pref.languageCodeWiktionary
+        wikiLangDao = DBHelper.getInstance(applicationContext).appDatabase.wikiLangDao
+
+        // Title & Sub title
+        val toolbar = findViewById<Toolbar>(R.id.toolbar)
+        toolbar?.title = getString(R.string.spell4wiktionary)
+        val wikiLang = wikiLangDao?.getWikiLanguageWithCode(languageCode)
+        setSupportActionBar(toolbar)
+        supportActionBar?.title = getString(R.string.spell4wiktionary)
+        supportActionBar?.subtitle = GeneralUtils.getLanguageInfo(applicationContext, wikiLang)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
         val bundle = intent.extras
         if (bundle != null) {
             val title: String?
@@ -106,6 +121,7 @@ class CommonWebActivity : BaseActivity() {
                 override fun onCallBackListener(langCode: String?) {
                     if (languageCode != langCode) {
                         languageCode = langCode
+                        supportActionBar?.subtitle = GeneralUtils.getLanguageInfo(applicationContext, wikiLangDao?.getWikiLanguageWithCode(langCode))
                         invalidateOptionsMenu()
                         fragment.loadWordWithOtherLang(langCode)
                     }

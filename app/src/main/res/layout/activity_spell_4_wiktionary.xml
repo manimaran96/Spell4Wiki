@@ -9,8 +9,7 @@
     android:background="@color/white"
     tools:context=".ui.spell4wiktionary.Spell4Wiktionary">
 
-    <include
-        layout="@layout/custom_app_bar"/>
+    <include layout="@layout/custom_app_bar"/>
 
     <RelativeLayout
         android:id="@+id/layoutFilterOption"

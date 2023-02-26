@@ -120,7 +120,7 @@
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize"
-            android:theme="@style/AppTheme" />
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name="com.manimarank.spell4wiki.ui.settings.SettingsActivity"
             android:screenOrientation="portrait"
