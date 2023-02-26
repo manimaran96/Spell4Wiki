@@ -356,9 +356,13 @@ class Spell4Wiktionary : BaseActivity(), EndlessListener {
                 }
             }
         }
-        val languageSelectionFragment = LanguageSelectionFragment(this)
-        languageSelectionFragment.init(callback, ListMode.SPELL_4_WIKI)
-        languageSelectionFragment.show(supportFragmentManager)
+        try {
+            val languageSelectionFragment = LanguageSelectionFragment(this)
+            languageSelectionFragment.init(callback, ListMode.SPELL_4_WIKI)
+            languageSelectionFragment.show(supportFragmentManager)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 
     private fun setupLanguageSelectorMenuItem(menu: Menu) {
