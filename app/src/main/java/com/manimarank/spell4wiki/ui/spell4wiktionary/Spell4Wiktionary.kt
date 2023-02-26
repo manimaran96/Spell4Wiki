@@ -12,6 +12,7 @@ import android.view.MenuItem
 import android.view.View
 import android.view.Window
 import android.widget.TextView
+import androidx.appcompat.widget.Toolbar
 import androidx.interpolator.view.animation.FastOutSlowInInterpolator
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -20,6 +21,7 @@ import com.manimarank.spell4wiki.R
 import com.manimarank.spell4wiki.data.apis.ApiClient.getWiktionaryApi
 import com.manimarank.spell4wiki.data.apis.ApiInterface
 import com.manimarank.spell4wiki.data.db.DBHelper
+import com.manimarank.spell4wiki.data.db.dao.WikiLangDao
 import com.manimarank.spell4wiki.data.db.dao.WordsHaveAudioDao
 import com.manimarank.spell4wiki.data.db.entities.WordsHaveAudio
 import com.manimarank.spell4wiki.data.model.WikiWordsWithoutAudio
@@ -50,10 +52,10 @@ import uk.co.samuelwall.materialtaptargetprompt.MaterialTapTargetSequence
 import uk.co.samuelwall.materialtaptargetprompt.extras.focals.RectanglePromptFocal
 import java.util.*
 import java.util.concurrent.TimeUnit
-import kotlin.collections.ArrayList
 
 class Spell4Wiktionary : BaseActivity(), EndlessListener {
-    var wordsHaveAudioDao: WordsHaveAudioDao? = null
+    private var wikiLangDao: WikiLangDao? = null
+    private var wordsHaveAudioDao: WordsHaveAudioDao? = null
     private var wordsListAlreadyHaveAudio: MutableList<String> = ArrayList()
 
     // Views
@@ -87,8 +89,14 @@ class Spell4Wiktionary : BaseActivity(), EndlessListener {
      */
     private fun init() {
         // Title & Sub title
+        val toolbar = findViewById<Toolbar>(R.id.toolbar)
+        toolbar?.title = getString(R.string.spell4wiktionary)
+        wikiLangDao = DBHelper.getInstance(applicationContext).appDatabase.wikiLangDao
+        val wikiLang = wikiLangDao?.getWikiLanguageWithCode(languageCode)
+        setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.title = getString(R.string.spell4wiktionary)
+        supportActionBar?.subtitle = GeneralUtils.getLanguageInfo(applicationContext, wikiLang)
         snackBar = Snackbar.make(recyclerView, getString(R.string.record_fetch_fail), Snackbar.LENGTH_LONG)
         recyclerView.setHasFixedSize(true)
 
@@ -184,11 +192,9 @@ class Spell4Wiktionary : BaseActivity(), EndlessListener {
                     resetApiResultTime()
                     apiFailRetryCount = 0
                     if (recyclerView != null) recyclerView.reset()
-                    val dbHelper = DBHelper.getInstance(applicationContext)
-                    val wikiLang = dbHelper.appDatabase.wikiLangDao?.getWikiLanguageWithCode(languageCode)
+                    val wikiLang = wikiLangDao?.getWikiLanguageWithCode(languageCode)
                     if (wikiLang != null && !TextUtils.isEmpty(wikiLang.titleOfWordsWithoutAudio))
                         wiktionaryTitleOfWordsWithoutAudio = wikiLang.titleOfWordsWithoutAudio
-                    wordsHaveAudioDao = dbHelper.appDatabase.wordsHaveAudioDao
                     wordsListAlreadyHaveAudio.clear()
                     wordsHaveAudioDao?.getWordsAlreadyHaveAudioByLanguage(languageCode)?.forEach { word ->
                         wordsListAlreadyHaveAudio.add(word)
@@ -349,6 +355,7 @@ class Spell4Wiktionary : BaseActivity(), EndlessListener {
             override fun onCallBackListener(langCode: String?) {
                 if (languageCode != langCode) {
                     languageCode = langCode
+                    supportActionBar?.subtitle = GeneralUtils.getLanguageInfo(applicationContext, wikiLangDao?.getWikiLanguageWithCode(langCode))
                     invalidateOptionsMenu()
                     recyclerView.reset()
                     nextOffsetObj = null
@@ -428,8 +435,6 @@ class Spell4Wiktionary : BaseActivity(), EndlessListener {
                     showed(ShowCasePref.SPELL_4_WIKI_PAGE)
                 }
                 if (isNotShowed(ShowCasePref.SPELL_4_WIKI_PAGE)) {
-                    val wikiLangDao =
-                        DBHelper.getInstance(applicationContext).appDatabase.wikiLangDao
                     sequence.addPrompt(
                         promptBuilder
                             .setTarget(R.id.layoutSelectLanguage)
