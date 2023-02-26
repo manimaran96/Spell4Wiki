@@ -88,10 +88,11 @@ class Spell4Wiktionary : BaseActivity(), EndlessListener {
      * Init views
      */
     private fun init() {
+        wikiLangDao = DBHelper.getInstance(applicationContext).appDatabase.wikiLangDao
+
         // Title & Sub title
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         toolbar?.title = getString(R.string.spell4wiktionary)
-        wikiLangDao = DBHelper.getInstance(applicationContext).appDatabase.wikiLangDao
         val wikiLang = wikiLangDao?.getWikiLanguageWithCode(languageCode)
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)

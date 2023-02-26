@@ -12,9 +12,11 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.TextView
 import androidx.annotation.RequiresApi
+import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.manimarank.spell4wiki.R
 import com.manimarank.spell4wiki.data.db.DBHelper
+import com.manimarank.spell4wiki.data.db.dao.WikiLangDao
 import com.manimarank.spell4wiki.data.db.dao.WordsHaveAudioDao
 import com.manimarank.spell4wiki.data.db.entities.WordsHaveAudio
 import com.manimarank.spell4wiki.data.prefs.PrefManager
@@ -25,6 +27,7 @@ import com.manimarank.spell4wiki.ui.common.BaseActivity
 import com.manimarank.spell4wiki.ui.dialogs.showConfirmBackDialog
 import com.manimarank.spell4wiki.ui.languageselector.LanguageSelectionFragment
 import com.manimarank.spell4wiki.ui.listerners.OnLanguageSelectionListener
+import com.manimarank.spell4wiki.utils.GeneralUtils
 import com.manimarank.spell4wiki.utils.GeneralUtils.getPromptBuilder
 import com.manimarank.spell4wiki.utils.GeneralUtils.hideKeyboard
 import com.manimarank.spell4wiki.utils.RealPathUtil.getRealPath
@@ -45,6 +48,7 @@ import java.util.*
 class Spell4WordListActivity : BaseActivity() {
     private var adapter: EndlessRecyclerAdapter? = null
     private var languageCode: String? = ""
+    private var wikiLangDao: WikiLangDao? = null
     private var wordsHaveAudioDao: WordsHaveAudioDao? = null
     private lateinit var pref: PrefManager
 
@@ -57,10 +61,16 @@ class Spell4WordListActivity : BaseActivity() {
     }
 
     private fun initUI() {
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.title = getString(R.string.spell4wordlist)
-
+        wikiLangDao = DBHelper.getInstance(applicationContext).appDatabase.wikiLangDao
         wordsHaveAudioDao = DBHelper.getInstance(applicationContext).appDatabase.wordsHaveAudioDao
+
+        val toolbar = findViewById<Toolbar>(R.id.toolbar)
+        toolbar?.title = getString(R.string.spell4wiktionary)
+        val wikiLang = wikiLangDao?.getWikiLanguageWithCode(languageCode)
+        setSupportActionBar(toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.title = getString(R.string.spell4wiktionary)
+        supportActionBar?.subtitle = GeneralUtils.getLanguageInfo(applicationContext, wikiLang)
 
         btnSelectFile.setOnClickListener {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
@@ -251,6 +261,7 @@ class Spell4WordListActivity : BaseActivity() {
             override fun onCallBackListener(langCode: String?) {
                 if (languageCode != langCode) {
                     languageCode = langCode
+                    supportActionBar?.subtitle = GeneralUtils.getLanguageInfo(applicationContext, wikiLangDao?.getWikiLanguageWithCode(langCode))
                     invalidateOptionsMenu()
                     if (recyclerView.visibility == View.VISIBLE || layoutEmpty.visibility == View.VISIBLE) {
                         if (!TextUtils.isEmpty(editFile.text)) {

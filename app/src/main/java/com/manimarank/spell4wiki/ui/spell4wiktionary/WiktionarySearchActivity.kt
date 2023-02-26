@@ -134,6 +134,7 @@ class WiktionarySearchActivity : BaseActivity(), EndlessListener {
             override fun onCallBackListener(langCode: String?) {
                 if (languageCode != langCode) {
                     languageCode = langCode
+                    supportActionBar?.subtitle = GeneralUtils.getLanguageInfo(applicationContext, wikiLangDao?.getWikiLanguageWithCode(langCode))
                     invalidateOptionsMenu()
                     api = getWiktionaryApi(applicationContext, languageCode!!).create(ApiInterface::class.java)
                     queryString?.let { qs -> submitQuery(qs) }
