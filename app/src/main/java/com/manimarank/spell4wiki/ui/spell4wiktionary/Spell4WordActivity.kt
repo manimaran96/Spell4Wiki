@@ -64,10 +64,9 @@ class Spell4WordActivity : BaseActivity() {
 
         // Title & Sub title
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
-        toolbar?.title = getString(R.string.spell4wiktionary)
         val wikiLang = wikiLangDao?.getWikiLanguageWithCode(languageCode)
         setSupportActionBar(toolbar)
-        supportActionBar?.title = getString(R.string.spell4wiktionary)
+        supportActionBar?.title = getString(R.string.spell4word)
         supportActionBar?.subtitle = GeneralUtils.getLanguageInfo(applicationContext, wikiLang)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 

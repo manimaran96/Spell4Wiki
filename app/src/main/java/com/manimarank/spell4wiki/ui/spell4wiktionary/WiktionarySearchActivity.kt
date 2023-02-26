@@ -82,9 +82,9 @@ class WiktionarySearchActivity : BaseActivity(), EndlessListener {
         recyclerView.setListener(this)
         recyclerView.makeInVisible()
 
-        val toolbar = findViewById<Toolbar>(R.id.toolbar)
-        toolbar?.title = getString(R.string.spell4wiktionary)
         wikiLangDao = DBHelper.getInstance(applicationContext).appDatabase.wikiLangDao
+
+        val toolbar = findViewById<Toolbar>(R.id.toolbar)
         val wikiLang = wikiLangDao?.getWikiLanguageWithCode(languageCode)
         setSupportActionBar(toolbar)
         supportActionBar?.title = getString(R.string.wiktionary)

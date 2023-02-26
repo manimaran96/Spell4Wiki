@@ -65,12 +65,11 @@ class Spell4WordListActivity : BaseActivity() {
         wordsHaveAudioDao = DBHelper.getInstance(applicationContext).appDatabase.wordsHaveAudioDao
 
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
-        toolbar?.title = getString(R.string.spell4wiktionary)
         val wikiLang = wikiLangDao?.getWikiLanguageWithCode(languageCode)
         setSupportActionBar(toolbar)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.title = getString(R.string.spell4wiktionary)
         supportActionBar?.subtitle = GeneralUtils.getLanguageInfo(applicationContext, wikiLang)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         btnSelectFile.setOnClickListener {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
