@@ -7,12 +7,14 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.TextView
 import androidx.appcompat.widget.SearchView
+import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.manimarank.spell4wiki.R
 import com.manimarank.spell4wiki.data.apis.ApiClient.getWiktionaryApi
 import com.manimarank.spell4wiki.data.apis.ApiInterface
 import com.manimarank.spell4wiki.data.db.DBHelper
+import com.manimarank.spell4wiki.data.db.dao.WikiLangDao
 import com.manimarank.spell4wiki.data.model.WikiSearchWords
 import com.manimarank.spell4wiki.data.prefs.PrefManager
 import com.manimarank.spell4wiki.data.prefs.ShowCasePref
@@ -39,7 +41,7 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 class WiktionarySearchActivity : BaseActivity(), EndlessListener {
-
+    private var wikiLangDao: WikiLangDao? = null
     private var adapter: EndlessRecyclerAdapter? = null
     private lateinit var snackBar: Snackbar
     private var queryString: String? = null
@@ -79,7 +81,14 @@ class WiktionarySearchActivity : BaseActivity(), EndlessListener {
         recyclerView.setAdapter(adapter, layoutManager)
         recyclerView.setListener(this)
         recyclerView.makeInVisible()
+
+        val toolbar = findViewById<Toolbar>(R.id.toolbar)
+        toolbar?.title = getString(R.string.spell4wiktionary)
+        wikiLangDao = DBHelper.getInstance(applicationContext).appDatabase.wikiLangDao
+        val wikiLang = wikiLangDao?.getWikiLanguageWithCode(languageCode)
+        setSupportActionBar(toolbar)
         supportActionBar?.title = getString(R.string.wiktionary)
+        supportActionBar?.subtitle = GeneralUtils.getLanguageInfo(applicationContext, wikiLang)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
 
@@ -233,7 +242,6 @@ class WiktionarySearchActivity : BaseActivity(), EndlessListener {
 
     private fun callShowCaseUI() {
         if (!isFinishing && !isDestroyed && isNotShowed(ShowCasePref.WIKTIONARY_PAGE)) {
-            val wikiLangDao = DBHelper.getInstance(applicationContext).appDatabase.wikiLangDao
             val sequence = MaterialTapTargetSequence().setSequenceCompleteListener { showed(ShowCasePref.WIKTIONARY_PAGE) }
             sequence.addPrompt(
                 GeneralUtils.getPromptBuilder(this)
