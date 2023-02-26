@@ -44,6 +44,7 @@ import com.manimarank.spell4wiki.ui.recordaudio.WikiDataUtils.getUploadName
 import com.manimarank.spell4wiki.ui.settings.SettingsActivity
 import com.manimarank.spell4wiki.utils.DateUtils.DF_YYYY_MM_DD
 import com.manimarank.spell4wiki.utils.DateUtils.getDateToString
+import com.manimarank.spell4wiki.utils.GeneralUtils
 import com.manimarank.spell4wiki.utils.GeneralUtils.checkPermissionGranted
 import com.manimarank.spell4wiki.utils.GeneralUtils.permissionDenied
 import com.manimarank.spell4wiki.utils.GeneralUtils.showAppSettingsPageSnackBar
@@ -122,7 +123,7 @@ class RecordAudioActivity : BaseActivity() {
         apiWiki = getWiktionaryApi(applicationContext, langCode!!).create(ApiInterface::class.java)
         txtWord.text = word
         val wikiLang = wikiLangDao?.getWikiLanguageWithCode(langCode)
-        txtLanguage.text = ("(" + wikiLang?.localName + " - " + wikiLang?.name + ")")
+        txtLanguage.text = GeneralUtils.getLanguageInfo(applicationContext, wikiLang, strResId = R.string.selected_language)
         txtRecordHint.text = getString(R.string.before_record)
         txtDuration.text = getDurationValue(0)
         checkboxDeclaration.text = String.format(getString(R.string.declaration_note), getString(licenseNameId(pref.uploadAudioLicense)))

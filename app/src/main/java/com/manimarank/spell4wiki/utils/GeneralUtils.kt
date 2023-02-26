@@ -140,7 +140,7 @@ object GeneralUtils {
         }
     }
 
-    fun getLanguageInfo(context: Context, wikiLang: WikiLang?): String {
-        return  "${context.getString(R.string.language)}: ${wikiLang?.name + " - " + wikiLang?.localName}";
+    fun getLanguageInfo(context: Context, wikiLang: WikiLang?, strResId: Int = R.string.language): String {
+        return  "${context.getString(strResId)}: ${wikiLang?.name + " - " + wikiLang?.localName}";
     }
 }

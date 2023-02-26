@@ -45,19 +45,6 @@
                     android:textColor="@color/white"
                     android:textSize="@dimen/text_heading" />
 
-                <!--Language-->
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/txtLanguage"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:gravity="center"
-                    android:maxLines="3"
-                    android:ellipsize="middle"
-                    android:text="@string/language"
-                    android:layout_marginBottom="@dimen/space24dp"
-                    android:textColor="@color/txt_light"
-                    android:textSize="@dimen/text_semi_normal" />
 
                 <!--Hint-->
                 <androidx.appcompat.widget.AppCompatTextView
@@ -67,6 +54,7 @@
                     android:layout_gravity="center"
                     android:ellipsize="end"
                     android:maxLines="1"
+                    android:layout_marginTop="@dimen/space10dp"
                     android:text="@string/before_record"
                     android:textAlignment="center"
                     android:textColor="@color/txt_light"
@@ -146,8 +134,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:layout_marginStart="@dimen/space8dp"
-                    android:layout_marginEnd="@dimen/space8dp"
+                    android:layout_marginStart="@dimen/space2dp"
+                    android:layout_marginEnd="@dimen/space2dp"
                     android:visibility="visible">
 
                     <androidx.appcompat.widget.AppCompatCheckBox
@@ -184,11 +172,26 @@
                         android:layout_centerVertical="true"
                         android:gravity="center_horizontal"
                         android:textColor="@color/txt_light"
-                        android:layout_marginEnd="@dimen/space2dp"
+                        android:layout_marginEnd="@dimen/space8dp"
                         android:textSize="@dimen/text_semi_normal"
                         tools:ignore="RelativeOverlap" />
 
                 </RelativeLayout>
+
+                <!--Language-->
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/txtLanguage"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:maxLines="3"
+                    android:gravity="center"
+                    android:ellipsize="middle"
+                    android:text="@string/language"
+                    android:layout_margin="@dimen/space8dp"
+                    android:layout_marginBottom="@dimen/space8dp"
+                    android:textColor="@color/txt_light"
+                    android:textSize="@dimen/text_small" />
 
                 <!--Upload button-->
                 <androidx.appcompat.widget.AppCompatButton
