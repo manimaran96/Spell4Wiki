@@ -9,8 +9,10 @@ import android.os.Handler
 import android.text.TextUtils
 import android.view.*
 import android.widget.TextView
+import androidx.appcompat.widget.Toolbar
 import com.manimarank.spell4wiki.R
 import com.manimarank.spell4wiki.data.db.DBHelper
+import com.manimarank.spell4wiki.data.db.dao.WikiLangDao
 import com.manimarank.spell4wiki.data.prefs.PrefManager
 import com.manimarank.spell4wiki.data.prefs.ShowCasePref
 import com.manimarank.spell4wiki.data.prefs.ShowCasePref.isNotShowed
@@ -20,6 +22,7 @@ import com.manimarank.spell4wiki.ui.dialogs.showConfirmBackDialog
 import com.manimarank.spell4wiki.ui.languageselector.LanguageSelectionFragment
 import com.manimarank.spell4wiki.ui.listerners.OnLanguageSelectionListener
 import com.manimarank.spell4wiki.ui.webui.CommonWebActivity
+import com.manimarank.spell4wiki.utils.GeneralUtils
 import com.manimarank.spell4wiki.utils.GeneralUtils.getPromptBuilder
 import com.manimarank.spell4wiki.utils.GeneralUtils.showRecordDialog
 import com.manimarank.spell4wiki.utils.NetworkUtils.isConnected
@@ -33,6 +36,7 @@ import uk.co.samuelwall.materialtaptargetprompt.MaterialTapTargetSequence
 import java.util.*
 
 class Spell4WordActivity : BaseActivity() {
+    private var wikiLangDao: WikiLangDao? = null
     private lateinit var pref: PrefManager
     private var languageCode: String? = ""
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -56,8 +60,16 @@ class Spell4WordActivity : BaseActivity() {
 
     @SuppressLint("ClickableViewAccessibility")
     private fun initUI() {
+        wikiLangDao = DBHelper.getInstance(applicationContext).appDatabase.wikiLangDao
+
+        // Title & Sub title
+        val toolbar = findViewById<Toolbar>(R.id.toolbar)
+        toolbar?.title = getString(R.string.spell4wiktionary)
+        val wikiLang = wikiLangDao?.getWikiLanguageWithCode(languageCode)
+        setSupportActionBar(toolbar)
+        supportActionBar?.title = getString(R.string.spell4wiktionary)
+        supportActionBar?.subtitle = GeneralUtils.getLanguageInfo(applicationContext, wikiLang)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.title = getString(R.string.spell4word)
 
         editSpell4Word.setOnTouchListener { _: View?, event: MotionEvent ->
             val DRAWABLE_RIGHT = 2
@@ -108,6 +120,7 @@ class Spell4WordActivity : BaseActivity() {
             override fun onCallBackListener(langCode: String?) {
                 if (languageCode != langCode) {
                     languageCode = langCode
+                    supportActionBar?.subtitle = GeneralUtils.getLanguageInfo(applicationContext, wikiLangDao?.getWikiLanguageWithCode(langCode))
                     invalidateOptionsMenu()
                 }
             }

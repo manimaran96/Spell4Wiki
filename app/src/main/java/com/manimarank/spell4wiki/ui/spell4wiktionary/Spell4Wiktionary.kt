@@ -95,9 +95,10 @@ class Spell4Wiktionary : BaseActivity(), EndlessListener {
         toolbar?.title = getString(R.string.spell4wiktionary)
         val wikiLang = wikiLangDao?.getWikiLanguageWithCode(languageCode)
         setSupportActionBar(toolbar)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.title = getString(R.string.spell4wiktionary)
         supportActionBar?.subtitle = GeneralUtils.getLanguageInfo(applicationContext, wikiLang)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
         snackBar = Snackbar.make(recyclerView, getString(R.string.record_fetch_fail), Snackbar.LENGTH_LONG)
         recyclerView.setHasFixedSize(true)
 
@@ -127,23 +128,28 @@ class Spell4Wiktionary : BaseActivity(), EndlessListener {
         var itemList: List<String> = ArrayList()
         filterRemovedWords.clear()
 
-        viewModel.progressForFilter.observe(this, { index ->
+        viewModel.progressForFilter.observe(this) { index ->
             // val progress = ((index+1) * 100) / itemList.size
-            txtProgress.text = ("${index+1}/${itemList.size}")
+            txtProgress.text = ("${index + 1}/${itemList.size}")
             txtInfo.text = getFilterText(itemList[index])
-        })
+        }
 
-        viewModel.wordAlreadyHaveAudio.observe(this, { word ->
+        viewModel.wordAlreadyHaveAudio.observe(this) { word ->
             updateList(word)
-        })
+        }
 
-        viewModel.wordsWithoutAudioList.observe(this, { list ->
+        viewModel.wordsWithoutAudioList.observe(this) { list ->
             val diff = itemList.size - list.size
-            SnackBarUtils.showLong(recyclerView,
-                if (diff > 0) getString(R.string.words_filter_success, diff) else getString(R.string.no_words_filtered))
+            SnackBarUtils.showLong(
+                recyclerView,
+                if (diff > 0) getString(
+                    R.string.words_filter_success,
+                    diff
+                ) else getString(R.string.no_words_filtered)
+            )
             filterRemovedWords.addAll(list)
             dialog.dismiss()
-        })
+        }
 
         btnRunFilter.setOnClickListener {
             val runFilterNoOfWordsCheckCount = pref.runFilterNumberOfWordsToCheck ?: AppConstants.RUN_FILTER_NO_OF_WORDS_CHECK_COUNT
