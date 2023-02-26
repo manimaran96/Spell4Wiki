@@ -256,7 +256,8 @@
          "code":"cs",
          "lang":"Czech",
          "dir":"ltr",
-         "local_lang":"Česky"
+         "local_lang":"Česky",
+         "category": ["Files uploaded by spell4wiki in cs"]
       },
       {
          "code":"csb",
