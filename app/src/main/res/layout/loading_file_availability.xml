@@ -18,7 +18,6 @@
         android:layout_marginTop="@dimen/space20dp"
         android:layout_marginBottom="@dimen/space4dp"
         app:lottie_enableMergePathsForKitKatAndAbove="true"
-        android:tint="@color/white"
         app:lottie_autoPlay="true"
         app:lottie_loop="true"
         app:lottie_rawRes="@raw/check_file_availability"
@@ -37,7 +36,6 @@
         android:gravity="center"
         android:maxLines="4"
         android:text="@string/checking_file_availability"
-        android:textColor="@color/white"
         android:textSize="@dimen/text_semi_normal" />
 
     <androidx.appcompat.widget.AppCompatTextView
@@ -55,7 +53,6 @@
         android:gravity="center"
         android:maxLines="4"
         tools:text="0/100"
-        android:textColor="@color/white"
         android:textSize="@dimen/text_heading" />
 
 

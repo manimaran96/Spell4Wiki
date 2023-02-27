@@ -4,7 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/white"
     tools:context=".ui.about.AboutActivity">
 
 
@@ -129,7 +128,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
                 android:layout_margin="@dimen/space12dp"
-                android:background="@color/gray" />
+                 />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/txt_powered_by_title"
@@ -273,7 +272,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
                 android:layout_margin="@dimen/space12dp"
-                android:background="@color/gray" />
+
+
+                />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/txt_contributors"
@@ -371,7 +372,6 @@
                 android:maxLines="1"
                 android:text="@string/help_us_translate"
                 app:drawableStartCompat="@drawable/ic_language"
-                app:drawableTint="@color/black"
                 android:textSize="@dimen/text_semi_normal" />
 
             <androidx.appcompat.widget.AppCompatTextView

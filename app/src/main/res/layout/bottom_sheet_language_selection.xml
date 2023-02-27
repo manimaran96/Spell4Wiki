@@ -4,7 +4,6 @@
     android:id="@+id/layout_bottom_sheet"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
     android:orientation="vertical"
     app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
 
@@ -100,7 +99,7 @@
             android:paddingStart="@dimen/space20dp"
             android:paddingEnd="@dimen/space20dp"
             android:text="@string/action_add"
-            android:textColor="@color/white" />
+            />
 
     </RelativeLayout>
 

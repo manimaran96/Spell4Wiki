@@ -2,7 +2,6 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="@color/white"
     android:fitsSystemWindows="true">
 
     <LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -70,9 +69,9 @@
             android:layout_margin="@dimen/space10dp"
             android:background="@drawable/bg_blue"
             android:text="@string/login"
-            android:textColor="@color/white"
+
             app:initialCornerAngle="5dp"
-            app:spinning_bar_color="#FFF"
+
             app:spinning_bar_padding="6dp"
             app:spinning_bar_width="3dp" />
 
