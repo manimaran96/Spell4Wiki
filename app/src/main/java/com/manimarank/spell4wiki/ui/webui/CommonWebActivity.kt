@@ -38,7 +38,6 @@ class CommonWebActivity : BaseActivity() {
         // Title & Sub title
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
-        supportActionBar?.subtitle = GeneralUtils.getLanguageInfo(applicationContext, wikiLangDao?.getWikiLanguageWithCode(languageCode))
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         val bundle = intent.extras
@@ -48,7 +47,8 @@ class CommonWebActivity : BaseActivity() {
                 title = bundle.getString(AppConstants.TITLE)
                 setTitle(title)
             }
-            if (bundle.containsKey(AppConstants.IS_WIKTIONARY_WORD)) isWiktionaryWord = bundle.getBoolean(AppConstants.IS_WIKTIONARY_WORD)
+            if (bundle.containsKey(AppConstants.IS_WIKTIONARY_WORD))
+                isWiktionaryWord = bundle.getBoolean(AppConstants.IS_WIKTIONARY_WORD)
             if (bundle.containsKey(AppConstants.LANGUAGE_CODE)) {
                 languageCode = bundle.getString(AppConstants.LANGUAGE_CODE)
                 supportActionBar?.subtitle = GeneralUtils.getLanguageInfo(applicationContext, wikiLangDao?.getWikiLanguageWithCode(languageCode))
