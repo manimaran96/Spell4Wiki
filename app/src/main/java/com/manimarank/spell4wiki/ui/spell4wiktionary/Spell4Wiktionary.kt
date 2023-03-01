@@ -35,6 +35,7 @@ import com.manimarank.spell4wiki.data.prefs.ShowCasePref.showed
 import com.manimarank.spell4wiki.ui.common.BaseActivity
 import com.manimarank.spell4wiki.ui.custom.EndlessRecyclerView.EndlessListener
 import com.manimarank.spell4wiki.ui.dialogs.CommonDialog.openInfoDialog
+import com.manimarank.spell4wiki.ui.dialogs.CommonDialog.openRunFilterInfoDialog
 import com.manimarank.spell4wiki.ui.dialogs.showConfirmBackDialog
 import com.manimarank.spell4wiki.ui.languageselector.LanguageSelectionFragment
 import com.manimarank.spell4wiki.ui.listerners.OnLanguageSelectionListener
@@ -44,6 +45,7 @@ import com.manimarank.spell4wiki.utils.constants.AppConstants
 import com.manimarank.spell4wiki.utils.constants.ListMode
 import kotlinx.android.synthetic.main.activity_spell_4_wiktionary.*
 import kotlinx.android.synthetic.main.empty_state_ui.*
+import kotlinx.android.synthetic.main.layout_run_filter_action.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -161,9 +163,7 @@ class Spell4Wiktionary : BaseActivity(), EndlessListener {
                 SnackBarUtils.showLong(recyclerView, getString(R.string.no_words_scroll_to_get_new_words))
         }
 
-        btnRunFilterInfo.setOnClickListener {
-            this.openInfoDialog(getString(R.string.run_filter_use) , getString(R.string.run_filter_info))
-        }
+        btnRunFilterInfo.setOnClickListener { this.openRunFilterInfoDialog() }
     }
 
     private fun getFilterText(word: String?): String {

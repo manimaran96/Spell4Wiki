@@ -11,55 +11,7 @@
 
     <include layout="@layout/custom_app_bar"/>
 
-    <RelativeLayout
-        android:id="@+id/layoutFilterOption"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/space8dp"
-        android:background="@drawable/bg_line_border"
-        android:padding="@dimen/space4dp">
-
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_toStartOf="@+id/btnRunFilter"
-            android:layout_width="match_parent"
-            android:layout_centerVertical="true"
-            android:layout_height="wrap_content">
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/txtAddLangInfo"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="@string/do_you_want_filter_words" />
-
-        </LinearLayout>
-
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btnRunFilter"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toStartOf="@+id/btnRunFilterInfo"
-            android:layout_centerInParent="true"
-            android:layout_margin="@dimen/space4dp"
-            android:background="@drawable/bg_blue"
-            android:minHeight="@dimen/btn_height"
-            android:paddingStart="@dimen/space20dp"
-            android:paddingEnd="@dimen/space20dp"
-            android:text="@string/run_filter"
-            android:textColor="@color/white" />
-
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/btnRunFilterInfo"
-            app:srcCompat="@drawable/ic_about"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:layout_width="@dimen/action_icon"
-            android:layout_height="@dimen/action_icon"/>
-
-    </RelativeLayout>
-
+    <include layout="@layout/layout_run_filter_action"/>
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/refreshLayout"
