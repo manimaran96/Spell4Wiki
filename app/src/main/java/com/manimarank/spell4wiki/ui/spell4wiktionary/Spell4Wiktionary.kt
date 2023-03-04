@@ -6,13 +6,12 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
+import android.text.InputType
 import android.text.TextUtils
-import android.view.Menu
-import android.view.MenuItem
-import android.view.View
-import android.view.Window
+import android.view.*
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.EditText
 import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
 import androidx.interpolator.view.animation.FastOutSlowInInterpolator
@@ -55,7 +54,7 @@ import uk.co.samuelwall.materialtaptargetprompt.MaterialTapTargetSequence
 import uk.co.samuelwall.materialtaptargetprompt.extras.focals.RectanglePromptFocal
 import java.util.*
 import java.util.concurrent.TimeUnit
-import kotlin.collections.ArrayList
+
 
 class Spell4Wiktionary : BaseActivity(), EndlessListener {
     private var wikiLangDao: WikiLangDao? = null
@@ -500,6 +499,22 @@ class Spell4Wiktionary : BaseActivity(), EndlessListener {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, pos: Int, id: Long) {
                 val item = parent?.getItemAtPosition(pos)?.toString();
                 SnackBarUtils.showLong(spinnerCategory, "$item")
+                showWordCategoryInputDialog()
+            }
+
+            private fun showWordCategoryInputDialog() {
+                var mCategoryTitle: String = "";
+                val builder = AlertDialog.Builder(this@Spell4Wiktionary)
+                builder.setTitle("Enter valid words category")
+                val input = EditText(this@Spell4Wiktionary)
+                input.inputType = InputType.TYPE_CLASS_TEXT
+                builder.setView(input)
+                builder.setPositiveButton("OK") { dialog, which -> mCategoryTitle = input.text?.toString() ?: "" }
+                builder.setNegativeButton(
+                    "Cancel"
+                ) { dialog, which -> dialog.cancel() }
+
+                builder.show()
             }
 
             override fun onNothingSelected(p0: AdapterView<*>?) {}
