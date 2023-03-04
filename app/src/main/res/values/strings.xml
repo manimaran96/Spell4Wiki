@@ -132,9 +132,13 @@
     <string name="app_settings">App Settings</string>
     <string name="app_language">App Language</string>
     <string name="action_add">Add</string>
-    <string name="choose_your_preferred_app_language">Choose your preferred language.\nCurrent app language : %s</string>
+   <string name="choose_your_preferred_app_language">Choose your preferred language.\nCurrent app language : %s</string>
+    <string name="choose_your_preferred_contribution_language">Choose your preferred language.\nCurrent contribution language : %s</string>
+
     <string name="choose_app_language">Choose app language</string>
+    <string name="choose_contribution_language">Choose contribution  language</string>
     <string name="app_language_selection">App Language Selection</string>
+    <string name="contribution_language_selection">Contribution Language Selection</string>
     <string name="yes_continue">Yes, Continue</string>
     <string name="later">Later</string>
     <string name="temporary">Temporary</string>

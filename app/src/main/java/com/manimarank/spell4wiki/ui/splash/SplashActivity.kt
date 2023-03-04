@@ -87,7 +87,7 @@ class SplashActivity : BaseActivity() {
         SyncHelper().syncWikiLanguages()
 
         // If app launch very first time to show the language selection and app intro. Other wise go to login page
-        val mainIntent = Intent(this@SplashActivity, if (pref.isFirstTimeLaunch) LanguageSelectionActivity::class.java else LoginActivity::class.java)
+        val mainIntent = Intent(this@SplashActivity, if (pref.isFirstTimeLaunch || true) LanguageSelectionActivity::class.java else LoginActivity::class.java)
         startActivity(mainIntent)
         finish()
     }
