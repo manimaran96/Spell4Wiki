@@ -9,7 +9,9 @@
     android:orientation="vertical"
     android:layout_gravity="center"
     android:gravity="center_horizontal"
-    tools:context=".ui.spell4wiktionary.WiktionarySearchActivity">
+    tools:context=".ui.spell4wiktionary.Spell4WordActivity">
+
+    <include layout="@layout/custom_app_bar"/>
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/wiktionary_logo"

@@ -16,6 +16,7 @@ import com.manimarank.spell4wiki.BuildConfig
 import com.manimarank.spell4wiki.R
 import com.manimarank.spell4wiki.data.apis.WikimediaCommonsUtils.checkFileAvailability
 import com.manimarank.spell4wiki.data.db.DBHelper
+import com.manimarank.spell4wiki.data.db.entities.WikiLang
 import com.manimarank.spell4wiki.data.db.entities.WordsHaveAudio
 import com.manimarank.spell4wiki.ui.dialogs.RecordInfoDialog.show
 import com.manimarank.spell4wiki.ui.listerners.FileAvailabilityCallback
@@ -137,5 +138,9 @@ object GeneralUtils {
                 }
                 .show()
         }
+    }
+
+    fun getLanguageInfo(context: Context, wikiLang: WikiLang?, strResId: Int = R.string.language): String {
+        return  "${context.getString(strResId)}: ${wikiLang?.name + " - " + wikiLang?.localName}";
     }
 }

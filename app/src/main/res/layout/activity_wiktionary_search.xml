@@ -1,46 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_search"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
     tools:context=".ui.spell4wiktionary.WiktionarySearchActivity">
 
-    <androidx.appcompat.widget.SearchView
-        android:id="@+id/search_bar"
+    <include
+        layout="@layout/custom_app_bar"/>
+
+    <RelativeLayout
+        android:id="@+id/activity_search"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/btn_height"
-        android:layout_margin="@dimen/space16dp"
-        app:searchIcon="@drawable/ic_info"
-        android:layout_centerHorizontal="true"
-        android:queryHint="@string/search_on_wiktionary"
-        android:background="@drawable/bg_line_border"
-        app:iconifiedByDefault="false"/>
+        android:layout_height="match_parent">
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/txtNotFound"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@+id/search_bar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="@dimen/text_normal"
-        android:textColor="@color/w_red"
-        android:visibility="gone"
-        android:gravity="center"
-        android:maxLines="4"
-        android:ellipsize="end"
-        android:text="@string/result_not_found"/>
+        <androidx.appcompat.widget.SearchView
+            android:id="@+id/search_bar"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/btn_height"
+            android:layout_margin="@dimen/space16dp"
+            app:searchIcon="@drawable/ic_info"
+            android:layout_centerHorizontal="true"
+            android:queryHint="@string/search_on_wiktionary"
+            android:background="@drawable/bg_line_border"
+            app:iconifiedByDefault="false"/>
 
-    <com.manimarank.spell4wiki.ui.custom.EndlessRecyclerView
-        android:id="@+id/recyclerView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/search_bar"
-        android:divider="@null" />
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/txtNotFound"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/search_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/text_normal"
+            android:textColor="@color/w_red"
+            android:visibility="gone"
+            android:gravity="center"
+            android:maxLines="4"
+            android:ellipsize="end"
+            android:text="@string/result_not_found"/>
 
-    <include layout="@layout/loading_info"
-        android:visibility="gone"/>
+        <com.manimarank.spell4wiki.ui.custom.EndlessRecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/search_bar"
+            android:divider="@null" />
 
-</RelativeLayout>
+        <include layout="@layout/loading_info"
+            android:visibility="gone"/>
+
+    </RelativeLayout>
+</LinearLayout>

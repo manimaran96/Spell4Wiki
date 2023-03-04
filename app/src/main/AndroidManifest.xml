@@ -70,13 +70,13 @@
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize"
-            android:theme="@style/AppTheme" />
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name="com.manimarank.spell4wiki.ui.spell4wiktionary.WiktionarySearchActivity"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize"
-            android:theme="@style/AppTheme" />
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name="com.manimarank.spell4wiki.ui.main.MainActivity"
             android:screenOrientation="portrait"
@@ -106,21 +106,21 @@
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize"
-            android:theme="@style/AppTheme" />
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name="com.manimarank.spell4wiki.ui.spell4wiktionary.Spell4WordActivity"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity"
             android:parentActivityName="com.manimarank.spell4wiki.ui.main.MainActivity"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize"
-            android:theme="@style/AppTheme" />
+            android:theme="@style/AppTheme.NoActionBar" />
 
         <activity
             android:name="com.manimarank.spell4wiki.ui.webui.CommonWebActivity"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize"
-            android:theme="@style/AppTheme" />
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name="com.manimarank.spell4wiki.ui.settings.SettingsActivity"
             android:screenOrientation="portrait"
