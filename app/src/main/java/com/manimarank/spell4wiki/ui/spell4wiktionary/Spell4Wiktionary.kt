@@ -11,6 +11,8 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.view.Window
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
 import androidx.interpolator.view.animation.FastOutSlowInInterpolator
@@ -34,7 +36,6 @@ import com.manimarank.spell4wiki.data.prefs.ShowCasePref.isNotShowed
 import com.manimarank.spell4wiki.data.prefs.ShowCasePref.showed
 import com.manimarank.spell4wiki.ui.common.BaseActivity
 import com.manimarank.spell4wiki.ui.custom.EndlessRecyclerView.EndlessListener
-import com.manimarank.spell4wiki.ui.dialogs.CommonDialog.openInfoDialog
 import com.manimarank.spell4wiki.ui.dialogs.CommonDialog.openRunFilterInfoDialog
 import com.manimarank.spell4wiki.ui.dialogs.showConfirmBackDialog
 import com.manimarank.spell4wiki.ui.languageselector.LanguageSelectionFragment
@@ -54,6 +55,7 @@ import uk.co.samuelwall.materialtaptargetprompt.MaterialTapTargetSequence
 import uk.co.samuelwall.materialtaptargetprompt.extras.focals.RectanglePromptFocal
 import java.util.*
 import java.util.concurrent.TimeUnit
+import kotlin.collections.ArrayList
 
 class Spell4Wiktionary : BaseActivity(), EndlessListener {
     private var wikiLangDao: WikiLangDao? = null
@@ -114,6 +116,7 @@ class Spell4Wiktionary : BaseActivity(), EndlessListener {
         recyclerView.setListener(this)
         recyclerView.makeVisible()
         refreshLayout.setOnRefreshListener { loadDataFromServer() }
+        loadCategoriesData()
     }
 
     private fun setupFilterWordOption() {
@@ -483,5 +486,24 @@ class Spell4Wiktionary : BaseActivity(), EndlessListener {
         if (adapter.itemCount > 0) {
             this.showConfirmBackDialog { super.onBackPressed() }
         } else super.onBackPressed()
+    }
+
+    private fun loadCategoriesData() {
+        val languageDataForSpinner = ArrayList<String>()
+        languageDataForSpinner.add("பகுப்பு:தமிழ்-ஒலிக்கோப்புகளில்லை")
+        languageDataForSpinner.add("பகுப்பு:உறவுச் சொற்கள்")
+        languageDataForSpinner.add("பகுப்பு:சமூகச் சொற்கள்")
+        val spinnerAdapter = ArrayAdapter(applicationContext, R.layout.item_category, languageDataForSpinner.toTypedArray())
+        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        spinnerCategory.adapter = spinnerAdapter
+        spinnerCategory.onItemSelectedListener = object: AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, pos: Int, id: Long) {
+                val item = parent?.getItemAtPosition(pos)?.toString();
+                SnackBarUtils.showLong(spinnerCategory, "$item")
+            }
+
+            override fun onNothingSelected(p0: AdapterView<*>?) {}
+
+        }
     }
 }
