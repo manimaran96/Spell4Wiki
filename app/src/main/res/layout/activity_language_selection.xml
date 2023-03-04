@@ -47,15 +47,18 @@
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnAddMyLanguage"
-        android:layout_below="@+id/txtAddLangInfo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/txtAddLangInfo"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="@dimen/space4dp"
+        android:layout_marginTop="@dimen/space4dp"
+        android:layout_marginEnd="@dimen/space4dp"
+        android:layout_marginBottom="@dimen/space4dp"
         android:background="@drawable/bg_blue"
         android:minHeight="@dimen/btn_height"
         android:paddingStart="@dimen/space20dp"
-        android:layout_margin="@dimen/space4dp"
         android:paddingEnd="@dimen/space20dp"
-        android:layout_centerHorizontal="true"
         android:text="@string/choose_app_language"
         android:textColor="@color/white" />
 
