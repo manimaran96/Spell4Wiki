@@ -7,28 +7,39 @@ import android.text.style.ForegroundColorSpan
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.TextView
+import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.manimarank.spell4wiki.R
+import com.manimarank.spell4wiki.data.db.DBHelper
+import com.manimarank.spell4wiki.data.db.dao.WikiLangDao
 import com.manimarank.spell4wiki.data.prefs.PrefManager
 import com.manimarank.spell4wiki.ui.common.BaseActivity
 import com.manimarank.spell4wiki.ui.languageselector.LanguageSelectionFragment
 import com.manimarank.spell4wiki.ui.listerners.OnLanguageSelectionListener
+import com.manimarank.spell4wiki.utils.GeneralUtils
 import com.manimarank.spell4wiki.utils.constants.AppConstants
 import com.manimarank.spell4wiki.utils.constants.ListMode
 import java.util.*
 
 class CommonWebActivity : BaseActivity() {
+    private var wikiLangDao: WikiLangDao? = null
     private var isWiktionaryWord = false
     private val fragment: WebViewFragment = WebViewFragment()
     private var languageCode: String? = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_common_web_view)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         val pref = PrefManager(applicationContext)
         languageCode = pref.languageCodeWiktionary
+        wikiLangDao = DBHelper.getInstance(applicationContext).appDatabase.wikiLangDao
+
+        // Title & Sub title
+        val toolbar = findViewById<Toolbar>(R.id.toolbar)
+        setSupportActionBar(toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
         val bundle = intent.extras
         if (bundle != null) {
             val title: String?
@@ -36,8 +47,12 @@ class CommonWebActivity : BaseActivity() {
                 title = bundle.getString(AppConstants.TITLE)
                 setTitle(title)
             }
-            if (bundle.containsKey(AppConstants.IS_WIKTIONARY_WORD)) isWiktionaryWord = bundle.getBoolean(AppConstants.IS_WIKTIONARY_WORD)
-            if (bundle.containsKey(AppConstants.LANGUAGE_CODE)) languageCode = bundle.getString(AppConstants.LANGUAGE_CODE)
+            if (bundle.containsKey(AppConstants.IS_WIKTIONARY_WORD))
+                isWiktionaryWord = bundle.getBoolean(AppConstants.IS_WIKTIONARY_WORD)
+            if (bundle.containsKey(AppConstants.LANGUAGE_CODE)) {
+                languageCode = bundle.getString(AppConstants.LANGUAGE_CODE)
+                supportActionBar?.subtitle = GeneralUtils.getLanguageInfo(applicationContext, wikiLangDao?.getWikiLanguageWithCode(languageCode))
+            }
             loadFragment(fragment)
         }
     }
@@ -106,6 +121,7 @@ class CommonWebActivity : BaseActivity() {
                 override fun onCallBackListener(langCode: String?) {
                     if (languageCode != langCode) {
                         languageCode = langCode
+                        supportActionBar?.subtitle = GeneralUtils.getLanguageInfo(applicationContext, wikiLangDao?.getWikiLanguageWithCode(langCode))
                         invalidateOptionsMenu()
                         fragment.loadWordWithOtherLang(langCode)
                     }

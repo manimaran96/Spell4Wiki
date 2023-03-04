@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,6 +8,8 @@
     android:background="@color/white"
     android:orientation="vertical"
     tools:context=".ui.spell4wiktionary.Spell4WordListActivity">
+
+    <include layout="@layout/custom_app_bar"/>
 
     <RelativeLayout
         android:id="@+id/layoutSelect"
@@ -183,15 +186,27 @@
 
     </RelativeLayout>
 
-    <com.manimarank.spell4wiki.ui.custom.EndlessRecyclerView
-        android:id="@+id/recyclerView"
+    <LinearLayout
+        android:id="@+id/layoutList"
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:divider="@null"
-        android:visibility="gone" />
+        android:visibility="gone"
+        android:layout_height="wrap_content">
+
+        <include layout="@layout/layout_run_filter_action"/>
+
+        <com.manimarank.spell4wiki.ui.custom.EndlessRecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:divider="@null" />
+
+    </LinearLayout>
+
+
 
     <include layout="@layout/empty_state_ui"
         android:visibility="gone"/>
 
 
-</RelativeLayout>
+</LinearLayout>

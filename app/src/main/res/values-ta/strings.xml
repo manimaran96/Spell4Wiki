@@ -74,6 +74,7 @@
     <string name="confirmation">உறுதிப்படுத்தல்</string>
     <string name="confirm_to_back">நீங்கள் திரும்பிச் செல்ல விரும்புகிறீர்களா?</string>
     <string name="select_language">மொழியைத் தேர்ந்தெடு</string>
+    <string name="selected_language">தேர்ந்தெடுக்கப்பட்ட மொழி</string>
     <string name="rate_app">செயலியை மதிப்பிட</string>
     <string name="share_app">செயலியை பகிர</string>
     <string name="share">பகிர்</string>

@@ -278,7 +278,7 @@
 
                 <SeekBar
                     android:id="@+id/seekBarRunFilterCount"
-                    android:max="50"
+                    android:max="100"
                     android:progress="25"
                     android:layout_centerInParent="true"
                     android:layout_marginTop="@dimen/space8dp"
@@ -295,7 +295,7 @@
                     android:gravity="center_vertical"
                     android:maxLines="1"
                     android:layout_alignParentEnd="true"
-                    android:text="50"
+                    android:text="100"
                     android:textColor="@color/settings_status_text"
                     android:textSize="@dimen/text_semi_normal"
                     tools:ignore="HardcodedText" />

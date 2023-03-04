@@ -22,4 +22,8 @@ object CommonDialog {
         dialog.show()
     }
 
+    fun Activity.openRunFilterInfoDialog() {
+        openInfoDialog(getString(R.string.run_filter_use) , getString(R.string.run_filter_info))
+    }
+
 }

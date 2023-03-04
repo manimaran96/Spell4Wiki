@@ -12,6 +12,7 @@ import android.view.MenuItem
 import android.view.View
 import android.view.Window
 import android.widget.TextView
+import androidx.appcompat.widget.Toolbar
 import androidx.interpolator.view.animation.FastOutSlowInInterpolator
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -20,6 +21,7 @@ import com.manimarank.spell4wiki.R
 import com.manimarank.spell4wiki.data.apis.ApiClient.getWiktionaryApi
 import com.manimarank.spell4wiki.data.apis.ApiInterface
 import com.manimarank.spell4wiki.data.db.DBHelper
+import com.manimarank.spell4wiki.data.db.dao.WikiLangDao
 import com.manimarank.spell4wiki.data.db.dao.WordsHaveAudioDao
 import com.manimarank.spell4wiki.data.db.entities.WordsHaveAudio
 import com.manimarank.spell4wiki.data.model.WikiWordsWithoutAudio
@@ -33,6 +35,7 @@ import com.manimarank.spell4wiki.data.prefs.ShowCasePref.showed
 import com.manimarank.spell4wiki.ui.common.BaseActivity
 import com.manimarank.spell4wiki.ui.custom.EndlessRecyclerView.EndlessListener
 import com.manimarank.spell4wiki.ui.dialogs.CommonDialog.openInfoDialog
+import com.manimarank.spell4wiki.ui.dialogs.CommonDialog.openRunFilterInfoDialog
 import com.manimarank.spell4wiki.ui.dialogs.showConfirmBackDialog
 import com.manimarank.spell4wiki.ui.languageselector.LanguageSelectionFragment
 import com.manimarank.spell4wiki.ui.listerners.OnLanguageSelectionListener
@@ -42,6 +45,7 @@ import com.manimarank.spell4wiki.utils.constants.AppConstants
 import com.manimarank.spell4wiki.utils.constants.ListMode
 import kotlinx.android.synthetic.main.activity_spell_4_wiktionary.*
 import kotlinx.android.synthetic.main.empty_state_ui.*
+import kotlinx.android.synthetic.main.layout_run_filter_action.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -50,10 +54,10 @@ import uk.co.samuelwall.materialtaptargetprompt.MaterialTapTargetSequence
 import uk.co.samuelwall.materialtaptargetprompt.extras.focals.RectanglePromptFocal
 import java.util.*
 import java.util.concurrent.TimeUnit
-import kotlin.collections.ArrayList
 
 class Spell4Wiktionary : BaseActivity(), EndlessListener {
-    var wordsHaveAudioDao: WordsHaveAudioDao? = null
+    private var wikiLangDao: WikiLangDao? = null
+    private var wordsHaveAudioDao: WordsHaveAudioDao? = null
     private var wordsListAlreadyHaveAudio: MutableList<String> = ArrayList()
 
     // Views
@@ -86,9 +90,16 @@ class Spell4Wiktionary : BaseActivity(), EndlessListener {
      * Init views
      */
     private fun init() {
+        wikiLangDao = DBHelper.getInstance(applicationContext).appDatabase.wikiLangDao
+
         // Title & Sub title
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        val toolbar = findViewById<Toolbar>(R.id.toolbar)
+        val wikiLang = wikiLangDao?.getWikiLanguageWithCode(languageCode)
+        setSupportActionBar(toolbar)
         supportActionBar?.title = getString(R.string.spell4wiktionary)
+        supportActionBar?.subtitle = GeneralUtils.getLanguageInfo(applicationContext, wikiLang)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
         snackBar = Snackbar.make(recyclerView, getString(R.string.record_fetch_fail), Snackbar.LENGTH_LONG)
         recyclerView.setHasFixedSize(true)
 
@@ -118,23 +129,28 @@ class Spell4Wiktionary : BaseActivity(), EndlessListener {
         var itemList: List<String> = ArrayList()
         filterRemovedWords.clear()
 
-        viewModel.progressForFilter.observe(this, { index ->
+        viewModel.progressForFilter.observe(this) { index ->
             // val progress = ((index+1) * 100) / itemList.size
-            txtProgress.text = ("${index+1}/${itemList.size}")
+            txtProgress.text = ("${index + 1}/${itemList.size}")
             txtInfo.text = getFilterText(itemList[index])
-        })
+        }
 
-        viewModel.wordAlreadyHaveAudio.observe(this, { word ->
+        viewModel.wordAlreadyHaveAudio.observe(this) { word ->
             updateList(word)
-        })
+        }
 
-        viewModel.wordsWithoutAudioList.observe(this, { list ->
+        viewModel.wordsWithoutAudioList.observe(this) { list ->
             val diff = itemList.size - list.size
-            SnackBarUtils.showLong(recyclerView,
-                if (diff > 0) getString(R.string.words_filter_success, diff) else getString(R.string.no_words_filtered))
+            SnackBarUtils.showLong(
+                recyclerView,
+                if (diff > 0) getString(
+                    R.string.words_filter_success,
+                    diff
+                ) else getString(R.string.no_words_filtered)
+            )
             filterRemovedWords.addAll(list)
             dialog.dismiss()
-        })
+        }
 
         btnRunFilter.setOnClickListener {
             val runFilterNoOfWordsCheckCount = pref.runFilterNumberOfWordsToCheck ?: AppConstants.RUN_FILTER_NO_OF_WORDS_CHECK_COUNT
@@ -147,9 +163,7 @@ class Spell4Wiktionary : BaseActivity(), EndlessListener {
                 SnackBarUtils.showLong(recyclerView, getString(R.string.no_words_scroll_to_get_new_words))
         }
 
-        btnRunFilterInfo.setOnClickListener {
-            this.openInfoDialog(getString(R.string.run_filter_use) , getString(R.string.run_filter_info))
-        }
+        btnRunFilterInfo.setOnClickListener { this.openRunFilterInfoDialog() }
     }
 
     private fun getFilterText(word: String?): String {
@@ -184,11 +198,9 @@ class Spell4Wiktionary : BaseActivity(), EndlessListener {
                     resetApiResultTime()
                     apiFailRetryCount = 0
                     if (recyclerView != null) recyclerView.reset()
-                    val dbHelper = DBHelper.getInstance(applicationContext)
-                    val wikiLang = dbHelper.appDatabase.wikiLangDao?.getWikiLanguageWithCode(languageCode)
+                    val wikiLang = wikiLangDao?.getWikiLanguageWithCode(languageCode)
                     if (wikiLang != null && !TextUtils.isEmpty(wikiLang.titleOfWordsWithoutAudio))
                         wiktionaryTitleOfWordsWithoutAudio = wikiLang.titleOfWordsWithoutAudio
-                    wordsHaveAudioDao = dbHelper.appDatabase.wordsHaveAudioDao
                     wordsListAlreadyHaveAudio.clear()
                     wordsHaveAudioDao?.getWordsAlreadyHaveAudioByLanguage(languageCode)?.forEach { word ->
                         wordsListAlreadyHaveAudio.add(word)
@@ -349,6 +361,7 @@ class Spell4Wiktionary : BaseActivity(), EndlessListener {
             override fun onCallBackListener(langCode: String?) {
                 if (languageCode != langCode) {
                     languageCode = langCode
+                    supportActionBar?.subtitle = GeneralUtils.getLanguageInfo(applicationContext, wikiLangDao?.getWikiLanguageWithCode(langCode))
                     invalidateOptionsMenu()
                     recyclerView.reset()
                     nextOffsetObj = null
@@ -356,9 +369,13 @@ class Spell4Wiktionary : BaseActivity(), EndlessListener {
                 }
             }
         }
-        val languageSelectionFragment = LanguageSelectionFragment(this)
-        languageSelectionFragment.init(callback, ListMode.SPELL_4_WIKI)
-        languageSelectionFragment.show(supportFragmentManager)
+        try {
+            val languageSelectionFragment = LanguageSelectionFragment(this)
+            languageSelectionFragment.init(callback, ListMode.SPELL_4_WIKI)
+            languageSelectionFragment.show(supportFragmentManager)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 
     private fun setupLanguageSelectorMenuItem(menu: Menu) {
@@ -424,8 +441,6 @@ class Spell4Wiktionary : BaseActivity(), EndlessListener {
                     showed(ShowCasePref.SPELL_4_WIKI_PAGE)
                 }
                 if (isNotShowed(ShowCasePref.SPELL_4_WIKI_PAGE)) {
-                    val wikiLangDao =
-                        DBHelper.getInstance(applicationContext).appDatabase.wikiLangDao
                     sequence.addPrompt(
                         promptBuilder
                             .setTarget(R.id.layoutSelectLanguage)

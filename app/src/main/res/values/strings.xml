@@ -89,6 +89,7 @@
     <string name="confirmation">Confirmation</string>
     <string name="confirm_to_back">Do you want to go back?</string>
     <string name="select_language">Select Language</string>
+    <string name="selected_language">Selected Language</string>
     <string name="rate_app">Rate the App</string>
     <string name="share_app">Share the App</string>
     <string name="share">Share</string>
