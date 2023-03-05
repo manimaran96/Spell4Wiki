@@ -499,26 +499,29 @@ class Spell4Wiktionary : BaseActivity(), EndlessListener {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, pos: Int, id: Long) {
                 val item = parent?.getItemAtPosition(pos)?.toString();
                 SnackBarUtils.showLong(spinnerCategory, "$item")
-                showWordCategoryInputDialog()
-            }
 
-            private fun showWordCategoryInputDialog() {
-                var mCategoryTitle: String = "";
-                val builder = AlertDialog.Builder(this@Spell4Wiktionary)
-                builder.setTitle("Enter valid words category")
-                val input = EditText(this@Spell4Wiktionary)
-                input.inputType = InputType.TYPE_CLASS_TEXT
-                builder.setView(input)
-                builder.setPositiveButton("OK") { dialog, which -> mCategoryTitle = input.text?.toString() ?: "" }
-                builder.setNegativeButton(
-                    "Cancel"
-                ) { dialog, which -> dialog.cancel() }
-
-                builder.show()
             }
 
             override fun onNothingSelected(p0: AdapterView<*>?) {}
-
         }
+
+        btnAddCategory.setOnClickListener {
+            showWordCategoryInputDialog()
+        }
+    }
+
+    private fun showWordCategoryInputDialog() {
+        var mCategoryTitle: String = "";
+        val builder = AlertDialog.Builder(this@Spell4Wiktionary)
+        builder.setTitle("Enter valid words category")
+        val input = EditText(this@Spell4Wiktionary)
+        input.inputType = InputType.TYPE_CLASS_TEXT
+        builder.setView(input)
+        builder.setPositiveButton("OK") { dialog, which -> mCategoryTitle = input.text?.toString() ?: "" }
+        builder.setNegativeButton(
+            "Cancel"
+        ) { dialog, which -> dialog.cancel() }
+
+        builder.show()
     }
 }

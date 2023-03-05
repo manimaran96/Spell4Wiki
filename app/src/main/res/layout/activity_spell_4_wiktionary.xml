@@ -35,18 +35,31 @@
                 android:background="@drawable/bg_line_border"
                 android:layout_width="fill_parent"
                 android:minHeight="40dp"
+                android:layout_toStartOf="@+id/btnAddCategory"
                 android:layout_height="wrap_content" />
 
             <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/imgDropDownArrow"
                 android:layout_width="24dp"
                 app:srcCompat="@drawable/ic_play"
                 app:tint="@color/gray"
                 android:rotation="90"
+                android:layout_toStartOf="@+id/btnAddCategory"
                 android:layout_marginStart="@dimen/space2dp"
                 android:layout_marginEnd="@dimen/space2dp"
                 android:layout_centerVertical="true"
-                android:layout_alignParentEnd="true"
                 android:layout_height="24dp"/>
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/btnAddCategory"
+                android:layout_width="32dp"
+                app:srcCompat="@drawable/ic_add"
+                app:tint="@color/gray"
+                android:layout_marginStart="@dimen/space8dp"
+                android:layout_marginEnd="@dimen/space2dp"
+                android:layout_centerVertical="true"
+                android:layout_alignParentEnd="true"
+                android:layout_height="32dp"/>
 
         </RelativeLayout>
 
