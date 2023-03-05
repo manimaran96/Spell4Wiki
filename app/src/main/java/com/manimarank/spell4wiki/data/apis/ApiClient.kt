@@ -61,7 +61,7 @@ object ApiClient {
         }
 
     private fun getWiktionaryApiUrl(langCode: String): String {
-        return String.format(Urls.WIKTIONARY, langCode.makeNullIfEmpty() ?: pref?.languageCodeSpell4Wiki)
+        return String.format(Urls.WIKTIONARY, langCode.makeNullIfEmpty() ?: pref?.languageCodeSpell4Wikicontributelang)
     }
 
     private fun getOkHttpClient(context: Context): OkHttpClient {

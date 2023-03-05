@@ -42,54 +42,25 @@ class SettingsActivity : BaseActivity() {
         if (pref.isAnonymous == true) {
             txtTitleLicense.makeGone()
             layoutSpell4WikiLang.makeGone()
-            layoutSpell4WordListLang.makeGone()
-            layoutSpell4WordLang.makeGone()
+//            layoutSpell4WordListLang.makeGone()
+//            layoutSpell4WordLang.makeGone()
             layoutLicenseOfUploadAudio.makeGone()
         }
-        updateLanguageView(txtSpell4WikiLang, pref.languageCodeSpell4Wiki)
-        updateLanguageView(txtSpell4WordListLang, pref.languageCodeSpell4WordList)
-        updateLanguageView(txtSpell4WordLang, pref.languageCodeSpell4Word)
-        updateLanguageView(txtWiktionaryLang, pref.languageCodeWiktionary)
+        updateLanguageView(txtSpell4WikiLang, pref.languageCodeSpell4Wikicontributelang)
+
+
         layoutSpell4WikiLang.setOnClickListener {
             val callback = object : OnLanguageSelectionListener {
                 override fun onCallBackListener(langCode: String?) {
-                    updateLanguageView(txtSpell4WikiLang, pref.languageCodeSpell4Wiki)
+                    updateLanguageView(txtSpell4WikiLang, pref.languageCodeSpell4Wikicontributelang)
                 }
             }
             val languageSelectionFragment = LanguageSelectionFragment(this)
-            languageSelectionFragment.init(callback, ListMode.SPELL_4_WIKI)
+            languageSelectionFragment.init(callback, ListMode.SPELL_4_WIKI_CONTRIBUTION_LANGUAGE)
             languageSelectionFragment.show(supportFragmentManager)
         }
-        layoutSpell4WordListLang.setOnClickListener {
-            val callback = object : OnLanguageSelectionListener {
-                override fun onCallBackListener(langCode: String?) {
-                    updateLanguageView(txtSpell4WordListLang, pref.languageCodeSpell4WordList)
-                }
-            }
-            val languageSelectionFragment = LanguageSelectionFragment(this)
-            languageSelectionFragment.init(callback, ListMode.SPELL_4_WORD_LIST)
-            languageSelectionFragment.show(supportFragmentManager)
-        }
-        layoutSpell4WordLang.setOnClickListener {
-            val callback = object : OnLanguageSelectionListener {
-                override fun onCallBackListener(langCode: String?) {
-                    updateLanguageView(txtSpell4WordLang, pref.languageCodeSpell4Word)
-                }
-            }
-            val languageSelectionFragment = LanguageSelectionFragment(this)
-            languageSelectionFragment.init(callback, ListMode.SPELL_4_WORD)
-            languageSelectionFragment.show(supportFragmentManager)
-        }
-        layoutWiktionaryLang.setOnClickListener {
-            val callback = object : OnLanguageSelectionListener {
-                override fun onCallBackListener(langCode: String?) {
-                    updateLanguageView(txtWiktionaryLang, pref.languageCodeWiktionary)
-                }
-            }
-            val languageSelectionFragment = LanguageSelectionFragment(this)
-            languageSelectionFragment.init(callback, ListMode.WIKTIONARY)
-            languageSelectionFragment.show(supportFragmentManager)
-        }
+
+
         updateLicenseView(txtLicenseOfUploadAudio, txtLicenseOfUploadAudioLegalCode)
         layoutLicenseOfUploadAudio.setOnClickListener {
             // setup the alert builder
