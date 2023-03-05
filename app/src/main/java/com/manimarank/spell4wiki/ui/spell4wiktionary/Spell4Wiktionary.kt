@@ -6,11 +6,12 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
+import android.text.InputType
 import android.text.TextUtils
-import android.view.Menu
-import android.view.MenuItem
-import android.view.View
-import android.view.Window
+import android.view.*
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.EditText
 import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
 import androidx.interpolator.view.animation.FastOutSlowInInterpolator
@@ -34,7 +35,6 @@ import com.manimarank.spell4wiki.data.prefs.ShowCasePref.isNotShowed
 import com.manimarank.spell4wiki.data.prefs.ShowCasePref.showed
 import com.manimarank.spell4wiki.ui.common.BaseActivity
 import com.manimarank.spell4wiki.ui.custom.EndlessRecyclerView.EndlessListener
-import com.manimarank.spell4wiki.ui.dialogs.CommonDialog.openInfoDialog
 import com.manimarank.spell4wiki.ui.dialogs.CommonDialog.openRunFilterInfoDialog
 import com.manimarank.spell4wiki.ui.dialogs.showConfirmBackDialog
 import com.manimarank.spell4wiki.ui.languageselector.LanguageSelectionFragment
@@ -43,6 +43,7 @@ import com.manimarank.spell4wiki.utils.*
 import com.manimarank.spell4wiki.utils.NetworkUtils.isConnected
 import com.manimarank.spell4wiki.utils.constants.AppConstants
 import com.manimarank.spell4wiki.utils.constants.ListMode
+import com.manimarank.spell4wiki.utils.extensions.makeNullIfEmpty
 import kotlinx.android.synthetic.main.activity_spell_4_wiktionary.*
 import kotlinx.android.synthetic.main.empty_state_ui.*
 import kotlinx.android.synthetic.main.layout_run_filter_action.*
@@ -54,6 +55,7 @@ import uk.co.samuelwall.materialtaptargetprompt.MaterialTapTargetSequence
 import uk.co.samuelwall.materialtaptargetprompt.extras.focals.RectanglePromptFocal
 import java.util.*
 import java.util.concurrent.TimeUnit
+
 
 class Spell4Wiktionary : BaseActivity(), EndlessListener {
     private var wikiLangDao: WikiLangDao? = null
@@ -114,6 +116,7 @@ class Spell4Wiktionary : BaseActivity(), EndlessListener {
         recyclerView.setListener(this)
         recyclerView.makeVisible()
         refreshLayout.setOnRefreshListener { loadDataFromServer() }
+        loadCategoriesData()
     }
 
     private fun setupFilterWordOption() {
@@ -483,5 +486,45 @@ class Spell4Wiktionary : BaseActivity(), EndlessListener {
         if (adapter.itemCount > 0) {
             this.showConfirmBackDialog { super.onBackPressed() }
         } else super.onBackPressed()
+    }
+
+    private fun loadCategoriesData() {
+        val categoryDataList = pref.getWordsCategoryList(languageCode)
+        val spinnerAdapter = ArrayAdapter(applicationContext, R.layout.item_category, categoryDataList.toTypedArray())
+        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        spinnerCategory.adapter = spinnerAdapter
+        spinnerCategory.onItemSelectedListener = object: AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, pos: Int, id: Long) {
+                val item = parent?.getItemAtPosition(pos)?.toString();
+                SnackBarUtils.showLong(spinnerCategory, "$item")
+            }
+
+            override fun onNothingSelected(p0: AdapterView<*>?) {}
+        }
+
+        btnAddCategory.setOnClickListener {
+            showWordCategoryInputDialog()
+        }
+    }
+
+    private fun showWordCategoryInputDialog() {
+        val builder = AlertDialog.Builder(this@Spell4Wiktionary)
+        builder.setTitle("Enter valid words category")
+        val input = EditText(this@Spell4Wiktionary)
+        input.inputType = InputType.TYPE_CLASS_TEXT
+        builder.setView(input)
+        builder.setPositiveButton("OK") { _, which -> setUpCategoryData(input.text?.toString()) }
+        builder.setNegativeButton(
+            "Cancel"
+        ) { dialog, which -> dialog.cancel() }
+        builder.show()
+    }
+
+    private fun setUpCategoryData(category: String?) {
+        if (category?.makeNullIfEmpty() != null) {
+            val catList: MutableList<String> = pref.getWordsCategoryList(languageCode)
+            catList.add(category)
+            pref.setWordsCategoryList(languageCode, catList.toMutableSet())
+        }
     }
 }

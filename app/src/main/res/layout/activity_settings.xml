@@ -278,14 +278,14 @@
 
                 <SeekBar
                     android:id="@+id/seekBarRunFilterCount"
-                    android:max="100"
-                    android:progress="25"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
                     android:layout_marginTop="@dimen/space8dp"
-                    android:layout_width="match_parent"
                     android:layout_toStartOf="@+id/txtRfEndCount"
                     android:layout_toEndOf="@+id/txtRfStartCount"
-                    android:layout_height="wrap_content"/>
+                    android:max="100"
+                    android:progress="25" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/txtRfEndCount"

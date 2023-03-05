@@ -4,8 +4,8 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
-import com.manimarank.spell4wiki.ui.login.LoginActivity
 import com.manimarank.spell4wiki.data.auth.AccountUtils
+import com.manimarank.spell4wiki.ui.login.LoginActivity
 import com.manimarank.spell4wiki.utils.WikiLicense
 import com.manimarank.spell4wiki.utils.constants.AppConstants
 
@@ -129,6 +129,15 @@ class PrefManager(private val mContext: Context?) {
             editor.apply()
         }
 
+    fun getWordsCategoryList(langCode: String?): MutableList<String> {
+        return (pref.getStringSet(String.format(WORDS_CATEGORY_FOR_LANG, langCode ?: "ta"), null) ?: mutableSetOf()).toMutableList()
+    }
+
+    fun setWordsCategoryList(langCode: String?, categoryList: MutableSet<String>?) {
+        editor.putStringSet(String.format(WORDS_CATEGORY_FOR_LANG, langCode ?: "ta"), categoryList)
+        editor.apply()
+    }
+
     companion object {
         // shared pref
         private const val PREF_NAME = "spell4wiki_pref"
@@ -144,6 +153,7 @@ class PrefManager(private val mContext: Context?) {
         private const val LANGUAGE_CODE_WIKTIONARY = "language_code_wiktionary"
         private const val UPLOAD_AUDIO_LICENSE = "upload_audio_license"
         private const val RUN_FILTER_NO_OF_WORDS_TO_CHECK = "run_filter_no_of_words_to_check"
+        private const val WORDS_CATEGORY_FOR_LANG = "words_category_for_%s"
         private const val CSRF_TOKEN = "csrf_token"
         private const val COOKIE = "cookie"
     }
