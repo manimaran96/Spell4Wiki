@@ -20,14 +20,16 @@ object AppLanguageDialog {
     private val languageCodeList by lazy {
         arrayOf(
                 "en",
-                "ta"
+                "ta",
+                "kn"
         )
     }
 
     private val languageList by lazy {
         arrayOf(
                 "English",
-                "தமிழ்"
+                "தமிழ்",
+                "ಕನ್ನಡ"
         )
     }
 
