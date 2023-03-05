@@ -21,12 +21,15 @@
             android:id="@+id/search_bar"
             android:layout_width="match_parent"
             android:layout_height="@dimen/btn_height"
-            android:layout_margin="@dimen/space16dp"
-            app:searchIcon="@drawable/ic_info"
             android:layout_centerHorizontal="true"
-            android:queryHint="@string/search_on_wiktionary"
+            android:layout_marginStart="@dimen/space16dp"
+            android:layout_marginTop="@dimen/space16dp"
+            android:layout_marginEnd="@dimen/space16dp"
+            android:layout_marginBottom="@dimen/space16dp"
             android:background="@drawable/bg_line_border"
-            app:iconifiedByDefault="false"/>
+            android:queryHint="@string/search_on_wiktionary"
+            app:iconifiedByDefault="false"
+            app:searchIcon="@drawable/ic_info" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/txtNotFound"
