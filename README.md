@@ -31,7 +31,11 @@ Spell4Wiki also act as a Wiki-Dictionary (word meaning from Wiktionary).
    <kbd align="center">
 <p align="center">
 <img src="https://raw.githubusercontent.com/manimaran96/Spell4Wiki/master/files/assets/screenshots/spell4wiki_ui.gif" width="300"/></p></kbd>
-  
+
+## FOSSHack23 Contributions
+
+All our FOSS Hack 23 contributions are tracked in [S4W-FOSSHack23](https://github.com/manimaran96/Spell4Wiki/milestone/1) milestore
+
 ## Contribution
 
 Whether you have ideas, translations, design changes, bugs, code cleaning, or real heavy code changes, help is always welcome. The more is done the better it gets!
