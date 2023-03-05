@@ -42,21 +42,17 @@ class SettingsActivity : BaseActivity() {
         if (pref.isAnonymous == true) {
             txtTitleLicense.makeGone()
             layoutSpell4WikiLang.makeGone()
-//            layoutSpell4WordListLang.makeGone()
-//            layoutSpell4WordLang.makeGone()
             layoutLicenseOfUploadAudio.makeGone()
         }
-        updateLanguageView(txtSpell4WikiLang, pref.languageCodeSpell4Wikicontributelang)
-
-
+        updateLanguageView(txtSpell4WikiLang, pref.languageCodes4wContributelang)
         layoutSpell4WikiLang.setOnClickListener {
             val callback = object : OnLanguageSelectionListener {
                 override fun onCallBackListener(langCode: String?) {
-                    updateLanguageView(txtSpell4WikiLang, pref.languageCodeSpell4Wikicontributelang)
+                    updateLanguageView(txtSpell4WikiLang, pref.languageCodes4wContributelang)
                 }
             }
             val languageSelectionFragment = LanguageSelectionFragment(this)
-            languageSelectionFragment.init(callback, ListMode.SPELL_4_WIKI_CONTRIBUTION_LANGUAGE)
+            languageSelectionFragment.init(callback, ListMode.SPELL_4_WIKI_ALL)
             languageSelectionFragment.show(supportFragmentManager)
         }
 
@@ -93,10 +89,14 @@ class SettingsActivity : BaseActivity() {
         txtAppLanguage.text = getSelectedLanguage()
         layoutLanguageOfApp.setOnClickListener { show(this@SettingsActivity) }
 
-        txtRfCount.text = getString(R.string.run_filter_settings_count, pref.runFilterNumberOfWordsToCheck ?: AppConstants.RUN_FILTER_NO_OF_WORDS_CHECK_COUNT)
-        seekBarRunFilterCount.progress = pref.runFilterNumberOfWordsToCheck ?: AppConstants.RUN_FILTER_NO_OF_WORDS_CHECK_COUNT
+        txtRfCount.text = getString(R.string.run_filter_settings_count, pref.runFilterNumberOfWordsToCheck
+                ?: AppConstants.RUN_FILTER_NO_OF_WORDS_CHECK_COUNT)
+        seekBarRunFilterCount.progress = pref.runFilterNumberOfWordsToCheck
+                ?: AppConstants.RUN_FILTER_NO_OF_WORDS_CHECK_COUNT
         seekBarRunFilterCount.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
-            var finalProgress = pref.runFilterNumberOfWordsToCheck ?: AppConstants.RUN_FILTER_NO_OF_WORDS_CHECK_COUNT
+            var finalProgress = pref.runFilterNumberOfWordsToCheck
+                    ?: AppConstants.RUN_FILTER_NO_OF_WORDS_CHECK_COUNT
+
             override fun onProgressChanged(p0: SeekBar?, progress: Int, p2: Boolean) {
                 finalProgress = if (progress <= 0) 1 else progress
                 txtRfCount.text = getString(R.string.run_filter_settings_count, finalProgress)

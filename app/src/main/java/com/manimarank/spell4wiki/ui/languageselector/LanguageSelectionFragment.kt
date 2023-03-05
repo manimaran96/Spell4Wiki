@@ -90,7 +90,7 @@ class LanguageSelectionFragment(private val mActivity: Activity) : BottomSheetDi
                 when (listMode) {
 
                     ListMode.WIKTIONARY -> pref.languageCodeWiktionary = langCode
-                    ListMode.SPELL_4_WIKI_CONTRIBUTION_LANGUAGE -> pref.languageCodeSpell4Wikicontributelang = langCode
+                    ListMode.SPELL_4_WIKI_ALL -> pref.languageCodes4wContributelang = langCode
 
                     ListMode.TEMP -> {
                     }
@@ -138,7 +138,7 @@ class LanguageSelectionFragment(private val mActivity: Activity) : BottomSheetDi
         get() = when (listMode) {
 
             ListMode.WIKTIONARY -> pref.languageCodeWiktionary
-            ListMode.SPELL_4_WIKI_CONTRIBUTION_LANGUAGE -> pref.languageCodeSpell4Wikicontributelang
+            ListMode.SPELL_4_WIKI_ALL -> pref.languageCodes4wContributelang
 
             ListMode.TEMP -> null
             else -> null
@@ -148,7 +148,7 @@ class LanguageSelectionFragment(private val mActivity: Activity) : BottomSheetDi
             var info: String? = null
             when (listMode) {
 
-                                ListMode.SPELL_4_WIKI_CONTRIBUTION_LANGUAGE -> info = getString(R.string.Spell_4_wiktionary_Contribution)
+                                ListMode.SPELL_4_WIKI_ALL -> info = getString(R.string.Spell_4_wiktionary_Contribution)
 
                 ListMode.TEMP -> info = getString(R.string.temporary)
             }

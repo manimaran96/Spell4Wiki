@@ -8,7 +8,7 @@ android {
     defaultConfig {
         applicationId "com.manimarank.spell4wiki"
         vectorDrawables.useSupportLibrary = true
-        minSdkVersion 21
+        minSdkVersion 19
         targetSdkVersion 31
         versionName "1.2.3"
         versionCode 13

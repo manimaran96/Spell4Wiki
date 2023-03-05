@@ -82,7 +82,7 @@ class Spell4Wiktionary : BaseActivity(), EndlessListener {
         setContentView(R.layout.activity_spell_4_wiktionary)
         pref = PrefManager(applicationContext)
 //        languageCode = pref.languageCodeSpell4Wiki
-        languageCode = pref.languageCodeSpell4Wikicontributelang
+        languageCode = pref.languageCodes4wContributelang
 
         init()
         loadDataFromServer()
@@ -251,7 +251,7 @@ class Spell4Wiktionary : BaseActivity(), EndlessListener {
                         AppConstants.DEFAULT_TITLE_FOR_WITHOUT_AUDIO
                     languageCode = AppConstants.DEFAULT_LANGUAGE_CODE
                     invalidateOptionsMenu()
-                    pref.languageCodeSpell4Wikicontributelang = languageCode
+                    pref.languageCodes4wContributelang = languageCode
                 }
 
                 //wiktionaryTitleOfWordsWithoutAudio = "பகுப்பு:அரிசமய. உள்ள பக்கங்கள்"; // https://ta.wiktionary.org/wiki/பகுப்பு:சென்னைப்_பேரகரமுதலியின்_சொற்சுருக்கப்_பகுப்புகள்-தமிழ்
@@ -373,7 +373,7 @@ class Spell4Wiktionary : BaseActivity(), EndlessListener {
         }
         try {
             val languageSelectionFragment = LanguageSelectionFragment(this)
-            languageSelectionFragment.init(callback, ListMode.SPELL_4_WIKI_CONTRIBUTION_LANGUAGE)
+            languageSelectionFragment.init(callback, ListMode.SPELL_4_WIKI_ALL)
 
             languageSelectionFragment.show(supportFragmentManager)
         } catch (e: Exception) {

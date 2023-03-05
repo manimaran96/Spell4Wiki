@@ -44,17 +44,17 @@ class Spell4WordActivity : BaseActivity() {
         setContentView(R.layout.activity_spell_4_word)
         pref = PrefManager(this)
 //        languageCode = pref.languageCodeSpell4Word
-        languageCode = pref.languageCodeSpell4Wikicontributelang
+        languageCode = pref.languageCodes4wContributelang
         initUI()
     }
 
     private fun openWiktionaryPage(wordInfo: String) {
         val intent = Intent(applicationContext, CommonWebActivity::class.java)
-        val url = String.format(Urls.WIKTIONARY_WEB, pref.languageCodeSpell4Wikicontributelang, wordInfo)
+        val url = String.format(Urls.WIKTIONARY_WEB, pref.languageCodes4wContributelang, wordInfo)
         intent.putExtra(AppConstants.TITLE, wordInfo)
         intent.putExtra(AppConstants.URL, url)
         intent.putExtra(AppConstants.IS_WIKTIONARY_WORD, true)
-        intent.putExtra(AppConstants.LANGUAGE_CODE, pref.languageCodeSpell4Wikicontributelang)
+        intent.putExtra(AppConstants.LANGUAGE_CODE, pref.languageCodes4wContributelang)
         startActivity(intent)
     }
 
@@ -126,7 +126,7 @@ class Spell4WordActivity : BaseActivity() {
             }
         }
         val languageSelectionFragment = LanguageSelectionFragment(this)
-        languageSelectionFragment.init(callback, ListMode.SPELL_4_WIKI_CONTRIBUTION_LANGUAGE)
+        languageSelectionFragment.init(callback, ListMode.SPELL_4_WIKI_ALL)
         languageSelectionFragment.show(supportFragmentManager)
     }
 

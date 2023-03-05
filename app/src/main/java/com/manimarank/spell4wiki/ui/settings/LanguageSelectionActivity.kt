@@ -51,7 +51,7 @@ class LanguageSelectionActivity : BaseActivity() {
             }
         }
         val languageSelectionFragment = LanguageSelectionFragment(this)
-        languageSelectionFragment.init(callback, ListMode.SPELL_4_WIKI_CONTRIBUTION_LANGUAGE)
+        languageSelectionFragment.init(callback, ListMode.SPELL_4_WIKI_ALL)
         languageSelectionFragment.show(supportFragmentManager)
     }
     private fun openMainActivity() {
@@ -59,6 +59,3 @@ class LanguageSelectionActivity : BaseActivity() {
         finish()
     }
 }
-
-
-
