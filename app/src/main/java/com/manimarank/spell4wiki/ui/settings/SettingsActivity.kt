@@ -45,11 +45,11 @@ class SettingsActivity : BaseActivity() {
             layoutLicenseOfUploadAudio.makeGone()
             layoutRunFilter.makeGone()
         }
-        updateLanguageView(txtSpell4WikiLang, pref.languageCodes4wContributelang)
+        updateLanguageView(txtSpell4WikiLang, pref.languageCodeSpell4WikiAll)
         layoutSpell4WikiLang.setOnClickListener {
             val callback = object : OnLanguageSelectionListener {
                 override fun onCallBackListener(langCode: String?) {
-                    updateLanguageView(txtSpell4WikiLang, pref.languageCodes4wContributelang)
+                    updateLanguageView(txtSpell4WikiLang, pref.languageCodeSpell4WikiAll)
                 }
             }
             val languageSelectionFragment = LanguageSelectionFragment(this)

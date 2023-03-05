@@ -36,7 +36,7 @@
                 android:gravity="center_vertical"
                 android:maxLines="1"
                 android:textColor="@color/settings_label_text"
-                android:text="@string/Spell_4_wiktionary_Contribution"
+                android:text="@string/spell_4_wiki_all"
                 android:textSize="@dimen/text_normal" />
 
             <androidx.appcompat.widget.AppCompatTextView

@@ -17,7 +17,7 @@
 
     <!--Don't translate-->
     <string name="app_name" translatable="false">Spell4Wiki</string>
-    <string name="Spell_4_wiktionary_Contribution" translatable="false">Spell 4 wiktionary Contribution</string>
+    <string name="spell_4_wiki_all" translatable="false">Spell4wiki</string>
     <string name="spell4wiktionary" translatable="false">Spell for Wiktionary</string>
     <string name="spell4wordlist" translatable="false">Spell for WordList</string>
     <string name="spell4word" translatable="false">Spell for Word</string>

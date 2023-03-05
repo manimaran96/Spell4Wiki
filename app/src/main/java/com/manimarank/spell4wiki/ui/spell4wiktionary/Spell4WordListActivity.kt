@@ -66,7 +66,7 @@ class Spell4WordListActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_spell_4_wordlist)
         pref = PrefManager(applicationContext)
-        languageCode = pref.languageCodes4wContributelang
+        languageCode = pref.languageCodeSpell4WikiAll
         initUI()
     }
 

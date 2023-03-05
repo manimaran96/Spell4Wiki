@@ -88,10 +88,7 @@ class LanguageSelectionFragment(private val mActivity: Activity) : BottomSheetDi
         val languageSelectionListener = object : OnLanguageSelectionListener {
             override fun onCallBackListener(langCode: String?) {
                 when (listMode) {
-
-                    ListMode.WIKTIONARY -> pref.languageCodeWiktionary = langCode
-                    ListMode.SPELL_4_WIKI_ALL -> pref.languageCodes4wContributelang = langCode
-
+                    ListMode.SPELL_4_WIKI_ALL -> pref.languageCodeSpell4WikiAll = langCode
                     ListMode.TEMP -> {
                     }
                 }
@@ -136,10 +133,7 @@ class LanguageSelectionFragment(private val mActivity: Activity) : BottomSheetDi
 
     private val existingLanguageCode: String?
         get() = when (listMode) {
-
-            ListMode.WIKTIONARY -> pref.languageCodeWiktionary
-            ListMode.SPELL_4_WIKI_ALL -> pref.languageCodes4wContributelang
-
+            ListMode.SPELL_4_WIKI_ALL -> pref.languageCodeSpell4WikiAll
             ListMode.TEMP -> null
             else -> null
         }
@@ -147,9 +141,7 @@ class LanguageSelectionFragment(private val mActivity: Activity) : BottomSheetDi
         get() {
             var info: String? = null
             when (listMode) {
-
-                                ListMode.SPELL_4_WIKI_ALL -> info = getString(R.string.Spell_4_wiktionary_Contribution)
-
+                ListMode.SPELL_4_WIKI_ALL -> info = getString(R.string.spell_4_wiki_all)
                 ListMode.TEMP -> info = getString(R.string.temporary)
             }
             if (info != null) {

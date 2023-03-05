@@ -43,18 +43,17 @@ class Spell4WordActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_spell_4_word)
         pref = PrefManager(this)
-//        languageCode = pref.languageCodeSpell4Word
-        languageCode = pref.languageCodes4wContributelang
+        languageCode = pref.languageCodeSpell4WikiAll
         initUI()
     }
 
     private fun openWiktionaryPage(wordInfo: String) {
         val intent = Intent(applicationContext, CommonWebActivity::class.java)
-        val url = String.format(Urls.WIKTIONARY_WEB, pref.languageCodes4wContributelang, wordInfo)
+        val url = String.format(Urls.WIKTIONARY_WEB, pref.languageCodeSpell4WikiAll, wordInfo)
         intent.putExtra(AppConstants.TITLE, wordInfo)
         intent.putExtra(AppConstants.URL, url)
         intent.putExtra(AppConstants.IS_WIKTIONARY_WORD, true)
-        intent.putExtra(AppConstants.LANGUAGE_CODE, pref.languageCodes4wContributelang)
+        intent.putExtra(AppConstants.LANGUAGE_CODE, pref.languageCodeSpell4WikiAll)
         startActivity(intent)
     }
 

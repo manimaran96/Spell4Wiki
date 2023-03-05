@@ -63,7 +63,7 @@ object ApiClient {
 
     private fun getWiktionaryApiUrl(langCode: String): String {
         return String.format(Urls.WIKTIONARY, langCode.makeNullIfEmpty()
-                ?: pref?.languageCodes4wContributelang)
+                ?: pref?.languageCodeSpell4WikiAll)
     }
 
 

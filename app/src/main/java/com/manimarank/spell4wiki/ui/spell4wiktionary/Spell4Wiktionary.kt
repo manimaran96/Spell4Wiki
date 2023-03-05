@@ -83,9 +83,7 @@ class Spell4Wiktionary : BaseActivity(), EndlessListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_spell_4_wiktionary)
         pref = PrefManager(applicationContext)
-//        languageCode = pref.languageCodeSpell4Wiki
-        languageCode = pref.languageCodes4wContributelang
-
+        languageCode = pref.languageCodeSpell4WikiAll
         init()
         loadDataFromServer()
     }
@@ -512,14 +510,22 @@ class Spell4Wiktionary : BaseActivity(), EndlessListener {
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinnerCategory.adapter = spinnerAdapter
         wiktionaryTitleOfWordsWithoutAudio = categoryDataList.first()
-        spinnerCategory.onItemSelectedListener = object: AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, pos: Int, id: Long) {
-                wiktionaryTitleOfWordsWithoutAudio = parent?.getItemAtPosition(pos)?.toString()
-                nextOffsetObj = null
-                recyclerView?.reset()
-                loadDataFromServer()
+        if (categoryDataList.isNotEmpty()) {
+            spinnerCategory.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: AdapterView<*>?,
+                    view: View?,
+                    pos: Int,
+                    id: Long
+                ) {
+                    wiktionaryTitleOfWordsWithoutAudio = parent?.getItemAtPosition(pos)?.toString()
+                    nextOffsetObj = null
+                    recyclerView?.reset()
+                    loadDataFromServer()
+                }
+
+                override fun onNothingSelected(p0: AdapterView<*>?) {}
             }
-            override fun onNothingSelected(p0: AdapterView<*>?) {}
         }
     }
 

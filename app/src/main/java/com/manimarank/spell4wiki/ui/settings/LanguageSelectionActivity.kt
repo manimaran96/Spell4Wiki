@@ -3,6 +3,8 @@ package com.manimarank.spell4wiki.ui.settings
 import android.content.Intent
 import android.os.Bundle
 import com.manimarank.spell4wiki.R
+import com.manimarank.spell4wiki.data.db.DBHelper
+import com.manimarank.spell4wiki.data.db.dao.WikiLangDao
 import com.manimarank.spell4wiki.data.prefs.PrefManager
 import com.manimarank.spell4wiki.ui.appintro.AppIntroActivity
 import com.manimarank.spell4wiki.ui.common.BaseActivity
@@ -16,7 +18,7 @@ import kotlinx.android.synthetic.main.bottom_sheet_language_selection.btnAddMyLa
 import kotlinx.android.synthetic.main.bottom_sheet_language_selection.txtAddLangInfo
 
 class LanguageSelectionActivity : BaseActivity() {
-    var spellforwiki :Spell4Wiktionary = Spell4Wiktionary();
+
     private lateinit var pref: PrefManager
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,22 +34,23 @@ class LanguageSelectionActivity : BaseActivity() {
             contributionLang()
         }
     }
-    private fun contributionLang(){
+    var wikiLangDao: WikiLangDao? = null;
+    private fun contributionLang() {
+        wikiLangDao = DBHelper.getInstance(applicationContext).appDatabase.wikiLangDao
         setContentView(R.layout.contribution_language_selection)
-        txtAddLangInfo.text = String.format(getString(R.string.choose_your_preferred_contribution_language), AppLanguageDialog.getSelectedLanguage())
+        txtAddLangInfo.text = String.format(getString(R.string.choose_your_preferred_contribution_language), wikiLangDao?.getWikiLanguageWithCode(pref.languageCodeSpell4WikiAll)?.name ?: "")
 
         btnAddMyLanguage.setOnClickListener { loadLanguages() }
 
         btnNext.setOnClickListener {
             openMainActivity()
-
         }
     }
 
     private fun loadLanguages() {
         val callback = object : OnLanguageSelectionListener {
             override fun onCallBackListener(langCode: String?) {
-
+                txtAddLangInfo.text = String.format(getString(R.string.choose_your_preferred_contribution_language), wikiLangDao?.getWikiLanguageWithCode(pref.languageCodeSpell4WikiAll)?.name ?: "")
             }
         }
         val languageSelectionFragment = LanguageSelectionFragment(this)

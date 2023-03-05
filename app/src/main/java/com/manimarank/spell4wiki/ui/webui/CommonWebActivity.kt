@@ -32,7 +32,7 @@ class CommonWebActivity : BaseActivity() {
         setContentView(R.layout.activity_common_web_view)
 
         val pref = PrefManager(applicationContext)
-        languageCode = pref.languageCodeWiktionary
+        languageCode = pref.languageCodeSpell4WikiAll
         wikiLangDao = DBHelper.getInstance(applicationContext).appDatabase.wikiLangDao
 
         // Title & Sub title
