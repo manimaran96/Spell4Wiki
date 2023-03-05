@@ -43,6 +43,7 @@ class SettingsActivity : BaseActivity() {
             txtTitleLicense.makeGone()
             layoutSpell4WikiLang.makeGone()
             layoutLicenseOfUploadAudio.makeGone()
+            layoutRunFilter.makeGone()
         }
         updateLanguageView(txtSpell4WikiLang, pref.languageCodes4wContributelang)
         layoutSpell4WikiLang.setOnClickListener {

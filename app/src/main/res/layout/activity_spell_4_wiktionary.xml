@@ -12,6 +12,58 @@
 
     <include layout="@layout/layout_run_filter_action" />
 
+    <LinearLayout
+        android:layout_margin="@dimen/space8dp"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="Words category:"
+            android:textStyle="bold"
+            android:layout_marginBottom="5dp" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.appcompat.widget.AppCompatSpinner
+                android:id="@+id/spinnerCategory"
+                android:background="@drawable/bg_line_border"
+                android:layout_width="fill_parent"
+                android:minHeight="40dp"
+                android:layout_toStartOf="@+id/btnAddCategory"
+                android:layout_height="wrap_content" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/imgDropDownArrow"
+                android:layout_width="24dp"
+                app:srcCompat="@drawable/ic_play"
+                app:tint="@color/gray"
+                android:rotation="90"
+                android:layout_toStartOf="@+id/btnAddCategory"
+                android:layout_marginStart="@dimen/space2dp"
+                android:layout_marginEnd="@dimen/space2dp"
+                android:layout_centerVertical="true"
+                android:layout_height="24dp"/>
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/btnAddCategory"
+                android:layout_width="32dp"
+                app:srcCompat="@drawable/ic_add"
+                app:tint="@color/gray"
+                android:layout_marginStart="@dimen/space8dp"
+                android:layout_marginEnd="@dimen/space2dp"
+                android:layout_centerVertical="true"
+                android:layout_alignParentEnd="true"
+                android:layout_height="32dp"/>
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/refreshLayout"
         android:layout_width="match_parent"
