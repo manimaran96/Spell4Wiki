@@ -19,12 +19,15 @@ import com.manimarank.spell4wiki.ui.dialogs.AppLanguageDialog.getSelectedLanguag
 import com.manimarank.spell4wiki.ui.dialogs.AppLanguageDialog.show
 import com.manimarank.spell4wiki.ui.languageselector.LanguageSelectionFragment
 import com.manimarank.spell4wiki.ui.listerners.OnLanguageSelectionListener
+import com.manimarank.spell4wiki.ui.recordaudio.RecordAudioActivity
 import com.manimarank.spell4wiki.utils.WikiLicense
 import com.manimarank.spell4wiki.utils.WikiLicense.licenseNameId
 import com.manimarank.spell4wiki.utils.WikiLicense.licenseUrlFor
 import com.manimarank.spell4wiki.utils.constants.AppConstants
 import com.manimarank.spell4wiki.utils.constants.ListMode
+import com.manimarank.spell4wiki.utils.extensions.showLicenseChooseDialog
 import com.manimarank.spell4wiki.utils.makeGone
+import kotlinx.android.synthetic.main.activity_record_audio_pop_up.*
 import kotlinx.android.synthetic.main.activity_settings.*
 import java.util.*
 
@@ -59,34 +62,14 @@ class SettingsActivity : BaseActivity() {
 
 
         updateLicenseView(txtLicenseOfUploadAudio, txtLicenseOfUploadAudioLegalCode)
+
+
+
         layoutLicenseOfUploadAudio.setOnClickListener {
-            // setup the alert builder
-            val builder = AlertDialog.Builder(this)
-            builder.setTitle(R.string.license_choose_alert) // add a radio button list
-            val licensePrefList = arrayOf(
-                    WikiLicense.LicensePrefs.CC_0,
-                    WikiLicense.LicensePrefs.CC_BY_3,
-                    WikiLicense.LicensePrefs.CC_BY_SA_3,
-                    WikiLicense.LicensePrefs.CC_BY_4,
-                    WikiLicense.LicensePrefs.CC_BY_SA_4
-            )
-            val licenseList = arrayOf(
-                    getString(R.string.license_name_cc_zero),
-                    getString(R.string.license_name_cc_by_three),
-                    getString(R.string.license_name_cc_by_sa_three),
-                    getString(R.string.license_name_cc_by_four),
-                    getString(R.string.license_name_cc_by_sa_four)
-            )
-            val checkedItem = licensePrefList.indexOf(pref.uploadAudioLicense)
-            builder.setSingleChoiceItems(licenseList, checkedItem) { dialog: DialogInterface, which: Int ->
-                pref.uploadAudioLicense = licensePrefList[which]
+            showLicenseChooseDialog {
                 updateLicenseView(txtLicenseOfUploadAudio, txtLicenseOfUploadAudioLegalCode)
-                dialog.dismiss()
-            }
-            builder.setNegativeButton(getString(R.string.cancel), null)
-            val dialog = builder.create()
-            dialog.show()
-        }
+            } }
+
         txtAppLanguage.text = getSelectedLanguage()
         layoutLanguageOfApp.setOnClickListener { show(this@SettingsActivity) }
 

@@ -2,6 +2,8 @@ package com.manimarank.spell4wiki.ui.recordaudio
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.content.Intent
 import android.content.res.Configuration
 import android.os.Build
@@ -9,13 +11,16 @@ import android.os.Bundle
 import android.os.CountDownTimer
 import android.os.Handler
 import android.text.TextUtils
+import android.text.method.LinkMovementMethod
 import android.view.MotionEvent
 import android.view.View
 import android.webkit.MimeTypeMap
 import android.widget.SeekBar
 import android.widget.SeekBar.OnSeekBarChangeListener
+import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
+import androidx.core.text.HtmlCompat
 import androidx.interpolator.view.animation.FastOutSlowInInterpolator
 import com.google.gson.Gson
 import com.manimarank.spell4wiki.R
@@ -40,6 +45,7 @@ import com.manimarank.spell4wiki.record.ogg.WavToOggConverter
 import com.manimarank.spell4wiki.record.wav.WAVPlayer
 import com.manimarank.spell4wiki.record.wav.WAVRecorder
 import com.manimarank.spell4wiki.ui.common.BaseActivity
+import com.manimarank.spell4wiki.ui.dialogs.AppLanguageDialog
 import com.manimarank.spell4wiki.ui.recordaudio.WikiDataUtils.getUploadName
 import com.manimarank.spell4wiki.ui.settings.SettingsActivity
 import com.manimarank.spell4wiki.utils.DateUtils.DF_YYYY_MM_DD
@@ -53,6 +59,7 @@ import com.manimarank.spell4wiki.utils.Print.error
 import com.manimarank.spell4wiki.utils.Print.log
 import com.manimarank.spell4wiki.utils.RealPathUtil
 import com.manimarank.spell4wiki.utils.ToastUtils.showLong
+import com.manimarank.spell4wiki.utils.WikiLicense
 import com.manimarank.spell4wiki.utils.WikiLicense.getLicenseTemplateInWiki
 import com.manimarank.spell4wiki.utils.WikiLicense.licenseNameId
 import com.manimarank.spell4wiki.utils.constants.AppConstants
@@ -60,7 +67,9 @@ import com.manimarank.spell4wiki.utils.constants.AppConstants.MAX_RETRIES_FOR_CS
 import com.manimarank.spell4wiki.utils.constants.AppConstants.MAX_RETRIES_FOR_FORCE_LOGIN
 import com.manimarank.spell4wiki.utils.constants.AppConstants.RC_EDIT_REQUEST_CODE
 import com.manimarank.spell4wiki.utils.constants.AppConstants.RC_LICENCE_CHANGE
+import com.manimarank.spell4wiki.utils.extensions.showLicenseChooseDialog
 import kotlinx.android.synthetic.main.activity_record_audio_pop_up.*
+import kotlinx.android.synthetic.main.activity_settings.*
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -128,9 +137,21 @@ class RecordAudioActivity : BaseActivity() {
         txtDuration.text = getDurationValue(0)
         checkboxDeclaration.text = String.format(getString(R.string.declaration_note), getString(licenseNameId(pref.uploadAudioLicense)))
 
+
+
         btnSettings.setOnClickListener {
-            startActivityForResult(Intent(applicationContext, SettingsActivity::class.java), RC_LICENCE_CHANGE)
+            showLicenseChooseDialog({
+                checkboxDeclaration.text = String.format(getString(R.string.declaration_note), getString(licenseNameId(pref.uploadAudioLicense)))
+            })
+
         }
+
+
+
+//        btnSettings.setOnClickListener {
+//
+//            startActivityForResult(Intent(applicationContext, SettingsActivity::class.java), RC_LICENCE_CHANGE)
+//        }
 
         // Set 10 sec only for recording
         countDownTimer = object : CountDownTimer(AppConstants.MAX_SEC_FOR_RECORDING * 1000, 1000) {
