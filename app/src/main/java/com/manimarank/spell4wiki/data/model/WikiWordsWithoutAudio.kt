@@ -13,7 +13,9 @@ data class WikiWordsWithoutAudio(
     @SerializedName("continue")
     var offset: OffsetWords? = null,
     @SerializedName("query")
-    var query: QueryWords? = null
+    var query: QueryWords? = null,
+    @SerializedName("error")
+    var error: WikiError? = null
 )
 
 /**
