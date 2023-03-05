@@ -45,6 +45,7 @@ class SettingsActivity : BaseActivity() {
             layoutSpell4WordListLang.makeGone()
             layoutSpell4WordLang.makeGone()
             layoutLicenseOfUploadAudio.makeGone()
+            layoutRunFilter.makeGone()
         }
         updateLanguageView(txtSpell4WikiLang, pref.languageCodeSpell4Wiki)
         updateLanguageView(txtSpell4WordListLang, pref.languageCodeSpell4WordList)
