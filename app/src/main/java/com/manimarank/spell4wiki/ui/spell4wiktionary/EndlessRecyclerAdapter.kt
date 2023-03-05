@@ -168,10 +168,12 @@ class EndlessRecyclerAdapter(
 
     private val languageCode: String?
         get() = when (mode) {
-            ListMode.SPELL_4_WIKI -> pref.languageCodeSpell4Wiki
-            ListMode.SPELL_4_WORD_LIST -> pref.languageCodeSpell4WordList
-            ListMode.SPELL_4_WORD -> pref.languageCodeSpell4Word
+//            ListMode.SPELL_4_WIKI -> pref.languageCodeSpell4Wiki
+//            ListMode.SPELL_4_WORD_LIST -> pref.languageCodeSpell4WordList
+//            ListMode.SPELL_4_WORD -> pref.languageCodeSpell4Word
             ListMode.WIKTIONARY -> pref.languageCodeWiktionary
+            ListMode.SPELL_4_WIKI_ALL -> pref.languageCodes4wContributelang
+
             ListMode.TEMP -> null
             else -> null
         }

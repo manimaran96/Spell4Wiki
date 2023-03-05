@@ -83,7 +83,9 @@ class Spell4Wiktionary : BaseActivity(), EndlessListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_spell_4_wiktionary)
         pref = PrefManager(applicationContext)
-        languageCode = pref.languageCodeSpell4Wiki
+//        languageCode = pref.languageCodeSpell4Wiki
+        languageCode = pref.languageCodes4wContributelang
+
         init()
         loadDataFromServer()
     }
@@ -378,7 +380,8 @@ class Spell4Wiktionary : BaseActivity(), EndlessListener {
         }
         try {
             val languageSelectionFragment = LanguageSelectionFragment(this)
-            languageSelectionFragment.init(callback, ListMode.SPELL_4_WIKI)
+            languageSelectionFragment.init(callback, ListMode.SPELL_4_WIKI_ALL)
+
             languageSelectionFragment.show(supportFragmentManager)
         } catch (e: Exception) {
             e.printStackTrace()

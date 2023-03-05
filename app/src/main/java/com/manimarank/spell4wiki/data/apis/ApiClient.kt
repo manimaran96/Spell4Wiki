@@ -49,6 +49,7 @@ object ApiClient {
                 .build()
     }
 
+
     val api: Retrofit
         get() {
             if (retrofitApi == null) {
@@ -61,8 +62,10 @@ object ApiClient {
         }
 
     private fun getWiktionaryApiUrl(langCode: String): String {
-        return String.format(Urls.WIKTIONARY, langCode.makeNullIfEmpty() ?: pref?.languageCodeSpell4Wiki)
+        return String.format(Urls.WIKTIONARY, langCode.makeNullIfEmpty()
+                ?: pref?.languageCodes4wContributelang)
     }
+
 
     private fun getOkHttpClient(context: Context): OkHttpClient {
         pref = PrefManager(context)
