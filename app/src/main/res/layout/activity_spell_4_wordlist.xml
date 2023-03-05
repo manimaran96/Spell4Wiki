@@ -186,12 +186,24 @@
 
     </RelativeLayout>
 
-    <com.manimarank.spell4wiki.ui.custom.EndlessRecyclerView
-        android:id="@+id/recyclerView"
+    <LinearLayout
+        android:id="@+id/layoutList"
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:divider="@null"
-        android:visibility="gone" />
+        android:visibility="gone"
+        android:layout_height="wrap_content">
+
+        <include layout="@layout/layout_run_filter_action"/>
+
+        <com.manimarank.spell4wiki.ui.custom.EndlessRecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:divider="@null" />
+
+    </LinearLayout>
+
+
 
     <include layout="@layout/empty_state_ui"
         android:visibility="gone"/>

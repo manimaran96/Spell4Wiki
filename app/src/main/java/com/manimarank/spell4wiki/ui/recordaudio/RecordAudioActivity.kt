@@ -125,7 +125,7 @@ class RecordAudioActivity : BaseActivity() {
         wikiLangDao = DBHelper.getInstance(applicationContext).appDatabase.wikiLangDao
         wordsHaveAudioDao = DBHelper.getInstance(applicationContext).appDatabase.wordsHaveAudioDao
 
-        langCode = intent?.extras?.getString(AppConstants.LANGUAGE_CODE, pref.languageCodeSpell4Wiki)
+        langCode = intent?.extras?.getString(AppConstants.LANGUAGE_CODE, pref.languageCodeSpell4WikiAll)
         word = intent?.extras?.getString(AppConstants.WORD, "")
         
         api = getCommonsApi(applicationContext).create(ApiInterface::class.java)

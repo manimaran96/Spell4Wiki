@@ -6,11 +6,12 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
+import android.text.InputType
 import android.text.TextUtils
-import android.view.Menu
-import android.view.MenuItem
-import android.view.View
-import android.view.Window
+import android.view.*
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.EditText
 import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
 import androidx.interpolator.view.animation.FastOutSlowInInterpolator
@@ -34,7 +35,7 @@ import com.manimarank.spell4wiki.data.prefs.ShowCasePref.isNotShowed
 import com.manimarank.spell4wiki.data.prefs.ShowCasePref.showed
 import com.manimarank.spell4wiki.ui.common.BaseActivity
 import com.manimarank.spell4wiki.ui.custom.EndlessRecyclerView.EndlessListener
-import com.manimarank.spell4wiki.ui.dialogs.CommonDialog.openInfoDialog
+import com.manimarank.spell4wiki.ui.dialogs.CommonDialog.openRunFilterInfoDialog
 import com.manimarank.spell4wiki.ui.dialogs.showConfirmBackDialog
 import com.manimarank.spell4wiki.ui.languageselector.LanguageSelectionFragment
 import com.manimarank.spell4wiki.ui.listerners.OnLanguageSelectionListener
@@ -42,8 +43,10 @@ import com.manimarank.spell4wiki.utils.*
 import com.manimarank.spell4wiki.utils.NetworkUtils.isConnected
 import com.manimarank.spell4wiki.utils.constants.AppConstants
 import com.manimarank.spell4wiki.utils.constants.ListMode
+import com.manimarank.spell4wiki.utils.extensions.makeNullIfEmpty
 import kotlinx.android.synthetic.main.activity_spell_4_wiktionary.*
 import kotlinx.android.synthetic.main.empty_state_ui.*
+import kotlinx.android.synthetic.main.layout_run_filter_action.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -52,6 +55,7 @@ import uk.co.samuelwall.materialtaptargetprompt.MaterialTapTargetSequence
 import uk.co.samuelwall.materialtaptargetprompt.extras.focals.RectanglePromptFocal
 import java.util.*
 import java.util.concurrent.TimeUnit
+
 
 class Spell4Wiktionary : BaseActivity(), EndlessListener {
     private var wikiLangDao: WikiLangDao? = null
@@ -79,7 +83,7 @@ class Spell4Wiktionary : BaseActivity(), EndlessListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_spell_4_wiktionary)
         pref = PrefManager(applicationContext)
-        languageCode = pref.languageCodeSpell4Wiki
+        languageCode = pref.languageCodeSpell4WikiAll
         init()
         loadDataFromServer()
     }
@@ -112,6 +116,7 @@ class Spell4Wiktionary : BaseActivity(), EndlessListener {
         recyclerView.setListener(this)
         recyclerView.makeVisible()
         refreshLayout.setOnRefreshListener { loadDataFromServer() }
+        loadCategoriesData()
     }
 
     private fun setupFilterWordOption() {
@@ -161,9 +166,7 @@ class Spell4Wiktionary : BaseActivity(), EndlessListener {
                 SnackBarUtils.showLong(recyclerView, getString(R.string.no_words_scroll_to_get_new_words))
         }
 
-        btnRunFilterInfo.setOnClickListener {
-            this.openInfoDialog(getString(R.string.run_filter_use) , getString(R.string.run_filter_info))
-        }
+        btnRunFilterInfo.setOnClickListener { this.openRunFilterInfoDialog() }
     }
 
     private fun getFilterText(word: String?): String {
@@ -193,14 +196,17 @@ class Spell4Wiktionary : BaseActivity(), EndlessListener {
 
                 /*
                  * Set basic information on both very first time and after language change
-                 */if (nextOffsetObj == null) {
-                    if (!refreshLayout.isRefreshing) refreshLayout.isRefreshing = true
+                 */
+                if (nextOffsetObj == null) {
+                    if (!refreshLayout.isRefreshing)
+                        refreshLayout.isRefreshing = true
                     resetApiResultTime()
                     apiFailRetryCount = 0
-                    if (recyclerView != null) recyclerView.reset()
+                    recyclerView?.reset()
                     val wikiLang = wikiLangDao?.getWikiLanguageWithCode(languageCode)
-                    if (wikiLang != null && !TextUtils.isEmpty(wikiLang.titleOfWordsWithoutAudio))
+                    if (wikiLang != null && !TextUtils.isEmpty(wikiLang.titleOfWordsWithoutAudio) && wiktionaryTitleOfWordsWithoutAudio?.makeNullIfEmpty() == null)
                         wiktionaryTitleOfWordsWithoutAudio = wikiLang.titleOfWordsWithoutAudio
+
                     wordsListAlreadyHaveAudio.clear()
                     wordsHaveAudioDao?.getWordsAlreadyHaveAudioByLanguage(languageCode)?.forEach { word ->
                         wordsListAlreadyHaveAudio.add(word)
@@ -245,17 +251,16 @@ class Spell4Wiktionary : BaseActivity(), EndlessListener {
 
                 // DB Clear or Sync Issue
                 if (wiktionaryTitleOfWordsWithoutAudio == null) {
-                    wiktionaryTitleOfWordsWithoutAudio =
-                        AppConstants.DEFAULT_TITLE_FOR_WITHOUT_AUDIO
-                    languageCode = AppConstants.DEFAULT_LANGUAGE_CODE
-                    invalidateOptionsMenu()
-                    pref.languageCodeSpell4Wiki = languageCode
+                    //wiktionaryTitleOfWordsWithoutAudio = AppConstants.DEFAULT_TITLE_FOR_WITHOUT_AUDIO
+                    //languageCode = AppConstants.DEFAULT_LANGUAGE_CODE
+                    //invalidateOptionsMenu()
+                    //pref.languageCodeSpell4Wiki = languageCode
                 }
 
                 //wiktionaryTitleOfWordsWithoutAudio = "பகுப்பு:அரிசமய. உள்ள பக்கங்கள்"; // https://ta.wiktionary.org/wiki/பகுப்பு:சென்னைப்_பேரகரமுதலியின்_சொற்சுருக்கப்_பகுப்புகள்-தமிழ்
                 val api = getWiktionaryApi(applicationContext, languageCode ?: AppConstants.DEFAULT_LANGUAGE_CODE).create(ApiInterface::class.java)
                 val call = api.fetchUnAudioRecords(
-                    wiktionaryTitleOfWordsWithoutAudio,
+                    wiktionaryTitleOfWordsWithoutAudio ?: "null",
                     nextOffsetObj,
                     getFetchLimit(),
                     getFetchBy(),
@@ -266,9 +271,10 @@ class Spell4Wiktionary : BaseActivity(), EndlessListener {
                         call: Call<WikiWordsWithoutAudio?>,
                         response: Response<WikiWordsWithoutAudio?>
                     ) {
-                        if (response.isSuccessful && response.body() != null) {
+                        if (response.isSuccessful && response.body() != null && response.body()?.error == null) {
                             processSearchResultAudio(response.body())
-                        } else searchFailed(getString(R.string.something_went_wrong))
+                        } else
+                            searchFailed(response?.body()?.error?.info ?: getString(R.string.something_went_wrong))
                     }
 
                     override fun onFailure(call: Call<WikiWordsWithoutAudio?>, t: Throwable) {
@@ -365,13 +371,15 @@ class Spell4Wiktionary : BaseActivity(), EndlessListener {
                     invalidateOptionsMenu()
                     recyclerView.reset()
                     nextOffsetObj = null
+                    loadCategoriesData()
                     loadDataFromServer()
                 }
             }
         }
         try {
             val languageSelectionFragment = LanguageSelectionFragment(this)
-            languageSelectionFragment.init(callback, ListMode.SPELL_4_WIKI)
+            languageSelectionFragment.init(callback, ListMode.SPELL_4_WIKI_ALL)
+
             languageSelectionFragment.show(supportFragmentManager)
         } catch (e: Exception) {
             e.printStackTrace()
@@ -483,5 +491,65 @@ class Spell4Wiktionary : BaseActivity(), EndlessListener {
         if (adapter.itemCount > 0) {
             this.showConfirmBackDialog { super.onBackPressed() }
         } else super.onBackPressed()
+    }
+
+    private fun loadCategoriesData() {
+        val categoryTitleFromApi: String? = wikiLangDao?.getWikiLanguageWithCode(languageCode)?.titleOfWordsWithoutAudio
+        var categoryDataList = pref.getWordsCategoryList(languageCode)
+        if (categoryTitleFromApi?.makeNullIfEmpty() != null && !categoryDataList.contains(categoryTitleFromApi))
+            setUpCategoryData(categoryTitleFromApi)
+        categoryDataList = pref.getWordsCategoryList(languageCode)
+        setupCategorySpinnerData(categoryDataList)
+        btnAddCategory.setOnClickListener {
+            showWordCategoryInputDialog()
+        }
+    }
+
+    private fun setupCategorySpinnerData(categoryDataList: MutableList<String>) {
+        val spinnerAdapter = ArrayAdapter(applicationContext, R.layout.item_category, categoryDataList.toTypedArray())
+        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        spinnerCategory.adapter = spinnerAdapter
+        wiktionaryTitleOfWordsWithoutAudio = categoryDataList.firstOrNull()
+        if (categoryDataList.isNotEmpty()) {
+            spinnerCategory.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: AdapterView<*>?,
+                    view: View?,
+                    pos: Int,
+                    id: Long
+                ) {
+                    wiktionaryTitleOfWordsWithoutAudio = parent?.getItemAtPosition(pos)?.toString()
+                    nextOffsetObj = null
+                    recyclerView?.reset()
+                    loadDataFromServer()
+                }
+
+                override fun onNothingSelected(p0: AdapterView<*>?) {}
+            }
+        }
+    }
+
+    private fun showWordCategoryInputDialog() {
+        val builder = AlertDialog.Builder(this@Spell4Wiktionary)
+        builder.setTitle("Enter valid words category")
+        val input = EditText(this@Spell4Wiktionary)
+        input.inputType = InputType.TYPE_CLASS_TEXT
+        builder.setView(input)
+        builder.setPositiveButton("Add") { _, which -> setUpCategoryData(input.text?.toString(), refreshSpinner = true) }
+        builder.setNegativeButton(
+            "Cancel"
+        ) { dialog, which -> dialog.cancel() }
+        builder.show()
+    }
+
+    private fun setUpCategoryData(category: String?, refreshSpinner: Boolean = false) {
+        if (category?.makeNullIfEmpty() != null) {
+            val catList: MutableList<String> = pref.getWordsCategoryList(languageCode)
+            catList.add(category)
+            pref.setWordsCategoryList(languageCode, catList.toMutableSet())
+            if (refreshSpinner) {
+               setupCategorySpinnerData(catList)
+            }
+        }
     }
 }

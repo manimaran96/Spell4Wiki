@@ -10,6 +10,7 @@ class ListMode {
      * Singleton class for List mode
      */
     companion object {
+        const val SPELL_4_WIKI_ALL = -1
         const val SPELL_4_WIKI = 0
         const val SPELL_4_WORD_LIST = 1
         const val SPELL_4_WORD = 2
@@ -17,7 +18,7 @@ class ListMode {
         const val TEMP = 4
 
         @Retention(AnnotationRetention.SOURCE)
-        @IntDef(SPELL_4_WIKI, SPELL_4_WORD_LIST, SPELL_4_WORD, WIKTIONARY, TEMP)
+        @IntDef(SPELL_4_WIKI, SPELL_4_WORD_LIST, SPELL_4_WORD, WIKTIONARY, TEMP,SPELL_4_WIKI_ALL)
         annotation class EnumListMode
     }
 }
