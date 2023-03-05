@@ -57,7 +57,7 @@ class WiktionarySearchActivity : BaseActivity(), EndlessListener {
 
     private fun init() {
         val pref = PrefManager(this@WiktionarySearchActivity)
-        languageCode = pref.languageCodeWiktionary
+        languageCode = pref.languageCodeSpell4WikiAll
         api = getWiktionaryApi(applicationContext, languageCode ?: AppConstants.DEFAULT_LANGUAGE_CODE).create(ApiInterface::class.java)
 
         // Views

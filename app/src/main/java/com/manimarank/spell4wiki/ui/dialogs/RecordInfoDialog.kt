@@ -4,6 +4,10 @@ import android.app.Activity
 import android.app.AlertDialog
 import com.manimarank.spell4wiki.R
 import com.manimarank.spell4wiki.data.prefs.AppPref
+import com.manimarank.spell4wiki.data.prefs.PrefManager
+import com.manimarank.spell4wiki.utils.WikiLicense
+import kotlinx.android.synthetic.main.activity_record_audio_pop_up.*
+import kotlinx.android.synthetic.main.activity_settings.*
 
 object RecordInfoDialog {
 

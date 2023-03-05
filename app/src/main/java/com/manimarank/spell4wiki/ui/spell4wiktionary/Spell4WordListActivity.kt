@@ -66,7 +66,7 @@ class Spell4WordListActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_spell_4_wordlist)
         pref = PrefManager(applicationContext)
-        languageCode = pref.languageCodeSpell4WordList
+        languageCode = pref.languageCodeSpell4WikiAll
         initUI()
     }
 
@@ -342,7 +342,7 @@ class Spell4WordListActivity : BaseActivity() {
             }
         }
         val languageSelectionFragment = LanguageSelectionFragment(this)
-        languageSelectionFragment.init(callback, ListMode.SPELL_4_WORD_LIST)
+        languageSelectionFragment.init(callback, ListMode.SPELL_4_WIKI_ALL)
         languageSelectionFragment.show(supportFragmentManager)
     }
 

@@ -1,17 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
+    android:orientation="vertical"
     tools:context=".ui.spell4wiktionary.Spell4Wiktionary">
 
-    <include layout="@layout/custom_app_bar"/>
+    <include layout="@layout/custom_app_bar" />
 
-    <include layout="@layout/layout_run_filter_action"/>
+    <include layout="@layout/layout_run_filter_action" />
 
     <LinearLayout
         android:layout_margin="@dimen/space8dp"
@@ -67,22 +66,21 @@
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/refreshLayout"
-        android:layout_below="@+id/layoutFilterOption"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_below="@+id/layoutFilterOption">
 
         <com.manimarank.spell4wiki.ui.custom.EndlessRecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent" />
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
-    <include layout="@layout/empty_state_ui"
-        android:layout_below="@+id/layoutFilterOption"
+    <include
+        layout="@layout/empty_state_ui"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="gone"/>
-
-
+        android:layout_below="@+id/layoutFilterOption"
+        android:visibility="gone" />
 </LinearLayout>

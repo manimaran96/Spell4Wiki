@@ -19,12 +19,15 @@ import com.manimarank.spell4wiki.ui.dialogs.AppLanguageDialog.getSelectedLanguag
 import com.manimarank.spell4wiki.ui.dialogs.AppLanguageDialog.show
 import com.manimarank.spell4wiki.ui.languageselector.LanguageSelectionFragment
 import com.manimarank.spell4wiki.ui.listerners.OnLanguageSelectionListener
+import com.manimarank.spell4wiki.ui.recordaudio.RecordAudioActivity
 import com.manimarank.spell4wiki.utils.WikiLicense
 import com.manimarank.spell4wiki.utils.WikiLicense.licenseNameId
 import com.manimarank.spell4wiki.utils.WikiLicense.licenseUrlFor
 import com.manimarank.spell4wiki.utils.constants.AppConstants
 import com.manimarank.spell4wiki.utils.constants.ListMode
+import com.manimarank.spell4wiki.utils.extensions.showLicenseChooseDialog
 import com.manimarank.spell4wiki.utils.makeGone
+import kotlinx.android.synthetic.main.activity_record_audio_pop_up.*
 import kotlinx.android.synthetic.main.activity_settings.*
 import java.util.*
 
@@ -42,91 +45,42 @@ class SettingsActivity : BaseActivity() {
         if (pref.isAnonymous == true) {
             txtTitleLicense.makeGone()
             layoutSpell4WikiLang.makeGone()
-            layoutSpell4WordListLang.makeGone()
-            layoutSpell4WordLang.makeGone()
             layoutLicenseOfUploadAudio.makeGone()
             layoutRunFilter.makeGone()
         }
-        updateLanguageView(txtSpell4WikiLang, pref.languageCodeSpell4Wiki)
-        updateLanguageView(txtSpell4WordListLang, pref.languageCodeSpell4WordList)
-        updateLanguageView(txtSpell4WordLang, pref.languageCodeSpell4Word)
-        updateLanguageView(txtWiktionaryLang, pref.languageCodeWiktionary)
+        updateLanguageView(txtSpell4WikiLang, pref.languageCodeSpell4WikiAll)
         layoutSpell4WikiLang.setOnClickListener {
             val callback = object : OnLanguageSelectionListener {
                 override fun onCallBackListener(langCode: String?) {
-                    updateLanguageView(txtSpell4WikiLang, pref.languageCodeSpell4Wiki)
+                    updateLanguageView(txtSpell4WikiLang, pref.languageCodeSpell4WikiAll)
                 }
             }
             val languageSelectionFragment = LanguageSelectionFragment(this)
-            languageSelectionFragment.init(callback, ListMode.SPELL_4_WIKI)
+            languageSelectionFragment.init(callback, ListMode.SPELL_4_WIKI_ALL)
             languageSelectionFragment.show(supportFragmentManager)
         }
-        layoutSpell4WordListLang.setOnClickListener {
-            val callback = object : OnLanguageSelectionListener {
-                override fun onCallBackListener(langCode: String?) {
-                    updateLanguageView(txtSpell4WordListLang, pref.languageCodeSpell4WordList)
-                }
-            }
-            val languageSelectionFragment = LanguageSelectionFragment(this)
-            languageSelectionFragment.init(callback, ListMode.SPELL_4_WORD_LIST)
-            languageSelectionFragment.show(supportFragmentManager)
-        }
-        layoutSpell4WordLang.setOnClickListener {
-            val callback = object : OnLanguageSelectionListener {
-                override fun onCallBackListener(langCode: String?) {
-                    updateLanguageView(txtSpell4WordLang, pref.languageCodeSpell4Word)
-                }
-            }
-            val languageSelectionFragment = LanguageSelectionFragment(this)
-            languageSelectionFragment.init(callback, ListMode.SPELL_4_WORD)
-            languageSelectionFragment.show(supportFragmentManager)
-        }
-        layoutWiktionaryLang.setOnClickListener {
-            val callback = object : OnLanguageSelectionListener {
-                override fun onCallBackListener(langCode: String?) {
-                    updateLanguageView(txtWiktionaryLang, pref.languageCodeWiktionary)
-                }
-            }
-            val languageSelectionFragment = LanguageSelectionFragment(this)
-            languageSelectionFragment.init(callback, ListMode.WIKTIONARY)
-            languageSelectionFragment.show(supportFragmentManager)
-        }
+
+
         updateLicenseView(txtLicenseOfUploadAudio, txtLicenseOfUploadAudioLegalCode)
+
+
+
         layoutLicenseOfUploadAudio.setOnClickListener {
-            // setup the alert builder
-            val builder = AlertDialog.Builder(this)
-            builder.setTitle(R.string.license_choose_alert) // add a radio button list
-            val licensePrefList = arrayOf(
-                    WikiLicense.LicensePrefs.CC_0,
-                    WikiLicense.LicensePrefs.CC_BY_3,
-                    WikiLicense.LicensePrefs.CC_BY_SA_3,
-                    WikiLicense.LicensePrefs.CC_BY_4,
-                    WikiLicense.LicensePrefs.CC_BY_SA_4
-            )
-            val licenseList = arrayOf(
-                    getString(R.string.license_name_cc_zero),
-                    getString(R.string.license_name_cc_by_three),
-                    getString(R.string.license_name_cc_by_sa_three),
-                    getString(R.string.license_name_cc_by_four),
-                    getString(R.string.license_name_cc_by_sa_four)
-            )
-            val checkedItem = licensePrefList.indexOf(pref.uploadAudioLicense)
-            builder.setSingleChoiceItems(licenseList, checkedItem) { dialog: DialogInterface, which: Int ->
-                pref.uploadAudioLicense = licensePrefList[which]
+            showLicenseChooseDialog {
                 updateLicenseView(txtLicenseOfUploadAudio, txtLicenseOfUploadAudioLegalCode)
-                dialog.dismiss()
-            }
-            builder.setNegativeButton(getString(R.string.cancel), null)
-            val dialog = builder.create()
-            dialog.show()
-        }
+            } }
+
         txtAppLanguage.text = getSelectedLanguage()
         layoutLanguageOfApp.setOnClickListener { show(this@SettingsActivity) }
 
-        txtRfCount.text = getString(R.string.run_filter_settings_count, pref.runFilterNumberOfWordsToCheck ?: AppConstants.RUN_FILTER_NO_OF_WORDS_CHECK_COUNT)
-        seekBarRunFilterCount.progress = pref.runFilterNumberOfWordsToCheck ?: AppConstants.RUN_FILTER_NO_OF_WORDS_CHECK_COUNT
+        txtRfCount.text = getString(R.string.run_filter_settings_count, pref.runFilterNumberOfWordsToCheck
+                ?: AppConstants.RUN_FILTER_NO_OF_WORDS_CHECK_COUNT)
+        seekBarRunFilterCount.progress = pref.runFilterNumberOfWordsToCheck
+                ?: AppConstants.RUN_FILTER_NO_OF_WORDS_CHECK_COUNT
         seekBarRunFilterCount.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
-            var finalProgress = pref.runFilterNumberOfWordsToCheck ?: AppConstants.RUN_FILTER_NO_OF_WORDS_CHECK_COUNT
+            var finalProgress = pref.runFilterNumberOfWordsToCheck
+                    ?: AppConstants.RUN_FILTER_NO_OF_WORDS_CHECK_COUNT
+
             override fun onProgressChanged(p0: SeekBar?, progress: Int, p2: Boolean) {
                 finalProgress = if (progress <= 0) 1 else progress
                 txtRfCount.text = getString(R.string.run_filter_settings_count, finalProgress)

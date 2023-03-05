@@ -91,30 +91,13 @@ class PrefManager(private val mContext: Context?) {
         editor.apply()
     }
 
-    var languageCodeSpell4Wiki: String?
-        get() = pref.getString(LANGUAGE_CODE_SPELL_4_WIKI, "ta")
+    var languageCodeSpell4WikiAll: String?
+        get() = pref.getString(SPELL_4_WIKI_ALL, "ta")
         set(languageCode) {
-            editor.putString(LANGUAGE_CODE_SPELL_4_WIKI, languageCode)
+            editor.putString(SPELL_4_WIKI_ALL, languageCode)
             editor.apply()
         }
-    var languageCodeSpell4WordList: String?
-        get() = pref.getString(LANGUAGE_CODE_SPELL_4_WORD_LIST, "ta")
-        set(languageCode) {
-            editor.putString(LANGUAGE_CODE_SPELL_4_WORD_LIST, languageCode)
-            editor.apply()
-        }
-    var languageCodeSpell4Word: String?
-        get() = pref.getString(LANGUAGE_CODE_SPELL_4_WORD, "ta")
-        set(languageCode) {
-            editor.putString(LANGUAGE_CODE_SPELL_4_WORD, languageCode)
-            editor.apply()
-        }
-    var languageCodeWiktionary: String?
-        get() = pref.getString(LANGUAGE_CODE_WIKTIONARY, "ta")
-        set(languageCode) {
-            editor.putString(LANGUAGE_CODE_WIKTIONARY, languageCode)
-            editor.apply()
-        }
+
     var uploadAudioLicense: String?
         get() = pref.getString(UPLOAD_AUDIO_LICENSE, WikiLicense.LicensePrefs.CC_0)
         set(uploadAudioLicense) {
@@ -125,7 +108,8 @@ class PrefManager(private val mContext: Context?) {
     var runFilterNumberOfWordsToCheck: Int?
         get() = pref.getInt(RUN_FILTER_NO_OF_WORDS_TO_CHECK, AppConstants.RUN_FILTER_NO_OF_WORDS_CHECK_COUNT)
         set(noOfWordCount) {
-            editor.putInt(RUN_FILTER_NO_OF_WORDS_TO_CHECK, noOfWordCount ?: AppConstants.RUN_FILTER_NO_OF_WORDS_CHECK_COUNT)
+            editor.putInt(RUN_FILTER_NO_OF_WORDS_TO_CHECK, noOfWordCount
+                    ?: AppConstants.RUN_FILTER_NO_OF_WORDS_CHECK_COUNT)
             editor.apply()
         }
 
@@ -147,10 +131,7 @@ class PrefManager(private val mContext: Context?) {
         private const val IS_LOGGED_IN_USER = "is_logged_in_user"
         private const val IS_ANONYMOUS_USER = "is_anonymous_user" // Only wiktionary use
         private const val IS_FIRST_TIME_LAUNCH = "is_first_time_launch"
-        private const val LANGUAGE_CODE_SPELL_4_WIKI = "language_code_spell_4_wiki"
-        private const val LANGUAGE_CODE_SPELL_4_WORD_LIST = "language_code_spell_4_word_list"
-        private const val LANGUAGE_CODE_SPELL_4_WORD = "language_code_spell_4_word"
-        private const val LANGUAGE_CODE_WIKTIONARY = "language_code_wiktionary"
+        private const val SPELL_4_WIKI_ALL = "language_code_spell_4_wiki_all"
         private const val UPLOAD_AUDIO_LICENSE = "upload_audio_license"
         private const val RUN_FILTER_NO_OF_WORDS_TO_CHECK = "run_filter_no_of_words_to_check"
         private const val WORDS_CATEGORY_FOR_LANG = "words_category_for_%s"

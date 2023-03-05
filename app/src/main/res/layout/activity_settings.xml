@@ -36,7 +36,7 @@
                 android:gravity="center_vertical"
                 android:maxLines="1"
                 android:textColor="@color/settings_label_text"
-                android:text="@string/spell4wiktionary"
+                android:text="@string/spell_4_wiki_all"
                 android:textSize="@dimen/text_normal" />
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -52,93 +52,6 @@
 
         </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/layoutSpell4WordListLang"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="@dimen/space8dp">
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:maxLines="1"
-                android:textColor="@color/settings_label_text"
-                android:text="@string/spell4wordlist"
-                android:textSize="@dimen/text_normal" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/txtSpell4WordListLang"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/space2dp"
-                android:gravity="center_vertical"
-                android:maxLines="1"
-                android:text="@string/language"
-                android:textColor="@color/settings_status_text"
-                android:textSize="@dimen/text_semi_normal" />
-
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/layoutSpell4WordLang"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="@dimen/space8dp">
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:maxLines="1"
-                android:textColor="@color/settings_label_text"
-                android:text="@string/spell4word"
-                android:textSize="@dimen/text_normal" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/txtSpell4WordLang"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/space2dp"
-                android:gravity="center_vertical"
-                android:maxLines="1"
-                android:text="@string/language"
-                android:textColor="@color/settings_status_text"
-                android:textSize="@dimen/text_semi_normal" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/layoutWiktionaryLang"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="@dimen/space8dp">
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:maxLines="1"
-                android:textColor="@color/settings_label_text"
-                android:text="@string/wiktionary"
-                android:textSize="@dimen/text_normal" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/txtWiktionaryLang"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/space2dp"
-                android:gravity="center_vertical"
-                android:maxLines="1"
-                android:text="@string/language"
-                android:textColor="@color/settings_status_text"
-                android:textSize="@dimen/text_semi_normal" />
-
-        </LinearLayout>
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/txtTitleLicense"
