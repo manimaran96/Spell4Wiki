@@ -260,7 +260,7 @@ class Spell4Wiktionary : BaseActivity(), EndlessListener {
                 //wiktionaryTitleOfWordsWithoutAudio = "பகுப்பு:அரிசமய. உள்ள பக்கங்கள்"; // https://ta.wiktionary.org/wiki/பகுப்பு:சென்னைப்_பேரகரமுதலியின்_சொற்சுருக்கப்_பகுப்புகள்-தமிழ்
                 val api = getWiktionaryApi(applicationContext, languageCode ?: AppConstants.DEFAULT_LANGUAGE_CODE).create(ApiInterface::class.java)
                 val call = api.fetchUnAudioRecords(
-                    wiktionaryTitleOfWordsWithoutAudio,
+                    wiktionaryTitleOfWordsWithoutAudio ?: "null",
                     nextOffsetObj,
                     getFetchLimit(),
                     getFetchBy(),
@@ -509,7 +509,7 @@ class Spell4Wiktionary : BaseActivity(), EndlessListener {
         val spinnerAdapter = ArrayAdapter(applicationContext, R.layout.item_category, categoryDataList.toTypedArray())
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinnerCategory.adapter = spinnerAdapter
-        wiktionaryTitleOfWordsWithoutAudio = categoryDataList.first()
+        wiktionaryTitleOfWordsWithoutAudio = categoryDataList.firstOrNull()
         if (categoryDataList.isNotEmpty()) {
             spinnerCategory.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(
