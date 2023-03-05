@@ -43,6 +43,7 @@ import com.manimarank.spell4wiki.utils.*
 import com.manimarank.spell4wiki.utils.NetworkUtils.isConnected
 import com.manimarank.spell4wiki.utils.constants.AppConstants
 import com.manimarank.spell4wiki.utils.constants.ListMode
+import com.manimarank.spell4wiki.utils.extensions.makeNullIfEmpty
 import kotlinx.android.synthetic.main.activity_spell_4_wiktionary.*
 import kotlinx.android.synthetic.main.empty_state_ui.*
 import kotlinx.android.synthetic.main.layout_run_filter_action.*
@@ -488,18 +489,14 @@ class Spell4Wiktionary : BaseActivity(), EndlessListener {
     }
 
     private fun loadCategoriesData() {
-        val languageDataForSpinner = ArrayList<String>()
-        languageDataForSpinner.add("பகுப்பு:தமிழ்-ஒலிக்கோப்புகளில்லை")
-        languageDataForSpinner.add("பகுப்பு:உறவுச் சொற்கள்")
-        languageDataForSpinner.add("பகுப்பு:சமூகச் சொற்கள்")
-        val spinnerAdapter = ArrayAdapter(applicationContext, R.layout.item_category, languageDataForSpinner.toTypedArray())
+        val categoryDataList = pref.getWordsCategoryList(languageCode)
+        val spinnerAdapter = ArrayAdapter(applicationContext, R.layout.item_category, categoryDataList.toTypedArray())
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinnerCategory.adapter = spinnerAdapter
         spinnerCategory.onItemSelectedListener = object: AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, pos: Int, id: Long) {
                 val item = parent?.getItemAtPosition(pos)?.toString();
                 SnackBarUtils.showLong(spinnerCategory, "$item")
-
             }
 
             override fun onNothingSelected(p0: AdapterView<*>?) {}
@@ -511,17 +508,23 @@ class Spell4Wiktionary : BaseActivity(), EndlessListener {
     }
 
     private fun showWordCategoryInputDialog() {
-        var mCategoryTitle: String = "";
         val builder = AlertDialog.Builder(this@Spell4Wiktionary)
         builder.setTitle("Enter valid words category")
         val input = EditText(this@Spell4Wiktionary)
         input.inputType = InputType.TYPE_CLASS_TEXT
         builder.setView(input)
-        builder.setPositiveButton("OK") { dialog, which -> mCategoryTitle = input.text?.toString() ?: "" }
+        builder.setPositiveButton("OK") { _, which -> setUpCategoryData(input.text?.toString()) }
         builder.setNegativeButton(
             "Cancel"
         ) { dialog, which -> dialog.cancel() }
-
         builder.show()
+    }
+
+    private fun setUpCategoryData(category: String?) {
+        if (category?.makeNullIfEmpty() != null) {
+            val catList: MutableList<String> = pref.getWordsCategoryList(languageCode)
+            catList.add(category)
+            pref.setWordsCategoryList(languageCode, catList.toMutableSet())
+        }
     }
 }
