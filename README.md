@@ -34,7 +34,7 @@ Spell4Wiki also act as a Wiki-Dictionary (word meaning from Wiktionary).
 
 ## FOSSHack23 Contributions
 
-All our FOSS Hack 23 contributions are tracked in [S4W-FOSSHack23](https://github.com/manimaran96/Spell4Wiki/milestone/1) milestore
+All our FOSS Hack 23 contributions are tracked in [S4W-FOSSHack23](https://github.com/manimaran96/Spell4Wiki/milestone/1) milestone
  
 Check: https://github.com/manimaran96/Spell4Wiki/milestone/1
 
