@@ -35,6 +35,33 @@ Spell4Wiki also act as a Wiki-Dictionary (word meaning from Wiktionary).
 ## FOSSHack23 Contributions
 
 All our FOSS Hack 23 contributions are tracked in [S4W-FOSSHack23](https://github.com/manimaran96/Spell4Wiki/milestone/1) milestore
+ 
+Check: https://github.com/manimaran96/Spell4Wiki/milestone/1
+
+**Completed**
+- [x] Spell4Wiktionary option supporting to all 250+ languages(Previously it was 8 languages only)
+- [x] Contributors can add dynamic words category(from Wiktionary) them self
+- [x] Option to choose contribution language when landing the app
+- [x] Provide option to change licence on recording page
+- [x] Upload and license acknowledgement checkbox make it check by default
+- [x] Shown selected language information in appbar and record dialog
+- [x] App localization for Kannada language
+- [x] Increase validation count limit of the run filter options 
+- [x] Fixed few app crash issues
+- [x] Improve the logic and SDK versions update
+
+**Inprogress**
+- [ ] App localization for Hindi language (It is in progress to validate the PR and resolve conflicts)
+
+**Key points**
+- Supported 250+ Languages for all 4 features.
+- Uploaded 30,000+ audio files to Wikimedia commons from various language contributors.
+- All audio files are categorized under Wikimedia commons - https://commons.wikimedia.org/wiki/Category:Filesuploadedby_spell4wiki
+- WIkimedia commons meta page - https://commons.wikimedia.org/wiki/Commons:Spell4Wiki
+- License: GNU General Public License V3 or later
+
+
+
 
 ## Contribution
 
