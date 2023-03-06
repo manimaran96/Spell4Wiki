@@ -53,6 +53,9 @@ Check: https://github.com/manimaran96/Spell4Wiki/milestone/1
 **Inprogress**
 - [ ] App localization for Hindi language (It is in progress to validate the PR and resolve conflicts)
 
+**Build link**
+- [Download APK file from here](https://github.com/manimaran96/Spell4Wiki/releases/download/v1.2.3-fosshack23/spell4wiki-fosshack23.apk)
+
 **Key points**
 - Supported 250+ Languages for all 4 features.
 - Uploaded 30,000+ audio files to Wikimedia commons from various language contributors.
@@ -84,7 +87,7 @@ More videos for other language [check here](https://github.com/manimaran96/Spell
  
 #### By Paypal
 
-<a href="https://www.paypal.me/manimaran24"><img src="https://raw.githubusercontent.com/manimaran96/Spell4Wiki/master/files/assets/images/badges/paypal.png" width="200px"/></a>
+<a href="https://www.paypal.me/manimaranlpt"><img src="https://raw.githubusercontent.com/manimaran96/Spell4Wiki/master/files/assets/images/badges/paypal.png" width="200px"/></a>
 
 #### By BHIM UPI Payment 
 
