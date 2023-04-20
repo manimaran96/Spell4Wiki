@@ -1551,7 +1551,8 @@
          "code":"zh",
          "lang":"Chinese",
          "dir":"ltr",
-         "local_lang":"中文"
+         "local_lang":"中文",
+         "category": ["Files uploaded by spell4wiki in zh"]
       },
       {
          "code":"yue",
