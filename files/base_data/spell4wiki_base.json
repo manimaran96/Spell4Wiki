@@ -341,7 +341,8 @@
          "code":"el",
          "lang":"Greek",
          "dir":"ltr",
-         "local_lang":"Ελληνικά"
+         "local_lang":"Ελληνικά",
+         "category": ["Files uploaded by spell4wiki in el"]
       },
       {
          "code":"en",
