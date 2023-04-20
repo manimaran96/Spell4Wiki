@@ -11,7 +11,8 @@
          "code":"aa",
          "lang":"Afar",
          "dir":"ltr",
-         "local_lang":"Afar"
+         "local_lang":"Afar",
+         "category": ["Files uploaded by spell4wiki in aa"]
       },
       {
          "code":"ab",
@@ -128,7 +129,8 @@
          "code":"bg",
          "lang":"Bulgarian",
          "dir":"ltr",
-         "local_lang":"Български"
+         "local_lang":"Български",
+         "category": ["Files uploaded by spell4wiki in bg"]
       },
       {
          "code":"bh",
@@ -332,7 +334,8 @@
          "code":"ee",
          "lang":"Ewe",
          "dir":"ltr",
-         "local_lang":"Ɛʋɛ"
+         "local_lang":"Ɛʋɛ",
+         "category": ["Files uploaded by spell4wiki in ee"]
       },
       {
          "code":"el",
@@ -383,7 +386,8 @@
          "code":"fa",
          "lang":"Persian",
          "dir":"rtl",
-         "local_lang":"فارسی"
+         "local_lang":"فارسی",
+         "category": ["Files uploaded by spell4wiki in fa"]
       },
       {
          "code":"ff",
@@ -395,7 +399,8 @@
          "code":"fi",
          "lang":"Finnish",
          "dir":"ltr",
-         "local_lang":"Suomi"
+         "local_lang":"Suomi",
+         "category": ["Files uploaded by spell4wiki in fi"]
       },
       {
          "code":"fj",
@@ -1077,7 +1082,8 @@
          "code":"pa",
          "lang":"Panjabi / Punjabi",
          "dir":"ltr",
-         "local_lang":"ਪੰਜਾਬੀ / पंजाबी / پنجابي"
+         "local_lang":"ਪੰਜਾਬੀ / पंजाबी / پنجابي",
+         "category": ["Files uploaded by spell4wiki in pa"]
       },
       {
          "code":"pag",
@@ -1137,7 +1143,8 @@
          "code":"pt",
          "lang":"Portuguese",
          "dir":"ltr",
-         "local_lang":"Português"
+         "local_lang":"Português",
+         "category": ["Files uploaded by spell4wiki in pt"]
       },
       {
          "code":"qu",
@@ -1330,7 +1337,8 @@
          "code":"te",
          "lang":"Telugu",
          "dir":"ltr",
-         "local_lang":"తెలుగు"
+         "local_lang":"తెలుగు",
+         "category": ["Files uploaded by spell4wiki in te"]
       },
       {
          "code":"tet",
