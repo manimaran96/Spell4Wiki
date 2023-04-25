@@ -89,4 +89,9 @@ interface ApiInterface {
     // Contributors List - Github API
     @GET("https://api.github.com/repos/manimaran96/Spell4Wiki/contributors")
     fun fetchCodeContributorsList(): Call<List<CodeContributors?>?>
+
+    /**
+     * Search category query
+     * https://commons.wikimedia.org/w/api.php?format=json&action=opensearch&namespace=14&limit=30&search=Category:Files uploaded by spell4wiki in
+     */
 }
