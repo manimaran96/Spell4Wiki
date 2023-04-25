@@ -96,6 +96,11 @@ class LanguageSelectionFragment(private val mActivity: Activity) : BottomSheetDi
                 dismiss()
             }
         }
+        val selectedLangInfo = wikiLanguageList.firstOrNull { wikiLang -> wikiLang.code == preSelectedLanguageCode }
+        if (selectedLangInfo != null) {
+            wikiLanguageList.remove(selectedLangInfo);
+            wikiLanguageList.add(0, selectedLangInfo);
+        }
         adapter = LanguageAdapter(wikiLanguageList, languageSelectionListener, preSelectedLanguageCode)
         recyclerView?.adapter = adapter
         btnClose?.setOnClickListener { dismiss() }

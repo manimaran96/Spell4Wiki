@@ -1,12 +1,12 @@
 <h1 align="center">
-Spell4Wiki > Spell For Wiktionary
+Spell4Wiki - Spell For Wiktionary/Wikimedia Commons
 </h1>
 
 <p align="center"><img width="120" height="120" src="https://raw.githubusercontent.com/manimaran96/Spell4Wiki/master/files/assets/icons/spell4wiki-playstore.png" alt="logo"/></p>
 
 <p align="center">
 Spell4Wiki is a mobile application to record and upload audio for Wiktionary words to Wikimedia Commons.<br/>
-Spell4Wiki also act as a Wiki-Dictionary (word meaning from Wiktionary).
+Spell4Wiki also a multilingual Wiki-Dictionary.
 </p>
 
 <p align="center">
@@ -32,30 +32,6 @@ Spell4Wiki also act as a Wiki-Dictionary (word meaning from Wiktionary).
 <p align="center">
 <img src="https://raw.githubusercontent.com/manimaran96/Spell4Wiki/master/files/assets/screenshots/spell4wiki_ui.gif" width="300"/></p></kbd>
 
-## FOSSHack23 Contributions
-
-All our FOSS Hack 23 contributions are tracked in [S4W-FOSSHack23](https://github.com/manimaran96/Spell4Wiki/milestone/1) milestone
- 
-Check: https://github.com/manimaran96/Spell4Wiki/milestone/1
-
-**Completed**
-- [x] Spell4Wiktionary option supporting to all 250+ languages(Previously it was 8 languages only)
-- [x] Contributors can add dynamic words category(from Wiktionary) them self
-- [x] Option to choose contribution language when landing the app
-- [x] Provide option to change licence on recording page
-- [x] Upload and license acknowledgement checkbox make it check by default
-- [x] Shown selected language information in appbar and record dialog
-- [x] App localization for Kannada language
-- [x] Increase validation count limit of the run filter options 
-- [x] Fixed few app crash issues
-- [x] Improve the logic and SDK versions update
-
-**Inprogress**
-- [ ] App localization for Hindi language (It is in progress to validate the PR and resolve conflicts)
-
-**Build link**
-- [Download APK file from here](https://github.com/manimaran96/Spell4Wiki/releases/download/v1.2.3-fosshack23/spell4wiki-fosshack23.apk)
-
 **Key points**
 - Supported 250+ Languages for all 4 features.
 - Uploaded 30,000+ audio files to Wikimedia commons from various language contributors.
@@ -63,8 +39,6 @@ Check: https://github.com/manimaran96/Spell4Wiki/milestone/1
 - WIkimedia commons meta page - https://commons.wikimedia.org/wiki/Commons:Spell4Wiki
 - App localized on 4 languages - English, Tamil, Kannada and Hindi
 - License: GNU General Public License V3 or later
-
-
 
 
 ## Contribution
@@ -142,11 +116,8 @@ Specifically you can redistribute and/or modify it under the terms of the [GNU G
 ## TODO List
 1. Implement Two factor authentication.
 2. Resolve category update problem(பகுப்பு:தமிழ்-ஒலிக்கோப்புகளில்லை).
-3. Custom category list from Wiktionary.
-4. Resolve issues.
-5. Support to other languages.
-6. Dark mode UI
-7. Update with android latest technologies
+3. Resolve issues.
+4. Dark mode UI
 
 ## Communication
 
