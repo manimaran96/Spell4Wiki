@@ -21,7 +21,8 @@ object AppLanguageDialog {
         arrayOf(
                 "en",
                 "ta",
-                "kn"
+                "kn",
+                "hi"
         )
     }
 
@@ -29,7 +30,8 @@ object AppLanguageDialog {
         arrayOf(
                 "English",
                 "தமிழ்",
-                "ಕನ್ನಡ"
+                "ಕನ್ನಡ",
+                "हिंदी"
         )
     }
 
