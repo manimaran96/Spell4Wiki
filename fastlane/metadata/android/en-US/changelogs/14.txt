@@ -1,0 +1,11 @@
+- Added: Spell4Wiktionary option supporting to all 250+ languages(Previously it was 8 languages only).
+- Added: Contributors can add dynamic words category(from Wiktionary) them self.
+- Added: Option to choose contribution language when landing the app.
+- Added: Provide option to change license on recording page.
+- Added: Upload and license acknowledgement checkbox - checked by default
+- Added: Shown selected language information in appbar and record dialog.
+- Added: App localization done for Kannada language.
+- Added: Support for how to add category.
+- Improved: Increased validation count limit of the run filter options.
+- Improved: App logic and SDK versions updated.
+- Fixed: App crash issues and defects.
