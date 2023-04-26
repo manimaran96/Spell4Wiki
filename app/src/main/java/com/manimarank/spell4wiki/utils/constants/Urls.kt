@@ -25,7 +25,7 @@ object Urls {
     const val HELP_DEVELOPMENT = DOC_BASE + "DONATION.md#donation--spell4wiki-app"
     const val HELP_US_TRANSLATE = DOC_BASE + "CONTRIBUTING.md#translation"
     const val PRIVACY_POLICY = DOC_BASE + "PRIVACY_POLICY.md#privacy-policy--spell4wiki-app"
-    const val HOW_TO_ADD_CATEGORY = DOC_BASE + "HOW_TO_ADD_CATEGORY.md"
+    const val HOW_TO_ADD_CATEGORY = DOC_BASE + "HOW_TO_ADD_CATEGORY.md#spell4wiki---how-to-add-category-"
     const val FORM_ADD_MY_LANGUAGE = "https://docs.google.com/forms/d/e/1FAIpQLSciqHNw1ZtH1kp2zz2DlKFmIbRZw2K7fhcJdxYNAr6TiAsN2A/viewform"
     const val TELEGRAM_CHANNEL = "https://t.me/spell4wiki"
 }
