@@ -1,6 +1,8 @@
 Spell4Wiki - How to Add Category ?
 ==================================
 
+Spell4Wiki app team working on adding category by searching. Will get this feature soon. For now follow the below steps to add category for your language.
+
 ## Steps: 
 1. Visit your language Wiktionary page (Like: https://en.wiktionary.org , https://ta.wiktionary.org)
 2. Find the most common categories or without audio words category (Like: Category:English nouns, Category:English quantizers, பகுப்பு:பெயர்ச்சொற்கள், பகுப்பு:தமிழ்-ஒலிக்கோப்புகளில்லை, ...etc.)
