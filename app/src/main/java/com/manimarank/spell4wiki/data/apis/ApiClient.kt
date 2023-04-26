@@ -49,7 +49,6 @@ object ApiClient {
                 .build()
     }
 
-
     val api: Retrofit
         get() {
             if (retrofitApi == null) {
@@ -62,8 +61,7 @@ object ApiClient {
         }
 
     private fun getWiktionaryApiUrl(langCode: String): String {
-        return String.format(Urls.WIKTIONARY, langCode.makeNullIfEmpty()
-                ?: pref?.languageCodeSpell4WikiAll)
+        return String.format(Urls.WIKTIONARY, langCode.makeNullIfEmpty() ?: pref?.languageCodeSpell4WikiAll)
     }
 
 

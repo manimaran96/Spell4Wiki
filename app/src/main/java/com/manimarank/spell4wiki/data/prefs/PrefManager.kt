@@ -108,8 +108,7 @@ class PrefManager(private val mContext: Context?) {
     var runFilterNumberOfWordsToCheck: Int?
         get() = pref.getInt(RUN_FILTER_NO_OF_WORDS_TO_CHECK, AppConstants.RUN_FILTER_NO_OF_WORDS_CHECK_COUNT)
         set(noOfWordCount) {
-            editor.putInt(RUN_FILTER_NO_OF_WORDS_TO_CHECK, noOfWordCount
-                    ?: AppConstants.RUN_FILTER_NO_OF_WORDS_CHECK_COUNT)
+            editor.putInt(RUN_FILTER_NO_OF_WORDS_TO_CHECK, noOfWordCount ?: AppConstants.RUN_FILTER_NO_OF_WORDS_CHECK_COUNT)
             editor.apply()
         }
 

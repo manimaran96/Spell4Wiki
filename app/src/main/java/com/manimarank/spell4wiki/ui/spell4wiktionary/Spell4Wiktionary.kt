@@ -40,9 +40,11 @@ import com.manimarank.spell4wiki.ui.dialogs.showConfirmBackDialog
 import com.manimarank.spell4wiki.ui.languageselector.LanguageSelectionFragment
 import com.manimarank.spell4wiki.ui.listerners.OnLanguageSelectionListener
 import com.manimarank.spell4wiki.utils.*
+import com.manimarank.spell4wiki.utils.GeneralUtils.openUrlInBrowser
 import com.manimarank.spell4wiki.utils.NetworkUtils.isConnected
 import com.manimarank.spell4wiki.utils.constants.AppConstants
 import com.manimarank.spell4wiki.utils.constants.ListMode
+import com.manimarank.spell4wiki.utils.constants.Urls
 import com.manimarank.spell4wiki.utils.extensions.makeNullIfEmpty
 import kotlinx.android.synthetic.main.activity_spell_4_wiktionary.*
 import kotlinx.android.synthetic.main.empty_state_ui.*
@@ -535,10 +537,9 @@ class Spell4Wiktionary : BaseActivity(), EndlessListener {
         val input = EditText(this@Spell4Wiktionary)
         input.inputType = InputType.TYPE_CLASS_TEXT
         builder.setView(input)
-        builder.setPositiveButton("Add") { _, which -> setUpCategoryData(input.text?.toString(), refreshSpinner = true) }
-        builder.setNegativeButton(
-            "Cancel"
-        ) { dialog, which -> dialog.cancel() }
+        builder.setPositiveButton("Add") { _, _ -> setUpCategoryData(input.text?.toString(), refreshSpinner = true) }
+        builder.setNegativeButton("Cancel") { dialog, _ -> dialog.cancel() }
+        builder.setNeutralButton("How to find?") { _, _ -> openUrlInBrowser(this, Urls.HOW_TO_ADD_CATEGORY) }
         builder.show()
     }
 

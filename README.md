@@ -32,13 +32,10 @@ Spell4Wiki also a multilingual Wiki-Dictionary.
 <p align="center">
 <img src="https://raw.githubusercontent.com/manimaran96/Spell4Wiki/master/files/assets/screenshots/spell4wiki_ui.gif" width="300"/></p></kbd>
 
-**Key points**
+**What Spell4Wiki App Achieved**
 - Supported 250+ Languages for all 4 features.
 - Uploaded 30,000+ audio files to Wikimedia commons from various language contributors.
 - All audio files are categorized under Wikimedia commons - https://commons.wikimedia.org/wiki/Category:Filesuploadedby_spell4wiki
-- WIkimedia commons meta page - https://commons.wikimedia.org/wiki/Commons:Spell4Wiki
-- App localized on 4 languages - English, Tamil, Kannada and Hindi
-- License: GNU General Public License V3 or later
 
 
 ## Contribution

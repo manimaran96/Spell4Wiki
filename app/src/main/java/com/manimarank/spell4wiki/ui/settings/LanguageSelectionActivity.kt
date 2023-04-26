@@ -11,7 +11,6 @@ import com.manimarank.spell4wiki.ui.common.BaseActivity
 import com.manimarank.spell4wiki.ui.dialogs.AppLanguageDialog
 import com.manimarank.spell4wiki.ui.languageselector.LanguageSelectionFragment
 import com.manimarank.spell4wiki.ui.listerners.OnLanguageSelectionListener
-import com.manimarank.spell4wiki.ui.spell4wiktionary.Spell4Wiktionary
 import com.manimarank.spell4wiki.utils.constants.ListMode
 import kotlinx.android.synthetic.main.activity_language_selection.*
 import kotlinx.android.synthetic.main.bottom_sheet_language_selection.btnAddMyLanguage

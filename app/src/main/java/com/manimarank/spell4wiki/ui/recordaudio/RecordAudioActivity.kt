@@ -137,21 +137,12 @@ class RecordAudioActivity : BaseActivity() {
         txtDuration.text = getDurationValue(0)
         checkboxDeclaration.text = String.format(getString(R.string.declaration_note), getString(licenseNameId(pref.uploadAudioLicense)))
 
-
-
         btnSettings.setOnClickListener {
             showLicenseChooseDialog({
                 checkboxDeclaration.text = String.format(getString(R.string.declaration_note), getString(licenseNameId(pref.uploadAudioLicense)))
             })
 
         }
-
-
-
-//        btnSettings.setOnClickListener {
-//
-//            startActivityForResult(Intent(applicationContext, SettingsActivity::class.java), RC_LICENCE_CHANGE)
-//        }
 
         // Set 10 sec only for recording
         countDownTimer = object : CountDownTimer(AppConstants.MAX_SEC_FOR_RECORDING * 1000, 1000) {
