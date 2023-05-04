@@ -493,7 +493,8 @@
          "code":"gu",
          "lang":"Gujarati",
          "dir":"ltr",
-         "local_lang":"ગુજરાતી"
+         "local_lang":"ગુજરાતી",
+         "category": ["Files uploaded by spell4wiki in gu", "Gujarati pronunciation of the words with Gujarati script", "Gujarati pronunciation"]
       },
       {
          "code":"gur",
@@ -1196,7 +1197,8 @@
          "code":"sa",
          "lang":"Sanskrit",
          "dir":"ltr",
-         "local_lang":"संस्कृतम्"
+         "local_lang":"संस्कृतम्",
+         "category": ["Files uploaded by spell4wiki in sa", "Sanskrit pronunciation"]
       },
       {
          "code":"sc",
