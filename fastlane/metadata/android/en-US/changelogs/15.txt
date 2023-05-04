@@ -1,0 +1,2 @@
+- Fixed: Spell4Wiki app anonymous login issues
+- Added: Updated settings and readme files
