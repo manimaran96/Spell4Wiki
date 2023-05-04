@@ -1,26 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:orientation="vertical"
     android:padding="8dp">
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/imgIcon"
-        android:layout_width="@dimen/img_normal"
-        android:layout_height="@dimen/img_normal"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
         app:srcCompat="@drawable/ic_contributors"
         android:scaleType="fitCenter"
         android:padding="@dimen/space8dp"
+
         android:layout_marginEnd="@dimen/space4dp"
         android:contentDescription="@string/app_name"/>
 
     <LinearLayout
+        android:id="@+id/layoutAbout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_toEndOf="@+id/imgIcon"
-        android:layout_toStartOf="@+id/btn_option"
-        android:layout_centerInParent="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignBottom="@+id/imgIcon"
         android:orientation="vertical">
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -30,6 +33,7 @@
             android:gravity="center_vertical"
             android:ellipsize="end"
             android:singleLine="true"
+            android:textAlignment="center"
             android:padding="@dimen/space2dp"
             android:text="@string/contributors"
             android:textSize="@dimen/text_normal"
@@ -50,19 +54,4 @@
 
     </LinearLayout>
 
-
-
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/btn_option"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_centerVertical="true"
-        android:paddingStart="@dimen/space8dp"
-        android:contentDescription="@string/app_name"
-        android:paddingEnd="@dimen/space4dp"
-        android:paddingTop="@dimen/space4dp"
-        android:paddingBottom="@dimen/space4dp"
-        app:srcCompat="@drawable/ic_link" />
-
-</RelativeLayout>
+</LinearLayout>

@@ -19,7 +19,8 @@ class ContributorsAdapter(private val mContext: Context, private val mList: List
         holder.txtName.text = contributor.name
         Glide.with(mContext).load(contributor.avatarUrl).apply(RequestOptions.circleCropTransform()).into(holder.imgIcon)
         holder.txtAbout.text = String.format(mContext.getString(R.string.contributions), contributor.contributions.toString() + "")
-        holder.btnOption.setOnClickListener { openUrlInBrowser(mContext, contributor.htmlUrl) }
+        holder.txtName.setOnClickListener { openUrlInBrowser(mContext, contributor.htmlUrl) }
+        holder.imgIcon.setOnClickListener { openUrlInBrowser(mContext, contributor.htmlUrl) }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -36,6 +37,5 @@ class ContributorsAdapter(private val mContext: Context, private val mList: List
         var txtName: TextView = itemView.findViewById(R.id.txt_name)
         var txtAbout: TextView = itemView.findViewById(R.id.txt_about)
         var imgIcon: ImageView = itemView.findViewById(R.id.imgIcon)
-        var btnOption: ImageView = itemView.findViewById(R.id.btn_option)
     }
 }

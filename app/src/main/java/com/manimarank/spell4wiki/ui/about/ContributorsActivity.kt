@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.view.MenuItem
 import android.view.View
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
@@ -42,7 +43,7 @@ class ContributorsActivity : BaseActivity() {
 
         val contributorsAdapter = ContributorsAdapter(this, codeContributorsList)
         recyclerViewCodeContributors.adapter = contributorsAdapter
-        recyclerViewCodeContributors.layoutManager = LinearLayoutManager(applicationContext)
+        recyclerViewCodeContributors.layoutManager = GridLayoutManager(applicationContext, 2)
         coreContributorsAdapter = CoreContributorsAdapter(this, coreContributorsList)
         recyclerViewCoreContributors.adapter = coreContributorsAdapter
         recyclerViewCoreContributors.layoutManager = LinearLayoutManager(applicationContext)
