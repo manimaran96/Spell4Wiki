@@ -18,9 +18,9 @@ Developers are ready to develop lots of free software tools. Your donation will 
 
 #### By Paypal
 
-<a href="https://www.paypal.me/manimaran24"><img src="https://raw.githubusercontent.com/manimaran96/Spell4Wiki/master/files/assets/images/badges/paypal.png" width="200px"/></a>
+<a href="https://www.paypal.me/manimaranlpt"><img src="https://raw.githubusercontent.com/manimaran96/Spell4Wiki/master/files/assets/images/badges/paypal.png" width="200px"/></a>
 
-Paypal ID: https://www.paypal.me/manimaran24 
+Paypal ID: https://www.paypal.me/manimaranlpt
 
 #### By BHIM UPI Payment
 

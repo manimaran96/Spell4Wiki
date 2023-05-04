@@ -16,8 +16,8 @@ And we can use those pronunciation for wiki data planning and other technologies
 
 <b>Powered By</b>
 <ul>
-<li><a href="http://www.kaniyam.com/">Kaniyam Foundation, TamilNadu</a>,</li>
-<li><a href="https://vglug.org/">VGLUG</a>, Free Software Activists and </li>
+<li><a href="https://vglug.org/">VGLUG Foundation</a>,</li>
+<li><a href="http://www.kaniyam.com/">Kaniyam Foundation</a>, Free Software Activists and</li>
 <li><a href="https://en.wikipedia.org/wiki/Tamil_Wikipedia">Tamil Wikimedia Community</a></li>
 </ul>
 <b>Note</b>

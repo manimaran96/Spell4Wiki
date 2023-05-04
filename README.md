@@ -61,6 +61,8 @@ More videos for other language [check here](https://github.com/manimaran96/Spell
 
 <a href="https://www.paypal.me/manimaranlpt"><img src="https://raw.githubusercontent.com/manimaran96/Spell4Wiki/master/files/assets/images/badges/paypal.png" width="200px"/></a>
 
+https://www.paypal.me/manimaranlpt
+
 #### By BHIM UPI Payment 
 
 Pay using **`spell4wiki@ybl`** BHIM UPI ID.
