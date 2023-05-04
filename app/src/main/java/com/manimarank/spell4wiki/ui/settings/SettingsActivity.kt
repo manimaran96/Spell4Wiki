@@ -44,7 +44,7 @@ class SettingsActivity : BaseActivity() {
         wikiLangDao = DBHelper.getInstance(applicationContext).appDatabase.wikiLangDao
         if (pref.isAnonymous == true) {
             txtTitleLicense.makeGone()
-            layoutSpell4WikiLang.makeGone()
+            // layoutSpell4WikiLang.makeGone()
             layoutLicenseOfUploadAudio.makeGone()
             layoutRunFilter.makeGone()
         }

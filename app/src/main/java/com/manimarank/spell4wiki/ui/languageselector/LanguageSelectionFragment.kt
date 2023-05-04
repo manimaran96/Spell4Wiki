@@ -73,24 +73,13 @@ class LanguageSelectionFragment(private val mActivity: Activity) : BottomSheetDi
          * "title_words_without_audio" - category of words without audio in wiktionary
          */
         wikiLanguageList.clear()
-        if (listMode == ListMode.SPELL_4_WIKI) {
-            dbHelper.appDatabase.wikiLangDao?.wikiLanguageListForWordsWithoutAudio?.filterNotNull()?.forEach { item -> wikiLanguageList.add(item) }
-            layoutAddLanguage.makeVisible()
-            btnAddMyLanguage?.setOnClickListener {
-                if (isAdded && isConnected(requireContext())) {
-                    openUrlInBrowser(requireContext(), Urls.FORM_ADD_MY_LANGUAGE)
-                } else showNormal(btnAddMyLanguage, getString(R.string.check_internet))
-            }
-        } else {
-            dbHelper.appDatabase.wikiLangDao?.wikiLanguageList?.filterNotNull()?.forEach { item -> wikiLanguageList.add(item) }
-            layoutAddLanguage.makeGone()
-        }
+        layoutAddLanguage.makeGone()
+        dbHelper.appDatabase.wikiLangDao?.wikiLanguageList?.filterNotNull()?.forEach { item -> wikiLanguageList.add(item) }
         val languageSelectionListener = object : OnLanguageSelectionListener {
             override fun onCallBackListener(langCode: String?) {
                 when (listMode) {
-                    ListMode.SPELL_4_WIKI_ALL -> pref.languageCodeSpell4WikiAll = langCode
-                    ListMode.TEMP -> {
-                    }
+                    ListMode.TEMP -> {}
+                    else -> pref.languageCodeSpell4WikiAll = langCode
                 }
                 callback?.onCallBackListener(langCode)
                 dismiss()

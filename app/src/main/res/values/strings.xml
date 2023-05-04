@@ -59,7 +59,7 @@
     <string name="link_share_title">Share link to your friends…</string>
     <string name="app_share_title">Share Spell4Wiki App to your friends…</string>
     <string name="app_share_invite_message">🎊🎉 I am happy to invite you to contribute your voice for wiktionary words using Spell4Wiki android application. 🎉🎊\n\n%s\nSpell4Wiki is a Free Software(GPLv3).</string>
-    <string name="app_description">Spell4Wiki is a mobile application to record and upload audio for Wiktionary words to Wikimedia commons. This is also act as a Wiki-Dictionary.</string>
+    <string name="app_description">Spell4Wiki is a mobile application to record and upload audio for Wiktionary words to Wikimedia Commons. It is also a multilingual Wiki-Dictionary.</string>
     <string name="app_share_link">App Link :\n%s</string>
     <string name="upload">Upload</string>
     <string name="before_record">Hold the Mic to Record</string>
@@ -207,9 +207,9 @@
     <string name="app_intro_slide_5_title">Permission Request</string>
 
     <string name="app_intro_slide_1_description">@string/app_description</string>
-    <string name="app_intro_slide_2_description">You can search meaning from Wikitionary for any words in any languages.</string>
-    <string name="app_intro_slide_3_description">You can upload for your own list of words from a text file or copy &amp; paste.</string>
-    <string name="app_intro_slide_4_description">You can spell and upload for a single word.</string>
+    <string name="app_intro_slide_2_description">You can explore meaning from Wiktionary for any words in any language.</string>
+    <string name="app_intro_slide_3_description">You can record and upload audio files for own list of words from a text file or copy &amp; paste.</string>
+    <string name="app_intro_slide_4_description">You can record and upload for a single word by easy way.</string>
     <string name="app_intro_slide_5_description">Spell4Wiki require storage and record audio permissions without violating your privacy.</string>
 
 

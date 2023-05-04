@@ -142,7 +142,7 @@ class WiktionarySearchActivity : BaseActivity(), EndlessListener {
             }
         }
         val languageSelectionFragment = LanguageSelectionFragment(this)
-        languageSelectionFragment.init(callback, ListMode.WIKTIONARY)
+        languageSelectionFragment.init(callback, ListMode.SPELL_4_WIKI_ALL)
         languageSelectionFragment.show(supportFragmentManager)
     }
 
