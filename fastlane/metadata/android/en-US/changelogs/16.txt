@@ -1,0 +1,2 @@
+- Fixed: Anonymous login issue
+- Added: Language details loaded from local json
