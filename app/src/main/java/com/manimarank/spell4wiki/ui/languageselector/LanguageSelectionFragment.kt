@@ -22,12 +22,8 @@ import com.manimarank.spell4wiki.data.db.DBHelper
 import com.manimarank.spell4wiki.data.db.entities.WikiLang
 import com.manimarank.spell4wiki.data.prefs.PrefManager
 import com.manimarank.spell4wiki.ui.listerners.OnLanguageSelectionListener
-import com.manimarank.spell4wiki.utils.GeneralUtils.openUrlInBrowser
-import com.manimarank.spell4wiki.utils.NetworkUtils.isConnected
-import com.manimarank.spell4wiki.utils.SnackBarUtils.showNormal
 import com.manimarank.spell4wiki.utils.constants.ListMode
 import com.manimarank.spell4wiki.utils.constants.ListMode.Companion.EnumListMode
-import com.manimarank.spell4wiki.utils.constants.Urls
 import com.manimarank.spell4wiki.utils.makeGone
 import com.manimarank.spell4wiki.utils.makeVisible
 
@@ -51,7 +47,8 @@ class LanguageSelectionFragment(private val mActivity: Activity) : BottomSheetDi
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         pref = PrefManager(context)
-        if (TextUtils.isEmpty(preSelectedLanguageCode)) preSelectedLanguageCode = existingLanguageCode
+        if (TextUtils.isEmpty(preSelectedLanguageCode))
+            preSelectedLanguageCode = existingLanguageCode
         val dialog = BottomSheetDialog(mActivity, R.style.AppTheme)
         dialog.setContentView(R.layout.bottom_sheet_language_selection)
         val txtTitle = dialog.findViewById<TextView>(R.id.text_select_lang_title)
