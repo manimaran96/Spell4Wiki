@@ -103,6 +103,10 @@ More contributors : [look here](https://github.com/manimaran96/Spell4Wiki/graphs
 | ![Fifth](fastlane/metadata/android/en-US/images/phoneScreenshots/5.png?raw=true) | ![Sixth](fastlane/metadata/android/en-US/images/phoneScreenshots/6.png?raw=true) | ![Seventh](fastlane/metadata/android/en-US/images/phoneScreenshots/7.png?raw=true) | ![Eighth](fastlane/metadata/android/en-US/images/phoneScreenshots/8.png?raw=true) |
 
 
+## Stats of Files uploaded by Speell4Wiki to Wikimedia Commons
+
+<p align="center"><img src="https://raw.githubusercontent.com/manimaran96/Spell4Wiki/master/files/assets/images/spell4wiki_files_uploded_stats.png" width="1200"/></p>
+
 
 ## License
 
