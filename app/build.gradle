@@ -69,6 +69,8 @@ dependencies {
     //noinspection GradleDependency
     implementation "com.squareup.okhttp3:okhttp:3.12.8"
     implementation 'com.github.franmontiel:PersistentCookieJar:v1.0.1'
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.12.8'
+
 
     // Coroutines
     def coroutines_version = "1.5.2"

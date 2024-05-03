@@ -7,6 +7,7 @@ import com.franmontiel.persistentcookiejar.ClearableCookieJar
 import com.franmontiel.persistentcookiejar.PersistentCookieJar
 import com.franmontiel.persistentcookiejar.cache.SetCookieCache
 import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersistor
+import com.manimarank.spell4wiki.BuildConfig
 import com.manimarank.spell4wiki.data.prefs.PrefManager
 import com.manimarank.spell4wiki.utils.Print.error
 import com.manimarank.spell4wiki.utils.constants.Urls
@@ -14,6 +15,7 @@ import com.manimarank.spell4wiki.utils.extensions.makeNullIfEmpty
 import okhttp3.ConnectionSpec
 import okhttp3.OkHttpClient
 import okhttp3.TlsVersion
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.security.KeyStore
@@ -69,6 +71,11 @@ object ApiClient {
         pref = PrefManager(context)
         val okHttpClient = OkHttpClient().newBuilder()
         okHttpClient.retryOnConnectionFailure(true)
+        if (BuildConfig.DEBUG) {
+            val interceptor = HttpLoggingInterceptor()
+            interceptor.level = HttpLoggingInterceptor.Level.BODY
+            okHttpClient.addInterceptor(interceptor)
+        }
         val cookieJar: ClearableCookieJar = PersistentCookieJar(SetCookieCache(), SharedPrefsCookiePersistor(context))
         okHttpClient.cookieJar(cookieJar)
         return enableTls12OnPreLollipop(okHttpClient).build()
