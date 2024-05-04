@@ -66,6 +66,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/search_view_height"
         android:layout_margin="@dimen/space10dp"
+        android:inputType="textCapSentences"
         android:background="@drawable/bg_line_border"
         android:queryHint="@string/search"
         app:iconifiedByDefault="false" />
