@@ -51,7 +51,7 @@ interface ApiInterface {
     @GET("w/api.php?action=query&format=json&list=allpages&apnamespace=14&utf8=1")
     fun fetchCategoryList(
             @Query("apfrom") categorySearchTerm: String?,
-            @Query("apprefix") apPrefix: String?,
+            //@Query("apprefix") apPrefix: String?,
             @Query("aplimit") limit: Int?,
             @Query("apcontinue") apContinue: String?,
     ): Call<WikiCategoryListItemResponse?>

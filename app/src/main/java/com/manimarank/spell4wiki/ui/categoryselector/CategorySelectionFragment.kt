@@ -80,7 +80,7 @@ class CategorySelectionFragment(private val mActivity: Activity) : BottomSheetDi
             }
         }
 
-        adapter = CategoryAdapter(arrayListOf(), categorySelectionListener, preSelectedLanguageCode)
+        adapter = CategoryAdapter(arrayListOf(), categorySelectionListener)
         recyclerView?.adapter = adapter
         btnClose?.setOnClickListener { dismiss() }
         dialog.setOnShowListener { dialog1: DialogInterface ->
@@ -130,7 +130,7 @@ class CategorySelectionFragment(private val mActivity: Activity) : BottomSheetDi
         val api = ApiClient.getWiktionaryApi(mActivity, pref.languageCodeSpell4WikiAll ?: AppConstants.DEFAULT_LANGUAGE_CODE).create(ApiInterface::class.java)
         val call = api.fetchCategoryList(
             searchTerm,
-            searchTerm,
+            //searchTerm,
             100,
             null
         )
