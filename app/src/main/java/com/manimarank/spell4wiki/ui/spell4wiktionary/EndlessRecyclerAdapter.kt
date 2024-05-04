@@ -33,8 +33,6 @@ import com.manimarank.spell4wiki.utils.constants.ListMode
 import com.manimarank.spell4wiki.utils.constants.ListMode.Companion.EnumListMode
 import com.manimarank.spell4wiki.utils.constants.Urls
 import com.manimarank.spell4wiki.utils.makeVisible
-import java.util.*
-import kotlin.collections.ArrayList
 
 class EndlessRecyclerAdapter(
     private val mContext: Context,
@@ -85,7 +83,10 @@ class EndlessRecyclerAdapter(
 
     fun addItems(postItems: MutableList<String>) {
         if (postItems.isNotEmpty()) {
-            mItems.addAll(postItems)
+            postItems.forEach {item ->
+                if (!mItems.contains(item))
+                    mItems.add(item)
+            }
             notifyDataSetChanged()
         }
     }

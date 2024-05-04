@@ -1,0 +1,26 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layoutItem"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/txtCategory"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/space12dp"
+        android:ellipsize="end"
+        android:maxLines="3"
+        android:textSize="@dimen/text_normal" />
+
+    <View
+        android:background="@color/cardview_dark_background"
+        android:layout_width="match_parent"
+        android:layout_marginStart="@dimen/space12dp"
+        android:layout_marginEnd="@dimen/space12dp"
+        android:layout_height="0.1dp"/>
+
+
+</LinearLayout>

@@ -6,12 +6,13 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
-import android.text.InputType
 import android.text.TextUtils
-import android.view.*
+import android.view.Menu
+import android.view.MenuItem
+import android.view.View
+import android.view.Window
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.EditText
 import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
 import androidx.interpolator.view.animation.FastOutSlowInInterpolator
@@ -33,29 +34,37 @@ import com.manimarank.spell4wiki.data.prefs.PrefManager
 import com.manimarank.spell4wiki.data.prefs.ShowCasePref
 import com.manimarank.spell4wiki.data.prefs.ShowCasePref.isNotShowed
 import com.manimarank.spell4wiki.data.prefs.ShowCasePref.showed
+import com.manimarank.spell4wiki.ui.categoryselector.CategorySelectionFragment
 import com.manimarank.spell4wiki.ui.common.BaseActivity
 import com.manimarank.spell4wiki.ui.custom.EndlessRecyclerView.EndlessListener
 import com.manimarank.spell4wiki.ui.dialogs.CommonDialog.openRunFilterInfoDialog
 import com.manimarank.spell4wiki.ui.dialogs.showConfirmBackDialog
 import com.manimarank.spell4wiki.ui.languageselector.LanguageSelectionFragment
+import com.manimarank.spell4wiki.ui.listerners.OnCategorySelectionListener
 import com.manimarank.spell4wiki.ui.listerners.OnLanguageSelectionListener
-import com.manimarank.spell4wiki.utils.*
-import com.manimarank.spell4wiki.utils.GeneralUtils.openUrlInBrowser
+import com.manimarank.spell4wiki.utils.GeneralUtils
 import com.manimarank.spell4wiki.utils.NetworkUtils.isConnected
+import com.manimarank.spell4wiki.utils.SnackBarUtils
 import com.manimarank.spell4wiki.utils.constants.AppConstants
 import com.manimarank.spell4wiki.utils.constants.ListMode
-import com.manimarank.spell4wiki.utils.constants.Urls
 import com.manimarank.spell4wiki.utils.extensions.makeNullIfEmpty
-import kotlinx.android.synthetic.main.activity_spell_4_wiktionary.*
-import kotlinx.android.synthetic.main.empty_state_ui.*
-import kotlinx.android.synthetic.main.layout_run_filter_action.*
+import com.manimarank.spell4wiki.utils.makeGone
+import com.manimarank.spell4wiki.utils.makeInVisible
+import com.manimarank.spell4wiki.utils.makeVisible
+import kotlinx.android.synthetic.main.activity_spell_4_wiktionary.btnAddCategory
+import kotlinx.android.synthetic.main.activity_spell_4_wiktionary.recyclerView
+import kotlinx.android.synthetic.main.activity_spell_4_wiktionary.refreshLayout
+import kotlinx.android.synthetic.main.activity_spell_4_wiktionary.spinnerCategory
+import kotlinx.android.synthetic.main.empty_state_ui.layoutEmpty
+import kotlinx.android.synthetic.main.layout_run_filter_action.btnRunFilter
+import kotlinx.android.synthetic.main.layout_run_filter_action.btnRunFilterInfo
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import uk.co.samuelwall.materialtaptargetprompt.MaterialTapTargetPrompt
 import uk.co.samuelwall.materialtaptargetprompt.MaterialTapTargetSequence
 import uk.co.samuelwall.materialtaptargetprompt.extras.focals.RectanglePromptFocal
-import java.util.*
+import java.util.Locale
 import java.util.concurrent.TimeUnit
 
 
@@ -503,7 +512,7 @@ class Spell4Wiktionary : BaseActivity(), EndlessListener {
         categoryDataList = pref.getWordsCategoryList(languageCode)
         setupCategorySpinnerData(categoryDataList)
         btnAddCategory.setOnClickListener {
-            showWordCategoryInputDialog()
+            showCategorySearchSelectionScreen()
         }
     }
 
@@ -511,7 +520,12 @@ class Spell4Wiktionary : BaseActivity(), EndlessListener {
         val spinnerAdapter = ArrayAdapter(applicationContext, R.layout.item_category, categoryDataList.toTypedArray())
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinnerCategory.adapter = spinnerAdapter
-        wiktionaryTitleOfWordsWithoutAudio = categoryDataList.firstOrNull()
+
+        val selectedPos = categoryDataList.indexOfFirst { it == pref.getSelectedWordsCategory(languageCode) }
+
+        spinnerCategory.setSelection(selectedPos)
+
+        wiktionaryTitleOfWordsWithoutAudio = categoryDataList.elementAtOrNull(selectedPos)
         if (categoryDataList.isNotEmpty()) {
             spinnerCategory.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(
@@ -520,7 +534,8 @@ class Spell4Wiktionary : BaseActivity(), EndlessListener {
                     pos: Int,
                     id: Long
                 ) {
-                    wiktionaryTitleOfWordsWithoutAudio = parent?.getItemAtPosition(pos)?.toString()
+                    pref.setSelectedWordsCategory(languageCode, parent?.getItemAtPosition(pos)?.toString())
+                    wiktionaryTitleOfWordsWithoutAudio = pref.getSelectedWordsCategory(languageCode)
                     nextOffsetObj = null
                     recyclerView?.reset()
                     loadDataFromServer()
@@ -531,22 +546,29 @@ class Spell4Wiktionary : BaseActivity(), EndlessListener {
         }
     }
 
-    private fun showWordCategoryInputDialog() {
-        val builder = AlertDialog.Builder(this@Spell4Wiktionary)
-        builder.setTitle("Enter valid words category")
-        val input = EditText(this@Spell4Wiktionary)
-        input.inputType = InputType.TYPE_CLASS_TEXT
-        builder.setView(input)
-        builder.setPositiveButton("Add") { _, _ -> setUpCategoryData(input.text?.toString(), refreshSpinner = true) }
-        builder.setNegativeButton("Cancel") { dialog, _ -> dialog.cancel() }
-        builder.setNeutralButton("How to find?") { _, _ -> openUrlInBrowser(this, Urls.HOW_TO_ADD_CATEGORY) }
-        builder.show()
+    private fun showCategorySearchSelectionScreen() {
+
+        val categorySelectionListener = object : OnCategorySelectionListener {
+            override fun onCallBackListener(category: String?) {
+                setUpCategoryData(category, refreshSpinner = true)
+            }
+        }
+
+        try {
+            val categorySelectionFragment = CategorySelectionFragment(this)
+            categorySelectionFragment.init(categorySelectionListener, ListMode.SPELL_4_WIKI_ALL)
+            categorySelectionFragment.show(supportFragmentManager)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
+
 
     private fun setUpCategoryData(category: String?, refreshSpinner: Boolean = false) {
         if (category?.makeNullIfEmpty() != null) {
             val catList: MutableList<String> = pref.getWordsCategoryList(languageCode)
             catList.add(category)
+            pref.setSelectedWordsCategory(languageCode, category)
             pref.setWordsCategoryList(languageCode, catList.toMutableSet())
             if (refreshSpinner) {
                setupCategorySpinnerData(catList)

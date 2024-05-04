@@ -47,6 +47,15 @@ interface ApiInterface {
             @Query("cmdir") sortDirection: String?
     ): Call<WikiWordsWithoutAudio?>
 
+    // Fetch Categories list - Wiktionary - https://www.mediawiki.org/wiki/API:allpages
+    @GET("w/api.php?action=query&format=json&list=allpages&apnamespace=14&utf8=1")
+    fun fetchCategoryList(
+            @Query("apfrom") categorySearchTerm: String?,
+            @Query("apprefix") apPrefix: String?,
+            @Query("aplimit") limit: Int?,
+            @Query("apcontinue") apContinue: String?,
+    ): Call<WikiCategoryListItemResponse?>
+
     // Edit Token - Commons
     @GET("w/api.php?action=query&meta=tokens&format=json&type=csrf")
     fun getCsrfEditToken(): Call<WikiToken?>

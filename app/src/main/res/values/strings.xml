@@ -237,4 +237,7 @@
     <string name="sc_t_core_contributors_list_item">More about Contributor</string>
     <string name="sc_d_core_contributors_list_item">Click the name for more details about the contributor.</string>
 
+    <!-- New String -->
+    <string name="select_category">Search &amp; Select Category</string>
+
 </resources>
