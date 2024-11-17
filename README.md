@@ -32,11 +32,10 @@ Spell4Wiki also a multilingual Wiki-Dictionary.
 <p align="center">
 <img src="https://raw.githubusercontent.com/manimaran96/Spell4Wiki/master/files/assets/screenshots/spell4wiki_ui.gif" width="300"/></p></kbd>
 
-**What Spell4Wiki App Achieved**
+## What Spell4Wiki App Achieved?
 - Supported 250+ Languages for all 4 features.
-- Uploaded 30,000+ audio files to Wikimedia commons from various language contributors.
-- All audio files are categorized under Wikimedia commons - https://commons.wikimedia.org/wiki/Category:Filesuploadedby_spell4wiki
-
+- Uploaded 35,000+ audio files to Wikimedia commons from various language contributors.
+- All audio files are categorized under Wikimedia commons - https://commons.wikimedia.org/wiki/Category:Files_uploaded_by_spell4wiki
 
 ## Contribution
 
@@ -103,6 +102,10 @@ More contributors : [look here](https://github.com/manimaran96/Spell4Wiki/graphs
 |:-:|:-:|:-:|:-:|
 | ![Fifth](fastlane/metadata/android/en-US/images/phoneScreenshots/5.png?raw=true) | ![Sixth](fastlane/metadata/android/en-US/images/phoneScreenshots/6.png?raw=true) | ![Seventh](fastlane/metadata/android/en-US/images/phoneScreenshots/7.png?raw=true) | ![Eighth](fastlane/metadata/android/en-US/images/phoneScreenshots/8.png?raw=true) |
 
+
+## Stats of Files uploaded by Speell4Wiki to Wikimedia Commons
+
+<p align="center"><img src="https://raw.githubusercontent.com/manimaran96/Spell4Wiki/master/files/assets/images/spell4wiki_files_uploded_stats.png" width="1200"/></p>
 
 
 ## License
