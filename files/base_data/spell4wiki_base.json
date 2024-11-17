@@ -787,7 +787,8 @@
          "code":"la",
          "lang":"Latin",
          "dir":"ltr",
-         "local_lang":"Latina"
+         "local_lang":"Latina",
+         "category": ["Files uploaded by spell4wiki in la"]
       },
       {
          "code":"lad",
