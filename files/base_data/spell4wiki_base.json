@@ -62,7 +62,7 @@
          "lang":"Arabic",
          "dir":"rtl",
          "local_lang":"العربية",
-         "category": ["Files uploaded by spell4wiki in ar"]
+         "category": ["Files uploaded by spell4wiki in ar", "Arabic pronunciation"]
       },
       {
          "code":"arc",
@@ -789,7 +789,7 @@
          "lang":"Latin",
          "dir":"ltr",
          "local_lang":"Latina",
-         "category": ["Files uploaded by spell4wiki in la"]
+         "category": ["Files uploaded by spell4wiki in la", "Latin pronunciation"]
       },
       {
          "code":"lad",
@@ -1069,7 +1069,7 @@
          "lang":"Oromo",
          "dir":"ltr",
          "local_lang":"Oromoo",
-         "category": ["Files uploaded by spell4wiki in om"]
+         "category": ["Files uploaded by spell4wiki in om", "Oromo pronunciation"]
       },
       {
          "code":"or",
@@ -1133,7 +1133,7 @@
          "lang":"Polish",
          "dir":"ltr",
          "local_lang":"Polski",
-         "category": ["Files uploaded by spell4wiki in pl"]
+         "category": ["Files uploaded by spell4wiki in pl", "Polish pronunciation"]
       },
       {
          "code":"pms",
