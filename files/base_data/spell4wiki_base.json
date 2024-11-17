@@ -763,7 +763,8 @@
          "code":"ku",
          "lang":"Kurdish",
          "dir":"rtl",
-         "local_lang":"Kurdî / كوردی"
+         "local_lang":"Kurdî / كوردی",
+         "category": ["Files uploaded by spell4wiki in ku", "Kurdish pronunciation"]
       },
       {
          "code":"kv",
