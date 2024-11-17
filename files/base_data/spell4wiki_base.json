@@ -61,7 +61,8 @@
          "code":"ar",
          "lang":"Arabic",
          "dir":"rtl",
-         "local_lang":"العربية"
+         "local_lang":"العربية",
+         "category": ["Files uploaded by spell4wiki in ar"]
       },
       {
          "code":"arc",
@@ -1065,7 +1066,8 @@
          "code":"om",
          "lang":"Oromo",
          "dir":"ltr",
-         "local_lang":"Oromoo"
+         "local_lang":"Oromoo",
+         "category": ["Files uploaded by spell4wiki in om"]
       },
       {
          "code":"or",
