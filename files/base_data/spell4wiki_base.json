@@ -1130,7 +1130,8 @@
          "code":"pl",
          "lang":"Polish",
          "dir":"ltr",
-         "local_lang":"Polski"
+         "local_lang":"Polski",
+         "category": ["Files uploaded by spell4wiki in pl"]
       },
       {
          "code":"pms",
