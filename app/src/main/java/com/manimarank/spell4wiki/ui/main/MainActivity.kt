@@ -1,11 +1,16 @@
 package com.manimarank.spell4wiki.ui.main
 
 import android.app.AlertDialog
-import android.content.*
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.DialogInterface
+import android.content.Intent
+import android.content.IntentFilter
 import android.os.Bundle
 import android.os.Handler
 import android.view.View
 import androidx.appcompat.widget.SearchView
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.manimarank.spell4wiki.R
 import com.manimarank.spell4wiki.data.prefs.AppPref.INSTANCE.checkAppUpdateAvailable
 import com.manimarank.spell4wiki.data.prefs.PrefManager
@@ -28,12 +33,21 @@ import com.manimarank.spell4wiki.utils.constants.AppConstants
 import com.manimarank.spell4wiki.utils.constants.Urls
 import com.manimarank.spell4wiki.utils.makeGone
 import com.manimarank.spell4wiki.utils.makeVisible
-import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_main.btn_about
+import kotlinx.android.synthetic.main.activity_main.btn_logout
+import kotlinx.android.synthetic.main.activity_main.btn_settings
+import kotlinx.android.synthetic.main.activity_main.card_spell4wiki
+import kotlinx.android.synthetic.main.activity_main.card_spell4word
+import kotlinx.android.synthetic.main.activity_main.card_spell4wordlist
+import kotlinx.android.synthetic.main.activity_main.layoutLogin
+import kotlinx.android.synthetic.main.activity_main.search_view
+import kotlinx.android.synthetic.main.activity_main.txtLogin
+import kotlinx.android.synthetic.main.activity_main.txtViewMyContribution
+import kotlinx.android.synthetic.main.activity_main.txt_welcome_user
 
 class MainActivity : BaseActivity(), View.OnClickListener {
     // Views
-    var filter = IntentFilter(AppLanguageDialog.LANGUAGE_FILTER)
-    var languageChangeReceiver: BroadcastReceiver? = object : BroadcastReceiver() {
+    private var languageChangeReceiver: BroadcastReceiver? = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
             if (!isDestroyed && !isFinishing && intent.extras != null) {
                 val value = intent.extras?.getString(AppLanguageDialog.SELECTED_LANGUAGE, "")
@@ -49,8 +63,12 @@ class MainActivity : BaseActivity(), View.OnClickListener {
         super.onCreate(savedInstanceState)
         pref = PrefManager(this@MainActivity)
         setContentView(R.layout.activity_main)
+        //window.enableEdgeToEdge()
         initViews()
-        registerReceiver(languageChangeReceiver, filter)
+        languageChangeReceiver?.let {
+            LocalBroadcastManager.getInstance(this).registerReceiver(
+                it, IntentFilter(AppLanguageDialog.SELECTED_LANGUAGE))
+        }
         search_view.queryHint = getString(R.string.wiktionary_search)
         search_view.setIconifiedByDefault(false)
         search_view.clearFocus()
@@ -158,6 +176,8 @@ class MainActivity : BaseActivity(), View.OnClickListener {
 
     override fun onDestroy() {
         super.onDestroy()
-        if (languageChangeReceiver != null) unregisterReceiver(languageChangeReceiver)
+        languageChangeReceiver?.let {
+            LocalBroadcastManager.getInstance(this).unregisterReceiver(it)
+        }
     }
 }
