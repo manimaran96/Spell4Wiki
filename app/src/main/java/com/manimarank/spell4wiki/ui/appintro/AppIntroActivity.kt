@@ -80,7 +80,7 @@ class AppIntroActivity : BaseActivity() {
                 isDoneCalled = true
                 // Ask required permission on done pressed
                 if (!GeneralUtils.checkPermissionGranted(this) && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    requestPermissions(arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.RECORD_AUDIO, Manifest.permission.READ_EXTERNAL_STORAGE), AppConstants.RC_PERMISSIONS)
+                    requestPermissions(arrayOf(Manifest.permission.RECORD_AUDIO), AppConstants.RC_PERMISSIONS)
                 } else {
                     openMainActivity()
                 }

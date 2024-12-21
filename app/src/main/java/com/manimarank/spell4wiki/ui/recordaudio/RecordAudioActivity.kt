@@ -2,8 +2,6 @@ package com.manimarank.spell4wiki.ui.recordaudio
 
 import android.Manifest
 import android.annotation.SuppressLint
-import android.app.AlertDialog
-import android.content.DialogInterface
 import android.content.Intent
 import android.content.res.Configuration
 import android.os.Build
@@ -11,16 +9,13 @@ import android.os.Bundle
 import android.os.CountDownTimer
 import android.os.Handler
 import android.text.TextUtils
-import android.text.method.LinkMovementMethod
 import android.view.MotionEvent
 import android.view.View
 import android.webkit.MimeTypeMap
 import android.widget.SeekBar
 import android.widget.SeekBar.OnSeekBarChangeListener
-import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
-import androidx.core.text.HtmlCompat
 import androidx.interpolator.view.animation.FastOutSlowInInterpolator
 import com.google.gson.Gson
 import com.manimarank.spell4wiki.R
@@ -45,9 +40,7 @@ import com.manimarank.spell4wiki.record.ogg.WavToOggConverter
 import com.manimarank.spell4wiki.record.wav.WAVPlayer
 import com.manimarank.spell4wiki.record.wav.WAVRecorder
 import com.manimarank.spell4wiki.ui.common.BaseActivity
-import com.manimarank.spell4wiki.ui.dialogs.AppLanguageDialog
 import com.manimarank.spell4wiki.ui.recordaudio.WikiDataUtils.getUploadName
-import com.manimarank.spell4wiki.ui.settings.SettingsActivity
 import com.manimarank.spell4wiki.utils.DateUtils.DF_YYYY_MM_DD
 import com.manimarank.spell4wiki.utils.DateUtils.getDateToString
 import com.manimarank.spell4wiki.utils.GeneralUtils
@@ -57,19 +50,28 @@ import com.manimarank.spell4wiki.utils.GeneralUtils.showAppSettingsPageSnackBar
 import com.manimarank.spell4wiki.utils.NetworkUtils.isConnected
 import com.manimarank.spell4wiki.utils.Print.error
 import com.manimarank.spell4wiki.utils.Print.log
-import com.manimarank.spell4wiki.utils.RealPathUtil
 import com.manimarank.spell4wiki.utils.ToastUtils.showLong
-import com.manimarank.spell4wiki.utils.WikiLicense
 import com.manimarank.spell4wiki.utils.WikiLicense.getLicenseTemplateInWiki
 import com.manimarank.spell4wiki.utils.WikiLicense.licenseNameId
 import com.manimarank.spell4wiki.utils.constants.AppConstants
 import com.manimarank.spell4wiki.utils.constants.AppConstants.MAX_RETRIES_FOR_CSRF_TOKEN
 import com.manimarank.spell4wiki.utils.constants.AppConstants.MAX_RETRIES_FOR_FORCE_LOGIN
-import com.manimarank.spell4wiki.utils.constants.AppConstants.RC_EDIT_REQUEST_CODE
 import com.manimarank.spell4wiki.utils.constants.AppConstants.RC_LICENCE_CHANGE
 import com.manimarank.spell4wiki.utils.extensions.showLicenseChooseDialog
-import kotlinx.android.synthetic.main.activity_record_audio_pop_up.*
-import kotlinx.android.synthetic.main.activity_settings.*
+import kotlinx.android.synthetic.main.activity_record_audio_pop_up.btnClose
+import kotlinx.android.synthetic.main.activity_record_audio_pop_up.btnPlayPause
+import kotlinx.android.synthetic.main.activity_record_audio_pop_up.btnRecord
+import kotlinx.android.synthetic.main.activity_record_audio_pop_up.btnSettings
+import kotlinx.android.synthetic.main.activity_record_audio_pop_up.btnUpload
+import kotlinx.android.synthetic.main.activity_record_audio_pop_up.checkboxDeclaration
+import kotlinx.android.synthetic.main.activity_record_audio_pop_up.layoutRecordControls
+import kotlinx.android.synthetic.main.activity_record_audio_pop_up.layoutUploadPopUp
+import kotlinx.android.synthetic.main.activity_record_audio_pop_up.seekBar
+import kotlinx.android.synthetic.main.activity_record_audio_pop_up.txtDuration
+import kotlinx.android.synthetic.main.activity_record_audio_pop_up.txtLanguage
+import kotlinx.android.synthetic.main.activity_record_audio_pop_up.txtRecordHint
+import kotlinx.android.synthetic.main.activity_record_audio_pop_up.txtUploadMsg
+import kotlinx.android.synthetic.main.activity_record_audio_pop_up.txtWord
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -80,7 +82,7 @@ import retrofit2.Response
 import uk.co.samuelwall.materialtaptargetprompt.MaterialTapTargetPrompt
 import uk.co.samuelwall.materialtaptargetprompt.extras.focals.RectanglePromptFocal
 import java.io.File
-import java.util.*
+import java.util.Locale
 import java.util.concurrent.Callable
 import java.util.concurrent.TimeUnit
 
@@ -308,8 +310,7 @@ class RecordAudioActivity : BaseActivity() {
                 showAppSettingsPageSnackBar(layoutRecordControls)
             requestPermissions(
                 arrayOf(
-                    Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.RECORD_AUDIO,
-                    Manifest.permission.WRITE_EXTERNAL_STORAGE
+                    Manifest.permission.RECORD_AUDIO,
                 ), AppConstants.RC_STORAGE_AUDIO_PERMISSION
             )
         }

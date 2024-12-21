@@ -6,7 +6,7 @@ buildscript {
     ext.playStoreBuild = "playstore-build"
     ext.appBuildType = fdroidBuild // Default build type is fdroid-build
 
-    ext.kotlin_version = '1.5.31'
+    ext.kotlin_version = '1.6.21'
     repositories {
         jcenter()
         google()
@@ -39,6 +39,6 @@ allprojects {
     }
 }
 
-task clean(type: Delete) {
+tasks.register('clean', Delete) {
     delete rootProject.buildDir
 }

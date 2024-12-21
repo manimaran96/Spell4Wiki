@@ -1,10 +1,8 @@
 package com.manimarank.spell4wiki.ui.spell4wiktionary
 
-import android.app.AlertDialog
 import android.app.Dialog
-import android.content.DialogInterface
 import android.content.Intent
-import android.os.Build
+import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.text.TextUtils
@@ -13,7 +11,7 @@ import android.view.MenuItem
 import android.view.View
 import android.view.Window
 import android.widget.TextView
-import androidx.annotation.RequiresApi
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -34,24 +32,30 @@ import com.manimarank.spell4wiki.ui.listerners.OnLanguageSelectionListener
 import com.manimarank.spell4wiki.utils.GeneralUtils
 import com.manimarank.spell4wiki.utils.GeneralUtils.getPromptBuilder
 import com.manimarank.spell4wiki.utils.GeneralUtils.hideKeyboard
-import com.manimarank.spell4wiki.utils.RealPathUtil.getRealPath
-import com.manimarank.spell4wiki.utils.SnackBarUtils
 import com.manimarank.spell4wiki.utils.SnackBarUtils.showLong
 import com.manimarank.spell4wiki.utils.constants.AppConstants
 import com.manimarank.spell4wiki.utils.constants.ListMode
 import com.manimarank.spell4wiki.utils.makeGone
 import com.manimarank.spell4wiki.utils.makeVisible
-import kotlinx.android.synthetic.main.activity_spell_4_wiktionary.*
-import kotlinx.android.synthetic.main.activity_spell_4_wordlist.*
+import kotlinx.android.synthetic.main.activity_spell_4_wordlist.btnDirectContent
+import kotlinx.android.synthetic.main.activity_spell_4_wordlist.btnDone
+import kotlinx.android.synthetic.main.activity_spell_4_wordlist.btnSelectFile
+import kotlinx.android.synthetic.main.activity_spell_4_wordlist.editFile
+import kotlinx.android.synthetic.main.activity_spell_4_wordlist.layoutEdit
+import kotlinx.android.synthetic.main.activity_spell_4_wordlist.layoutList
+import kotlinx.android.synthetic.main.activity_spell_4_wordlist.layoutSelect
 import kotlinx.android.synthetic.main.activity_spell_4_wordlist.recyclerView
-import kotlinx.android.synthetic.main.empty_state_ui.*
-import kotlinx.android.synthetic.main.layout_run_filter_action.*
+import kotlinx.android.synthetic.main.activity_spell_4_wordlist.txtFileInfo
+import kotlinx.android.synthetic.main.empty_state_ui.layoutEmpty
+import kotlinx.android.synthetic.main.layout_run_filter_action.btnRunFilter
+import kotlinx.android.synthetic.main.layout_run_filter_action.btnRunFilterInfo
 import uk.co.samuelwall.materialtaptargetprompt.MaterialTapTargetSequence
 import java.io.BufferedReader
-import java.io.File
 import java.io.FileInputStream
+import java.io.IOException
 import java.io.InputStreamReader
-import java.util.*
+import java.util.Locale
+
 
 class Spell4WordListActivity : BaseActivity() {
     private var adapter: EndlessRecyclerAdapter? = null
@@ -82,9 +86,7 @@ class Spell4WordListActivity : BaseActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         btnSelectFile.setOnClickListener {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-                editDocument()
-            }
+            openTextFilePicker()
         }
         btnDirectContent.setOnClickListener { showDirectContentAlignMode() }
         btnDone.setOnClickListener {
@@ -104,21 +106,38 @@ class Spell4WordListActivity : BaseActivity() {
     }
 
     /**
-     * Open a file for writing and append some text to it.
+     * Open a text file to read the words
      */
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-    private fun editDocument() {
-        // ACTION_OPEN_DOCUMENT is the intent to choose a file via the system's
-        // file browser.
-        val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
+    private val openTextFileLauncher = registerForActivityResult( ActivityResultContracts.OpenDocument(), this::handleSelectedTextFile)
 
-        // Filter to only show results that can be "opened", such as a
-        // file (as opposed to a list of contacts or timezones).
-        intent.addCategory(Intent.CATEGORY_OPENABLE)
+    // Handle the result of file selection
+    private fun handleSelectedTextFile(uri: Uri?) {
+        if (uri != null) {
+            readTextFileFromUri(uri)
+        }
+    }
 
-        // Filter to show only text files.
-        intent.type = "text/plain"
-        startActivityForResult(intent, AppConstants.RC_EDIT_REQUEST_CODE)
+    // Read content of the selected text file
+    private fun readTextFileFromUri(uri: Uri) {
+        try {
+            contentResolver.openInputStream(uri).use { inputStream ->
+                BufferedReader(InputStreamReader(inputStream)).use { reader ->
+                    val fileContent = java.lang.StringBuilder()
+                    var line: String?
+                    while ((reader.readLine().also { line = it }) != null) {
+                        fileContent.append(line).append("\n")
+                    }
+                    openFileContentInAlignMode(fileContent.toString())
+                }
+            }
+        } catch (e: IOException) {
+            e.printStackTrace()
+        }
+    }
+
+    // Launch SAF to pick a text file
+    private fun openTextFilePicker() {
+        openTextFileLauncher.launch(arrayOf("text/plain")) // MIME type for text files
     }
 
     fun updateList(word: String?) {
@@ -197,17 +216,6 @@ class Spell4WordListActivity : BaseActivity() {
         // response to some other intent, and the code below shouldn't run at all.
         super.onActivityResult(requestCode, resultCode, data)
         if (!isDestroyed && !isFinishing) {
-            if (requestCode == AppConstants.RC_EDIT_REQUEST_CODE && resultCode == RESULT_OK) {
-                // The document selected by the user won't be returned in the intent.
-                // Instead, a URI to that document will be contained in the return intent
-                // provided to this method as a parameter.
-                // Pull that URI using resultData.getData().
-                if (data?.data != null) {
-                    @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
-                    val file = File(getRealPath(applicationContext, data.data!!))
-                    openFileInAlignMode(file.absolutePath)
-                }
-            }
             if (requestCode == AppConstants.RC_UPLOAD_DIALOG) {
                 if (data != null && data.hasExtra(AppConstants.WORD)) {
                     adapter?.addWordInWordsHaveAudioList(data.getStringExtra(AppConstants.WORD))
@@ -219,13 +227,13 @@ class Spell4WordListActivity : BaseActivity() {
         }
     }
 
-    private fun openFileInAlignMode(filePath: String) {
+    private fun openFileContentInAlignMode(fileContent: String) {
         layoutSelect.makeGone()
         layoutEdit.makeVisible()
         layoutList.makeGone()
         layoutEmpty.makeGone()
         txtFileInfo.text = getString(R.string.hint_select_file_next)
-        editFile.setText(getContentFromFile(filePath))
+        editFile.setText(fileContent)
     }
 
     private fun showDirectContentAlignMode() {
@@ -349,7 +357,7 @@ class Spell4WordListActivity : BaseActivity() {
     private fun setupLanguageSelectorMenuItem(menu: Menu) {
         val item = menu.findItem(R.id.menu_lang_selector)
         item.isVisible = true
-        val rootView = item.actionView
+        val rootView = item.actionView ?: return
         val selectedLang = rootView.findViewById<TextView>(R.id.txtSelectedLanguage)
         selectedLang.text = languageCode?.toUpperCase(Locale.ROOT) ?: ""
         rootView.setOnClickListener { loadLanguages() }

@@ -400,7 +400,7 @@ class Spell4Wiktionary : BaseActivity(), EndlessListener {
     private fun setupLanguageSelectorMenuItem(menu: Menu) {
         val item = menu.findItem(R.id.menu_lang_selector)
         item.isVisible = true
-        val rootView = item.actionView
+        val rootView: View = item.actionView ?: return
         val selectedLang = rootView.findViewById<TextView>(R.id.txtSelectedLanguage)
         selectedLang.text = languageCode?.toUpperCase(Locale.ROOT) ?: ""
         rootView.setOnClickListener {

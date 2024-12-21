@@ -20,7 +20,7 @@ import com.manimarank.spell4wiki.ui.listerners.OnLanguageSelectionListener
 import com.manimarank.spell4wiki.utils.GeneralUtils
 import com.manimarank.spell4wiki.utils.constants.AppConstants
 import com.manimarank.spell4wiki.utils.constants.ListMode
-import java.util.*
+import java.util.Locale
 
 class CommonWebActivity : BaseActivity() {
     private var wikiLangDao: WikiLangDao? = null
@@ -108,7 +108,7 @@ class CommonWebActivity : BaseActivity() {
         menu.findItem(R.id.menu_lang_selector).isVisible = isWiktionaryWord
         if (isWiktionaryWord) {
             val item = menu.findItem(R.id.menu_lang_selector)
-            val rootView = item.actionView
+            val rootView = item.actionView ?: return
             val selectedLang = rootView.findViewById<TextView>(R.id.txtSelectedLanguage)
             selectedLang.text = languageCode?.toUpperCase(Locale.ROOT) ?: ""
             rootView.setOnClickListener { loadLanguages() }

@@ -220,9 +220,7 @@ class EndlessRecyclerAdapter(
                     showAppSettingsPageHint()
                     mActivity.requestPermissions(
                         arrayOf(
-                            Manifest.permission.READ_EXTERNAL_STORAGE,
                             Manifest.permission.RECORD_AUDIO,
-                            Manifest.permission.WRITE_EXTERNAL_STORAGE
                         ), AppConstants.RC_PERMISSIONS
                     )
                 }

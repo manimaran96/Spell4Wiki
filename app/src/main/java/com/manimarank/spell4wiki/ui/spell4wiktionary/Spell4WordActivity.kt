@@ -1,13 +1,14 @@
 package com.manimarank.spell4wiki.ui.spell4wiktionary
 
 import android.annotation.SuppressLint
-import android.app.AlertDialog
-import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.text.TextUtils
-import android.view.*
+import android.view.Menu
+import android.view.MenuItem
+import android.view.MotionEvent
+import android.view.View
 import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
 import com.manimarank.spell4wiki.R
@@ -31,9 +32,10 @@ import com.manimarank.spell4wiki.utils.constants.AppConstants
 import com.manimarank.spell4wiki.utils.constants.ListMode
 import com.manimarank.spell4wiki.utils.constants.Urls
 import com.manimarank.spell4wiki.utils.removeStyleAfterPaste
-import kotlinx.android.synthetic.main.activity_spell_4_word.*
+import kotlinx.android.synthetic.main.activity_spell_4_word.btn_record
+import kotlinx.android.synthetic.main.activity_spell_4_word.editSpell4Word
 import uk.co.samuelwall.materialtaptargetprompt.MaterialTapTargetSequence
-import java.util.*
+import java.util.Locale
 
 class Spell4WordActivity : BaseActivity() {
     private var wikiLangDao: WikiLangDao? = null
@@ -139,7 +141,7 @@ class Spell4WordActivity : BaseActivity() {
     private fun setupLanguageSelectorMenuItem(menu: Menu) {
         val item = menu.findItem(R.id.menu_lang_selector)
         item.isVisible = true
-        val rootView = item.actionView
+        val rootView = item.actionView ?: return
         val selectedLang = rootView.findViewById<TextView>(R.id.txtSelectedLanguage)
         selectedLang.text = languageCode?.toUpperCase(Locale.ROOT) ?: ""
         rootView.setOnClickListener { loadLanguages() }

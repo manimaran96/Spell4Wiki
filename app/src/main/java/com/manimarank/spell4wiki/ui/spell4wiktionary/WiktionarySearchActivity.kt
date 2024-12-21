@@ -31,14 +31,15 @@ import com.manimarank.spell4wiki.utils.constants.ListMode
 import com.manimarank.spell4wiki.utils.makeGone
 import com.manimarank.spell4wiki.utils.makeInVisible
 import com.manimarank.spell4wiki.utils.makeVisible
-import kotlinx.android.synthetic.main.activity_wiktionary_search.*
-import kotlinx.android.synthetic.main.loading_info.*
+import kotlinx.android.synthetic.main.activity_wiktionary_search.recyclerView
+import kotlinx.android.synthetic.main.activity_wiktionary_search.search_bar
+import kotlinx.android.synthetic.main.activity_wiktionary_search.txtNotFound
+import kotlinx.android.synthetic.main.loading_info.layoutProgress
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import uk.co.samuelwall.materialtaptargetprompt.MaterialTapTargetSequence
-import java.util.*
-import kotlin.collections.ArrayList
+import java.util.Locale
 
 class WiktionarySearchActivity : BaseActivity(), EndlessListener {
     private var wikiLangDao: WikiLangDao? = null
@@ -149,7 +150,7 @@ class WiktionarySearchActivity : BaseActivity(), EndlessListener {
     private fun setupLanguageSelectorMenuItem(menu: Menu) {
         val item = menu.findItem(R.id.menu_lang_selector)
         item.isVisible = true
-        val rootView = item.actionView
+        val rootView = item.actionView ?: return
         val selectedLang = rootView.findViewById<TextView>(R.id.txtSelectedLanguage)
         selectedLang.text = languageCode?.toUpperCase(Locale.ROOT) ?: ""
         rootView.setOnClickListener {

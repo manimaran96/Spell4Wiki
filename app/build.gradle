@@ -4,12 +4,12 @@ apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-android-extensions'
 
 android {
-    compileSdkVersion 31
+    compileSdk 34
     defaultConfig {
         applicationId "com.manimarank.spell4wiki"
         vectorDrawables.useSupportLibrary = true
-        minSdkVersion 19
-        targetSdkVersion 31
+        minSdk 21
+        targetSdk 35
         versionName "2.2"
         versionCode 16
         multiDexEnabled true
@@ -44,7 +44,7 @@ dependencies {
 
     // Kotlin
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    implementation 'androidx.core:core-ktx:1.7.0'
+    implementation 'androidx.core:core-ktx:1.8.1'
 
     // UI related libraries
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
