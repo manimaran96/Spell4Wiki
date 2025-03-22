@@ -81,8 +81,8 @@ hasn't been reported/requested before.
 * Follow the [instructions](#code-contribution) and [steps to start changes](#getting-started).
 * Create new branch. Ex : ```language-ta``` 
 * Checkout this new branch.
-* Then, Create ```vales-language-code``` folder inside the ```app/src/main/res/``` folder. (Ex : ```values-ta```, ```values-hi```, ... etc.)
-* Create ```strings.xml``` file inside the ```vales-language-code``` folder.
+* Then, Create ```values-language-code``` folder inside the ```app/src/main/res/``` folder. (Ex : ```values-ta```, ```values-hi```, ... etc.)
+* Create ```strings.xml``` file inside the ```values-language-code``` folder.
 * Copy all the English text from following file```app/src/main/res/values/strings.xml``` path - [link](https://github.com/manimaran96/Spell4Wiki/blob/master/app/src/main/res/values/strings.xml)
 * Translate all the strings into your language.
 * Finally do commit and give the PR.
