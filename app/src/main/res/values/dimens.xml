@@ -46,15 +46,40 @@
 	<dimen name="record_close_btn_margin">-24dp</dimen>
 	<dimen name="record_close_btn_size">48dp</dimen>
 
-	<!--Space Margin, Padding -->
+	<!--Space Margin, Padding - Material Design Guidelines -->
+	<!-- Material Design 8dp grid system -->
+	<dimen name="space2dp">2dp</dimen>
+	<dimen name="space4dp">4dp</dimen>
+	<dimen name="space8dp">8dp</dimen>
 	<dimen name="space12dp">12dp</dimen>
-	<dimen name="space32dp">32dp</dimen>
 	<dimen name="space16dp">16dp</dimen>
 	<dimen name="space20dp">20dp</dimen>
-	<dimen name="space8dp">8dp</dimen>
-	<dimen name="space4dp">4dp</dimen>
-	<dimen name="space2dp">2dp</dimen>
 	<dimen name="space24dp">24dp</dimen>
+	<dimen name="space32dp">32dp</dimen>
+	<dimen name="space40dp">40dp</dimen>
+	<dimen name="space48dp">48dp</dimen>
+	<dimen name="space56dp">56dp</dimen>
+	<dimen name="space64dp">64dp</dimen>
+	<dimen name="space72dp">72dp</dimen>
+
+	<!-- Material Design specific spacing -->
+	<dimen name="margin_small">8dp</dimen>
+	<dimen name="margin_medium">16dp</dimen>
+	<dimen name="margin_large">24dp</dimen>
+	<dimen name="margin_extra_large">32dp</dimen>
+
+	<dimen name="padding_small">8dp</dimen>
+	<dimen name="padding_medium">16dp</dimen>
+	<dimen name="padding_large">24dp</dimen>
+	<dimen name="padding_extra_large">32dp</dimen>
+
+	<!-- Content spacing -->
+	<dimen name="content_margin_horizontal">16dp</dimen>
+	<dimen name="content_margin_vertical">16dp</dimen>
+	<dimen name="list_item_spacing">8dp</dimen>
+	<dimen name="section_spacing">24dp</dimen>
+
+	<!-- Legacy dimensions -->
 	<dimen name="space30dp">30dp</dimen>
 	<dimen name="show_case_focal_padding">40dp</dimen>
 	<dimen name="icon_language">60dp</dimen>

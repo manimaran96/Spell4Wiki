@@ -29,12 +29,17 @@ import com.manimarank.spell4wiki.utils.constants.AppConstants
 import com.manimarank.spell4wiki.utils.constants.ListMode.Companion.EnumListMode
 import com.manimarank.spell4wiki.utils.makeGone
 import com.manimarank.spell4wiki.utils.makeVisible
+import com.manimarank.spell4wiki.databinding.BottomSheetCategorySelectionBinding
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 
 class CategorySelectionFragment(private val mActivity: Activity) : BottomSheetDialogFragment() {
+
+    private var _binding: BottomSheetCategorySelectionBinding? = null
+    private val binding get() = _binding!!
+
     private lateinit var pref: PrefManager
     private var callback: OnCategorySelectionListener? = null
     private var categoryList = ArrayList<CategoryItem>()
@@ -43,10 +48,6 @@ class CategorySelectionFragment(private val mActivity: Activity) : BottomSheetDi
     @EnumListMode
     private var listMode = 0
     private var preSelectedLanguageCode: String? = null
-
-    var recyclerView: RecyclerView? = null
-    var loaderView: ProgressBar? = null
-    var txtCategoryResInfo: TextView? = null
 
     @JvmOverloads
     fun init(callback: OnCategorySelectionListener?, @EnumListMode mode: Int, preSelectedLanguageCode: String? = null) {
@@ -58,18 +59,14 @@ class CategorySelectionFragment(private val mActivity: Activity) : BottomSheetDi
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         pref = PrefManager(context)
-        val dialog = BottomSheetDialog(mActivity, R.style.AppTheme)
-        dialog.setContentView(R.layout.bottom_sheet_category_selection)
-        val txtTitle = dialog.findViewById<TextView>(R.id.text_select_category_sub_title)
-        if (!TextUtils.isEmpty(subTitleInfo) && txtTitle != null) {
-            txtTitle.makeVisible()
-            txtTitle.text = subTitleInfo
+        val dialog = BottomSheetDialog(mActivity, R.style.BottomSheetDialogTheme)
+        _binding = BottomSheetCategorySelectionBinding.inflate(layoutInflater)
+        dialog.setContentView(binding.root)
+
+        if (!TextUtils.isEmpty(subTitleInfo)) {
+            binding.textSelectCategorySubTitle.makeVisible()
+            binding.textSelectCategorySubTitle.text = subTitleInfo
         }
-        recyclerView = dialog.findViewById(R.id.recyclerView)
-        loaderView = dialog.findViewById(R.id.progressBar)
-        txtCategoryResInfo = dialog.findViewById(R.id.txtCategorySearchInfo)
-        val btnClose = dialog.findViewById<ImageView>(R.id.btn_close)
-        val searchView = dialog.findViewById<SearchView>(R.id.search_view)
 
         categoryList.clear()
 
@@ -81,11 +78,11 @@ class CategorySelectionFragment(private val mActivity: Activity) : BottomSheetDi
         }
 
         adapter = CategoryAdapter(arrayListOf(), categorySelectionListener)
-        recyclerView?.adapter = adapter
-        btnClose?.setOnClickListener { dismiss() }
+        binding.recyclerView.adapter = adapter
+        binding.btnClose.setOnClickListener { dismiss() }
         dialog.setOnShowListener { dialog1: DialogInterface ->
             val d = dialog1 as BottomSheetDialog
-            val bottomSheet = d.findViewById<FrameLayout>(R.id.design_bottom_sheet)
+            val bottomSheet = d.findViewById<FrameLayout>(com.google.android.material.R.id.design_bottom_sheet)
             if (bottomSheet != null) {
                 val behavior: BottomSheetBehavior<*> = BottomSheetBehavior.from(bottomSheet)
                 behavior.isHideable = false
@@ -99,10 +96,10 @@ class CategorySelectionFragment(private val mActivity: Activity) : BottomSheetDi
             }
         }
 
-        searchView?.queryHint = getString(R.string.search)
-        searchView?.isQueryRefinementEnabled = true
+        binding.searchView.queryHint = getString(R.string.search)
+        binding.searchView.isQueryRefinementEnabled = true
         val handler = Handler(Looper.getMainLooper())
-        searchView?.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+        binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String): Boolean {
                 return false
             }
@@ -160,17 +157,17 @@ class CategorySelectionFragment(private val mActivity: Activity) : BottomSheetDi
         })
     }
     fun showLoader(show: Boolean?, resInfo: String? = null) {
-        recyclerView.makeGone()
-        loaderView.makeGone()
-        txtCategoryResInfo.makeGone()
+        binding.recyclerView.makeGone()
+        binding.progressBar.makeGone()
+        binding.txtCategorySearchInfo.makeGone()
 
         if (resInfo != null) {
-            txtCategoryResInfo?.text = resInfo
-            txtCategoryResInfo.makeVisible()
+            binding.txtCategorySearchInfo.text = resInfo
+            binding.txtCategorySearchInfo.makeVisible()
         } else if (show == true) {
-            loaderView.makeVisible()
+            binding.progressBar.makeVisible()
         } else {
-            recyclerView.makeVisible()
+            binding.recyclerView.makeVisible()
         }
     }
     private val subTitleInfo: String?
@@ -188,4 +185,9 @@ class CategorySelectionFragment(private val mActivity: Activity) : BottomSheetDi
 
     private val tagValue: String
         get() = "CATEGORY_SELECTION_FRAGMENT"
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 }

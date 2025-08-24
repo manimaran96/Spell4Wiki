@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.manimarank.spell4wiki.R
 import com.manimarank.spell4wiki.ui.common.BaseActivity
 import com.manimarank.spell4wiki.data.model.ItemsModel
+import com.manimarank.spell4wiki.utils.EdgeToEdgeUtils.setupEdgeToEdgeWithToolbar
 import com.manimarank.spell4wiki.utils.constants.AppConstants
 import com.manimarank.spell4wiki.utils.constants.Urls
 import java.util.*
@@ -16,6 +17,13 @@ class ListItemActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_list_info)
+
+        // Setup proper status bar handling (ListItemActivity uses default action bar)
+        setupEdgeToEdgeWithToolbar(
+            rootView = findViewById(android.R.id.content),
+            toolbar = null
+        )
+
         if (supportActionBar != null) {
             supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         }
@@ -59,15 +67,15 @@ class ListItemActivity : BaseActivity() {
             val gplV3 = Urls.GPL_V3
             val apache = Urls.APACHE
             val mit = Urls.MIT
-            list.add(ItemsModel("org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.3.72", apache, "https://mvnrepository.com/artifact/org.jetbrains.kotlin/kotlin-stdlib-jdk7"))
-            list.add(ItemsModel("androidx.core:core-ktx:1.2.0", apache, "https://developer.android.com/jetpack/androidx/releases/core"))
-            list.add(ItemsModel("androidx.constraintlayout:constraintlayout:1.1.3", apache, "https://androidstudio.googleblog.com/2018/08/constraintlayout-113.html"))
-            list.add(ItemsModel("androidx.appcompat:appcompat:1.1.0", apache, "https://developer.android.com/jetpack/androidx/releases/appcompat"))
-            list.add(ItemsModel("com.google.android.material:material:1.0.0", apache, "https://developer.android.com/topic/libraries/support-library"))
-            list.add(ItemsModel("androidx.recyclerview:recyclerview:1.1.0", apache, "https://developer.android.com/jetpack/androidx/releases/recyclerview"))
-            list.add(ItemsModel("br.com.simplepass:loading-button-android:1.14.0", mit, "https://github.com/leandroBorgesFerreira/LoadingButtonAndroid"))
-            list.add(ItemsModel("com.arthenica:mobile-ffmpeg-audio:4.3.1.LTS", gplV3, "https://github.com/tanersener/mobile-ffmpeg"))
-            list.add(ItemsModel("com.github.bumptech.glide:glide:4.11.0", "https://github.com/bumptech/glide/blob/master/LICENSE", "https://github.com/bumptech/glide"))
+            list.add(ItemsModel("org.jetbrains.kotlin:kotlin-stdlib:1.9.24", apache, "https://mvnrepository.com/artifact/org.jetbrains.kotlin/kotlin-stdlib"))
+            list.add(ItemsModel("androidx.core:core-ktx:1.13.1", apache, "https://developer.android.com/jetpack/androidx/releases/core"))
+            list.add(ItemsModel("androidx.constraintlayout:constraintlayout:2.1.4", apache, "https://developer.android.com/jetpack/androidx/releases/constraintlayout"))
+            list.add(ItemsModel("androidx.appcompat:appcompat:1.7.0", apache, "https://developer.android.com/jetpack/androidx/releases/appcompat"))
+            list.add(ItemsModel("com.google.android.material:material:1.12.0", apache, "https://developer.android.com/topic/libraries/support-library"))
+            list.add(ItemsModel("androidx.recyclerview:recyclerview:1.3.2", apache, "https://developer.android.com/jetpack/androidx/releases/recyclerview"))
+            list.add(ItemsModel("br.com.simplepass:loading-button-android:2.3.0", mit, "https://github.com/leandroBorgesFerreira/LoadingButtonAndroid"))
+            list.add(ItemsModel("com.arthenica:ffmpeg-kit-audio:6.0-2", gplV3, "https://github.com/arthenica/ffmpeg-kit"))
+            list.add(ItemsModel("com.github.bumptech.glide:glide:4.16.0", "https://github.com/bumptech/glide/blob/master/LICENSE", "https://github.com/bumptech/glide"))
             list.add(ItemsModel("com.squareup.retrofit2:retrofit:2.6.2", apache, "https://github.com/square/retrofit"))
             list.add(ItemsModel("com.squareup.retrofit2:converter-gson:2.6.2", apache, "https://github.com/square/retrofit/tree/master/retrofit-converters/gson"))
             list.add(ItemsModel("com.squareup.okhttp3:okhttp:4.2.1", apache, "https://github.com/square/okhttp"))

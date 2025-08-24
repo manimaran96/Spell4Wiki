@@ -98,6 +98,7 @@ object GeneralUtils {
                                 is Spell4WordListActivity -> activity.updateList(word)
                                 is Spell4WordActivity -> activity.updateList(word)
                                 is CommonWebActivity -> activity.updateList(word)
+                                is CommonWebContentActivity -> activity.updateList(word)
                             }
                             showLong(String.format(activity.getString(R.string.audio_file_already_exist), word))
                             show(activity)

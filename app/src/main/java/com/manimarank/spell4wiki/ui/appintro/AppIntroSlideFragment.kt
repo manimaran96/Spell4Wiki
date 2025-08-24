@@ -8,9 +8,12 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.manimarank.spell4wiki.R
 import com.manimarank.spell4wiki.data.model.AppIntroData
-import kotlinx.android.synthetic.main.app_intro_slide.*
+import com.manimarank.spell4wiki.databinding.AppIntroSlideBinding
 
 class AppIntroSlideFragment : Fragment() {
+
+    private var _binding: AppIntroSlideBinding? = null
+    private val binding get() = _binding!!
     companion object {
         const val APP_INTRO_DATA = "app_intro_data"
         fun newInstance(appIntroData: AppIntroData): AppIntroSlideFragment {
@@ -26,7 +29,8 @@ class AppIntroSlideFragment : Fragment() {
             inflater: LayoutInflater, container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View {
-        return inflater.inflate(R.layout.app_intro_slide, container, false)
+        _binding = AppIntroSlideBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -34,11 +38,16 @@ class AppIntroSlideFragment : Fragment() {
 
         if (arguments != null && arguments?.getSerializable(APP_INTRO_DATA) != null) {
             val appIntroData = (arguments?.getSerializable(APP_INTRO_DATA)) as AppIntroData
-            txtAppIntroTitle.text = appIntroData.title
-            imgAppIntro.setImageResource(appIntroData.imgId)
-            txtAppIntroDescription.text = appIntroData.description
-            txtAppIntroDescription.movementMethod = ScrollingMovementMethod()
+            binding.txtAppIntroTitle.text = appIntroData.title
+            binding.imgAppIntro.setImageResource(appIntroData.imgId)
+            binding.txtAppIntroDescription.text = appIntroData.description
+            binding.txtAppIntroDescription.movementMethod = ScrollingMovementMethod()
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
 }

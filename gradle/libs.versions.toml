@@ -1,0 +1,186 @@
+[versions]
+# Build Tools
+agp = "8.5.2"
+kotlin = "1.9.24"
+
+# Android SDK
+compileSdk = "35"
+targetSdk = "35"
+minSdk = "21"
+
+# AndroidX Core
+androidx-core-ktx = "1.12.0"
+androidx-appcompat = "1.6.1"
+androidx-constraintlayout = "2.1.4"
+androidx-recyclerview = "1.3.2"
+androidx-swiperefreshlayout = "1.1.0"
+
+# Material Design
+material = "1.11.0"
+
+# Architecture Components
+androidx-lifecycle = "2.7.0"
+androidx-room = "2.5.2"
+
+# Networking
+retrofit = "2.9.0"
+okhttp = "4.11.0"
+gson = "2.10.1"
+persistent-cookie-jar = "v1.0.1"
+
+# Coroutines
+kotlinx-coroutines = "1.7.3"
+
+# Image Loading
+glide = "4.15.1"
+
+# Animation & UI
+lottie = "6.1.0"
+loading-button = "1.14.0"
+material-tap-target = "3.3.2"
+
+# Audio Processing
+ffmpeg-kit = "5.1"
+
+# Utilities
+annotations = "24.0.1"
+crashreporter = "v1.0"
+
+# Firebase (Play Store only)
+firebase-bom = "32.7.4"
+google-services = "4.4.2"
+firebase-crashlytics-gradle = "3.0.2"
+
+# Testing
+junit = "4.13.2"
+androidx-test-ext-junit = "1.1.5"
+espresso-core = "3.5.1"
+
+[libraries]
+# AndroidX Core
+androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "androidx-core-ktx" }
+androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "androidx-appcompat" }
+androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "androidx-constraintlayout" }
+androidx-recyclerview = { group = "androidx.recyclerview", name = "recyclerview", version.ref = "androidx-recyclerview" }
+androidx-swiperefreshlayout = { group = "androidx.swiperefreshlayout", name = "swiperefreshlayout", version.ref = "androidx-swiperefreshlayout" }
+
+# Material Design
+material = { group = "com.google.android.material", name = "material", version.ref = "material" }
+
+# Architecture Components
+androidx-lifecycle-viewmodel-ktx = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-ktx", version.ref = "androidx-lifecycle" }
+androidx-lifecycle-livedata-ktx = { group = "androidx.lifecycle", name = "lifecycle-livedata-ktx", version.ref = "androidx-lifecycle" }
+androidx-lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "androidx-lifecycle" }
+
+# Room Database
+androidx-room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "androidx-room" }
+androidx-room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "androidx-room" }
+androidx-room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "androidx-room" }
+
+# Networking
+retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
+retrofit-converter-gson = { group = "com.squareup.retrofit2", name = "converter-gson", version.ref = "retrofit" }
+okhttp = { group = "com.squareup.okhttp3", name = "okhttp", version.ref = "okhttp" }
+okhttp-logging-interceptor = { group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "okhttp" }
+persistent-cookie-jar = { group = "com.github.franmontiel", name = "PersistentCookieJar", version.ref = "persistent-cookie-jar" }
+
+# Coroutines
+kotlinx-coroutines-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "kotlinx-coroutines" }
+kotlinx-coroutines-android = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "kotlinx-coroutines" }
+
+# Image Loading
+glide = { group = "com.github.bumptech.glide", name = "glide", version.ref = "glide" }
+glide-compiler = { group = "com.github.bumptech.glide", name = "compiler", version.ref = "glide" }
+
+# Animation & UI
+lottie = { group = "com.airbnb.android", name = "lottie", version.ref = "lottie" }
+loading-button-android = { group = "br.com.simplepass", name = "loading-button-android", version.ref = "loading-button" }
+material-tap-target-prompt = { group = "uk.co.samuelwall", name = "material-tap-target-prompt", version.ref = "material-tap-target" }
+
+# Audio Processing
+ffmpeg-kit-audio = { group = "com.arthenica", name = "ffmpeg-kit-audio", version.ref = "ffmpeg-kit" }
+
+# Utilities
+kotlin-stdlib = { group = "org.jetbrains.kotlin", name = "kotlin-stdlib", version.ref = "kotlin" }
+annotations = { group = "org.jetbrains", name = "annotations", version.ref = "annotations" }
+crashreporter = { group = "com.gitlab.manimaran", name = "crashreporter", version.ref = "crashreporter" }
+
+# Firebase (Play Store only)
+firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version.ref = "firebase-bom" }
+firebase-analytics-ktx = { group = "com.google.firebase", name = "firebase-analytics-ktx" }
+firebase-crashlytics-ktx = { group = "com.google.firebase", name = "firebase-crashlytics-ktx" }
+
+# Testing
+junit = { group = "junit", name = "junit", version.ref = "junit" }
+androidx-test-ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "androidx-test-ext-junit" }
+espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espresso-core" }
+
+[bundles]
+# AndroidX UI Bundle
+androidx-ui = [
+    "androidx-core-ktx",
+    "androidx-appcompat",
+    "androidx-constraintlayout",
+    "androidx-recyclerview",
+    "androidx-swiperefreshlayout",
+    "material"
+]
+
+# Architecture Components Bundle
+androidx-architecture = [
+    "androidx-lifecycle-viewmodel-ktx",
+    "androidx-lifecycle-livedata-ktx",
+    "androidx-lifecycle-runtime-ktx"
+]
+
+# Room Database Bundle
+androidx-room = [
+    "androidx-room-runtime",
+    "androidx-room-ktx"
+]
+
+# Networking Bundle
+networking = [
+    "retrofit",
+    "retrofit-converter-gson",
+    "okhttp",
+    "okhttp-logging-interceptor",
+    "persistent-cookie-jar"
+]
+
+# Coroutines Bundle
+coroutines = [
+    "kotlinx-coroutines-core",
+    "kotlinx-coroutines-android"
+]
+
+# Animation & UI Bundle
+animation-ui = [
+    "lottie",
+    "loading-button-android",
+    "material-tap-target-prompt"
+]
+
+# Firebase Bundle (Play Store only)
+firebase = [
+    "firebase-analytics-ktx",
+    "firebase-crashlytics-ktx"
+]
+
+# Testing Bundle
+testing = [
+    "junit",
+    "androidx-test-ext-junit",
+    "espresso-core"
+]
+
+[plugins]
+# Build Plugins
+android-application = { id = "com.android.application", version.ref = "agp" }
+kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
+kotlin-parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize", version.ref = "kotlin" }
+
+# Firebase Plugins (Play Store only)
+google-services = { id = "com.google.gms.google-services", version.ref = "google-services" }
+firebase-crashlytics = { id = "com.google.firebase.crashlytics", version.ref = "firebase-crashlytics-gradle" }

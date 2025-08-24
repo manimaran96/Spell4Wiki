@@ -1,8 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">@color/white</color>
-    <color name="colorPrimaryDark">@color/white</color>
+    <color name="colorPrimaryDark">@color/light_gray</color>
     <color name="colorAccent">@color/w_blue</color>
+
+    <!-- Material Design 3 Color System -->
+    <color name="colorPrimaryVariant">@color/light_gray</color>
+    <color name="colorSecondary">@color/w_green</color>
+    <color name="colorSecondaryVariant">@color/w_green</color>
+    <color name="colorSurface">@color/white</color>
+    <color name="colorBackground">@color/white</color>
+    <color name="colorError">@color/w_red</color>
+    <color name="colorOnPrimary">@color/black</color>
+    <color name="colorOnSecondary">@color/white</color>
+    <color name="colorOnSurface">@color/black</color>
+    <color name="colorOnBackground">@color/black</color>
+    <color name="colorOnError">@color/white</color>
 
     <color name="transparent">#00FFFFFF</color>
     <color name="white">#fff</color>

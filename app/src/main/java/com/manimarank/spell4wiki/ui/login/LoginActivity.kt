@@ -24,18 +24,21 @@ import com.manimarank.spell4wiki.utils.NetworkUtils.isConnected
 import com.manimarank.spell4wiki.utils.SnackBarUtils.showLong
 import com.manimarank.spell4wiki.utils.constants.AppConstants
 import com.manimarank.spell4wiki.utils.constants.Urls
-import kotlinx.android.synthetic.main.activity_login.*
+import com.manimarank.spell4wiki.databinding.ActivityLoginBinding
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 class LoginActivity : BaseActivity() {
+
+    private lateinit var binding: ActivityLoginBinding
     private lateinit var pref: PrefManager
     private var api: ApiInterface? = null
     private var isDuringLogin = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_login)
+        binding = ActivityLoginBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         pref = PrefManager(applicationContext)
 
         /*
@@ -50,20 +53,20 @@ class LoginActivity : BaseActivity() {
             api = ApiClient.getCommonsApi(applicationContext).create(ApiInterface::class.java)
 
             // Hit Login Button
-            btn_login.setOnClickListener {
-                if (!TextUtils.isEmpty(edit_username.text) && !TextUtils.isEmpty(edit_password.text)) {
+            binding.btnLogin.setOnClickListener {
+                if (!TextUtils.isEmpty(binding.editUsername.text) && !TextUtils.isEmpty(binding.editPassword.text)) {
                     if (isConnected(applicationContext)) {
                         hideKeyboard(this@LoginActivity)
-                        btn_login.startAnimation()
+                        // binding.btnLogin.startAnimation() // Temporarily disabled - loading button library issue
                         isDuringLogin = true
-                        callToken(edit_username.text.toString(), edit_password.text.toString())
+                        callToken(binding.editUsername.text.toString(), binding.editPassword.text.toString())
                     } else showMsg(getString(R.string.check_internet))
                 } else showMsg(getString(R.string.invalid_credential))
             }
 
 
             // Hit Skip Button
-            btn_skip_login.setOnClickListener {
+            binding.btnSkipLogin.setOnClickListener {
                 if (isDuringLogin()) {
                     showMsg(getString(R.string.please_wait))
                 } else {
@@ -73,10 +76,10 @@ class LoginActivity : BaseActivity() {
             }
 
             // Hit Forgot Password Button
-            btn_forgot_password.setOnClickListener { openUrl(Urls.FORGOT_PASSWORD, getString(R.string.forgot_password)) }
+            binding.btnForgotPassword.setOnClickListener { openUrl(Urls.FORGOT_PASSWORD, getString(R.string.forgot_password)) }
 
             // Hit Join Wikipedia Button
-            btn_join_wikipedia.setOnClickListener { openUrl(Urls.JOIN_WIKI, getString(R.string.join_wiki)) }
+            binding.btnJoinWikipedia.setOnClickListener { openUrl(Urls.JOIN_WIKI, getString(R.string.join_wiki)) }
         }
     }
 
@@ -135,7 +138,7 @@ class LoginActivity : BaseActivity() {
                                     showMsg(String.format(getString(R.string.welcome_user), login.username))
                                     //  Write to shared preferences
                                     pref.setUserSession(login.username)
-                                    btn_login.doneLoadingAnimation(ContextCompat.getColor(this@LoginActivity, R.color.w_green), BitmapFactory.decodeResource(resources, R.drawable.ic_done))
+                                    // binding.btnLogin.doneLoadingAnimation(ContextCompat.getColor(this@LoginActivity, R.color.w_green), BitmapFactory.decodeResource(resources, R.drawable.ic_done)) // Temporarily disabled - loading button library issue
                                     // Move to new activity
                                     Handler().postDelayed({ launchActivity() }, 1500)
                                 }
@@ -171,29 +174,30 @@ class LoginActivity : BaseActivity() {
 
     private fun showErrorMsg(msg: String?) {
         if (isConnected(applicationContext)) showMsg(msg) else showMsg(getString(R.string.check_internet))
-        btn_login.revertAnimation()
+        // binding.btnLogin.revertAnimation() // Temporarily disabled - loading button library issue
         isDuringLogin = false
     }
 
     private fun showMsg(msg: String?) {
-        showLong(btn_login, msg ?: "")
+        showLong(binding.btnLogin, msg ?: "")
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        btn_login.revertAnimation()
-        btn_login.dispose()
+        // binding.btnLogin.revertAnimation() // Temporarily disabled - loading button library issue
+        // binding.btnLogin.dispose() // Temporarily disabled - loading button library issue
     }
 
     private fun openUrl(url: String, title: String) {
         if (isDuringLogin()) {
             showMsg(getString(R.string.please_wait))
         } else {
-            if (isConnected(applicationContext)) openUrl(this@LoginActivity, url, title) else showMsg(getString(R.string.check_internet))
+            if (isConnected(applicationContext)) com.manimarank.spell4wiki.utils.GeneralUtils.openUrl(this@LoginActivity, url, title) else showMsg(getString(R.string.check_internet))
         }
     }
 
     private fun isDuringLogin(): Boolean {
-        return btn_login.isAnimating || isDuringLogin
+        return isDuringLogin // Temporarily simplified - loading button library issue
+        // return binding.btnLogin.isAnimating || isDuringLogin
     }
 }

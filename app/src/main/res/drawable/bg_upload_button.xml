@@ -3,9 +3,18 @@
     <!-- Pressed state -->
     <item android:state_pressed="true">
         <shape android:shape="rectangle">
-            <solid android:color="@color/w_blue" />
+            <solid android:color="@color/w_green" />
             <corners android:radius="8dp" />
-            <stroke android:width="1dp" android:color="@color/colorAccent" />
+            <stroke android:width="2dp" android:color="@color/colorSecondary" />
+        </shape>
+    </item>
+
+    <!-- Focused state -->
+    <item android:state_focused="true">
+        <shape android:shape="rectangle">
+            <solid android:color="@color/colorSecondary" />
+            <corners android:radius="8dp" />
+            <stroke android:width="2dp" android:color="@color/w_green" />
         </shape>
     </item>
 
@@ -20,8 +29,9 @@
     <!-- Default state -->
     <item>
         <shape android:shape="rectangle">
-            <solid android:color="@color/colorAccent" />
+            <solid android:color="@color/colorSecondary" />
             <corners android:radius="8dp" />
+            <stroke android:width="1dp" android:color="@color/w_green" />
         </shape>
     </item>
 </selector>

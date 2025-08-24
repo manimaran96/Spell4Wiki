@@ -62,7 +62,7 @@
                 android:inputType="textPassword"/>
         </com.google.android.material.textfield.TextInputLayout>
 
-        <br.com.simplepass.loading_button_lib.customViews.CircularProgressButton
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_login"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -70,11 +70,7 @@
             android:layout_margin="@dimen/space10dp"
             android:background="@drawable/bg_blue"
             android:text="@string/login"
-            android:textColor="@color/white"
-            app:initialCornerAngle="5dp"
-            app:spinning_bar_color="#FFF"
-            app:spinning_bar_padding="6dp"
-            app:spinning_bar_width="3dp" />
+            android:textColor="@color/white" />
 
 
         <androidx.appcompat.widget.AppCompatTextView

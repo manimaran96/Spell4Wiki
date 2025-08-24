@@ -15,41 +15,52 @@ import com.manimarank.spell4wiki.BuildConfig
 import com.manimarank.spell4wiki.R
 import com.manimarank.spell4wiki.data.prefs.PrefManager
 import com.manimarank.spell4wiki.ui.common.BaseActivity
+import com.manimarank.spell4wiki.utils.EdgeToEdgeUtils.setupEdgeToEdgeWithToolbar
 import com.manimarank.spell4wiki.utils.GeneralUtils.openUrl
 import com.manimarank.spell4wiki.utils.GeneralUtils.openUrlInBrowser
 import com.manimarank.spell4wiki.utils.NetworkUtils.isConnected
 import com.manimarank.spell4wiki.utils.SnackBarUtils.showLong
 import com.manimarank.spell4wiki.utils.constants.AppConstants
 import com.manimarank.spell4wiki.utils.constants.Urls
-import kotlinx.android.synthetic.main.activity_about.*
+import com.manimarank.spell4wiki.databinding.ActivityAboutBinding
 
 class AboutActivity : BaseActivity(), View.OnClickListener {
+
+    private lateinit var binding: ActivityAboutBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_about)
+        binding = ActivityAboutBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        // Setup proper status bar handling (AboutActivity doesn't have a toolbar)
+        setupEdgeToEdgeWithToolbar(
+            rootView = binding.root,
+            toolbar = null
+        )
+
         title = getString(R.string.about)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        
-        txtPoweredByLink.text = Urls.KANIYAM
-        txtInitiatedByLink.text = Urls.VGLUG
-        txt_app_version_and_license.setOnClickListener(this)
-        txt_rate_app.setOnClickListener(this)
-        txt_share.setOnClickListener(this)
-        txt_how_to_contribute.setOnClickListener(this)
-        txt_source_code.setOnClickListener(this)
-        txt_contributors.setOnClickListener(this)
-        txt_third_party_lib.setOnClickListener(this)
-        txt_credits.setOnClickListener(this)
-        txt_help_development.setOnClickListener(this)
-        txtFeedback.setOnClickListener(this)
-        txtTelegram.setOnClickListener(this)
-        txtPrivacyPolicy.setOnClickListener(this)
-        txtHelpTranslate.setOnClickListener(this)
-        layout_kaniyam.setOnClickListener(this)
-        layout_vglug.setOnClickListener(this)
-        txt_app_version_and_license.movementMethod = LinkMovementMethod.getInstance()
+
+        binding.txtPoweredByLink.text = Urls.KANIYAM
+        binding.txtInitiatedByLink.text = Urls.VGLUG
+        binding.txtAppVersionAndLicense.setOnClickListener(this)
+        binding.txtRateApp.setOnClickListener(this)
+        binding.txtShare.setOnClickListener(this)
+        binding.txtHowToContribute.setOnClickListener(this)
+        binding.txtSourceCode.setOnClickListener(this)
+        binding.txtContributors.setOnClickListener(this)
+        binding.txtThirdPartyLib.setOnClickListener(this)
+        binding.txtCredits.setOnClickListener(this)
+        binding.txtHelpDevelopment.setOnClickListener(this)
+        binding.txtFeedback.setOnClickListener(this)
+        binding.txtTelegram.setOnClickListener(this)
+        binding.txtPrivacyPolicy.setOnClickListener(this)
+        binding.txtHelpTranslate.setOnClickListener(this)
+        binding.layoutKaniyam.setOnClickListener(this)
+        binding.layoutVglug.setOnClickListener(this)
+        binding.txtAppVersionAndLicense.movementMethod = LinkMovementMethod.getInstance()
         val appVersionLicense = getString(R.string.version) + " : " + BuildConfig.VERSION_NAME + " & " + getString(R.string.license) + " : <u><font color='" + ContextCompat.getColor(applicationContext, R.color.w_green) + "'>GPLv3</font></u>"
-        txt_app_version_and_license.text = HtmlCompat.fromHtml(appVersionLicense, HtmlCompat.FROM_HTML_MODE_LEGACY)
+        binding.txtAppVersionAndLicense.text = HtmlCompat.fromHtml(appVersionLicense, HtmlCompat.FROM_HTML_MODE_LEGACY)
     }
 
     override fun onOptionsItemSelected(menuItem: MenuItem): Boolean {
@@ -62,7 +73,7 @@ class AboutActivity : BaseActivity(), View.OnClickListener {
 
     override fun onClick(v: View) {
         if (!isConnected(applicationContext)) {
-            showLong(findViewById(R.id.txt_rate_app), getString(R.string.check_internet))
+            showLong(binding.txtRateApp, getString(R.string.check_internet))
             return
         }
         when (v.id) {
@@ -104,7 +115,7 @@ class AboutActivity : BaseActivity(), View.OnClickListener {
             intent.putExtra(Intent.EXTRA_TEXT, appInfo)
             startActivity(Intent.createChooser(intent, getString(R.string.app_share_title)))
         } catch (e: Exception) {
-            showLong(findViewById(R.id.txt_share), getString(R.string.something_went_wrong))
+            showLong(binding.txtShare, getString(R.string.something_went_wrong))
         }
     }
 
@@ -121,7 +132,7 @@ class AboutActivity : BaseActivity(), View.OnClickListener {
         try {
             startActivity(emailIntent)
         } catch (ex: ActivityNotFoundException) {
-            showLong(findViewById(R.id.txtFeedback), getString(R.string.no_email_client))
+            showLong(binding.txtFeedback, getString(R.string.no_email_client))
         }
     }
 

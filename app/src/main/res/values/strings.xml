@@ -71,11 +71,20 @@
     <string name="recording_under_process">Recording under process</string>
     <string name="permission_required">Microphone and Storage permissions required.</string>
     <string name="go_settings">GO SETTINGS</string>
+
+    <!-- Notification Permission -->
+    <string name="notification_permission_title">Enable Notifications</string>
+    <string name="notification_permission_rationale">Spell4Wiki would like to send you notifications about recording progress and upload status. This helps you stay informed about your contributions.</string>
+    <string name="notification_permission_denied_title">Notification Permission Required</string>
+    <string name="notification_permission_denied_message">To receive important updates about your recordings and uploads, please enable notifications in Settings.</string>
+    <string name="allow">Allow</string>
+    <string name="deny">Deny</string>
     <string name="message_upload_info">Uploading…\n%s</string>
     <string name="crash_report_alert_title">Do you like to share crash information?</string>
     <string name="crash_report_alert_message">A previous crash was collected. Would you like to send the crash logs to developer to fix this issue in the future?</string>
     <string name="send">Send</string>
     <string name="cancel">Cancel</string>
+    <string name="close">Close</string>
     <string name="upload_success">Successfully uploaded the pronunciation of %s</string>
     <string name="select_file">Select file</string>
     <string name="next">Next</string>

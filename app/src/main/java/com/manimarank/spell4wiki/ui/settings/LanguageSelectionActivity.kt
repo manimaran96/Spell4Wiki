@@ -11,37 +11,44 @@ import com.manimarank.spell4wiki.ui.common.BaseActivity
 import com.manimarank.spell4wiki.ui.dialogs.AppLanguageDialog
 import com.manimarank.spell4wiki.ui.languageselector.LanguageSelectionFragment
 import com.manimarank.spell4wiki.ui.listerners.OnLanguageSelectionListener
+import com.manimarank.spell4wiki.utils.EdgeToEdgeUtils.setupStatusBarHandling
 import com.manimarank.spell4wiki.utils.constants.ListMode
-import kotlinx.android.synthetic.main.activity_language_selection.*
-import kotlinx.android.synthetic.main.bottom_sheet_language_selection.btnAddMyLanguage
-import kotlinx.android.synthetic.main.bottom_sheet_language_selection.txtAddLangInfo
+import com.manimarank.spell4wiki.databinding.ActivityLanguageSelectionBinding
+import com.manimarank.spell4wiki.databinding.ContributionLanguageSelectionBinding
 
 class LanguageSelectionActivity : BaseActivity() {
 
+    private lateinit var binding: ActivityLanguageSelectionBinding
+    private lateinit var contributionBinding: ContributionLanguageSelectionBinding
     private lateinit var pref: PrefManager
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_language_selection)
+        binding = ActivityLanguageSelectionBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        // Setup proper status bar handling
+        setupStatusBarHandling(binding.root)
 
         pref = PrefManager(applicationContext)
 
-        txtAddLangInfo.text = String.format(getString(R.string.choose_your_preferred_app_language), AppLanguageDialog.getSelectedLanguage())
+        binding.txtAddLangInfo.text = String.format(getString(R.string.choose_your_preferred_app_language), AppLanguageDialog.getSelectedLanguage())
 
-        btnAddMyLanguage.setOnClickListener { AppLanguageDialog.show(this) }
+        binding.btnAddMyLanguage.setOnClickListener { AppLanguageDialog.show(this) }
 
-        btnNext.setOnClickListener {
+        binding.btnNext.setOnClickListener {
             contributionLang()
         }
     }
     var wikiLangDao: WikiLangDao? = null;
     private fun contributionLang() {
         wikiLangDao = DBHelper.getInstance(applicationContext).appDatabase.wikiLangDao
-        setContentView(R.layout.contribution_language_selection)
-        txtAddLangInfo.text = String.format(getString(R.string.choose_your_preferred_contribution_language), wikiLangDao?.getWikiLanguageWithCode(pref.languageCodeSpell4WikiAll)?.name ?: "")
+        contributionBinding = ContributionLanguageSelectionBinding.inflate(layoutInflater)
+        setContentView(contributionBinding.root)
+        contributionBinding.txtAddLangInfo.text = String.format(getString(R.string.choose_your_preferred_contribution_language), wikiLangDao?.getWikiLanguageWithCode(pref.languageCodeSpell4WikiAll)?.name ?: "")
 
-        btnAddMyLanguage.setOnClickListener { loadLanguages() }
+        contributionBinding.btnAddMyLanguage.setOnClickListener { loadLanguages() }
 
-        btnNext.setOnClickListener {
+        contributionBinding.btnNext.setOnClickListener {
             openMainActivity()
         }
     }
@@ -49,7 +56,7 @@ class LanguageSelectionActivity : BaseActivity() {
     private fun loadLanguages() {
         val callback = object : OnLanguageSelectionListener {
             override fun onCallBackListener(langCode: String?) {
-                txtAddLangInfo.text = String.format(getString(R.string.choose_your_preferred_contribution_language), wikiLangDao?.getWikiLanguageWithCode(pref.languageCodeSpell4WikiAll)?.name ?: "")
+                contributionBinding.txtAddLangInfo.text = String.format(getString(R.string.choose_your_preferred_contribution_language), wikiLangDao?.getWikiLanguageWithCode(pref.languageCodeSpell4WikiAll)?.name ?: "")
             }
         }
         val languageSelectionFragment = LanguageSelectionFragment(this)

@@ -11,15 +11,18 @@ import com.manimarank.spell4wiki.R
 import com.manimarank.spell4wiki.ui.login.LoginActivity
 import com.manimarank.spell4wiki.ui.common.BaseActivity
 import com.manimarank.spell4wiki.data.model.AppIntroData
+import com.manimarank.spell4wiki.ui.dialogs.CommonDialog.showNotificationPermissionDialog
 import com.manimarank.spell4wiki.utils.GeneralUtils
 import com.manimarank.spell4wiki.data.prefs.PrefManager
+import com.manimarank.spell4wiki.utils.PermissionUtils
 import com.manimarank.spell4wiki.utils.constants.AppConstants
 import com.manimarank.spell4wiki.utils.makeGone
 import com.manimarank.spell4wiki.utils.makeVisible
-import kotlinx.android.synthetic.main.activity_app_intro.*
+import com.manimarank.spell4wiki.databinding.ActivityAppIntroBinding
 
 class AppIntroActivity : BaseActivity() {
 
+    private lateinit var binding: ActivityAppIntroBinding
     private lateinit var pref: PrefManager
     private var isDoneCalled = false
 
@@ -36,16 +39,16 @@ class AppIntroActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_app_intro)
+        binding = ActivityAppIntroBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         pref = PrefManager(applicationContext)
 
         val appIntroDataList = list
         val tabsPagerAdapter = AppIntroTabsPagerAdapter(supportFragmentManager, appIntroDataList)
-        val viewPager: ViewPager = findViewById(R.id.viewPager)
-        viewPager.adapter = tabsPagerAdapter
+        binding.viewPager.adapter = tabsPagerAdapter
 
-        viewPager.addOnPageChangeListener(object : OnPageChangeListener {
+        binding.viewPager.addOnPageChangeListener(object : OnPageChangeListener {
             override fun onPageScrollStateChanged(state: Int) {
             }
 
@@ -57,35 +60,52 @@ class AppIntroActivity : BaseActivity() {
             }
 
             override fun onPageSelected(position: Int) {
-                if (tabLayout.tabCount - 1 <= position) {
-                    btnDone.makeVisible()
-                    btnNext.makeGone()
+                if (binding.tabLayout.tabCount - 1 <= position) {
+                    binding.btnDone.makeVisible()
+                    binding.btnNext.makeGone()
                 } else {
-                    btnNext.makeVisible()
-                    btnDone.makeGone()
+                    binding.btnNext.makeVisible()
+                    binding.btnDone.makeGone()
                 }
             }
         })
 
-        tabLayout.setupWithViewPager(viewPager)
+        binding.tabLayout.setupWithViewPager(binding.viewPager)
 
-        btnNext.setOnClickListener {
-            if (tabLayout.selectedTabPosition < tabLayout.tabCount - 1) {
-                viewPager.currentItem = tabLayout.selectedTabPosition + 1
+        binding.btnNext.setOnClickListener {
+            if (binding.tabLayout.selectedTabPosition < binding.tabLayout.tabCount - 1) {
+                binding.viewPager.currentItem = binding.tabLayout.selectedTabPosition + 1
             }
         }
 
-        btnDone.setOnClickListener {
+        binding.btnDone.setOnClickListener {
             if (!isDoneCalled) {
                 isDoneCalled = true
-                // Ask required permission on done pressed
-                if (!GeneralUtils.checkPermissionGranted(this) && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    requestPermissions(arrayOf(Manifest.permission.RECORD_AUDIO), AppConstants.RC_PERMISSIONS)
-                } else {
-                    openMainActivity()
-                }
+                // Ask required permissions on done pressed
+                requestRequiredPermissions()
             }
         }
+    }
+
+    private fun requestRequiredPermissions() {
+        // First check and request audio recording permission
+        if (!PermissionUtils.isAudioRecordingPermissionGranted(this) && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            PermissionUtils.requestAudioRecordingPermission(this)
+        } else {
+            // Audio permission granted or not needed, now check notification permission
+            requestNotificationPermissionIfNeeded()
+        }
+    }
+
+    private fun requestNotificationPermissionIfNeeded() {
+        showNotificationPermissionDialog(
+            onPermissionGranted = {
+                openMainActivity()
+            },
+            onPermissionDenied = {
+                openMainActivity()
+            }
+        )
     }
 
     private fun openMainActivity() {
@@ -98,6 +118,15 @@ class AppIntroActivity : BaseActivity() {
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String?>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (requestCode == AppConstants.RC_PERMISSIONS) openMainActivity()
+        when (requestCode) {
+            AppConstants.RC_STORAGE_AUDIO_PERMISSION -> {
+                // Audio permission result - now check notification permission
+                requestNotificationPermissionIfNeeded()
+            }
+            AppConstants.RC_PERMISSIONS -> {
+                // Notification permission result - proceed to main activity
+                openMainActivity()
+            }
+        }
     }
 }

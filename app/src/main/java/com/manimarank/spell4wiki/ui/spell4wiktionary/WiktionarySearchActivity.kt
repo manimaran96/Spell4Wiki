@@ -24,6 +24,7 @@ import com.manimarank.spell4wiki.ui.common.BaseActivity
 import com.manimarank.spell4wiki.ui.custom.EndlessRecyclerView.EndlessListener
 import com.manimarank.spell4wiki.ui.languageselector.LanguageSelectionFragment
 import com.manimarank.spell4wiki.ui.listerners.OnLanguageSelectionListener
+import com.manimarank.spell4wiki.utils.EdgeToEdgeUtils.setupEdgeToEdgeWithToolbar
 import com.manimarank.spell4wiki.utils.GeneralUtils
 import com.manimarank.spell4wiki.utils.NetworkUtils.isConnected
 import com.manimarank.spell4wiki.utils.constants.AppConstants
@@ -31,10 +32,7 @@ import com.manimarank.spell4wiki.utils.constants.ListMode
 import com.manimarank.spell4wiki.utils.makeGone
 import com.manimarank.spell4wiki.utils.makeInVisible
 import com.manimarank.spell4wiki.utils.makeVisible
-import kotlinx.android.synthetic.main.activity_wiktionary_search.recyclerView
-import kotlinx.android.synthetic.main.activity_wiktionary_search.search_bar
-import kotlinx.android.synthetic.main.activity_wiktionary_search.txtNotFound
-import kotlinx.android.synthetic.main.loading_info.layoutProgress
+import com.manimarank.spell4wiki.databinding.ActivityWiktionarySearchBinding
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -42,6 +40,8 @@ import uk.co.samuelwall.materialtaptargetprompt.MaterialTapTargetSequence
 import java.util.Locale
 
 class WiktionarySearchActivity : BaseActivity(), EndlessListener {
+
+    private lateinit var binding: ActivityWiktionarySearchBinding
     private var wikiLangDao: WikiLangDao? = null
     private var adapter: EndlessRecyclerAdapter? = null
     private lateinit var snackBar: Snackbar
@@ -52,7 +52,8 @@ class WiktionarySearchActivity : BaseActivity(), EndlessListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_wiktionary_search)
+        binding = ActivityWiktionarySearchBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         init()
     }
 
@@ -62,10 +63,10 @@ class WiktionarySearchActivity : BaseActivity(), EndlessListener {
         api = getWiktionaryApi(applicationContext, languageCode ?: AppConstants.DEFAULT_LANGUAGE_CODE).create(ApiInterface::class.java)
 
         // Views
-        snackBar = Snackbar.make(search_bar, getString(R.string.something_went_wrong), Snackbar.LENGTH_LONG)
-        search_bar.setIconifiedByDefault(false)
-        search_bar.queryHint = resources.getString(R.string.search)
-        search_bar.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+        snackBar = Snackbar.make(binding.searchBar, getString(R.string.something_went_wrong), Snackbar.LENGTH_LONG)
+        binding.searchBar.setIconifiedByDefault(false)
+        binding.searchBar.queryHint = resources.getString(R.string.search)
+        binding.searchBar.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(s: String): Boolean {
                 submitQuery(s)
                 return true
@@ -75,18 +76,25 @@ class WiktionarySearchActivity : BaseActivity(), EndlessListener {
                 return false
             }
         })
-        recyclerView.setHasFixedSize(true)
+        binding.recyclerView.setHasFixedSize(true)
         val layoutManager = LinearLayoutManager(this)
-        recyclerView.layoutManager = layoutManager
+        binding.recyclerView.layoutManager = layoutManager
         adapter = EndlessRecyclerAdapter(this, ArrayList(), ListMode.WIKTIONARY)
-        recyclerView.setAdapter(adapter, layoutManager)
-        recyclerView.setListener(this)
-        recyclerView.makeInVisible()
+        binding.recyclerView.setAdapter(adapter, layoutManager)
+        binding.recyclerView.setListener(this)
+        binding.recyclerView.makeInVisible()
 
         wikiLangDao = DBHelper.getInstance(applicationContext).appDatabase.wikiLangDao
 
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         val wikiLang = wikiLangDao?.getWikiLanguageWithCode(languageCode)
+
+        // Setup proper status bar handling and edge-to-edge
+        setupEdgeToEdgeWithToolbar(
+            rootView = binding.root,
+            toolbar = toolbar
+        )
+
         setSupportActionBar(toolbar)
         supportActionBar?.title = getString(R.string.wiktionary)
         supportActionBar?.subtitle = GeneralUtils.getLanguageInfo(applicationContext, wikiLang)
@@ -95,7 +103,7 @@ class WiktionarySearchActivity : BaseActivity(), EndlessListener {
 
         if (intent.extras?.containsKey(AppConstants.SEARCH_TEXT) == true) {
             val text = intent.extras?.getString(AppConstants.SEARCH_TEXT)
-            search_bar.setQuery(text, true)
+            binding.searchBar.setQuery(text, true)
         }
 
     }
@@ -104,10 +112,10 @@ class WiktionarySearchActivity : BaseActivity(), EndlessListener {
         if (!isDestroyed && !isFinishing) {
             queryString = s
             nextOffset = 0
-            txtNotFound.makeGone()
-            layoutProgress.makeVisible()
-            recyclerView.makeVisible()
-            recyclerView.reset()
+            binding.txtNotFound.makeGone()
+            binding.root.findViewById<View>(R.id.layoutProgress).makeVisible()
+            binding.recyclerView.makeVisible()
+            binding.recyclerView.reset()
             search(queryString)
         }
     }
@@ -186,13 +194,14 @@ class WiktionarySearchActivity : BaseActivity(), EndlessListener {
         if (!isDestroyed && !isFinishing) {
             if (isConnected(applicationContext)) {
                 snackBar.setText(msg)
+                val layoutProgress = binding.root.findViewById<View>(R.id.layoutProgress)
                 if (layoutProgress.visibility == View.VISIBLE)
                     layoutProgress.makeGone()
-                if (recyclerView != null && adapter?.itemCount ?: 0 < 1) {
-                    recyclerView.makeInVisible()
-                    txtNotFound.text = getString(R.string.result_not_found)
-                    txtNotFound.makeVisible()
-                } else txtNotFound.makeGone()
+                if (adapter?.itemCount ?: 0 < 1) {
+                    binding.recyclerView.makeInVisible()
+                    binding.txtNotFound.text = getString(R.string.result_not_found)
+                    binding.txtNotFound.makeVisible()
+                } else binding.txtNotFound.makeGone()
             } else snackBar.setText(getString(R.string.check_internet))
             if (msg != getString(R.string.result_not_found) && !snackBar.isShown)
                 snackBar.show()
@@ -202,13 +211,14 @@ class WiktionarySearchActivity : BaseActivity(), EndlessListener {
     private fun processSearchResult(wikiSearchWords: WikiSearchWords?) {
         if (!isDestroyed && !isFinishing) {
             val titleList: MutableList<String> = ArrayList()
+            val layoutProgress = binding.root.findViewById<View>(R.id.layoutProgress)
             if (layoutProgress.visibility == View.VISIBLE) layoutProgress.makeGone()
             if (snackBar.isShown) snackBar.dismiss()
             if (wikiSearchWords != null) {
                 nextOffset = if (wikiSearchWords.offset?.nextOffset != null) {
                         wikiSearchWords.offset?.nextOffset
                     } else {
-                        recyclerView.setLastPage()
+                        binding.recyclerView.setLastPage()
                         null
                     }
 
@@ -218,7 +228,7 @@ class WiktionarySearchActivity : BaseActivity(), EndlessListener {
                 if (titleList.isEmpty()) {
                     searchFailed(getString(R.string.result_not_found))
                 } else {
-                    recyclerView.addNewData(titleList)
+                    binding.recyclerView.addNewData(titleList)
                 }
             } else searchFailed(getString(R.string.something_went_wrong))
         }
@@ -238,7 +248,7 @@ class WiktionarySearchActivity : BaseActivity(), EndlessListener {
     override fun loadFail() {
         if (!isConnected(applicationContext))
             searchFailed(getString(R.string.check_internet))
-        else if (recyclerView != null && recyclerView.isLastPage && adapter?.itemCount ?: 0 > 10)
+        else if (binding.recyclerView.isLastPage && adapter?.itemCount ?: 0 > 10)
             searchFailed(getString(R.string.no_more_data_found))
     }
 

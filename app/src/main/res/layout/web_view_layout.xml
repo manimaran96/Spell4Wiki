@@ -27,6 +27,7 @@
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/margin_large"
                 android:text="@string/web_page_not_found"
                 android:textColor="@color/black"
                 android:textAlignment="center"
@@ -62,7 +63,7 @@
             android:textColor="@color/w_blue"
             android:textSize="@dimen/text_normal"
             android:layout_below="@+id/progressBar"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="@dimen/margin_medium"
             android:layout_centerInParent="true"/>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -71,13 +72,15 @@
             android:layout_height="wrap_content"
             android:src="@drawable/ic_record"
             app:maxImageSize="@dimen/fab_size"
-            app:backgroundTint="@color/transparent"
+            app:backgroundTint="@color/colorSecondary"
+            app:tint="@color/colorOnSecondary"
             android:layout_alignParentBottom="true"
             android:layout_alignParentEnd="true"
             app:elevation="@dimen/card_elevation"
             app:fabCustomSize="@dimen/fab_size"
             android:contentDescription="@string/record"
-            android:layout_margin="@dimen/fab_margin" />
+            android:layout_margin="@dimen/margin_medium"
+            app:rippleColor="@color/colorSecondaryVariant" />
 
     </RelativeLayout>
 

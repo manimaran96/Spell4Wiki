@@ -7,10 +7,14 @@
     android:layout_height="fill_parent">
 
     <ScrollView
+        android:id="@+id/dialogScrollView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_margin="@dimen/space8dp"
+        android:layout_marginStart="@dimen/space16dp"
+        android:layout_marginEnd="@dimen/space16dp"
+        android:layout_marginTop="@dimen/space8dp"
+        android:layout_marginBottom="@dimen/space8dp"
         tools:ignore="UselessParent">
 
         <RelativeLayout
@@ -28,9 +32,11 @@
                 android:orientation="vertical"
                 android:paddingTop="@dimen/space24dp"
                 android:paddingBottom="@dimen/space24dp"
-                android:paddingStart="@dimen/space8dp"
+                android:paddingStart="@dimen/space16dp"
+                android:paddingEnd="@dimen/space16dp"
                 android:visibility="visible"
-                android:paddingEnd="@dimen/space8dp">
+                android:elevation="8dp"
+                android:layout_margin="@dimen/space4dp">
 
                 <!--Word-->
                 <androidx.appcompat.widget.AppCompatTextView
@@ -110,7 +116,10 @@
                         android:layout_toStartOf="@+id/txtDuration"
                         android:layout_centerInParent="true"
                         android:layout_centerVertical="true"
-                        app:tickMarkTint="@color/white" />
+                        android:progressTint="@color/colorSecondary"
+                        android:progressBackgroundTint="@color/txt_light"
+                        android:thumbTint="@color/colorSecondary"
+                        app:tickMarkTint="@color/colorSecondary" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/txtDuration"
@@ -130,7 +139,7 @@
 
                 <!--License and settings-->
                 <RelativeLayout
-                    android:id="@+id/layoutPlayerControls"
+                    android:id="@+id/layoutLicenseSettings"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
@@ -166,14 +175,16 @@
                         android:layout_toStartOf="@+id/txtDuration"
                         android:layout_alignParentEnd="true"
                         app:srcCompat="@drawable/ic_change_license"
-                        app:tint="@color/txt_light"
+                        app:tint="@color/white"
                         android:layout_marginStart="@dimen/space2dp"
                         android:textAlignment="center"
                         android:layout_centerVertical="true"
                         android:gravity="center_horizontal"
-                        android:textColor="@color/txt_light"
+                        android:textColor="@color/white"
                         android:layout_marginEnd="@dimen/space8dp"
                         android:textSize="@dimen/text_semi_normal"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:padding="8dp"
                         tools:ignore="RelativeOverlap" />
 
                 </RelativeLayout>
@@ -193,37 +204,67 @@
                     android:textColor="@color/txt_light"
                     android:textSize="@dimen/text_small" />
 
+                <!--File name preview-->
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/txtFileNamePreview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginBottom="8dp"
+                    android:text="Note: Upload file will be\nexample.ogg"
+                    android:textColor="@color/white"
+                    android:textSize="12sp"
+                    android:gravity="center"
+                    android:alpha="0.9"
+                    android:maxLines="2"
+                    android:lineSpacingExtra="2dp"
+                    android:visibility="gone" />
+
                 <!--Upload button-->
-                <androidx.appcompat.widget.AppCompatButton
+                <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnUpload"
                     android:layout_width="wrap_content"
-                    android:layout_height="@dimen/btn_height"
+                    android:layout_height="48dp"
                     android:layout_gravity="center"
-                    android:paddingStart="@dimen/space32dp"
-                    android:paddingEnd="@dimen/space32dp"
-                    android:layout_marginTop="12dp"
-                    android:layout_marginBottom="24dp"
-                    android:background="@drawable/bg_button"
+                    android:paddingStart="24dp"
+                    android:paddingEnd="24dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="6dp"
                     android:text="@string/upload"
                     android:textAllCaps="false"
-                    android:textColor="@color/white" />
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    app:backgroundTint="@color/colorSecondary"
+                    android:textColor="@color/white"
+                    app:cornerRadius="8dp"
+                    app:rippleColor="@color/white"
+                    android:elevation="4dp"
+                    android:minWidth="120dp"
+                    style="@style/Widget.MaterialComponents.Button" />
+
+                <!--Close button-->
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnClose"
+                    android:layout_width="wrap_content"
+                    android:layout_height="48dp"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="8dp"
+                    android:text="@string/close"
+                    android:textColor="@color/white"
+                    android:textSize="14sp"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
+                    app:rippleColor="@color/txt_light"
+                    android:minWidth="80dp"
+                    style="@style/Widget.MaterialComponents.Button.TextButton" />
 
             </LinearLayout>
 
 
 
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/btnClose"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:fabSize="normal"
-                android:layout_centerHorizontal="true"
-                app:fabCustomSize="@dimen/record_close_btn_size"
-                android:layout_below="@+id/layoutRecordControls"
-                android:layout_marginTop="@dimen/record_close_btn_margin"
-                app:srcCompat="@drawable/ic_close"
-                android:tint="@color/white"
-                app:backgroundTint="@color/fab_close" />
+
 
 
             <RelativeLayout

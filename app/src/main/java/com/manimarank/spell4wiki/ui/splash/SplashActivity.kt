@@ -18,12 +18,14 @@ import com.manimarank.spell4wiki.data.apis.SyncHelper
 import com.manimarank.spell4wiki.utils.makeGone
 import com.manimarank.spell4wiki.utils.makeVisible
 import com.manimarank.spell4wiki.data.prefs.PrefManager
-import kotlinx.android.synthetic.main.activity_splash.*
+import com.manimarank.spell4wiki.databinding.ActivitySplashBinding
 
 /**
  * Splash screen activity
  */
 class SplashActivity : BaseActivity() {
+
+    private lateinit var binding: ActivitySplashBinding
     private lateinit var pref: PrefManager
     private var isNetworkFail = false
 
@@ -32,28 +34,28 @@ class SplashActivity : BaseActivity() {
      */
     public override fun onCreate(icicle: Bundle?) {
         super.onCreate(icicle)
-        setContentView(R.layout.activity_splash)
+        binding = ActivitySplashBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         pref = PrefManager(applicationContext)
         val animation = AnimationUtils.loadAnimation(applicationContext, R.anim.zoom)
-        val splash = findViewById<ImageView>(R.id.img_splash)
-        splash.startAnimation(animation)
-        btnNext.setOnClickListener {
+        binding.imgSplash.startAnimation(animation)
+        binding.btnNext.setOnClickListener {
             if (isConnected(applicationContext)) {
-                btnNext.makeGone()
+                binding.btnNext.makeGone()
                 if (isNetworkFail) {
                     loadSplash()
                 } else {
                     callNextScreen()
                 }
-            } else showNormal(btnNext, getString(R.string.check_internet))
+            } else showNormal(binding.btnNext, getString(R.string.check_internet))
         }
-        btnNext.makeGone()
+        binding.btnNext.makeGone()
         if (isConnected(applicationContext)) {
             loadSplash()
         } else {
-            showNormal(btnNext, getString(R.string.check_internet))
+            showNormal(binding.btnNext, getString(R.string.check_internet))
             isNetworkFail = true
-            btnNext.makeVisible()
+            binding.btnNext.makeVisible()
         }
     }
 
@@ -65,7 +67,7 @@ class SplashActivity : BaseActivity() {
             try {
                 val listener: CrashAlertClickListener = object : CrashAlertClickListener {
                     override fun onOkClick() {
-                        btnNext.makeVisible()
+                        binding.btnNext.makeVisible()
                     }
 
                     override fun onCancelClick() {

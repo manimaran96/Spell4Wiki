@@ -6,6 +6,7 @@ import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
@@ -17,6 +18,7 @@ import com.manimarank.spell4wiki.data.prefs.PrefManager
 import com.manimarank.spell4wiki.ui.common.BaseActivity
 import com.manimarank.spell4wiki.ui.languageselector.LanguageSelectionFragment
 import com.manimarank.spell4wiki.ui.listerners.OnLanguageSelectionListener
+import com.manimarank.spell4wiki.utils.EdgeToEdgeUtils.setupEdgeToEdgeForWebView
 import com.manimarank.spell4wiki.utils.GeneralUtils
 import com.manimarank.spell4wiki.utils.constants.AppConstants
 import com.manimarank.spell4wiki.utils.constants.ListMode
@@ -25,7 +27,7 @@ import java.util.Locale
 class CommonWebActivity : BaseActivity() {
     private var wikiLangDao: WikiLangDao? = null
     private var isWiktionaryWord = false
-    private val fragment: WebViewFragment = WebViewFragment()
+    private lateinit var fragment: WebViewFragment
     private var languageCode: String? = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,8 +37,19 @@ class CommonWebActivity : BaseActivity() {
         languageCode = pref.languageCodeSpell4WikiAll
         wikiLangDao = DBHelper.getInstance(applicationContext).appDatabase.wikiLangDao
 
-        // Title & Sub title
+        // Initialize fragment
+        fragment = WebViewFragment()
+
+        // Setup edge-to-edge display
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
+        val frameLayout = findViewById<View>(R.id.frameLayout)
+        setupEdgeToEdgeForWebView(
+            rootView = findViewById(android.R.id.content),
+            toolbar = toolbar,
+            webViewContainer = frameLayout
+        )
+
+        // Title & Sub title
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
@@ -73,27 +86,39 @@ class CommonWebActivity : BaseActivity() {
         return when (item.itemId) {
             R.id.action_favorite -> true
             R.id.action_share -> {
-                fragment.shareLink()
+                if (::fragment.isInitialized && fragment.isAdded) {
+                    fragment.shareLink()
+                }
                 true
             }
             R.id.action_refresh -> {
-                fragment.refreshWebPage()
+                if (::fragment.isInitialized && fragment.isAdded) {
+                    fragment.refreshWebPage()
+                }
                 true
             }
             R.id.action_forward -> {
-                fragment.forwardWebPage()
+                if (::fragment.isInitialized && fragment.isAdded) {
+                    fragment.forwardWebPage()
+                }
                 true
             }
             R.id.action_backward -> {
-                fragment.backwardWebPage()
+                if (::fragment.isInitialized && fragment.isAdded) {
+                    fragment.backwardWebPage()
+                }
                 true
             }
             R.id.action_open_in_browser -> {
-                fragment.openInAppBrowser()
+                if (::fragment.isInitialized && fragment.isAdded) {
+                    fragment.openInAppBrowser()
+                }
                 true
             }
             R.id.action_copy_link -> {
-                fragment.copyLink()
+                if (::fragment.isInitialized && fragment.isAdded) {
+                    fragment.copyLink()
+                }
                 true
             }
             android.R.id.home -> {
@@ -123,7 +148,9 @@ class CommonWebActivity : BaseActivity() {
                         languageCode = langCode
                         supportActionBar?.subtitle = GeneralUtils.getLanguageInfo(applicationContext, wikiLangDao?.getWikiLanguageWithCode(langCode))
                         invalidateOptionsMenu()
-                        fragment.loadWordWithOtherLang(langCode)
+                        if (::fragment.isInitialized && fragment.isAdded) {
+                            fragment.loadWordWithOtherLang(langCode)
+                        }
                     }
                 }
             }
@@ -135,8 +162,10 @@ class CommonWebActivity : BaseActivity() {
 
     override fun onPrepareOptionsMenu(menu: Menu): Boolean {
         val result = super.onPrepareOptionsMenu(menu)
-        changeMenuButtonStyle(menu.findItem(R.id.action_forward), fragment.canGoForward())
-        changeMenuButtonStyle(menu.findItem(R.id.action_backward), fragment.canGoBackward())
+        if (::fragment.isInitialized && fragment.isAdded) {
+            changeMenuButtonStyle(menu.findItem(R.id.action_forward), fragment.canGoForward())
+            changeMenuButtonStyle(menu.findItem(R.id.action_backward), fragment.canGoBackward())
+        }
         setupLanguageSelectorMenuItem(menu)
         return result
     }
@@ -151,7 +180,9 @@ class CommonWebActivity : BaseActivity() {
     }
 
     fun updateList(word: String?) {
-        fragment.hideRecordButton(word!!)
+        if (::fragment.isInitialized && fragment.isAdded && word != null) {
+            fragment.hideRecordButton(word)
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -161,5 +192,15 @@ class CommonWebActivity : BaseActivity() {
                 updateList(data.getStringExtra(AppConstants.WORD))
             }
         }
+    }
+
+    override fun onDestroy() {
+        try {
+            // Clean up any resources to prevent memory leaks
+            wikiLangDao = null
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+        super.onDestroy()
     }
 }

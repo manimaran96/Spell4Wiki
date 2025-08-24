@@ -24,6 +24,7 @@ import com.manimarank.spell4wiki.ui.spell4wiktionary.Spell4Wiktionary
 import com.manimarank.spell4wiki.ui.spell4wiktionary.Spell4WordActivity
 import com.manimarank.spell4wiki.ui.spell4wiktionary.Spell4WordListActivity
 import com.manimarank.spell4wiki.ui.spell4wiktionary.WiktionarySearchActivity
+import com.manimarank.spell4wiki.utils.EdgeToEdgeUtils.setupStatusBarHandling
 import com.manimarank.spell4wiki.utils.GeneralUtils.hideKeyboard
 import com.manimarank.spell4wiki.utils.GeneralUtils.openUrl
 import com.manimarank.spell4wiki.utils.NetworkUtils.isConnected
@@ -33,19 +34,11 @@ import com.manimarank.spell4wiki.utils.constants.AppConstants
 import com.manimarank.spell4wiki.utils.constants.Urls
 import com.manimarank.spell4wiki.utils.makeGone
 import com.manimarank.spell4wiki.utils.makeVisible
-import kotlinx.android.synthetic.main.activity_main.btn_about
-import kotlinx.android.synthetic.main.activity_main.btn_logout
-import kotlinx.android.synthetic.main.activity_main.btn_settings
-import kotlinx.android.synthetic.main.activity_main.card_spell4wiki
-import kotlinx.android.synthetic.main.activity_main.card_spell4word
-import kotlinx.android.synthetic.main.activity_main.card_spell4wordlist
-import kotlinx.android.synthetic.main.activity_main.layoutLogin
-import kotlinx.android.synthetic.main.activity_main.search_view
-import kotlinx.android.synthetic.main.activity_main.txtLogin
-import kotlinx.android.synthetic.main.activity_main.txtViewMyContribution
-import kotlinx.android.synthetic.main.activity_main.txt_welcome_user
+import com.manimarank.spell4wiki.databinding.ActivityMainBinding
 
 class MainActivity : BaseActivity(), View.OnClickListener {
+
+    private lateinit var binding: ActivityMainBinding
     // Views
     private var languageChangeReceiver: BroadcastReceiver? = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
@@ -62,22 +55,26 @@ class MainActivity : BaseActivity(), View.OnClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         pref = PrefManager(this@MainActivity)
-        setContentView(R.layout.activity_main)
-        //window.enableEdgeToEdge()
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        // Setup proper status bar handling
+        setupStatusBarHandling(binding.root)
+
         initViews()
         languageChangeReceiver?.let {
             LocalBroadcastManager.getInstance(this).registerReceiver(
                 it, IntentFilter(AppLanguageDialog.SELECTED_LANGUAGE))
         }
-        search_view.queryHint = getString(R.string.wiktionary_search)
-        search_view.setIconifiedByDefault(false)
-        search_view.clearFocus()
-        search_view.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+        binding.searchView.queryHint = getString(R.string.wiktionary_search)
+        binding.searchView.setIconifiedByDefault(false)
+        binding.searchView.clearFocus()
+        binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String): Boolean {
                 val intent = Intent(applicationContext, WiktionarySearchActivity::class.java)
                 intent.putExtra(AppConstants.SEARCH_TEXT, query)
                 startActivity(intent)
-                Handler().postDelayed({ search_view.setQuery("", false) }, 100)
+                Handler().postDelayed({ binding.searchView.setQuery("", false) }, 100)
                 return false
             }
 
@@ -123,21 +120,21 @@ class MainActivity : BaseActivity(), View.OnClickListener {
      * Init views
      */
     private fun initViews() {
-        card_spell4wiki.setOnClickListener(this)
-        card_spell4wordlist.setOnClickListener(this)
-        card_spell4word.setOnClickListener(this)
-        txt_welcome_user.text = String.format(getString(R.string.welcome_user), pref.name)
-        btn_about.setOnClickListener { startActivity(Intent(applicationContext, AboutActivity::class.java)) }
-        btn_settings.setOnClickListener { startActivity(Intent(applicationContext, SettingsActivity::class.java)) }
-        btn_logout.setOnClickListener { logoutUser() }
+        binding.cardSpell4wiki.setOnClickListener(this)
+        binding.cardSpell4wordlist.setOnClickListener(this)
+        binding.cardSpell4word.setOnClickListener(this)
+        binding.txtWelcomeUser.text = String.format(getString(R.string.welcome_user), pref.name)
+        binding.btnAbout.setOnClickListener { startActivity(Intent(applicationContext, AboutActivity::class.java)) }
+        binding.btnSettings.setOnClickListener { startActivity(Intent(applicationContext, SettingsActivity::class.java)) }
+        binding.btnLogout.setOnClickListener { logoutUser() }
         val urlMyContribution = String.format(Urls.COMMONS_CONTRIBUTION, pref.name)
-        txtViewMyContribution.setOnClickListener { if (isConnected(applicationContext)) openUrl(this@MainActivity, urlMyContribution, getString(R.string.view_my_contribution)) else showNormal(txtViewMyContribution, getString(R.string.check_internet)) }
-        txtLogin.setOnClickListener { if (isConnected(applicationContext)) pref.logoutUser() else showNormal(search_view, getString(R.string.check_internet)) }
+        binding.txtViewMyContribution.setOnClickListener { if (isConnected(applicationContext)) openUrl(this@MainActivity, urlMyContribution, getString(R.string.view_my_contribution)) else showNormal(binding.txtViewMyContribution, getString(R.string.check_internet)) }
+        binding.txtLogin.setOnClickListener { if (isConnected(applicationContext)) pref.logoutUser() else showNormal(binding.searchView, getString(R.string.check_internet)) }
         if (pref.isAnonymous == true) {
-            txtViewMyContribution.makeGone()
-            txt_welcome_user.makeGone()
-            btn_logout.makeGone()
-            layoutLogin.makeVisible()
+            binding.txtViewMyContribution.makeGone()
+            binding.txtWelcomeUser.makeGone()
+            binding.btnLogout.makeGone()
+            binding.layoutLogin.makeVisible()
         }
     }
 
@@ -153,15 +150,15 @@ class MainActivity : BaseActivity(), View.OnClickListener {
                     }
                     .setNegativeButton(R.string.no, null)
                     .show()
-        } else showNormal(search_view, getString(R.string.check_internet))
+        } else showNormal(binding.searchView, getString(R.string.check_internet))
     }
 
     private fun logoutApi() {}
     override fun onResume() {
         super.onResume()
-        search_view.clearFocus()
+        binding.searchView.clearFocus()
         hideKeyboard(this)
-        if (!isConnected(applicationContext)) showNormal(search_view, getString(R.string.check_internet))
+        if (!isConnected(applicationContext)) showNormal(binding.searchView, getString(R.string.check_internet))
     }
 
     override fun onBackPressed() {
@@ -169,7 +166,7 @@ class MainActivity : BaseActivity(), View.OnClickListener {
             super.onBackPressed() 
         else {
             doubleBackToExitPressedOnce = true
-            showLong(search_view, getString(R.string.alert_to_exit))
+            showLong(binding.searchView, getString(R.string.alert_to_exit))
         }
         Handler().postDelayed({ doubleBackToExitPressedOnce = false }, 2000)
     }

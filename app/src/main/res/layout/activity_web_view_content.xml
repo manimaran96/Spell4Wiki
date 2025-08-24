@@ -49,4 +49,20 @@
 
     </RelativeLayout>
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabRecord"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_record"
+        app:maxImageSize="@dimen/fab_size"
+        app:backgroundTint="@color/colorSecondary"
+        app:tint="@color/colorOnSecondary"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        app:elevation="@dimen/card_elevation"
+        app:fabCustomSize="@dimen/fab_size"
+        android:contentDescription="@string/record"
+        android:layout_margin="@dimen/margin_medium"
+        app:rippleColor="@color/colorSecondaryVariant" />
+
 </RelativeLayout>

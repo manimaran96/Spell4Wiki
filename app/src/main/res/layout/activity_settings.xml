@@ -10,13 +10,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="@dimen/space16dp">
+        android:padding="@dimen/content_margin_horizontal"
+        android:paddingTop="@dimen/margin_large">
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/txtTitleLanguage"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/space8dp"
+            android:layout_marginBottom="@dimen/margin_small"
             android:gravity="center_vertical"
             android:maxLines="1"
             android:text="@string/language"
@@ -28,7 +29,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="@dimen/space8dp">
+            android:padding="@dimen/padding_medium"
+            android:layout_marginBottom="@dimen/section_spacing">
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="match_parent"
@@ -43,7 +45,7 @@
                 android:id="@+id/txtSpell4WikiLang"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/space2dp"
+                android:layout_marginTop="@dimen/margin_small"
                 android:gravity="center_vertical"
                 android:maxLines="1"
                 android:text="@string/language"
@@ -57,8 +59,7 @@
             android:id="@+id/txtTitleLicense"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/space16dp"
-            android:layout_marginBottom="@dimen/space8dp"
+            android:layout_marginBottom="@dimen/margin_small"
             android:gravity="center_vertical"
             android:maxLines="1"
             android:text="@string/license"
@@ -70,7 +71,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="@dimen/space8dp">
+            android:padding="@dimen/padding_medium"
+            android:layout_marginBottom="@dimen/section_spacing">
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="match_parent"
