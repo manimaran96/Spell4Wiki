@@ -6,7 +6,7 @@ kotlin = "1.9.24"
 # Android SDK
 compileSdk = "35"
 targetSdk = "35"
-minSdk = "21"
+minSdk = "24"
 
 # AndroidX Core
 androidx-core-ktx = "1.12.0"
