@@ -93,8 +93,10 @@ dependencies {
     implementation(libs.material.tap.target.prompt)
     // implementation(libs.loading.button.android) // Temporarily disabled - repository issue
 
-    // Audio Processing (temporarily disabled - using MediaRecorder instead)
-    // implementation(libs.ffmpeg.kit.audio)
+    // Audio Processing - FFmpeg Kit
+    // Download aar file - https://artifactory.appodeal.com/appodeal-public/com/arthenica/mobile-ffmpeg-min/4.4.LTS/
+    implementation(files("libs/mobile-ffmpeg-min-4.4.LTS.aar"))
+    implementation("com.arthenica:smart-exception-java:0.2.1") // Added for FFmpeg Kit compatibility refer - https://medium.com/deemaze-software/android-building-the-archived-ffmpegkit-878db187cc2c
 
     // Image Loading
     implementation(libs.glide)

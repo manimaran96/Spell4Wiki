@@ -193,6 +193,7 @@
     <string name="invalid_csrf_try_again">Invalid CSRF Token. Please try again.</string>
     <string name="invalid_response">Invalid response. Please try again</string>
     <string name="upload_failed">Upload failed. Please try again.</string>
+    <string name="audio_conversion_failed">Audio conversion failed. Please try recording again.</string>
     <string name="file_already_exist">The upload file already exist in same/another format</string>
     <string name="audio_file_already_exist">Audio file already exist for %s.</string>
     <string name="login_expired">Login expired. Please login and continue.</string>

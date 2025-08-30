@@ -39,9 +39,6 @@ lottie = "6.1.0"
 loading-button = "1.14.0"
 material-tap-target = "3.3.2"
 
-# Audio Processing
-ffmpeg-kit = "5.1"
-
 # Utilities
 annotations = "24.0.1"
 crashreporter = "v1.0"
@@ -96,9 +93,6 @@ glide-compiler = { group = "com.github.bumptech.glide", name = "compiler", versi
 lottie = { group = "com.airbnb.android", name = "lottie", version.ref = "lottie" }
 loading-button-android = { group = "br.com.simplepass", name = "loading-button-android", version.ref = "loading-button" }
 material-tap-target-prompt = { group = "uk.co.samuelwall", name = "material-tap-target-prompt", version.ref = "material-tap-target" }
-
-# Audio Processing
-ffmpeg-kit-audio = { group = "com.arthenica", name = "ffmpeg-kit-audio", version.ref = "ffmpeg-kit" }
 
 # Utilities
 kotlin-stdlib = { group = "org.jetbrains.kotlin", name = "kotlin-stdlib", version.ref = "kotlin" }

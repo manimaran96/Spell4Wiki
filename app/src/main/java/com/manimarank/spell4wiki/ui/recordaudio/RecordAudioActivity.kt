@@ -452,6 +452,10 @@ class RecordAudioActivity : BaseActivity() {
 
     private fun completeUpload(editToken: String?) {
         val filePath = getFinalConvertedFilePath()
+        if (filePath == null) {
+            uploadFailed(getString(R.string.audio_conversion_failed))
+            return
+        }
         val uploadFileName = getUploadName(langCode, word)
         val contentAndLicense = getCommonsContentAndLicense()
         val file = File(filePath)
@@ -681,9 +685,13 @@ class RecordAudioActivity : BaseActivity() {
         return file.absolutePath + "/" + fileName
     }
 
-    private fun getFinalConvertedFilePath(): String {
-        WavToOggConverter().convert(getFilePath(AppConstants.AUDIO_RECORDED_FILENAME), getFilePath(AppConstants.AUDIO_CONVERTED_FILENAME))
-        return getFilePath(AppConstants.AUDIO_CONVERTED_FILENAME)
+    private fun getFinalConvertedFilePath(): String? {
+        val success = WavToOggConverter().convert(getFilePath(AppConstants.AUDIO_RECORDED_FILENAME), getFilePath(AppConstants.AUDIO_CONVERTED_FILENAME))
+        return if (success) {
+            getFilePath(AppConstants.AUDIO_CONVERTED_FILENAME)
+        } else {
+            null
+        }
     }
 
     /**
