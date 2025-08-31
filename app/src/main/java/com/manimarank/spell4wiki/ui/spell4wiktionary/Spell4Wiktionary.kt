@@ -287,14 +287,39 @@ class Spell4Wiktionary : BaseActivity(), EndlessListener {
                         call: Call<WikiWordsWithoutAudio?>,
                         response: Response<WikiWordsWithoutAudio?>
                     ) {
-                        if (response.isSuccessful && response.body() != null && response.body()?.error == null) {
-                            processSearchResultAudio(response.body())
-                        } else
-                            searchFailed(response?.body()?.error?.info ?: getString(R.string.something_went_wrong))
+                        try {
+                            if (response.isSuccessful) {
+                                val responseBody = response.body()
+                                if (responseBody != null) {
+                                    if (responseBody.error == null) {
+                                        processSearchResultAudio(responseBody)
+                                    } else {
+                                        // Handle API error response
+                                        val errorMsg = responseBody.error?.info ?: "API returned error"
+                                        error("API Error: $errorMsg")
+                                        searchFailed(errorMsg)
+                                    }
+                                } else {
+                                    // Response successful but body is null
+                                    error("Response body is null")
+                                    searchFailed(getString(R.string.result_not_found))
+                                }
+                            } else {
+                                // HTTP error response
+                                error("HTTP Error: ${response.code()} - ${response.message()}")
+                                searchFailed("Server error: ${response.code()}")
+                            }
+                        } catch (e: Exception) {
+                            error("Response processing error: ${e.message}")
+                            e.printStackTrace()
+                            searchFailed(getString(R.string.something_went_wrong))
+                        }
                     }
 
                     override fun onFailure(call: Call<WikiWordsWithoutAudio?>, t: Throwable) {
-                        searchFailed(getString(R.string.something_went_wrong))
+                        error("Network failure: ${t.message}")
+                        t.printStackTrace()
+                        searchFailed(getString(R.string.something_went_wrong_try_again))
                     }
                 })
             } else {
@@ -341,9 +366,21 @@ class Spell4Wiktionary : BaseActivity(), EndlessListener {
                         loadDataFromServer()
                     }
                 } else {
-                    searchFailed(getString(R.string.something_went_wrong))
+                    // No titles found in this batch
+                    if (nextOffsetObj != null) {
+                        // More data available, continue loading
+                        apiRetryCount += 1
+                        loadDataFromServer()
+                    } else {
+                        // No more data available
+                        searchFailed(getString(R.string.result_not_found))
+                    }
                 }
-            } else searchFailed(getString(R.string.something_went_wrong))
+            } else {
+                // wikiWordsWithoutAudio is null
+                error("Response data is null")
+                searchFailed(getString(R.string.result_not_found))
+            }
         }
     }
 

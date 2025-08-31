@@ -177,13 +177,30 @@ class WiktionarySearchActivity : BaseActivity(), EndlessListener {
                         call: Call<WikiSearchWords?>,
                         response: Response<WikiSearchWords?>
                     ) {
-                        if (response.isSuccessful && response.body() != null) {
-                            processSearchResult(response.body())
-                        } else searchFailed(getString(R.string.something_went_wrong))
+                        try {
+                            if (response.isSuccessful) {
+                                val responseBody = response.body()
+                                if (responseBody != null) {
+                                    processSearchResult(responseBody)
+                                } else {
+                                    error("Search response body is null")
+                                    searchFailed(getString(R.string.result_not_found))
+                                }
+                            } else {
+                                error("Search HTTP Error: ${response.code()} - ${response.message()}")
+                                searchFailed("Server error: ${response.code()}")
+                            }
+                        } catch (e: Exception) {
+                            error("Search response processing error: ${e.message}")
+                            e.printStackTrace()
+                            searchFailed(getString(R.string.something_went_wrong))
+                        }
                     }
 
                     override fun onFailure(call: Call<WikiSearchWords?>, t: Throwable) {
-                        searchFailed(getString(R.string.something_went_wrong))
+                        error("Search network failure: ${t.message}")
+                        t.printStackTrace()
+                        searchFailed(getString(R.string.something_went_wrong_try_again))
                     }
                 })
             } else searchFailed(getString(R.string.check_internet))
@@ -230,7 +247,11 @@ class WiktionarySearchActivity : BaseActivity(), EndlessListener {
                 } else {
                     binding.recyclerView.addNewData(titleList)
                 }
-            } else searchFailed(getString(R.string.something_went_wrong))
+            } else {
+                // wikiSearchWords is null
+                error("Search result data is null")
+                searchFailed(getString(R.string.result_not_found))
+            }
         }
     }
 

@@ -13,6 +13,7 @@ import com.manimarank.spell4wiki.utils.Print.error
 import com.manimarank.spell4wiki.utils.constants.Urls
 import com.manimarank.spell4wiki.utils.extensions.makeNullIfEmpty
 import okhttp3.ConnectionSpec
+import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.TlsVersion
 import okhttp3.logging.HttpLoggingInterceptor
@@ -20,7 +21,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.security.KeyStore
 import java.security.KeyStoreException
-import java.util.*
+import java.util.Arrays
 import javax.net.ssl.SSLContext
 import javax.net.ssl.TrustManagerFactory
 import javax.net.ssl.X509TrustManager
@@ -56,11 +57,44 @@ object ApiClient {
             if (retrofitApi == null) {
                 retrofitApi = Retrofit.Builder()
                         .baseUrl("https://github.com")
+                        .client(getBasicOkHttpClient())
                         .addConverterFactory(GsonConverterFactory.create())
                         .build()
             }
             return retrofitApi!!
         }
+
+    /**
+     * Creates a basic OkHttp client with User-Agent for non-Wikimedia APIs
+     */
+    private fun getBasicOkHttpClient(): OkHttpClient {
+        val okHttpClient = OkHttpClient().newBuilder()
+        okHttpClient.retryOnConnectionFailure(true)
+
+        // Add User-Agent interceptor (required by Wikimedia policy)
+        okHttpClient.addInterceptor(createUserAgentInterceptor())
+
+        if (BuildConfig.DEBUG) {
+            val interceptor = HttpLoggingInterceptor()
+            interceptor.level = HttpLoggingInterceptor.Level.BODY
+            okHttpClient.addInterceptor(interceptor)
+        }
+
+        return okHttpClient.build()
+    }
+
+    /**
+     * Creates User-Agent header as required by Wikimedia robot policy
+     */
+    private fun createUserAgentInterceptor(): Interceptor {
+        return Interceptor { chain ->
+            val originalRequest = chain.request()
+            val requestWithUserAgent = originalRequest.newBuilder()
+                .header("User-Agent", "Spell4Wiki/${BuildConfig.VERSION_NAME}")
+                .build()
+            chain.proceed(requestWithUserAgent)
+        }
+    }
 
     private fun getWiktionaryApiUrl(langCode: String): String {
         return String.format(Urls.WIKTIONARY, langCode.makeNullIfEmpty() ?: pref?.languageCodeSpell4WikiAll)
@@ -71,6 +105,10 @@ object ApiClient {
         pref = PrefManager(context)
         val okHttpClient = OkHttpClient().newBuilder()
         okHttpClient.retryOnConnectionFailure(true)
+
+        // Add User-Agent interceptor (required by Wikimedia policy)
+        okHttpClient.addInterceptor(createUserAgentInterceptor())
+
         if (BuildConfig.DEBUG) {
             val interceptor = HttpLoggingInterceptor()
             interceptor.level = HttpLoggingInterceptor.Level.BODY
