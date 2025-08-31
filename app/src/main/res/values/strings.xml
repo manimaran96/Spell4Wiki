@@ -42,8 +42,10 @@
     <string name="otp_required">Email verification required</string>
     <string name="invalid_otp">Please enter a valid verification code</string>
     <string name="verify_and_login">Verify &amp; Login</string>
+    <string name="please_wait">Please wait…</string>
+    <string name="logging_in">Logging in…</string>
+    <string name="verifying_code">Verifying code…</string>
     <string name="done">Done</string>
-    <string name="please_wait">Please wait</string>
     <string name="forgot_password">Forgot your password?</string>
     <string name="join_wiki">Join Wiki</string>
     <string name="yes">Yes</string>

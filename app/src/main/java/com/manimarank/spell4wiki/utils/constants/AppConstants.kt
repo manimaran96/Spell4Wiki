@@ -19,7 +19,7 @@ object AppConstants {
     // API related
     const val PASS = "PASS"
     const val FAIL = "FAIL"
-    const val TWO_FACTOR = "UI"
+    const val OTP_OR_TWO_FACTOR = "UI"
     const val INVALID_CSRF = "+\\"
     const val UPLOAD_SUCCESS = "success"
     const val UPLOAD_WARNING = "warning"

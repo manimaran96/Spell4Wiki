@@ -56,12 +56,17 @@ class LoginActivity : BaseActivity() {
 
             // Hit Login Button
             binding.btnLogin.setOnClickListener {
+                if (isDuringLogin) {
+                    showMsg(getString(R.string.please_wait))
+                    return@setOnClickListener
+                }
+
                 if (isOtpMode) {
                     // OTP verification mode
                     if (!TextUtils.isEmpty(binding.editOtp.text)) {
                         if (isConnected(applicationContext)) {
                             hideKeyboard(this@LoginActivity)
-                            isDuringLogin = true
+                            setLoadingState(true, getString(R.string.verifying_code))
                             completeOtpLogin(binding.editOtp.text.toString())
                         } else showMsg(getString(R.string.check_internet))
                     } else showMsg(getString(R.string.invalid_otp))
@@ -70,8 +75,7 @@ class LoginActivity : BaseActivity() {
                     if (!TextUtils.isEmpty(binding.editUsername.text) && !TextUtils.isEmpty(binding.editPassword.text)) {
                         if (isConnected(applicationContext)) {
                             hideKeyboard(this@LoginActivity)
-                            // binding.btnLogin.startAnimation() // Temporarily disabled - loading button library issue
-                            isDuringLogin = true
+                            setLoadingState(true, getString(R.string.logging_in))
                             callToken(binding.editUsername.text.toString(), binding.editPassword.text.toString())
                         } else showMsg(getString(R.string.check_internet))
                     } else showMsg(getString(R.string.invalid_credential))
@@ -161,15 +165,11 @@ class LoginActivity : BaseActivity() {
                                     // Move to new activity
                                     Handler().postDelayed({ launchActivity() }, 1500)
                                 }
-                                "UI" -> {
-                                    // OTP/Email verification required
+                                AppConstants.OTP_OR_TWO_FACTOR -> {
+                                    // Handle OTP/Email/2FA OTP verification required
                                     handleOtpRequired(login)
                                 }
                                 AppConstants.FAIL -> showErrorMsg(login.message)
-                                AppConstants.TWO_FACTOR -> {
-                                    showErrorMsg(getString(R.string.two_factor_login) + " ${login.message}")
-                                    showErrorMsg(getString(R.string.server_misbehaved))
-                                }
                                 else -> showErrorMsg(getString(R.string.server_misbehaved))
                             }
                         } else showErrorMsg(getString(R.string.something_went_wrong))
@@ -187,13 +187,13 @@ class LoginActivity : BaseActivity() {
     }
 
     /**
-     * Handle OTP requirement when status is "UI"
+     * Handle OTP requirement when status is "UI" or "TWO_FACTOR"
      */
     private fun handleOtpRequired(login: ClientLogin) {
         try {
             // Show OTP UI
             showOtpUI(login.message)
-            isDuringLogin = false
+            setLoadingState(false)
         } catch (e: Exception) {
             e.printStackTrace()
             showErrorMsg(getString(R.string.something_went_wrong))
@@ -296,6 +296,23 @@ class LoginActivity : BaseActivity() {
         currentUsername = null
         currentPassword = null
         currentLoginToken = null
+        setLoadingState(false)
+    }
+
+    /**
+     * Set loading state for login button
+     */
+    private fun setLoadingState(isLoading: Boolean, loadingText: String = "") {
+        isDuringLogin = isLoading
+        binding.btnLogin.isEnabled = !isLoading
+
+        if (isLoading) {
+            if (loadingText.isNotEmpty()) {
+                binding.btnLogin.text = loadingText
+            }
+        } else {
+            binding.btnLogin.text = if (isOtpMode) getString(R.string.verify_and_login) else getString(R.string.login)
+        }
     }
 
     /**
@@ -309,8 +326,7 @@ class LoginActivity : BaseActivity() {
 
     private fun showErrorMsg(msg: String?) {
         if (isConnected(applicationContext)) showMsg(msg) else showMsg(getString(R.string.check_internet))
-        // binding.btnLogin.revertAnimation() // Temporarily disabled - loading button library issue
-        isDuringLogin = false
+        setLoadingState(false)
     }
 
     private fun showMsg(msg: String?) {
