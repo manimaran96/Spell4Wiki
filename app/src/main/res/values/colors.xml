@@ -27,6 +27,7 @@
     <color name="w_red">#9A0000</color>
     <color name="w_green">#339967</color>
     <color name="w_blue">#006599</color>
+    <color name="light_blue_background">#E3F2FD</color>
     <color name="app_intro_title">@color/w_blue</color>
     <color name="app_intro_description">@color/w_blue</color>
     <color name="ic_launcher_background">#ffffff</color>

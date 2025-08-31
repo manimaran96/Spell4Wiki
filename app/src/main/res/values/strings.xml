@@ -37,6 +37,11 @@
     <string name="username">Username</string>
     <string name="password">Password</string>
     <string name="login">Login</string>
+    <string name="verification_code">Verification Code</string>
+    <string name="otp_verification_message">A verification code has been sent to your email address. Please enter the code below to complete login.</string>
+    <string name="otp_required">Email verification required</string>
+    <string name="invalid_otp">Please enter a valid verification code</string>
+    <string name="verify_and_login">Verify &amp; Login</string>
     <string name="done">Done</string>
     <string name="please_wait">Please wait</string>
     <string name="forgot_password">Forgot your password?</string>

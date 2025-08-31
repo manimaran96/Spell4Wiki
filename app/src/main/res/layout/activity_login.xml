@@ -67,6 +67,46 @@
                 android:textColorHint="@color/gray"/>
         </com.google.android.material.textfield.TextInputLayout>
 
+        <!-- OTP Section (Initially Hidden) -->
+        <LinearLayout
+            android:id="@+id/layout_otp_section"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <!-- OTP Info Message -->
+            <TextView
+                android:id="@+id/txt_otp_message"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space16dp"
+                android:background="@drawable/bg_rounded_info"
+                android:padding="@dimen/space12dp"
+                android:text="@string/otp_verification_message"
+                android:textColor="@color/colorPrimary"
+                android:textSize="14sp"
+                android:lineSpacingExtra="2dp"/>
+
+            <!-- OTP Input Field -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/LoginTextInputLayoutStyle"
+                android:layout_marginTop="@dimen/space12dp">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edit_otp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/verification_code"
+                    android:inputType="number"
+                    android:maxLength="6"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/gray"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+        </LinearLayout>
+
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_login"
             style="@style/LoginButtonStyle"
