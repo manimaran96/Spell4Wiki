@@ -5,8 +5,6 @@ on:
     branches: [ "master", "dev-*" ]
   pull_request:
     branches: [ "master" ]
-  release:
-    types: [published]
 
 env:
   GRADLE_OPTS: -Dorg.gradle.daemon=false
@@ -17,94 +15,53 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-    - name: Set up JDK 17
-      uses: actions/setup-java@v4
-      with:
-        java-version: '17'
-        distribution: 'temurin'
-        cache: gradle
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: gradle
 
-    - name: Grant execute permission for gradlew
-      run: chmod +x gradlew
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
 
-    - name: Run unit tests
-      run: ./gradlew test --stacktrace
+      - name: Run unit tests
+        run: ./gradlew test --stacktrace
 
   build:
-    name: Build APK
+    name: Build Debug APK
     runs-on: ubuntu-latest
     needs: test
 
-    strategy:
-      matrix:
-        build-type: [debug, release]
-
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-    - name: Set up JDK 17
-      uses: actions/setup-java@v4
-      with:
-        java-version: '17'
-        distribution: 'temurin'
-        cache: gradle
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: gradle
 
-    - name: Grant execute permission for gradlew
-      run: chmod +x gradlew
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
 
-    - name: Decode Keystore (Release only)
-      if: matrix.build-type == 'release'
-      env:
-        ENCODED_STRING: ${{ secrets.KEYSTORE_BASE64 }}
-        RELEASE_KEYSTORE_PASSWORD: ${{ secrets.RELEASE_KEYSTORE_PASSWORD }}
-        RELEASE_KEYSTORE_ALIAS: ${{ secrets.RELEASE_KEYSTORE_ALIAS }}
-        RELEASE_KEY_PASSWORD: ${{ secrets.RELEASE_KEY_PASSWORD }}
-      run: |
-        if [ ! -z "$ENCODED_STRING" ]; then
-          echo $ENCODED_STRING | base64 -di > app/keystore.jks
-        fi
+      - name: Build Debug APK
+        run: ./gradlew assembleDebug --stacktrace
 
-    - name: Build APK
-      run: |
-        if [ "${{ matrix.build-type }}" == "release" ] && [ ! -z "${{ secrets.KEYSTORE_BASE64 }}" ]; then
-          ./gradlew assembleRelease --stacktrace
-        else
-          ./gradlew assembleDebug --stacktrace
-        fi
-      env:
-        RELEASE_KEYSTORE_PASSWORD: ${{ secrets.RELEASE_KEYSTORE_PASSWORD }}
-        RELEASE_KEYSTORE_ALIAS: ${{ secrets.RELEASE_KEYSTORE_ALIAS }}
-        RELEASE_KEY_PASSWORD: ${{ secrets.RELEASE_KEY_PASSWORD }}
-
-    - name: Get APK path
-      id: apk-path
-      run: |
-        if [ "${{ matrix.build-type }}" == "release" ] && [ ! -z "${{ secrets.KEYSTORE_BASE64 }}" ]; then
-          echo "path=app/build/outputs/apk/release/app-release.apk" >> $GITHUB_OUTPUT
-          echo "name=Spell4Wiki-v${{ github.run_number }}-release" >> $GITHUB_OUTPUT
-        else
+      - name: Get APK path
+        id: apk-path
+        run: |
           echo "path=app/build/outputs/apk/debug/app-debug.apk" >> $GITHUB_OUTPUT
           echo "name=Spell4Wiki-v${{ github.run_number }}-debug" >> $GITHUB_OUTPUT
-        fi
 
-    - name: Upload APK Artifact
-      uses: actions/upload-artifact@v4
-      with:
-        name: ${{ steps.apk-path.outputs.name }}
-        path: ${{ steps.apk-path.outputs.path }}
-        retention-days: 30
-
-    - name: Upload to Release (Release builds only)
-      if: matrix.build-type == 'release' && github.event_name == 'release'
-      uses: actions/upload-release-asset@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        upload_url: ${{ github.event.release.upload_url }}
-        asset_path: ${{ steps.apk-path.outputs.path }}
-        asset_name: Spell4Wiki-${{ github.event.release.tag_name }}.apk
-        asset_content_type: application/vnd.android.package-archive
+      - name: Upload APK Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ steps.apk-path.outputs.name }}
+          path: ${{ steps.apk-path.outputs.path }}
+          retention-days: 30
