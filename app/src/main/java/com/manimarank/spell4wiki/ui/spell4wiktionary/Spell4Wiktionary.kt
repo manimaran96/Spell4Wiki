@@ -287,32 +287,11 @@ class Spell4Wiktionary : BaseActivity(), EndlessListener {
                         call: Call<WikiWordsWithoutAudio?>,
                         response: Response<WikiWordsWithoutAudio?>
                     ) {
-                        try {
-                            if (response.isSuccessful) {
-                                val responseBody = response.body()
-                                if (responseBody != null) {
-                                    if (responseBody.error == null) {
-                                        processSearchResultAudio(responseBody)
-                                    } else {
-                                        // Handle API error response
-                                        val errorMsg = responseBody.error?.info ?: "API returned error"
-                                        error("API Error: $errorMsg")
-                                        searchFailed(errorMsg)
-                                    }
-                                } else {
-                                    // Response successful but body is null
-                                    error("Response body is null")
-                                    searchFailed(getString(R.string.result_not_found))
-                                }
-                            } else {
-                                // HTTP error response
-                                error("HTTP Error: ${response.code()} - ${response.message()}")
-                                searchFailed("Server error: ${response.code()}")
-                            }
-                        } catch (e: Exception) {
-                            error("Response processing error: ${e.message}")
-                            e.printStackTrace()
-                            searchFailed(getString(R.string.something_went_wrong))
+                        if (response.isSuccessful && response.body() != null && response.body()?.error == null) {
+                            processSearchResultAudio(response.body())
+                        } else {
+                            val errorMsg = response.body()?.error?.info ?: getString(R.string.something_went_wrong)
+                            searchFailed(errorMsg)
                         }
                     }
 

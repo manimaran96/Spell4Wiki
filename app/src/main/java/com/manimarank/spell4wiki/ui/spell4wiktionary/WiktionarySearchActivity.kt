@@ -20,6 +20,7 @@ import com.manimarank.spell4wiki.data.prefs.PrefManager
 import com.manimarank.spell4wiki.data.prefs.ShowCasePref
 import com.manimarank.spell4wiki.data.prefs.ShowCasePref.isNotShowed
 import com.manimarank.spell4wiki.data.prefs.ShowCasePref.showed
+import com.manimarank.spell4wiki.databinding.ActivityWiktionarySearchBinding
 import com.manimarank.spell4wiki.ui.common.BaseActivity
 import com.manimarank.spell4wiki.ui.custom.EndlessRecyclerView.EndlessListener
 import com.manimarank.spell4wiki.ui.languageselector.LanguageSelectionFragment
@@ -32,7 +33,6 @@ import com.manimarank.spell4wiki.utils.constants.ListMode
 import com.manimarank.spell4wiki.utils.makeGone
 import com.manimarank.spell4wiki.utils.makeInVisible
 import com.manimarank.spell4wiki.utils.makeVisible
-import com.manimarank.spell4wiki.databinding.ActivityWiktionarySearchBinding
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -177,22 +177,9 @@ class WiktionarySearchActivity : BaseActivity(), EndlessListener {
                         call: Call<WikiSearchWords?>,
                         response: Response<WikiSearchWords?>
                     ) {
-                        try {
-                            if (response.isSuccessful) {
-                                val responseBody = response.body()
-                                if (responseBody != null) {
-                                    processSearchResult(responseBody)
-                                } else {
-                                    error("Search response body is null")
-                                    searchFailed(getString(R.string.result_not_found))
-                                }
-                            } else {
-                                error("Search HTTP Error: ${response.code()} - ${response.message()}")
-                                searchFailed("Server error: ${response.code()}")
-                            }
-                        } catch (e: Exception) {
-                            error("Search response processing error: ${e.message}")
-                            e.printStackTrace()
+                        if (response.isSuccessful && response.body() != null) {
+                            processSearchResult(response.body())
+                        } else {
                             searchFailed(getString(R.string.something_went_wrong))
                         }
                     }
@@ -203,7 +190,9 @@ class WiktionarySearchActivity : BaseActivity(), EndlessListener {
                         searchFailed(getString(R.string.something_went_wrong_try_again))
                     }
                 })
-            } else searchFailed(getString(R.string.check_internet))
+            } else {
+                searchFailed(getString(R.string.check_internet))
+            }
         }
     }
 
