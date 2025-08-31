@@ -1,0 +1,10 @@
+- Added: OTP/2FA authentication support for enhanced security
+- Improved: Login UI with better user experience and flow
+- Enhanced: API error handling with User-Agent headers
+- Upgraded: FFmpegKit for better audio conversion performance
+- Updated: Android 15 compatibility and modern SDK support
+- Migrated: Build system to Gradle Kotlin DSL for better maintainability
+- Improved: Storage Access Framework implementation
+- Enhanced: Dialog styling and UI consistency across the app
+- Fixed: Broadcast receiver intent filters for better reliability
+- Improved: Crash reporting and error handling mechanisms
