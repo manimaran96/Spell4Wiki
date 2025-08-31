@@ -1,10 +1,8 @@
 package com.manimarank.spell4wiki.ui.spell4wiktionary
 
-import android.app.AlertDialog
 import android.app.Dialog
-import android.content.DialogInterface
 import android.content.Intent
-import android.os.Build
+import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.text.TextUtils
@@ -13,7 +11,7 @@ import android.view.MenuItem
 import android.view.View
 import android.view.Window
 import android.widget.TextView
-import androidx.annotation.RequiresApi
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -31,29 +29,27 @@ import com.manimarank.spell4wiki.ui.dialogs.CommonDialog.openRunFilterInfoDialog
 import com.manimarank.spell4wiki.ui.dialogs.showConfirmBackDialog
 import com.manimarank.spell4wiki.ui.languageselector.LanguageSelectionFragment
 import com.manimarank.spell4wiki.ui.listerners.OnLanguageSelectionListener
+import com.manimarank.spell4wiki.utils.EdgeToEdgeUtils.setupEdgeToEdgeWithToolbar
 import com.manimarank.spell4wiki.utils.GeneralUtils
 import com.manimarank.spell4wiki.utils.GeneralUtils.getPromptBuilder
 import com.manimarank.spell4wiki.utils.GeneralUtils.hideKeyboard
-import com.manimarank.spell4wiki.utils.RealPathUtil.getRealPath
-import com.manimarank.spell4wiki.utils.SnackBarUtils
 import com.manimarank.spell4wiki.utils.SnackBarUtils.showLong
 import com.manimarank.spell4wiki.utils.constants.AppConstants
 import com.manimarank.spell4wiki.utils.constants.ListMode
 import com.manimarank.spell4wiki.utils.makeGone
 import com.manimarank.spell4wiki.utils.makeVisible
-import kotlinx.android.synthetic.main.activity_spell_4_wiktionary.*
-import kotlinx.android.synthetic.main.activity_spell_4_wordlist.*
-import kotlinx.android.synthetic.main.activity_spell_4_wordlist.recyclerView
-import kotlinx.android.synthetic.main.empty_state_ui.*
-import kotlinx.android.synthetic.main.layout_run_filter_action.*
+import com.manimarank.spell4wiki.databinding.ActivitySpell4WordlistBinding
 import uk.co.samuelwall.materialtaptargetprompt.MaterialTapTargetSequence
 import java.io.BufferedReader
-import java.io.File
 import java.io.FileInputStream
+import java.io.IOException
 import java.io.InputStreamReader
-import java.util.*
+import java.util.Locale
+
 
 class Spell4WordListActivity : BaseActivity() {
+
+    private lateinit var binding: ActivitySpell4WordlistBinding
     private var adapter: EndlessRecyclerAdapter? = null
     private var languageCode: String? = ""
     private var wikiLangDao: WikiLangDao? = null
@@ -64,7 +60,8 @@ class Spell4WordListActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_spell_4_wordlist)
+        binding = ActivitySpell4WordlistBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         pref = PrefManager(applicationContext)
         languageCode = pref.languageCodeSpell4WikiAll
         initUI()
@@ -76,49 +73,71 @@ class Spell4WordListActivity : BaseActivity() {
 
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         val wikiLang = wikiLangDao?.getWikiLanguageWithCode(languageCode)
+
+        // Setup proper status bar handling
+        setupEdgeToEdgeWithToolbar(
+            rootView = binding.root,
+            toolbar = toolbar
+        )
+
         setSupportActionBar(toolbar)
         supportActionBar?.title = getString(R.string.spell4wordlist)
         supportActionBar?.subtitle = GeneralUtils.getLanguageInfo(applicationContext, wikiLang)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        btnSelectFile.setOnClickListener {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-                editDocument()
-            }
+        binding.btnSelectFile.setOnClickListener {
+            openTextFilePicker()
         }
-        btnDirectContent.setOnClickListener { showDirectContentAlignMode() }
-        btnDone.setOnClickListener {
+        binding.btnDirectContent.setOnClickListener { showDirectContentAlignMode() }
+        binding.btnDone.setOnClickListener {
             hideKeyboard(this@Spell4WordListActivity)
-            if (!TextUtils.isEmpty(editFile.text)) {
-                val items = getWordListFromString(editFile.text.toString())
+            if (!TextUtils.isEmpty(binding.editFile.text)) {
+                val items = getWordListFromString(binding.editFile.text.toString())
                 showWordsInRecordMode(items)
-            } else showLong(editFile, getString(R.string.provide_valid_content))
+            } else showLong(binding.editFile, getString(R.string.provide_valid_content))
         }
-        layoutSelect.makeVisible()
-        layoutEdit.makeGone()
-        layoutList.makeGone()
-        layoutEmpty.makeGone()
+        binding.layoutSelect.makeVisible()
+        binding.layoutEdit.makeGone()
+        binding.layoutList.makeGone()
+        binding.root.findViewById<View>(R.id.layoutEmpty).makeGone()
 
         viewModel = ViewModelProvider(this)[MainViewModel::class.java]
         setupFilterWordOption()
     }
 
     /**
-     * Open a file for writing and append some text to it.
+     * Open a text file to read the words
      */
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-    private fun editDocument() {
-        // ACTION_OPEN_DOCUMENT is the intent to choose a file via the system's
-        // file browser.
-        val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
+    private val openTextFileLauncher = registerForActivityResult( ActivityResultContracts.OpenDocument(), this::handleSelectedTextFile)
 
-        // Filter to only show results that can be "opened", such as a
-        // file (as opposed to a list of contacts or timezones).
-        intent.addCategory(Intent.CATEGORY_OPENABLE)
+    // Handle the result of file selection
+    private fun handleSelectedTextFile(uri: Uri?) {
+        if (uri != null) {
+            readTextFileFromUri(uri)
+        }
+    }
 
-        // Filter to show only text files.
-        intent.type = "text/plain"
-        startActivityForResult(intent, AppConstants.RC_EDIT_REQUEST_CODE)
+    // Read content of the selected text file
+    private fun readTextFileFromUri(uri: Uri) {
+        try {
+            contentResolver.openInputStream(uri).use { inputStream ->
+                BufferedReader(InputStreamReader(inputStream)).use { reader ->
+                    val fileContent = java.lang.StringBuilder()
+                    var line: String?
+                    while ((reader.readLine().also { line = it }) != null) {
+                        fileContent.append(line).append("\n")
+                    }
+                    openFileContentInAlignMode(fileContent.toString())
+                }
+            }
+        } catch (e: IOException) {
+            e.printStackTrace()
+        }
+    }
+
+    // Launch SAF to pick a text file
+    private fun openTextFilePicker() {
+        openTextFileLauncher.launch(arrayOf("text/plain")) // MIME type for text files
     }
 
     fun updateList(word: String?) {
@@ -158,7 +177,7 @@ class Spell4WordListActivity : BaseActivity() {
         viewModel.wordsWithoutAudioList.observe(this) { list ->
             val diff = itemList.size - list.size
             showLong(
-                recyclerView,
+                binding.recyclerView,
                 if (diff > 0) getString(
                     R.string.words_filter_success,
                     diff
@@ -168,7 +187,7 @@ class Spell4WordListActivity : BaseActivity() {
             dialog.dismiss()
         }
 
-        btnRunFilter.setOnClickListener {
+        binding.root.findViewById<View>(R.id.btnRunFilter).setOnClickListener {
             val runFilterNoOfWordsCheckCount = pref.runFilterNumberOfWordsToCheck ?: AppConstants.RUN_FILTER_NO_OF_WORDS_CHECK_COUNT
             itemList = adapter?.getList()?.filter { filterRemovedWords.contains(it).not() }?.take(runFilterNoOfWordsCheckCount) ?: listOf()
             if (itemList.isNotEmpty() && languageCode != null) {
@@ -176,10 +195,10 @@ class Spell4WordListActivity : BaseActivity() {
                 dialog.show()
                 viewModel.checkWordsAvailability(itemList, languageCode!!, runFilterNoOfWordsCheckCount)
             } else
-                showLong(recyclerView, getString(R.string.no_words_scroll_to_get_new_words))
+                showLong(binding.recyclerView, getString(R.string.no_words_scroll_to_get_new_words))
         }
 
-        btnRunFilterInfo.setOnClickListener { this.openRunFilterInfoDialog() }
+        binding.root.findViewById<View>(R.id.btnRunFilterInfo).setOnClickListener { this.openRunFilterInfoDialog() }
     }
 
     private fun getFilterText(word: String?): String {
@@ -197,17 +216,6 @@ class Spell4WordListActivity : BaseActivity() {
         // response to some other intent, and the code below shouldn't run at all.
         super.onActivityResult(requestCode, resultCode, data)
         if (!isDestroyed && !isFinishing) {
-            if (requestCode == AppConstants.RC_EDIT_REQUEST_CODE && resultCode == RESULT_OK) {
-                // The document selected by the user won't be returned in the intent.
-                // Instead, a URI to that document will be contained in the return intent
-                // provided to this method as a parameter.
-                // Pull that URI using resultData.getData().
-                if (data?.data != null) {
-                    @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
-                    val file = File(getRealPath(applicationContext, data.data!!))
-                    openFileInAlignMode(file.absolutePath)
-                }
-            }
             if (requestCode == AppConstants.RC_UPLOAD_DIALOG) {
                 if (data != null && data.hasExtra(AppConstants.WORD)) {
                     adapter?.addWordInWordsHaveAudioList(data.getStringExtra(AppConstants.WORD))
@@ -219,22 +227,22 @@ class Spell4WordListActivity : BaseActivity() {
         }
     }
 
-    private fun openFileInAlignMode(filePath: String) {
-        layoutSelect.makeGone()
-        layoutEdit.makeVisible()
-        layoutList.makeGone()
-        layoutEmpty.makeGone()
-        txtFileInfo.text = getString(R.string.hint_select_file_next)
-        editFile.setText(getContentFromFile(filePath))
+    private fun openFileContentInAlignMode(fileContent: String) {
+        binding.layoutSelect.makeGone()
+        binding.layoutEdit.makeVisible()
+        binding.layoutList.makeGone()
+        binding.root.findViewById<View>(R.id.layoutEmpty).makeGone()
+        binding.txtFileInfo.text = getString(R.string.hint_select_file_next)
+        binding.editFile.setText(fileContent)
     }
 
     private fun showDirectContentAlignMode() {
-        layoutSelect.makeGone()
-        layoutEdit.makeVisible()
-        layoutList.makeGone()
-        layoutEmpty.makeGone()
-        txtFileInfo.text = getString(R.string.hint_direct_copy_next)
-        editFile.setText("")
+        binding.layoutSelect.makeGone()
+        binding.layoutEdit.makeVisible()
+        binding.layoutList.makeGone()
+        binding.root.findViewById<View>(R.id.layoutEmpty).makeGone()
+        binding.txtFileInfo.text = getString(R.string.hint_direct_copy_next)
+        binding.editFile.setText("")
     }
 
     private fun showWordsInRecordMode(items: MutableList<String>) {
@@ -243,15 +251,15 @@ class Spell4WordListActivity : BaseActivity() {
             items.removeAll(wordsAlreadyHaveAudio)
         }
         if (items.size > 0) {
-            layoutSelect.makeGone()
-            layoutEdit.makeGone()
-            layoutList.makeVisible()
-            layoutEmpty.makeGone()
-            recyclerView.setHasFixedSize(true)
+            binding.layoutSelect.makeGone()
+            binding.layoutEdit.makeGone()
+            binding.layoutList.makeVisible()
+            binding.root.findViewById<View>(R.id.layoutEmpty).makeGone()
+            binding.recyclerView.setHasFixedSize(true)
             val layoutManager = LinearLayoutManager(this)
-            recyclerView.layoutManager = layoutManager
+            binding.recyclerView.layoutManager = layoutManager
             adapter = EndlessRecyclerAdapter(this, items, ListMode.SPELL_4_WORD_LIST)
-            recyclerView.setAdapter(adapter, layoutManager)
+            binding.recyclerView.setAdapter(adapter, layoutManager)
             adapter?.setWordsHaveAudioList(wordsHaveAudioDao?.getWordsAlreadyHaveAudioByLanguage(languageCode)?.toMutableList())
             if (isNotShowed(ShowCasePref.LIST_ITEM_SPELL_4_WIKI))
                 Handler().post { callShowCaseUI() }
@@ -261,10 +269,10 @@ class Spell4WordListActivity : BaseActivity() {
     }
 
     private fun showEmptyView() {
-        layoutSelect.makeGone()
-        layoutEdit.makeGone()
-        layoutList.makeGone()
-        layoutEmpty.makeVisible()
+        binding.layoutSelect.makeGone()
+        binding.layoutEdit.makeGone()
+        binding.layoutList.makeGone()
+        binding.root.findViewById<View>(R.id.layoutEmpty).makeVisible()
     }
 
     private fun getWordListFromString(data: String?): MutableList<String> {
@@ -330,10 +338,10 @@ class Spell4WordListActivity : BaseActivity() {
                     languageCode = langCode
                     supportActionBar?.subtitle = GeneralUtils.getLanguageInfo(applicationContext, wikiLangDao?.getWikiLanguageWithCode(langCode))
                     invalidateOptionsMenu()
-                    if (layoutList.visibility == View.VISIBLE || layoutEmpty.visibility == View.VISIBLE) {
-                        if (!TextUtils.isEmpty(editFile.text)) {
+                    if (binding.layoutList.visibility == View.VISIBLE || binding.root.findViewById<View>(R.id.layoutEmpty).visibility == View.VISIBLE) {
+                        if (!TextUtils.isEmpty(binding.editFile.text)) {
                             val items = getWordListFromString(
-                                editFile.text.toString()
+                                binding.editFile.text.toString()
                             )
                             showWordsInRecordMode(items)
                         }
@@ -349,7 +357,7 @@ class Spell4WordListActivity : BaseActivity() {
     private fun setupLanguageSelectorMenuItem(menu: Menu) {
         val item = menu.findItem(R.id.menu_lang_selector)
         item.isVisible = true
-        val rootView = item.actionView
+        val rootView = item.actionView ?: return
         val selectedLang = rootView.findViewById<TextView>(R.id.txtSelectedLanguage)
         selectedLang.text = languageCode?.toUpperCase(Locale.ROOT) ?: ""
         rootView.setOnClickListener { loadLanguages() }
@@ -365,30 +373,30 @@ class Spell4WordListActivity : BaseActivity() {
     }
 
     private fun callBackPress() {
-        if (layoutList.visibility == View.VISIBLE || layoutEmpty.visibility == View.VISIBLE) {
-            layoutEdit.makeVisible()
-            layoutList.makeGone()
-            layoutEmpty.makeGone()
-        } else if (layoutEdit.visibility == View.VISIBLE) {
-            if (!TextUtils.isEmpty(editFile.text)) {
+        if (binding.layoutList.visibility == View.VISIBLE || binding.root.findViewById<View>(R.id.layoutEmpty).visibility == View.VISIBLE) {
+            binding.layoutEdit.makeVisible()
+            binding.layoutList.makeGone()
+            binding.root.findViewById<View>(R.id.layoutEmpty).makeGone()
+        } else if (binding.layoutEdit.visibility == View.VISIBLE) {
+            if (!TextUtils.isEmpty(binding.editFile.text)) {
                 this.showConfirmBackDialog {
-                    layoutSelect.makeVisible()
-                    layoutEdit.makeGone()
+                    binding.layoutSelect.makeVisible()
+                    binding.layoutEdit.makeGone()
                 }
             } else {
-                layoutSelect.makeVisible()
-                layoutEdit.makeGone()
+                binding.layoutSelect.makeVisible()
+                binding.layoutEdit.makeGone()
             }
         } else super.onBackPressed()
     }
 
     private fun callShowCaseUI() {
         if (!isFinishing && !isDestroyed) {
-            if (isNotShowed(ShowCasePref.LIST_ITEM_SPELL_4_WIKI) && recyclerView != null && recyclerView.visibility == View.VISIBLE && recyclerView.getChildAt(0) != null) {
+            if (isNotShowed(ShowCasePref.LIST_ITEM_SPELL_4_WIKI) && binding.recyclerView.visibility == View.VISIBLE && binding.recyclerView.getChildAt(0) != null) {
                 val sequence = MaterialTapTargetSequence().setSequenceCompleteListener { showed(ShowCasePref.LIST_ITEM_SPELL_4_WIKI) }
                 sequence.addPrompt(
                     getPromptBuilder(this@Spell4WordListActivity)
-                        .setTarget(recyclerView.getChildAt(0))
+                        .setTarget(binding.recyclerView.getChildAt(0))
                         .setPrimaryText(R.string.sc_t_spell4wiki_list_item)
                         .setSecondaryText(R.string.sc_d_spell4wiki_list_item)
                 )

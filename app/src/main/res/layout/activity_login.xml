@@ -33,7 +33,7 @@
         <!--  Email / Username Label -->
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/input_user_name"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+            style="@style/LoginTextInputLayoutStyle"
             android:layout_width="match_parent"
             android:layout_marginTop="@dimen/space8dp"
             android:layout_height="wrap_content">
@@ -44,37 +44,80 @@
                 android:layout_height="wrap_content"
                 android:maxLines="1"
                 android:inputType="text"
-                android:hint="@string/username" />
+                android:hint="@string/username"
+                android:textColor="@color/black"
+                android:textColorHint="@color/gray"
+                android:textCursorDrawable="@null" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <!--  Password Label -->
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+            style="@style/LoginTextInputLayoutStyle"
             android:layout_marginTop="@dimen/space8dp"
-            app:passwordToggleEnabled="true">
+            app:passwordToggleEnabled="true"
+            app:endIconTint="@color/colorAccent">
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edit_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/password"
-                android:inputType="textPassword"/>
+                android:inputType="textPassword"
+                android:textColor="@color/black"
+                android:textColorHint="@color/gray"
+                android:textCursorDrawable="@null"/>
         </com.google.android.material.textfield.TextInputLayout>
 
-        <br.com.simplepass.loading_button_lib.customViews.CircularProgressButton
+        <!-- OTP Section (Initially Hidden) -->
+        <LinearLayout
+            android:id="@+id/layout_otp_section"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <!-- OTP Info Message -->
+            <TextView
+                android:id="@+id/txt_otp_message"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space16dp"
+                android:background="@drawable/bg_rounded_info"
+                android:padding="@dimen/space12dp"
+                android:text="@string/otp_verification_message"
+                android:textColor="@color/w_blue"
+                android:textSize="14sp"
+                android:lineSpacingExtra="2dp"/>
+
+            <!-- OTP Input Field -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/LoginTextInputLayoutStyle"
+                android:layout_marginTop="@dimen/space12dp">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edit_otp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/verification_code"
+                    android:inputType="number"
+                    android:maxLength="6"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/gray"
+                    android:textCursorDrawable="@null"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+        </LinearLayout>
+
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_login"
+            style="@style/LoginButtonStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="@dimen/space10dp"
             android:layout_margin="@dimen/space10dp"
-            android:background="@drawable/bg_blue"
-            android:text="@string/login"
-            android:textColor="@color/white"
-            app:initialCornerAngle="5dp"
-            app:spinning_bar_color="#FFF"
-            app:spinning_bar_padding="6dp"
-            app:spinning_bar_width="3dp" />
+            android:text="@string/login" />
 
 
         <androidx.appcompat.widget.AppCompatTextView

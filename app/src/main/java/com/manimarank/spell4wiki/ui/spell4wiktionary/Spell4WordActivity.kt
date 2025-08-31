@@ -1,13 +1,14 @@
 package com.manimarank.spell4wiki.ui.spell4wiktionary
 
 import android.annotation.SuppressLint
-import android.app.AlertDialog
-import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.text.TextUtils
-import android.view.*
+import android.view.Menu
+import android.view.MenuItem
+import android.view.MotionEvent
+import android.view.View
 import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
 import com.manimarank.spell4wiki.R
@@ -22,6 +23,7 @@ import com.manimarank.spell4wiki.ui.dialogs.showConfirmBackDialog
 import com.manimarank.spell4wiki.ui.languageselector.LanguageSelectionFragment
 import com.manimarank.spell4wiki.ui.listerners.OnLanguageSelectionListener
 import com.manimarank.spell4wiki.ui.webui.CommonWebActivity
+import com.manimarank.spell4wiki.utils.EdgeToEdgeUtils.setupEdgeToEdgeWithToolbar
 import com.manimarank.spell4wiki.utils.GeneralUtils
 import com.manimarank.spell4wiki.utils.GeneralUtils.getPromptBuilder
 import com.manimarank.spell4wiki.utils.GeneralUtils.showRecordDialog
@@ -31,17 +33,20 @@ import com.manimarank.spell4wiki.utils.constants.AppConstants
 import com.manimarank.spell4wiki.utils.constants.ListMode
 import com.manimarank.spell4wiki.utils.constants.Urls
 import com.manimarank.spell4wiki.utils.removeStyleAfterPaste
-import kotlinx.android.synthetic.main.activity_spell_4_word.*
+import com.manimarank.spell4wiki.databinding.ActivitySpell4WordBinding
 import uk.co.samuelwall.materialtaptargetprompt.MaterialTapTargetSequence
-import java.util.*
+import java.util.Locale
 
 class Spell4WordActivity : BaseActivity() {
+
+    private lateinit var binding: ActivitySpell4WordBinding
     private var wikiLangDao: WikiLangDao? = null
     private lateinit var pref: PrefManager
     private var languageCode: String? = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_spell_4_word)
+        binding = ActivitySpell4WordBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         pref = PrefManager(this)
         languageCode = pref.languageCodeSpell4WikiAll
         initUI()
@@ -65,31 +70,38 @@ class Spell4WordActivity : BaseActivity() {
         // Title & Sub title
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         val wikiLang = wikiLangDao?.getWikiLanguageWithCode(languageCode)
+
+        // Setup proper status bar handling
+        setupEdgeToEdgeWithToolbar(
+            rootView = binding.root,
+            toolbar = toolbar
+        )
+
         setSupportActionBar(toolbar)
         supportActionBar?.title = getString(R.string.spell4word)
         supportActionBar?.subtitle = GeneralUtils.getLanguageInfo(applicationContext, wikiLang)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        editSpell4Word.setOnTouchListener { _: View?, event: MotionEvent ->
+        binding.editSpell4Word.setOnTouchListener { _: View?, event: MotionEvent ->
             val DRAWABLE_RIGHT = 2
-            if (event.action == MotionEvent.ACTION_UP && event.rawX >= editSpell4Word.right - editSpell4Word.compoundDrawables[DRAWABLE_RIGHT].bounds.width()) {
-                if (!TextUtils.isEmpty(editSpell4Word.text) && editSpell4Word.text?.length ?: 0 < 30) openWiktionaryPage(
-                    editSpell4Word.text.toString()
-                ) else showLong(editSpell4Word, getString(R.string.enter_valid_word))
+            if (event.action == MotionEvent.ACTION_UP && event.rawX >= binding.editSpell4Word.right - binding.editSpell4Word.compoundDrawables[DRAWABLE_RIGHT].bounds.width()) {
+                if (!TextUtils.isEmpty(binding.editSpell4Word.text) && binding.editSpell4Word.text?.length ?: 0 < 30) openWiktionaryPage(
+                    binding.editSpell4Word.text.toString()
+                ) else showLong(binding.editSpell4Word, getString(R.string.enter_valid_word))
                 return@setOnTouchListener true
             }
             false
         }
 
         // Remove styles after paste content
-        editSpell4Word.removeStyleAfterPaste()
-        btn_record.setOnClickListener {
-            if (!TextUtils.isEmpty(editSpell4Word.text) && editSpell4Word.text?.length ?: 0 < 30) {
+        binding.editSpell4Word.removeStyleAfterPaste()
+        binding.btnRecord.setOnClickListener {
+            if (!TextUtils.isEmpty(binding.editSpell4Word.text) && binding.editSpell4Word.text?.length ?: 0 < 30) {
                 if (isConnected(applicationContext)) {
-                    val word = editSpell4Word.text.toString().trim { it <= ' ' }
-                    if (isAllowRecord(word)) showRecordDialog(this@Spell4WordActivity, word, languageCode) else showLong(editSpell4Word, String.format(getString(R.string.audio_file_already_exist), word))
-                } else showLong(editSpell4Word, getString(R.string.check_internet))
-            } else showLong(editSpell4Word, getString(R.string.enter_valid_word))
+                    val word = binding.editSpell4Word.text.toString().trim { it <= ' ' }
+                    if (isAllowRecord(word)) showRecordDialog(this@Spell4WordActivity, word, languageCode) else showLong(binding.editSpell4Word, String.format(getString(R.string.audio_file_already_exist), word))
+                } else showLong(binding.editSpell4Word, getString(R.string.check_internet))
+            } else showLong(binding.editSpell4Word, getString(R.string.enter_valid_word))
         }
     }
 
@@ -139,7 +151,7 @@ class Spell4WordActivity : BaseActivity() {
     private fun setupLanguageSelectorMenuItem(menu: Menu) {
         val item = menu.findItem(R.id.menu_lang_selector)
         item.isVisible = true
-        val rootView = item.actionView
+        val rootView = item.actionView ?: return
         val selectedLang = rootView.findViewById<TextView>(R.id.txtSelectedLanguage)
         selectedLang.text = languageCode?.toUpperCase(Locale.ROOT) ?: ""
         rootView.setOnClickListener { loadLanguages() }
@@ -169,7 +181,7 @@ class Spell4WordActivity : BaseActivity() {
     }
 
     private fun callBackPress() {
-        if (!TextUtils.isEmpty(editSpell4Word.text)) {
+        if (!TextUtils.isEmpty(binding.editSpell4Word.text)) {
             this.showConfirmBackDialog { super.onBackPressed() }
         } else {
             super.onBackPressed()

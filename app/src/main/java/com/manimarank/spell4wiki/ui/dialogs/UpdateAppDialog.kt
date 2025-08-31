@@ -4,6 +4,7 @@ import android.app.Activity
 import android.app.AlertDialog
 import com.manimarank.spell4wiki.R
 import com.manimarank.spell4wiki.data.prefs.AppPref
+import com.manimarank.spell4wiki.ui.dialogs.styleDialogButtons
 import com.manimarank.spell4wiki.utils.GeneralUtils
 import com.manimarank.spell4wiki.utils.constants.Urls
 
@@ -14,7 +15,7 @@ object UpdateAppDialog {
         try {
             if (AppPref.checkAppUpdateAvailable(activity)) {
                 // Show Dialog
-                val builder = AlertDialog.Builder(activity)
+                val builder = AlertDialog.Builder(activity, R.style.AlertDialogTheme)
                 builder.setTitle(R.string.update_dialog_title)
                 builder.setMessage(R.string.update_dialog_message)
                 builder.setCancelable(false)
@@ -30,6 +31,9 @@ object UpdateAppDialog {
                 val dialog = builder.create()
                 AppPref.setUpdateShowed()
                 dialog.show()
+
+                // Apply consistent button styling
+                dialog.styleDialogButtons(activity)
             }
         } catch (e: Exception) {
             e.printStackTrace()

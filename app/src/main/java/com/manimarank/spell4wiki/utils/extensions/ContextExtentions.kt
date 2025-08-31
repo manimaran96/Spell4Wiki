@@ -5,6 +5,7 @@ import android.app.AlertDialog
 import android.content.Context
 import android.content.DialogInterface
 import android.os.Build
+import androidx.core.content.ContextCompat
 import com.manimarank.spell4wiki.R
 import com.manimarank.spell4wiki.data.prefs.PrefManager
 import com.manimarank.spell4wiki.utils.WikiLicense
@@ -31,7 +32,7 @@ fun Context.getAppVersion(): Long {
 fun Activity.showLicenseChooseDialog(confirmAction: () -> Unit = {}) {
     try {
         val pref = PrefManager(this)
-        val builder = AlertDialog.Builder(this)
+        val builder = AlertDialog.Builder(this, R.style.AlertDialogTheme)
         builder.setTitle(R.string.license_choose_alert) // add a radio button list
         val licensePrefList = arrayOf(
             WikiLicense.LicensePrefs.CC_0,
@@ -56,6 +57,14 @@ fun Activity.showLicenseChooseDialog(confirmAction: () -> Unit = {}) {
         builder.setNegativeButton(getString(R.string.cancel), null)
         val dialog = builder.create()
         dialog.show()
+
+        // Set button colors programmatically for better visibility
+        dialog.getButton(AlertDialog.BUTTON_NEGATIVE)?.apply {
+            setTextColor(ContextCompat.getColor(this@showLicenseChooseDialog, R.color.black))
+            textSize = 14f
+            isAllCaps = false
+            alpha = 0.87f
+        }
     } catch (e: Exception) {
         e.printStackTrace()
     }

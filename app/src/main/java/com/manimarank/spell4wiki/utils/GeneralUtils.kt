@@ -39,11 +39,11 @@ import kotlin.Exception as KotlinException
 object GeneralUtils {
 
     fun checkPermissionGranted(activity: Activity?): Boolean {
-        return ContextCompat.checkSelfPermission(activity!!, Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(activity, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED
+        return ContextCompat.checkSelfPermission(activity!!, Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_GRANTED
     }
 
     fun permissionDenied(activity: Activity?): Boolean {
-        return ContextCompat.checkSelfPermission(activity!!, Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_DENIED || ContextCompat.checkSelfPermission(activity, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED || ContextCompat.checkSelfPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED
+        return ContextCompat.checkSelfPermission(activity!!, Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_DENIED
     }
 
     fun hideKeyboard(activity: Activity) {
@@ -98,6 +98,7 @@ object GeneralUtils {
                                 is Spell4WordListActivity -> activity.updateList(word)
                                 is Spell4WordActivity -> activity.updateList(word)
                                 is CommonWebActivity -> activity.updateList(word)
+                                is CommonWebContentActivity -> activity.updateList(word)
                             }
                             showLong(String.format(activity.getString(R.string.audio_file_already_exist), word))
                             show(activity)

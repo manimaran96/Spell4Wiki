@@ -19,7 +19,7 @@ object AppConstants {
     // API related
     const val PASS = "PASS"
     const val FAIL = "FAIL"
-    const val TWO_FACTOR = "UI"
+    const val OTP_OR_TWO_FACTOR = "UI"
     const val INVALID_CSRF = "+\\"
     const val UPLOAD_SUCCESS = "success"
     const val UPLOAD_WARNING = "warning"
@@ -48,7 +48,6 @@ object AppConstants {
     // Request Code
     const val RC_UPLOAD_DIALOG = 1001
     const val RC_PERMISSIONS = 1000
-    const val RC_EDIT_REQUEST_CODE = 42
     const val RC_STORAGE_AUDIO_PERMISSION = 100
     const val RC_LICENCE_CHANGE = 1002
 

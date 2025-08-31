@@ -1,36 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:background="@color/white"
     android:orientation="vertical"
     tools:context=".ui.about.ContributorsActivity">
 
+    <include layout="@layout/custom_app_bar"/>
+
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <com.google.android.material.tabs.TabItem
-            android:id="@+id/tabCoreContributors"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/core_contributors" />
-
-        <com.google.android.material.tabs.TabItem
-            android:id="@+id/tabCodeContributors"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/code_contributors" />
-
-    </com.google.android.material.tabs.TabLayout>
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        app:tabTextColor="@color/gray"
+        app:tabSelectedTextColor="@color/colorAccent"
+        app:tabIndicatorColor="@color/colorAccent"
+        app:tabIndicatorHeight="3dp"
+        app:tabTextAppearance="@style/TabTextAppearance"
+        app:tabMode="fixed"
+        app:tabGravity="fill" />
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_below="@+id/tabLayout"
-        android:layout_height="match_parent">
+        android:layout_height="0dp"
+        android:layout_weight="1">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -99,7 +95,4 @@
         </RelativeLayout>
     </androidx.core.widget.NestedScrollView>
 
-
-
-
-</RelativeLayout>
+</LinearLayout>

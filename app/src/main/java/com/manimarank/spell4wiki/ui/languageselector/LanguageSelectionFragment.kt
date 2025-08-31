@@ -49,7 +49,7 @@ class LanguageSelectionFragment(private val mActivity: Activity) : BottomSheetDi
         pref = PrefManager(context)
         if (TextUtils.isEmpty(preSelectedLanguageCode))
             preSelectedLanguageCode = existingLanguageCode
-        val dialog = BottomSheetDialog(mActivity, R.style.AppTheme)
+        val dialog = BottomSheetDialog(mActivity, R.style.BottomSheetDialogTheme)
         dialog.setContentView(R.layout.bottom_sheet_language_selection)
         val txtTitle = dialog.findViewById<TextView>(R.id.text_select_lang_title)
         if (!TextUtils.isEmpty(subTitleInfo) && txtTitle != null) {
@@ -92,7 +92,7 @@ class LanguageSelectionFragment(private val mActivity: Activity) : BottomSheetDi
         btnClose?.setOnClickListener { dismiss() }
         dialog.setOnShowListener { dialog1: DialogInterface ->
             val d = dialog1 as BottomSheetDialog
-            val bottomSheet = d.findViewById<FrameLayout>(R.id.design_bottom_sheet)
+            val bottomSheet = d.findViewById<FrameLayout>(com.google.android.material.R.id.design_bottom_sheet)
             if (bottomSheet != null) {
                 val behavior: BottomSheetBehavior<*> = BottomSheetBehavior.from(bottomSheet)
                 behavior.isHideable = false

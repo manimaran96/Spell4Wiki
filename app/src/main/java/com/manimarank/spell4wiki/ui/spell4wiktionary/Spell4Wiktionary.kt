@@ -42,6 +42,7 @@ import com.manimarank.spell4wiki.ui.dialogs.showConfirmBackDialog
 import com.manimarank.spell4wiki.ui.languageselector.LanguageSelectionFragment
 import com.manimarank.spell4wiki.ui.listerners.OnCategorySelectionListener
 import com.manimarank.spell4wiki.ui.listerners.OnLanguageSelectionListener
+import com.manimarank.spell4wiki.utils.EdgeToEdgeUtils.setupEdgeToEdgeWithToolbar
 import com.manimarank.spell4wiki.utils.GeneralUtils
 import com.manimarank.spell4wiki.utils.NetworkUtils.isConnected
 import com.manimarank.spell4wiki.utils.SnackBarUtils
@@ -51,13 +52,7 @@ import com.manimarank.spell4wiki.utils.extensions.makeNullIfEmpty
 import com.manimarank.spell4wiki.utils.makeGone
 import com.manimarank.spell4wiki.utils.makeInVisible
 import com.manimarank.spell4wiki.utils.makeVisible
-import kotlinx.android.synthetic.main.activity_spell_4_wiktionary.btnAddCategory
-import kotlinx.android.synthetic.main.activity_spell_4_wiktionary.recyclerView
-import kotlinx.android.synthetic.main.activity_spell_4_wiktionary.refreshLayout
-import kotlinx.android.synthetic.main.activity_spell_4_wiktionary.spinnerCategory
-import kotlinx.android.synthetic.main.empty_state_ui.layoutEmpty
-import kotlinx.android.synthetic.main.layout_run_filter_action.btnRunFilter
-import kotlinx.android.synthetic.main.layout_run_filter_action.btnRunFilterInfo
+import com.manimarank.spell4wiki.databinding.ActivitySpell4WiktionaryBinding
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -69,6 +64,8 @@ import java.util.concurrent.TimeUnit
 
 
 class Spell4Wiktionary : BaseActivity(), EndlessListener {
+
+    private lateinit var binding: ActivitySpell4WiktionaryBinding
     private var wikiLangDao: WikiLangDao? = null
     private var wordsHaveAudioDao: WordsHaveAudioDao? = null
     private var wordsListAlreadyHaveAudio: MutableList<String> = ArrayList()
@@ -92,7 +89,8 @@ class Spell4Wiktionary : BaseActivity(), EndlessListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_spell_4_wiktionary)
+        binding = ActivitySpell4WiktionaryBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         pref = PrefManager(applicationContext)
         languageCode = pref.languageCodeSpell4WikiAll
         init()
@@ -108,25 +106,32 @@ class Spell4Wiktionary : BaseActivity(), EndlessListener {
         // Title & Sub title
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         val wikiLang = wikiLangDao?.getWikiLanguageWithCode(languageCode)
+
+        // Setup proper status bar handling and edge-to-edge
+        setupEdgeToEdgeWithToolbar(
+            rootView = binding.root,
+            toolbar = toolbar
+        )
+
         setSupportActionBar(toolbar)
         supportActionBar?.title = getString(R.string.spell4wiktionary)
         supportActionBar?.subtitle = GeneralUtils.getLanguageInfo(applicationContext, wikiLang)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        snackBar = Snackbar.make(recyclerView, getString(R.string.record_fetch_fail), Snackbar.LENGTH_LONG)
-        recyclerView.setHasFixedSize(true)
+        snackBar = Snackbar.make(binding.recyclerView, getString(R.string.record_fetch_fail), Snackbar.LENGTH_LONG)
+        binding.recyclerView.setHasFixedSize(true)
 
         viewModel = ViewModelProvider(this)[MainViewModel::class.java]
 
         setupFilterWordOption()
 
         val layoutManager = LinearLayoutManager(this)
-        recyclerView.layoutManager = layoutManager
+        binding.recyclerView.layoutManager = layoutManager
         adapter = EndlessRecyclerAdapter(this@Spell4Wiktionary, ArrayList(), ListMode.SPELL_4_WIKI)
-        recyclerView.setAdapter(adapter, layoutManager)
-        recyclerView.setListener(this)
-        recyclerView.makeVisible()
-        refreshLayout.setOnRefreshListener { loadDataFromServer() }
+        binding.recyclerView.setAdapter(adapter, layoutManager)
+        binding.recyclerView.setListener(this)
+        binding.recyclerView.makeVisible()
+        binding.refreshLayout.setOnRefreshListener { loadDataFromServer() }
         loadCategoriesData()
     }
 
@@ -156,7 +161,7 @@ class Spell4Wiktionary : BaseActivity(), EndlessListener {
         viewModel.wordsWithoutAudioList.observe(this) { list ->
             val diff = itemList.size - list.size
             SnackBarUtils.showLong(
-                recyclerView,
+                binding.recyclerView,
                 if (diff > 0) getString(
                     R.string.words_filter_success,
                     diff
@@ -166,7 +171,7 @@ class Spell4Wiktionary : BaseActivity(), EndlessListener {
             dialog.dismiss()
         }
 
-        btnRunFilter.setOnClickListener {
+        binding.root.findViewById<View>(R.id.btnRunFilter).setOnClickListener {
             val runFilterNoOfWordsCheckCount = pref.runFilterNumberOfWordsToCheck ?: AppConstants.RUN_FILTER_NO_OF_WORDS_CHECK_COUNT
             itemList = adapter.getList().filter { filterRemovedWords.contains(it).not() }.take(runFilterNoOfWordsCheckCount)
             if (itemList.isNotEmpty() && languageCode != null) {
@@ -174,10 +179,10 @@ class Spell4Wiktionary : BaseActivity(), EndlessListener {
                 dialog.show()
                 viewModel.checkWordsAvailability(itemList, languageCode!!, runFilterNoOfWordsCheckCount)
             } else
-                SnackBarUtils.showLong(recyclerView, getString(R.string.no_words_scroll_to_get_new_words))
+                SnackBarUtils.showLong(binding.recyclerView, getString(R.string.no_words_scroll_to_get_new_words))
         }
 
-        btnRunFilterInfo.setOnClickListener { this.openRunFilterInfoDialog() }
+        binding.root.findViewById<View>(R.id.btnRunFilterInfo).setOnClickListener { this.openRunFilterInfoDialog() }
     }
 
     private fun getFilterText(word: String?): String {
@@ -200,7 +205,7 @@ class Spell4Wiktionary : BaseActivity(), EndlessListener {
                  * Check if user reach the end of api data.
                  * Show empty UI If no data exist. Otherwise show message.
                  */
-                if (recyclerView.isLastPage) {
+                if (binding.recyclerView.isLastPage) {
                     searchFailed(getString(R.string.no_more_data_found))
                     return
                 }
@@ -209,11 +214,11 @@ class Spell4Wiktionary : BaseActivity(), EndlessListener {
                  * Set basic information on both very first time and after language change
                  */
                 if (nextOffsetObj == null) {
-                    if (!refreshLayout.isRefreshing)
-                        refreshLayout.isRefreshing = true
+                    if (!binding.refreshLayout.isRefreshing)
+                        binding.refreshLayout.isRefreshing = true
                     resetApiResultTime()
                     apiFailRetryCount = 0
-                    recyclerView?.reset()
+                    binding.recyclerView.reset()
                     val wikiLang = wikiLangDao?.getWikiLanguageWithCode(languageCode)
                     if (wikiLang != null && !TextUtils.isEmpty(wikiLang.titleOfWordsWithoutAudio) && wiktionaryTitleOfWordsWithoutAudio?.makeNullIfEmpty() == null)
                         wiktionaryTitleOfWordsWithoutAudio = wikiLang.titleOfWordsWithoutAudio
@@ -242,18 +247,18 @@ class Spell4Wiktionary : BaseActivity(), EndlessListener {
                         builder.setMessage(if (isFail) R.string.spell4wiktionary_load_more_failed_confirmation else R.string.spell4wiktionary_load_more_confirmation)
                         builder.setCancelable(false)
                         builder.setPositiveButton(R.string.yes_continue) { _: DialogInterface?, _: Int ->
-                            recyclerView.enableLoadMore()
+                            binding.recyclerView.enableLoadMore()
                             resetApiResultTime()
                             apiFailRetryCount = 0
                             loadDataFromServer()
                         }
                         builder.setNegativeButton(R.string.later) { dialog: DialogInterface, _: Int ->
-                            recyclerView.disableLoadMore()
+                            binding.recyclerView.disableLoadMore()
                             dialog.dismiss()
                         }
                         val dialog = builder.create()
-                        recyclerView.disableLoadMore()
-                        if (refreshLayout.isRefreshing) refreshLayout.isRefreshing = false
+                        binding.recyclerView.disableLoadMore()
+                        if (binding.refreshLayout.isRefreshing) binding.refreshLayout.isRefreshing = false
                         dialog.show()
                         return
                     }
@@ -284,12 +289,16 @@ class Spell4Wiktionary : BaseActivity(), EndlessListener {
                     ) {
                         if (response.isSuccessful && response.body() != null && response.body()?.error == null) {
                             processSearchResultAudio(response.body())
-                        } else
-                            searchFailed(response?.body()?.error?.info ?: getString(R.string.something_went_wrong))
+                        } else {
+                            val errorMsg = response.body()?.error?.info ?: getString(R.string.something_went_wrong)
+                            searchFailed(errorMsg)
+                        }
                     }
 
                     override fun onFailure(call: Call<WikiWordsWithoutAudio?>, t: Throwable) {
-                        searchFailed(getString(R.string.something_went_wrong))
+                        error("Network failure: ${t.message}")
+                        t.printStackTrace()
+                        searchFailed(getString(R.string.something_went_wrong_try_again))
                     }
                 })
             } else {
@@ -301,14 +310,15 @@ class Spell4Wiktionary : BaseActivity(), EndlessListener {
     private fun processSearchResultAudio(wikiWordsWithoutAudio: WikiWordsWithoutAudio?) {
         if (!isDestroyed && !isFinishing) {
             val titleList = ArrayList<String>()
-            if (recyclerView.visibility != View.VISIBLE) recyclerView.makeVisible()
+            if (binding.recyclerView.visibility != View.VISIBLE) binding.recyclerView.makeVisible()
+            val layoutEmpty = binding.root.findViewById<View>(R.id.layoutEmpty)
             if (layoutEmpty.visibility == View.VISIBLE) layoutEmpty.makeGone()
             if (snackBar.isShown) snackBar.dismiss()
             if (wikiWordsWithoutAudio != null) {
                 nextOffsetObj = if (wikiWordsWithoutAudio.offset?.nextOffset != null) {
                         wikiWordsWithoutAudio.offset?.nextOffset
                     } else {
-                        recyclerView.setLastPage()
+                        binding.recyclerView.setLastPage()
                         null
                     }
 
@@ -321,23 +331,35 @@ class Spell4Wiktionary : BaseActivity(), EndlessListener {
                     // Remove already recorded words
                     titleList.removeAll(wordsListAlreadyHaveAudio)
                     if (titleList.size > 0) {
-                        if (refreshLayout.isRefreshing)
-                            refreshLayout.isRefreshing = false
+                        if (binding.refreshLayout.isRefreshing)
+                            binding.refreshLayout.isRefreshing = false
                         resetApiResultTime()
                         adapter.setWordsHaveAudioList(wordsListAlreadyHaveAudio)
-                        recyclerView.addNewData(titleList)
+                        binding.recyclerView.addNewData(titleList)
                         if (isNotShowed(ShowCasePref.LIST_ITEM_SPELL_4_WIKI) || isNotShowed(ShowCasePref.SPELL_4_WIKI_PAGE))
                             Handler().post { callShowCaseUI() }
                     } else {
-                        if (!refreshLayout.isRefreshing)
-                            refreshLayout.isRefreshing = true
+                        if (!binding.refreshLayout.isRefreshing)
+                            binding.refreshLayout.isRefreshing = true
                         apiRetryCount += 1
                         loadDataFromServer()
                     }
                 } else {
-                    searchFailed(getString(R.string.something_went_wrong))
+                    // No titles found in this batch
+                    if (nextOffsetObj != null) {
+                        // More data available, continue loading
+                        apiRetryCount += 1
+                        loadDataFromServer()
+                    } else {
+                        // No more data available
+                        searchFailed(getString(R.string.result_not_found))
+                    }
                 }
-            } else searchFailed(getString(R.string.something_went_wrong))
+            } else {
+                // wikiWordsWithoutAudio is null
+                error("Response data is null")
+                searchFailed(getString(R.string.result_not_found))
+            }
         }
     }
 
@@ -347,15 +369,15 @@ class Spell4Wiktionary : BaseActivity(), EndlessListener {
             if (isConnected(applicationContext)) {
                 apiFailRetryCount += 1
                 snackBar.setText(msg)
-                if (recyclerView != null && adapter.itemCount < 1) {
-                    recyclerView.makeInVisible()
-                    layoutEmpty.makeVisible()
+                if (adapter.itemCount < 1) {
+                    binding.recyclerView.makeInVisible()
+                    binding.root.findViewById<View>(R.id.layoutEmpty).makeVisible()
                 }
             } else {
                 snackBar.setText(getString(if (adapter.itemCount < 15) R.string.record_fetch_fail else R.string.check_internet))
             }
-            if (recyclerView != null) recyclerView.removeLoader()
-            if (refreshLayout.isRefreshing) refreshLayout.isRefreshing = false
+            binding.recyclerView.removeLoader()
+            if (binding.refreshLayout.isRefreshing) binding.refreshLayout.isRefreshing = false
             if (!snackBar.isShown) snackBar.show()
         }
     }
@@ -380,7 +402,7 @@ class Spell4Wiktionary : BaseActivity(), EndlessListener {
                     languageCode = langCode
                     supportActionBar?.subtitle = GeneralUtils.getLanguageInfo(applicationContext, wikiLangDao?.getWikiLanguageWithCode(langCode))
                     invalidateOptionsMenu()
-                    recyclerView.reset()
+                    binding.recyclerView.reset()
                     nextOffsetObj = null
                     loadCategoriesData()
                     loadDataFromServer()
@@ -400,7 +422,7 @@ class Spell4Wiktionary : BaseActivity(), EndlessListener {
     private fun setupLanguageSelectorMenuItem(menu: Menu) {
         val item = menu.findItem(R.id.menu_lang_selector)
         item.isVisible = true
-        val rootView = item.actionView
+        val rootView: View = item.actionView ?: return
         val selectedLang = rootView.findViewById<TextView>(R.id.txtSelectedLanguage)
         selectedLang.text = languageCode?.toUpperCase(Locale.ROOT) ?: ""
         rootView.setOnClickListener {
@@ -428,7 +450,7 @@ class Spell4Wiktionary : BaseActivity(), EndlessListener {
     override fun loadFail() {
         if (!isConnected(applicationContext))
             searchFailed(getString(R.string.check_internet))
-        else if (recyclerView != null && recyclerView.isLastPage)
+        else if (binding.recyclerView.isLastPage)
             searchFailed(getString(R.string.no_more_data_found))
     }
 
@@ -472,13 +494,13 @@ class Spell4Wiktionary : BaseActivity(), EndlessListener {
                             )
                     )
                 }
-                if (isNotShowed(ShowCasePref.LIST_ITEM_SPELL_4_WIKI) && recyclerView != null && recyclerView.getChildAt(
+                if (isNotShowed(ShowCasePref.LIST_ITEM_SPELL_4_WIKI) && binding.recyclerView.getChildAt(
                         0
                     ) != null
                 ) {
                     sequence.addPrompt(
                         promptBuilder
-                            .setTarget(recyclerView.getChildAt(0))
+                            .setTarget(binding.recyclerView.getChildAt(0))
                             .setPrimaryText(R.string.sc_t_spell4wiki_list_item)
                             .setSecondaryText(R.string.sc_d_spell4wiki_list_item)
                     )
@@ -511,7 +533,7 @@ class Spell4Wiktionary : BaseActivity(), EndlessListener {
             setUpCategoryData(categoryTitleFromApi)
         categoryDataList = pref.getWordsCategoryList(languageCode)
         setupCategorySpinnerData(categoryDataList)
-        btnAddCategory.setOnClickListener {
+        binding.btnAddCategory.setOnClickListener {
             showCategorySearchSelectionScreen()
         }
     }
@@ -519,15 +541,15 @@ class Spell4Wiktionary : BaseActivity(), EndlessListener {
     private fun setupCategorySpinnerData(categoryDataList: MutableList<String>) {
         val spinnerAdapter = ArrayAdapter(applicationContext, R.layout.item_category, categoryDataList.toTypedArray())
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        spinnerCategory.adapter = spinnerAdapter
+        binding.spinnerCategory.adapter = spinnerAdapter
 
         val selectedPos = categoryDataList.indexOfFirst { it == pref.getSelectedWordsCategory(languageCode) }
 
-        spinnerCategory.setSelection(selectedPos)
+        binding.spinnerCategory.setSelection(selectedPos)
 
         wiktionaryTitleOfWordsWithoutAudio = categoryDataList.elementAtOrNull(selectedPos)
         if (categoryDataList.isNotEmpty()) {
-            spinnerCategory.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            binding.spinnerCategory.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(
                     parent: AdapterView<*>?,
                     view: View?,
@@ -537,7 +559,7 @@ class Spell4Wiktionary : BaseActivity(), EndlessListener {
                     pref.setSelectedWordsCategory(languageCode, parent?.getItemAtPosition(pos)?.toString())
                     wiktionaryTitleOfWordsWithoutAudio = pref.getSelectedWordsCategory(languageCode)
                     nextOffsetObj = null
-                    recyclerView?.reset()
+                    binding.recyclerView.reset()
                     loadDataFromServer()
                 }
 

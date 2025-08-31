@@ -16,7 +16,7 @@
         android:id="@+id/txtLoading"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/space8dp"
+        android:layout_marginTop="@dimen/margin_medium"
         android:text="@string/loading"
         android:textColor="@color/w_blue"
         android:textSize="@dimen/text_normal" />

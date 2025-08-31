@@ -1,19 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">@color/white</color>
-    <color name="colorPrimaryDark">@color/white</color>
+    <color name="colorPrimaryDark">@color/light_gray</color>
     <color name="colorAccent">@color/w_blue</color>
+
+    <!-- Material Design 3 Color System -->
+    <color name="colorPrimaryVariant">@color/light_gray</color>
+    <color name="colorSecondary">@color/w_green</color>
+    <color name="colorSecondaryVariant">@color/w_green</color>
+    <color name="colorSurface">@color/white</color>
+    <color name="colorBackground">@color/white</color>
+    <color name="colorError">@color/w_red</color>
+    <color name="colorOnPrimary">@color/black</color>
+    <color name="colorOnSecondary">@color/white</color>
+    <color name="colorOnSurface">@color/black</color>
+    <color name="colorOnBackground">@color/black</color>
+    <color name="colorOnError">@color/white</color>
 
     <color name="transparent">#00FFFFFF</color>
     <color name="white">#fff</color>
     <color name="black">#000000</color>
-    <color name="gray">#5A5A5A</color>
+    <color name="gray">#373737</color>
     <color name="light_gray">#eae9e9</color>
     <color name="gray_100">#ccc</color>
     <color name="gray_border">#A3A3A3</color>
     <color name="w_red">#9A0000</color>
     <color name="w_green">#339967</color>
     <color name="w_blue">#006599</color>
+    <color name="light_blue_background">#E3F2FD</color>
     <color name="app_intro_title">@color/w_blue</color>
     <color name="app_intro_description">@color/w_blue</color>
     <color name="ic_launcher_background">#ffffff</color>
@@ -26,4 +40,10 @@
     <color name="record_have_audio">#EFFFF0</color>
     <color name="record_play_icon">@color/txt_light</color>
     <color name="show_case_bg_record_upload">#5E35B1</color>
+
+    <!-- Additional colors for better UI contrast -->
+    <color name="text_input_focused">#006599</color>
+    <color name="text_input_unfocused">#A3A3A3</color>
+    <color name="button_text_primary">#FFFFFF</color>
+    <color name="button_text_secondary">#006599</color>
 </resources>

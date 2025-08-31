@@ -2,8 +2,6 @@ package com.manimarank.spell4wiki.ui.recordaudio
 
 import android.Manifest
 import android.annotation.SuppressLint
-import android.app.AlertDialog
-import android.content.DialogInterface
 import android.content.Intent
 import android.content.res.Configuration
 import android.os.Build
@@ -11,13 +9,14 @@ import android.os.Bundle
 import android.os.CountDownTimer
 import android.os.Handler
 import android.text.TextUtils
-import android.text.method.LinkMovementMethod
+import android.util.DisplayMetrics
 import android.view.MotionEvent
 import android.view.View
+import android.view.ViewGroup
 import android.webkit.MimeTypeMap
+import android.widget.ScrollView
 import android.widget.SeekBar
 import android.widget.SeekBar.OnSeekBarChangeListener
-import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.core.text.HtmlCompat
@@ -45,11 +44,10 @@ import com.manimarank.spell4wiki.record.ogg.WavToOggConverter
 import com.manimarank.spell4wiki.record.wav.WAVPlayer
 import com.manimarank.spell4wiki.record.wav.WAVRecorder
 import com.manimarank.spell4wiki.ui.common.BaseActivity
-import com.manimarank.spell4wiki.ui.dialogs.AppLanguageDialog
 import com.manimarank.spell4wiki.ui.recordaudio.WikiDataUtils.getUploadName
-import com.manimarank.spell4wiki.ui.settings.SettingsActivity
 import com.manimarank.spell4wiki.utils.DateUtils.DF_YYYY_MM_DD
 import com.manimarank.spell4wiki.utils.DateUtils.getDateToString
+import com.manimarank.spell4wiki.utils.EdgeToEdgeUtils.setupStatusBarHandling
 import com.manimarank.spell4wiki.utils.GeneralUtils
 import com.manimarank.spell4wiki.utils.GeneralUtils.checkPermissionGranted
 import com.manimarank.spell4wiki.utils.GeneralUtils.permissionDenied
@@ -57,20 +55,17 @@ import com.manimarank.spell4wiki.utils.GeneralUtils.showAppSettingsPageSnackBar
 import com.manimarank.spell4wiki.utils.NetworkUtils.isConnected
 import com.manimarank.spell4wiki.utils.Print.error
 import com.manimarank.spell4wiki.utils.Print.log
-import com.manimarank.spell4wiki.utils.RealPathUtil
 import com.manimarank.spell4wiki.utils.ToastUtils.showLong
-import com.manimarank.spell4wiki.utils.WikiLicense
 import com.manimarank.spell4wiki.utils.WikiLicense.getLicenseTemplateInWiki
 import com.manimarank.spell4wiki.utils.WikiLicense.licenseNameId
 import com.manimarank.spell4wiki.utils.constants.AppConstants
 import com.manimarank.spell4wiki.utils.constants.AppConstants.MAX_RETRIES_FOR_CSRF_TOKEN
 import com.manimarank.spell4wiki.utils.constants.AppConstants.MAX_RETRIES_FOR_FORCE_LOGIN
-import com.manimarank.spell4wiki.utils.constants.AppConstants.RC_EDIT_REQUEST_CODE
 import com.manimarank.spell4wiki.utils.constants.AppConstants.RC_LICENCE_CHANGE
 import com.manimarank.spell4wiki.utils.extensions.showLicenseChooseDialog
-import kotlinx.android.synthetic.main.activity_record_audio_pop_up.*
-import kotlinx.android.synthetic.main.activity_settings.*
+import com.manimarank.spell4wiki.databinding.ActivityRecordAudioPopUpBinding
 import okhttp3.MediaType
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import okhttp3.ResponseBody
@@ -80,15 +75,17 @@ import retrofit2.Response
 import uk.co.samuelwall.materialtaptargetprompt.MaterialTapTargetPrompt
 import uk.co.samuelwall.materialtaptargetprompt.extras.focals.RectanglePromptFocal
 import java.io.File
-import java.util.*
+import java.util.Locale
 import java.util.concurrent.Callable
 import java.util.concurrent.TimeUnit
 
 class RecordAudioActivity : BaseActivity() {
 
+    private lateinit var binding: ActivityRecordAudioPopUpBinding
+
     private var countDownTimer: CountDownTimer? = null
     private var recordedSecs: Long = 0
-    
+
     private var langCode: String? = null
     private var word: String? = ""
 
@@ -111,9 +108,18 @@ class RecordAudioActivity : BaseActivity() {
 
     private val TAG = RecordAudioActivity::class.java.simpleName + " --> "
     private var showCaseShowed = true
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_record_audio_pop_up)
+        binding = ActivityRecordAudioPopUpBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        // Setup proper status bar handling
+        setupStatusBarHandling(binding.root)
+
+        // Setup responsive dialog width
+        setupResponsiveDialogWidth()
+
         init()
     }
 
@@ -130,16 +136,19 @@ class RecordAudioActivity : BaseActivity() {
         
         api = getCommonsApi(applicationContext).create(ApiInterface::class.java)
         apiWiki = getWiktionaryApi(applicationContext, langCode!!).create(ApiInterface::class.java)
-        txtWord.text = word
+        binding.txtWord.text = word
         val wikiLang = wikiLangDao?.getWikiLanguageWithCode(langCode)
-        txtLanguage.text = GeneralUtils.getLanguageInfo(applicationContext, wikiLang, strResId = R.string.selected_language)
-        txtRecordHint.text = getString(R.string.before_record)
-        txtDuration.text = getDurationValue(0)
-        checkboxDeclaration.text = String.format(getString(R.string.declaration_note), getString(licenseNameId(pref.uploadAudioLicense)))
+        binding.txtLanguage.text = GeneralUtils.getLanguageInfo(applicationContext, wikiLang, strResId = R.string.selected_language)
+        binding.txtRecordHint.text = getString(R.string.before_record)
+        binding.txtDuration.text = getDurationValue(0)
+        binding.checkboxDeclaration.text = String.format(getString(R.string.declaration_note), getString(licenseNameId(pref.uploadAudioLicense)))
 
-        btnSettings.setOnClickListener {
+        // Update file name preview
+        updateFileNamePreview()
+
+        binding.btnSettings.setOnClickListener {
             showLicenseChooseDialog({
-                checkboxDeclaration.text = String.format(getString(R.string.declaration_note), getString(licenseNameId(pref.uploadAudioLicense)))
+                binding.checkboxDeclaration.text = String.format(getString(R.string.declaration_note), getString(licenseNameId(pref.uploadAudioLicense)))
             })
 
         }
@@ -149,12 +158,12 @@ class RecordAudioActivity : BaseActivity() {
             override fun onTick(millisUntilFinished: Long) {
                 val remainingSecs = TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished)
                 recordedSecs = 10 - remainingSecs
-                txtRecordHint.text = String.format(getString(R.string.during_record), getDurationValue(remainingSecs))
+                binding.txtRecordHint.text = String.format(getString(R.string.during_record), getDurationValue(remainingSecs))
             }
 
             override fun onFinish() = stopRecording()
         }
-        btnRecord.setOnTouchListener { _: View?, event: MotionEvent ->
+        binding.btnRecord.setOnTouchListener { _: View?, event: MotionEvent ->
             if (checkPermissionGranted(this@RecordAudioActivity)) {
                 if (event.action == MotionEvent.ACTION_DOWN) {
                     startRecording()
@@ -168,20 +177,20 @@ class RecordAudioActivity : BaseActivity() {
             }
             false
         }
-        btnPlayPause.setOnClickListener {
+        binding.btnPlayPause.setOnClickListener {
             if (isRecorded)
                 playPauseRecordedAudio()
             else
                 showLong(getString(R.string.record_audio_not_found))
         }
-        seekBar.setOnSeekBarChangeListener(object : OnSeekBarChangeListener {
+        binding.seekBar.setOnSeekBarChangeListener(object : OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
                 if (fromUser) {
                     seekBar.max = TimeUnit.SECONDS.toMillis(recordedSecs).toInt()
                     player.seekTo(progress)
                     lastProgress = progress
                 }
-                txtDuration.text = getDurationValue(recordedSecs - TimeUnit.MILLISECONDS.toSeconds(progress.toLong()))
+                binding.txtDuration.text = getDurationValue(recordedSecs - TimeUnit.MILLISECONDS.toSeconds(progress.toLong()))
             }
 
             override fun onStartTrackingTouch(seekBar: SeekBar) = Unit
@@ -189,7 +198,7 @@ class RecordAudioActivity : BaseActivity() {
         })
         runnable = Runnable { seekUpdate() }
 
-        btnUpload.setOnClickListener {
+        binding.btnUpload.setOnClickListener {
             if (isConnected(applicationContext)) {
                 if (isNotShowed(ShowCasePref.RECORD_UPLOAD_UI)) {
                     showCaseShowed = false
@@ -202,7 +211,7 @@ class RecordAudioActivity : BaseActivity() {
             } else
                 showLong(getString(R.string.check_internet))
         }
-        btnClose.setOnClickListener { closePopUp() }
+        binding.btnClose.setOnClickListener { closePopUp() }
     }
 
     private fun callShowCaseUI() {
@@ -216,7 +225,7 @@ class RecordAudioActivity : BaseActivity() {
                 .setTarget(R.id.btnUpload)
                 .setPrimaryText(R.string.sc_t_record_upload)
                 .setSecondaryText(R.string.sc_d_record_upload)
-                .setClipToView(findViewById(R.id.layoutRecordControls))
+                .setClipToView(binding.layoutRecordControls)
                 .show()
         }
     }
@@ -225,22 +234,25 @@ class RecordAudioActivity : BaseActivity() {
         isRecorded = false
         recorder.startRecording(getFilePath(AppConstants.AUDIO_TEMP_RECORDER_FILENAME))
         countDownTimer?.start()
-        txtDuration.text = getDurationValue(0)
+        binding.txtDuration.text = getDurationValue(0)
         player.stopPlaying()
         // Animation for scale
-        btnRecord.animate().scaleX(1.4f).scaleY(1.4f)
+        binding.btnRecord.animate().scaleX(1.4f).scaleY(1.4f)
     }
 
     private fun stopRecording() {
-        txtRecordHint.text = getString(R.string.after_record)
+        binding.txtRecordHint.text = getString(R.string.after_record)
         if (recorder.isRecording) {
             recorder.stopRecording(getFilePath(AppConstants.AUDIO_TEMP_RECORDER_FILENAME), getFilePath(AppConstants.AUDIO_RECORDED_FILENAME))
             player.stopPlaying()
-            txtDuration.text = getDurationValue(recordedSecs)
+            binding.txtDuration.text = getDurationValue(recordedSecs)
 
             // Reverse animation
-            btnRecord.animate().setDuration(100).scaleX(1.0f).scaleY(1.0f)
+            binding.btnRecord.animate().setDuration(100).scaleX(1.0f).scaleY(1.0f)
             isRecorded = true
+
+            // Update file name preview after recording
+            updateFileNamePreview()
         }
         countDownTimer?.cancel()
     }
@@ -248,28 +260,28 @@ class RecordAudioActivity : BaseActivity() {
     private fun playPauseRecordedAudio() {
         if (isPlaying) {
             player.stopPlaying()
-            btnPlayPause.setImageResource(R.drawable.ic_play)
+            binding.btnPlayPause.setImageResource(R.drawable.ic_play)
         } else {
             player.startPlaying(
                 getFilePath(AppConstants.AUDIO_RECORDED_FILENAME),
                 Callable<Any?> {
                     // Play Done
-                    btnPlayPause.setImageResource(R.drawable.ic_play)
+                    binding.btnPlayPause.setImageResource(R.drawable.ic_play)
                     isPlaying = false
                     lastProgress = 0
-                    seekBar.progress = 0
+                    binding.seekBar.progress = 0
                     player.seekTo(0)
-                    txtDuration.text = getDurationValue(recordedSecs)
+                    binding.txtDuration.text = getDurationValue(recordedSecs)
                     null
                 })
 
 
             // Play
-            seekBar.progress = lastProgress
+            binding.seekBar.progress = lastProgress
             player.seekTo(lastProgress)
-            seekBar.max = player.duration
+            binding.seekBar.max = player.duration
             seekUpdate()
-            btnPlayPause.setImageResource(R.drawable.ic_pause)
+            binding.btnPlayPause.setImageResource(R.drawable.ic_pause)
         }
         isPlaying = !isPlaying
     }
@@ -277,7 +289,7 @@ class RecordAudioActivity : BaseActivity() {
     private fun seekUpdate() {
         if (!isDestroyed && !isFinishing) {
             val mCurrentPosition = player.currentPosition
-            seekBar.progress = mCurrentPosition
+            binding.seekBar.progress = mCurrentPosition
             lastProgress = mCurrentPosition
             mHandler.postDelayed(runnable, 100)
         }
@@ -305,11 +317,10 @@ class RecordAudioActivity : BaseActivity() {
     @RequiresApi(Build.VERSION_CODES.M)
     private fun askPermissionToRecordAudio() {
             if (permissionDenied(this))
-                showAppSettingsPageSnackBar(layoutRecordControls)
+                showAppSettingsPageSnackBar(binding.layoutRecordControls)
             requestPermissions(
                 arrayOf(
-                    Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.RECORD_AUDIO,
-                    Manifest.permission.WRITE_EXTERNAL_STORAGE
+                    Manifest.permission.RECORD_AUDIO,
                 ), AppConstants.RC_STORAGE_AUDIO_PERMISSION
             )
         }
@@ -318,12 +329,52 @@ class RecordAudioActivity : BaseActivity() {
         return String.format(Locale.ENGLISH, "00:%02d", sec)
     }
 
+    private fun updateFileNamePreview() {
+        if (!TextUtils.isEmpty(word) && !TextUtils.isEmpty(langCode)) {
+            val fileName = getUploadName(langCode, word)
+            val formattedText = "Note: Upload file will be<br/><b><u>$fileName</u></b>"
+            binding.txtFileNamePreview.text = HtmlCompat.fromHtml(formattedText, HtmlCompat.FROM_HTML_MODE_LEGACY)
+            binding.txtFileNamePreview.visibility = View.VISIBLE
+        } else {
+            binding.txtFileNamePreview.visibility = View.GONE
+        }
+    }
+
+    private fun setupResponsiveDialogWidth() {
+        val displayMetrics = DisplayMetrics()
+        @Suppress("DEPRECATION")
+        windowManager.defaultDisplay.getMetrics(displayMetrics)
+        val screenWidth = displayMetrics.widthPixels
+
+        // Calculate responsive width based on screen size
+        val dialogWidth = when {
+            screenWidth >= 1200 -> (screenWidth * 0.6).toInt() // Large screens (tablets): 60% width
+            screenWidth >= 800 -> (screenWidth * 0.75).toInt()  // Medium screens: 75% width
+            screenWidth >= 600 -> (screenWidth * 0.85).toInt()  // Small tablets: 85% width
+            else -> (screenWidth * 0.95).toInt()                // Phones: 95% width
+        }
+
+        // Apply the calculated width to the ScrollView using the binding
+        val scrollView = binding.root.findViewById<ScrollView>(R.id.dialogScrollView)
+
+        scrollView?.let { sv ->
+            val layoutParams = sv.layoutParams as? ViewGroup.MarginLayoutParams
+            layoutParams?.let { params ->
+                val horizontalMargin = (screenWidth - dialogWidth) / 2
+                params.leftMargin = horizontalMargin
+                params.rightMargin = horizontalMargin
+                params.width = dialogWidth
+                sv.layoutParams = params
+            }
+        }
+    }
+
     private fun uploadAudioProcess() {
         if (!TextUtils.isEmpty(word)) {
             if (!TextUtils.isEmpty(langCode)) {
                 if (isRecorded) {
                     if (recordedSecs > 1) {
-                        if (checkboxDeclaration.isChecked) {
+                        if (binding.checkboxDeclaration.isChecked) {
                             uploadAudioToWikiServer()
                         } else showLong(getString(R.string.confirm_declaration))
                     } else showLong(getString(R.string.recorded_audio_too_short))
@@ -346,15 +397,12 @@ class RecordAudioActivity : BaseActivity() {
     }
 
     private fun recordLayoutVisibility(visible: Boolean) {
-        layoutRecordControls.visibility = if (visible) View.VISIBLE else View.GONE
-        if (visible)
-            btnClose.show()
-        else
-            btnClose.hide()
-        layoutUploadPopUp.visibility = if (visible) View.GONE else View.VISIBLE
+        binding.layoutRecordControls.visibility = if (visible) View.VISIBLE else View.GONE
+        binding.btnClose.visibility = if (visible) View.VISIBLE else View.GONE
+        binding.layoutUploadPopUp.visibility = if (visible) View.GONE else View.VISIBLE
 
         if (!visible)
-            txtUploadMsg.text = String.format(getString(R.string.message_upload_info), getUploadName(langCode, word))
+            binding.txtUploadMsg.text = String.format(getString(R.string.message_upload_info), getUploadName(langCode, word))
     }
 
     private fun uploadAudioToWikiServer() {
@@ -404,11 +452,15 @@ class RecordAudioActivity : BaseActivity() {
 
     private fun completeUpload(editToken: String?) {
         val filePath = getFinalConvertedFilePath()
+        if (filePath == null) {
+            uploadFailed(getString(R.string.audio_conversion_failed))
+            return
+        }
         val uploadFileName = getUploadName(langCode, word)
         val contentAndLicense = getCommonsContentAndLicense()
         val file = File(filePath)
         // create RequestBody instance from file
-        val requestFile = RequestBody.create(MediaType.parse(getMimeType(filePath)), file)
+        val requestFile = RequestBody.create(getMimeType(filePath).toMediaTypeOrNull(), file)
 
         // MultipartBody.Part is used to send also the actual file name
         val body = MultipartBody.Part.createFormData("file", uploadFileName, requestFile)
@@ -633,9 +685,13 @@ class RecordAudioActivity : BaseActivity() {
         return file.absolutePath + "/" + fileName
     }
 
-    private fun getFinalConvertedFilePath(): String {
-        WavToOggConverter().convert(getFilePath(AppConstants.AUDIO_RECORDED_FILENAME), getFilePath(AppConstants.AUDIO_CONVERTED_FILENAME))
-        return getFilePath(AppConstants.AUDIO_CONVERTED_FILENAME)
+    private fun getFinalConvertedFilePath(): String? {
+        val success = WavToOggConverter().convert(getFilePath(AppConstants.AUDIO_RECORDED_FILENAME), getFilePath(AppConstants.AUDIO_CONVERTED_FILENAME))
+        return if (success) {
+            getFilePath(AppConstants.AUDIO_CONVERTED_FILENAME)
+        } else {
+            null
+        }
     }
 
     /**
@@ -729,7 +785,7 @@ class RecordAudioActivity : BaseActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         if (!isDestroyed && !isFinishing) {
             if (requestCode == RC_LICENCE_CHANGE) {
-                checkboxDeclaration.text = String.format(getString(R.string.declaration_note), getString(licenseNameId(pref.uploadAudioLicense)))
+                binding.checkboxDeclaration.text = String.format(getString(R.string.declaration_note), getString(licenseNameId(pref.uploadAudioLicense)))
             }
         }
     }

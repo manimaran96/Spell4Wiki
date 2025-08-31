@@ -35,9 +35,10 @@
             android:id="@+id/txtEmptyMsg"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_large"
             android:gravity="center"
-            android:paddingStart="@dimen/space32dp"
-            android:paddingEnd="@dimen/space32dp"
+            android:paddingStart="@dimen/padding_extra_large"
+            android:paddingEnd="@dimen/padding_extra_large"
             android:text="@string/word_list_no_record_found"
             android:textSize="@dimen/text_normal" />
     </LinearLayout>

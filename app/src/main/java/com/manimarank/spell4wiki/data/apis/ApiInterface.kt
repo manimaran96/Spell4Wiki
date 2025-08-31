@@ -1,12 +1,26 @@
 package com.manimarank.spell4wiki.data.apis
 
-import com.manimarank.spell4wiki.data.model.*
+import com.manimarank.spell4wiki.data.model.CodeContributors
+import com.manimarank.spell4wiki.data.model.ContributorData
+import com.manimarank.spell4wiki.data.model.WikiBaseData
+import com.manimarank.spell4wiki.data.model.WikiCategoryListItemResponse
+import com.manimarank.spell4wiki.data.model.WikiLogin
+import com.manimarank.spell4wiki.data.model.WikiSearchWords
+import com.manimarank.spell4wiki.data.model.WikiToken
+import com.manimarank.spell4wiki.data.model.WikiUpload
+import com.manimarank.spell4wiki.data.model.WikiWordsWithoutAudio
 import com.manimarank.spell4wiki.utils.constants.Urls
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import okhttp3.ResponseBody
 import retrofit2.Call
-import retrofit2.http.*
+import retrofit2.http.Field
+import retrofit2.http.FormUrlEncoded
+import retrofit2.http.GET
+import retrofit2.http.Multipart
+import retrofit2.http.POST
+import retrofit2.http.Part
+import retrofit2.http.Query
 
 /**
  * Media wiki API - https://mediawiki.org/wiki/API
@@ -23,6 +37,17 @@ interface ApiInterface {
             @Field("username") username: String?,
             @Field("password") password: String?,
             @Field("logintoken") token: String?
+    ): Call<WikiLogin?>
+
+    // Login with OTP - Commons
+    @FormUrlEncoded
+    @POST("w/api.php?action=clientlogin&format=json&rememberMe=&loginreturnurl=" + Urls.COMMONS)
+    fun clientLoginWithOtp(
+            @Field("username") username: String?,
+            @Field("password") password: String?,
+            @Field("logintoken") token: String?,
+            @Field("logincontinue") logincontinue: String?,
+            @Field("token") otpToken: String?
     ): Call<WikiLogin?>
 
     @POST("w/api.php?action=logout&format=json")

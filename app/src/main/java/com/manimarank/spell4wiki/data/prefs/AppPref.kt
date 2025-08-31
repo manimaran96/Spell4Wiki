@@ -45,6 +45,9 @@ class AppPref {
         // Record
         private const val RECORD_INFO_SHOWED = "record_info_showed"
 
+        // Notification Permission
+        private const val NOTIFICATION_PERMISSION_REQUESTED = "notification_permission_requested"
+
         lateinit var pref: SharedPreferences
         fun init(context: Context) {
             pref = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
@@ -280,6 +283,24 @@ class AppPref {
          */
         fun getRecordInfoShowed(): Boolean {
             return pref.getBoolean(RECORD_INFO_SHOWED, false)
+        }
+
+        /**
+         * Set notification permission requested flag
+         */
+        fun setNotificationPermissionRequested() {
+            pref.edit().apply {
+                putBoolean(NOTIFICATION_PERMISSION_REQUESTED, true)
+                apply()
+            }
+        }
+
+        /**
+         * Check if notification permission has been requested before
+         * @return Boolean
+         */
+        fun hasRequestedNotificationPermission(): Boolean {
+            return pref.getBoolean(NOTIFICATION_PERMISSION_REQUESTED, false)
         }
     }
 }

@@ -6,9 +6,11 @@ import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
 import android.content.res.Configuration
+import androidx.core.content.ContextCompat
 import com.manimarank.spell4wiki.BuildConfig
 import com.manimarank.spell4wiki.R
 import com.manimarank.spell4wiki.data.prefs.AppPref
+import com.manimarank.spell4wiki.ui.dialogs.styleDialogButtons
 import java.util.*
 
 
@@ -46,7 +48,7 @@ object AppLanguageDialog {
     }
 
     fun show(activity: Activity) {
-        val builder = AlertDialog.Builder(activity)
+        val builder = AlertDialog.Builder(activity, R.style.AlertDialogTheme)
         builder.setTitle(R.string.select_language) // add a radio button list
 
         val checkedItem = languageCodeList.indexOf(getSelectedLanguageCode())
@@ -65,6 +67,9 @@ object AppLanguageDialog {
         builder.setNegativeButton(R.string.cancel, null)
         val dialog = builder.create()
         dialog.show()
+
+        // Apply consistent button styling
+        dialog.styleDialogButtons(activity)
     }
 
     fun applyLanguageConfig(context: Context): Context {
