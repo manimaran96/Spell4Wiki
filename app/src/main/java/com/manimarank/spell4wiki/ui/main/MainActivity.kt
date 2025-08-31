@@ -19,6 +19,7 @@ import com.manimarank.spell4wiki.ui.common.BaseActivity
 import com.manimarank.spell4wiki.ui.dialogs.AppLanguageDialog
 import com.manimarank.spell4wiki.ui.dialogs.RateAppDialog
 import com.manimarank.spell4wiki.ui.dialogs.UpdateAppDialog
+import com.manimarank.spell4wiki.ui.dialogs.styleDialogButtons
 import com.manimarank.spell4wiki.ui.settings.SettingsActivity
 import com.manimarank.spell4wiki.ui.spell4wiktionary.Spell4Wiktionary
 import com.manimarank.spell4wiki.ui.spell4wiktionary.Spell4WordActivity
@@ -140,7 +141,7 @@ class MainActivity : BaseActivity(), View.OnClickListener {
 
     private fun logoutUser() {
         if (isConnected(applicationContext)) {
-            AlertDialog.Builder(this)
+            val dialog = AlertDialog.Builder(this, R.style.AlertDialogTheme)
                     .setTitle(R.string.logout_confirmation)
                     .setMessage(R.string.logout_message)
                     .setPositiveButton(getString(R.string.yes)) { _: DialogInterface?, _: Int ->
@@ -149,7 +150,11 @@ class MainActivity : BaseActivity(), View.OnClickListener {
                         pref.logoutUser()
                     }
                     .setNegativeButton(R.string.no, null)
-                    .show()
+                    .create()
+            dialog.show()
+
+            // Apply consistent button styling
+            dialog.styleDialogButtons(this)
         } else showNormal(binding.searchView, getString(R.string.check_internet))
     }
 

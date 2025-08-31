@@ -119,6 +119,18 @@
         <item name="errorTextColor">@color/colorError</item>
     </style>
 
+    <!--Login TextInputLayout style for better visibility -->
+    <style name="LoginTextInputLayoutStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
+        <item name="android:fontFamily">@font/montserrat</item>
+        <item name="boxStrokeColor">@color/colorAccent</item>
+        <item name="hintTextColor">@color/colorAccent</item>
+        <item name="android:textColorHint">@color/gray</item>
+        <item name="errorTextColor">@color/colorError</item>
+        <item name="boxStrokeWidth">2dp</item>
+        <item name="colorPrimary">@color/colorAccent</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
     <!--Custom Text view style-->
     <style name="CustomTextViewStyle" parent="android:Widget.TextView">
         <item name="android:fontFamily">@font/montserrat</item>
@@ -152,6 +164,17 @@
         <item name="android:fontFamily">@font/montserrat</item>
         <item name="android:textColor">@color/colorAccent</item>
         <item name="rippleColor">@color/colorAccent</item>
+    </style>
+
+    <!--Login Button style for better visibility -->
+    <style name="LoginButtonStyle" parent="Widget.MaterialComponents.Button">
+        <item name="android:fontFamily">@font/montserrat</item>
+        <item name="backgroundTint">@color/colorAccent</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">16sp</item>
+        <item name="rippleColor">@color/colorPrimaryVariant</item>
+        <item name="cornerRadius">8dp</item>
     </style>
 
     <!--FAB style -->

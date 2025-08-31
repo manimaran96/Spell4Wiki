@@ -11,6 +11,7 @@ import androidx.core.content.ContextCompat
 import com.manimarank.spell4wiki.BuildConfig
 import com.manimarank.spell4wiki.R
 import com.manimarank.spell4wiki.data.prefs.AppPref
+import com.manimarank.spell4wiki.ui.dialogs.styleDialogButtons
 import com.manimarank.spell4wiki.utils.PermissionUtils
 
 object CommonDialog {
@@ -28,13 +29,8 @@ object CommonDialog {
         AppPref.setRecordInfoShowed()
         dialog.show()
 
-        // Set button colors programmatically for better visibility
-        dialog.getButton(AlertDialog.BUTTON_POSITIVE)?.apply {
-            setTextColor(ContextCompat.getColor(this@openInfoDialog, R.color.colorAccent))
-            textSize = 14f
-            isAllCaps = false
-            typeface = android.graphics.Typeface.DEFAULT_BOLD
-        }
+        // Apply consistent button styling
+        dialog.styleDialogButtons(this)
     }
 
     fun Activity.openRunFilterInfoDialog() {
