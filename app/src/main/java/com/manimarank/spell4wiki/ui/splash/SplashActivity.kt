@@ -4,21 +4,20 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.view.animation.AnimationUtils
-import android.widget.ImageView
 import com.manimaran.crash_reporter.CrashReporter.showAlertDialogForShareCrash
 import com.manimaran.crash_reporter.interfaces.CrashAlertClickListener
 import com.manimaran.crash_reporter.utils.CrashUtil.Companion.isHaveCrashData
 import com.manimarank.spell4wiki.R
-import com.manimarank.spell4wiki.ui.settings.LanguageSelectionActivity
-import com.manimarank.spell4wiki.ui.login.LoginActivity
-import com.manimarank.spell4wiki.ui.common.BaseActivity
-import com.manimarank.spell4wiki.utils.NetworkUtils.isConnected
-import com.manimarank.spell4wiki.utils.SnackBarUtils.showNormal
 import com.manimarank.spell4wiki.data.apis.SyncHelper
-import com.manimarank.spell4wiki.utils.makeGone
-import com.manimarank.spell4wiki.utils.makeVisible
 import com.manimarank.spell4wiki.data.prefs.PrefManager
 import com.manimarank.spell4wiki.databinding.ActivitySplashBinding
+import com.manimarank.spell4wiki.ui.common.BaseActivity
+import com.manimarank.spell4wiki.ui.login.LoginActivity
+import com.manimarank.spell4wiki.ui.settings.LanguageSelectionActivity
+import com.manimarank.spell4wiki.utils.NetworkUtils.isConnected
+import com.manimarank.spell4wiki.utils.SnackBarUtils.showNormal
+import com.manimarank.spell4wiki.utils.makeGone
+import com.manimarank.spell4wiki.utils.makeVisible
 
 /**
  * Splash screen activity

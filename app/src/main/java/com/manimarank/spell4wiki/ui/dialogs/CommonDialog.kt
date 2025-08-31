@@ -79,7 +79,7 @@ object CommonDialog {
         onPermissionGranted: () -> Unit,
         onPermissionDenied: () -> Unit
     ) {
-        val builder = AlertDialog.Builder(this)
+        val builder = AlertDialog.Builder(this, R.style.AlertDialogTheme)
         builder.setTitle(R.string.notification_permission_title)
         builder.setMessage(R.string.notification_permission_rationale)
         builder.setCancelable(false)
@@ -94,13 +94,17 @@ object CommonDialog {
             onPermissionDenied()
         }
 
-        builder.create().show()
+        val dialog = builder.create()
+        dialog.show()
+
+        // Apply consistent button styling
+        dialog.styleDialogButtons(this)
     }
 
     private fun Activity.showNotificationPermissionSettingsDialog(
         onPermissionDenied: () -> Unit
     ) {
-        val builder = AlertDialog.Builder(this)
+        val builder = AlertDialog.Builder(this, R.style.AlertDialogTheme)
         builder.setTitle(R.string.notification_permission_denied_title)
         builder.setMessage(R.string.notification_permission_denied_message)
         builder.setCancelable(false)
@@ -115,7 +119,11 @@ object CommonDialog {
             onPermissionDenied()
         }
 
-        builder.create().show()
+        val dialog = builder.create()
+        dialog.show()
+
+        // Apply consistent button styling
+        dialog.styleDialogButtons(this)
     }
 
     private fun Activity.openAppSettings() {

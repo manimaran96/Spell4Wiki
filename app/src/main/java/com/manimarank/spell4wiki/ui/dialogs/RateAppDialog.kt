@@ -33,7 +33,7 @@ object RateAppDialog {
                         AppPref.setLaunchCount(launchCount + 1)
 
                         // Show Dialog
-                        val builder = AlertDialog.Builder(activity)
+                        val builder = AlertDialog.Builder(activity, R.style.AlertDialogTheme)
                         builder.setTitle(R.string.rta_dialog_title)
                         builder.setMessage(R.string.rta_dialog_message)
                         builder.setCancelable(false)
@@ -54,6 +54,9 @@ object RateAppDialog {
                         }
                         val dialog = builder.create()
                         dialog.show()
+
+                        // Apply consistent button styling
+                        dialog.styleDialogButtons(activity)
                     }
                 } else {
                     AppPref.setDontShowAgain()

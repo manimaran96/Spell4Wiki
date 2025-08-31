@@ -10,6 +10,7 @@ import androidx.core.content.ContextCompat
 import com.manimarank.spell4wiki.BuildConfig
 import com.manimarank.spell4wiki.R
 import com.manimarank.spell4wiki.data.prefs.AppPref
+import com.manimarank.spell4wiki.ui.dialogs.styleDialogButtons
 import java.util.*
 
 
@@ -67,13 +68,8 @@ object AppLanguageDialog {
         val dialog = builder.create()
         dialog.show()
 
-        // Set button colors programmatically for better visibility
-        dialog.getButton(AlertDialog.BUTTON_NEGATIVE)?.apply {
-            setTextColor(ContextCompat.getColor(activity, R.color.black))
-            textSize = 14f
-            isAllCaps = false
-            alpha = 0.87f
-        }
+        // Apply consistent button styling
+        dialog.styleDialogButtons(activity)
     }
 
     fun applyLanguageConfig(context: Context): Context {

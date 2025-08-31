@@ -80,8 +80,10 @@
     <string name="allow">Allow</string>
     <string name="deny">Deny</string>
     <string name="message_upload_info">Uploading…\n%s</string>
-    <string name="crash_report_alert_title">Do you like to share crash information?</string>
-    <string name="crash_report_alert_message">A previous crash was collected. Would you like to send the crash logs to developer to fix this issue in the future?</string>
+    <string name="crash_report_alert_title">Help Improve Spell4Wiki</string>
+    <string name="crash_report_alert_message">A crash was detected in the previous session. Would you like to send the crash report to help us fix this issue and improve the app?</string>
+    <string name="crash_send_button">Send Report</string>
+    <string name="crash_cancel_button">Not Now</string>
     <string name="send">Send</string>
     <string name="cancel">Cancel</string>
     <string name="close">Close</string>
