@@ -336,19 +336,7 @@
                 app:drawableStartCompat="@drawable/ic_help_development"
                 android:textSize="@dimen/text_semi_normal" />
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/txtTelegram"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="@dimen/space10dp"
-                android:paddingStart="@dimen/space20dp"
-                android:paddingEnd="@dimen/space10dp"
-                android:drawablePadding="@dimen/space24dp"
-                android:gravity="center_vertical"
-                android:maxLines="1"
-                android:text="@string/join_telegram"
-                app:drawableStartCompat="@drawable/ic_telegram"
-                android:textSize="@dimen/text_semi_normal" />
+
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/txtFeedback"

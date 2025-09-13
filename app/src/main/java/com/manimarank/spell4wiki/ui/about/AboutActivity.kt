@@ -53,13 +53,12 @@ class AboutActivity : BaseActivity(), View.OnClickListener {
         binding.txtCredits.setOnClickListener(this)
         binding.txtHelpDevelopment.setOnClickListener(this)
         binding.txtFeedback.setOnClickListener(this)
-        binding.txtTelegram.setOnClickListener(this)
         binding.txtPrivacyPolicy.setOnClickListener(this)
         binding.txtHelpTranslate.setOnClickListener(this)
         binding.layoutKaniyam.setOnClickListener(this)
         binding.layoutVglug.setOnClickListener(this)
         binding.txtAppVersionAndLicense.movementMethod = LinkMovementMethod.getInstance()
-        val appVersionLicense = getString(R.string.version) + " : " + BuildConfig.VERSION_NAME + " & " + getString(R.string.license) + " : <u><font color='" + ContextCompat.getColor(applicationContext, R.color.w_green) + "'>GPLv3</font></u>"
+        val appVersionLicense = getString(R.string.version) + " : " + BuildConfig.VERSION_NAME + " (" + BuildConfig.VERSION_CODE + ") & " + getString(R.string.license) + " : <u><font color='" + ContextCompat.getColor(applicationContext, R.color.w_green) + "'>GPLv3</font></u>"
         binding.txtAppVersionAndLicense.text = HtmlCompat.fromHtml(appVersionLicense, HtmlCompat.FROM_HTML_MODE_LEGACY)
     }
 
@@ -94,7 +93,6 @@ class AboutActivity : BaseActivity(), View.OnClickListener {
             }
             R.id.txt_help_development -> openUrl(this, Urls.HELP_DEVELOPMENT, getString(R.string.help_development))
             R.id.txtFeedback -> feedback()
-            R.id.txtTelegram -> openUrlInBrowser(this, Urls.TELEGRAM_CHANNEL)
             R.id.txtPrivacyPolicy -> openUrlInBrowser(this, Urls.PRIVACY_POLICY)
             R.id.txtHelpTranslate -> openUrlInBrowser(this, Urls.HELP_US_TRANSLATE)
             R.id.layout_kaniyam -> openUrlInBrowser(this, Urls.KANIYAM)

@@ -127,6 +127,8 @@
     <string name="privacy_policy">Privacy Policy</string>
     <string name="help_us_translate">Help us Translate</string>
     <string name="join_telegram">Join Telegram Group</string>
+    <string name="join_spell4wiki_support">Join Spell4Wiki Support</string>
+    <string name="filter_cancelled">Filter operation cancelled</string>
     <string name="about_app">@string/app_intro_slide_1_description </string>
     <string name="version">Version</string>
     <string name="license">License</string>

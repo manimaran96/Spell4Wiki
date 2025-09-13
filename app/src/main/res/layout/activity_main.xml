@@ -288,6 +288,20 @@
 
         </RelativeLayout>
 
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/btn_join_telegram"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/join_spell4wiki_support"
+            android:textAlignment="center"
+            android:padding="@dimen/space8dp"
+            android:layout_marginTop="@dimen/space12dp"
+            android:layout_gravity="center"
+            android:textColor="@color/w_blue"
+            app:drawableTopCompat="@drawable/ic_telegram"
+            android:drawablePadding="@dimen/space2dp"
+            android:gravity="center" />
+
 
     </LinearLayout>
 

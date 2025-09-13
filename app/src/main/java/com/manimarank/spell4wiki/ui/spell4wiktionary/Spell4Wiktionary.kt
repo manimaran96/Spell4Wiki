@@ -13,6 +13,7 @@ import android.view.View
 import android.view.Window
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
 import androidx.interpolator.view.animation.FastOutSlowInInterpolator
@@ -53,6 +54,7 @@ import com.manimarank.spell4wiki.utils.makeGone
 import com.manimarank.spell4wiki.utils.makeInVisible
 import com.manimarank.spell4wiki.utils.makeVisible
 import com.manimarank.spell4wiki.databinding.ActivitySpell4WiktionaryBinding
+import com.manimarank.spell4wiki.utils.SnackBarUtils.showLong
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -141,6 +143,7 @@ class Spell4Wiktionary : BaseActivity(), EndlessListener {
         dialog.setContentView(R.layout.loading_file_availability)
         val txtInfo = dialog.findViewById<TextView>(R.id.txtFileName)
         val txtProgress = dialog.findViewById<TextView>(R.id.txtProgress)
+        val btnCancel = dialog.findViewById<Button>(R.id.btnCancel)
         txtProgress.makeVisible()
         txtInfo.text = getFilterText("")
         dialog.setCancelable(false)
@@ -169,6 +172,17 @@ class Spell4Wiktionary : BaseActivity(), EndlessListener {
             )
             filterRemovedWords.addAll(list)
             dialog.dismiss()
+        }
+
+        viewModel.filterCancelled.observe(this) { cancelled ->
+            if (cancelled) {
+                showLong(binding.recyclerView, getString(R.string.filter_cancelled))
+                dialog.dismiss()
+            }
+        }
+
+        btnCancel.setOnClickListener {
+            viewModel.cancelFilter()
         }
 
         binding.root.findViewById<View>(R.id.btnRunFilter).setOnClickListener {
