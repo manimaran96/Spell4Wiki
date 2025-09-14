@@ -104,6 +104,14 @@
 
     </RelativeLayout>
 
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/txtLanguageSearchInfo"
+        android:layout_width="match_parent"
+        android:padding="@dimen/space12dp"
+        android:visibility="gone"
+        android:gravity="center"
+        android:layout_height="wrap_content"/>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"

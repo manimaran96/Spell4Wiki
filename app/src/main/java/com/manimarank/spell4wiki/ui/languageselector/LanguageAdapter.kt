@@ -18,6 +18,7 @@ import java.util.*
 class LanguageAdapter(private var mList: List<WikiLang>, listener: OnLanguageSelectionListener, private val existLangCode: String?) : RecyclerView.Adapter<LanguageAdapter.ViewHolder>(), Filterable {
     private val mBackUpList: List<WikiLang> = mList
     private val mListener: OnLanguageSelectionListener = listener
+    private var onFilterResultListener: ((isEmpty: Boolean) -> Unit)? = null
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val pos = holder.adapterPosition
         val model = mList[pos]
@@ -65,8 +66,19 @@ class LanguageAdapter(private var mList: List<WikiLang>, listener: OnLanguageSel
             override fun publishResults(constraint: CharSequence, results: FilterResults) {
                 mList = castList(results.values, WikiLang::class.java).filterNotNull()
                 notifyDataSetChanged()
+
+                // Notify about empty results when searching
+                if (constraint.isNotEmpty()) {
+                    onFilterResultListener?.invoke(mList.isEmpty())
+                } else {
+                    onFilterResultListener?.invoke(false) // Not empty when no search constraint
+                }
             }
         }
+    }
+
+    fun setOnFilterResultListener(listener: (isEmpty: Boolean) -> Unit) {
+        onFilterResultListener = listener
     }
 
     /* adapter view holder */

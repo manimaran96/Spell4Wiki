@@ -23,6 +23,8 @@ import com.manimarank.spell4wiki.data.db.entities.WikiLang
 import com.manimarank.spell4wiki.data.prefs.PrefManager
 import com.manimarank.spell4wiki.ui.listerners.OnLanguageSelectionListener
 import com.manimarank.spell4wiki.utils.constants.ListMode
+import com.manimarank.spell4wiki.utils.makeGone
+import com.manimarank.spell4wiki.utils.makeVisible
 import com.manimarank.spell4wiki.utils.constants.ListMode.Companion.EnumListMode
 import com.manimarank.spell4wiki.utils.makeGone
 import com.manimarank.spell4wiki.utils.makeVisible
@@ -61,6 +63,7 @@ class LanguageSelectionFragment(private val mActivity: Activity) : BottomSheetDi
         val searchView = dialog.findViewById<SearchView>(R.id.search_view)
         val layoutAddLanguage = dialog.findViewById<View>(R.id.layoutAddLanguage)
         val btnAddMyLanguage = dialog.findViewById<Button>(R.id.btnAddMyLanguage)
+        val txtLanguageSearchInfo = dialog.findViewById<TextView>(R.id.txtLanguageSearchInfo)
         val dbHelper = DBHelper.getInstance(requireContext())
 
         /*
@@ -89,6 +92,18 @@ class LanguageSelectionFragment(private val mActivity: Activity) : BottomSheetDi
         }
         adapter = LanguageAdapter(wikiLanguageList, languageSelectionListener, preSelectedLanguageCode)
         recyclerView?.adapter = adapter
+
+        // Set up filter result listener to show/hide empty results message
+        adapter?.setOnFilterResultListener { isEmpty ->
+            if (isEmpty) {
+                recyclerView?.makeGone()
+                txtLanguageSearchInfo?.text = getString(R.string.result_not_found)
+                txtLanguageSearchInfo?.makeVisible()
+            } else {
+                recyclerView?.makeVisible()
+                txtLanguageSearchInfo?.makeGone()
+            }
+        }
         btnClose?.setOnClickListener { dismiss() }
         dialog.setOnShowListener { dialog1: DialogInterface ->
             val d = dialog1 as BottomSheetDialog
