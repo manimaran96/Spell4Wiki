@@ -65,6 +65,7 @@ import uk.co.samuelwall.materialtaptargetprompt.MaterialTapTargetSequence
 import uk.co.samuelwall.materialtaptargetprompt.extras.focals.RectanglePromptFocal
 import java.util.Locale
 import java.util.concurrent.TimeUnit
+import androidx.core.view.isVisible
 
 
 class Spell4Wiktionary : BaseActivity(), EndlessListener {
@@ -106,6 +107,7 @@ class Spell4Wiktionary : BaseActivity(), EndlessListener {
      */
     private fun init() {
         wikiLangDao = DBHelper.getInstance(applicationContext).appDatabase.wikiLangDao
+        wordsHaveAudioDao = DBHelper.getInstance(applicationContext).appDatabase.wordsHaveAudioDao
 
         // Title & Sub title
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
@@ -165,7 +167,7 @@ class Spell4Wiktionary : BaseActivity(), EndlessListener {
 
         viewModel.wordsWithoutAudioList.observe(this) { list ->
             val diff = itemList.size - list.size
-            SnackBarUtils.showLong(
+            showLong(
                 binding.recyclerView,
                 if (diff > 0) getString(
                     R.string.words_filter_success,
@@ -203,7 +205,7 @@ class Spell4Wiktionary : BaseActivity(), EndlessListener {
                     dialog.show()
                     viewModel.checkWordsAvailability(itemList, languageCode!!, runFilterNoOfWordsCheckCount)
                 } else
-                    SnackBarUtils.showLong(binding.recyclerView, getString(R.string.no_words_scroll_to_get_new_words))
+                    showLong(binding.recyclerView, getString(R.string.no_words_scroll_to_get_new_words))
             }
         }
 
@@ -349,7 +351,7 @@ class Spell4Wiktionary : BaseActivity(), EndlessListener {
             val titleList = ArrayList<String>()
             if (binding.recyclerView.visibility != View.VISIBLE) binding.recyclerView.makeVisible()
             val layoutEmpty = binding.root.findViewById<View>(R.id.layoutEmpty)
-            if (layoutEmpty.visibility == View.VISIBLE) layoutEmpty.makeGone()
+            if (layoutEmpty.isVisible) layoutEmpty.makeGone()
             if (snackBar.isShown) snackBar.dismiss()
             if (wikiWordsWithoutAudio != null) {
                 nextOffsetObj = if (wikiWordsWithoutAudio.offset?.nextOffset != null) {
@@ -367,7 +369,7 @@ class Spell4Wiktionary : BaseActivity(), EndlessListener {
                     apiFailRetryCount = 0
                     // Remove already recorded words
                     titleList.removeAll(wordsListAlreadyHaveAudio)
-                    if (titleList.size > 0) {
+                    if (titleList.isNotEmpty()) {
                         if (binding.refreshLayout.isRefreshing)
                             binding.refreshLayout.isRefreshing = false
                         resetApiResultTime()
