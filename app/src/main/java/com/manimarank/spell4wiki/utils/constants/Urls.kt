@@ -22,7 +22,7 @@ object Urls {
     const val KANIYAM = "http://www.kaniyam.com/"
     private const val DOC_BASE = "https://github.com/manimaran96/Spell4Wiki/blob/master/docs/"
     const val HOW_TO_CONTRIBUTE = DOC_BASE + "CONTRIBUTING.md#spell4wiki-contribution-guidelines"
-    const val HELP_DEVELOPMENT = DOC_BASE + "DONATION.md#donation--spell4wiki-app"
+    const val HELP_DEVELOPMENT = "https://www.paypal.me/manimaranlpt"
     const val HELP_US_TRANSLATE = DOC_BASE + "CONTRIBUTING.md#translation"
     const val PRIVACY_POLICY = DOC_BASE + "PRIVACY_POLICY.md#privacy-policy--spell4wiki-app"
     const val HOW_TO_ADD_CATEGORY = DOC_BASE + "HOW_TO_ADD_CATEGORY.md#spell4wiki---how-to-add-category-"

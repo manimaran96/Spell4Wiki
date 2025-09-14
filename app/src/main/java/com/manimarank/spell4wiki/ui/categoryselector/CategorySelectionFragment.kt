@@ -143,6 +143,9 @@ class CategorySelectionFragment(private val mActivity: Activity) : BottomSheetDi
 
         call.enqueue(object : Callback<WikiCategoryListItemResponse?> {
             override fun onResponse(call: Call<WikiCategoryListItemResponse?>, response: Response<WikiCategoryListItemResponse?>) {
+                // Check if fragment is still attached to prevent crashes
+                if (_binding == null || !isAdded) return
+
                 var resList: List<CategoryItem> = listOf()
                 if (response.isSuccessful && response.body() != null) {
                     resList = response.body()?.query?.allpages ?: listOf()
@@ -157,6 +160,9 @@ class CategorySelectionFragment(private val mActivity: Activity) : BottomSheetDi
             }
 
             override fun onFailure(call: Call<WikiCategoryListItemResponse?>, t: Throwable) {
+                // Check if fragment is still attached to prevent crashes
+                if (_binding == null || !isAdded) return
+
                 showLoader(false, t.message ?: "")
                 t.printStackTrace()
 
@@ -164,6 +170,9 @@ class CategorySelectionFragment(private val mActivity: Activity) : BottomSheetDi
         })
     }
     fun showLoader(show: Boolean?, resInfo: String? = null) {
+        // Check if binding is still available to prevent NPE when fragment is destroyed
+        if (_binding == null) return
+
         binding.recyclerView.makeGone()
         binding.progressBar.makeGone()
         binding.txtCategorySearchInfo.makeGone()
