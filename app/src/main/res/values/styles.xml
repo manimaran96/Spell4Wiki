@@ -177,13 +177,6 @@
         <item name="cornerRadius">8dp</item>
     </style>
 
-    <!--FAB style -->
-    <style name="FABStyle" parent="Widget.MaterialComponents.FloatingActionButton">
-        <item name="backgroundTint">@color/colorSecondary</item>
-        <item name="tint">@color/colorOnSecondary</item>
-        <item name="rippleColor">@color/colorSecondaryVariant</item>
-    </style>
-
     <!--PopUpMenu Style-->
     <style name="PopUpMenuStyle" parent="AppTheme.PopupOverlay">
         <item name="android:colorBackground">@color/transparent</item>
