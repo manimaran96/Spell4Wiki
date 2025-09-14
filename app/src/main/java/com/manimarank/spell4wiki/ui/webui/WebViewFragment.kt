@@ -22,6 +22,7 @@ import com.manimarank.spell4wiki.data.prefs.PrefManager
 import com.manimarank.spell4wiki.utils.GeneralUtils.openUrlInBrowser
 import com.manimarank.spell4wiki.utils.GeneralUtils.showRecordDialog
 import com.manimarank.spell4wiki.utils.NetworkUtils.isConnected
+import com.manimarank.spell4wiki.utils.Print
 import com.manimarank.spell4wiki.utils.SnackBarUtils.showLong
 import com.manimarank.spell4wiki.utils.constants.AppConstants
 import com.manimarank.spell4wiki.utils.constants.Urls
@@ -111,6 +112,12 @@ class WebViewFragment : Fragment() {
 
     @SuppressLint("SetJavaScriptEnabled")
     private fun loadWebPage(url: String?) {
+        // Check internet connectivity before loading
+        if (!isConnected(requireContext())) {
+            showPageNotFound()
+            return
+        }
+
         binding.webView.loadUrl(url.toString())
 
         // Enable Javascript
@@ -121,7 +128,11 @@ class WebViewFragment : Fragment() {
         binding.webView.settings.setSupportZoom(true)
         binding.webView.settings.builtInZoomControls = true
         binding.webView.settings.displayZoomControls = false
-        binding.webView.settings.cacheMode = WebSettings.LOAD_NO_CACHE
+        binding.webView.settings.cacheMode = if (isConnected(requireContext())) {
+            WebSettings.LOAD_DEFAULT
+        } else {
+            WebSettings.LOAD_CACHE_ELSE_NETWORK
+        }
         binding.webView.settings.domStorageEnabled = true
         binding.webView.webViewClient = object : WebViewClient() {
             override fun onPageStarted(view: WebView, url: String, favicon: Bitmap?) {
@@ -155,6 +166,17 @@ class WebViewFragment : Fragment() {
                 super.onReceivedError(view, request, error)
                 isWebPageNotFound = true
                 if (isAdded) {
+                    Print.error("WebView error: ${error.description} for URL: ${request.url}")
+                    showPageNotFound()
+                    activity?.invalidateOptionsMenu()
+                }
+            }
+
+            override fun onReceivedHttpError(view: WebView?, request: WebResourceRequest?, errorResponse: WebResourceResponse?) {
+                super.onReceivedHttpError(view, request, errorResponse)
+                if (isAdded && request?.isForMainFrame == true) {
+                    Print.error("WebView HTTP error: ${errorResponse?.statusCode} for URL: ${request.url}")
+                    isWebPageNotFound = true
                     showPageNotFound()
                     activity?.invalidateOptionsMenu()
                 }

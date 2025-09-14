@@ -29,6 +29,7 @@ import com.manimarank.spell4wiki.utils.constants.AppConstants
 import com.manimarank.spell4wiki.utils.constants.ListMode.Companion.EnumListMode
 import com.manimarank.spell4wiki.utils.makeGone
 import com.manimarank.spell4wiki.utils.makeVisible
+import com.manimarank.spell4wiki.utils.NetworkUtils.isConnected
 import com.manimarank.spell4wiki.databinding.BottomSheetCategorySelectionBinding
 import retrofit2.Call
 import retrofit2.Callback
@@ -120,6 +121,12 @@ class CategorySelectionFragment(private val mActivity: Activity) : BottomSheetDi
     fun fetchCategory(searchTerm: String?) {
         if (searchTerm == null) {
             showLoader(null, "Not valid search term")
+            return
+        }
+
+        // Check internet connectivity before making API call
+        if (!isConnected(mActivity)) {
+            showLoader(null, mActivity.getString(R.string.check_internet))
             return
         }
 

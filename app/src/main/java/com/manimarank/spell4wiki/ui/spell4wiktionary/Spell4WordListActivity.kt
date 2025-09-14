@@ -34,6 +34,8 @@ import com.manimarank.spell4wiki.utils.EdgeToEdgeUtils.setupEdgeToEdgeWithToolba
 import com.manimarank.spell4wiki.utils.GeneralUtils
 import com.manimarank.spell4wiki.utils.GeneralUtils.getPromptBuilder
 import com.manimarank.spell4wiki.utils.GeneralUtils.hideKeyboard
+import com.manimarank.spell4wiki.utils.NetworkUtils.isConnected
+import com.manimarank.spell4wiki.utils.Print
 import com.manimarank.spell4wiki.utils.SnackBarUtils.showLong
 import com.manimarank.spell4wiki.utils.constants.AppConstants
 import com.manimarank.spell4wiki.utils.constants.ListMode
@@ -196,11 +198,23 @@ class Spell4WordListActivity : BaseActivity() {
             }
         }
 
+        viewModel.networkError.observe(this) { errorResourceId ->
+            if (errorResourceId != null && errorResourceId != 0) {
+                showLong(binding.recyclerView, getString(errorResourceId))
+                dialog.dismiss()
+            }
+        }
+
         btnCancel.setOnClickListener {
             viewModel.cancelFilter()
         }
 
         binding.root.findViewById<View>(R.id.btnRunFilter).setOnClickListener {
+            if (!isConnected(applicationContext)) {
+                showLong(binding.recyclerView, getString(R.string.check_internet))
+                return@setOnClickListener
+            }
+
             val runFilterNoOfWordsCheckCount = pref.runFilterNumberOfWordsToCheck ?: AppConstants.RUN_FILTER_NO_OF_WORDS_CHECK_COUNT
             itemList = adapter?.getList()?.filter { filterRemovedWords.contains(it).not() }?.take(runFilterNoOfWordsCheckCount) ?: listOf()
             if (itemList.isNotEmpty() && languageCode != null) {

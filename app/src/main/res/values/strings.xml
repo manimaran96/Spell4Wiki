@@ -191,6 +191,9 @@
 
     <string name="check_internet">Please check your internet connection!</string>
     <string name="record_fetch_fail">Please check your connection!\nSwipe down/Scroll to try again!</string>
+    <string name="network_error_general">Network error occurred. Please check your internet connection and try again.</string>
+    <string name="network_timeout_error">Network timeout. Please check your connection and try again.</string>
+    <string name="no_internet_connection">No internet connection. Please check your network and try again.</string>
     <string name="something_went_wrong">Something went wrong.</string>
     <string name="something_went_wrong_try_again">Something went wrong. Please try again.</string>
     <string name="web_page_not_found">Page not found.\nTry again.</string>
