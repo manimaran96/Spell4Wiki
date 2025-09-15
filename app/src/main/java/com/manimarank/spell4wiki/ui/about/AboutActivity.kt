@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.text.method.LinkMovementMethod
 import android.view.MenuItem
 import android.view.View
+import android.view.animation.AnimationUtils
 import androidx.core.content.ContextCompat
 import androidx.core.text.HtmlCompat
 import com.manimaran.crash_reporter.utils.AppUtils.getDeviceDetails
@@ -52,7 +53,7 @@ class AboutActivity : BaseActivity(), View.OnClickListener {
         binding.txtContributors.setOnClickListener(this)
         binding.txtThirdPartyLib.setOnClickListener(this)
         binding.txtCredits.setOnClickListener(this)
-        binding.txtHelpDevelopment.setOnClickListener(this)
+        binding.layoutHelpDevelopment.setOnClickListener(this)
         binding.txtFeedback.setOnClickListener(this)
         binding.txtPrivacyPolicy.setOnClickListener(this)
         binding.txtHelpTranslate.setOnClickListener(this)
@@ -61,6 +62,18 @@ class AboutActivity : BaseActivity(), View.OnClickListener {
         binding.txtAppVersionAndLicense.movementMethod = LinkMovementMethod.getInstance()
         val appVersionLicense = getString(R.string.version) + " : " + BuildConfig.VERSION_NAME + " (" + BuildConfig.VERSION_CODE + ") & " + getString(R.string.license) + " : <u><font color='" + ContextCompat.getColor(applicationContext, R.color.w_green) + "'>GPLv3</font></u>"
         binding.txtAppVersionAndLicense.text = HtmlCompat.fromHtml(appVersionLicense, HtmlCompat.FROM_HTML_MODE_LEGACY)
+
+        // Start pulse animation for the heart icon
+        startPulseAnimation()
+    }
+
+    private fun startPulseAnimation() {
+        try {
+            // Start pulse animation immediately - it's infinite so no need for handler
+            binding.imgSupportDev.startAnimation(AnimationUtils.loadAnimation(this, R.anim.pulse))
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 
     override fun onOptionsItemSelected(menuItem: MenuItem): Boolean {
@@ -98,11 +111,11 @@ class AboutActivity : BaseActivity(), View.OnClickListener {
                 intentCredits.putExtra(AppConstants.TITLE, getString(R.string.credits))
                 startActivity(intentCredits)
             }
-            R.id.txt_help_development -> executeWithNetworkCheck(applicationContext, binding.txtHelpDevelopment) {
+            R.id.layout_help_development -> executeWithNetworkCheck(applicationContext, binding.layoutHelpDevelopment) {
                 // Open donation page in external browser to avoid GitHub collector analytics issues
                 openUrlInBrowser(this, Urls.HELP_DEVELOPMENT)
             }
-            R.id.txtFeedback -> feedback()
+            R.id.txtFeedback -> sendFeedback()
             R.id.txtPrivacyPolicy -> executeWithNetworkCheck(applicationContext, binding.txtPrivacyPolicy) {
                 openUrlInBrowser(this, Urls.PRIVACY_POLICY)
             }
@@ -138,11 +151,10 @@ class AboutActivity : BaseActivity(), View.OnClickListener {
     }
 
     @SuppressLint("IntentReset")
-    private fun feedback() {
+    private fun sendFeedback() {
         val emailIntent = Intent(Intent.ACTION_SENDTO)
         emailIntent.type = "message/rfc822"
         emailIntent.data = Uri.parse("mailto:")
-        //emailIntent.setDataAndType(Uri.parse("mailto:"), "message/rfc822");
         emailIntent.putExtra(Intent.EXTRA_EMAIL, arrayOf(AppConstants.CONTACT_MAIL))
         emailIntent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.app_name) + " App - Feedback")
         emailIntent.putExtra(Intent.EXTRA_TEXT, String.format(

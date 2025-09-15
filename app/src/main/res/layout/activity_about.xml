@@ -322,19 +322,41 @@
                 app:drawableStartCompat="@drawable/ic_git"
                 android:textSize="@dimen/text_semi_normal" />
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/txt_help_development"
+            <LinearLayout
+                android:id="@+id/layout_help_development"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/space10dp"
                 android:paddingStart="@dimen/space20dp"
                 android:paddingEnd="@dimen/space10dp"
-                android:drawablePadding="@dimen/space24dp"
                 android:gravity="center_vertical"
-                android:maxLines="1"
-                android:text="@string/help_development"
-                app:drawableStartCompat="@drawable/ic_help_development"
-                android:textSize="@dimen/text_semi_normal" />
+                android:orientation="horizontal"
+                android:clickable="true"
+                android:focusable="true"
+                android:background="?android:attr/selectableItemBackground">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/imgSupportDev"
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
+                    android:background="@drawable/pulse_heart_bg"
+                    android:padding="4dp"
+                    android:scaleType="centerInside"
+                    android:contentDescription="@string/support_development"
+                    app:srcCompat="@drawable/ic_favorite"
+                    app:tint="@color/colorHeart"
+                    android:layout_marginEnd="@dimen/spacing_medium" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/txt_help_development"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:maxLines="1"
+                    android:text="@string/help_development"
+                    android:textSize="@dimen/text_semi_normal" />
+
+            </LinearLayout>
 
 
 

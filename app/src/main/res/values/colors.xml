@@ -40,6 +40,7 @@
     <color name="record_have_audio">#EFFFF0</color>
     <color name="record_play_icon">@color/txt_light</color>
     <color name="show_case_bg_record_upload">#5E35B1</color>
+    <color name="colorHeart">#E91E63</color>
 
     <!-- Additional colors for better UI contrast -->
     <color name="text_input_focused">#006599</color>

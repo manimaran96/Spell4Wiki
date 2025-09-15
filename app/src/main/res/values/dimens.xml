@@ -78,6 +78,7 @@
 	<dimen name="content_margin_vertical">16dp</dimen>
 	<dimen name="list_item_spacing">8dp</dimen>
 	<dimen name="section_spacing">24dp</dimen>
+	<dimen name="spacing_medium">16dp</dimen>
 
 	<!-- Legacy dimensions -->
 	<dimen name="space30dp">30dp</dimen>
