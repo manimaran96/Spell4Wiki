@@ -327,7 +327,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/space10dp"
-                android:paddingStart="@dimen/space20dp"
+                android:paddingStart="@dimen/space8dp"
                 android:paddingEnd="@dimen/space10dp"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
@@ -335,17 +335,25 @@
                 android:focusable="true"
                 android:background="?android:attr/selectableItemBackground">
 
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/imgSupportDev"
-                    android:layout_width="28dp"
-                    android:layout_height="28dp"
-                    android:background="@drawable/pulse_heart_bg"
-                    android:padding="4dp"
-                    android:scaleType="centerInside"
-                    android:contentDescription="@string/support_development"
-                    app:srcCompat="@drawable/ic_favorite"
-                    app:tint="@color/colorHeart"
-                    android:layout_marginEnd="@dimen/spacing_medium" />
+                <!-- Container for pulse animation with extra space -->
+                <FrameLayout
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_marginEnd="@dimen/space12dp">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/imgSupportDev"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:layout_gravity="center"
+                        android:background="@drawable/pulse_heart_bg"
+                        android:padding="6dp"
+                        android:scaleType="centerInside"
+                        android:contentDescription="@string/support_development"
+                        app:srcCompat="@drawable/ic_favorite"
+                        app:tint="@color/colorHeart" />
+
+                </FrameLayout>
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/txt_help_development"
