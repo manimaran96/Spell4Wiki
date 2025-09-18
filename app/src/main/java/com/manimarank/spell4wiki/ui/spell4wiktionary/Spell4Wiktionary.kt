@@ -578,16 +578,22 @@ class Spell4Wiktionary : BaseActivity(), EndlessListener {
     }
 
     private fun setupCategorySpinnerData(categoryDataList: MutableList<String>) {
-        val spinnerAdapter = ArrayAdapter(applicationContext, R.layout.item_category, categoryDataList.toTypedArray())
+        // Handle empty category list case
+        val displayList = if (categoryDataList.isEmpty()) {
+            mutableListOf(getString(R.string.no_categories_available))
+        } else {
+            categoryDataList
+        }
+
+        val spinnerAdapter = ArrayAdapter(applicationContext, R.layout.item_category, displayList.toTypedArray())
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         binding.spinnerCategory.adapter = spinnerAdapter
 
-        val selectedPos = categoryDataList.indexOfFirst { it == pref.getSelectedWordsCategory(languageCode) }
-
-        binding.spinnerCategory.setSelection(selectedPos)
-
-        wiktionaryTitleOfWordsWithoutAudio = categoryDataList.elementAtOrNull(selectedPos)
         if (categoryDataList.isNotEmpty()) {
+            val selectedPos = categoryDataList.indexOfFirst { it == pref.getSelectedWordsCategory(languageCode) }
+            binding.spinnerCategory.setSelection(if (selectedPos >= 0) selectedPos else 0)
+            wiktionaryTitleOfWordsWithoutAudio = categoryDataList.elementAtOrNull(if (selectedPos >= 0) selectedPos else 0)
+
             binding.spinnerCategory.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(
                     parent: AdapterView<*>?,
@@ -604,6 +610,21 @@ class Spell4Wiktionary : BaseActivity(), EndlessListener {
 
                 override fun onNothingSelected(p0: AdapterView<*>?) {}
             }
+        } else {
+            // No categories available - clear selection and show helpful message
+            wiktionaryTitleOfWordsWithoutAudio = null
+            binding.spinnerCategory.onItemSelectedListener = null
+
+            // Show helpful info text
+            binding.txtCategoryInfo.makeVisible()
+
+            // Show empty state with helpful message
+            showNoCategoriesState()
+        }
+
+        // Hide info text when categories are available
+        if (categoryDataList.isNotEmpty()) {
+            binding.txtCategoryInfo.makeGone()
         }
     }
 
@@ -635,5 +656,11 @@ class Spell4Wiktionary : BaseActivity(), EndlessListener {
                setupCategorySpinnerData(catList)
             }
         }
+    }
+
+    private fun showNoCategoriesState() {
+        // Hide the word list and show empty state with helpful message
+        binding.recyclerView.makeInVisible()
+        binding.root.findViewById<View>(R.id.layoutEmpty)?.makeVisible()
     }
 }

@@ -226,6 +226,12 @@
     <string name="spell4wiktionary_load_more_failed_confirmation">@string/something_went_wrong_try_again</string>
     <string name="no_more_data_found">No more data found</string>
 
+    <!-- Category Selection Messages -->
+    <string name="no_categories_available">No categories available</string>
+    <string name="no_categories_message">No word categories are available for this language yet. Tap the + button to search and add categories.</string>
+    <string name="category_search_hint">Search for categories by keywords (e.g., \"words\", \"nouns\", \"verbs\")</string>
+    <string name="category_search_no_results">No categories found for your search. Try different keywords or check your internet connection.</string>
+
     <!-- App Intro Screen -->
     <string name="app_intro_slide_1_title">Welcome</string>
     <string name="app_intro_slide_2_title">Wiktionary Explore</string>

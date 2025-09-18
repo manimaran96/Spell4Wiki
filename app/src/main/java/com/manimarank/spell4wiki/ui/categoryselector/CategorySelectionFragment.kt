@@ -155,7 +155,7 @@ class CategorySelectionFragment(private val mActivity: Activity) : BottomSheetDi
                     showLoader(false)
                     adapter?.loadData(resList)
                 } else {
-                    showLoader(null, mActivity.getString(R.string.result_not_found))
+                    showLoader(null, mActivity.getString(R.string.category_search_no_results))
                 }
             }
 
@@ -166,6 +166,29 @@ class CategorySelectionFragment(private val mActivity: Activity) : BottomSheetDi
                 showLoader(false, t.message ?: "")
                 t.printStackTrace()
 
+                // Handle different types of network failures gracefully
+                val errorMessage = when {
+                    t.message?.contains("timeout", ignoreCase = true) == true -> {
+                        mActivity.getString(R.string.network_timeout_error)
+                    }
+                    t.message?.contains("certificate", ignoreCase = true) == true ||
+                    t.message?.contains("SSL", ignoreCase = true) == true ||
+                    t.message?.contains("Trust anchor", ignoreCase = true) == true -> {
+                        mActivity.getString(R.string.network_error_general)
+                    }
+                    t.message?.contains("Unable to resolve host", ignoreCase = true) == true ||
+                    t.message?.contains("No address associated", ignoreCase = true) == true -> {
+                        mActivity.getString(R.string.network_error_general)
+                    }
+                    !isConnected(mActivity) -> {
+                        mActivity.getString(R.string.check_internet)
+                    }
+                    else -> {
+                        mActivity.getString(R.string.category_search_no_results)
+                    }
+                }
+
+                showLoader(null, errorMessage)
             }
         })
     }
@@ -188,7 +211,7 @@ class CategorySelectionFragment(private val mActivity: Activity) : BottomSheetDi
     }
     private val subTitleInfo: String?
         get() {
-            return "Search Category by known key words"
+            return mActivity.getString(R.string.category_search_hint)
         }
 
     fun show(fragmentManager: FragmentManager) {
