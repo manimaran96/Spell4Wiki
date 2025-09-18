@@ -153,6 +153,8 @@
     <string name="wiktionary_search">Wiktionary search</string>
     <string name="app_settings">App Settings</string>
     <string name="app_language">App Language</string>
+    <string name="wiktionary_cleanup">Wiktionary Simplified</string>
+    <string name="wiktionary_cleanup_description">Expand all sections for easier reading</string>
     <string name="action_add">Add</string>
    <string name="choose_your_preferred_app_language">Choose your preferred language.\nCurrent app language : %s</string>
     <string name="choose_your_preferred_contribution_language">Choose your preferred language.\nCurrent contribution language : %s</string>

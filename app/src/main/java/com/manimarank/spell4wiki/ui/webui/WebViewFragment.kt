@@ -14,11 +14,17 @@ import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.webkit.*
+import android.webkit.WebResourceError
+import android.webkit.WebResourceRequest
+import android.webkit.WebResourceResponse
+import android.webkit.WebSettings
+import android.webkit.WebView
+import android.webkit.WebViewClient
 import androidx.fragment.app.Fragment
 import com.manimarank.spell4wiki.R
 import com.manimarank.spell4wiki.data.db.DBHelper
 import com.manimarank.spell4wiki.data.prefs.PrefManager
+import com.manimarank.spell4wiki.databinding.WebViewLayoutBinding
 import com.manimarank.spell4wiki.utils.GeneralUtils.openUrlInBrowser
 import com.manimarank.spell4wiki.utils.GeneralUtils.showRecordDialog
 import com.manimarank.spell4wiki.utils.NetworkUtils.isConnected
@@ -28,7 +34,6 @@ import com.manimarank.spell4wiki.utils.constants.AppConstants
 import com.manimarank.spell4wiki.utils.constants.Urls
 import com.manimarank.spell4wiki.utils.makeInVisible
 import com.manimarank.spell4wiki.utils.makeVisible
-import com.manimarank.spell4wiki.databinding.WebViewLayoutBinding
 
 class WebViewFragment : Fragment() {
 
@@ -145,16 +150,21 @@ class WebViewFragment : Fragment() {
             }
 
             override fun onPageFinished(view: WebView, url: String) {
-                // super.onPageFinished(view, url)
                 if (isAdded) {
                     if (isWiktionaryWord) {
-                        hideDivListForWiktionaryWebPage.forEach { divClass ->
-                            binding.webView.loadUrl("javascript:(function() { document.getElementsByClassName('${divClass}')[0].style.display='none'; })()")
+                        // Check if Wiktionary cleanup is enabled in settings
+                        if (pref?.isWiktionaryCleanupEnabled == true) {
+                            // Use new implementation with enhanced cleanup
+                            binding.webView.applyWiktionaryReadabilityEnhancement()
+                        } else {
+                            // Use old implementation - basic cleanup only
+                            hideDivListForWiktionaryWebPage.forEach { divClass ->
+                                binding.webView.loadUrl("javascript:(function() { document.getElementsByClassName('${divClass}')[0].style.display='none'; })()")
+                            }
+                            hideDivIdListForWiktionaryWebPage.forEach { divClass ->
+                                binding.webView.loadUrl("javascript:(function() { document.getElementById('$divClass').style.display='none'; })()")
+                            }
                         }
-                        hideDivIdListForWiktionaryWebPage.forEach { divClass ->
-                            binding.webView.loadUrl("javascript:(function() { document.getElementById('$divClass').style.display='none'; })()")
-                        }
-
                     }
                     if (!isWebPageNotFound)
                         loadingVisibility(View.GONE)
@@ -183,6 +193,66 @@ class WebViewFragment : Fragment() {
             }
         }
     }
+
+
+    // Todo: Plan to use proper js and github based link load
+    private fun WebView.applyWiktionaryReadabilityEnhancement(timeoutMs: Long = 3000) {
+        val jsCode = """
+        (function() {
+          function cleanUp() {
+            // 1) Hide unwanted elements
+            const hideClasses = [
+              "header-container",
+              "banner-container",
+              "page-actions-menu",
+              "was-wotd",
+              "mw-editsection",
+              "mw-footer",
+              "mw-notification-area"
+            ];
+            const hideIds = ["page-secondary-actions"];
+
+            hideClasses.forEach(cls => {
+              document.querySelectorAll("." + cls).forEach(el => {
+                el.style.display = "none";
+              });
+            });
+            hideIds.forEach(id => {
+              const el = document.getElementById(id);
+              if (el) el.style.display = "none";
+            });
+
+            // 2) Expand all collapsible accordions
+            document.querySelectorAll(".mf-collapsible-content").forEach(el => {
+              el.removeAttribute("hidden");   // remove hidden attr
+              el.style.display = "block";     // force visible
+            });
+
+            // 3) Update expand → collapse icons
+            document.querySelectorAll(".mf-icon-expand").forEach(icon => {
+              icon.classList.remove("mf-icon-expand");
+              icon.classList.add("mf-icon-collapse");
+            });
+          }
+
+          // Run once immediately
+          cleanUp();
+
+          // Observe DOM changes for lazy content
+          const observer = new MutationObserver(() => { cleanUp(); });
+          observer.observe(document.body, { childList: true, subtree: true });
+
+          // Stop observing after timeout
+          setTimeout(() => { observer.disconnect(); }, ${timeoutMs});
+        })();
+     """.trimIndent()
+
+        this.post {
+            this.evaluateJavascript(jsCode, null)
+        }
+    }
+
+
 
     private fun showPageNotFound() {
         if (isAdded) {

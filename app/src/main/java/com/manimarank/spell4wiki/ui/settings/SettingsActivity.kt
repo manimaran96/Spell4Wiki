@@ -80,6 +80,12 @@ class SettingsActivity : BaseActivity() {
         binding.txtAppLanguage.text = getSelectedLanguage()
         binding.layoutLanguageOfApp.setOnClickListener { show(this@SettingsActivity) }
 
+        // Wiktionary cleanup setting
+        binding.switchWiktionaryCleanup.isChecked = pref.isWiktionaryCleanupEnabled
+        binding.switchWiktionaryCleanup.setOnCheckedChangeListener { _, isChecked ->
+            pref.isWiktionaryCleanupEnabled = isChecked
+        }
+
         binding.txtRfCount.text = getString(R.string.run_filter_settings_count, pref.runFilterNumberOfWordsToCheck
                 ?: AppConstants.RUN_FILTER_NO_OF_WORDS_CHECK_COUNT)
         binding.seekBarRunFilterCount.progress = pref.runFilterNumberOfWordsToCheck
