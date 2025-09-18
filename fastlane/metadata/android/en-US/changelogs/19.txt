@@ -1,0 +1,7 @@
+- Wiktionary pages now open with sections expanded for easier reading 📖
+- Smoother browsing with improved WebView & faster performance ⚡
+- Fresh modern UI with edge-to-edge display & polished dialogs 🎨
+- Better text input handling (no unwanted styles after paste) ✍️
+- Easier file handling with improved storage access 📂
+- Stability fixes, memory optimizations & overall smoother app 🚀
+- Issues and Crashes Fixes
