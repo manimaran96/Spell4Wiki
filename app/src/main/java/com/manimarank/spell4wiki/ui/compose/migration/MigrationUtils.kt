@@ -65,6 +65,7 @@ object MigrationUtils {
      */
     fun launchLoginActivity(context: Context) {
         val intent = Intent(context, com.manimarank.spell4wiki.ui.compose.auth.LoginComposeActivity::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         context.startActivity(intent)
     }
 

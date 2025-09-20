@@ -180,7 +180,7 @@ fun AppIntroSlide(
             text = slide.title,
             fontSize = 24.sp,
             fontWeight = FontWeight.Bold,
-            color = MaterialTheme.colorScheme.primary,
+            color = MaterialTheme.colorScheme.onBackground,
             textAlign = TextAlign.Center,
             modifier = Modifier.padding(bottom = 100.dp)
         )
@@ -198,9 +198,9 @@ fun AppIntroSlide(
         Text(
             text = slide.description,
             fontSize = 16.sp,
-            color = MaterialTheme.colorScheme.onSurface,
+            color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.8f),
             textAlign = TextAlign.Center,
-            lineHeight = 18.sp,
+            lineHeight = 20.sp,
             modifier = Modifier
                 .padding(horizontal = 20.dp)
                 .padding(bottom = 24.dp)
