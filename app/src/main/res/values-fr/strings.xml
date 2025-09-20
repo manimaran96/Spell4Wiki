@@ -1,0 +1,345 @@
+<resources>
+
+    <!--
+    ######## Don't translate - Because this are unique name for understand that feature. #########
+    Spell4Wiki, Spell4WordList, Spell4Word,
+    Spell for Wiki, Spell for WordList, Spell for Word,
+
+    ######## Optional to translate #########
+    Wiktionary, Wikimedia Commons
+
+    ######## NOTE ############
+    - Keep %s, \n and @string/......... values
+    - That %s will be replaced with some word.
+    - For ambracene symbol(&) use &amp;
+    - If translatable="false" mentioned in string tag then don't translate that word.
+    -->
+
+    <!--Don't translate-->
+    <string name="app_name" translatable="false">Spell4Wiki</string>
+    <string name="spell_4_wiki_all" translatable="false">Spell4wiki</string>
+    <string name="spell4wiktionary" translatable="false">Spell for Wiktionary</string>
+    <string name="spell4wordlist" translatable="false">Spell for WordList</string>
+    <string name="spell4word" translatable="false">Spell for Word</string>
+    <string name="record_duration" translatable="false">00:10</string>
+    <string name="account_name" translatable="false">Spell4Wiki</string>
+    <string name="account_type" translatable="false">com.manimarank.spell4wiki</string>
+    <string name="license_name_cc_by_three" translatable="false">Attribution 3.0</string>
+    <string name="license_name_cc_by_four" translatable="false">Attribution 4.0</string>
+    <string name="license_name_cc_by_sa_three" translatable="false">Attribution-ShareAlike 3.0</string>
+    <string name="license_name_cc_by_sa_four" translatable="false">Attribution-ShareAlike 4.0</string>
+    <string name="license_name_cc_zero" translatable="false">CC0(release all rights)</string>
+    <string name="sample_url" translatable="false">https://manimaran96.wordpress.com</string>
+
+    <string name="wiktionary">Wiktionnaire</string>
+    <string name="search_on_wiktionary">Rechercher dans le Wiktionnaire</string>
+    <string name="wiki_login">Connexion au Wiki</string>
+    <string name="username">Nom d'utilisateur</string>
+    <string name="password">Mot de passe</string>
+    <string name="login">Se connecter</string>
+    <string name="done">OK</string>
+    <string name="please_wait">Veuillez patienter</string>
+    <string name="forgot_password">Mot de passe oublié ?</string>
+    <string name="join_wiki">Rejoindre le Wiktionnaire</string>
+    <string name="yes">Oui</string>
+    <string name="no">Non</string>
+    <string name="skip_login">Continuer sans connexion</string>
+    <string name="welcome_user">Bienvenue, %s</string>
+    <string name="loading">Chargement…</string>
+    <string name="view_my_contribution">Mes contributions</string>
+    <string name="search">Recherche</string>
+    <string name="settings">Préférences</string>
+    <string name="login_to_contribute">Se connecter pour contribuer</string>
+    <string name="contribute_to_wiki_commons">Contribuer à Wikimedia commons ?</string>
+    <string name="logout">Se déconnecter</string>
+    <string name="about">Aide</string>
+    <string name="record">Enregistrer</string>
+    <string name="link_copied">Lien copié</string>
+    <string name="link_share_message">Recommandation : %s\nPartage du
+    lien vers l'application Spell4Wiki.</string>
+    <string name="link_share_title">Partager le lien avec vos amis…</string>
+    <string name="app_share_title">Partager l'application Spell4Wiki
+    avec vos amis…</string>
+    <string name="app_share_invite_message">🎊🎉 Contribuer au
+    Wiktionnaire en enregistrant votre voix à l'aide de l'application
+    Spell4Wiki pour Android. 🎉🎊\n\n%s\nSpell4Wiki est un logiciel
+    libre (GPLv3).</string>
+    <string name="app_description">Spell4Wiki est une application mobile
+    permettant d'enregistrer des mots du Wiktionnaire sous forme audio
+    et de les téléverser sur Wikimedia Commons. C'est aussi un
+    Wiki-dictionnaire multilingue.</string>
+    <string name="app_share_link">Lien vers l'application :\n%s</string>
+    <string name="upload">Téléverser</string>
+    <string name="before_record">Maintenir le micro appuyé pour
+    enregistrer</string>
+    <string name="during_record">Enregistrement…  %s</string>
+    <string name="after_record">Maintenir le micro appuyé pour
+    réenregistrer</string>
+    <string name="declaration_note">Je déclare que ceci est mon propre
+    travail et que quiconque peut l'utiliser sous la licence
+    %s.</string>
+    <string name="record_audio_not_found">Enregistrer d'abord
+    l'audio.</string>
+    <string name="recorded_audio_too_short">Vérifier l'audio
+    enregistré.</string>
+    <string name="recording_under_process">Enregistrement en cours</string>
+    <string name="permission_required">Autoriser l'accès au microphone
+    et au stockage.</string>
+    <string name="go_settings">VOIR LES PRÉFÉRENCES</string>
+    <string name="message_upload_info">Téléversement…\n%s</string>
+    <string name="crash_report_alert_title">Partager le
+    rapport de plantage ?</string>
+    <string name="crash_report_alert_message">Un plantage a eu lieu
+    précédemment. Envoyer le rapport de plantage aux
+    développeurs afin de corriger de problème à l'avenir ?</string>
+    <string name="send">Envoyer</string>
+    <string name="cancel">Annuler</string>
+    <string name="upload_success">La prononciation de %s a bien été
+    téléversée</string>
+    <string name="select_file">Choisir un fichier</string>
+    <string name="next">Suivant</string>
+    <string name="type_word">Saisir ou coller des mots ici</string>
+    <string name="enter_word">Saisir un mot</string>
+    <string name="hint_select_file">Choisir un fichier .txt contenant la
+    liste des mots auxquels contribuer.</string>
+    <string name="hint_select_file_next">Format attendu : un mot par
+    ligne.</string>
+    <string name="direct_content">Contenu direct</string>
+    <string name="hint_direct_copy">Copier-coller ou saisir les mots
+    auxquels contribuer.</string>
+    <string name="hint_direct_copy_next">Saisir ou coller dans le champ
+    ci-dessous\n(un mot par ligne).</string>
+    <string name="hint_common_steps">---------- NOTE ----------\nChaque
+    mot doit figurer sur une ligne à part.\nAligner correctement les mots
+    si nécessaire.\n</string>
+    <string name="confirmation">Confirmation</string>
+    <string name="confirm_to_back">Revenir en arrière ?</string>
+    <string name="select_language">Choisir la langue</string>
+    <string name="selected_language">Langue choisie</string>
+    <string name="rate_app">Noter l'application</string>
+    <string name="share_app">Partager l'application</string>
+    <string name="share">Partager</string>
+    <string name="powered_by">Produit par</string>
+    <string name="kaniyam">Kaniyam Foundation</string>
+    <string name="about_kaniyam">La Fondation Kaniyam est une
+    organisation encourageant le développement de l'usage de la langue
+    tamoule dans tous les aspects de la science et du développement
+    socio-économique, ainsi que l'accès libre à la connaissance et aux
+    ressources.</string>
+    <string name="vglug">Fondation VGLUG</string>
+    <string name="about_vglug">Le Villupuram GNU/Linux Users Group
+    (Villupuram GLUG) est une organisation non lucrative fondée en 2013
+    et inspirée par le logiciel libre et ouvert (FOSS).</string>
+    <string name="how_to_contribute">Comment contribuer ?</string>
+    <string name="source_code">Voir le code source</string>
+    <string name="help_development">Don aux développeurs</string>
+    <string name="contributors">Contributeurs</string>
+    <string name="credits">Remerciements</string>
+    <string name="third_party_libraries">Bibliothèques tierces</string>
+    <string name="feedback">Avis &amp; contact</string>
+    <string name="privacy_policy">Politique</string>
+    <string name="help_us_translate">Aider à traduire</string>
+    <string name="join_telegram">Rejoindre le groupe Telegram</string>
+    <string name="about_app">@string/app_intro_slide_1_description </string>
+    <string name="version">Version</string>
+    <string name="license">Licence</string>
+    <string name="copy_link">Copier le lien</string>
+    <string name="favorite">Favori</string>
+    <string name="forward">Suivant</string>
+    <string name="backward">Précédent</string>
+    <string name="select_language_response_msg">%s - langue choisie.</string>
+    <string name="refresh">Rafraîchir</string>
+    <string name="open_in_browser">Ouvrir dans le navigateur</string>
+    <string name="logout_confirmation">Confirmation de déconnexion</string>
+    <string name="logout_message">Déconnexion ?</string>
+    <string name="contributions">Contributions : %s</string>
+    <string name="language">Langue</string>
+    <string name="license_of_upload_audio">Téléverser l'audio - Licence</string>
+    <string name="license_choose_alert">Choisir la licence CC</string>
+    <string name="core_contributors">Contributeurs principaux</string>
+    <string name="code_contributors">Contributeurs du code</string>
+    <string name="wiki_tech_helpers">Wikimedia &amp; et aide
+technique</string>
+    <string name="language_for_note">Note : langue pour l'option %s.</string>
+    <string name="wiktionary_search">Rechercher sur le Wiktionnaire</string>
+    <string name="app_settings">Préférences de l'application</string>
+    <string name="app_language">Langue de l'application</string>
+    <string name="action_add">Ajouter</string>
+   <string name="choose_your_preferred_app_language">Choisir votre
+   langue par défaut.\nLangue actuelle de l'application : %s</string>
+    <string name="choose_your_preferred_contribution_language">Choisir
+    votre langue par défaut.\nLangue de contribution actuelle : %s</string>
+
+    <string name="choose_app_language">Choisir la langue de
+    l'application</string>
+    <string name="choose_contribution_language">Choisir la langue de
+    contribution</string>
+    <string name="app_language_selection">Choisir la langue de
+    l'application</string>
+    <string name="contribution_language_selection">Choisir la langue de
+    contribution</string>
+    <string name="yes_continue">Oui, continuer</string>
+    <string name="later">Plus tard</string>
+    <string name="temporary">Provisoire</string>
+    <string name="checking_file_availability">Vérification de la
+    disponibilité du fichier\n(%s)</string>
+    <string name="ask_to_add_language">Ajouter votre langue ?</string>
+    <string name="do_you_want_continue">Charger davantage ?</string>
+    <string name="rta_dialog_title">@string/rate_app</string>
+    <string name="rta_dialog_message">Si cette application vous plaît,
+    accepteriez-vous de prendre un moment pour la noter ? Cela prendra
+    moins d'une minute. Merci pour votre soutien !</string>
+    <string name="rta_dialog_ok">Noter maintenant</string>
+    <string name="rta_dialog_cancel">@string/later</string>
+    <string name="rta_dialog_no">Non merci</string>
+    <string name="update_dialog_title">Mettre à jour l'application</string>
+    <string name="update_dialog_message">Une nouvelle version est
+    disponible. Veuillez mettre à jour l'application</string>
+    <string name="update_dialog_ok">Mettre à jour</string>
+    <string name="update_dialog_no">@string/later</string>
+    <string name="record_info_dialog_title">Toutes nos excuses pour le
+    désagrément</string>
+    <string name="record_info_dialog_message">Afin d'éviter les
+    téléversements multiples et les doublons, nous vérifions si le
+    fichier audio existe déjà avant de l'enregistrer, car certains mots
+    ont déjà un audio dans Commons.\n\nAprès avoir cliqué sur le mot, si
+    vous voyez le message « Le fichier audio existe déjà », passez à un
+    autre mot.</string>
+    <string name="record_info_dialog_ok">OK</string>
+
+    <!-- Run Filter Option -->
+    <string name="do_you_want_filter_words">Filtrer les mots sans audio ?</string>
+    <string name="run_filter">Filtrer</string>
+    <string name="no_words_scroll_to_get_new_words">Aucun mot trouvé.
+    Faites défiler pour trouver de nouveaux mots.</string>
+    <string name="no_words_filtered">Aucun mot ne correspond à cette
+    recherche. Vous pouvez enregistrer un audio ou lancer une nouvelle
+    recherche.</string>
+    <string name="words_filter_success">Trouvé ! %d mots filtrés depuis
+    cette liste.</string>
+    <string name="run_filter_use">Usage du filtre</string>
+    <string name="run_filter_info">Afin d'éviter les
+    téléversements multiples et les doublons, nous vérifions si le
+    fichier audio existe déjà avant de l'enregistrer, car certains mots
+    ont déjà un audio dans Commons.\n\n\nCette option Filtrer permet de
+    filtrer facilement les mots qui n'ont pas d'audio. Après avoir
+    appliqué le filtre, vous pouvez commencer à enregistrer l'audio pour
+    les mots de la liste. Pour voir plus de mots, faites défiler la liste.
+</string>
+    <string name="run_filter_settings_count">Filtrer - Nombre de mots à
+    vérifier : %d</string>
+
+    <string name="check_internet">Vérifier la connexion
+    Internet</string>
+    <string name="record_fetch_fail">Vérifier la connexion.\nFaire
+    défiler pour réessayer</string>
+    <string name="something_went_wrong">Problème rencontré.</string>
+    <string name="something_went_wrong_try_again">Problème rencontré.
+    Réessayer.</string>
+    <string name="web_page_not_found">Page non trouvée.\nRéessayer.</string>
+    <string name="enter_valid_word">Saisir un mot valide (max : 30
+    caractères).</string>
+    <string name="provide_valid_word">Saisir un mot valide</string>
+    <string name="provide_valid_content">Saisir un contenu valide</string>
+    <string name="backward_nothing">Pas de précédent</string>
+    <string name="forward_nothing">Pas de suivant</string>
+    <string name="invalid_language">Choisir une langue valide.</string>
+    <string name="confirm_declaration">Vérifier et confirmer la
+    déclaration.</string>
+    <string name="invalid_csrf_try_again">Jeton CSRF invalide.
+    Réessayer.</string>
+    <string name="invalid_response">Réponse invalide. Réessayer</string>
+    <string name="upload_failed">Échec du téléversement.
+    Réessayer.</string>
+    <string name="file_already_exist">Le fichier téléversé existe déjà
+    dans le même format ou un autre.</string>
+    <string name="audio_file_already_exist">Fichier audio déjà présent
+    pour %s.</string>
+    <string name="login_expired">Connexion expirée. Connectez-vous
+    pour poursuivre.</string>
+    <string name="two_factor_login">Pas d'authentification à deux
+    facteurs.</string>
+    <string name="check_url">Lien invalide</string>
+    <string name="alert_to_exit">Cliquer encore sur Retour pour
+    sortir</string>
+    <string name="invalid_credential">Le nom d'utilisateur et le mot de
+    passe doivent être valides</string>
+    <string name="no_email_client">Client de courrier électronique
+    introuvable</string>
+    <string name="result_not_found">Résultat introuvable</string>
+    <string name="server_misbehaved">Problème de serveur ! Réessayer
+    plus tard.</string>
+    <string name="word_list_no_record_found">Aucun mot
+    trouvé.\n(ou)\nFichiers audio déjà existants ou téléversés pour tous
+    les mots.\n(ou)\nContribuez à une autre langue.</string>
+    <string name="spell4wiktionary_load_more_confirmation">Trouver des
+    mots sans audio risque de prendre un peu de temps. Voulez-vous
+    vraiment continuer ?</string>
+    <string name="spell4wiktionary_load_more_failed_confirmation">@string/something_went_wrong_try_again</string>
+    <string name="no_more_data_found">Données introuvables</string>
+
+    <!-- App Intro Screen -->
+    <string name="app_intro_slide_1_title">Bienvenue</string>
+    <string name="app_intro_slide_2_title">Explorer le Wiktionnaire</string>
+    <string name="app_intro_slide_3_title">@string/spell4wordlist</string>
+    <string name="app_intro_slide_4_title">@string/spell4word</string>
+    <string name="app_intro_slide_5_title">Demande d'autorisation</string>
+
+    <string name="app_intro_slide_1_description">@string/app_description</string>
+    <string name="app_intro_slide_2_description">Vous pouvez explorer la
+    définition par le Wiktionnaire des mots de toutes les
+    langues.</string>
+    <string name="app_intro_slide_3_description">Vous pouvez enregistrer
+    et téléverser des fichiers audio pour votre propre liste de mots
+    à partir d'un fichier texte ou d'un copier-coller.</string>
+    <string name="app_intro_slide_4_description">Vous pouvez très
+    facilement enregistrer et téléverser l'audio pour un mot
+    unique.</string>
+    <string name="app_intro_slide_5_description">Spell4Wiki requiert les
+    autorisations de stockage et d'enregistrement audio sans attenter
+    à votre vie privée.</string>
+
+
+    <!--Wikimedia Commons/Wiktionary Related-->
+    <string name="language_code">fr</string>
+    <string name="file_content_description">Prononciation de %s</string> <!--Don't use full stop-->
+    <!-- Wikipedia page about language
+     For English : https://en.wikipedia.org/wiki/English_language -> English_language
+     For Tamil : https://en.wikipedia.org/wiki/Tamil_language -> Tamil_language-->
+    <string name="language_page_in_wikipedia">French_language</string>
+    <string name="wiktionary_url">https://en.wiktionary.org/</string>
+
+
+    <!-- App Show case -->
+    <string name="sc_t_spell4wiki_page_language">Changer de langue</string>
+    <string name="sc_d_spell4wiki_page_language">Vous pouvez changer de
+    langue pour contribuer. L'audio sera téléversé pour la langue
+    correspondante.\n\nLangue actuellement choisie :
+    %s\n\nRemarque :\nSeules quelques langues sont actuellement
+    proposées.</string>
+    <string name="sc_t_spell4wiki_list_item">Pour enregistrer</string>
+    <string name="sc_d_spell4wiki_list_item">Cliquer sur le mot pour
+enregistrer l'audio ou cliquer sur l'icône dictionnaire pour lire la
+définition du Wiktionnaire.</string>
+    <string name="sc_t_spell4word_page_edit_word">Saisir le mot à
+enregistrer</string>
+    <string name="sc_d_spell4word_page_edit_word">Saisir le mot et
+appuyer sur Enregistrer pour enregistrer l'audio ou cliquer
+sur l'icône Dictionnaire pour lire la définition du Wiktionnaire.</string>
+    <string name="sc_t_wiktionary_page_language">@string/sc_t_spell4wiki_page_language</string>
+    <string name="sc_d_wiktionary_page_language">Vous pouvez choisir
+n'importe quelle langue du Wiktionnaire. Les résultats et les
+définitions sont ceux de la langue choisie.\n\nLangue actuelle : %s</string>
+    <string name="sc_t_record_upload">Vérifier avant de téléverser</string>
+    <string name="sc_d_record_upload">1. Vérifier le mot et la
+langue\n2. Écouter et vérifier l'enregistrement audio\n3. Appuyer pour
+téléverser sur Wikimedia Commons</string>
+    <string name="sc_t_core_contributors_list_item">Plus d'informations
+    sur le contributeur</string>
+    <string name="sc_d_core_contributors_list_item">Cliquer sur le nom
+pour plus d'informations sur le contributeur.</string>
+
+    <!-- New String -->
+    <string name="select_category">Chercher &amp; choisir une catégorie</string>
+
+</resources>
