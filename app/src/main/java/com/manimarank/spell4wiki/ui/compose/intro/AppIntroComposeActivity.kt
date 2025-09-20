@@ -130,7 +130,7 @@ fun AppIntroScreen(
 
     Surface(
         modifier = Modifier.fillMaxSize(),
-        color = Color.White
+        color = MaterialTheme.colorScheme.background
     ) {
         Column(
             modifier = Modifier.fillMaxSize()
@@ -222,7 +222,7 @@ fun AppIntroControls(
         modifier = Modifier
             .fillMaxWidth()
             .height(56.dp),
-        color = Color.White
+        color = MaterialTheme.colorScheme.surface
     ) {
         Box(
             modifier = Modifier

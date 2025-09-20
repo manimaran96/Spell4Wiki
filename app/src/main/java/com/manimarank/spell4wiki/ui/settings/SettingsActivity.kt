@@ -80,6 +80,12 @@ class SettingsActivity : BaseActivity() {
         binding.txtAppLanguage.text = getSelectedLanguage()
         binding.layoutLanguageOfApp.setOnClickListener { show(this@SettingsActivity) }
 
+        // Theme selection setting
+        updateThemeView()
+        binding.layoutThemeSelection.setOnClickListener {
+            showThemeSelectionDialog()
+        }
+
         // Wiktionary cleanup setting
         binding.switchWiktionaryCleanup.isChecked = pref.isWiktionaryCleanupEnabled
         binding.switchWiktionaryCleanup.setOnCheckedChangeListener { _, isChecked ->
@@ -115,6 +121,52 @@ class SettingsActivity : BaseActivity() {
             if (wikiLang != null && !TextUtils.isEmpty(wikiLang.name)) value = wikiLang.localName + " - " + wikiLang.name + " : " + languageCode
             txtView.text = value
         }
+    }
+
+    private fun updateThemeView() {
+        val themeText = when (pref.themeMode) {
+            PrefManager.ThemeMode.LIGHT -> getString(R.string.theme_light)
+            PrefManager.ThemeMode.DARK -> getString(R.string.theme_dark)
+            PrefManager.ThemeMode.SYSTEM -> getString(R.string.theme_system_default)
+            else -> getString(R.string.theme_system_default)
+        }
+        binding.txtThemeSelection.text = themeText
+    }
+
+    private fun showThemeSelectionDialog() {
+        val themes = arrayOf(
+            getString(R.string.theme_light),
+            getString(R.string.theme_dark),
+            getString(R.string.theme_system_default)
+        )
+
+        val currentSelection = when (pref.themeMode) {
+            PrefManager.ThemeMode.LIGHT -> 0
+            PrefManager.ThemeMode.DARK -> 1
+            PrefManager.ThemeMode.SYSTEM -> 2
+            else -> 2
+        }
+
+        AlertDialog.Builder(this)
+            .setTitle(getString(R.string.choose_theme))
+            .setSingleChoiceItems(themes, currentSelection) { dialog, which ->
+                val selectedTheme = when (which) {
+                    0 -> PrefManager.ThemeMode.LIGHT
+                    1 -> PrefManager.ThemeMode.DARK
+                    2 -> PrefManager.ThemeMode.SYSTEM
+                    else -> PrefManager.ThemeMode.SYSTEM
+                }
+
+                pref.themeMode = selectedTheme
+                updateThemeView()
+
+                // Recreate activity to apply theme change
+                recreate()
+
+                dialog.dismiss()
+            }
+            .setNegativeButton(getString(R.string.cancel), null)
+            .show()
     }
 
     private fun updateLicenseView(txtLicenseOfUploadAudio: TextView, txtLicenseOfUploadAudioLegalCode: TextView) {

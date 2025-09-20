@@ -87,7 +87,7 @@ fun WebViewScreen(
                     Icon(
                         painter = painterResource(id = R.drawable.ic_record),
                         contentDescription = "Record Audio",
-                        tint = androidx.compose.ui.graphics.Color.White
+                        tint = MaterialTheme.colorScheme.onPrimary
                     )
                 }
             }

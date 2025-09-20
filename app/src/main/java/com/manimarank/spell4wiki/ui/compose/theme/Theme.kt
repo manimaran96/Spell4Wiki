@@ -15,6 +15,7 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
+import com.manimarank.spell4wiki.data.prefs.PrefManager
 
 // Define colors based on the existing app theme
 private val md_theme_light_primary = Color(0xFF1976D2)
@@ -131,18 +132,27 @@ private val DarkColors = darkColorScheme(
 
 @Composable
 fun Spell4WikiTheme(
-    darkTheme: Boolean = isSystemInDarkTheme(),
+    darkTheme: Boolean? = null,
     // Dynamic color is available on Android 12+
     dynamicColor: Boolean = true,
     content: @Composable () -> Unit
 ) {
+    val context = LocalContext.current
+    val pref = PrefManager(context)
+
+    val isDarkTheme = darkTheme ?: when (pref.themeMode) {
+        PrefManager.ThemeMode.LIGHT -> false
+        PrefManager.ThemeMode.DARK -> true
+        PrefManager.ThemeMode.SYSTEM -> isSystemInDarkTheme()
+        else -> isSystemInDarkTheme()
+    }
+
     val colorScheme = when {
         dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
-            val context = LocalContext.current
-            if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
+            if (isDarkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
         }
 
-        darkTheme -> DarkColors
+        isDarkTheme -> DarkColors
         else -> LightColors
     }
     val view = LocalView.current
@@ -150,7 +160,7 @@ fun Spell4WikiTheme(
         SideEffect {
             val window = (view.context as Activity).window
             window.statusBarColor = colorScheme.primary.toArgb()
-            WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = darkTheme
+            WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = !isDarkTheme
         }
     }
 

@@ -159,6 +159,54 @@
 
         </LinearLayout>
 
+        <!-- Theme Selection Setting -->
+        <LinearLayout
+            android:id="@+id/layoutThemeSelection"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="@dimen/space8dp"
+            android:gravity="center_vertical"
+            android:background="?android:attr/selectableItemBackground">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:maxLines="1"
+                    android:text="@string/app_theme"
+                    android:textColor="@color/settings_label_text"
+                    android:textSize="@dimen/text_normal" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/txtThemeSelection"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/space2dp"
+                    android:gravity="center_vertical"
+                    android:maxLines="1"
+                    android:text="@string/theme_system_default"
+                    android:textColor="@color/settings_status_text"
+                    android:textSize="@dimen/text_semi_normal" />
+
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="@dimen/action_icon"
+                android:layout_height="@dimen/action_icon"
+                android:layout_marginStart="@dimen/space8dp"
+                android:contentDescription="@string/app_theme"
+                android:src="@drawable/ic_navigate_next"
+                android:tint="@color/settings_status_text" />
+
+        </LinearLayout>
+
         <LinearLayout
             android:id="@+id/layoutWiktionaryCleanup"
             android:layout_width="match_parent"

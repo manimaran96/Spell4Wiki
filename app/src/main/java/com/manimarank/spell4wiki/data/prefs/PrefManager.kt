@@ -119,6 +119,13 @@ class PrefManager(private val mContext: Context?) {
             editor.apply()
         }
 
+    var themeMode: String
+        get() = pref.getString(THEME_MODE, ThemeMode.SYSTEM) ?: ThemeMode.SYSTEM
+        set(mode) {
+            editor.putString(THEME_MODE, mode)
+            editor.apply()
+        }
+
 
 
     fun getWordsCategoryList(langCode: String?): MutableList<String> {
@@ -156,6 +163,13 @@ class PrefManager(private val mContext: Context?) {
         private const val CSRF_TOKEN = "csrf_token"
         private const val COOKIE = "cookie"
         private const val WIKTIONARY_CLEANUP_ENABLED = "wiktionary_cleanup_enabled"
+        private const val THEME_MODE = "theme_mode"
+    }
+
+    object ThemeMode {
+        const val LIGHT = "light"
+        const val DARK = "dark"
+        const val SYSTEM = "system"
     }
 
     init {

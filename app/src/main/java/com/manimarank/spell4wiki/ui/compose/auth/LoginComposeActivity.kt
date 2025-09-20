@@ -101,7 +101,7 @@ fun LoginScreen(
 
     Surface(
         modifier = Modifier.fillMaxSize(),
-        color = Color.White
+        color = MaterialTheme.colorScheme.background
     ) {
         Column(
             modifier = Modifier
@@ -176,7 +176,7 @@ fun LoginScreen(
                     Text(
                         text = uiState.otpMessage ?: stringResource(R.string.otp_verification_message),
                         modifier = Modifier.padding(12.dp),
-                        color = MaterialTheme.colorScheme.primary,
+                        color = MaterialTheme.colorScheme.onPrimaryContainer,
                         fontSize = 14.sp,
                         lineHeight = 16.sp
                     )
@@ -214,7 +214,7 @@ fun LoginScreen(
                 if (uiState.isLoading) {
                     CircularProgressIndicator(
                         modifier = Modifier.size(16.dp),
-                        color = Color.White
+                        color = MaterialTheme.colorScheme.onPrimary
                     )
                     Spacer(modifier = Modifier.width(8.dp))
                 }
