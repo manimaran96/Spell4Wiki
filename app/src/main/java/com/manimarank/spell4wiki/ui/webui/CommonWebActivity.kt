@@ -16,6 +16,9 @@ import com.manimarank.spell4wiki.data.db.DBHelper
 import com.manimarank.spell4wiki.data.db.dao.WikiLangDao
 import com.manimarank.spell4wiki.data.prefs.PrefManager
 import com.manimarank.spell4wiki.ui.common.BaseActivity
+import com.manimarank.spell4wiki.ui.compose.migration.CompatibilityLayer
+import com.manimarank.spell4wiki.ui.compose.migration.MigrationUtils
+import com.manimarank.spell4wiki.ui.compose.webview.WebViewComposeFragment
 import com.manimarank.spell4wiki.ui.languageselector.LanguageSelectionFragment
 import com.manimarank.spell4wiki.ui.listerners.OnLanguageSelectionListener
 import com.manimarank.spell4wiki.utils.EdgeToEdgeUtils.setupEdgeToEdgeForWebView
@@ -27,8 +30,9 @@ import java.util.Locale
 class CommonWebActivity : BaseActivity() {
     private var wikiLangDao: WikiLangDao? = null
     private var isWiktionaryWord = false
-    private lateinit var fragment: WebViewFragment
+    private lateinit var fragment: Fragment
     private var languageCode: String? = ""
+    private var isUsingCompose = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_common_web_view)
@@ -37,8 +41,18 @@ class CommonWebActivity : BaseActivity() {
         languageCode = pref.languageCodeSpell4WikiAll
         wikiLangDao = DBHelper.getInstance(applicationContext).appDatabase.wikiLangDao
 
-        // Initialize fragment
-        fragment = WebViewFragment()
+        // Initialize fragment based on migration settings
+        val bundle = intent.extras
+        val url = bundle?.getString(AppConstants.URL) ?: ""
+        val title = bundle?.getString(AppConstants.TITLE)
+        val langCode = bundle?.getString(AppConstants.LANGUAGE_CODE)
+
+        isUsingCompose = MigrationUtils.shouldUseComposeWebView(this)
+        fragment = if (isUsingCompose) {
+            WebViewComposeFragment.newInstance(url, title, isWiktionaryWord, langCode)
+        } else {
+            WebViewFragment()
+        }
 
         // Setup edge-to-edge display
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
@@ -53,7 +67,6 @@ class CommonWebActivity : BaseActivity() {
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        val bundle = intent.extras
         if (bundle != null) {
             val title: String?
             if (bundle.containsKey(AppConstants.TITLE)) {
@@ -87,37 +100,37 @@ class CommonWebActivity : BaseActivity() {
             R.id.action_favorite -> true
             R.id.action_share -> {
                 if (::fragment.isInitialized && fragment.isAdded) {
-                    fragment.shareLink()
+                    CompatibilityLayer.performWebViewAction(fragment, "shareLink")
                 }
                 true
             }
             R.id.action_refresh -> {
                 if (::fragment.isInitialized && fragment.isAdded) {
-                    fragment.refreshWebPage()
+                    CompatibilityLayer.performWebViewAction(fragment, "refresh")
                 }
                 true
             }
             R.id.action_forward -> {
                 if (::fragment.isInitialized && fragment.isAdded) {
-                    fragment.forwardWebPage()
+                    CompatibilityLayer.performWebViewAction(fragment, "goForward")
                 }
                 true
             }
             R.id.action_backward -> {
                 if (::fragment.isInitialized && fragment.isAdded) {
-                    fragment.backwardWebPage()
+                    CompatibilityLayer.performWebViewAction(fragment, "goBack")
                 }
                 true
             }
             R.id.action_open_in_browser -> {
                 if (::fragment.isInitialized && fragment.isAdded) {
-                    fragment.openInAppBrowser()
+                    CompatibilityLayer.performWebViewAction(fragment, "openInAppBrowser")
                 }
                 true
             }
             R.id.action_copy_link -> {
                 if (::fragment.isInitialized && fragment.isAdded) {
-                    fragment.copyLink()
+                    CompatibilityLayer.performWebViewAction(fragment, "copyLink")
                 }
                 true
             }
@@ -149,7 +162,7 @@ class CommonWebActivity : BaseActivity() {
                         supportActionBar?.subtitle = GeneralUtils.getLanguageInfo(applicationContext, wikiLangDao?.getWikiLanguageWithCode(langCode))
                         invalidateOptionsMenu()
                         if (::fragment.isInitialized && fragment.isAdded) {
-                            fragment.loadWordWithOtherLang(langCode)
+                            CompatibilityLayer.performWebViewAction(fragment, "loadWordWithOtherLang", langCode ?: "")
                         }
                     }
                 }
@@ -163,8 +176,8 @@ class CommonWebActivity : BaseActivity() {
     override fun onPrepareOptionsMenu(menu: Menu): Boolean {
         val result = super.onPrepareOptionsMenu(menu)
         if (::fragment.isInitialized && fragment.isAdded) {
-            changeMenuButtonStyle(menu.findItem(R.id.action_forward), fragment.canGoForward())
-            changeMenuButtonStyle(menu.findItem(R.id.action_backward), fragment.canGoBackward())
+            changeMenuButtonStyle(menu.findItem(R.id.action_forward), CompatibilityLayer.canGoForward(fragment))
+            changeMenuButtonStyle(menu.findItem(R.id.action_backward), CompatibilityLayer.canGoBack(fragment))
         }
         setupLanguageSelectorMenuItem(menu)
         return result
@@ -181,7 +194,7 @@ class CommonWebActivity : BaseActivity() {
 
     fun updateList(word: String?) {
         if (::fragment.isInitialized && fragment.isAdded && word != null) {
-            fragment.hideRecordButton(word)
+            CompatibilityLayer.performWebViewAction(fragment, "hideRecordButton", word)
         }
     }
 

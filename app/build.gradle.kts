@@ -46,6 +46,11 @@ android {
     buildFeatures {
         viewBinding = true
         buildConfig = true
+        compose = true
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.5.14"
     }
 
     bundle {
@@ -73,6 +78,11 @@ dependencies {
 
     // UI related libraries - using bundles
     implementation(libs.bundles.androidx.ui)
+
+    // Jetpack Compose - using bundles
+    implementation(platform(libs.compose.bom))
+    implementation(libs.bundles.compose)
+    debugImplementation(libs.bundles.compose.debug)
 
     // Architecture Components - using bundles
     implementation(libs.bundles.androidx.architecture)

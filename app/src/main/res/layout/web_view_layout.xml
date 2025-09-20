@@ -1,84 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/white"
-    tools:context=".ui.webui.CommonWebActivity">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
         <WebView
             android:id="@+id/webView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:clickable="false" />
+            android:layout_height="0dp"
+            android:layout_weight="1" />
 
-        <RelativeLayout
+        <include
+            android:id="@+id/loadingInfo"
+            layout="@layout/loading_info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone" />
+
+        <LinearLayout
             android:id="@+id/layoutWebPageNotFound"
             android:layout_width="match_parent"
-            android:layout_centerInParent="true"
-            android:visibility="invisible"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="gone">
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/margin_large"
                 android:text="@string/web_page_not_found"
-                android:textColor="@color/black"
-                android:textAlignment="center"
-                android:textSize="@dimen/text_large"
-                android:layout_centerHorizontal="true"
-                android:layout_above="@+id/lottiePageNotFound" />
+                android:textSize="18sp" />
 
-            <com.airbnb.lottie.LottieAnimationView
-                android:id="@+id/lottiePageNotFound"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/lottie_icon"
-                app:lottie_rawRes="@raw/web_page_load_error"
-                app:lottie_autoPlay="true"
-                app:lottie_loop="true"
-                app:lottie_enableMergePathsForKitKatAndAbove="true"
-                app:lottie_speed="2"
-                android:layout_centerInParent="true"/>
-
-        </RelativeLayout>
+        </LinearLayout>
 
         <ProgressBar
             android:id="@+id/progressBar"
-            style="?android:attr/progressBarStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true" />
+            android:layout_gravity="center"
+            android:visibility="gone" />
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/txtLoading"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:text="@string/loading"
-            android:textColor="@color/w_blue"
-            android:textSize="@dimen/text_normal"
-            android:layout_below="@+id/progressBar"
-            android:layout_marginTop="@dimen/margin_medium"
-            android:layout_centerInParent="true"/>
+            android:visibility="gone" />
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fabRecord"
-            android:layout_width="@dimen/fab_size"
-            android:layout_height="@dimen/fab_size"
-            android:src="@drawable/ic_record"
-            app:maxImageSize="@dimen/fab_size"
-            app:backgroundTint="@color/transparent"
-            app:tint="@null"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentEnd="true"
-            android:contentDescription="@string/record"
-            android:layout_margin="@dimen/margin_medium" />
+    </LinearLayout>
 
-    </RelativeLayout>
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabRecord"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="16dp"
+        android:src="@drawable/ic_record"
+        android:visibility="gone"
+        app:backgroundTint="@color/colorPrimary"
+        app:tint="@android:color/white" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

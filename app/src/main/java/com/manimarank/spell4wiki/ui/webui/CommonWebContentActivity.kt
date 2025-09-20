@@ -48,7 +48,7 @@ class CommonWebContentActivity : BaseActivity() {
         // Setup edge-to-edge display for WebView content
         setupEdgeToEdgeForWebView(
             rootView = binding.root,
-            webViewContainer = binding.webView
+            webViewContainer = binding.frameLayout
         )
         if (supportActionBar != null) {
             supportActionBar!!.setDisplayHomeAsUpEnabled(true)

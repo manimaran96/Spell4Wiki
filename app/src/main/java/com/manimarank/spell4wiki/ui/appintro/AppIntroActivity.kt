@@ -116,7 +116,8 @@ class AppIntroActivity : BaseActivity() {
         finish()
     }
 
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String?>, grantResults: IntArray) {
+    @Deprecated("Deprecated in Java")
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         when (requestCode) {
             AppConstants.RC_STORAGE_AUDIO_PERMISSION -> {
