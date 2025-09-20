@@ -15,114 +15,180 @@ Spell4Wiki also a multilingual Wiki-Dictionary.
 <a href="https://manimaran96.wordpress.com" alt="Developer badge"><img src="https://img.shields.io/badge/developed%20by-Manimaran-blue.svg" ></a>
 </p>
 
-
 <p align="center">
    <a href="https://f-droid.org/en/packages/com.manimarank.spell4wiki/"><img src="https://raw.githubusercontent.com/manimaran96/Spell4Wiki/master/files/assets/images/badges/fdroid.png" width="200px"></a>
    <a href="https://play.google.com/store/apps/details?id=com.manimarank.spell4wiki"><img src="https://raw.githubusercontent.com/manimaran96/Spell4Wiki/master/files/assets/images/badges/google_play.png" width="200px"></a>
-</p> 
+</p>
 
 ## Features
 
 <p align="center"><img src="https://raw.githubusercontent.com/manimaran96/Spell4Wiki/master/files/assets/images/spell4wiki_banner.png" width="800"/></p>
 
-## Screenshots
+### Core Features
+- 📋 **Spell4Wiki**: Record and upload audio for Wiktionary category-based word lists
+- 📄 **Spell4WordList**: Upload audio for custom word lists from text files or copy-paste
+- 🎤 **Spell4Word**: Record and upload pronunciation for individual words
+- 🔍 **Wiktionary Search**: Search word meanings from Wiktionary in multiple languages
 
+### Technical Features
+- 🌍 **250+ Language Support**: Record audio for words in 250+ languages
+- 🎵 **Audio Processing**: High-quality WAV recording with OGG conversion
+- 🔍 **Smart Filtering**: Check which words already have audio to avoid duplicates
+- ⚡ **Batch Processing**: Handle multiple words efficiently
+- 📤 **Wikimedia Integration**: Direct upload to Wikimedia Commons with proper categorization
 
-   <kbd align="center">
+### Purpose of this app
+There are plenty of words in the Wiktionary. But they do not have enough pronunciation audio files. So we can upload pronunciation audio for words in a simple way. And we can use those pronunciation for wiki data planning and other technologies like machine learning under CC-license. And other linguists can learn how to pronounce a word.
+
+## 📱 Screenshots
+
+<kbd align="center">
 <p align="center">
 <img src="https://raw.githubusercontent.com/manimaran96/Spell4Wiki/master/files/assets/screenshots/spell4wiki_ui.gif" width="300"/></p></kbd>
 
-## What Spell4Wiki App Achieved?
-- Supported 250+ Languages for all 4 features.
-- Uploaded 35,000+ audio files to Wikimedia commons from various language contributors.
-- All audio files are categorized under Wikimedia commons - https://commons.wikimedia.org/wiki/Category:Files_uploaded_by_spell4wiki
+## 🏆 What Spell4Wiki App Achieved?
+- 🌍 **250+ Languages Supported** across all 4 features
+- 🎙️ **40,000+ Audio Files** uploaded to Wikimedia Commons from contributors worldwide
+- 📂 **Organized Contributions** - All audio files categorized under [Wikimedia Commons](https://commons.wikimedia.org/wiki/Category:Files_uploaded_by_spell4wiki)
+- 👥 **Global Community** of language enthusiasts and contributors
+- 🆓 **Free & Open Source** contribution to world's knowledge base
 
-## Contribution
+## 🔗 Useful Links
 
-Whether you have ideas, translations, design changes, bugs, code cleaning, or real heavy code changes, help is always welcome. The more is done the better it gets!
+### Official Resources
+- 📋 **[Commons:Spell4Wiki](https://commons.wikimedia.org/wiki/Commons:Spell4Wiki)** - Official Wikimedia Commons page
+- 📁 **[Files uploaded by Spell4Wiki](https://commons.wikimedia.org/wiki/Category:Files_uploaded_by_spell4wiki)** - Browse all contributions
+- 📝 **[Developer Blog](https://manimaran96.wordpress.com/category/android-apps/spell4wiki/)** - Development updates and insights
+- 📊 **[Privacy Policy](https://github.com/manimaran96/Spell4Wiki/blob/master/docs/PRIVACY_POLICY.md)** - Data handling information
 
-If you'd like to get involved, check our [contribution](https://github.com/manimaran96/Spell4Wiki/blob/master/docs/CONTRIBUTING.md#spell4wiki-contribution-guidelines) notes.
+## 🚀 How to Use
 
-Watch the tutorial videos below and make your contribution.
+1. 📝 **Create Account**: Create account in [Wikimedia Commons](https://commons.wikimedia.org) and login (if no account)
+2. 🌍 **Select Language**: Choose from 250+ supported languages
+3. 🎙️ **Choose Recording Mode**: Spell4Wiki, Spell4WordList, or Spell4Word
+4. 🎵 **Record & Upload**: Record pronunciation and upload to Wikimedia Commons
 
-| Title | Video Link |
-| :------- | :---------: |
-|     Introduction & What is Spell4Wiki App?    | [Play Video](https://youtu.be/IMku3FL7s3I) |
-|     How to use Spell4Wiki App?    | [Play Video](https://youtu.be/Fu4kQcv04kA) |
+### 📺 Tutorial Videos
 
-More videos for other language [check here](https://github.com/manimaran96/Spell4Wiki/blob/master/docs/CONTRIBUTING.md#how-to-use-spell4wiki)
+| Language | Video Link | Creator |
+| :------- | :---------: | :------------- |
+| English | [Introduction](https://youtu.be/IMku3FL7s3I) • [Tutorial](https://youtu.be/Fu4kQcv04kA) | [Ganesh](https://commons.wikimedia.org/wiki/User:Libreaim) |
+| Tamil | [Tutorial](https://youtu.be/4y5I1sUW1ys) | [Manimaran](https://commons.wikimedia.org/wiki/User:Manimaran96) |
 
+More tutorial videos in different languages are available in our [Contributing Guide](https://github.com/manimaran96/Spell4Wiki/blob/master/docs/CONTRIBUTING.md#how-to-use-spell4wiki).
 
-## Donation for Development
- - To support developers, you can do a donation : [Donation details](https://github.com/manimaran96/Spell4Wiki/blob/master/docs/DONATION.md#donation--spell4wiki-app)
- 
-#### By Paypal
+## 🤝 Contributing
+
+We welcome contributions from developers, linguists, translators, and language enthusiasts! Whether you want to add new features, fix bugs, improve documentation, or add support for new languages, your help is valuable.
+
+### Ways to Contribute
+- **Code Contributions**: Bug fixes, new features, performance improvements
+- **Language Support**: Add new languages or improve existing language data
+- **Audio Contributions**: Record pronunciations for words in your native language
+- **Documentation**: Improve guides, tutorials, and documentation
+- **Testing**: Report bugs and test new features
+- **Translations**: Help translate the app interface
+
+### Getting Started with Development
+1. Fork the repository
+2. Clone your fork: `git clone https://github.com/yourusername/Spell4Wiki.git`
+3. Create a feature branch: `git checkout -b feature/your-feature-name`
+4. Make your changes and commit: `git commit -m "Add your feature"`
+5. Push to your fork: `git push origin feature/your-feature-name`
+6. Create a Pull Request
+
+For detailed contribution guidelines, see our [Contributing Guide](https://github.com/manimaran96/Spell4Wiki/blob/master/docs/CONTRIBUTING.md).
+
+## ☕ Ways to Support
+
+Your support helps maintain and improve Spell4Wiki, enabling us to add new features and support more languages.
+
+### Buy us a Coffee
+
+#### Donate via PayPal
+Support development through PayPal for international contributors:
 
 <a href="https://www.paypal.me/manimaranlpt"><img src="https://raw.githubusercontent.com/manimaran96/Spell4Wiki/master/files/assets/images/badges/paypal.png" width="200px"/></a>
 
-https://www.paypal.me/manimaranlpt
+**PayPal Link:** [Dontate via PayPal](https://www.paypal.me/manimaranlpt)
 
-#### By BHIM UPI Payment 
+#### UPI Payment (India)
+For contributors in India, you can support via UPI:
 
-Pay using **`spell4wiki@ybl`** BHIM UPI ID.
+**UPI ID:** `spell4wiki@ybl`
+
+**UPI Link:** [Dontate via UPI](upi://pay?pa=spell4wiki@ybl&pn=Manimaran&tn=&am=)
+
+**UPI QR Code:**
+
+<img src="https://raw.githubusercontent.com/manimaran96/Spell4Wiki/master/files/assets/images/badges/upi_qr_spell4wiki.png" width="200px" alt="UPI QR Code for spell4wiki@ybl"/>
 
 *Share the donation details to `manimarankumar96@gmail.com`
 
-## Credits To
-#### Initiated & Powered By
-* [Kaniyam](http://www.kaniyam.com/) Foundation - [Project idea](https://github.com/KaniyamFoundation/ProjectIdeas/wiki/Project-Ideas)
-* [VGLUG](https://vglug.org/) - Villupuram GNU Linux Users Group
-* [Tamil Wiki Community](https://en.wikipedia.org/wiki/Tamil_Wikipedia)
+For more donation details, visit our [Donation Guide](https://github.com/manimaran96/Spell4Wiki/blob/master/docs/DONATION.md).
 
-#### Inspired By
-* [WikiAudio](https://github.com/Atul22/wikiAudio)
+## 🙏 Acknowledgments
 
-#### Contributors & Supporters for Technical and Wikimedia knowledge
-* [Irmodesgh](https://github.com/lrmodesgh)
-* [Shrinivasan](https://github.com/tshrinivasan)
-* [Khaleel Jageer](https://github.com/jskcse4)
-* [Info farmer](https://www.mediawiki.org/wiki/User:Info-farmer)
-* [Ragulkanth](https://github.com/ragulkanth)
-* [Sivaraam](https://github.com/sivaraam)
+### 🚀 Initiated & Powered By
+- 🏛️ **[Kaniyam Foundation](http://www.kaniyam.com/)** - Original project concept and ongoing support
+- 🐧 **[VGLUG](https://vglug.org/)** - Villupuram GNU Linux Users Group
+- 🌐 **[Tamil Wiki Community](https://en.wikipedia.org/wiki/Tamil_Wikipedia)** - Community support and guidance
 
-More contributors : [look here](https://github.com/manimaran96/Spell4Wiki/graphs/contributors)
+### 💡 Inspired By
+- 🎵 **[WikiAudio](https://github.com/Atul22/wikiAudio)** - Initial inspiration for audio contribution tools
 
-## Useful links
- * [Commons:Spell4Wiki](https://commons.wikimedia.org/wiki/Commons:Spell4Wiki)
- * [Files uploaded by Spell4Wiki](https://commons.wikimedia.org/wiki/Category:Files_uploaded_by_spell4wiki)
- * [Blog about Spell4Wiki](https://manimaran96.wordpress.com/category/android-apps/spell4wiki/)
- 
-## More Screenshots 
+### 👥 Key Contributors
+Special thanks to our contributors who have provided technical expertise, Wikimedia knowledge, and ongoing support:
 
-| Login | Main | Words List | Record & Upload |
+- **[Irmodesgh](https://github.com/lrmodesgh)** - Technical contributions
+- **[Shrinivasan](https://github.com/tshrinivasan)** - Wikimedia expertise
+- **[Khaleel Jageer](https://github.com/jskcse4)** - Development support
+- **[Info farmer](https://www.mediawiki.org/wiki/User:Info-farmer)** - Wikimedia guidance
+- **[Ragulkanth](https://github.com/ragulkanth)** - Technical contributions
+- **[Sivaraam](https://github.com/sivaraam)** - Code review and improvements
+
+View all contributors on our [Contributors Page](https://github.com/manimaran96/Spell4Wiki/graphs/contributors).
+
+### 💬 Community Links
+- **[Telegram Group](https://t.me/spell4wiki)** - Join our community discussions
+- **[GitHub Issues](https://github.com/manimaran96/Spell4Wiki/issues)** - Report bugs and request features
+- **Email**: [manimarankumar96@gmail.com](mailto:manimarankumar96@gmail.com) - Direct contact with the developer
+- **Telegram**: [@manimarank](https://t.me/manimaran_k) - Developer contact
+
+
+
+## 📸 Application Screenshots
+
+| Login | Main Dashboard | Word Lists | Record & Upload |
 |:-:|:-:|:-:|:-:|
-| ![First](fastlane/metadata/android/en-US/images/phoneScreenshots/1.png?raw=true) | ![Sec](fastlane/metadata/android/en-US/images/phoneScreenshots/2.png?raw=true) | ![Third](fastlane/metadata/android/en-US/images/phoneScreenshots/3.png?raw=true) | ![Fourth](fastlane/metadata/android/en-US/images/phoneScreenshots/4.png?raw=true) |
+| ![Login Screen](fastlane/metadata/android/en-US/images/phoneScreenshots/1.png) | ![Main Dashboard](fastlane/metadata/android/en-US/images/phoneScreenshots/2.png) | ![Word Lists](fastlane/metadata/android/en-US/images/phoneScreenshots/3.png) | ![Record & Upload](fastlane/metadata/android/en-US/images/phoneScreenshots/4.png) |
 
-| Settings | License | Word-Details | Wiktionary |
+| Settings | License Info | Word Details | Wiktionary Search |
 |:-:|:-:|:-:|:-:|
-| ![Fifth](fastlane/metadata/android/en-US/images/phoneScreenshots/5.png?raw=true) | ![Sixth](fastlane/metadata/android/en-US/images/phoneScreenshots/6.png?raw=true) | ![Seventh](fastlane/metadata/android/en-US/images/phoneScreenshots/7.png?raw=true) | ![Eighth](fastlane/metadata/android/en-US/images/phoneScreenshots/8.png?raw=true) |
+| ![Settings](fastlane/metadata/android/en-US/images/phoneScreenshots/5.png) | ![License](fastlane/metadata/android/en-US/images/phoneScreenshots/6.png) | ![Word Details](fastlane/metadata/android/en-US/images/phoneScreenshots/7.png) | ![Wiktionary](fastlane/metadata/android/en-US/images/phoneScreenshots/8.png) |
+
+## 📊 Contribution Statistics
+
+<p align="center"><img src="https://raw.githubusercontent.com/manimaran96/Spell4Wiki/master/files/assets/images/spell4wiki_files_uploded_stats.png" width="1200" alt="Spell4Wiki Upload Statistics"/></p>
 
 
-## Stats of Files uploaded by Speell4Wiki to Wikimedia Commons
+## 📄 License
 
-<p align="center"><img src="https://raw.githubusercontent.com/manimaran96/Spell4Wiki/master/files/assets/images/spell4wiki_files_uploded_stats.png" width="1200"/></p>
+<img src="https://raw.githubusercontent.com/manimaran96/Spell4Wiki/master/files/assets/images/badges/gplv3.svg" width="100px" alt="GPL v3 License"/>
 
+Spell4Wiki is Free and Open Source Software (FOSS). You can use, study, share, and improve it freely.
 
-## License
+This project is licensed under the [GNU General Public License v3.0](https://www.gnu.org/licenses/gpl.html). You can redistribute and/or modify it under the terms of the GPL as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
 
-<img src="https://raw.githubusercontent.com/manimaran96/Spell4Wiki/master/files/assets/images/badges/gplv3.svg" width="100px"></img>
+### What this means:
+- ✅ **Freedom to use** the software for any purpose
+- ✅ **Freedom to study** how the program works and change it
+- ✅ **Freedom to redistribute** copies to help others
+- ✅ **Freedom to distribute** copies of your modified versions
 
-Spell4Wiki is Free Software: You can use, study share and improve it at your will. 
-Specifically you can redistribute and/or modify it under the terms of the [GNU General Public License](https://www.gnu.org/licenses/gpl.html) as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
+---
 
-## TODO List
-1. Implement Two factor authentication.
-2. Resolve category update problem(பகுப்பு:தமிழ்-ஒலிக்கோப்புகளில்லை).
-3. Resolve issues.
-4. Dark mode UI
-
-## Communication
-
-* Join Telegram Group - [Spell4Wiki Telegram Group](https://t.me/spell4wiki) 
-* If you want to get in touch with the developer you can send an email to <a href="mailto:manimarankumar96@gmail.com">manimarankumar96@gmail.com</a> or [@manimarank](https://t.me/manimaran_k) in Telegram.
-* Feel free to post suggestions, changes, ideas etc. on GitHub or Telegram!
+<p align="center">
+<strong>Made with ❤️ by the open source community and Wikimedia community</strong><br/>
+<em>Preserving languages, one pronunciation at a time</em>
+</p>
