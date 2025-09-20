@@ -29,6 +29,7 @@ import com.manimarank.spell4wiki.utils.constants.AppConstants
 import com.manimarank.spell4wiki.utils.constants.ListMode.Companion.EnumListMode
 import com.manimarank.spell4wiki.utils.makeGone
 import com.manimarank.spell4wiki.utils.makeVisible
+import com.manimarank.spell4wiki.utils.NetworkUtils.isConnected
 import com.manimarank.spell4wiki.databinding.BottomSheetCategorySelectionBinding
 import retrofit2.Call
 import retrofit2.Callback
@@ -123,6 +124,12 @@ class CategorySelectionFragment(private val mActivity: Activity) : BottomSheetDi
             return
         }
 
+        // Check internet connectivity before making API call
+        if (!isConnected(mActivity)) {
+            showLoader(null, mActivity.getString(R.string.check_internet))
+            return
+        }
+
         //Wiktionary Categories list
         val api = ApiClient.getWiktionaryApi(mActivity, pref.languageCodeSpell4WikiAll ?: AppConstants.DEFAULT_LANGUAGE_CODE).create(ApiInterface::class.java)
         val call = api.fetchCategoryList(
@@ -136,6 +143,9 @@ class CategorySelectionFragment(private val mActivity: Activity) : BottomSheetDi
 
         call.enqueue(object : Callback<WikiCategoryListItemResponse?> {
             override fun onResponse(call: Call<WikiCategoryListItemResponse?>, response: Response<WikiCategoryListItemResponse?>) {
+                // Check if fragment is still attached to prevent crashes
+                if (_binding == null || !isAdded) return
+
                 var resList: List<CategoryItem> = listOf()
                 if (response.isSuccessful && response.body() != null) {
                     resList = response.body()?.query?.allpages ?: listOf()
@@ -145,18 +155,47 @@ class CategorySelectionFragment(private val mActivity: Activity) : BottomSheetDi
                     showLoader(false)
                     adapter?.loadData(resList)
                 } else {
-                    showLoader(null, mActivity.getString(R.string.result_not_found))
+                    showLoader(null, mActivity.getString(R.string.category_search_no_results))
                 }
             }
 
             override fun onFailure(call: Call<WikiCategoryListItemResponse?>, t: Throwable) {
+                // Check if fragment is still attached to prevent crashes
+                if (_binding == null || !isAdded) return
+
                 showLoader(false, t.message ?: "")
                 t.printStackTrace()
 
+                // Handle different types of network failures gracefully
+                val errorMessage = when {
+                    t.message?.contains("timeout", ignoreCase = true) == true -> {
+                        mActivity.getString(R.string.network_timeout_error)
+                    }
+                    t.message?.contains("certificate", ignoreCase = true) == true ||
+                    t.message?.contains("SSL", ignoreCase = true) == true ||
+                    t.message?.contains("Trust anchor", ignoreCase = true) == true -> {
+                        mActivity.getString(R.string.network_error_general)
+                    }
+                    t.message?.contains("Unable to resolve host", ignoreCase = true) == true ||
+                    t.message?.contains("No address associated", ignoreCase = true) == true -> {
+                        mActivity.getString(R.string.network_error_general)
+                    }
+                    !isConnected(mActivity) -> {
+                        mActivity.getString(R.string.check_internet)
+                    }
+                    else -> {
+                        mActivity.getString(R.string.category_search_no_results)
+                    }
+                }
+
+                showLoader(null, errorMessage)
             }
         })
     }
     fun showLoader(show: Boolean?, resInfo: String? = null) {
+        // Check if binding is still available to prevent NPE when fragment is destroyed
+        if (_binding == null) return
+
         binding.recyclerView.makeGone()
         binding.progressBar.makeGone()
         binding.txtCategorySearchInfo.makeGone()
@@ -172,7 +211,7 @@ class CategorySelectionFragment(private val mActivity: Activity) : BottomSheetDi
     }
     private val subTitleInfo: String?
         get() {
-            return "Search Category by known key words"
+            return mActivity.getString(R.string.category_search_hint)
         }
 
     fun show(fragmentManager: FragmentManager) {

@@ -1,31 +1,49 @@
-<b>Wikimedia Commons Audio Upload Tool.</b>
-Spell4Wiki is a mobile application to record and upload ogg audio files for Wiktionary words to Wikimedia commons.
-Spell4Wiki also act as a Wiki-Dictionary(Word meaning from Wiktionary).
+<b>Wikimedia Commons Audio Upload Tool</b>
+
+Spell4Wiki is a mobile application to record and upload audio files for Wiktionary words to Wikimedia Commons. Spell4Wiki also acts as a multilingual Wiki-Dictionary.
 
 <b>App Features:</b>
 <ol>
-<li><i>Spell For Wiktionary</i> - You can record & upload audio for the list of Wiktionary words to Wikimedia commons.</li>
-<li><i>Spell For WordList</i> - You can upload for your own list of words from a text file or copy & paste.</li>
-<li><i>Spell For Word</i> - You can spell and upload for a single word.</li>
-<li><i>Wiktionary Explore</i> - You can search meaning from Wikitionary for any words in any languages.</li>
+<li><i>Spell For Wiktionary</i> - Record & upload audio for Wiktionary category-based word lists</li>
+<li><i>Spell For WordList</i> - Upload audio for custom word lists from text files or copy & paste</li>
+<li><i>Spell For Word</i> - Record and upload pronunciation for individual words</li>
+<li><i>Wiktionary Search</i> - Search word meanings from Wiktionary in multiple languages</li>
 </ol>
 
+<b>What Spell4Wiki App Achieved:</b>
+• Supported 250+ Languages for all 4 features
+• Uploaded 40,000+ audio files to Wikimedia Commons from various language contributors
+• All audio files are categorized under Wikimedia Commons
+
 <b>Purpose of this application</b>
-There are plenty of words in the Wiktionary. But they do not have enough pronunciation audio files. So we can upload pronunciation audio for words in a simple way.
-And we can use those pronunciation for wiki data planning and other technologies like machine learning under CC-license. And other linguists can learn how to pronounce a word.
+There are plenty of words in the Wiktionary. But they do not have enough pronunciation audio files. So we can upload pronunciation audio for words in a simple way. And we can use those pronunciation for wiki data planning and other technologies like machine learning under CC-license. And other linguists can learn how to pronounce a word.
+
+<b>Technical Features:</b>
+• High-quality WAV recording with OGG conversion
+• Smart filtering to check words that already have audio
+• Direct upload to Wikimedia Commons with proper categorization
+• Support for 250+ languages
 
 <b>Powered By</b>
 <ul>
-<li><a href="https://vglug.org/">VGLUG Foundation</a>,</li>
+<li><a href="https://vglug.org/">VGLUG Foundation</a></li>
 <li><a href="http://www.kaniyam.com/">Kaniyam Foundation</a>, Free Software Activists and</li>
 <li><a href="https://en.wikipedia.org/wiki/Tamil_Wikipedia">Tamil Wikimedia Community</a></li>
 </ul>
+
+<b>How to Use</b>
+1. Create account in Wikimedia Commons and login (if no account)
+2. Select your language from 250+ options
+3. Choose recording mode: Spell4Wiki, Spell4WordList, or Spell4Word
+4. Record pronunciation and upload to Wikimedia Commons
+
 <b>Note</b>
-This app load some configuration(available language list, categories & contributors) details from the app's repo.
+This app loads some configuration (available language list, categories & contributors) details from the app's repo.
 
 <b>Useful Links</b>
 <ul>
 <li>Join the Telegram group: <a href="https://t.me/spell4wiki">@spell4wiki</a></li>
-<li>Spell4Wiki Commons Page : <a href="https://commons.wikimedia.org/wiki/Commons:Spell4Wiki">Commons:Spell4Wiki</a></li>
-<li>More details about development : <a href="https://manimaran96.wordpress.com/category/android-apps/spell4wiki/|Spell4Wiki">Blog Post about Spell4Wiki</a></li>
-<li>Tuttorial & Demo Videos : <a href="https://www.youtube.com/playlist?list=PLpASUeEWdwvFJFlOlXicYef4gu9xS2P4C">Play Videos</a></li>
+<li>Spell4Wiki Commons Page: <a href="https://commons.wikimedia.org/wiki/Commons:Spell4Wiki">Commons:Spell4Wiki</a></li>
+<li>More details about development: <a href="https://manimaran96.wordpress.com/category/android-apps/spell4wiki/">Blog Post about Spell4Wiki</a></li>
+<li>Tutorial & Demo Videos: <a href="https://www.youtube.com/playlist?list=PLpASUeEWdwvFJFlOlXicYef4gu9xS2P4C">Play Videos</a></li>
+</ul>

@@ -119,7 +119,8 @@
     <string name="about_vglug">Villupuram GNU/Linux Users Group (Villupuram GLUG) is a non profit organization started in 2013, inspired by Free and open-source software (FOSS).</string>
     <string name="how_to_contribute">How to Contribute?</string>
     <string name="source_code">See Source Code</string>
-    <string name="help_development">Donate for Developers</string>
+    <string name="help_development">Buy Coffee to Developer</string>
+    <string name="support_development">Support Development</string>
     <string name="contributors">Contributors</string>
     <string name="credits">Credits</string>
     <string name="third_party_libraries">Third Party Libraries</string>
@@ -127,6 +128,8 @@
     <string name="privacy_policy">Privacy Policy</string>
     <string name="help_us_translate">Help us Translate</string>
     <string name="join_telegram">Join Telegram Group</string>
+    <string name="join_spell4wiki_support">Join Spell4Wiki Support</string>
+    <string name="filter_cancelled">Filter operation cancelled</string>
     <string name="about_app">@string/app_intro_slide_1_description </string>
     <string name="version">Version</string>
     <string name="license">License</string>
@@ -150,6 +153,8 @@
     <string name="wiktionary_search">Wiktionary search</string>
     <string name="app_settings">App Settings</string>
     <string name="app_language">App Language</string>
+    <string name="wiktionary_cleanup">Wiktionary Simplified</string>
+    <string name="wiktionary_cleanup_description">Expand all sections for easier reading</string>
     <string name="action_add">Add</string>
    <string name="choose_your_preferred_app_language">Choose your preferred language.\nCurrent app language : %s</string>
     <string name="choose_your_preferred_contribution_language">Choose your preferred language.\nCurrent contribution language : %s</string>
@@ -189,6 +194,9 @@
 
     <string name="check_internet">Please check your internet connection!</string>
     <string name="record_fetch_fail">Please check your connection!\nSwipe down/Scroll to try again!</string>
+    <string name="network_error_general">Network error occurred. Please check your internet connection and try again.</string>
+    <string name="network_timeout_error">Network timeout. Please check your connection and try again.</string>
+    <string name="no_internet_connection">No internet connection. Please check your network and try again.</string>
     <string name="something_went_wrong">Something went wrong.</string>
     <string name="something_went_wrong_try_again">Something went wrong. Please try again.</string>
     <string name="web_page_not_found">Page not found.\nTry again.</string>
@@ -217,6 +225,12 @@
     <string name="spell4wiktionary_load_more_confirmation">It seems like it will take more time to find words without audio. Do you really want to continue?</string>
     <string name="spell4wiktionary_load_more_failed_confirmation">@string/something_went_wrong_try_again</string>
     <string name="no_more_data_found">No more data found</string>
+
+    <!-- Category Selection Messages -->
+    <string name="no_categories_available">No categories available</string>
+    <string name="no_categories_message">No word categories are available for this language yet. Tap the + button to search and add categories.</string>
+    <string name="category_search_hint">Search for categories by keywords (e.g., \"words\", \"nouns\", \"verbs\")</string>
+    <string name="category_search_no_results">No categories found for your search. Try different keywords or check your internet connection.</string>
 
     <!-- App Intro Screen -->
     <string name="app_intro_slide_1_title">Welcome</string>

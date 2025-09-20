@@ -28,6 +28,7 @@ import com.manimarank.spell4wiki.ui.spell4wiktionary.WiktionarySearchActivity
 import com.manimarank.spell4wiki.utils.EdgeToEdgeUtils.setupStatusBarHandling
 import com.manimarank.spell4wiki.utils.GeneralUtils.hideKeyboard
 import com.manimarank.spell4wiki.utils.GeneralUtils.openUrl
+import com.manimarank.spell4wiki.utils.GeneralUtils.openUrlInBrowser
 import com.manimarank.spell4wiki.utils.NetworkUtils.isConnected
 import com.manimarank.spell4wiki.utils.SnackBarUtils.showLong
 import com.manimarank.spell4wiki.utils.SnackBarUtils.showNormal
@@ -128,6 +129,13 @@ class MainActivity : BaseActivity(), View.OnClickListener {
         binding.btnAbout.setOnClickListener { startActivity(Intent(applicationContext, AboutActivity::class.java)) }
         binding.btnSettings.setOnClickListener { startActivity(Intent(applicationContext, SettingsActivity::class.java)) }
         binding.btnLogout.setOnClickListener { logoutUser() }
+        binding.btnJoinTelegram.setOnClickListener {
+            if (isConnected(applicationContext)) {
+                openUrlInBrowser(this@MainActivity, Urls.TELEGRAM_CHANNEL)
+            } else {
+                showNormal(binding.btnJoinTelegram, getString(R.string.check_internet))
+            }
+        }
         val urlMyContribution = String.format(Urls.COMMONS_CONTRIBUTION, pref.name)
         binding.txtViewMyContribution.setOnClickListener { if (isConnected(applicationContext)) openUrl(this@MainActivity, urlMyContribution, getString(R.string.view_my_contribution)) else showNormal(binding.txtViewMyContribution, getString(R.string.check_internet)) }
         binding.txtLogin.setOnClickListener { if (isConnected(applicationContext)) pref.logoutUser() else showNormal(binding.searchView, getString(R.string.check_internet)) }

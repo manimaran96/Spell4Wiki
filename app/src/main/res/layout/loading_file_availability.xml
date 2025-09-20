@@ -3,8 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/layoutUploadPopUp"
-    android:layout_width="@dimen/lottie_icon"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    android:minWidth="@dimen/lottie_icon"
     android:layout_centerInParent="true"
     android:background="@drawable/bg_blue"
     android:orientation="vertical"
@@ -57,6 +58,27 @@
         tools:text="0/100"
         android:textColor="@color/white"
         android:textSize="@dimen/text_heading" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnCancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txtProgress"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/space16dp"
+        android:layout_marginBottom="@dimen/space8dp"
+        android:background="@drawable/bg_cancel_button"
+        android:text="@string/cancel"
+        android:textColor="@color/w_blue"
+        android:textStyle="bold"
+        android:textAllCaps="false"
+        android:paddingStart="@dimen/space20dp"
+        android:paddingEnd="@dimen/space20dp"
+        android:paddingTop="@dimen/space10dp"
+        android:paddingBottom="@dimen/space10dp"
+        android:textSize="@dimen/text_normal"
+        android:elevation="4dp"
+        android:stateListAnimator="@null" />
 
 
 </RelativeLayout>

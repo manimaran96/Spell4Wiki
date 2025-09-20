@@ -18,11 +18,7 @@ class ListItemActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_list_info)
 
-        // Setup proper status bar handling (ListItemActivity uses default action bar)
-        setupEdgeToEdgeWithToolbar(
-            rootView = findViewById(android.R.id.content),
-            toolbar = null
-        )
+        // No edge-to-edge setup needed - default action bar handles status bar spacing properly
 
         if (supportActionBar != null) {
             supportActionBar!!.setDisplayHomeAsUpEnabled(true)

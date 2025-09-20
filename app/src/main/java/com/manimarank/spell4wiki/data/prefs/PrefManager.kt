@@ -112,6 +112,13 @@ class PrefManager(private val mContext: Context?) {
             editor.apply()
         }
 
+    var isWiktionaryCleanupEnabled: Boolean
+        get() = pref.getBoolean(WIKTIONARY_CLEANUP_ENABLED, true)
+        set(isEnabled) {
+            editor.putBoolean(WIKTIONARY_CLEANUP_ENABLED, isEnabled)
+            editor.apply()
+        }
+
     fun getWordsCategoryList(langCode: String?): MutableList<String> {
         return (pref.getStringSet(String.format(WORDS_CATEGORY_FOR_LANG, langCode ?: "ta"), null) ?: mutableSetOf()).toMutableList()
     }
@@ -146,6 +153,7 @@ class PrefManager(private val mContext: Context?) {
         private const val SELECTED_WORDS_CATEGORY_FOR_LANG = "selected_words_category_for_%s"
         private const val CSRF_TOKEN = "csrf_token"
         private const val COOKIE = "cookie"
+        private const val WIKTIONARY_CLEANUP_ENABLED = "wiktionary_cleanup_enabled"
     }
 
     init {

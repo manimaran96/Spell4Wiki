@@ -28,6 +28,7 @@ import com.manimarank.spell4wiki.ui.listerners.OnLanguageSelectionListener
 import com.manimarank.spell4wiki.utils.EdgeToEdgeUtils.setupEdgeToEdgeWithToolbar
 import com.manimarank.spell4wiki.utils.GeneralUtils
 import com.manimarank.spell4wiki.utils.NetworkUtils.isConnected
+import com.manimarank.spell4wiki.utils.Print
 import com.manimarank.spell4wiki.utils.constants.AppConstants
 import com.manimarank.spell4wiki.utils.constants.ListMode
 import com.manimarank.spell4wiki.utils.makeGone
@@ -177,17 +178,29 @@ class WiktionarySearchActivity : BaseActivity(), EndlessListener {
                         call: Call<WikiSearchWords?>,
                         response: Response<WikiSearchWords?>
                     ) {
-                        if (response.isSuccessful && response.body() != null) {
-                            processSearchResult(response.body())
-                        } else {
-                            searchFailed(getString(R.string.something_went_wrong))
+                        try {
+                            if (response.isSuccessful && response.body() != null) {
+                                processSearchResult(response.body())
+                            } else {
+                                searchFailed(getString(R.string.something_went_wrong))
+                            }
+                        } catch (e: Exception) {
+                            Print.error("Error processing search response: ${e.message}")
+                            e.printStackTrace()
+                            searchFailed(getString(R.string.something_went_wrong_try_again))
                         }
                     }
 
                     override fun onFailure(call: Call<WikiSearchWords?>, t: Throwable) {
-                        error("Search network failure: ${t.message}")
-                        t.printStackTrace()
-                        searchFailed(getString(R.string.something_went_wrong_try_again))
+                        try {
+                            Print.error("Search network failure: ${t.message}")
+                            t.printStackTrace()
+                            searchFailed(getString(R.string.something_went_wrong_try_again))
+                        } catch (e: Exception) {
+                            Print.error("Error in onFailure handler: ${e.message}")
+                            e.printStackTrace()
+                            searchFailed(getString(R.string.something_went_wrong_try_again))
+                        }
                     }
                 })
             } else {
@@ -238,7 +251,7 @@ class WiktionarySearchActivity : BaseActivity(), EndlessListener {
                 }
             } else {
                 // wikiSearchWords is null
-                error("Search result data is null")
+                Print.error("Search result data is null")
                 searchFailed(getString(R.string.result_not_found))
             }
         }

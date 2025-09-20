@@ -8,21 +8,23 @@ import android.os.Bundle
 import android.text.method.LinkMovementMethod
 import android.view.MenuItem
 import android.view.View
+import android.view.animation.AnimationUtils
 import androidx.core.content.ContextCompat
 import androidx.core.text.HtmlCompat
 import com.manimaran.crash_reporter.utils.AppUtils.getDeviceDetails
 import com.manimarank.spell4wiki.BuildConfig
 import com.manimarank.spell4wiki.R
 import com.manimarank.spell4wiki.data.prefs.PrefManager
+import com.manimarank.spell4wiki.databinding.ActivityAboutBinding
 import com.manimarank.spell4wiki.ui.common.BaseActivity
 import com.manimarank.spell4wiki.utils.EdgeToEdgeUtils.setupEdgeToEdgeWithToolbar
 import com.manimarank.spell4wiki.utils.GeneralUtils.openUrl
 import com.manimarank.spell4wiki.utils.GeneralUtils.openUrlInBrowser
+import com.manimarank.spell4wiki.utils.NetworkUtils.executeWithNetworkCheck
 import com.manimarank.spell4wiki.utils.NetworkUtils.isConnected
 import com.manimarank.spell4wiki.utils.SnackBarUtils.showLong
 import com.manimarank.spell4wiki.utils.constants.AppConstants
 import com.manimarank.spell4wiki.utils.constants.Urls
-import com.manimarank.spell4wiki.databinding.ActivityAboutBinding
 
 class AboutActivity : BaseActivity(), View.OnClickListener {
 
@@ -51,16 +53,27 @@ class AboutActivity : BaseActivity(), View.OnClickListener {
         binding.txtContributors.setOnClickListener(this)
         binding.txtThirdPartyLib.setOnClickListener(this)
         binding.txtCredits.setOnClickListener(this)
-        binding.txtHelpDevelopment.setOnClickListener(this)
+        binding.layoutHelpDevelopment.setOnClickListener(this)
         binding.txtFeedback.setOnClickListener(this)
-        binding.txtTelegram.setOnClickListener(this)
         binding.txtPrivacyPolicy.setOnClickListener(this)
         binding.txtHelpTranslate.setOnClickListener(this)
         binding.layoutKaniyam.setOnClickListener(this)
         binding.layoutVglug.setOnClickListener(this)
         binding.txtAppVersionAndLicense.movementMethod = LinkMovementMethod.getInstance()
-        val appVersionLicense = getString(R.string.version) + " : " + BuildConfig.VERSION_NAME + " & " + getString(R.string.license) + " : <u><font color='" + ContextCompat.getColor(applicationContext, R.color.w_green) + "'>GPLv3</font></u>"
+        val appVersionLicense = getString(R.string.version) + " : " + BuildConfig.VERSION_NAME + " (" + BuildConfig.VERSION_CODE + ") & " + getString(R.string.license) + " : <u><font color='" + ContextCompat.getColor(applicationContext, R.color.w_green) + "'>GPLv3</font></u>"
         binding.txtAppVersionAndLicense.text = HtmlCompat.fromHtml(appVersionLicense, HtmlCompat.FROM_HTML_MODE_LEGACY)
+
+        // Start pulse animation for the heart icon
+        startPulseAnimation()
+    }
+
+    private fun startPulseAnimation() {
+        try {
+            // Start pulse animation immediately - it's infinite so no need for handler
+            binding.imgSupportDev.startAnimation(AnimationUtils.loadAnimation(this, R.anim.pulse))
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 
     override fun onOptionsItemSelected(menuItem: MenuItem): Boolean {
@@ -77,10 +90,16 @@ class AboutActivity : BaseActivity(), View.OnClickListener {
             return
         }
         when (v.id) {
-            R.id.txt_rate_app -> openUrlInBrowser(this, Urls.APP_LINK)
+            R.id.txt_rate_app -> executeWithNetworkCheck(applicationContext, binding.txtRateApp) {
+                openUrlInBrowser(this, Urls.APP_LINK)
+            }
             R.id.txt_share -> shareApp()
-            R.id.txt_how_to_contribute -> openUrl(this, Urls.HOW_TO_CONTRIBUTE, getString(R.string.how_to_contribute))
-            R.id.txt_source_code -> openUrlInBrowser(this, Urls.SOURCE_CODE)
+            R.id.txt_how_to_contribute -> executeWithNetworkCheck(applicationContext, binding.txtHowToContribute) {
+                openUrl(this, Urls.HOW_TO_CONTRIBUTE, getString(R.string.how_to_contribute))
+            }
+            R.id.txt_source_code -> executeWithNetworkCheck(applicationContext, binding.txtSourceCode) {
+                openUrlInBrowser(this, Urls.SOURCE_CODE)
+            }
             R.id.txt_contributors -> startActivity(Intent(applicationContext, ContributorsActivity::class.java))
             R.id.txt_third_party_lib -> {
                 val intentTPL = Intent(applicationContext, ListItemActivity::class.java)
@@ -92,14 +111,26 @@ class AboutActivity : BaseActivity(), View.OnClickListener {
                 intentCredits.putExtra(AppConstants.TITLE, getString(R.string.credits))
                 startActivity(intentCredits)
             }
-            R.id.txt_help_development -> openUrl(this, Urls.HELP_DEVELOPMENT, getString(R.string.help_development))
-            R.id.txtFeedback -> feedback()
-            R.id.txtTelegram -> openUrlInBrowser(this, Urls.TELEGRAM_CHANNEL)
-            R.id.txtPrivacyPolicy -> openUrlInBrowser(this, Urls.PRIVACY_POLICY)
-            R.id.txtHelpTranslate -> openUrlInBrowser(this, Urls.HELP_US_TRANSLATE)
-            R.id.layout_kaniyam -> openUrlInBrowser(this, Urls.KANIYAM)
-            R.id.layout_vglug -> openUrlInBrowser(this, Urls.VGLUG)
-            R.id.txt_app_version_and_license -> openUrlInBrowser(this, Urls.GPL_V3)
+            R.id.layout_help_development -> executeWithNetworkCheck(applicationContext, binding.layoutHelpDevelopment) {
+                // Open donation page in external browser to avoid GitHub collector analytics issues
+                openUrlInBrowser(this, Urls.HELP_DEVELOPMENT)
+            }
+            R.id.txtFeedback -> sendFeedback()
+            R.id.txtPrivacyPolicy -> executeWithNetworkCheck(applicationContext, binding.txtPrivacyPolicy) {
+                openUrlInBrowser(this, Urls.PRIVACY_POLICY)
+            }
+            R.id.txtHelpTranslate -> executeWithNetworkCheck(applicationContext, binding.txtHelpTranslate) {
+                openUrlInBrowser(this, Urls.HELP_US_TRANSLATE)
+            }
+            R.id.layout_kaniyam -> executeWithNetworkCheck(applicationContext, binding.layoutKaniyam) {
+                openUrlInBrowser(this, Urls.KANIYAM)
+            }
+            R.id.layout_vglug -> executeWithNetworkCheck(applicationContext, binding.layoutVglug) {
+                openUrlInBrowser(this, Urls.VGLUG)
+            }
+            R.id.txt_app_version_and_license -> executeWithNetworkCheck(applicationContext, binding.txtAppVersionAndLicense) {
+                openUrlInBrowser(this, Urls.GPL_V3)
+            }
         }
     }
 
@@ -120,11 +151,10 @@ class AboutActivity : BaseActivity(), View.OnClickListener {
     }
 
     @SuppressLint("IntentReset")
-    private fun feedback() {
+    private fun sendFeedback() {
         val emailIntent = Intent(Intent.ACTION_SENDTO)
         emailIntent.type = "message/rfc822"
         emailIntent.data = Uri.parse("mailto:")
-        //emailIntent.setDataAndType(Uri.parse("mailto:"), "message/rfc822");
         emailIntent.putExtra(Intent.EXTRA_EMAIL, arrayOf(AppConstants.CONTACT_MAIL))
         emailIntent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.app_name) + " App - Feedback")
         emailIntent.putExtra(Intent.EXTRA_TEXT, String.format(

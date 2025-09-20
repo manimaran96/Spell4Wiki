@@ -62,6 +62,17 @@
 
         </RelativeLayout>
 
+        <TextView
+            android:id="@+id/txtCategoryInfo"
+            android:layout_width="match_parent"
+            android:gravity="center"
+            android:layout_margin="@dimen/section_spacing"
+            android:layout_height="wrap_content"
+            android:text="@string/no_categories_message"
+            android:textSize="@dimen/text_semi_normal"
+            android:textColor="@color/gray"
+            android:visibility="gone" />
+
     </LinearLayout>
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
