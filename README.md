@@ -169,7 +169,7 @@ View all contributors on our [Contributors Page](https://github.com/manimaran96/
 
 ## 📊 Contribution Statistics
 
-<p align="center"><img src="https://raw.githubusercontent.com/manimaran96/Spell4Wiki/master/files/assets/images/spell4wiki_files_uploded_stats.png" width="1200" alt="Spell4Wiki Upload Statistics"/></p>
+<p align="center"><img src="https://raw.githubusercontent.com/manimaran96/Spell4Wiki/master/files/assets/images/spell4wiki_files_uploaded_stats.png" width="1200" alt="Spell4Wiki Upload Statistics"/></p>
 
 
 ## 📄 License
