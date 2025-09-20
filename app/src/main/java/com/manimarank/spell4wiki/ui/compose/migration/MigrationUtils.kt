@@ -31,6 +31,8 @@ object MigrationUtils {
         // In production, this could be a feature flag or A/B testing
         return pref.isWiktionaryCleanupEnabled // Reusing existing preference as example
     }
+
+
     
     /**
      * Launch appropriate WebView activity based on migration settings
@@ -57,7 +59,23 @@ object MigrationUtils {
         
         context.startActivity(intent)
     }
-    
+
+    /**
+     * Launch Login activity - uses Compose version by default
+     */
+    fun launchLoginActivity(context: Context) {
+        val intent = Intent(context, com.manimarank.spell4wiki.ui.compose.auth.LoginComposeActivity::class.java)
+        context.startActivity(intent)
+    }
+
+    /**
+     * Launch AppIntro activity - uses Compose version by default
+     */
+    fun launchAppIntroActivity(context: Context) {
+        val intent = Intent(context, com.manimarank.spell4wiki.ui.compose.intro.AppIntroComposeActivity::class.java)
+        context.startActivity(intent)
+    }
+
     /**
      * Create appropriate WebView fragment based on migration settings
      */

@@ -12,7 +12,7 @@ import com.manimarank.spell4wiki.data.apis.SyncHelper
 import com.manimarank.spell4wiki.data.prefs.PrefManager
 import com.manimarank.spell4wiki.databinding.ActivitySplashBinding
 import com.manimarank.spell4wiki.ui.common.BaseActivity
-import com.manimarank.spell4wiki.ui.login.LoginActivity
+import com.manimarank.spell4wiki.ui.compose.migration.MigrationUtils
 import com.manimarank.spell4wiki.ui.settings.LanguageSelectionActivity
 import com.manimarank.spell4wiki.utils.NetworkUtils.isConnected
 import com.manimarank.spell4wiki.utils.SnackBarUtils.showNormal
@@ -88,8 +88,13 @@ class SplashActivity : BaseActivity() {
         SyncHelper().syncWikiLanguages()
 
         // If app launch very first time to show the language selection and app intro. Other wise go to login page
-        val mainIntent = Intent(this@SplashActivity, if (pref.isFirstTimeLaunch ) LanguageSelectionActivity::class.java else LoginActivity::class.java)
-        startActivity(mainIntent)
+        if (pref.isFirstTimeLaunch) {
+            val mainIntent = Intent(this@SplashActivity, LanguageSelectionActivity::class.java)
+            startActivity(mainIntent)
+        } else {
+            // Use MigrationUtils to launch appropriate login activity based on feature flag
+            MigrationUtils.launchLoginActivity(this@SplashActivity)
+        }
         finish()
     }
 }

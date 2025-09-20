@@ -5,7 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import com.manimarank.spell4wiki.data.auth.AccountUtils
-import com.manimarank.spell4wiki.ui.login.LoginActivity
+import com.manimarank.spell4wiki.ui.compose.auth.LoginComposeActivity
 import com.manimarank.spell4wiki.utils.WikiLicense
 import com.manimarank.spell4wiki.utils.constants.AppConstants
 
@@ -61,7 +61,7 @@ class PrefManager(private val mContext: Context?) {
             val activity = mContext
             // After logout redirect user to Login Activity
             activity.finishAffinity()
-            activity.startActivity(Intent(mContext, LoginActivity::class.java))
+            activity.startActivity(Intent(mContext, LoginComposeActivity::class.java))
         }
     }
 
@@ -118,6 +118,8 @@ class PrefManager(private val mContext: Context?) {
             editor.putBoolean(WIKTIONARY_CLEANUP_ENABLED, isEnabled)
             editor.apply()
         }
+
+
 
     fun getWordsCategoryList(langCode: String?): MutableList<String> {
         return (pref.getStringSet(String.format(WORDS_CATEGORY_FOR_LANG, langCode ?: "ta"), null) ?: mutableSetOf()).toMutableList()
