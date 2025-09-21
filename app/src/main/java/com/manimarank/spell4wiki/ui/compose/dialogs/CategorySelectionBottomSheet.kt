@@ -25,6 +25,8 @@ import com.manimarank.spell4wiki.utils.NetworkUtils.isConnected
 import com.manimarank.spell4wiki.utils.constants.AppConstants
 import com.manimarank.spell4wiki.utils.constants.ListMode
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.Job
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -39,6 +41,7 @@ fun CategorySelectionBottomSheet(
     listMode: Int,
     preSelectedLanguageCode: String? = null,
     subTitleInfo: String? = null,
+    selectedCategory: String? = null,
     onCategorySelected: (String?) -> Unit,
     onDismiss: () -> Unit,
     modifier: Modifier = Modifier
@@ -46,11 +49,12 @@ fun CategorySelectionBottomSheet(
     val context = LocalContext.current
     val pref = remember { PrefManager(context) }
     val scope = rememberCoroutineScope()
-    
+
     var searchQuery by remember { mutableStateOf("") }
     var categoryList by remember { mutableStateOf<List<CategoryItem>>(emptyList()) }
     var isLoading by remember { mutableStateOf(false) }
     var errorMessage by remember { mutableStateOf<String?>(null) }
+    var searchJob by remember { mutableStateOf<Job?>(null) }
     
     // Function to fetch categories
     fun fetchCategories(searchTerm: String) {
@@ -125,12 +129,20 @@ fun CategorySelectionBottomSheet(
             // Search field
             OutlinedTextField(
                 value = searchQuery,
-                onValueChange = { 
-                    searchQuery = it
-                    if (it.length >= 3) {
-                        scope.launch {
-                            fetchCategories(it)
+                onValueChange = { newQuery ->
+                    searchQuery = newQuery
+
+                    // Cancel previous search job
+                    searchJob?.cancel()
+
+                    if (newQuery.length >= 3) {
+                        searchJob = scope.launch {
+                            delay(400) // Debounce delay
+                            fetchCategories(newQuery)
                         }
+                    } else {
+                        categoryList = emptyList()
+                        errorMessage = null
                     }
                 },
                 label = { Text(stringResource(R.string.search_categories)) },
@@ -190,8 +202,10 @@ fun CategorySelectionBottomSheet(
                             items(categoryList) { category ->
                                 CategoryItem(
                                     category = category,
+                                    isSelected = category.title == selectedCategory,
                                     onClick = {
                                         onCategorySelected(category.title)
+                                        onDismiss()
                                     }
                                 )
                             }
@@ -233,6 +247,7 @@ fun CategorySelectionBottomSheet(
 @Composable
 private fun CategoryItem(
     category: CategoryItem,
+    isSelected: Boolean = false,
     onClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -240,24 +255,42 @@ private fun CategoryItem(
         modifier = modifier
             .fillMaxWidth()
             .selectable(
-                selected = false,
+                selected = isSelected,
                 onClick = onClick
             ),
         colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surface
+            containerColor = if (isSelected)
+                MaterialTheme.colorScheme.primaryContainer
+            else
+                MaterialTheme.colorScheme.surface
         )
     ) {
-        Column(
+        Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(16.dp)
+                .padding(16.dp),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
                 text = category.title ?: "",
                 style = MaterialTheme.typography.bodyLarge,
-                fontWeight = FontWeight.Medium,
-                color = MaterialTheme.colorScheme.onSurface
+                fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Medium,
+                color = if (isSelected)
+                    MaterialTheme.colorScheme.onPrimaryContainer
+                else
+                    MaterialTheme.colorScheme.onSurface,
+                modifier = Modifier.weight(1f)
             )
+
+            if (isSelected) {
+                Text(
+                    text = stringResource(R.string.selected),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.primary,
+                    fontWeight = FontWeight.Bold
+                )
+            }
         }
     }
 }

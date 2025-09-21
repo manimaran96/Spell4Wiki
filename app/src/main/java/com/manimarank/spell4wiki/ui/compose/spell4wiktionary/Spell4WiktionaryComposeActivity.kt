@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
@@ -13,10 +14,12 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material3.*
+import androidx.compose.ui.res.painterResource
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -99,9 +102,10 @@ class Spell4WiktionaryComposeActivity : ComponentActivity() {
             }
         }
         showCategorySelectionBottomSheet(
-            callback, 
-            ListMode.SPELL_4_WIKI_ALL, 
-            pref.languageCodeSpell4WikiAll
+            callback,
+            ListMode.SPELL_4_WIKI_ALL,
+            pref.languageCodeSpell4WikiAll,
+            selectedCategory = viewModel.uiState.value.selectedCategory
         )
     }
 
@@ -243,19 +247,22 @@ fun Spell4WiktionaryTopBar(
     onRefreshClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    TopAppBar(
+    CenterAlignedTopAppBar(
         title = {
-            Column {
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
                 Text(
                     text = stringResource(R.string.spell_4_wiki_all),
                     style = MaterialTheme.typography.titleLarge,
-                    fontWeight = FontWeight.Bold
+                    fontWeight = FontWeight.Bold,
+                    color = MaterialTheme.colorScheme.onPrimary
                 )
                 if (languageInfo.isNotEmpty()) {
                     Text(
                         text = languageInfo,
                         style = MaterialTheme.typography.bodySmall,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                        color = MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.8f)
                     )
                 }
             }
@@ -264,7 +271,8 @@ fun Spell4WiktionaryTopBar(
             IconButton(onClick = onBackClick) {
                 Icon(
                     imageVector = Icons.Default.ArrowBack,
-                    contentDescription = stringResource(R.string.back)
+                    contentDescription = stringResource(R.string.back),
+                    tint = MaterialTheme.colorScheme.onPrimary
                 )
             }
         },
@@ -272,17 +280,19 @@ fun Spell4WiktionaryTopBar(
             IconButton(onClick = onLanguageClick) {
                 Icon(
                     imageVector = Icons.Default.Settings,
-                    contentDescription = stringResource(R.string.select_language)
+                    contentDescription = stringResource(R.string.select_language),
+                    tint = MaterialTheme.colorScheme.onPrimary
                 )
             }
             IconButton(onClick = onRefreshClick) {
                 Icon(
                     imageVector = Icons.Default.Refresh,
-                    contentDescription = stringResource(R.string.refresh)
+                    contentDescription = stringResource(R.string.refresh),
+                    tint = MaterialTheme.colorScheme.onPrimary
                 )
             }
         },
-        colors = TopAppBarDefaults.topAppBarColors(
+        colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
             containerColor = MaterialTheme.colorScheme.primary,
             titleContentColor = MaterialTheme.colorScheme.onPrimary,
             navigationIconContentColor = MaterialTheme.colorScheme.onPrimary,
@@ -432,6 +442,7 @@ fun WordListItem(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
+                .clickable { onWordClick() } // Make the entire row clickable for recording
                 .padding(16.dp),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
@@ -439,17 +450,21 @@ fun WordListItem(
             Text(
                 text = word,
                 style = MaterialTheme.typography.bodyLarge,
-                modifier = Modifier.weight(1f)
+                modifier = Modifier.weight(1f),
+                color = MaterialTheme.colorScheme.onSurface
             )
 
-            Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                OutlinedButton(onClick = onWiktionaryClick) {
-                    Text(stringResource(R.string.wiktionary))
-                }
-
-                Button(onClick = onWordClick) {
-                    Text(stringResource(R.string.record))
-                }
+            // Dictionary icon for Wiktionary
+            IconButton(
+                onClick = onWiktionaryClick,
+                modifier = Modifier.size(40.dp)
+            ) {
+                Icon(
+                    painter = painterResource(id = R.drawable.ic_info),
+                    contentDescription = stringResource(R.string.wiktionary),
+                    tint = MaterialTheme.colorScheme.primary,
+                    modifier = Modifier.size(24.dp)
+                )
             }
         }
     }

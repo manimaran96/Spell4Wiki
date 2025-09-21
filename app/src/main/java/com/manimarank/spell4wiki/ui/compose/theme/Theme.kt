@@ -18,10 +18,10 @@ import androidx.core.view.WindowCompat
 import com.manimarank.spell4wiki.data.prefs.PrefManager
 
 // Define colors based on the existing app theme
-private val md_theme_light_primary = Color(0xFF1976D2)
+private val md_theme_light_primary = Color(0xFF006599) // w_blue from colors.xml
 private val md_theme_light_onPrimary = Color(0xFFFFFFFF)
-private val md_theme_light_primaryContainer = Color(0xFFBBDEFB)
-private val md_theme_light_onPrimaryContainer = Color(0xFF0D47A1)
+private val md_theme_light_primaryContainer = Color(0xFFE3F2FD) // light_blue_background from colors.xml
+private val md_theme_light_onPrimaryContainer = Color(0xFF003D5C)
 private val md_theme_light_secondary = Color(0xFF03DAC6)
 private val md_theme_light_onSecondary = Color(0xFF000000)
 private val md_theme_light_secondaryContainer = Color(0xFFB2DFDB)
@@ -45,9 +45,9 @@ private val md_theme_light_inverseOnSurface = Color(0xFFF4EFF4)
 private val md_theme_light_inverseSurface = Color(0xFF313033)
 private val md_theme_light_inversePrimary = Color(0xFF90CAF9)
 
-private val md_theme_dark_primary = Color(0xFF90CAF9)
-private val md_theme_dark_onPrimary = Color(0xFF0D47A1)
-private val md_theme_dark_primaryContainer = Color(0xFF1565C0)
+private val md_theme_dark_primary = Color(0xFF4FC3F7) // Lighter blue for dark theme
+private val md_theme_dark_onPrimary = Color(0xFF003D5C)
+private val md_theme_dark_primaryContainer = Color(0xFF006599)
 private val md_theme_dark_onPrimaryContainer = Color(0xFFBBDEFB)
 private val md_theme_dark_secondary = Color(0xFF4DB6AC)
 private val md_theme_dark_onSecondary = Color(0xFF004D40)

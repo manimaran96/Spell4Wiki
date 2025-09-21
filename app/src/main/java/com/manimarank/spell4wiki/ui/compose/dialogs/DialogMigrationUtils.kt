@@ -207,7 +207,8 @@ object DialogMigrationUtils {
         callback: OnCategorySelectionListener?,
         listMode: Int,
         preSelectedLanguageCode: String? = null,
-        subTitleInfo: String? = null
+        subTitleInfo: String? = null,
+        selectedCategory: String? = null
     ) {
         if (this is FragmentActivity) {
             showComposeBottomSheet { onDismiss ->
@@ -215,9 +216,9 @@ object DialogMigrationUtils {
                     listMode = listMode,
                     preSelectedLanguageCode = preSelectedLanguageCode,
                     subTitleInfo = subTitleInfo,
+                    selectedCategory = selectedCategory,
                     onCategorySelected = { category ->
                         callback?.onCallBackListener(category)
-                        onDismiss()
                     },
                     onDismiss = onDismiss
                 )
