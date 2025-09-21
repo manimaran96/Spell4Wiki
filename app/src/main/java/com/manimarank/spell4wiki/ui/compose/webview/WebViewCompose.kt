@@ -23,6 +23,7 @@ import androidx.compose.ui.viewinterop.AndroidView
 import com.manimarank.spell4wiki.data.prefs.PrefManager
 import com.manimarank.spell4wiki.utils.NetworkUtils
 import com.manimarank.spell4wiki.utils.Print
+import com.manimarank.spell4wiki.utils.ThemeUtils
 
 /**
  * Composable WebView component that wraps Android WebView with Compose integration
@@ -98,27 +99,8 @@ private fun setupWebView(
         }
         settings.domStorageEnabled = true
 
-        // Set background color based on theme
-        val backgroundColor = if (context.resources.configuration.uiMode and
-            android.content.res.Configuration.UI_MODE_NIGHT_MASK ==
-            android.content.res.Configuration.UI_MODE_NIGHT_YES) {
-            android.graphics.Color.parseColor("#121212") // Dark theme background
-        } else {
-            android.graphics.Color.WHITE // Light theme background
-        }
-        setBackgroundColor(backgroundColor)
-
-        // Apply dark mode to WebView content if supported
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            val isDarkMode = context.resources.configuration.uiMode and
-                android.content.res.Configuration.UI_MODE_NIGHT_MASK ==
-                android.content.res.Configuration.UI_MODE_NIGHT_YES
-            settings.forceDark = if (isDarkMode) {
-                WebSettings.FORCE_DARK_ON
-            } else {
-                WebSettings.FORCE_DARK_OFF
-            }
-        }
+        // Apply theme to WebView using enhanced theme utilities
+        ThemeUtils.applyThemeToWebView(this, context)
     }
 }
 

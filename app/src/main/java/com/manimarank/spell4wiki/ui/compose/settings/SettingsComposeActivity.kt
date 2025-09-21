@@ -33,6 +33,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.manimarank.spell4wiki.R
 import com.manimarank.spell4wiki.data.prefs.PrefManager
 import com.manimarank.spell4wiki.ui.compose.theme.Spell4WikiTheme
+import com.manimarank.spell4wiki.ui.compose.dialogs.ThemeSelectionDialog
 import com.manimarank.spell4wiki.utils.EdgeToEdgeUtils
 
 /**
@@ -141,7 +142,7 @@ fun SettingsScreen(
                     currentTheme = settingsState.currentTheme,
                     isWiktionaryCleanupEnabled = settingsState.isWiktionaryCleanupEnabled,
                     onAppLanguageClick = { viewModel.showAppLanguageDialog(context) },
-                    onThemeClick = { viewModel.showThemeDialog(context) },
+                    onThemeClick = { viewModel.showThemeDialog() },
                     onWiktionaryCleanupToggle = { enabled ->
                         viewModel.updateWiktionaryCleanup(enabled)
                     }
@@ -158,6 +159,19 @@ fun SettingsScreen(
                 }
             }
         }
+    }
+
+    // Show theme selection dialog if needed
+    if (settingsState.showThemeDialog) {
+        ThemeSelectionDialog(
+            currentTheme = settingsState.currentTheme,
+            onThemeSelected = { theme ->
+                viewModel.selectTheme(theme, context)
+            },
+            onDismiss = {
+                viewModel.hideThemeDialog()
+            }
+        )
     }
 }
 

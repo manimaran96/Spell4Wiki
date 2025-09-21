@@ -128,7 +128,7 @@ fun RunFilterSettingsSection(
     var sliderValue by remember { mutableFloatStateOf(currentCount.toFloat()) }
     
     SettingsSection(
-        title = stringResource(R.string.run_filter_settings_count),
+        title = stringResource(R.string.run_filter_settings_count, currentCount),
         modifier = modifier
     ) {
         Column(

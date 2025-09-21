@@ -29,13 +29,13 @@
 
 
     <application
+        android:name=".Spell4WikiApplication"
         android:allowBackup="false"
         android:fullBackupContent="false"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:configChanges="locale"
-        android:name="com.manimarank.spell4wiki.Spell4WikiApp"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
@@ -93,6 +93,20 @@
 
         <!-- Contributors Compose Activity -->
         <activity android:name="com.manimarank.spell4wiki.ui.compose.contributors.ContributorsComposeActivity"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustResize"
+            android:theme="@style/AppTheme.NoActionBar"/>
+
+        <!-- Spell4Word Compose Activity -->
+        <activity android:name="com.manimarank.spell4wiki.ui.compose.spell4word.Spell4WordComposeActivity"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustResize"
+            android:theme="@style/AppTheme.NoActionBar"/>
+
+        <!-- Spell4WordList Compose Activity -->
+        <activity android:name="com.manimarank.spell4wiki.ui.compose.spell4wordlist.Spell4WordListComposeActivity"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize"

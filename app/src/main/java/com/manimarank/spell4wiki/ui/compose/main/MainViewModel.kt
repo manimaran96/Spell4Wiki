@@ -1,15 +1,13 @@
 package com.manimarank.spell4wiki.ui.compose.main
 
-import android.app.AlertDialog
 import android.content.Context
-import android.content.DialogInterface
 import android.content.Intent
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.manimarank.spell4wiki.R
 import com.manimarank.spell4wiki.data.prefs.PrefManager
 import com.manimarank.spell4wiki.ui.compose.search.SearchComposeActivity
-import com.manimarank.spell4wiki.ui.dialogs.styleDialogButtons
+
 import com.manimarank.spell4wiki.utils.GeneralUtils.openUrl
 import com.manimarank.spell4wiki.utils.NetworkUtils.isConnected
 import com.manimarank.spell4wiki.utils.constants.AppConstants
@@ -29,6 +27,9 @@ class MainViewModel : ViewModel() {
 
     private val _errorMessage = MutableStateFlow<String?>(null)
     val errorMessage: StateFlow<String?> = _errorMessage.asStateFlow()
+
+    private val _showLogoutDialog = MutableStateFlow(false)
+    val showLogoutDialog: StateFlow<Boolean> = _showLogoutDialog.asStateFlow()
 
     fun updateSearchQuery(query: String) {
         _searchQuery.value = query
@@ -59,25 +60,22 @@ class MainViewModel : ViewModel() {
         }
     }
 
-    fun showLogoutDialog(context: Context, pref: PrefManager) {
+    fun showLogoutDialog(context: Context) {
         if (isConnected(context)) {
-            val dialog = AlertDialog.Builder(context, R.style.AlertDialogTheme)
-                .setTitle(R.string.logout_confirmation)
-                .setMessage(R.string.logout_message)
-                .setPositiveButton(context.getString(R.string.yes)) { _: DialogInterface?, _: Int ->
-                    // Logout user
-                    logoutApi()
-                    pref.logoutUser()
-                }
-                .setNegativeButton(R.string.no, null)
-                .create()
-            dialog.show()
-
-            // Apply consistent button styling
-            dialog.styleDialogButtons(context)
+            _showLogoutDialog.value = true
         } else {
             _errorMessage.value = context.getString(R.string.check_internet)
         }
+    }
+
+    fun hideLogoutDialog() {
+        _showLogoutDialog.value = false
+    }
+
+    fun confirmLogout(pref: PrefManager) {
+        logoutApi()
+        pref.logoutUser()
+        hideLogoutDialog()
     }
 
     fun openContributionUrl(context: Context, pref: PrefManager) {

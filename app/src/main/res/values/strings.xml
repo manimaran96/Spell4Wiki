@@ -99,6 +99,7 @@
     <string name="next">Next</string>
     <string name="type_word">Type or Paste your words here</string>
     <string name="enter_word">Type word</string>
+    <string name="enter_word_to_record">Enter a word to record its pronunciation</string>
     <string name="hint_select_file">Select .txt file which contains list of words to contribute.</string>
     <string name="hint_select_file_next">Make sure that you have one word per line.</string>
     <string name="direct_content">Direct content</string>
@@ -109,6 +110,8 @@
     <string name="confirm_to_back">Do you want to go back?</string>
     <string name="select_language">Select Language</string>
     <string name="selected_language">Selected Language</string>
+    <string name="back">Back</string>
+    <string name="info">Info</string>
     <string name="rate_app">Rate the App</string>
     <string name="share_app">Share the App</string>
     <string name="share">Share</string>

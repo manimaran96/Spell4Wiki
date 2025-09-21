@@ -13,7 +13,7 @@ import com.manimarank.spell4wiki.utils.constants.ListMode
 import com.manimarank.spell4wiki.ui.dialogs.AppLanguageDialog
 import com.manimarank.spell4wiki.utils.WikiLicense
 import com.manimarank.spell4wiki.utils.extensions.showLicenseChooseDialog
-import android.app.AlertDialog
+import com.manimarank.spell4wiki.utils.ThemeUtils
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -96,42 +96,29 @@ class SettingsViewModel(private val context: Context) : ViewModel() {
     /**
      * Show theme selection dialog
      */
-    fun showThemeDialog(context: Context) {
-        if (context is androidx.activity.ComponentActivity) {
-            val themes = arrayOf(
-                context.getString(R.string.theme_light),
-                context.getString(R.string.theme_dark),
-                context.getString(R.string.theme_system_default)
-            )
+    fun showThemeDialog() {
+        _settingsState.value = _settingsState.value.copy(showThemeDialog = true)
+    }
 
-            val currentSelection = when (pref.themeMode) {
-                PrefManager.ThemeMode.LIGHT -> 0
-                PrefManager.ThemeMode.DARK -> 1
-                PrefManager.ThemeMode.SYSTEM -> 2
-                else -> 2
-            }
+    /**
+     * Hide theme selection dialog
+     */
+    fun hideThemeDialog() {
+        _settingsState.value = _settingsState.value.copy(showThemeDialog = false)
+    }
 
-            AlertDialog.Builder(context)
-                .setTitle(context.getString(R.string.choose_theme))
-                .setSingleChoiceItems(themes, currentSelection) { dialog, which ->
-                    val selectedTheme = when (which) {
-                        0 -> PrefManager.ThemeMode.LIGHT
-                        1 -> PrefManager.ThemeMode.DARK
-                        2 -> PrefManager.ThemeMode.SYSTEM
-                        else -> PrefManager.ThemeMode.SYSTEM
-                    }
+    /**
+     * Handle theme selection with enhanced global application
+     */
+    fun selectTheme(themeMode: String, context: Context) {
+        val oldTheme = pref.themeMode
 
-                    pref.themeMode = selectedTheme
-                    loadSettings() // Refresh settings after theme change
+        // Apply theme globally using enhanced utilities
+        ThemeUtils.changeTheme(context, themeMode, recreateActivity = true)
 
-                    // Recreate activity to apply theme change
-                    context.recreate()
-
-                    dialog.dismiss()
-                }
-                .setNegativeButton(context.getString(R.string.cancel), null)
-                .show()
-        }
+        // Refresh settings after theme change
+        loadSettings()
+        hideThemeDialog()
     }
     
     /**
@@ -220,5 +207,6 @@ data class SettingsState(
     val appLanguage: String = "",
     val currentTheme: String = "",
     val isWiktionaryCleanupEnabled: Boolean = true,
-    val runFilterCount: Int = 25
+    val runFilterCount: Int = 25,
+    val showThemeDialog: Boolean = false
 )

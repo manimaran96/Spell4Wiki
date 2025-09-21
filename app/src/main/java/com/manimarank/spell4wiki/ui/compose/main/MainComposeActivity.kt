@@ -39,6 +39,7 @@ import com.manimarank.spell4wiki.data.prefs.AppPref.INSTANCE.checkAppUpdateAvail
 import com.manimarank.spell4wiki.data.prefs.PrefManager
 import com.manimarank.spell4wiki.ui.about.AboutActivity
 import com.manimarank.spell4wiki.ui.compose.theme.Spell4WikiTheme
+import com.manimarank.spell4wiki.ui.compose.dialogs.LogoutDialog
 import com.manimarank.spell4wiki.ui.dialogs.AppLanguageDialog
 import com.manimarank.spell4wiki.ui.dialogs.RateAppDialog
 import com.manimarank.spell4wiki.ui.dialogs.UpdateAppDialog
@@ -117,7 +118,7 @@ class MainComposeActivity : ComponentActivity() {
                         startActivity(Intent(this@MainComposeActivity, com.manimarank.spell4wiki.ui.compose.settings.SettingsComposeActivity::class.java))
                     },
                     onLogout = {
-                        viewModel.showLogoutDialog(this@MainComposeActivity, pref)
+                        viewModel.showLogoutDialog(this@MainComposeActivity)
                     },
                     onJoinTelegram = {
                         if (isConnected(applicationContext)) {
@@ -276,6 +277,19 @@ fun MainScreen(
                 modifier = Modifier.padding(top = 16.dp)
             )
         }
+    }
+
+    // Show logout dialog if needed
+    val showLogoutDialog by viewModel.showLogoutDialog.collectAsState()
+    if (showLogoutDialog) {
+        LogoutDialog(
+            onConfirm = {
+                viewModel.confirmLogout(pref)
+            },
+            onCancel = {
+                viewModel.hideLogoutDialog()
+            }
+        )
     }
 }
 
