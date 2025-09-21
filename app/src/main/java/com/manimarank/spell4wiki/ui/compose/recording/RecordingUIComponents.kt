@@ -221,7 +221,7 @@ private fun RecordingButton(
             imageVector = Icons.Default.Add,
             contentDescription = stringResource(R.string.record),
             modifier = Modifier.size(48.dp),
-            tint = Color.White
+            tint = MaterialTheme.colorScheme.onPrimary
         )
     }
 }

@@ -1,104 +1,85 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/layout_bottom_sheet"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="?attr/colorSurface"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
-    app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
+    android:padding="16dp">
 
-    <RelativeLayout
-        android:id="@+id/layout_title"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/app_bar_height"
-        android:paddingStart="@dimen/space16dp"
-        android:paddingEnd="@dimen/space12dp">
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_centerVertical="true"
-            android:layout_marginTop="@dimen/space4dp"
-            android:layout_marginBottom="@dimen/space4dp"
-            android:layout_toStartOf="@+id/btn_close"
-            android:orientation="vertical"
-            android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/textSelectCategoryTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/select_category"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="?android:attr/textColorPrimary"
+            android:gravity="center"
+            android:padding="16dp" />
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/text_select_category"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/select_category"
-                android:textColor="@color/black"
-                android:textSize="@dimen/text_heading" />
+        <ImageButton
+            android:id="@+id/btnClose"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_close"
+            android:contentDescription="@string/close" />
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/text_select_category_sub_title"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:visibility="gone"
-                android:textColor="@color/gray"
-                android:textSize="@dimen/text_small" />
+    </LinearLayout>
 
-
-        </LinearLayout>
-
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/btn_close"
-            android:layout_width="@dimen/lang_close"
-            android:layout_height="@dimen/lang_close"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:contentDescription="@string/cancel"
-            android:tint="@color/black"
-            app:srcCompat="@drawable/ic_close" />
-
-    </RelativeLayout>
-
-    <View
+    <TextView
+        android:id="@+id/textSelectCategorySubTitle"
         android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/gray_border" />
+        android:layout_height="wrap_content"
+        android:textSize="14sp"
+        android:textColor="?android:attr/textColorSecondary"
+        android:gravity="center"
+        android:visibility="gone" />
 
     <androidx.appcompat.widget.SearchView
-        android:id="@+id/search_view"
+        android:id="@+id/searchView"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/search_view_height"
-        android:layout_margin="@dimen/space10dp"
-        android:inputType="textCapSentences"
-        android:background="@drawable/bg_line_border"
-        android:queryHint="@string/search"
-        app:iconifiedByDefault="false" />
-
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/txtCategorySearchInfo"
-        android:layout_width="match_parent"
-        android:padding="@dimen/space12dp"
-        android:visibility="gone"
-        android:gravity="center"
-        android:layout_height="wrap_content"/>
-
-    <ProgressBar
-        android:id="@+id/progressBar"
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:visibility="gone"
-        tools:visibility="visible"
-        android:layout_gravity="center_horizontal"
-        android:padding="@dimen/space20dp" />
+        android:layout_margin="8dp"
+        android:queryHint="@string/search_categories" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        android:divider="@null"
-        android:dividerHeight="0dp" />
+        android:layout_height="300dp"
+        android:layout_margin="8dp" />
 
-    <View
+    <LinearLayout
+        android:id="@+id/loadingInfo"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:gravity="center"
+        android:visibility="gone">
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:indeterminate="true" />
+
+        <TextView
+            android:id="@+id/txtCategorySearchInfo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/loading"
+            android:textSize="14sp"
+            android:textColor="?android:attr/textColorSecondary"
+            android:gravity="center" />
+
+    </LinearLayout>
 
 </LinearLayout>

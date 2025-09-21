@@ -1,9 +1,9 @@
 package com.manimarank.spell4wiki.ui.compose.settings
 
 import android.os.Bundle
-import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
+import androidx.fragment.app.FragmentActivity
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -40,7 +40,7 @@ import com.manimarank.spell4wiki.utils.EdgeToEdgeUtils
  * Compose version of SettingsActivity
  * Provides a modern settings implementation using Jetpack Compose
  */
-class SettingsComposeActivity : ComponentActivity() {
+class SettingsComposeActivity : FragmentActivity() {
     
     private lateinit var pref: PrefManager
     
@@ -89,7 +89,7 @@ fun SettingsScreen(
                 title = {
                     Text(
                         text = stringResource(R.string.settings),
-                        color = Color.White
+                        color = MaterialTheme.colorScheme.onPrimary
                     )
                 },
                 navigationIcon = {
@@ -97,7 +97,7 @@ fun SettingsScreen(
                         Icon(
                             imageVector = Icons.Filled.ArrowBack,
                             contentDescription = "Back",
-                            tint = Color.White
+                            tint = MaterialTheme.colorScheme.onPrimary
                         )
                     }
                 },

@@ -324,7 +324,7 @@ fun SelectModeContent(
                 text = stringResource(R.string.select_file),
                 style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.Bold,
-                color = Color.White
+                color = MaterialTheme.colorScheme.onPrimary
             )
         }
         
@@ -392,7 +392,7 @@ fun EditModeContent(
             ) {
                 Text(
                     text = stringResource(R.string.next),
-                    color = Color.White
+                    color = MaterialTheme.colorScheme.onPrimary
                 )
             }
         }
@@ -531,7 +531,7 @@ fun EmptyStateContent(
         ) {
             Text(
                 text = stringResource(R.string.back),
-                color = Color.White
+                color = MaterialTheme.colorScheme.onPrimary
             )
         }
     }

@@ -4,12 +4,14 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -68,9 +70,14 @@ fun SearchScreen(
     // Initialize with the search query from intent
     LaunchedEffect(initialQuery) {
         if (initialQuery.isNotEmpty()) {
+            viewModel.setContext(context)
             viewModel.updateSearchQuery(initialQuery)
-            viewModel.performSearch(initialQuery, context)
         }
+    }
+
+    // Set context for real-time search
+    LaunchedEffect(Unit) {
+        viewModel.setContext(context)
     }
 
     // Show error message if any
@@ -217,7 +224,8 @@ fun SearchResultsSection(
                     items(results) { result ->
                         SearchResultItem(
                             result = result,
-                            onClick = { onResultClick(result) }
+                            onClick = { onResultClick(result) },
+                            onWiktionaryClick = { onResultClick(result) }
                         )
                     }
                     
@@ -247,10 +255,10 @@ fun SearchResultsSection(
 fun SearchResultItem(
     result: SearchResult,
     onClick: () -> Unit,
+    onWiktionaryClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Card(
-        onClick = onClick,
         modifier = modifier.fillMaxWidth(),
         shape = RoundedCornerShape(8.dp),
         colors = CardDefaults.cardColors(
@@ -258,24 +266,42 @@ fun SearchResultItem(
         ),
         elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
     ) {
-        Column(
+        Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(16.dp)
+                .padding(16.dp),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
         ) {
-            Text(
-                text = result.title,
-                fontSize = 16.sp,
-                fontWeight = FontWeight.Medium,
-                color = MaterialTheme.colorScheme.onSurface
-            )
-            
-            if (result.description.isNotEmpty()) {
-                Spacer(modifier = Modifier.height(4.dp))
+            Column(
+                modifier = Modifier
+                    .weight(1f)
+                    .clickable { onClick() }
+            ) {
                 Text(
-                    text = result.description,
-                    fontSize = 14.sp,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                    text = result.title,
+                    fontSize = 16.sp,
+                    fontWeight = FontWeight.Medium,
+                    color = MaterialTheme.colorScheme.onSurface
+                )
+
+                if (result.description.isNotEmpty()) {
+                    Spacer(modifier = Modifier.height(4.dp))
+                    Text(
+                        text = result.description,
+                        fontSize = 14.sp,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                }
+            }
+
+            IconButton(
+                onClick = onWiktionaryClick
+            ) {
+                Icon(
+                    imageVector = Icons.Default.Info,
+                    contentDescription = stringResource(R.string.wiktionary),
+                    tint = MaterialTheme.colorScheme.primary
                 )
             }
         }

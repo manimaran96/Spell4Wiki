@@ -109,7 +109,12 @@
     <string name="confirmation">Confirmation</string>
     <string name="confirm_to_back">Do you want to go back?</string>
     <string name="select_language">Select Language</string>
+    <string name="search_languages">Search languages</string>
     <string name="selected_language">Selected Language</string>
+    <string name="contributor_avatar">Contributor avatar</string>
+    <string name="open_profile">Open profile</string>
+    <string name="select_input_method">Select Input Method</string>
+    <string name="enter_words_to_record">Enter words to record</string>
     <string name="back">Back</string>
     <string name="info">Info</string>
     <string name="rate_app">Rate the App</string>
@@ -307,5 +312,13 @@
     <string name="words_category">Words Category</string>
     <string name="no_words_found">No words found</string>
     <string name="filter_progress_message">Filtering words, please wait…</string>
+
+    <!-- Common UI Component Strings -->
+    <string name="error_occurred">An error occurred</string>
+    <string name="retry">Retry</string>
+    <string name="no_data_available">No data available</string>
+    <string name="add_my_language">Add My Language</string>
+    <string name="language_search_info">Can\'t find your language? Contact us to add it.</string>
+    <string name="page_not_found">Page not found</string>
 
 </resources>

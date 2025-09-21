@@ -157,7 +157,7 @@ fun CommonWebContentScreen(
                 title = {
                     Text(
                         text = title,
-                        color = Color.White
+                        color = MaterialTheme.colorScheme.onPrimary
                     )
                 },
                 navigationIcon = {
@@ -165,7 +165,7 @@ fun CommonWebContentScreen(
                         Icon(
                             imageVector = Icons.Filled.ArrowBack,
                             contentDescription = "Back",
-                            tint = Color.White
+                            tint = MaterialTheme.colorScheme.onPrimary
                         )
                     }
                 },

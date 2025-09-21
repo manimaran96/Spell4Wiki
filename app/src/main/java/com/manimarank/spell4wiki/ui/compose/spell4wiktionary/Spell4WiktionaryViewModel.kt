@@ -106,9 +106,10 @@ class Spell4WiktionaryViewModel : ViewModel() {
 
         _isLoading.value = true
 
-        if (NetworkUtils.isConnected(context!!)) {
-            val api = getWiktionaryApi(context!!, languageCode ?: AppConstants.DEFAULT_LANGUAGE_CODE)
-                .create(ApiInterface::class.java)
+        context?.let { ctx ->
+            if (NetworkUtils.isConnected(ctx)) {
+                val api = getWiktionaryApi(ctx, languageCode ?: AppConstants.DEFAULT_LANGUAGE_CODE)
+                    .create(ApiInterface::class.java)
 
             val call = api.fetchUnAudioRecords(
                 wiktionaryTitleOfWordsWithoutAudio ?: "null",
@@ -127,7 +128,9 @@ class Spell4WiktionaryViewModel : ViewModel() {
                     _isRefreshing.value = false
 
                     if (response.isSuccessful && response.body() != null) {
-                        processWordsResponse(response.body()!!)
+                        response.body()?.let { body ->
+                            processWordsResponse(body)
+                        }
                     } else {
                         // Handle error
                         updateErrorState("Failed to load words")
@@ -140,9 +143,10 @@ class Spell4WiktionaryViewModel : ViewModel() {
                     updateErrorState("Network error: ${t.message}")
                 }
             })
-        } else {
-            _isLoading.value = false
-            updateErrorState("No internet connection")
+            } else {
+                _isLoading.value = false
+                updateErrorState("No internet connection")
+            }
         }
     }
 
@@ -266,6 +270,9 @@ class Spell4WiktionaryViewModel : ViewModel() {
     private fun updateLanguageInfo() {
         val wikiLang = wikiLangDao?.getWikiLanguageWithCode(languageCode)
         val languageInfo = if (wikiLang != null) {
+            // Initialize the wiktionary title for words without audio
+            wiktionaryTitleOfWordsWithoutAudio = wikiLang.titleOfWordsWithoutAudio
+
             context?.let { ctx ->
                 GeneralUtils.getLanguageInfo(ctx, wikiLang, R.string.language)
             } ?: ""

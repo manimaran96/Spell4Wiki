@@ -1,84 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/layoutUploadPopUp"
-    android:layout_width="wrap_content"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:minWidth="@dimen/lottie_icon"
-    android:layout_centerInParent="true"
-    android:background="@drawable/bg_blue"
     android:orientation="vertical"
-    android:padding="@dimen/space20dp">
+    android:padding="16dp"
+    android:gravity="center">
 
-    <com.airbnb.lottie.LottieAnimationView
-        android:id="@+id/lottieUpload"
-        android:layout_width="@dimen/app_intro_icon"
-        android:layout_height="@dimen/logo_large"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/space20dp"
-        android:layout_marginBottom="@dimen/space4dp"
-        app:lottie_enableMergePathsForKitKatAndAbove="true"
-        android:tint="@color/white"
-        app:lottie_autoPlay="true"
-        app:lottie_loop="true"
-        app:lottie_rawRes="@raw/check_file_availability"
-        app:lottie_speed="2.5" />
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:indeterminate="true" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/txtFileName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/lottieUpload"
-        android:layout_centerHorizontal="true"
-        android:layout_gravity="center"
-        android:layout_marginTop="@dimen/space4dp"
-        android:layout_marginBottom="@dimen/space4dp"
-        android:ellipsize="middle"
-        android:gravity="center"
-        android:maxLines="4"
         android:text="@string/checking_file_availability"
-        android:textColor="@color/white"
-        android:textSize="@dimen/text_semi_normal" />
+        android:textSize="14sp"
+        android:textColor="?android:attr/textColorSecondary"
+        android:gravity="center" />
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/txtProgress"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/txtFileName"
-        android:layout_centerHorizontal="true"
-        android:layout_gravity="center"
-        android:visibility="gone"
-        tools:visibility="visible"
-        android:layout_marginTop="@dimen/space4dp"
-        android:layout_marginBottom="@dimen/space4dp"
-        android:ellipsize="middle"
-        android:gravity="center"
-        android:maxLines="4"
-        tools:text="0/100"
-        android:textColor="@color/white"
-        android:textSize="@dimen/text_heading" />
-
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btnCancel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/txtProgress"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/space16dp"
-        android:layout_marginBottom="@dimen/space8dp"
-        android:background="@drawable/bg_cancel_button"
-        android:text="@string/cancel"
-        android:textColor="@color/w_blue"
-        android:textStyle="bold"
-        android:textAllCaps="false"
-        android:paddingStart="@dimen/space20dp"
-        android:paddingEnd="@dimen/space20dp"
-        android:paddingTop="@dimen/space10dp"
-        android:paddingBottom="@dimen/space10dp"
-        android:textSize="@dimen/text_normal"
-        android:elevation="4dp"
-        android:stateListAnimator="@null" />
-
-
-</RelativeLayout>
+</LinearLayout>

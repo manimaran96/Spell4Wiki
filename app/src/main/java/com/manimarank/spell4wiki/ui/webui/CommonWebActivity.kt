@@ -19,7 +19,7 @@ import com.manimarank.spell4wiki.ui.common.BaseActivity
 import com.manimarank.spell4wiki.ui.compose.migration.CompatibilityLayer
 import com.manimarank.spell4wiki.ui.compose.migration.MigrationUtils
 import com.manimarank.spell4wiki.ui.compose.webview.WebViewComposeFragment
-import com.manimarank.spell4wiki.ui.languageselector.LanguageSelectionFragment
+import com.manimarank.spell4wiki.ui.compose.dialogs.DialogMigrationUtils.showLanguageSelectionBottomSheet
 import com.manimarank.spell4wiki.ui.listerners.OnLanguageSelectionListener
 import com.manimarank.spell4wiki.utils.EdgeToEdgeUtils.setupEdgeToEdgeForWebView
 import com.manimarank.spell4wiki.utils.GeneralUtils
@@ -167,9 +167,7 @@ class CommonWebActivity : BaseActivity() {
                     }
                 }
             }
-            val languageSelectionFragment = LanguageSelectionFragment(this)
-            languageSelectionFragment.init(callback, ListMode.TEMP, languageCode)
-            languageSelectionFragment.show(supportFragmentManager)
+            showLanguageSelectionBottomSheet(callback, ListMode.TEMP, languageCode)
         }
     }
 

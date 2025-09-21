@@ -37,16 +37,11 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.manimarank.spell4wiki.R
 import com.manimarank.spell4wiki.data.prefs.AppPref.INSTANCE.checkAppUpdateAvailable
 import com.manimarank.spell4wiki.data.prefs.PrefManager
-import com.manimarank.spell4wiki.ui.about.AboutActivity
 import com.manimarank.spell4wiki.ui.compose.theme.Spell4WikiTheme
 import com.manimarank.spell4wiki.ui.compose.dialogs.LogoutDialog
 import com.manimarank.spell4wiki.ui.dialogs.AppLanguageDialog
 import com.manimarank.spell4wiki.ui.dialogs.RateAppDialog
 import com.manimarank.spell4wiki.ui.dialogs.UpdateAppDialog
-import com.manimarank.spell4wiki.ui.settings.SettingsActivity
-import com.manimarank.spell4wiki.ui.spell4wiktionary.Spell4Wiktionary
-import com.manimarank.spell4wiki.ui.spell4wiktionary.Spell4WordActivity
-import com.manimarank.spell4wiki.ui.spell4wiktionary.Spell4WordListActivity
 import com.manimarank.spell4wiki.utils.GeneralUtils.hideKeyboard
 import com.manimarank.spell4wiki.utils.GeneralUtils.openUrlInBrowser
 import com.manimarank.spell4wiki.utils.NetworkUtils.isConnected
@@ -92,21 +87,21 @@ class MainComposeActivity : ComponentActivity() {
                     },
                     onNavigateToSpell4Wiki = {
                         if (checkNetworkAndLogin()) {
-                            startActivity(Intent(this@MainComposeActivity, Spell4Wiktionary::class.java).apply {
+                            startActivity(Intent(this@MainComposeActivity, com.manimarank.spell4wiki.ui.compose.spell4wiktionary.Spell4WiktionaryComposeActivity::class.java).apply {
                                 flags = Intent.FLAG_ACTIVITY_SINGLE_TOP
                             })
                         }
                     },
                     onNavigateToSpell4WordList = {
                         if (checkNetworkAndLogin()) {
-                            startActivity(Intent(this@MainComposeActivity, Spell4WordListActivity::class.java).apply {
+                            startActivity(Intent(this@MainComposeActivity, com.manimarank.spell4wiki.ui.compose.spell4wordlist.Spell4WordListComposeActivity::class.java).apply {
                                 flags = Intent.FLAG_ACTIVITY_SINGLE_TOP
                             })
                         }
                     },
                     onNavigateToSpell4Word = {
                         if (checkNetworkAndLogin()) {
-                            startActivity(Intent(this@MainComposeActivity, Spell4WordActivity::class.java).apply {
+                            startActivity(Intent(this@MainComposeActivity, com.manimarank.spell4wiki.ui.compose.spell4word.Spell4WordComposeActivity::class.java).apply {
                                 flags = Intent.FLAG_ACTIVITY_SINGLE_TOP
                             })
                         }

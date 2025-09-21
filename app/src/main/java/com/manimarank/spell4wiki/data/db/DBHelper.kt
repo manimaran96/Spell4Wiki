@@ -17,7 +17,7 @@ class DBHelper private constructor(mCtx: Context) {
             if (mInstance == null) {
                 mInstance = DBHelper(mCtx)
             }
-            return mInstance!!
+            return mInstance ?: throw IllegalStateException("DBHelper instance is null")
         }
     }
 }

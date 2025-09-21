@@ -1,48 +1,27 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/layoutItem"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:gravity="center"
-    android:orientation="vertical">
+    android:orientation="horizontal"
+    android:padding="16dp"
+    android:background="?android:attr/selectableItemBackground">
 
-    <androidx.appcompat.widget.AppCompatRadioButton
+    <TextView
+        android:id="@+id/txtLocalName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:textSize="16sp"
+        android:textColor="?android:attr/textColorPrimary"
+        android:gravity="start|center_vertical" />
+
+    <RadioButton
         android:id="@+id/radioSelect"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_marginTop="@dimen/space4dp"
-        android:layout_marginRight="@dimen/space8dp"
-        android:layout_marginLeft="@dimen/space8dp"
-        android:layout_marginBottom="@dimen/space4dp"
-        android:clickable="false" />
+        android:layout_gravity="center_vertical"
+        android:clickable="false"
+        android:focusable="false" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:layout_toEndOf="@+id/radioSelect"
-        android:orientation="vertical">
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/txtLanguage"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/space10dp"
-            android:layout_marginBottom="@dimen/space2dp"
-            android:ellipsize="end"
-            android:maxLines="1"
-            android:textSize="@dimen/text_normal" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/txtLocalName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/space10dp"
-            android:ellipsize="end"
-            android:maxLines="1"
-            android:textSize="@dimen/text_small" />
-
-    </LinearLayout>
-
-
-</RelativeLayout>
+</LinearLayout>

@@ -26,10 +26,15 @@ object MigrationUtils {
      * Check if Compose WebView should be used based on user preference or feature flag
      */
     fun shouldUseComposeWebView(context: Context): Boolean {
-        val pref = PrefManager(context)
-        // For now, we'll use a simple preference check
-        // In production, this could be a feature flag or A/B testing
-        return pref.isWiktionaryCleanupEnabled // Reusing existing preference as example
+        // Always use Compose version now that migration is complete
+        return true
+    }
+
+    /**
+     * Check if Compose activities should be used (always true after migration completion)
+     */
+    fun shouldUseComposeActivities(context: Context): Boolean {
+        return true
     }
 
 
@@ -79,23 +84,76 @@ object MigrationUtils {
     }
 
     /**
-     * Launch AppIntro activity - uses traditional MainActivity for now
+     * Launch AppIntro activity - uses Compose version by default
      */
     fun launchAppIntroActivity(context: Context) {
-        val intent = Intent(context, com.manimarank.spell4wiki.ui.main.MainActivity::class.java)
+        val intent = Intent(context, com.manimarank.spell4wiki.ui.compose.intro.AppIntroComposeActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         context.startActivity(intent)
     }
 
     /**
-     * Launch Spell4Wiktionary activity - uses Compose version if enabled
+     * Launch Spell4Wiktionary activity - uses Compose version by default
      */
     fun launchSpell4WiktionaryActivity(context: Context) {
-        val intent = if (shouldUseComposeWebView(context)) {
-            Intent(context, com.manimarank.spell4wiki.ui.compose.spell4wiktionary.Spell4WiktionaryComposeActivity::class.java)
-        } else {
-            Intent(context, com.manimarank.spell4wiki.ui.spell4wiktionary.Spell4Wiktionary::class.java)
-        }
+        val intent = Intent(context, com.manimarank.spell4wiki.ui.compose.spell4wiktionary.Spell4WiktionaryComposeActivity::class.java)
+        context.startActivity(intent)
+    }
+
+    /**
+     * Launch Spell4Word activity - uses Compose version by default
+     */
+    fun launchSpell4WordActivity(context: Context) {
+        val intent = Intent(context, com.manimarank.spell4wiki.ui.compose.spell4word.Spell4WordComposeActivity::class.java)
+        context.startActivity(intent)
+    }
+
+    /**
+     * Launch Spell4WordList activity - uses Compose version by default
+     */
+    fun launchSpell4WordListActivity(context: Context) {
+        val intent = Intent(context, com.manimarank.spell4wiki.ui.compose.spell4wordlist.Spell4WordListComposeActivity::class.java)
+        context.startActivity(intent)
+    }
+
+    /**
+     * Launch WiktionarySearch activity - uses Compose version by default
+     */
+    fun launchWiktionarySearchActivity(context: Context, searchText: String? = null) {
+        val intent = Intent(context, com.manimarank.spell4wiki.ui.compose.search.SearchComposeActivity::class.java)
+        searchText?.let { intent.putExtra(com.manimarank.spell4wiki.utils.constants.AppConstants.SEARCH_TEXT, it) }
+        context.startActivity(intent)
+    }
+
+    /**
+     * Launch Settings activity - uses Compose version by default
+     */
+    fun launchSettingsActivity(context: Context) {
+        val intent = Intent(context, com.manimarank.spell4wiki.ui.compose.settings.SettingsComposeActivity::class.java)
+        context.startActivity(intent)
+    }
+
+    /**
+     * Launch About activity - uses Compose version by default
+     */
+    fun launchAboutActivity(context: Context) {
+        val intent = Intent(context, com.manimarank.spell4wiki.ui.compose.about.AboutComposeActivity::class.java)
+        context.startActivity(intent)
+    }
+
+    /**
+     * Launch Contributors activity - uses Compose version by default
+     */
+    fun launchContributorsActivity(context: Context) {
+        val intent = Intent(context, com.manimarank.spell4wiki.ui.compose.contributors.ContributorsComposeActivity::class.java)
+        context.startActivity(intent)
+    }
+
+    /**
+     * Launch Language Selection activity - uses Compose version by default
+     */
+    fun launchLanguageSelectionActivity(context: Context) {
+        val intent = Intent(context, com.manimarank.spell4wiki.ui.compose.languageselection.LanguageSelectionComposeActivity::class.java)
         context.startActivity(intent)
     }
 

@@ -278,7 +278,7 @@ fun Spell4WordScreen(
                         text = stringResource(R.string.record),
                         style = MaterialTheme.typography.titleMedium,
                         fontWeight = FontWeight.Bold,
-                        color = Color.White
+                        color = MaterialTheme.colorScheme.onPrimary
                     )
                 }
                 

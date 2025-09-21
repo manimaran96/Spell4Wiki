@@ -1,128 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/layout_bottom_sheet"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="?attr/colorSurface"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
-    app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
+    android:padding="16dp">
 
-    <RelativeLayout
-        android:id="@+id/layout_title"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/app_bar_height"
-        android:paddingStart="@dimen/space16dp"
-        android:paddingEnd="@dimen/space12dp">
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_centerVertical="true"
-            android:layout_marginTop="@dimen/space4dp"
-            android:layout_marginBottom="@dimen/space4dp"
-            android:layout_toStartOf="@+id/btn_close"
-            android:orientation="vertical"
-            android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/text_select_lang_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/select_language"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="?android:attr/textColorPrimary"
+            android:padding="16dp" />
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/text_select_lang"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/select_language"
-                android:textColor="@color/black"
-                android:textSize="@dimen/text_heading" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/text_select_lang_title"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:visibility="gone"
-                android:textColor="@color/gray"
-                android:textSize="@dimen/text_small" />
-
-
-        </LinearLayout>
-
-        <androidx.appcompat.widget.AppCompatImageView
+        <ImageButton
             android:id="@+id/btn_close"
-            android:layout_width="@dimen/lang_close"
-            android:layout_height="@dimen/lang_close"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:contentDescription="@string/cancel"
-            android:tint="@color/black"
-            app:srcCompat="@drawable/ic_close" />
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_close"
+            android:contentDescription="@string/close" />
 
-    </RelativeLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/gray_border" />
+    </LinearLayout>
 
     <androidx.appcompat.widget.SearchView
         android:id="@+id/search_view"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/search_view_height"
-        android:layout_margin="@dimen/space10dp"
-        android:background="@drawable/bg_line_border"
-        android:queryHint="@string/search"
-        app:iconifiedByDefault="false" />
-
-    <RelativeLayout
-        android:id="@+id/layoutAddLanguage"
-        android:visibility="gone"
-        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/space10dp"
-        android:layout_marginEnd="@dimen/space10dp"
-        android:background="@drawable/bg_line_border"
-        android:padding="@dimen/space4dp">
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/txtAddLangInfo"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:layout_centerVertical="true"
-            android:layout_toStartOf="@+id/btnAddMyLanguage"
-            android:text="@string/ask_to_add_language" />
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btnAddMyLanguage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_margin="@dimen/space4dp"
-            android:layout_centerInParent="true"
-            android:background="@drawable/bg_blue"
-            android:minHeight="@dimen/btn_height"
-            android:paddingStart="@dimen/space20dp"
-            android:paddingEnd="@dimen/space20dp"
-            android:text="@string/action_add"
-            android:textColor="@color/white" />
-
-    </RelativeLayout>
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/txtLanguageSearchInfo"
-        android:layout_width="match_parent"
-        android:padding="@dimen/space12dp"
-        android:visibility="gone"
-        android:gravity="center"
-        android:layout_height="wrap_content"/>
+        android:layout_margin="8dp"
+        android:queryHint="@string/search_languages" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        android:divider="@null"
-        android:dividerHeight="0dp" />
+        android:layout_height="300dp"
+        android:layout_margin="8dp" />
 
-    <View
+    <LinearLayout
+        android:id="@+id/layoutAddLanguage"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="8dp"
+        android:visibility="gone">
 
+        <Button
+            android:id="@+id/btnAddMyLanguage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/add_my_language"
+            android:layout_margin="8dp" />
+
+        <TextView
+            android:id="@+id/txtLanguageSearchInfo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/language_search_info"
+            android:textSize="12sp"
+            android:textColor="?android:attr/textColorSecondary"
+            android:gravity="center"
+            android:padding="8dp" />
+
+    </LinearLayout>
 
 </LinearLayout>

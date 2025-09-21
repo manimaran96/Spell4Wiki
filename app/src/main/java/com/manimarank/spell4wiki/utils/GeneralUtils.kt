@@ -21,11 +21,9 @@ import com.manimarank.spell4wiki.data.db.entities.WordsHaveAudio
 import com.manimarank.spell4wiki.ui.dialogs.RecordInfoDialog.show
 import com.manimarank.spell4wiki.ui.listerners.FileAvailabilityCallback
 import com.manimarank.spell4wiki.ui.recordaudio.RecordAudioActivity
-import com.manimarank.spell4wiki.ui.spell4wiktionary.Spell4Wiktionary
-import com.manimarank.spell4wiki.ui.spell4wiktionary.Spell4WordActivity
-import com.manimarank.spell4wiki.ui.spell4wiktionary.Spell4WordListActivity
+
 import com.manimarank.spell4wiki.ui.webui.CommonWebActivity
-import com.manimarank.spell4wiki.ui.webui.CommonWebContentActivity
+import com.manimarank.spell4wiki.ui.compose.migration.MigrationUtils
 import com.manimarank.spell4wiki.utils.NetworkUtils.isConnected
 import com.manimarank.spell4wiki.utils.ToastUtils.showLong
 import com.manimarank.spell4wiki.utils.constants.AppConstants
@@ -94,11 +92,8 @@ object GeneralUtils {
                             val wordsHaveAudioDao = DBHelper.getInstance(activity).appDatabase.wordsHaveAudioDao
                             wordsHaveAudioDao?.insert(WordsHaveAudio(word, langCode))
                             when (activity) {
-                                is Spell4Wiktionary -> activity.updateList(word)
-                                is Spell4WordListActivity -> activity.updateList(word)
-                                is Spell4WordActivity -> activity.updateList(word)
                                 is CommonWebActivity -> activity.updateList(word)
-                                is CommonWebContentActivity -> activity.updateList(word)
+
                             }
                             showLong(String.format(activity.getString(R.string.audio_file_already_exist), word))
                             show(activity)
@@ -116,10 +111,7 @@ object GeneralUtils {
     }
 
     fun openMarkdownUrl(activity: Activity, url: String?, title: String?) {
-        val intent = Intent(activity, CommonWebContentActivity::class.java)
-        intent.putExtra(AppConstants.TITLE, title)
-        intent.putExtra(AppConstants.URL, url)
-        activity.startActivityForResult(intent, AppConstants.RC_UPLOAD_DIALOG)
+        MigrationUtils.launchWebViewActivity(activity, url ?: "", title)
     }
 
     fun getPromptBuilder(activity: Activity): MaterialTapTargetPrompt.Builder {

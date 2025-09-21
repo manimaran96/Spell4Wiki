@@ -52,8 +52,9 @@ class SyncHelper {
             override fun onResponse(call: Call<WikiBaseData?>, response: Response<WikiBaseData?>) {
                 try {
                     if (response.isSuccessful && response.body() != null) {
-                        val data = response.body()!!
-                        processBaseData(data)
+                        response.body()?.let { data ->
+                            processBaseData(data)
+                        }
                     }
                 } catch (e: KotlinException) {
                     e.printStackTrace()

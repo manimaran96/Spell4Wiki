@@ -46,7 +46,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.manimarank.spell4wiki.R
 import com.manimarank.spell4wiki.data.prefs.PrefManager
 import com.manimarank.spell4wiki.ui.compose.theme.Spell4WikiTheme
-import com.manimarank.spell4wiki.ui.settings.LanguageSelectionActivity
+import com.manimarank.spell4wiki.ui.compose.migration.MigrationUtils
 import com.manimarank.spell4wiki.utils.EdgeToEdgeUtils
 import kotlinx.coroutines.delay
 
@@ -94,14 +94,13 @@ class SplashComposeActivity : ComponentActivity() {
         val splashState = viewModel.splashState.value
         when (splashState.navigationDestination) {
             SplashState.NavigationDestination.LANGUAGE_SELECTION -> {
-                val intent = Intent(this, LanguageSelectionActivity::class.java)
-                startActivity(intent)
+                MigrationUtils.launchLanguageSelectionActivity(this)
             }
             SplashState.NavigationDestination.LOGIN -> {
-                com.manimarank.spell4wiki.ui.compose.migration.MigrationUtils.launchLoginActivity(this)
+                MigrationUtils.launchLoginActivity(this)
             }
             SplashState.NavigationDestination.MAIN -> {
-                com.manimarank.spell4wiki.ui.compose.migration.MigrationUtils.launchMainActivity(this)
+                MigrationUtils.launchMainActivity(this)
             }
         }
         finish()

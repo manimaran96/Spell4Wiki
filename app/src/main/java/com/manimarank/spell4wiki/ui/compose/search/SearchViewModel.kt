@@ -15,6 +15,8 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.Job
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -42,15 +44,42 @@ class SearchViewModel : ViewModel() {
 
     private var nextOffset: Int? = null
     private var currentQuery: String = ""
+    private var searchJob: Job? = null
+    private var context: Context? = null
 
     fun updateSearchQuery(query: String) {
         _searchQuery.value = query
+
+        // Cancel previous search job
+        searchJob?.cancel()
+
+        // Start new search with debouncing
+        if (query.isNotBlank()) {
+            searchJob = viewModelScope.launch {
+                delay(400) // 400ms debounce delay
+                performSearchInternal(query, context)
+            }
+        } else {
+            // Clear results if query is empty
+            _searchResults.value = emptyList()
+            _isLoading.value = false
+        }
+    }
+
+    fun setContext(context: Context) {
+        this.context = context
     }
 
     fun performSearch(query: String, context: Context, loadMore: Boolean = false) {
+        performSearchInternal(query, context, loadMore)
+    }
+
+    private fun performSearchInternal(query: String, context: Context? = null, loadMore: Boolean = false) {
         if (query.isBlank()) return
-        
-        if (!isConnected(context)) {
+
+        val ctx = context ?: return
+
+        if (!isConnected(ctx)) {
             _errorMessage.value = "No internet connection"
             return
         }
@@ -66,10 +95,10 @@ class SearchViewModel : ViewModel() {
                     currentQuery = query
                 }
 
-                val pref = PrefManager(context)
+                val pref = PrefManager(ctx)
                 val wikiLangCode = pref.languageCodeSpell4WikiAll ?: "en"
 
-                searchWiktionary(query, wikiLangCode, nextOffset ?: 0, context)
+                searchWiktionary(query, wikiLangCode, nextOffset ?: 0, ctx)
 
             } catch (e: Exception) {
                 _errorMessage.value = e.message

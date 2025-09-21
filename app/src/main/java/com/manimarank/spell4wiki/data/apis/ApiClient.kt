@@ -41,7 +41,7 @@ object ApiClient {
                     .addConverterFactory(GsonConverterFactory.create())
                     .build()
         }
-        return retrofitCommons!!
+        return retrofitCommons ?: throw IllegalStateException("Failed to initialize Commons API client")
     }
 
     fun getWiktionaryApi(context: Context, langCode: String): Retrofit {
@@ -61,7 +61,7 @@ object ApiClient {
                         .addConverterFactory(GsonConverterFactory.create())
                         .build()
             }
-            return retrofitApi!!
+            return retrofitApi ?: throw IllegalStateException("Failed to initialize API client")
         }
 
     /**

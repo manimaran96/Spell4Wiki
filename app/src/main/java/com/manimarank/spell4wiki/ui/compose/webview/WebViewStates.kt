@@ -87,7 +87,7 @@ fun WebViewErrorState(
             Text(
                 text = errorText,
                 style = MaterialTheme.typography.bodyLarge,
-                color = Color.Black,
+                color = MaterialTheme.colorScheme.error,
                 textAlign = TextAlign.Center
             )
             
