@@ -1426,7 +1426,8 @@
          "code":"tt",
          "lang":"Tatar",
          "dir":"ltr",
-         "local_lang":"Tatarça"
+         "local_lang":"Tatarça",
+         "category": ["Files uploaded by spell4wiki in tt"]
       },
       {
          "code":"tum",
