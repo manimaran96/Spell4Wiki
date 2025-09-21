@@ -303,4 +303,9 @@
     <string name="community">Community</string>
     <string name="share_app_text">Check out this amazing app for contributing audio pronunciations to Wiktionary!</string>
 
+    <!-- Spell4Wiktionary Compose Activity -->
+    <string name="words_category">Words Category</string>
+    <string name="no_words_found">No words found</string>
+    <string name="filter_progress_message">Filtering words, please wait…</string>
+
 </resources>

@@ -88,6 +88,18 @@ object MigrationUtils {
     }
 
     /**
+     * Launch Spell4Wiktionary activity - uses Compose version if enabled
+     */
+    fun launchSpell4WiktionaryActivity(context: Context) {
+        val intent = if (shouldUseComposeWebView(context)) {
+            Intent(context, com.manimarank.spell4wiki.ui.compose.spell4wiktionary.Spell4WiktionaryComposeActivity::class.java)
+        } else {
+            Intent(context, com.manimarank.spell4wiki.ui.spell4wiktionary.Spell4Wiktionary::class.java)
+        }
+        context.startActivity(intent)
+    }
+
+    /**
      * Create appropriate WebView fragment based on migration settings
      */
     fun createWebViewFragment(

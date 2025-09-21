@@ -24,6 +24,7 @@ import com.manimarank.spell4wiki.R
 import com.manimarank.spell4wiki.ui.compose.migration.MigrationUtils
 import com.manimarank.spell4wiki.ui.compose.theme.Spell4WikiTheme
 import com.manimarank.spell4wiki.ui.dialogs.AppLanguageDialog
+import com.manimarank.spell4wiki.ui.compose.dialogs.DialogMigrationUtils.showAppLanguageDialog
 import com.manimarank.spell4wiki.utils.EdgeToEdgeUtils.setupStatusBarHandling
 
 /**
@@ -47,7 +48,7 @@ class LanguageSelectionComposeActivity : ComponentActivity() {
             Spell4WikiTheme {
                 LanguageSelectionScreen(
                     viewModel = viewModel,
-                    onAppLanguageClick = { AppLanguageDialog.show(this@LanguageSelectionComposeActivity) },
+                    onAppLanguageClick = { showAppLanguageDialog() },
                     onContributionLanguageClick = { viewModel.showLanguageSelection(this@LanguageSelectionComposeActivity) },
                     onNextClick = { openMainActivity() }
                 )

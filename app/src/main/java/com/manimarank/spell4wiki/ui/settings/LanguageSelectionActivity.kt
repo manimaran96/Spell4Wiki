@@ -11,6 +11,7 @@ import com.manimarank.spell4wiki.ui.compose.migration.MigrationUtils
 import com.manimarank.spell4wiki.ui.dialogs.AppLanguageDialog
 import com.manimarank.spell4wiki.ui.languageselector.LanguageSelectionFragment
 import com.manimarank.spell4wiki.ui.listerners.OnLanguageSelectionListener
+import com.manimarank.spell4wiki.ui.compose.dialogs.DialogMigrationUtils.showLanguageSelectionBottomSheet
 import com.manimarank.spell4wiki.utils.EdgeToEdgeUtils.setupStatusBarHandling
 import com.manimarank.spell4wiki.utils.constants.ListMode
 import com.manimarank.spell4wiki.databinding.ActivityLanguageSelectionBinding
@@ -59,9 +60,7 @@ class LanguageSelectionActivity : BaseActivity() {
                 contributionBinding.txtAddLangInfo.text = String.format(getString(R.string.choose_your_preferred_contribution_language), wikiLangDao?.getWikiLanguageWithCode(pref.languageCodeSpell4WikiAll)?.name ?: "")
             }
         }
-        val languageSelectionFragment = LanguageSelectionFragment(this)
-        languageSelectionFragment.init(callback, ListMode.SPELL_4_WIKI_ALL)
-        languageSelectionFragment.show(supportFragmentManager)
+        showLanguageSelectionBottomSheet(callback, ListMode.SPELL_4_WIKI_ALL)
     }
     private fun openMainActivity() {
         // Use MigrationUtils to launch appropriate app intro activity based on feature flag

@@ -22,6 +22,7 @@ import com.manimarank.spell4wiki.ui.common.BaseActivity
 import com.manimarank.spell4wiki.ui.dialogs.showConfirmBackDialog
 import com.manimarank.spell4wiki.ui.languageselector.LanguageSelectionFragment
 import com.manimarank.spell4wiki.ui.listerners.OnLanguageSelectionListener
+import com.manimarank.spell4wiki.ui.compose.dialogs.DialogMigrationUtils.showLanguageSelectionBottomSheet
 import com.manimarank.spell4wiki.ui.webui.CommonWebActivity
 import com.manimarank.spell4wiki.utils.EdgeToEdgeUtils.setupEdgeToEdgeWithToolbar
 import com.manimarank.spell4wiki.utils.GeneralUtils
@@ -136,9 +137,7 @@ class Spell4WordActivity : BaseActivity() {
                 }
             }
         }
-        val languageSelectionFragment = LanguageSelectionFragment(this)
-        languageSelectionFragment.init(callback, ListMode.SPELL_4_WIKI_ALL)
-        languageSelectionFragment.show(supportFragmentManager)
+        showLanguageSelectionBottomSheet(callback, ListMode.SPELL_4_WIKI_ALL)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

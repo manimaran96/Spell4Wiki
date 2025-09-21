@@ -25,6 +25,7 @@ import com.manimarank.spell4wiki.ui.common.BaseActivity
 import com.manimarank.spell4wiki.ui.custom.EndlessRecyclerView.EndlessListener
 import com.manimarank.spell4wiki.ui.languageselector.LanguageSelectionFragment
 import com.manimarank.spell4wiki.ui.listerners.OnLanguageSelectionListener
+import com.manimarank.spell4wiki.ui.compose.dialogs.DialogMigrationUtils.showLanguageSelectionBottomSheet
 import com.manimarank.spell4wiki.utils.EdgeToEdgeUtils.setupEdgeToEdgeWithToolbar
 import com.manimarank.spell4wiki.utils.GeneralUtils
 import com.manimarank.spell4wiki.utils.NetworkUtils.isConnected
@@ -151,9 +152,7 @@ class WiktionarySearchActivity : BaseActivity(), EndlessListener {
                 }
             }
         }
-        val languageSelectionFragment = LanguageSelectionFragment(this)
-        languageSelectionFragment.init(callback, ListMode.SPELL_4_WIKI_ALL)
-        languageSelectionFragment.show(supportFragmentManager)
+        showLanguageSelectionBottomSheet(callback, ListMode.SPELL_4_WIKI_ALL)
     }
 
     private fun setupLanguageSelectorMenuItem(menu: Menu) {

@@ -9,6 +9,7 @@ import com.manimarank.spell4wiki.data.db.dao.WikiLangDao
 import com.manimarank.spell4wiki.data.prefs.PrefManager
 import com.manimarank.spell4wiki.ui.compose.dialogs.DialogMigrationUtils.showLanguageSelectionBottomSheet
 import com.manimarank.spell4wiki.ui.compose.dialogs.DialogMigrationUtils.showLicenseSelectionDialog
+import com.manimarank.spell4wiki.ui.compose.dialogs.DialogMigrationUtils.showAppLanguageDialog
 import com.manimarank.spell4wiki.ui.listerners.OnLanguageSelectionListener
 import com.manimarank.spell4wiki.utils.constants.ListMode
 import com.manimarank.spell4wiki.ui.dialogs.AppLanguageDialog
@@ -85,7 +86,7 @@ class SettingsViewModel(private val context: Context) : ViewModel() {
      */
     fun showAppLanguageDialog(context: Context) {
         if (context is androidx.activity.ComponentActivity) {
-            AppLanguageDialog.show(context)
+            context.showAppLanguageDialog()
             // Refresh settings after potential language change
             loadSettings()
         }

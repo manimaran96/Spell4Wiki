@@ -554,3 +554,87 @@ fun LicenseSelectionDialog(
         textContentColor = MaterialTheme.colorScheme.onSurface
     )
 }
+
+/**
+ * App Language Selection Dialog - Compose implementation
+ * Replaces the traditional AppLanguageDialog.show
+ */
+@Composable
+fun AppLanguageDialog(
+    currentLanguage: String,
+    onLanguageSelected: (String) -> Unit,
+    onDismiss: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    val languageOptions = listOf(
+        "en" to "English",
+        "ta" to "தமிழ்",
+        "kn" to "ಕನ್ನಡ"
+    )
+
+    var selectedLanguage by remember { mutableStateOf(currentLanguage) }
+
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        title = {
+            Text(
+                text = stringResource(R.string.select_language),
+                style = MaterialTheme.typography.headlineSmall,
+                fontWeight = FontWeight.Bold
+            )
+        },
+        text = {
+            Column(
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                languageOptions.forEach { (languageCode, languageLabel) ->
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .clickable {
+                                selectedLanguage = languageCode
+                                onLanguageSelected(languageCode)
+                                onDismiss()
+                            }
+                            .padding(vertical = 8.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        RadioButton(
+                            selected = selectedLanguage == languageCode,
+                            onClick = {
+                                selectedLanguage = languageCode
+                                onLanguageSelected(languageCode)
+                                onDismiss()
+                            },
+                            colors = RadioButtonDefaults.colors(
+                                selectedColor = MaterialTheme.colorScheme.primary
+                            )
+                        )
+                        Spacer(modifier = Modifier.width(12.dp))
+                        Text(
+                            text = languageLabel,
+                            style = MaterialTheme.typography.bodyLarge,
+                            color = MaterialTheme.colorScheme.onSurface,
+                            modifier = Modifier.weight(1f)
+                        )
+                    }
+                }
+            }
+        },
+        confirmButton = {
+            // No confirm button needed as selection happens on click
+        },
+        dismissButton = {
+            TextButton(onClick = onDismiss) {
+                Text(
+                    text = stringResource(R.string.cancel),
+                    fontWeight = FontWeight.Medium
+                )
+            }
+        },
+        modifier = modifier,
+        containerColor = MaterialTheme.colorScheme.surface,
+        titleContentColor = MaterialTheme.colorScheme.onSurface,
+        textContentColor = MaterialTheme.colorScheme.onSurface
+    )
+}

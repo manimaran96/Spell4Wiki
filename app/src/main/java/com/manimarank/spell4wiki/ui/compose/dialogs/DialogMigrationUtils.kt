@@ -1,6 +1,7 @@
 package com.manimarank.spell4wiki.ui.compose.dialogs
 
 import android.app.Activity
+import android.content.Intent
 import androidx.compose.runtime.*
 import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.FragmentActivity
@@ -276,6 +277,30 @@ object DialogMigrationUtils {
                     currentTheme = pref.themeMode,
                     onThemeSelected = { theme ->
                         onThemeSelected(theme)
+                        onDismiss()
+                    },
+                    onDismiss = onDismiss
+                )
+            }
+        }
+    }
+
+    /**
+     * Show app language selection dialog using Compose implementation
+     * Replaces AppLanguageDialog.show
+     */
+    fun Activity.showAppLanguageDialog() {
+        if (this is FragmentActivity) {
+            showComposeDialog { onDismiss ->
+                AppLanguageDialog(
+                    currentLanguage = AppPref.getAppLanguage() ?: "en",
+                    onLanguageSelected = { languageCode ->
+                        AppPref.setAppLanguage(languageCode)
+                        com.manimarank.spell4wiki.ui.dialogs.AppLanguageDialog.applyLanguageConfig(this@showAppLanguageDialog)
+                        recreate()
+                        val intent = Intent(com.manimarank.spell4wiki.ui.dialogs.AppLanguageDialog.LANGUAGE_FILTER)
+                        intent.putExtra(com.manimarank.spell4wiki.ui.dialogs.AppLanguageDialog.SELECTED_LANGUAGE, languageCode)
+                        sendBroadcast(intent)
                         onDismiss()
                     },
                     onDismiss = onDismiss

@@ -40,6 +40,7 @@ import com.manimarank.spell4wiki.data.db.DBHelper
 import com.manimarank.spell4wiki.data.prefs.PrefManager
 import com.manimarank.spell4wiki.ui.compose.theme.Spell4WikiTheme
 import com.manimarank.spell4wiki.ui.compose.dialogs.BackConfirmationDialog
+import com.manimarank.spell4wiki.ui.compose.dialogs.DialogMigrationUtils.showLanguageSelectionBottomSheet
 import com.manimarank.spell4wiki.ui.languageselector.LanguageSelectionFragment
 import com.manimarank.spell4wiki.ui.listerners.OnLanguageSelectionListener
 import com.manimarank.spell4wiki.utils.GeneralUtils
@@ -99,9 +100,7 @@ class Spell4WordListComposeActivity : AppCompatActivity() {
                 viewModel.updateLanguage(this@Spell4WordListComposeActivity, langCode)
             }
         }
-        val languageSelectionFragment = LanguageSelectionFragment(this)
-        languageSelectionFragment.init(callback, ListMode.SPELL_4_WIKI_ALL)
-        languageSelectionFragment.show(supportFragmentManager)
+        showLanguageSelectionBottomSheet(callback, ListMode.SPELL_4_WIKI_ALL)
     }
 
     private fun openWiktionaryPage(word: String) {
