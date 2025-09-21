@@ -31,7 +31,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.manimarank.spell4wiki.R
 import com.manimarank.spell4wiki.data.prefs.PrefManager
 import com.manimarank.spell4wiki.ui.compose.theme.Spell4WikiTheme
-import com.manimarank.spell4wiki.ui.main.MainActivity
+import com.manimarank.spell4wiki.ui.compose.migration.MigrationUtils
 import com.manimarank.spell4wiki.utils.NetworkUtils.isConnected
 import com.manimarank.spell4wiki.utils.constants.Urls
 
@@ -66,8 +66,7 @@ class LoginComposeActivity : ComponentActivity() {
     }
 
     private fun launchActivity() {
-        val intent = Intent(applicationContext, MainActivity::class.java)
-        startActivity(intent)
+        MigrationUtils.launchMainActivity(applicationContext)
         finish()
     }
 

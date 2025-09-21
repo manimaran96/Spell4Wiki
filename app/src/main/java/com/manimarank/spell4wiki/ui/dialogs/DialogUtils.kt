@@ -2,6 +2,7 @@ package com.manimarank.spell4wiki.ui.dialogs
 
 import android.app.Activity
 import android.app.AlertDialog
+import android.content.Context
 import android.content.DialogInterface
 import androidx.core.content.ContextCompat
 import com.manimarank.spell4wiki.R
@@ -12,6 +13,10 @@ import com.manimarank.spell4wiki.R
  * Secondary button: Black color for cancel/dismiss actions (Cancel, No, Deny, etc.)
  * Neutral button: Gray color for neutral actions (Later, Maybe, etc.)
  */
+
+fun AlertDialog.styleDialogButtons(context: Context) {
+    this.styleDialogButtons(context as Activity)
+}
 fun AlertDialog.styleDialogButtons(activity: Activity) {
     // Set positive button style (Primary action - Blue)
     getButton(AlertDialog.BUTTON_POSITIVE)?.apply {

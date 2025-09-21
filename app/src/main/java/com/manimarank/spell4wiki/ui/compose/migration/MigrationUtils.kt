@@ -70,6 +70,15 @@ object MigrationUtils {
     }
 
     /**
+     * Launch Main activity - uses Compose version by default
+     */
+    fun launchMainActivity(context: Context) {
+        val intent = Intent(context, com.manimarank.spell4wiki.ui.compose.main.MainComposeActivity::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+        context.startActivity(intent)
+    }
+
+    /**
      * Launch AppIntro activity - uses Compose version by default
      */
     fun launchAppIntroActivity(context: Context) {

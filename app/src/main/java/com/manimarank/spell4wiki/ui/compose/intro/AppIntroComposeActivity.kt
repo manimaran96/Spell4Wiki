@@ -98,7 +98,7 @@ class AppIntroComposeActivity : ComponentActivity() {
     private fun openMainActivity() {
         isDoneCalled = false
         pref.isFirstTimeLaunch = false
-        MigrationUtils.launchLoginActivity(applicationContext)
+        MigrationUtils.launchMainActivity(applicationContext)
         finish()
     }
 

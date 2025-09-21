@@ -160,6 +160,8 @@
     <string name="theme_dark">Dark</string>
     <string name="theme_system_default">System Default</string>
     <string name="choose_theme">Choose Theme</string>
+    <string name="searching">Searching...</string>
+    <string name="no_results_found">No results found</string>
     <string name="action_add">Add</string>
    <string name="choose_your_preferred_app_language">Choose your preferred language.\nCurrent app language : %s</string>
     <string name="choose_your_preferred_contribution_language">Choose your preferred language.\nCurrent contribution language : %s</string>

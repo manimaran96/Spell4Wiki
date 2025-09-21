@@ -162,6 +162,20 @@
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize"
             android:theme="@style/AppTheme" />
 
+        <activity
+            android:name="com.manimarank.spell4wiki.ui.compose.main.MainComposeActivity"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustResize"
+            android:theme="@style/AppTheme" />
+
+        <activity
+            android:name="com.manimarank.spell4wiki.ui.compose.search.SearchComposeActivity"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustResize"
+            android:theme="@style/AppTheme" />
+
         <service android:name=".data.auth.WikiAuthenticatorService"
             android:exported="false">
             <intent-filter>
