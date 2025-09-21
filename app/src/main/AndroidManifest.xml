@@ -91,6 +91,13 @@
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize"
             android:theme="@style/AppTheme.NoActionBar"/>
 
+        <!-- Contributors Compose Activity -->
+        <activity android:name="com.manimarank.spell4wiki.ui.compose.contributors.ContributorsComposeActivity"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustResize"
+            android:theme="@style/AppTheme.NoActionBar"/>
+
         <activity
             android:name="com.manimarank.spell4wiki.ui.settings.LanguageSelectionActivity"
             android:screenOrientation="portrait"

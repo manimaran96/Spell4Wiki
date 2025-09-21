@@ -54,7 +54,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.manimarank.spell4wiki.BuildConfig
 import com.manimarank.spell4wiki.R
-import com.manimarank.spell4wiki.ui.about.ContributorsActivity
+import com.manimarank.spell4wiki.ui.compose.contributors.ContributorsComposeActivity
 import com.manimarank.spell4wiki.ui.about.ListItemActivity
 import com.manimarank.spell4wiki.ui.compose.theme.Spell4WikiTheme
 import com.manimarank.spell4wiki.utils.EdgeToEdgeUtils
@@ -87,7 +87,7 @@ class AboutComposeActivity : ComponentActivity() {
                     viewModel = viewModel,
                     onBackPressed = { finish() },
                     onNavigateToContributors = {
-                        startActivity(Intent(this, ContributorsActivity::class.java))
+                        startActivity(Intent(this, ContributorsComposeActivity::class.java))
                     },
                     onNavigateToThirdPartyLibs = {
                         val intent = Intent(this, ListItemActivity::class.java)

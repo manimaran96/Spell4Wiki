@@ -8,6 +8,9 @@ import com.manimarank.spell4wiki.data.db.DBHelper
 import com.manimarank.spell4wiki.data.db.dao.WikiLangDao
 import com.manimarank.spell4wiki.data.prefs.PrefManager
 import com.manimarank.spell4wiki.ui.languageselector.LanguageSelectionFragment
+import com.manimarank.spell4wiki.ui.listerners.OnLanguageSelectionListener
+import com.manimarank.spell4wiki.utils.constants.ListMode
+import com.manimarank.spell4wiki.ui.dialogs.AppLanguageDialog
 import com.manimarank.spell4wiki.utils.WikiLicense
 import com.manimarank.spell4wiki.utils.extensions.showLicenseChooseDialog
 import android.app.AlertDialog
@@ -56,8 +59,16 @@ class SettingsViewModel(private val context: Context) : ViewModel() {
      * Show Spell4Wiki language selection dialog
      */
     fun showSpell4WikiLanguageDialog(context: Context) {
-        // Implementation would show language selection dialog
-        // This would typically use a DialogFragment or Compose Dialog
+        if (context is androidx.fragment.app.FragmentActivity) {
+            val callback = object : OnLanguageSelectionListener {
+                override fun onCallBackListener(langCode: String?) {
+                    loadSettings() // Refresh settings after language change
+                }
+            }
+            val languageSelectionFragment = LanguageSelectionFragment(context)
+            languageSelectionFragment.init(callback, ListMode.SPELL_4_WIKI_ALL)
+            languageSelectionFragment.show(context.supportFragmentManager)
+        }
     }
     
     /**
@@ -75,8 +86,11 @@ class SettingsViewModel(private val context: Context) : ViewModel() {
      * Show app language selection dialog
      */
     fun showAppLanguageDialog(context: Context) {
-        // Implementation would show app language selection
-        // This could use LanguageSelectionFragment or a Compose equivalent
+        if (context is androidx.activity.ComponentActivity) {
+            AppLanguageDialog.show(context)
+            // Refresh settings after potential language change
+            loadSettings()
+        }
     }
     
     /**
@@ -147,7 +161,11 @@ class SettingsViewModel(private val context: Context) : ViewModel() {
         return try {
             val langCode = pref.languageCodeSpell4WikiAll
             val wikiLang = wikiLangDao?.getWikiLanguageWithCode(langCode ?: "en")
-            wikiLang?.localName ?: wikiLang?.name ?: "English"
+            if (wikiLang != null && !wikiLang.name.isNullOrEmpty()) {
+                "${wikiLang.localName} - ${wikiLang.name} : $langCode"
+            } else {
+                "English"
+            }
         } catch (e: Exception) {
             "English"
         }
@@ -172,8 +190,11 @@ class SettingsViewModel(private val context: Context) : ViewModel() {
      * Get current app language
      */
     private fun getAppLanguage(): String {
-        // Implementation would get current app language
-        return "English" // Placeholder
+        return try {
+            AppLanguageDialog.getSelectedLanguage()
+        } catch (e: Exception) {
+            "English"
+        }
     }
     
     /**
