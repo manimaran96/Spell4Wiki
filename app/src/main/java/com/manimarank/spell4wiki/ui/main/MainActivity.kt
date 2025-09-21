@@ -1,9 +1,7 @@
 package com.manimarank.spell4wiki.ui.main
 
-import android.app.AlertDialog
 import android.content.BroadcastReceiver
 import android.content.Context
-import android.content.DialogInterface
 import android.content.Intent
 import android.content.IntentFilter
 import android.os.Bundle
@@ -16,10 +14,10 @@ import com.manimarank.spell4wiki.data.prefs.AppPref.INSTANCE.checkAppUpdateAvail
 import com.manimarank.spell4wiki.data.prefs.PrefManager
 import com.manimarank.spell4wiki.ui.about.AboutActivity
 import com.manimarank.spell4wiki.ui.common.BaseActivity
+import com.manimarank.spell4wiki.ui.compose.dialogs.DialogMigrationUtils.showLogoutDialog
+import com.manimarank.spell4wiki.ui.compose.dialogs.DialogMigrationUtils.showRateAppDialog
+import com.manimarank.spell4wiki.ui.compose.dialogs.DialogMigrationUtils.showUpdateAppDialog
 import com.manimarank.spell4wiki.ui.dialogs.AppLanguageDialog
-import com.manimarank.spell4wiki.ui.dialogs.RateAppDialog
-import com.manimarank.spell4wiki.ui.dialogs.UpdateAppDialog
-import com.manimarank.spell4wiki.ui.dialogs.styleDialogButtons
 import com.manimarank.spell4wiki.ui.settings.SettingsActivity
 import com.manimarank.spell4wiki.ui.spell4wiktionary.Spell4Wiktionary
 import com.manimarank.spell4wiki.ui.spell4wiktionary.Spell4WordActivity
@@ -87,7 +85,7 @@ class MainActivity : BaseActivity(), View.OnClickListener {
         Handler().post { hideKeyboard(this@MainActivity) }
 
         // Update and Rate the app
-        if (checkAppUpdateAvailable(this@MainActivity)) UpdateAppDialog.show(this@MainActivity) else RateAppDialog.show(this@MainActivity)
+        if (checkAppUpdateAvailable(this@MainActivity)) showUpdateAppDialog() else showRateAppDialog()
     }
 
     override fun onClick(view: View) {
@@ -149,20 +147,11 @@ class MainActivity : BaseActivity(), View.OnClickListener {
 
     private fun logoutUser() {
         if (isConnected(applicationContext)) {
-            val dialog = AlertDialog.Builder(this, R.style.AlertDialogTheme)
-                    .setTitle(R.string.logout_confirmation)
-                    .setMessage(R.string.logout_message)
-                    .setPositiveButton(getString(R.string.yes)) { _: DialogInterface?, _: Int ->
-                        // Logout user
-                        logoutApi()
-                        pref.logoutUser()
-                    }
-                    .setNegativeButton(R.string.no, null)
-                    .create()
-            dialog.show()
-
-            // Apply consistent button styling
-            dialog.styleDialogButtons(this)
+            showLogoutDialog {
+                // Logout user
+                logoutApi()
+                pref.logoutUser()
+            }
         } else showNormal(binding.searchView, getString(R.string.check_internet))
     }
 

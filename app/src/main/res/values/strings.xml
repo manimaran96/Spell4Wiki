@@ -178,6 +178,12 @@
     <string name="temporary">Temporary</string>
     <string name="checking_file_availability">Checking file availability\n(%s)</string>
     <string name="ask_to_add_language">Do you want to add your language?</string>
+    <string name="upload_file_will_be">Note: Upload file will be</string>
+    <string name="uploading">Uploading…</string>
+    <string name="upload_feature_coming_soon">Upload feature coming soon</string>
+    <string name="permission_denied_record_audio">Permission denied for audio recording</string>
+    <string name="pause">Pause</string>
+    <string name="play">Play</string>
     <string name="do_you_want_continue">Do you want to load more?</string>
     <string name="rta_dialog_title">@string/rate_app</string>
     <string name="rta_dialog_message">If you enjoy using this app, would you mind taking a moment to rate it? It won\'t take more than a minute. Thank you for your support!</string>

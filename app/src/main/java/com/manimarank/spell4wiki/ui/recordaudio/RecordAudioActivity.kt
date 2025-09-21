@@ -62,7 +62,7 @@ import com.manimarank.spell4wiki.utils.constants.AppConstants
 import com.manimarank.spell4wiki.utils.constants.AppConstants.MAX_RETRIES_FOR_CSRF_TOKEN
 import com.manimarank.spell4wiki.utils.constants.AppConstants.MAX_RETRIES_FOR_FORCE_LOGIN
 import com.manimarank.spell4wiki.utils.constants.AppConstants.RC_LICENCE_CHANGE
-import com.manimarank.spell4wiki.utils.extensions.showLicenseChooseDialog
+import com.manimarank.spell4wiki.ui.compose.dialogs.DialogMigrationUtils.showLicenseSelectionDialog
 import com.manimarank.spell4wiki.databinding.ActivityRecordAudioPopUpBinding
 import okhttp3.MediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -147,10 +147,9 @@ class RecordAudioActivity : BaseActivity() {
         updateFileNamePreview()
 
         binding.btnSettings.setOnClickListener {
-            showLicenseChooseDialog({
+            showLicenseSelectionDialog {
                 binding.checkboxDeclaration.text = String.format(getString(R.string.declaration_note), getString(licenseNameId(pref.uploadAudioLicense)))
-            })
-
+            }
         }
 
         // Set 10 sec only for recording

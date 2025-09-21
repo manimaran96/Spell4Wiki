@@ -47,7 +47,34 @@ This document summarizes the comprehensive Jetpack Compose migration for the Spe
   - Wiktionary integration
   - Material Design 3 components throughout
 
-### 4. **Enhanced Global Theme System** ✅
+### 4. **Recording UI Centralization and Compose Migration** ✅
+- **Status**: Complete
+- **Files Created**:
+  - `RecordingUIComponents.kt` - Centralized, reusable recording UI components
+  - `RecordingViewModel.kt` - Comprehensive state management for recording operations
+  - `RecordAudioComposeActivity.kt` - Full Compose replacement for RecordAudioActivity
+- **Features**:
+  - Centralized recording logic for reuse across different screens
+  - Material Design 3 styling with proper theme support
+  - Animated recording button with visual feedback
+  - Audio playback controls with progress tracking
+  - Permission handling and error management
+  - State management with StateFlow for reactive UI updates
+  - Integration with existing WAVRecorder and WAVPlayer classes
+
+### 5. **Language Selection Screen Migration** ✅
+- **Status**: Complete
+- **Files Created**:
+  - `LanguageSelectionComposeActivity.kt` - Full Compose implementation
+  - `LanguageSelectionViewModel.kt` - State management and search functionality
+- **Features**:
+  - Real-time search with debouncing
+  - Efficient LazyColumn for large language lists
+  - Material Design 3 components
+  - Proper state management and navigation
+  - Search functionality with instant filtering
+
+### 6. **Enhanced Global Theme System** ✅
 - **Status**: Complete
 - **Files Created**:
   - `ThemeUtils.kt` - Comprehensive theme management utilities

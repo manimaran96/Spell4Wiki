@@ -11,6 +11,7 @@ import com.manimarank.spell4wiki.ui.listerners.OnCategorySelectionListener
 import com.manimarank.spell4wiki.ui.listerners.OnLanguageSelectionListener
 import com.manimarank.spell4wiki.utils.GeneralUtils
 import com.manimarank.spell4wiki.utils.PermissionUtils
+import com.manimarank.spell4wiki.utils.WikiLicense
 import com.manimarank.spell4wiki.utils.constants.ListMode
 import com.manimarank.spell4wiki.utils.constants.Urls
 
@@ -215,6 +216,66 @@ object DialogMigrationUtils {
                     subTitleInfo = subTitleInfo,
                     onCategorySelected = { category ->
                         callback?.onCallBackListener(category)
+                        onDismiss()
+                    },
+                    onDismiss = onDismiss
+                )
+            }
+        }
+    }
+
+    /**
+     * Show license selection dialog using Compose implementation
+     * Replaces showLicenseChooseDialog extension function
+     */
+    fun Activity.showLicenseSelectionDialog(confirmAction: () -> Unit = {}) {
+        if (this is FragmentActivity) {
+            val pref = PrefManager(this)
+            showComposeDialog { onDismiss ->
+                LicenseSelectionDialog(
+                    currentLicense = pref.uploadAudioLicense,
+                    onLicenseSelected = { license ->
+                        pref.uploadAudioLicense = license
+                        confirmAction()
+                        onDismiss()
+                    },
+                    onDismiss = onDismiss
+                )
+            }
+        }
+    }
+
+    /**
+     * Show logout confirmation dialog using Compose implementation
+     * Replaces MainActivity logout AlertDialog.Builder
+     */
+    fun Activity.showLogoutDialog(onLogout: () -> Unit) {
+        if (this is FragmentActivity) {
+            showComposeDialog { onDismiss ->
+                LogoutDialog(
+                    onConfirm = {
+                        onLogout()
+                        onDismiss()
+                    },
+                    onCancel = onDismiss,
+                    onDismiss = onDismiss
+                )
+            }
+        }
+    }
+
+    /**
+     * Show theme selection dialog using Compose implementation
+     * Replaces SettingsActivity theme AlertDialog.Builder
+     */
+    fun Activity.showThemeSelectionDialog(onThemeSelected: (String) -> Unit) {
+        if (this is FragmentActivity) {
+            val pref = PrefManager(this)
+            showComposeDialog { onDismiss ->
+                ThemeSelectionDialog(
+                    currentTheme = pref.themeMode,
+                    onThemeSelected = { theme ->
+                        onThemeSelected(theme)
                         onDismiss()
                     },
                     onDismiss = onDismiss

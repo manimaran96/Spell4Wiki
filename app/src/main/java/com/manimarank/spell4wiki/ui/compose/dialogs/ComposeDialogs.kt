@@ -1,6 +1,9 @@
 package com.manimarank.spell4wiki.ui.compose.dialogs
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -14,6 +17,8 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import com.manimarank.spell4wiki.R
+import com.manimarank.spell4wiki.data.prefs.PrefManager
+import com.manimarank.spell4wiki.utils.WikiLicense
 import com.manimarank.spell4wiki.data.prefs.AppPref
 import com.manimarank.spell4wiki.utils.GeneralUtils
 import com.manimarank.spell4wiki.utils.constants.Urls
@@ -461,5 +466,91 @@ fun NotificationPermissionDialog(
         },
         modifier = modifier,
         properties = DialogProperties(dismissOnBackPress = false, dismissOnClickOutside = false)
+    )
+}
+
+/**
+ * License Selection Dialog - Compose implementation
+ * Replaces the traditional AlertDialog.Builder license selection dialog
+ */
+@Composable
+fun LicenseSelectionDialog(
+    currentLicense: String?,
+    onLicenseSelected: (String) -> Unit,
+    onDismiss: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    val licenseOptions = listOf(
+        WikiLicense.LicensePrefs.CC_0 to R.string.license_name_cc_zero,
+        WikiLicense.LicensePrefs.CC_BY_3 to R.string.license_name_cc_by_three,
+        WikiLicense.LicensePrefs.CC_BY_SA_3 to R.string.license_name_cc_by_sa_three,
+        WikiLicense.LicensePrefs.CC_BY_4 to R.string.license_name_cc_by_four,
+        WikiLicense.LicensePrefs.CC_BY_SA_4 to R.string.license_name_cc_by_sa_four
+    )
+
+    var selectedLicense by remember { mutableStateOf(currentLicense ?: WikiLicense.LicensePrefs.CC_0) }
+
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        title = {
+            Text(
+                text = stringResource(R.string.license_choose_alert),
+                style = MaterialTheme.typography.headlineSmall,
+                fontWeight = FontWeight.Bold
+            )
+        },
+        text = {
+            LazyColumn(
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                items(licenseOptions) { (license, nameRes) ->
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .clickable {
+                                selectedLicense = license
+                                onLicenseSelected(license)
+                                onDismiss()
+                            }
+                            .padding(vertical = 8.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        RadioButton(
+                            selected = selectedLicense == license,
+                            onClick = {
+                                selectedLicense = license
+                                onLicenseSelected(license)
+                                onDismiss()
+                            },
+                            colors = RadioButtonDefaults.colors(
+                                selectedColor = MaterialTheme.colorScheme.primary
+                            )
+                        )
+                        Spacer(modifier = Modifier.width(12.dp))
+                        Text(
+                            text = stringResource(nameRes),
+                            style = MaterialTheme.typography.bodyLarge,
+                            color = MaterialTheme.colorScheme.onSurface,
+                            modifier = Modifier.weight(1f)
+                        )
+                    }
+                }
+            }
+        },
+        confirmButton = {
+            // No confirm button needed as selection happens on click
+        },
+        dismissButton = {
+            TextButton(onClick = onDismiss) {
+                Text(
+                    text = stringResource(R.string.cancel),
+                    fontWeight = FontWeight.Medium
+                )
+            }
+        },
+        modifier = modifier,
+        containerColor = MaterialTheme.colorScheme.surface,
+        titleContentColor = MaterialTheme.colorScheme.onSurface,
+        textContentColor = MaterialTheme.colorScheme.onSurface
     )
 }

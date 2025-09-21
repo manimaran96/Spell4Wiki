@@ -7,12 +7,12 @@ import com.manimarank.spell4wiki.R
 import com.manimarank.spell4wiki.data.db.DBHelper
 import com.manimarank.spell4wiki.data.db.dao.WikiLangDao
 import com.manimarank.spell4wiki.data.prefs.PrefManager
-import com.manimarank.spell4wiki.ui.languageselector.LanguageSelectionFragment
+import com.manimarank.spell4wiki.ui.compose.dialogs.DialogMigrationUtils.showLanguageSelectionBottomSheet
+import com.manimarank.spell4wiki.ui.compose.dialogs.DialogMigrationUtils.showLicenseSelectionDialog
 import com.manimarank.spell4wiki.ui.listerners.OnLanguageSelectionListener
 import com.manimarank.spell4wiki.utils.constants.ListMode
 import com.manimarank.spell4wiki.ui.dialogs.AppLanguageDialog
 import com.manimarank.spell4wiki.utils.WikiLicense
-import com.manimarank.spell4wiki.utils.extensions.showLicenseChooseDialog
 import com.manimarank.spell4wiki.utils.ThemeUtils
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -65,9 +65,7 @@ class SettingsViewModel(private val context: Context) : ViewModel() {
                     loadSettings() // Refresh settings after language change
                 }
             }
-            val languageSelectionFragment = LanguageSelectionFragment(context)
-            languageSelectionFragment.init(callback, ListMode.SPELL_4_WIKI_ALL)
-            languageSelectionFragment.show(context.supportFragmentManager)
+            context.showLanguageSelectionBottomSheet(callback, ListMode.SPELL_4_WIKI_ALL)
         }
     }
     
@@ -75,8 +73,8 @@ class SettingsViewModel(private val context: Context) : ViewModel() {
      * Show license selection dialog
      */
     fun showLicenseDialog(context: Context) {
-        if (context is androidx.activity.ComponentActivity) {
-            context.showLicenseChooseDialog {
+        if (context is androidx.fragment.app.FragmentActivity) {
+            context.showLicenseSelectionDialog {
                 loadSettings() // Refresh settings after license change
             }
         }

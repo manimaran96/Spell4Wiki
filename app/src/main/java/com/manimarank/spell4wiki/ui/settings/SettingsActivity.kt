@@ -26,7 +26,8 @@ import com.manimarank.spell4wiki.utils.WikiLicense.licenseNameId
 import com.manimarank.spell4wiki.utils.WikiLicense.licenseUrlFor
 import com.manimarank.spell4wiki.utils.constants.AppConstants
 import com.manimarank.spell4wiki.utils.constants.ListMode
-import com.manimarank.spell4wiki.utils.extensions.showLicenseChooseDialog
+import com.manimarank.spell4wiki.ui.compose.dialogs.DialogMigrationUtils.showLicenseSelectionDialog
+import com.manimarank.spell4wiki.ui.compose.dialogs.DialogMigrationUtils.showThemeSelectionDialog
 import com.manimarank.spell4wiki.utils.makeGone
 import com.manimarank.spell4wiki.databinding.ActivitySettingsBinding
 import java.util.*
@@ -73,9 +74,10 @@ class SettingsActivity : BaseActivity() {
 
 
         binding.layoutLicenseOfUploadAudio.setOnClickListener {
-            showLicenseChooseDialog {
+            showLicenseSelectionDialog {
                 updateLicenseView(binding.txtLicenseOfUploadAudio, binding.txtLicenseOfUploadAudioLegalCode)
-            } }
+            }
+        }
 
         binding.txtAppLanguage.text = getSelectedLanguage()
         binding.layoutLanguageOfApp.setOnClickListener { show(this@SettingsActivity) }
@@ -83,7 +85,7 @@ class SettingsActivity : BaseActivity() {
         // Theme selection setting
         updateThemeView()
         binding.layoutThemeSelection.setOnClickListener {
-            showThemeSelectionDialog()
+            showThemeDialog()
         }
 
         // Wiktionary cleanup setting
@@ -133,40 +135,14 @@ class SettingsActivity : BaseActivity() {
         binding.txtThemeSelection.text = themeText
     }
 
-    private fun showThemeSelectionDialog() {
-        val themes = arrayOf(
-            getString(R.string.theme_light),
-            getString(R.string.theme_dark),
-            getString(R.string.theme_system_default)
-        )
+    private fun showThemeDialog() {
+        showThemeSelectionDialog { selectedTheme ->
+            pref.themeMode = selectedTheme
+            updateThemeView()
 
-        val currentSelection = when (pref.themeMode) {
-            PrefManager.ThemeMode.LIGHT -> 0
-            PrefManager.ThemeMode.DARK -> 1
-            PrefManager.ThemeMode.SYSTEM -> 2
-            else -> 2
+            // Recreate activity to apply theme change
+            recreate()
         }
-
-        AlertDialog.Builder(this)
-            .setTitle(getString(R.string.choose_theme))
-            .setSingleChoiceItems(themes, currentSelection) { dialog, which ->
-                val selectedTheme = when (which) {
-                    0 -> PrefManager.ThemeMode.LIGHT
-                    1 -> PrefManager.ThemeMode.DARK
-                    2 -> PrefManager.ThemeMode.SYSTEM
-                    else -> PrefManager.ThemeMode.SYSTEM
-                }
-
-                pref.themeMode = selectedTheme
-                updateThemeView()
-
-                // Recreate activity to apply theme change
-                recreate()
-
-                dialog.dismiss()
-            }
-            .setNegativeButton(getString(R.string.cancel), null)
-            .show()
     }
 
     private fun updateLicenseView(txtLicenseOfUploadAudio: TextView, txtLicenseOfUploadAudioLegalCode: TextView) {

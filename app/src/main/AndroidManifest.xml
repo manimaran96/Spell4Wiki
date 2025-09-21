@@ -196,6 +196,21 @@
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize"
             android:theme="@style/RecordAudioDialogTheme" />
 
+        <!-- Jetpack Compose Activities -->
+        <activity
+            android:name="com.manimarank.spell4wiki.ui.compose.languageselection.LanguageSelectionComposeActivity"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustResize"
+            android:theme="@style/AppTheme.NoActionBar" />
+
+        <activity
+            android:name="com.manimarank.spell4wiki.ui.compose.recording.RecordAudioComposeActivity"
+            android:screenOrientation="unspecified"
+            tools:ignore="LockedOrientationActivity"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustResize"
+            android:theme="@style/RecordAudioDialogTheme" />
+
         <activity
             android:name="com.manimarank.spell4wiki.ui.webui.CommonWebContentActivity"
             android:screenOrientation="portrait"
