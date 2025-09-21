@@ -2,6 +2,7 @@ package com.manimarank.spell4wiki.ui.compose.webview
 
 import android.annotation.SuppressLint
 import android.graphics.Bitmap
+import android.os.Build
 import android.webkit.WebResourceError
 import android.webkit.WebResourceRequest
 import android.webkit.WebResourceResponse
@@ -97,8 +98,27 @@ private fun setupWebView(
         }
         settings.domStorageEnabled = true
 
-        // Fix black background issue
-        setBackgroundColor(android.graphics.Color.WHITE)
+        // Set background color based on theme
+        val backgroundColor = if (context.resources.configuration.uiMode and
+            android.content.res.Configuration.UI_MODE_NIGHT_MASK ==
+            android.content.res.Configuration.UI_MODE_NIGHT_YES) {
+            android.graphics.Color.parseColor("#121212") // Dark theme background
+        } else {
+            android.graphics.Color.WHITE // Light theme background
+        }
+        setBackgroundColor(backgroundColor)
+
+        // Apply dark mode to WebView content if supported
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            val isDarkMode = context.resources.configuration.uiMode and
+                android.content.res.Configuration.UI_MODE_NIGHT_MASK ==
+                android.content.res.Configuration.UI_MODE_NIGHT_YES
+            settings.forceDark = if (isDarkMode) {
+                WebSettings.FORCE_DARK_ON
+            } else {
+                WebSettings.FORCE_DARK_OFF
+            }
+        }
     }
 }
 

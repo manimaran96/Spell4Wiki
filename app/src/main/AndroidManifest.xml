@@ -45,8 +45,18 @@
         tools:ignore="GoogleAppIndexingWarning"
         tools:targetApi="tiramisu">
 
+        <!-- Old Splash Activity (kept for compatibility) -->
         <activity
             android:name="com.manimarank.spell4wiki.ui.splash.SplashActivity"
+            tools:ignore="LockedOrientationActivity"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustResize"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.FullScreen"
+            android:exported="false" />
+
+        <!-- New Compose Splash Activity (Main Launcher) -->
+        <activity
+            android:name="com.manimarank.spell4wiki.ui.compose.splash.SplashComposeActivity"
             tools:ignore="LockedOrientationActivity"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize"
             android:screenOrientation="portrait"
@@ -64,6 +74,22 @@
             tools:ignore="LockedOrientationActivity"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize"
             android:theme="@style/AppTheme.FullScreen"/>
+
+
+
+        <!-- Settings Compose Activity -->
+        <activity android:name="com.manimarank.spell4wiki.ui.compose.settings.SettingsComposeActivity"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustResize"
+            android:theme="@style/AppTheme.NoActionBar"/>
+
+        <!-- About Compose Activity -->
+        <activity android:name="com.manimarank.spell4wiki.ui.compose.about.AboutComposeActivity"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustResize"
+            android:theme="@style/AppTheme.NoActionBar"/>
 
         <activity
             android:name="com.manimarank.spell4wiki.ui.settings.LanguageSelectionActivity"

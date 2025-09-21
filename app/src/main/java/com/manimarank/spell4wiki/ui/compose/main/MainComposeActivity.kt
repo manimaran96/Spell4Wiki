@@ -111,10 +111,10 @@ class MainComposeActivity : ComponentActivity() {
                         }
                     },
                     onNavigateToAbout = {
-                        startActivity(Intent(this@MainComposeActivity, AboutActivity::class.java))
+                        startActivity(Intent(this@MainComposeActivity, com.manimarank.spell4wiki.ui.compose.about.AboutComposeActivity::class.java))
                     },
                     onNavigateToSettings = {
-                        startActivity(Intent(this@MainComposeActivity, SettingsActivity::class.java))
+                        startActivity(Intent(this@MainComposeActivity, com.manimarank.spell4wiki.ui.compose.settings.SettingsComposeActivity::class.java))
                     },
                     onLogout = {
                         viewModel.showLogoutDialog(this@MainComposeActivity, pref)

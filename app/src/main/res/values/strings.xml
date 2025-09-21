@@ -280,4 +280,11 @@
     <!-- New String -->
     <string name="select_category">Search &amp; Select Category</string>
 
+    <!-- About Screen Sections -->
+    <string name="app_actions">App Actions</string>
+    <string name="development">Development</string>
+    <string name="legal">Legal</string>
+    <string name="community">Community</string>
+    <string name="share_app_text">Check out this amazing app for contributing audio pronunciations to Wiktionary!</string>
+
 </resources>

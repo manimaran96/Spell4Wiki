@@ -205,15 +205,14 @@ class LoginViewModel : ViewModel() {
     private fun handleLoginSuccess(context: Context, login: ClientLogin) {
         viewModelScope.launch {
             try {
-                // Handle account authentication response if present
-                // This would need to be passed from the activity if needed
+                // Create WikiUser and update account
                 val wikiUser = WikiUser(_uiState.value.username, _uiState.value.password)
-                // AccountUtils.updateAccount(accountAuthenticatorResponse, wikiUser)
-                
+                AccountUtils.updateAccount(null, wikiUser)
+
                 // Save user session
                 val pref = PrefManager(context)
                 pref.setUserSession(login.username)
-                
+
                 // Show success message and mark login as successful
                 _uiState.value = _uiState.value.copy(
                     isLoading = false,
