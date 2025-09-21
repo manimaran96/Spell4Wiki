@@ -357,3 +357,109 @@ fun ThemeSelectionDialog(
         textContentColor = MaterialTheme.colorScheme.onSurface
     )
 }
+
+/**
+ * Rate app dialog with three options
+ */
+@Composable
+fun RateAppDialog(
+    onRate: () -> Unit,
+    onLater: () -> Unit,
+    onNever: () -> Unit,
+    onDismiss: () -> Unit = onLater,
+    modifier: Modifier = Modifier
+) {
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        title = {
+            Text(
+                text = stringResource(R.string.rta_dialog_title),
+                style = MaterialTheme.typography.headlineSmall,
+                fontWeight = FontWeight.Bold
+            )
+        },
+        text = {
+            Text(
+                text = stringResource(R.string.rta_dialog_message),
+                style = MaterialTheme.typography.bodyMedium,
+                textAlign = TextAlign.Start
+            )
+        },
+        confirmButton = {
+            TextButton(onClick = onRate) {
+                Text(
+                    text = stringResource(R.string.rta_dialog_ok),
+                    color = MaterialTheme.colorScheme.primary,
+                    fontWeight = FontWeight.Bold
+                )
+            }
+        },
+        dismissButton = {
+            Row {
+                TextButton(onClick = onNever) {
+                    Text(
+                        text = stringResource(R.string.rta_dialog_no),
+                        color = MaterialTheme.colorScheme.onSurface
+                    )
+                }
+                Spacer(modifier = Modifier.width(8.dp))
+                TextButton(onClick = onLater) {
+                    Text(
+                        text = stringResource(R.string.rta_dialog_cancel),
+                        color = MaterialTheme.colorScheme.onSurface
+                    )
+                }
+            }
+        },
+        modifier = modifier,
+        properties = DialogProperties(dismissOnBackPress = false, dismissOnClickOutside = false)
+    )
+}
+
+/**
+ * Notification permission rationale dialog
+ */
+@Composable
+fun NotificationPermissionDialog(
+    onAllow: () -> Unit,
+    onDeny: () -> Unit,
+    onDismiss: () -> Unit = onDeny,
+    modifier: Modifier = Modifier
+) {
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        title = {
+            Text(
+                text = stringResource(R.string.notification_permission_title),
+                style = MaterialTheme.typography.headlineSmall,
+                fontWeight = FontWeight.Bold
+            )
+        },
+        text = {
+            Text(
+                text = stringResource(R.string.notification_permission_rationale),
+                style = MaterialTheme.typography.bodyMedium,
+                textAlign = TextAlign.Start
+            )
+        },
+        confirmButton = {
+            TextButton(onClick = onAllow) {
+                Text(
+                    text = stringResource(R.string.allow),
+                    color = MaterialTheme.colorScheme.primary,
+                    fontWeight = FontWeight.Bold
+                )
+            }
+        },
+        dismissButton = {
+            TextButton(onClick = onDeny) {
+                Text(
+                    text = stringResource(R.string.deny),
+                    color = MaterialTheme.colorScheme.onSurface
+                )
+            }
+        },
+        modifier = modifier,
+        properties = DialogProperties(dismissOnBackPress = false, dismissOnClickOutside = false)
+    )
+}

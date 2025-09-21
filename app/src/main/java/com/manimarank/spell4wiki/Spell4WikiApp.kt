@@ -8,6 +8,7 @@ import com.manimaran.crash_reporter.CrashReporter
 import com.manimaran.crash_reporter.CrashReporterConfiguration
 import com.manimarank.spell4wiki.data.prefs.PrefManager
 import com.manimarank.spell4wiki.ui.dialogs.AppLanguageDialog
+import com.manimarank.spell4wiki.utils.ThemeUtils
 import kotlin.Exception as KotlinException
 
 /**
@@ -32,6 +33,10 @@ class Spell4WikiApp : Application() {
 
     override fun onCreate() {
         super.onCreate()
+
+        // Initialize theme on app startup
+        ThemeUtils.initializeTheme(this)
+
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true)
         try {
             val sharedPref = PrefManager(applicationContext)

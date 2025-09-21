@@ -29,7 +29,7 @@
 
 
     <application
-        android:name=".Spell4WikiApplication"
+        android:name=".Spell4WikiApp"
         android:allowBackup="false"
         android:fullBackupContent="false"
         android:dataExtractionRules="@xml/data_extraction_rules"

@@ -282,6 +282,13 @@
 
     <!-- New String -->
     <string name="select_category">Search &amp; Select Category</string>
+    <string name="search_categories">Search categories</string>
+    <string name="type_to_search_categories">Type to search categories</string>
+    <string name="loading_categories">Loading categories…</string>
+    <string name="no_categories_found">No categories found</string>
+    <string name="type_at_least_3_characters">Type at least 3 characters to search</string>
+    <string name="no_languages_found">No languages found</string>
+    <string name="selected">Selected</string>
 
     <!-- About Screen Sections -->
     <string name="app_actions">App Actions</string>
