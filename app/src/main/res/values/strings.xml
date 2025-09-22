@@ -314,6 +314,7 @@
     <string name="filter_progress_message">Filtering words, please wait…</string>
     <string name="add_category">Add Category</string>
     <string name="change_category">Change Category</string>
+    <string name="loading_words">Loading words…</string>
 
     <!-- Common UI Component Strings -->
     <string name="error_occurred">An error occurred</string>

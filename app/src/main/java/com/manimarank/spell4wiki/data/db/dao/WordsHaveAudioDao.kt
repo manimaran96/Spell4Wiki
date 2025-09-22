@@ -6,13 +6,13 @@ import com.manimarank.spell4wiki.data.db.entities.WordsHaveAudio
 @Dao
 interface WordsHaveAudioDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(vararg wordsHaveAudios: WordsHaveAudio?)
+    fun insert(vararg wordsHaveAudios: WordsHaveAudio)
 
     @Update
-    fun update(vararg wordsHaveAudios: WordsHaveAudio?)
+    fun update(vararg wordsHaveAudios: WordsHaveAudio)
 
     @Delete
-    fun delete(wordsHaveAudio: WordsHaveAudio?)
+    fun delete(wordsHaveAudio: WordsHaveAudio)
 
     @Query("SELECT word FROM words_already_have_audio WHERE language_code = :code")
     fun getWordsAlreadyHaveAudioByLanguage(code: String?): List<String>?

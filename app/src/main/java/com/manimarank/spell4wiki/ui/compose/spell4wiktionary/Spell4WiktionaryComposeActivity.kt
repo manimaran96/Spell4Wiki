@@ -30,6 +30,11 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModelProvider
+import androidx.compose.ui.platform.LocalInspectionMode
+import androidx.compose.runtime.DisposableEffect
+import androidx.compose.ui.platform.LocalLifecycleOwner
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleEventObserver
 import com.manimarank.spell4wiki.R
 import com.manimarank.spell4wiki.data.prefs.PrefManager
 import com.manimarank.spell4wiki.ui.compose.dialogs.DialogMigrationUtils.showConfirmBackDialog
@@ -144,13 +149,40 @@ fun Spell4WiktionaryScreen(
     modifier: Modifier = Modifier
 ) {
     val context = LocalContext.current
-    
+    val lifecycleOwner = LocalLifecycleOwner.current
+    val isInPreview = LocalInspectionMode.current
+
     val uiState by viewModel.uiState.collectAsState()
     val words by viewModel.words.collectAsState()
     val isLoading by viewModel.isLoading.collectAsState()
     val isRefreshing by viewModel.isRefreshing.collectAsState()
     val showBackDialog by viewModel.showBackConfirmationDialog.collectAsState()
     val showFilterDialog by viewModel.showFilterDialog.collectAsState()
+
+    // Android 16 lifecycle management for privacy and performance
+    DisposableEffect(lifecycleOwner) {
+        val observer = LifecycleEventObserver { _, event ->
+            when (event) {
+                Lifecycle.Event.ON_PAUSE -> {
+                    // Pause data loading when app goes to background for privacy
+                    if (!isInPreview) {
+                        viewModel.pauseDataLoading()
+                    }
+                }
+                Lifecycle.Event.ON_RESUME -> {
+                    // Resume data loading when app comes to foreground
+                    if (!isInPreview) {
+                        viewModel.resumeDataLoading()
+                    }
+                }
+                else -> {}
+            }
+        }
+        lifecycleOwner.lifecycle.addObserver(observer)
+        onDispose {
+            lifecycleOwner.lifecycle.removeObserver(observer)
+        }
+    }
     
     val listState = rememberLazyListState()
     
@@ -254,12 +286,12 @@ fun Spell4WiktionaryTopBar(
     TopAppBar(
         title = {
             Column(
-                modifier = Modifier.padding(vertical = 4.dp)
+                modifier = Modifier.padding(vertical = 2.dp)
             ) {
                 Text(
                     text = stringResource(R.string.spell_4_wiki_all),
                     style = MaterialTheme.typography.titleMedium,
-                    fontWeight = FontWeight.Bold,
+                    fontWeight = FontWeight.Medium,
                     color = MaterialTheme.colorScheme.onPrimary,
                     maxLines = 1
                 )
@@ -429,17 +461,37 @@ fun WordsList(
 
         if (isLoading) {
             item {
-                Box(
+                Card(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(16.dp),
-                    contentAlignment = Alignment.Center
+                    colors = CardDefaults.cardColors(
+                        containerColor = MaterialTheme.colorScheme.surfaceVariant
+                    ),
+                    elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
                 ) {
-                    CircularProgressIndicator(
-                        modifier = Modifier.size(32.dp),
-                        strokeWidth = 3.dp,
-                        color = MaterialTheme.colorScheme.primary
-                    )
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(24.dp),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Column(
+                            horizontalAlignment = Alignment.CenterHorizontally,
+                            verticalArrangement = Arrangement.spacedBy(12.dp)
+                        ) {
+                            CircularProgressIndicator(
+                                modifier = Modifier.size(40.dp),
+                                strokeWidth = 4.dp,
+                                color = MaterialTheme.colorScheme.primary
+                            )
+                            Text(
+                                text = stringResource(R.string.loading_words),
+                                style = MaterialTheme.typography.bodyMedium,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant
+                            )
+                        }
+                    }
                 }
             }
         }

@@ -2,31 +2,32 @@
 # Build Tools
 agp = "8.5.2"
 kotlin = "1.9.24"
+kotlin-compose-compiler = "1.5.14"
 
-# Android SDK
+# Android SDK - Updated for Android 16 compatibility
 compileSdk = "35"
 targetSdk = "35"
 minSdk = "24"
 
-# AndroidX Core
-androidx-core-ktx = "1.12.0"
-androidx-appcompat = "1.6.1"
+# AndroidX Core - Updated for Android 16 compatibility
+androidx-core-ktx = "1.13.1"
+androidx-appcompat = "1.7.0"
 androidx-constraintlayout = "2.1.4"
 androidx-recyclerview = "1.3.2"
 androidx-swiperefreshlayout = "1.1.0"
-androidx-fragment-ktx = "1.6.2"
+androidx-fragment-ktx = "1.8.2"
 
-# Material Design
-material = "1.11.0"
+# Material Design - Updated for Android 16
+material = "1.12.0"
 
-# Jetpack Compose
+# Jetpack Compose - Updated for Android 16
 compose-bom = "2024.06.00"
-androidx-activity-compose = "1.9.0"
+androidx-activity-compose = "1.9.1"
 androidx-navigation-compose = "2.7.7"
 
-# Architecture Components
-androidx-lifecycle = "2.7.0"
-androidx-room = "2.5.2"
+# Architecture Components - Updated for Android 16
+androidx-lifecycle = "2.8.4"
+androidx-room = "2.6.1"
 
 # Networking
 retrofit = "2.9.0"
@@ -222,6 +223,7 @@ android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
 kotlin-parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize", version.ref = "kotlin" }
+kotlin-compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 
 # Firebase Plugins (Play Store only)
 google-services = { id = "com.google.gms.google-services", version.ref = "google-services" }

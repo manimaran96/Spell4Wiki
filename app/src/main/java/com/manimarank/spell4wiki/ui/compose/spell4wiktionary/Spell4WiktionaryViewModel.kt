@@ -76,6 +76,7 @@ class Spell4WiktionaryViewModel : ViewModel() {
     private var wiktionaryTitleOfWordsWithoutAudio: String? = null
     private var filterJob: Job? = null
     private var isFilterCancelled = false
+    private var isDataLoadingPaused = false
 
     /**
      * Initialize the ViewModel with context and language code
@@ -102,7 +103,7 @@ class Spell4WiktionaryViewModel : ViewModel() {
      * Load words from server
      */
     fun loadWords() {
-        if (_isLoading.value || context == null) return
+        if (_isLoading.value || context == null || isDataLoadingPaused) return
 
         _isLoading.value = true
 
@@ -370,6 +371,22 @@ class Spell4WiktionaryViewModel : ViewModel() {
         } catch (e: Exception) {
             false
         }
+    }
+
+    /**
+     * Pause data loading for Android 16 privacy compliance
+     * Called when app goes to background
+     */
+    fun pauseDataLoading() {
+        isDataLoadingPaused = true
+    }
+
+    /**
+     * Resume data loading for Android 16 privacy compliance
+     * Called when app comes to foreground
+     */
+    fun resumeDataLoading() {
+        isDataLoadingPaused = false
     }
 }
 

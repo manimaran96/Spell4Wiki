@@ -6,13 +6,13 @@ import com.manimarank.spell4wiki.data.db.entities.WikiLang
 @Dao
 interface WikiLangDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(vararg wikiLangs: WikiLang?)
+    fun insert(vararg wikiLangs: WikiLang)
 
     @Update
-    fun update(vararg wikiLangs: WikiLang?)
+    fun update(vararg wikiLangs: WikiLang)
 
     @Delete
-    fun delete(wikiLang: WikiLang?)
+    fun delete(wikiLang: WikiLang)
 
     @get:Query("SELECT * FROM wiki_language")
     val wikiLanguageList: List<WikiLang?>?
