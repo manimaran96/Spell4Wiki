@@ -17,6 +17,8 @@ import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Settings
+import androidx.compose.ui.res.painterResource
+import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material3.*
 import androidx.compose.ui.res.painterResource
@@ -171,6 +173,7 @@ fun Spell4WiktionaryScreen(
                 languageInfo = uiState.languageInfo,
                 onBackClick = onBackPressed,
                 onLanguageClick = onLanguageSelection,
+                onCategoryClick = onCategorySelection,
                 onRefreshClick = { viewModel.refreshWords() }
             )
         },
@@ -244,25 +247,28 @@ fun Spell4WiktionaryTopBar(
     languageInfo: String,
     onBackClick: () -> Unit,
     onLanguageClick: () -> Unit,
+    onCategoryClick: () -> Unit,
     onRefreshClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    CenterAlignedTopAppBar(
+    TopAppBar(
         title = {
             Column(
-                horizontalAlignment = Alignment.CenterHorizontally
+                modifier = Modifier.padding(vertical = 4.dp)
             ) {
                 Text(
                     text = stringResource(R.string.spell_4_wiki_all),
-                    style = MaterialTheme.typography.titleLarge,
+                    style = MaterialTheme.typography.titleMedium,
                     fontWeight = FontWeight.Bold,
-                    color = MaterialTheme.colorScheme.onPrimary
+                    color = MaterialTheme.colorScheme.onPrimary,
+                    maxLines = 1
                 )
                 if (languageInfo.isNotEmpty()) {
                     Text(
                         text = languageInfo,
                         style = MaterialTheme.typography.bodySmall,
-                        color = MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.8f)
+                        color = MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.8f),
+                        maxLines = 1
                     )
                 }
             }
@@ -277,11 +283,19 @@ fun Spell4WiktionaryTopBar(
             }
         },
         actions = {
+            IconButton(onClick = onCategoryClick) {
+                Icon(
+                    imageVector = Icons.Default.Add,
+                    contentDescription = stringResource(R.string.add_category),
+                    tint = MaterialTheme.colorScheme.onPrimary
+                )
+            }
             IconButton(onClick = onLanguageClick) {
                 Icon(
-                    imageVector = Icons.Default.Settings,
+                    painter = painterResource(id = R.drawable.ic_language),
                     contentDescription = stringResource(R.string.select_language),
-                    tint = MaterialTheme.colorScheme.onPrimary
+                    tint = MaterialTheme.colorScheme.onPrimary,
+                    modifier = Modifier.size(24.dp)
                 )
             }
             IconButton(onClick = onRefreshClick) {
@@ -292,7 +306,7 @@ fun Spell4WiktionaryTopBar(
                 )
             }
         },
-        colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
+        colors = TopAppBarDefaults.topAppBarColors(
             containerColor = MaterialTheme.colorScheme.primary,
             titleContentColor = MaterialTheme.colorScheme.onPrimary,
             navigationIconContentColor = MaterialTheme.colorScheme.onPrimary,
@@ -421,7 +435,11 @@ fun WordsList(
                         .padding(16.dp),
                     contentAlignment = Alignment.Center
                 ) {
-                    CircularProgressIndicator()
+                    CircularProgressIndicator(
+                        modifier = Modifier.size(32.dp),
+                        strokeWidth = 3.dp,
+                        color = MaterialTheme.colorScheme.primary
+                    )
                 }
             }
         }

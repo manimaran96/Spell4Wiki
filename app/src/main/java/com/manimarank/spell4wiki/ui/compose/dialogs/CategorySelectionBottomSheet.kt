@@ -55,29 +55,29 @@ fun CategorySelectionBottomSheet(
     var isLoading by remember { mutableStateOf(false) }
     var errorMessage by remember { mutableStateOf<String?>(null) }
     var searchJob by remember { mutableStateOf<Job?>(null) }
-    
+
     // Function to fetch categories
     fun fetchCategories(searchTerm: String) {
         if (searchTerm.isEmpty()) {
             errorMessage = "Not valid search term"
             return
         }
-        
+
         if (!isConnected(context)) {
             errorMessage = context.getString(R.string.check_internet)
             return
         }
-        
+
         isLoading = true
         errorMessage = null
-        
+
         val api = ApiClient.getWiktionaryApi(
-            context, 
+            context,
             pref.languageCodeSpell4WikiAll ?: AppConstants.DEFAULT_LANGUAGE_CODE
         ).create(ApiInterface::class.java)
-        
+
         val call = api.fetchCategoryList(searchTerm, 100, null)
-        
+
         call.enqueue(object : Callback<WikiCategoryListItemResponse?> {
             override fun onResponse(call: Call<WikiCategoryListItemResponse?>, response: Response<WikiCategoryListItemResponse?>) {
                 isLoading = false
@@ -135,7 +135,7 @@ fun CategorySelectionBottomSheet(
                     // Cancel previous search job
                     searchJob?.cancel()
 
-                    if (newQuery.length >= 3) {
+                    if (newQuery.isNotEmpty()) {
                         searchJob = scope.launch {
                             delay(400) // Debounce delay
                             fetchCategories(newQuery)
@@ -212,9 +212,9 @@ fun CategorySelectionBottomSheet(
                         }
                     }
                     
-                    searchQuery.length < 3 -> {
+                    searchQuery.isEmpty() -> {
                         Text(
-                            text = stringResource(R.string.type_at_least_3_characters),
+                            text = stringResource(R.string.type_to_search_categories),
                             style = MaterialTheme.typography.bodyMedium,
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
                             textAlign = TextAlign.Center,

@@ -312,6 +312,8 @@
     <string name="words_category">Words Category</string>
     <string name="no_words_found">No words found</string>
     <string name="filter_progress_message">Filtering words, please wait…</string>
+    <string name="add_category">Add Category</string>
+    <string name="change_category">Change Category</string>
 
     <!-- Common UI Component Strings -->
     <string name="error_occurred">An error occurred</string>

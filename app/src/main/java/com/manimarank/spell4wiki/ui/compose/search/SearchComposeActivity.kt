@@ -11,7 +11,8 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material.icons.filled.Info
+import androidx.compose.ui.res.painterResource
+import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -299,9 +300,10 @@ fun SearchResultItem(
                 onClick = onWiktionaryClick
             ) {
                 Icon(
-                    imageVector = Icons.Default.Info,
+                    painter = painterResource(id = com.manimarank.spell4wiki.R.drawable.ic_info),
                     contentDescription = stringResource(R.string.wiktionary),
-                    tint = MaterialTheme.colorScheme.primary
+                    tint = MaterialTheme.colorScheme.primary,
+                    modifier = Modifier.size(24.dp)
                 )
             }
         }
