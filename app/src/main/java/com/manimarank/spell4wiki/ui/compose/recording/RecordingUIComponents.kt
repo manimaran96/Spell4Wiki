@@ -41,7 +41,8 @@ data class RecordingUIState(
     val language: String = "",
     val fileName: String = "",
     val isUploading: Boolean = false,
-    val uploadProgress: Float = 0f
+    val uploadProgress: Float = 0f,
+    val isDeclarationChecked: Boolean = true
 )
 
 /**
@@ -58,6 +59,7 @@ fun RecordingUIComponent(
     onUpload: () -> Unit,
     onClose: () -> Unit,
     onSettingsClick: () -> Unit,
+    onDeclarationToggle: (Boolean) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Card(
@@ -114,6 +116,14 @@ fun RecordingUIComponent(
                 FileNamePreview(fileName = state.fileName)
             }
             
+            // Declaration checkbox (shown when audio is recorded)
+            if (state.isRecorded) {
+                DeclarationCheckbox(
+                    isChecked = state.isDeclarationChecked,
+                    onCheckedChange = onDeclarationToggle
+                )
+            }
+
             // Upload button (shown when audio is recorded)
             if (state.isRecorded) {
                 UploadButton(
@@ -307,6 +317,38 @@ private fun FileNamePreview(
                 color = MaterialTheme.colorScheme.onSurface
             )
         }
+    }
+}
+
+/**
+ * Declaration checkbox component
+ */
+@Composable
+private fun DeclarationCheckbox(
+    isChecked: Boolean,
+    onCheckedChange: (Boolean) -> Unit,
+    modifier: Modifier = Modifier
+) {
+    val context = LocalContext.current
+
+    Row(
+        modifier = modifier.fillMaxWidth(),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(8.dp)
+    ) {
+        Checkbox(
+            checked = isChecked,
+            onCheckedChange = onCheckedChange,
+            colors = CheckboxDefaults.colors(
+                checkedColor = MaterialTheme.colorScheme.primary
+            )
+        )
+        Text(
+            text = stringResource(R.string.declaration_note, "CC0"),
+            style = MaterialTheme.typography.bodySmall,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+            modifier = Modifier.weight(1f)
+        )
     }
 }
 

@@ -26,6 +26,7 @@ import com.manimarank.spell4wiki.utils.EdgeToEdgeUtils.setupStatusBarHandling
 import com.manimarank.spell4wiki.utils.GeneralUtils
 import com.manimarank.spell4wiki.utils.constants.AppConstants
 import com.manimarank.spell4wiki.utils.ToastUtils.showLong
+import com.manimarank.spell4wiki.utils.NetworkUtils.isConnected
 import java.io.File
 
 /**
@@ -70,7 +71,8 @@ class RecordAudioComposeActivity : ComponentActivity() {
                     onSeekTo = { position -> viewModel.seekTo(position) },
                     onUpload = { handleUpload() },
                     onClose = { finish() },
-                    onSettingsClick = { showLicenseDialog() }
+                    onSettingsClick = { showLicenseDialog() },
+                    onDeclarationToggle = { isChecked -> viewModel.toggleDeclaration(isChecked) }
                 )
             }
         }
@@ -126,13 +128,30 @@ class RecordAudioComposeActivity : ComponentActivity() {
      * Handle upload process
      */
     private fun handleUpload() {
-        // TODO: Implement upload logic similar to original RecordAudioActivity
-        // This would include network calls, progress tracking, etc.
-        viewModel.startUpload()
-        
-        // Simulate upload progress for now
-        // In real implementation, this would be handled by upload API calls
-        showLong(getString(R.string.upload_feature_coming_soon))
+        val uiState = viewModel.uiState.value
+
+        if (!uiState.isRecorded) {
+            showLong(getString(R.string.record_audio_not_found))
+            return
+        }
+
+        if (uiState.recordedDuration < 1000) { // Less than 1 second
+            showLong(getString(R.string.recorded_audio_too_short))
+            return
+        }
+
+        if (!uiState.isDeclarationChecked) {
+            showLong(getString(R.string.confirm_declaration))
+            return
+        }
+
+        if (!isConnected(applicationContext)) {
+            showLong(getString(R.string.check_internet))
+            return
+        }
+
+        // Start the upload process
+        viewModel.uploadAudioToWikiServer(this)
     }
 
     /**
@@ -188,6 +207,7 @@ fun RecordAudioScreen(
     onUpload: () -> Unit,
     onClose: () -> Unit,
     onSettingsClick: () -> Unit,
+    onDeclarationToggle: (Boolean) -> Unit,
     modifier: Modifier = Modifier
 ) {
     val context = LocalContext.current
@@ -215,7 +235,8 @@ fun RecordAudioScreen(
                 onSeekTo = onSeekTo,
                 onUpload = onUpload,
                 onClose = onClose,
-                onSettingsClick = onSettingsClick
+                onSettingsClick = onSettingsClick,
+                onDeclarationToggle = onDeclarationToggle
             )
         }
     }
