@@ -7,7 +7,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
 import com.manimarank.spell4wiki.data.prefs.PrefManager
-import com.manimarank.spell4wiki.ui.compose.webview.CommonWebContentComposeActivity
+import com.manimarank.spell4wiki.ui.compose.webview.WebContentActivity
 import com.manimarank.spell4wiki.ui.compose.webview.WebViewComposeFragment
 import com.manimarank.spell4wiki.ui.webui.CommonWebActivity
 import com.manimarank.spell4wiki.ui.webui.CommonWebContentActivity
@@ -50,7 +50,7 @@ object MigrationUtils {
         languageCode: String? = null
     ) {
         val intent = if (shouldUseComposeWebView(context)) {
-            Intent(context, CommonWebContentComposeActivity::class.java)
+            Intent(context, WebContentActivity::class.java)
         } else {
             Intent(context, CommonWebContentActivity::class.java)
         }
@@ -69,7 +69,7 @@ object MigrationUtils {
      * Launch Login activity - uses Compose version by default
      */
     fun launchLoginActivity(context: Context) {
-        val intent = Intent(context, com.manimarank.spell4wiki.ui.compose.auth.LoginComposeActivity::class.java)
+        val intent = Intent(context, com.manimarank.spell4wiki.ui.compose.auth.LoginActivity::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         context.startActivity(intent)
     }
@@ -78,7 +78,7 @@ object MigrationUtils {
      * Launch Main activity - uses Compose version by default
      */
     fun launchMainActivity(context: Context) {
-        val intent = Intent(context, com.manimarank.spell4wiki.ui.compose.main.MainComposeActivity::class.java)
+        val intent = Intent(context, com.manimarank.spell4wiki.ui.compose.main.MainActivity::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
         context.startActivity(intent)
     }
@@ -87,7 +87,7 @@ object MigrationUtils {
      * Launch AppIntro activity - uses Compose version by default
      */
     fun launchAppIntroActivity(context: Context) {
-        val intent = Intent(context, com.manimarank.spell4wiki.ui.compose.intro.AppIntroComposeActivity::class.java)
+        val intent = Intent(context, com.manimarank.spell4wiki.ui.compose.intro.AppIntroActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         context.startActivity(intent)
     }
@@ -96,7 +96,7 @@ object MigrationUtils {
      * Launch Spell4Wiktionary activity - uses Compose version by default
      */
     fun launchSpell4WiktionaryActivity(context: Context) {
-        val intent = Intent(context, com.manimarank.spell4wiki.ui.compose.spell4wiktionary.Spell4WiktionaryComposeActivity::class.java)
+        val intent = Intent(context, com.manimarank.spell4wiki.ui.compose.spell4wiktionary.Spell4WiktionaryActivity::class.java)
         context.startActivity(intent)
     }
 
@@ -104,7 +104,7 @@ object MigrationUtils {
      * Launch Spell4Word activity - uses Compose version by default
      */
     fun launchSpell4WordActivity(context: Context) {
-        val intent = Intent(context, com.manimarank.spell4wiki.ui.compose.spell4word.Spell4WordComposeActivity::class.java)
+        val intent = Intent(context, com.manimarank.spell4wiki.ui.compose.spell4word.Spell4WordActivity::class.java)
         context.startActivity(intent)
     }
 
@@ -112,7 +112,7 @@ object MigrationUtils {
      * Launch Spell4WordList activity - uses Compose version by default
      */
     fun launchSpell4WordListActivity(context: Context) {
-        val intent = Intent(context, com.manimarank.spell4wiki.ui.compose.spell4wordlist.Spell4WordListComposeActivity::class.java)
+        val intent = Intent(context, com.manimarank.spell4wiki.ui.compose.spell4wordlist.Spell4WordListActivity::class.java)
         context.startActivity(intent)
     }
 
@@ -120,7 +120,7 @@ object MigrationUtils {
      * Launch WiktionarySearch activity - uses Compose version by default
      */
     fun launchWiktionarySearchActivity(context: Context, searchText: String? = null) {
-        val intent = Intent(context, com.manimarank.spell4wiki.ui.compose.search.SearchComposeActivity::class.java)
+        val intent = Intent(context, com.manimarank.spell4wiki.ui.compose.search.SearchActivity::class.java)
         searchText?.let { intent.putExtra(com.manimarank.spell4wiki.utils.constants.AppConstants.SEARCH_TEXT, it) }
         context.startActivity(intent)
     }
@@ -129,7 +129,7 @@ object MigrationUtils {
      * Launch Settings activity - uses Compose version by default
      */
     fun launchSettingsActivity(context: Context) {
-        val intent = Intent(context, com.manimarank.spell4wiki.ui.compose.settings.SettingsComposeActivity::class.java)
+        val intent = Intent(context, com.manimarank.spell4wiki.ui.compose.settings.SettingsActivity::class.java)
         context.startActivity(intent)
     }
 
@@ -137,7 +137,7 @@ object MigrationUtils {
      * Launch About activity - uses Compose version by default
      */
     fun launchAboutActivity(context: Context) {
-        val intent = Intent(context, com.manimarank.spell4wiki.ui.compose.about.AboutComposeActivity::class.java)
+        val intent = Intent(context, com.manimarank.spell4wiki.ui.compose.about.AboutActivity::class.java)
         context.startActivity(intent)
     }
 
@@ -145,7 +145,7 @@ object MigrationUtils {
      * Launch Contributors activity - uses Compose version by default
      */
     fun launchContributorsActivity(context: Context) {
-        val intent = Intent(context, com.manimarank.spell4wiki.ui.compose.contributors.ContributorsComposeActivity::class.java)
+        val intent = Intent(context, com.manimarank.spell4wiki.ui.compose.contributors.ContributorsActivity::class.java)
         context.startActivity(intent)
     }
 
@@ -153,7 +153,7 @@ object MigrationUtils {
      * Launch Language Selection activity - uses Compose version by default
      */
     fun launchLanguageSelectionActivity(context: Context) {
-        val intent = Intent(context, com.manimarank.spell4wiki.ui.compose.languageselection.LanguageSelectionComposeActivity::class.java)
+        val intent = Intent(context, com.manimarank.spell4wiki.ui.compose.languageselection.LanguageSelectionActivity::class.java)
         context.startActivity(intent)
     }
 

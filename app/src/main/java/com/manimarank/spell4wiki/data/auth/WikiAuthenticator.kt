@@ -5,7 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import com.manimarank.spell4wiki.R
-import com.manimarank.spell4wiki.ui.compose.auth.LoginComposeActivity
+import com.manimarank.spell4wiki.ui.compose.auth.LoginActivity
 import com.manimarank.spell4wiki.utils.Print.log
 
 class WikiAuthenticator internal constructor(private val mContext: Context) : AbstractAccountAuthenticator(mContext) {
@@ -24,7 +24,7 @@ class WikiAuthenticator internal constructor(private val mContext: Context) : Ab
 
     private fun addAccount(response: AccountAuthenticatorResponse): Bundle {
         log(TAG + "Add Account Sub")
-        val intent = Intent(mContext, LoginComposeActivity::class.java)
+        val intent = Intent(mContext, LoginActivity::class.java)
         intent.putExtra(AccountManager.KEY_ACCOUNT_AUTHENTICATOR_RESPONSE, response)
         val bundle = Bundle()
         bundle.putParcelable(AccountManager.KEY_INTENT, intent)

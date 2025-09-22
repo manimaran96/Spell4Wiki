@@ -58,9 +58,9 @@
 
 
 
-        <!-- New Compose Splash Activity (Main Launcher) -->
+        <!-- Splash Activity (Main Launcher) -->
         <activity
-            android:name="com.manimarank.spell4wiki.ui.compose.splash.SplashComposeActivity"
+            android:name="com.manimarank.spell4wiki.ui.compose.splash.SplashActivity"
             tools:ignore="LockedOrientationActivity"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize"
             android:screenOrientation="portrait"
@@ -73,7 +73,7 @@
         </activity>
 
         <!-- App Intro Activity -->
-        <activity android:name="com.manimarank.spell4wiki.ui.compose.intro.AppIntroComposeActivity"
+        <activity android:name="com.manimarank.spell4wiki.ui.compose.intro.AppIntroActivity"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize"
@@ -81,36 +81,36 @@
 
 
 
-        <!-- Settings Compose Activity -->
-        <activity android:name="com.manimarank.spell4wiki.ui.compose.settings.SettingsComposeActivity"
+        <!-- Settings Activity -->
+        <activity android:name="com.manimarank.spell4wiki.ui.compose.settings.SettingsActivity"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize"
             android:theme="@style/AppTheme.NoActionBar"/>
 
-        <!-- About Compose Activity -->
-        <activity android:name="com.manimarank.spell4wiki.ui.compose.about.AboutComposeActivity"
+        <!-- About Activity -->
+        <activity android:name="com.manimarank.spell4wiki.ui.compose.about.AboutActivity"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize"
             android:theme="@style/AppTheme.NoActionBar"/>
 
-        <!-- Contributors Compose Activity -->
-        <activity android:name="com.manimarank.spell4wiki.ui.compose.contributors.ContributorsComposeActivity"
+        <!-- Contributors Activity -->
+        <activity android:name="com.manimarank.spell4wiki.ui.compose.contributors.ContributorsActivity"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize"
             android:theme="@style/AppTheme.NoActionBar"/>
 
-        <!-- Spell4Word Compose Activity -->
-        <activity android:name="com.manimarank.spell4wiki.ui.compose.spell4word.Spell4WordComposeActivity"
+        <!-- Spell4Word Activity -->
+        <activity android:name="com.manimarank.spell4wiki.ui.compose.spell4word.Spell4WordActivity"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize"
             android:theme="@style/AppTheme.NoActionBar"/>
 
-        <!-- Spell4WordList Compose Activity -->
-        <activity android:name="com.manimarank.spell4wiki.ui.compose.spell4wordlist.Spell4WordListComposeActivity"
+        <!-- Spell4WordList Activity -->
+        <activity android:name="com.manimarank.spell4wiki.ui.compose.spell4wordlist.Spell4WordListActivity"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize"
@@ -120,14 +120,14 @@
 
         <!-- Login Activity -->
         <activity
-            android:name="com.manimarank.spell4wiki.ui.compose.auth.LoginComposeActivity"
+            android:name="com.manimarank.spell4wiki.ui.compose.auth.LoginActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize"
             tools:ignore="LockedOrientationActivity" />
 
         <activity
-            android:name="com.manimarank.spell4wiki.ui.compose.spell4wiktionary.Spell4WiktionaryComposeActivity"
+            android:name="com.manimarank.spell4wiki.ui.compose.spell4wiktionary.Spell4WiktionaryActivity"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize"
@@ -160,9 +160,9 @@
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize"
             android:theme="@style/RecordAudioDialogTheme" />
 
-        <!-- Jetpack Compose Activities -->
+        <!-- Language Selection Activity -->
         <activity
-            android:name="com.manimarank.spell4wiki.ui.compose.languageselection.LanguageSelectionComposeActivity"
+            android:name="com.manimarank.spell4wiki.ui.compose.languageselection.LanguageSelectionActivity"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize"
@@ -182,21 +182,21 @@
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize"
             android:theme="@style/AppTheme" />
         <activity
-            android:name="com.manimarank.spell4wiki.ui.compose.webview.CommonWebContentComposeActivity"
+            android:name="com.manimarank.spell4wiki.ui.compose.webview.WebContentActivity"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize"
             android:theme="@style/AppTheme" />
 
         <activity
-            android:name="com.manimarank.spell4wiki.ui.compose.main.MainComposeActivity"
+            android:name="com.manimarank.spell4wiki.ui.compose.main.MainActivity"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize"
             android:theme="@style/AppTheme" />
 
         <activity
-            android:name="com.manimarank.spell4wiki.ui.compose.search.SearchComposeActivity"
+            android:name="com.manimarank.spell4wiki.ui.compose.search.SearchActivity"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize"

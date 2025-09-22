@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.manimarank.spell4wiki.R
 import com.manimarank.spell4wiki.data.prefs.PrefManager
-import com.manimarank.spell4wiki.ui.compose.search.SearchComposeActivity
+import com.manimarank.spell4wiki.ui.compose.search.SearchActivity
 
 import com.manimarank.spell4wiki.utils.GeneralUtils.openUrl
 import com.manimarank.spell4wiki.utils.NetworkUtils.isConnected
@@ -44,7 +44,7 @@ class MainViewModel : ViewModel() {
                 _errorMessage.value = null
                 
                 // Launch search activity with query
-                val intent = Intent(context, SearchComposeActivity::class.java)
+                val intent = Intent(context, SearchActivity::class.java)
                 intent.putExtra(AppConstants.SEARCH_TEXT, query)
                 context.startActivity(intent)
                 

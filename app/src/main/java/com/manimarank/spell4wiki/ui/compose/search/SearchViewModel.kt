@@ -8,7 +8,7 @@ import com.manimarank.spell4wiki.data.apis.ApiClient
 import com.manimarank.spell4wiki.data.apis.ApiInterface
 import com.manimarank.spell4wiki.data.model.WikiSearchWords
 import com.manimarank.spell4wiki.data.prefs.PrefManager
-import com.manimarank.spell4wiki.ui.compose.webview.CommonWebContentComposeActivity
+import com.manimarank.spell4wiki.ui.compose.webview.WebContentActivity
 import com.manimarank.spell4wiki.utils.NetworkUtils.isConnected
 import com.manimarank.spell4wiki.utils.constants.AppConstants
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -156,7 +156,7 @@ class SearchViewModel : ViewModel() {
     }
 
     fun openSearchResult(result: SearchResult, context: Context) {
-        val intent = Intent(context, CommonWebContentComposeActivity::class.java)
+        val intent = Intent(context, WebContentActivity::class.java)
         intent.putExtra(AppConstants.TITLE, result.title)
         intent.putExtra(AppConstants.URL, result.url)
         context.startActivity(intent)

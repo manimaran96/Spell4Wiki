@@ -244,7 +244,8 @@ class RecordingViewModel : ViewModel() {
 
         val uploadFileName = _uiState.value.fileName
         val file = File(filePath)
-        val body = file.asRequestBody("audio/ogg".toMediaTypeOrNull())
+        val requestBody = file.asRequestBody("audio/ogg".toMediaTypeOrNull())
+        val filePart = MultipartBody.Part.createFormData("file", uploadFileName, requestBody)
 
         // Create content and license text
         val contentAndLicense = createContentAndLicense(context)
@@ -253,7 +254,7 @@ class RecordingViewModel : ViewModel() {
         val call = api?.uploadFile(
             uploadFileName.toRequestBody(MultipartBody.FORM),
             (editToken ?: "").toRequestBody(MultipartBody.FORM),
-            body,
+            filePart,
             contentAndLicense.toRequestBody(MultipartBody.FORM),
             AppConstants.UPLOAD_COMMENT.toRequestBody(MultipartBody.FORM)
         )
@@ -262,7 +263,7 @@ class RecordingViewModel : ViewModel() {
             override fun onResponse(call: Call<WikiUpload?>, response: Response<WikiUpload?>) {
                 if (response.isSuccessful && response.body() != null) {
                     try {
-                        val upload = response.body()!!.upload
+                        val upload = response.body()!!.success
                         val result = upload?.result
                         completeUploadFinalProcess(result, context)
                     } catch (e: Exception) {
