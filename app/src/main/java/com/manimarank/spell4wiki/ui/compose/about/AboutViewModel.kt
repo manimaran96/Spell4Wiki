@@ -16,7 +16,7 @@ import com.manimarank.spell4wiki.utils.GeneralUtils.openUrlInBrowser
 import com.manimarank.spell4wiki.utils.constants.AppConstants
 
 /**
- * ViewModel for AboutComposeActivity
+ * ViewModel for AboutActivity
  * Manages about screen actions and navigation
  */
 class AboutViewModel(private val context: Context) : ViewModel() {

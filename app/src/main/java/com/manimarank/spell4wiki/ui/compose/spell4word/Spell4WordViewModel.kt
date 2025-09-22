@@ -15,7 +15,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 /**
- * ViewModel for Spell4WordComposeActivity
+ * ViewModel for Spell4WordActivity
  * Manages word input state, language selection, and recording validation
  */
 class Spell4WordViewModel : ViewModel() {

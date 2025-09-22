@@ -20,7 +20,7 @@ import retrofit2.Callback
 import retrofit2.Response
 
 /**
- * ViewModel for ContributorsComposeActivity
+ * ViewModel for ContributorsActivity
  * Manages contributors data and API calls
  */
 class ContributorsViewModel(private val context: Context) : ViewModel() {

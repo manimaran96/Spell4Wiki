@@ -21,7 +21,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 /**
- * ViewModel for SettingsComposeActivity
+ * ViewModel for SettingsActivity
  * Manages settings state and user preferences
  */
 class SettingsViewModel(private val context: Context) : ViewModel() {

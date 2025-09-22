@@ -16,7 +16,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 /**
- * ViewModel for SplashComposeActivity
+ * ViewModel for SplashActivity
  * Manages splash screen state and navigation logic
  */
 class SplashViewModel(private val context: Context) : ViewModel() {
