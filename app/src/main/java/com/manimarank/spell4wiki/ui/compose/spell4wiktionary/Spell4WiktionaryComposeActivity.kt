@@ -285,25 +285,18 @@ fun Spell4WiktionaryTopBar(
 ) {
     TopAppBar(
         title = {
-            Column(
-                modifier = Modifier.padding(vertical = 2.dp)
-            ) {
-                Text(
-                    text = stringResource(R.string.spell_4_wiki_all),
-                    style = MaterialTheme.typography.titleMedium,
-                    fontWeight = FontWeight.Medium,
-                    color = MaterialTheme.colorScheme.onPrimary,
-                    maxLines = 1
-                )
-                if (languageInfo.isNotEmpty()) {
-                    Text(
-                        text = languageInfo,
-                        style = MaterialTheme.typography.bodySmall,
-                        color = MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.8f),
-                        maxLines = 1
-                    )
-                }
-            }
+            Text(
+                text = if (languageInfo.isNotEmpty()) {
+                    "${stringResource(R.string.spell_4_wiki_all)} - $languageInfo"
+                } else {
+                    stringResource(R.string.spell_4_wiki_all)
+                },
+                style = MaterialTheme.typography.titleMedium,
+                fontWeight = FontWeight.Normal,
+                color = MaterialTheme.colorScheme.onPrimary,
+                maxLines = 1,
+                overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis
+            )
         },
         navigationIcon = {
             IconButton(onClick = onBackClick) {
@@ -461,34 +454,37 @@ fun WordsList(
 
         if (isLoading) {
             item {
-                Card(
+                Box(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(16.dp),
-                    colors = CardDefaults.cardColors(
-                        containerColor = MaterialTheme.colorScheme.surfaceVariant
-                    ),
-                    elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
+                    contentAlignment = Alignment.Center
                 ) {
-                    Box(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(24.dp),
-                        contentAlignment = Alignment.Center
+                    Card(
+                        colors = CardDefaults.cardColors(
+                            containerColor = MaterialTheme.colorScheme.surface,
+                            contentColor = MaterialTheme.colorScheme.onSurface
+                        ),
+                        elevation = CardDefaults.cardElevation(defaultElevation = 6.dp),
+                        modifier = Modifier.fillMaxWidth()
                     ) {
                         Column(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(24.dp),
                             horizontalAlignment = Alignment.CenterHorizontally,
-                            verticalArrangement = Arrangement.spacedBy(12.dp)
+                            verticalArrangement = Arrangement.spacedBy(16.dp)
                         ) {
                             CircularProgressIndicator(
-                                modifier = Modifier.size(40.dp),
+                                modifier = Modifier.size(48.dp),
                                 strokeWidth = 4.dp,
                                 color = MaterialTheme.colorScheme.primary
                             )
                             Text(
                                 text = stringResource(R.string.loading_words),
-                                style = MaterialTheme.typography.bodyMedium,
-                                color = MaterialTheme.colorScheme.onSurfaceVariant
+                                style = MaterialTheme.typography.bodyLarge,
+                                color = MaterialTheme.colorScheme.onSurface,
+                                fontWeight = FontWeight.Medium
                             )
                         }
                     }
@@ -524,7 +520,7 @@ fun WordListItem(
                 color = MaterialTheme.colorScheme.onSurface
             )
 
-            // Dictionary icon for Wiktionary
+            // Info icon for Wiktionary
             IconButton(
                 onClick = onWiktionaryClick,
                 modifier = Modifier.size(40.dp)

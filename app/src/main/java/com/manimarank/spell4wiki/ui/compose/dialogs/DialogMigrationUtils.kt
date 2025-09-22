@@ -219,6 +219,7 @@ object DialogMigrationUtils {
                     selectedCategory = selectedCategory,
                     onCategorySelected = { category ->
                         callback?.onCallBackListener(category)
+                        onDismiss()
                     },
                     onDismiss = onDismiss
                 )
