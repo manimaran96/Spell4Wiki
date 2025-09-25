@@ -13,7 +13,7 @@ Watch the tutorial videos below and make your contribution.
 | English   | [Introduction](https://youtu.be/IMku3FL7s3I)<br/>[Play Video](https://youtu.be/Fu4kQcv04kA) | [Ganesh](https://commons.wikimedia.org/wiki/User:Libreaim)
 
 
-You are always welcome to make video for your language. then share link or video file by <a href="#communication">communication mediums</a> 
+You are always welcome to make video for your language. then share link or video file by <a href="#communication">communication mediums</a>
 
 
 ## Spell4Wiki Improvements
@@ -28,7 +28,7 @@ So, please fill [this form](https://docs.google.com/forms/d/e/1FAIpQLSciqHNw1ZtH
 
 
 Needed Data
- 
+
 | Field        | Data           |
 | ------------- |:-------------:|
 | Language name     | Tamil |  |
@@ -48,7 +48,7 @@ Ex : <br/>
 பகுப்பு:தமிழ்-ஒலிக்கோப்புகளில்லை - https://ta.wiktionary.org/wiki/பகுப்பு:தமிழ்-ஒலிக்கோப்புகளில்லை, <br/>
 Category:en:Fruits - https://en.wiktionary.org/wiki/Category:en:Fruits, <br/>
 Category:Apple cultivars - https://en.wiktionary.org/wiki/Category:Apple_cultivars
-* Category name in Commons -> All audio files are uploaded under this commons category. More category then separate with coma(,). 
+* Category name in Commons -> All audio files are uploaded under this commons category. More category then separate with coma(,).
 
 
 ### Create Category for your language in Commons
@@ -57,7 +57,7 @@ In [Files uploaded by spell4wiki](https://commons.wikimedia.org/wiki/Category:Fi
 So, create one subcategory for your language specific(```Files uploaded by spell4wiki in language-code```). Like ```Files uploaded by spell4wiki in ta```.
 
 Ex : For Tamil - https://commons.wikimedia.org/wiki/Category:Files_uploaded_by_spell4wiki_in_ta
- 
+
 
 ## Issue reporting/feature requests
 
@@ -71,18 +71,18 @@ hasn't been reported/requested before.
 
 ## Crash reporting
 
-* We collect the app crash details in app cache. So, You will see the dialog for sending the crash information to developer. Whenever opening the app after crash happened. 
-* Please send the crash information to developer via email. 
+* We collect the app crash details in app cache. So, You will see the dialog for sending the crash information to developer. Whenever opening the app after crash happened.
+* Please send the crash information to developer via email.
 * You'll see exactly what is sent, the system is 100% transparent.
 
 
 ## Translation
 
 * Follow the [instructions](#code-contribution) and [steps to start changes](#getting-started).
-* Create new branch. Ex : ```language-ta``` 
+* Create new branch. Ex : ```language-ta```
 * Checkout this new branch.
-* Then, Create ```vales-language-code``` folder inside the ```app/src/main/res/``` folder. (Ex : ```values-ta```, ```values-hi```, ... etc.)
-* Create ```strings.xml``` file inside the ```vales-language-code``` folder.
+* Then, Create ```values-language-code``` folder inside the ```app/src/main/res/``` folder. (Ex : ```values-ta```, ```values-hi```, ... etc.)
+* Create ```strings.xml``` file inside the ```values-language-code``` folder.
 * Copy all the English text from following file```app/src/main/res/values/strings.xml``` path - [link](https://github.com/manimaran96/Spell4Wiki/blob/master/app/src/main/res/values/strings.xml)
 * Translate all the strings into your language.
 * Finally do commit and give the PR.
@@ -107,14 +107,14 @@ If you have any questions/doubt, don't hesitate to contact by <a href="#communic
 
 ### Getting Started
 1. Fork the repository on the GitHub page by clicking the Fork button. This makes a fork of the project under your GitHub account.
-2. Clone your fork to your machine. 
+2. Clone your fork to your machine.
 ```
 git clone https://github.com/<Your_Username>/Spell4Wiki
 ```
-3. Create a new branch named after your change. 
+3. Create a new branch named after your change.
 ```
 git checkout -b your-branch-name
-``` 
+```
 Here, ```checkout``` switches to a branch, ```-b``` specifies that the branch is a new one.
 
 4. Any time you get a good chunk of work done it's good to make a commit. You can either uses Android Studio's built-in UI for doing this or running the commands:
@@ -122,24 +122,24 @@ Here, ```checkout``` switches to a branch, ```-b``` specifies that the branch is
 git add .
 git commit -m "Describe the changes in this commit here."
 ```
-5. Once your all changes done then submit your changes. 
+5. Once your all changes done then submit your changes.
 6. Make sure your branch is up-to-date with the ```master``` branch. Run:
 ```
 git fetch
 git rebase origin/master
 ```
-It may refuse to start the rebase if there's changes that haven't been committed, so make sure you've added and committed everything. 
-If there were changes on master to any of the parts of files you worked on, a conflict will arise when you rebase. 
-[Resolving a merge conflict](https://help.github.com/articles/resolving-a-merge-conflict-using-the-command-line) is a good guide to help with this. 
+It may refuse to start the rebase if there's changes that haven't been committed, so make sure you've added and committed everything.
+If there were changes on master to any of the parts of files you worked on, a conflict will arise when you rebase.
+[Resolving a merge conflict](https://help.github.com/articles/resolving-a-merge-conflict-using-the-command-line) is a good guide to help with this.
 
 7. After committing the resolution, you can run below command to finish the rebase.
-```git rebase --continue``` 
+```git rebase --continue```
 
-8. If you want to cancel, like if you make some mistake in resolving the conflict, you can always do 
+8. If you want to cancel, like if you make some mistake in resolving the conflict, you can always do
 ```
 git rebase --abort
 ```
-9. Push your local branch to your fork on GitHub by running 
+9. Push your local branch to your fork on GitHub by running
 ```
 git push origin your-change-name
 ```
@@ -147,12 +147,12 @@ git push origin your-change-name
 
 Wait for feedback on your pull request and be ready to make some changes.
 
-If you have any questions, don't hesitate to open an issue or contact by <a href="#communication">communication details</a>. 
+If you have any questions, don't hesitate to open an issue or contact by <a href="#communication">communication details</a>.
 Please also ask before you start implementing a new big feature.
 
 ## Communication
 
-* Join Telegram Group - [Spell4Wiki Telegram Group](https://t.me/spell4wiki) 
+* Join Telegram Group - [Spell4Wiki Telegram Group](https://t.me/spell4wiki)
 * If you want to get in touch with the developer you can send an email to <a href="mailto:manimarankumar96@gmail.com">manimarankumar96@gmail.com</a> or [@manimarank](https://t.me/manimaran_k) in Telegram.
 * Feel free to post suggestions, changes, ideas etc. on GitHub or Telegram!
 
