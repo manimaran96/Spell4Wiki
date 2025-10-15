@@ -1206,6 +1206,13 @@
          "category": ["Files uploaded by spell4wiki in sa", "Sanskrit pronunciation"]
       },
       {
+         "code":"sat",
+         "lang":"Santali",
+         "dir":"ltr",
+         "local_lang":"ᱥᱟᱱᱛᱟᱲᱤ",
+         "category": ["Files uploaded by spell4wiki in sat"]
+      },
+      {
          "code":"sc",
          "lang":"Sardinian",
          "dir":"ltr",
