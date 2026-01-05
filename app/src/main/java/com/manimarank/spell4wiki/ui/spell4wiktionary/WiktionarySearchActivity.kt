@@ -26,6 +26,7 @@ import com.manimarank.spell4wiki.ui.custom.EndlessRecyclerView.EndlessListener
 import com.manimarank.spell4wiki.ui.languageselector.LanguageSelectionFragment
 import com.manimarank.spell4wiki.ui.listerners.OnLanguageSelectionListener
 import com.manimarank.spell4wiki.utils.EdgeToEdgeUtils.setupEdgeToEdgeWithToolbar
+import com.manimarank.spell4wiki.utils.EdgeToEdgeUtils.applyBottomWindowInsets
 import com.manimarank.spell4wiki.utils.GeneralUtils
 import com.manimarank.spell4wiki.utils.NetworkUtils.isConnected
 import com.manimarank.spell4wiki.utils.Print
@@ -84,6 +85,10 @@ class WiktionarySearchActivity : BaseActivity(), EndlessListener {
         binding.recyclerView.setAdapter(adapter, layoutManager)
         binding.recyclerView.setListener(this)
         binding.recyclerView.makeInVisible()
+
+        // Handle bottom insets
+        binding.recyclerView.clipToPadding = false
+        binding.recyclerView.applyBottomWindowInsets()
 
         wikiLangDao = DBHelper.getInstance(applicationContext).appDatabase.wikiLangDao
 

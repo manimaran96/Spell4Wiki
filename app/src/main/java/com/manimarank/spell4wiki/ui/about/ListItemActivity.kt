@@ -8,6 +8,8 @@ import com.manimarank.spell4wiki.R
 import com.manimarank.spell4wiki.ui.common.BaseActivity
 import com.manimarank.spell4wiki.data.model.ItemsModel
 import com.manimarank.spell4wiki.utils.EdgeToEdgeUtils.setupEdgeToEdgeWithToolbar
+import com.manimarank.spell4wiki.utils.EdgeToEdgeUtils.enableEdgeToEdge
+import com.manimarank.spell4wiki.utils.EdgeToEdgeUtils.applyBottomWindowInsets
 import com.manimarank.spell4wiki.utils.constants.AppConstants
 import com.manimarank.spell4wiki.utils.constants.Urls
 import java.util.*
@@ -18,7 +20,14 @@ class ListItemActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_list_info)
 
+        enableEdgeToEdge()
         // No edge-to-edge setup needed - default action bar handles status bar spacing properly
+        // But need to handle bottom insets for RecyclerView
+        val recyclerView = findViewById<RecyclerView>(R.id.recyclerView)
+        recyclerView.clipToPadding = false
+        recyclerView.applyBottomWindowInsets()
+        // Handle Action Bar top spacing if needed (usually standard action bar handles it, but check) 
+        // We will rely on System to place ActionBar correctly below status bar.
 
         if (supportActionBar != null) {
             supportActionBar!!.setDisplayHomeAsUpEnabled(true)

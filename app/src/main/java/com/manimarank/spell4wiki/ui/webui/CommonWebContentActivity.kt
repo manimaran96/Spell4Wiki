@@ -25,6 +25,7 @@ import com.manimarank.spell4wiki.utils.constants.AppConstants
 import com.manimarank.spell4wiki.utils.makeGone
 import com.manimarank.spell4wiki.utils.makeVisible
 import com.manimarank.spell4wiki.databinding.ActivityWebViewContentBinding
+import com.manimarank.spell4wiki.utils.EdgeToEdgeUtils.applyWindowInsetsWithMarginAddition
 import java.lang.Exception
 
 
@@ -79,6 +80,9 @@ class CommonWebContentActivity : BaseActivity() {
 
         // Initialize record button
         recordButtonInit()
+        
+        // Handle edge-to-edge for FAB
+        binding.fabRecord.applyWindowInsetsWithMarginAddition(applyBottom = true)
     }
 
 

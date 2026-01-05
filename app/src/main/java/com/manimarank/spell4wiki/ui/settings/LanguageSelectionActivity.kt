@@ -15,6 +15,9 @@ import com.manimarank.spell4wiki.utils.EdgeToEdgeUtils.setupStatusBarHandling
 import com.manimarank.spell4wiki.utils.constants.ListMode
 import com.manimarank.spell4wiki.databinding.ActivityLanguageSelectionBinding
 import com.manimarank.spell4wiki.databinding.ContributionLanguageSelectionBinding
+import com.manimarank.spell4wiki.utils.EdgeToEdgeUtils.applyWindowInsetsWithMarginAddition
+
+import com.manimarank.spell4wiki.utils.EdgeToEdgeUtils.enableEdgeToEdge
 
 class LanguageSelectionActivity : BaseActivity() {
 
@@ -23,6 +26,7 @@ class LanguageSelectionActivity : BaseActivity() {
     private lateinit var pref: PrefManager
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
         binding = ActivityLanguageSelectionBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -34,6 +38,9 @@ class LanguageSelectionActivity : BaseActivity() {
         binding.txtAddLangInfo.text = String.format(getString(R.string.choose_your_preferred_app_language), AppLanguageDialog.getSelectedLanguage())
 
         binding.btnAddMyLanguage.setOnClickListener { AppLanguageDialog.show(this) }
+        
+        // Handle edge-to-edge for next button
+        binding.btnNext.applyWindowInsetsWithMarginAddition(applyBottom = true)
 
         binding.btnNext.setOnClickListener {
             contributionLang()
@@ -44,6 +51,13 @@ class LanguageSelectionActivity : BaseActivity() {
         wikiLangDao = DBHelper.getInstance(applicationContext).appDatabase.wikiLangDao
         contributionBinding = ContributionLanguageSelectionBinding.inflate(layoutInflater)
         setContentView(contributionBinding.root)
+        
+        // Setup proper status bar handling for contribution view
+        setupStatusBarHandling(contributionBinding.root)
+        
+        // Handle edge-to-edge for contribution next button
+        contributionBinding.btnNext.applyWindowInsetsWithMarginAddition(applyBottom = true)
+
         contributionBinding.txtAddLangInfo.text = String.format(getString(R.string.choose_your_preferred_contribution_language), wikiLangDao?.getWikiLanguageWithCode(pref.languageCodeSpell4WikiAll)?.name ?: "")
 
         contributionBinding.btnAddMyLanguage.setOnClickListener { loadLanguages() }

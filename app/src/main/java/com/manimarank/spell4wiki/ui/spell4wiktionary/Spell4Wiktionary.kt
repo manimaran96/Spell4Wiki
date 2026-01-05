@@ -44,6 +44,7 @@ import com.manimarank.spell4wiki.ui.languageselector.LanguageSelectionFragment
 import com.manimarank.spell4wiki.ui.listerners.OnCategorySelectionListener
 import com.manimarank.spell4wiki.ui.listerners.OnLanguageSelectionListener
 import com.manimarank.spell4wiki.utils.EdgeToEdgeUtils.setupEdgeToEdgeWithToolbar
+import com.manimarank.spell4wiki.utils.EdgeToEdgeUtils.applyBottomWindowInsets
 import com.manimarank.spell4wiki.utils.GeneralUtils
 import com.manimarank.spell4wiki.utils.NetworkUtils.isConnected
 import com.manimarank.spell4wiki.utils.NetworkUtils.executeWithNetworkCheck
@@ -138,6 +139,11 @@ class Spell4Wiktionary : BaseActivity(), EndlessListener {
         binding.recyclerView.setListener(this)
         binding.recyclerView.makeVisible()
         binding.refreshLayout.setOnRefreshListener { loadDataFromServer() }
+        
+        // Handle bottom insets for recycler view
+        binding.recyclerView.clipToPadding = false
+        binding.recyclerView.applyBottomWindowInsets()
+        
         loadCategoriesData()
     }
 

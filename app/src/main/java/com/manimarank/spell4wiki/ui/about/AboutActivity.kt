@@ -17,7 +17,8 @@ import com.manimarank.spell4wiki.R
 import com.manimarank.spell4wiki.data.prefs.PrefManager
 import com.manimarank.spell4wiki.databinding.ActivityAboutBinding
 import com.manimarank.spell4wiki.ui.common.BaseActivity
-import com.manimarank.spell4wiki.utils.EdgeToEdgeUtils.setupEdgeToEdgeWithToolbar
+import com.manimarank.spell4wiki.utils.EdgeToEdgeUtils.enableEdgeToEdge
+import com.manimarank.spell4wiki.utils.EdgeToEdgeUtils.applySystemBarInsets
 import com.manimarank.spell4wiki.utils.GeneralUtils.openUrl
 import com.manimarank.spell4wiki.utils.GeneralUtils.openUrlInBrowser
 import com.manimarank.spell4wiki.utils.NetworkUtils.executeWithNetworkCheck
@@ -35,10 +36,10 @@ class AboutActivity : BaseActivity(), View.OnClickListener {
         setContentView(binding.root)
 
         // Setup proper status bar handling (AboutActivity doesn't have a toolbar)
-        setupEdgeToEdgeWithToolbar(
-            rootView = binding.root,
-            toolbar = null
-        )
+        // Setup proper edge-to-edge with scroll view handling
+        enableEdgeToEdge()
+        binding.root.clipToPadding = false
+        binding.root.applySystemBarInsets()
 
         title = getString(R.string.about)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)

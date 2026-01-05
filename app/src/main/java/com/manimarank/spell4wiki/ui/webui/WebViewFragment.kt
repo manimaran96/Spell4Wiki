@@ -34,6 +34,7 @@ import com.manimarank.spell4wiki.utils.constants.AppConstants
 import com.manimarank.spell4wiki.utils.constants.Urls
 import com.manimarank.spell4wiki.utils.makeInVisible
 import com.manimarank.spell4wiki.utils.makeVisible
+import com.manimarank.spell4wiki.utils.EdgeToEdgeUtils.applyWindowInsetsWithMarginAddition
 
 class WebViewFragment : Fragment() {
 
@@ -81,6 +82,9 @@ class WebViewFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         loadWebPage(url)
         recordButtonInit()
+        
+        // Handle edge-to-edge for FAB
+        binding.fabRecord.applyWindowInsetsWithMarginAddition(applyBottom = true)
     }
 
     private fun recordButtonInit() {
