@@ -33,8 +33,8 @@ class WavToOggConverter {
             }
 
             // Execute FFmpeg command to convert WAV to OGG
-            //val command = "-y -i $recordedFilePath -acodec libvorbis $convertedFilePath"
-            val command = "-y -i $recordedFilePath -c:a libopus -b:a 24k $convertedFilePath"
+            val command = "-y -i $recordedFilePath -acodec libvorbis $convertedFilePath"
+            //val command = "-y -i $recordedFilePath -c:a libopus -b:a 24k $convertedFilePath"
 
 
             val session = FFmpegKit.execute(command)
