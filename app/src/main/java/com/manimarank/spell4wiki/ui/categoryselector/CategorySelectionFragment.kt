@@ -19,6 +19,7 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.manimarank.spell4wiki.R
+import com.manimarank.spell4wiki.utils.EdgeToEdgeUtils.applyBottomWindowInsets
 import com.manimarank.spell4wiki.data.apis.ApiClient
 import com.manimarank.spell4wiki.data.apis.ApiInterface
 import com.manimarank.spell4wiki.data.model.CategoryItem
@@ -64,6 +65,12 @@ class CategorySelectionFragment(private val mActivity: Activity) : BottomSheetDi
         _binding = BottomSheetCategorySelectionBinding.inflate(layoutInflater)
         dialog.setContentView(binding.root)
 
+        // Fix transparency issue: explicitly set window to edge-to-edge
+        dialog.window?.let { window ->
+            androidx.core.view.WindowCompat.setDecorFitsSystemWindows(window, false)
+            window.navigationBarColor = android.graphics.Color.TRANSPARENT
+        }
+
         if (!TextUtils.isEmpty(subTitleInfo)) {
             binding.textSelectCategorySubTitle.makeVisible()
             binding.textSelectCategorySubTitle.text = subTitleInfo
@@ -80,6 +87,11 @@ class CategorySelectionFragment(private val mActivity: Activity) : BottomSheetDi
 
         adapter = CategoryAdapter(arrayListOf(), categorySelectionListener)
         binding.recyclerView.adapter = adapter
+        
+        // Handle bottom insets
+        binding.recyclerView.clipToPadding = false
+        binding.recyclerView.applyBottomWindowInsets()
+        
         binding.btnClose.setOnClickListener { dismiss() }
         dialog.setOnShowListener { dialog1: DialogInterface ->
             val d = dialog1 as BottomSheetDialog

@@ -9,6 +9,7 @@ import android.view.WindowInsetsController
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.WindowInsetsControllerCompat
 import androidx.core.view.updateLayoutParams
 import androidx.core.view.updatePadding
 
@@ -21,15 +22,10 @@ object EdgeToEdgeUtils {
      * Enable edge-to-edge display for the activity
      */
     fun Activity.enableEdgeToEdge() {
+        WindowCompat.setDecorFitsSystemWindows(window, false)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            // For Android 11 and above
-            window.setDecorFitsSystemWindows(false)
-            window.insetsController?.let { controller ->
-                controller.systemBarsBehavior = WindowInsetsController.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
-            }
-        } else {
-            // For older versions, use WindowCompat
-            WindowCompat.setDecorFitsSystemWindows(window, false)
+            val controller = WindowCompat.getInsetsController(window, window.decorView)
+            controller.systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
         }
     }
 
@@ -109,10 +105,9 @@ object EdgeToEdgeUtils {
             val insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars())
 
             // For WebView with toolbar, don't apply top padding as toolbar handles it
-            // Only handle bottom insets if needed
             view.updatePadding(
                 top = 0, // Toolbar handles top spacing
-                bottom = 0 // Let WebView handle bottom insets naturally
+                bottom = insets.bottom 
             )
 
             windowInsets
@@ -196,6 +191,47 @@ object EdgeToEdgeUtils {
             } else {
                 rootView.applySystemBarInsets()
             }
+        }
+    }
+    /**
+     * Apply window insets to a view, adding them to the initial margins
+     * This is useful when you have a view with existing margins that needs to be pushed away from system bars
+     */
+    fun View.applyWindowInsetsWithMarginAddition(
+        applyLeft: Boolean = false,
+        applyTop: Boolean = false,
+        applyRight: Boolean = false,
+        applyBottom: Boolean = false
+    ) {
+        val initialLeft = (layoutParams as? ViewGroup.MarginLayoutParams)?.leftMargin ?: 0
+        val initialTop = (layoutParams as? ViewGroup.MarginLayoutParams)?.topMargin ?: 0
+        val initialRight = (layoutParams as? ViewGroup.MarginLayoutParams)?.rightMargin ?: 0
+        val initialBottom = (layoutParams as? ViewGroup.MarginLayoutParams)?.bottomMargin ?: 0
+
+        ViewCompat.setOnApplyWindowInsetsListener(this) { view, windowInsets ->
+            val insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars())
+            
+            view.updateLayoutParams<ViewGroup.MarginLayoutParams> {
+                if (applyLeft) leftMargin = initialLeft + insets.left
+                if (applyTop) topMargin = initialTop + insets.top
+                if (applyRight) rightMargin = initialRight + insets.right
+                if (applyBottom) bottomMargin = initialBottom + insets.bottom
+            }
+            
+            windowInsets
+        }
+        
+        // Request insets to be applied immediately
+        if (isAttachedToWindow) {
+            ViewCompat.requestApplyInsets(this)
+        } else {
+            addOnAttachStateChangeListener(object : View.OnAttachStateChangeListener {
+                override fun onViewAttachedToWindow(v: View) {
+                    v.removeOnAttachStateChangeListener(this)
+                    ViewCompat.requestApplyInsets(v)
+                }
+                override fun onViewDetachedFromWindow(v: View) {}
+            })
         }
     }
 }

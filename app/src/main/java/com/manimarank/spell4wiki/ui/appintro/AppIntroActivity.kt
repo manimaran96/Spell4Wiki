@@ -19,6 +19,9 @@ import com.manimarank.spell4wiki.utils.constants.AppConstants
 import com.manimarank.spell4wiki.utils.makeGone
 import com.manimarank.spell4wiki.utils.makeVisible
 import com.manimarank.spell4wiki.databinding.ActivityAppIntroBinding
+import com.manimarank.spell4wiki.utils.EdgeToEdgeUtils.applyWindowInsetsWithMarginAddition
+
+import com.manimarank.spell4wiki.utils.EdgeToEdgeUtils.enableEdgeToEdge
 
 class AppIntroActivity : BaseActivity() {
 
@@ -39,9 +42,12 @@ class AppIntroActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
         binding = ActivityAppIntroBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        binding.rlControls.applyWindowInsetsWithMarginAddition(applyBottom = true)
+        
         pref = PrefManager(applicationContext)
 
         val appIntroDataList = list

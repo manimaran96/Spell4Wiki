@@ -1,0 +1,6 @@
+- Fixed UI text overlaps on App Intro, About, Contributors, and Libraries screens 🛠️
+- Resolved transparency issues in bottom sheet navigation 🎨
+- Improved edge-to-edge display support across the app 📱
+- Fixed "Next" button and FAB visibility issues 🔘
+- Better Wiktionary search layout and scrolling 📜
+- General UI polish and crash fixes 🚀

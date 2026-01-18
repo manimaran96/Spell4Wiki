@@ -20,6 +20,7 @@ import com.manimarank.spell4wiki.data.prefs.ShowCasePref.isNotShowed
 import com.manimarank.spell4wiki.data.prefs.ShowCasePref.showed
 import com.manimarank.spell4wiki.ui.common.BaseActivity
 import com.manimarank.spell4wiki.utils.EdgeToEdgeUtils.setupEdgeToEdgeWithToolbar
+import com.manimarank.spell4wiki.utils.EdgeToEdgeUtils.applyBottomWindowInsets
 import com.manimarank.spell4wiki.utils.GeneralUtils
 import com.manimarank.spell4wiki.utils.NetworkUtils.isConnected
 import com.manimarank.spell4wiki.utils.SnackBarUtils.showLong
@@ -52,6 +53,10 @@ class ContributorsActivity : BaseActivity() {
             rootView = binding.root,
             toolbar = toolbar
         )
+        
+        // Handle bottom insets for NestedScrollView
+        binding.nestedScrollView.clipToPadding = false
+        binding.nestedScrollView.applyBottomWindowInsets()
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.title = getString(R.string.contributors)

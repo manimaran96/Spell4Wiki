@@ -19,6 +19,10 @@ import com.manimarank.spell4wiki.utils.SnackBarUtils.showNormal
 import com.manimarank.spell4wiki.utils.makeGone
 import com.manimarank.spell4wiki.utils.makeVisible
 
+import com.manimarank.spell4wiki.utils.EdgeToEdgeUtils.applyWindowInsetsWithMarginAddition
+
+import com.manimarank.spell4wiki.utils.EdgeToEdgeUtils.enableEdgeToEdge
+
 /**
  * Splash screen activity
  */
@@ -33,11 +37,16 @@ class SplashActivity : BaseActivity() {
      */
     public override fun onCreate(icicle: Bundle?) {
         super.onCreate(icicle)
+        enableEdgeToEdge()
         binding = ActivitySplashBinding.inflate(layoutInflater)
         setContentView(binding.root)
         pref = PrefManager(applicationContext)
         val animation = AnimationUtils.loadAnimation(applicationContext, R.anim.zoom)
         binding.imgSplash.startAnimation(animation)
+
+        // Handle edge-to-edge for next button
+        binding.btnNext.applyWindowInsetsWithMarginAddition(applyBottom = true)
+
         binding.btnNext.setOnClickListener {
             if (isConnected(applicationContext)) {
                 binding.btnNext.makeGone()

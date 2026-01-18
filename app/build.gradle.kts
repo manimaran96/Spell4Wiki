@@ -18,8 +18,8 @@ android {
         vectorDrawables.useSupportLibrary = true
         minSdk = libs.versions.minSdk.get().toInt()
         targetSdk = libs.versions.targetSdk.get().toInt()
-        versionName = "3.1"
-        versionCode = 19
+        versionName = "3.3"
+        versionCode = 21
         multiDexEnabled = true
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -95,7 +95,8 @@ dependencies {
 
     // Audio Processing - FFmpeg Kit
     // Download aar file - https://artifactory.appodeal.com/appodeal-public/com/arthenica/mobile-ffmpeg-min/4.4.LTS/
-    implementation(files("libs/ffmpeg-kit-full-6.0-2.aar"))
+    // https://github.com/moizhassankh/ffmpeg-kit-android-16KB
+    implementation(files("libs/ffmpeg-kit-full-6.1.1.aar"))
     implementation("com.arthenica:smart-exception-java:0.2.1") // Added for FFmpeg Kit compatibility refer - https://medium.com/deemaze-software/android-building-the-archived-ffmpegkit-878db187cc2c
 
     // Image Loading
