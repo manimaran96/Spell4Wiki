@@ -58,6 +58,7 @@ import com.manimarank.spell4wiki.utils.Print.log
 import com.manimarank.spell4wiki.utils.ToastUtils.showLong
 import com.manimarank.spell4wiki.utils.WikiLicense.getLicenseTemplateInWiki
 import com.manimarank.spell4wiki.utils.WikiLicense.licenseNameId
+import com.manimarank.spell4wiki.utils.SdcUtils
 import com.manimarank.spell4wiki.utils.constants.AppConstants
 import com.manimarank.spell4wiki.utils.constants.AppConstants.MAX_RETRIES_FOR_CSRF_TOKEN
 import com.manimarank.spell4wiki.utils.constants.AppConstants.MAX_RETRIES_FOR_FORCE_LOGIN
@@ -510,7 +511,11 @@ class RecordAudioActivity : BaseActivity() {
             private fun completeUploadFinalProcess(data: String?) {
                 log(TAG + "COMPLETE UPLOAD FINAL PROCESS " + data)
                 when (data?.toLowerCase(Locale.ENGLISH)) {
-                    AppConstants.UPLOAD_SUCCESS -> purgeWiktionaryPage(String.format(getString(R.string.upload_success), word))
+                    AppConstants.UPLOAD_SUCCESS -> {
+                        // Update SDC after successful upload
+                        updateSdcForUploadedFile(getUploadName(langCode, word))
+                        purgeWiktionaryPage(String.format(getString(R.string.upload_success), word))
+                    }
                     AppConstants.UPLOAD_FILE_EXIST, AppConstants.UPLOAD_FILE_EXIST_FORBIDDEN, AppConstants.UPLOAD_WARNING -> purgeWiktionaryPage(getString(R.string.file_already_exist))
                     AppConstants.UPLOAD_INVALID_TOKEN -> {
                         pref.csrfToken = null
@@ -787,6 +792,137 @@ class RecordAudioActivity : BaseActivity() {
             if (requestCode == RC_LICENCE_CHANGE) {
                 binding.checkboxDeclaration.text = String.format(getString(R.string.declaration_note), getString(licenseNameId(pref.uploadAudioLicense)))
             }
+        }
+    }
+
+    /**
+     * Update Structured Data on Commons (SDC) for the uploaded file
+     * This runs asynchronously and doesn't block the upload success flow
+     */
+    private fun updateSdcForUploadedFile(fileName: String) {
+        log(TAG + "SDC UPDATE INIT for file: $fileName")
+        
+        // Get file entity ID first
+        getFileEntityId(fileName) { entityId ->
+            if (entityId != null) {
+                performSdcUpdate(entityId)
+            } else {
+                error(TAG + "SDC UPDATE FAILED - Could not get entity ID for file: $fileName")
+            }
+        }
+    }
+
+    /**
+     * Get the entity ID (M-ID) for a file on Commons
+     * The Wikibase API requires M<pageid> format, not File: prefix
+     */
+    private fun getFileEntityId(fileName: String, callback: (String?) -> Unit) {
+        val fileTitle = "File:$fileName"
+        
+        log(TAG + "SDC UPDATE - Querying page ID for: $fileTitle")
+        
+        // Query the API to get the page ID
+        val call = api.getPageInfo(fileTitle)
+        
+        call.enqueue(object : Callback<ResponseBody?> {
+            override fun onResponse(call: Call<ResponseBody?>, response: Response<ResponseBody?>) {
+                if (response.isSuccessful) {
+                    try {
+                        val responseBody = response.body()?.string()
+                        log(TAG + "SDC UPDATE - Page info response: $responseBody")
+                        
+                        // Parse JSON to extract page ID
+                        val jsonResponse = org.json.JSONObject(responseBody ?: "{}")
+                        val query = jsonResponse.optJSONObject("query")
+                        val pages = query?.optJSONObject("pages")
+                        
+                        if (pages != null) {
+                            // Get the first (and only) page
+                            val pageId = pages.keys().next()
+                            
+                            // Check if page exists (pageId should not be negative)
+                            if (pageId.toIntOrNull() != null && pageId.toInt() > 0) {
+                                // Convert to M-ID format
+                                val entityId = "M$pageId"
+                                log(TAG + "SDC UPDATE - Found entity ID: $entityId")
+                                callback(entityId)
+                            } else {
+                                error(TAG + "SDC UPDATE - Invalid page ID: $pageId")
+                                callback(null)
+                            }
+                        } else {
+                            error(TAG + "SDC UPDATE - No pages found in response")
+                            callback(null)
+                        }
+                    } catch (e: Exception) {
+                        error(TAG + "SDC UPDATE - Error parsing page info: ${e.message}")
+                        e.printStackTrace()
+                        callback(null)
+                    }
+                } else {
+                    error(TAG + "SDC UPDATE - Page info query failed: ${response.code()}")
+                    callback(null)
+                }
+            }
+            
+            override fun onFailure(call: Call<ResponseBody?>, t: Throwable) {
+                error(TAG + "SDC UPDATE - Page info query exception: ${t.message}")
+                t.printStackTrace()
+                callback(null)
+            }
+        })
+    }
+
+    /**
+     * Perform the actual SDC update
+     */
+    private fun performSdcUpdate(entityId: String) {
+        try {
+            // Build SDC data using SdcUtils
+            val sdcData = SdcUtils.buildSdcDataForAudioFile(
+                username = pref.name ?: "Unknown",
+                licensePref = pref.uploadAudioLicense ?: "CC0",
+                uploadDate = getDateToString(DF_YYYY_MM_DD)
+            )
+
+            log(TAG + "SDC DATA: $sdcData")
+
+            // Make API call to update structured data
+            val call = api.updateStructuredData(
+                fileId = entityId,
+                data = sdcData,
+                token = pref.csrfToken,
+                summary = AppConstants.SDC_UPDATE_COMMENT
+            )
+
+            call.enqueue(object : Callback<ResponseBody?> {
+                override fun onResponse(call: Call<ResponseBody?>, response: Response<ResponseBody?>) {
+                    if (response.isSuccessful) {
+                        try {
+                            val responseBody = response.body()?.string()
+                            log(TAG + "SDC UPDATE SUCCESS: $responseBody")
+                            
+                            // Check if there's an error in the response
+                            if (responseBody?.contains("\"error\"") == true) {
+                                error(TAG + "SDC UPDATE ERROR IN RESPONSE: $responseBody")
+                            }
+                        } catch (e: Exception) {
+                            error(TAG + "SDC UPDATE RESPONSE PARSE ERROR: ${e.message}")
+                            e.printStackTrace()
+                        }
+                    } else {
+                        error(TAG + "SDC UPDATE FAILED - Response code: ${response.code()}")
+                    }
+                }
+
+                override fun onFailure(call: Call<ResponseBody?>, t: Throwable) {
+                    error(TAG + "SDC UPDATE EXCEPTION: ${t.message}")
+                    t.printStackTrace()
+                }
+            })
+        } catch (e: Exception) {
+            error(TAG + "SDC UPDATE BUILD ERROR: ${e.message}")
+            e.printStackTrace()
         }
     }
 

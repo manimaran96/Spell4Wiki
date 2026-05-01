@@ -128,4 +128,20 @@ interface ApiInterface {
      * Search category query
      * https://commons.wikimedia.org/w/api.php?format=json&action=opensearch&namespace=14&limit=30&search=Category:Files uploaded by spell4wiki in
      */
+
+    // Query page info to get page ID
+    @GET("w/api.php?action=query&format=json")
+    fun getPageInfo(
+        @Query("titles") titles: String?
+    ): Call<ResponseBody?>
+
+    // Update Structured Data on Commons (SDC)
+    @FormUrlEncoded
+    @POST("w/api.php?action=wbeditentity&format=json")
+    fun updateStructuredData(
+            @Field("id") fileId: String?,
+            @Field("data") data: String?,
+            @Field("token") token: String?,
+            @Field("summary") summary: String?
+    ): Call<ResponseBody?>
 }
