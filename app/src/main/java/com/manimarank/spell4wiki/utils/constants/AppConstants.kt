@@ -12,7 +12,7 @@ object AppConstants {
     const val DEFAULT_LANGUAGE_CODE = "ta"
     const val LANGUAGE_CODE = "language_code"
     const val UPLOAD_COMMENT = "Uploaded using [[:Commons:Spell4Wiki|Spell4Wiki]] app."
-    const val SDC_UPDATE_COMMENT = "Adding structured data via Spell4Wiki"
+    const val SDC_UPDATE_COMMENT = "Adding structured data using [[:Commons:Spell4Wiki|Spell4Wiki]] app."
 
     // Intent
     const val SEARCH_TEXT = "search_text"
