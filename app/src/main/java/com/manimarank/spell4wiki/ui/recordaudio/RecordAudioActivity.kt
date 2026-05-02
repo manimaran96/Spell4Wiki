@@ -514,7 +514,9 @@ class RecordAudioActivity : BaseActivity() {
                 when (data?.toLowerCase(Locale.ENGLISH)) {
                     AppConstants.UPLOAD_SUCCESS -> {
                         // Update SDC after successful upload
-                        updateSdcForUploadedFile(getUploadName(langCode, word))
+                        if (pref.isSdcUpdateEnabled) {
+                            updateSdcForUploadedFile(getUploadName(langCode, word))
+                        }
                         purgeWiktionaryPage(String.format(getString(R.string.upload_success), word))
                     }
                     AppConstants.UPLOAD_FILE_EXIST, AppConstants.UPLOAD_FILE_EXIST_FORBIDDEN, AppConstants.UPLOAD_WARNING -> purgeWiktionaryPage(getString(R.string.file_already_exist))

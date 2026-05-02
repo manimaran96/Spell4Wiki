@@ -119,6 +119,13 @@ class PrefManager(private val mContext: Context?) {
             editor.apply()
         }
 
+    var isSdcUpdateEnabled: Boolean
+        get() = pref.getBoolean(SDC_UPDATE_ENABLED, true)
+        set(isEnabled) {
+            editor.putBoolean(SDC_UPDATE_ENABLED, isEnabled)
+            editor.apply()
+        }
+
     fun getWordsCategoryList(langCode: String?): MutableList<String> {
         return (pref.getStringSet(String.format(WORDS_CATEGORY_FOR_LANG, langCode ?: "ta"), null) ?: mutableSetOf()).toMutableList()
     }
@@ -154,6 +161,7 @@ class PrefManager(private val mContext: Context?) {
         private const val CSRF_TOKEN = "csrf_token"
         private const val COOKIE = "cookie"
         private const val WIKTIONARY_CLEANUP_ENABLED = "wiktionary_cleanup_enabled"
+        private const val SDC_UPDATE_ENABLED = "sdc_update_enabled"
     }
 
     init {

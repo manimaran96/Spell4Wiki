@@ -54,6 +54,7 @@ class SettingsActivity : BaseActivity() {
             // binding.layoutSpell4WikiLang.makeGone()
             binding.layoutLicenseOfUploadAudio.makeGone()
             binding.layoutRunFilter.makeGone()
+            binding.layoutSdcUpdateToggle.makeGone()
         }
         updateLanguageView(binding.txtSpell4WikiLang, pref.languageCodeSpell4WikiAll)
         binding.layoutSpell4WikiLang.setOnClickListener {
@@ -85,6 +86,14 @@ class SettingsActivity : BaseActivity() {
         binding.switchWiktionaryCleanup.setOnCheckedChangeListener { _, isChecked ->
             pref.isWiktionaryCleanupEnabled = isChecked
         }
+
+        // SDC update setting
+        binding.switchSdcUpdate.isChecked = pref.isSdcUpdateEnabled
+        binding.switchSdcUpdate.setOnCheckedChangeListener { _, isChecked ->
+            pref.isSdcUpdateEnabled = isChecked
+        }
+        binding.txtSdcUpdateDescription.movementMethod = LinkMovementMethod.getInstance()
+        binding.txtSdcUpdateDescription.text = HtmlCompat.fromHtml(getString(R.string.sdc_update_setting_description), HtmlCompat.FROM_HTML_MODE_LEGACY)
 
         binding.txtRfCount.text = getString(R.string.run_filter_settings_count, pref.runFilterNumberOfWordsToCheck
                 ?: AppConstants.RUN_FILTER_NO_OF_WORDS_CHECK_COUNT)
