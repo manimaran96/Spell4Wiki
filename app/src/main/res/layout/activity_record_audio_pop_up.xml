@@ -213,7 +213,7 @@
                     android:ellipsize="middle"
                     android:text="@string/language"
                     android:layout_margin="@dimen/space8dp"
-                    android:layout_marginBottom="@dimen/space8dp"
+                    android:layout_marginBottom="@dimen/space4dp"
                     android:textColor="@color/txt_light"
                     android:textSize="@dimen/text_small" />
 
@@ -243,8 +243,8 @@
                     android:layout_gravity="center"
                     android:paddingStart="24dp"
                     android:paddingEnd="24dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginBottom="6dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginBottom="2dp"
                     android:text="@string/upload"
                     android:textAllCaps="false"
                     android:textSize="16sp"
@@ -261,9 +261,9 @@
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnClose"
                     android:layout_width="wrap_content"
-                    android:layout_height="48dp"
+                    android:layout_height="42dp"
                     android:layout_gravity="center"
-                    android:layout_marginBottom="8dp"
+                    android:layout_marginBottom="2dp"
                     android:text="@string/close"
                     android:textColor="@color/white"
                     android:textSize="14sp"
