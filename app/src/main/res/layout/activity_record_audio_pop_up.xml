@@ -145,12 +145,12 @@
                     android:orientation="horizontal"
                     android:layout_marginStart="@dimen/space2dp"
                     android:layout_marginEnd="@dimen/space2dp"
+                    android:layout_marginTop="@dimen/space8dp"
                     android:visibility="visible">
 
                     <androidx.appcompat.widget.AppCompatCheckBox
                         android:id="@+id/checkboxDeclaration"
                         app:buttonTint="@color/txt_light"
-                        android:layout_marginTop="@dimen/space24dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:ellipsize="end"
@@ -159,7 +159,6 @@
                         android:layout_marginStart="@dimen/space8dp"
                         android:layout_marginEnd="@dimen/space8dp"
                         android:gravity="center_vertical"
-                        android:layout_gravity="center"
                         android:drawablePadding="@dimen/space8dp"
                         android:text="@string/declaration_note"
                         android:textColor="@color/txt_light"
@@ -172,7 +171,6 @@
                         android:id="@+id/btnSettings"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_toStartOf="@+id/txtDuration"
                         android:layout_alignParentEnd="true"
                         app:srcCompat="@drawable/ic_change_license"
                         app:tint="@color/white"
@@ -188,6 +186,21 @@
                         tools:ignore="RelativeOverlap" />
 
                 </RelativeLayout>
+
+                <!--SDC update toggle-->
+                <androidx.appcompat.widget.AppCompatCheckBox
+                    android:id="@+id/checkboxSdcUpdate"
+                    app:buttonTint="@color/txt_light"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/space8dp"
+                    android:layout_marginEnd="@dimen/space10dp"
+                    android:layout_marginTop="@dimen/space4dp"
+                    android:gravity="center_vertical"
+                    android:drawablePadding="@dimen/space8dp"
+                    android:text="@string/sdc_update_setting_short"
+                    android:textColor="@color/txt_light"
+                    android:textSize="@dimen/text_small" />
 
                 <!--Language-->
                 <androidx.appcompat.widget.AppCompatTextView

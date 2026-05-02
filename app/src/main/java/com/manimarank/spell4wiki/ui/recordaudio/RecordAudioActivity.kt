@@ -144,6 +144,11 @@ class RecordAudioActivity : BaseActivity() {
         binding.txtDuration.text = getDurationValue(0)
         binding.checkboxDeclaration.text = String.format(getString(R.string.declaration_note), getString(licenseNameId(pref.uploadAudioLicense)))
 
+        binding.checkboxSdcUpdate.isChecked = pref.isSdcUpdateEnabled
+        binding.checkboxSdcUpdate.setOnCheckedChangeListener { _, isChecked ->
+            pref.isSdcUpdateEnabled = isChecked
+        }
+
         // Update file name preview
         updateFileNamePreview()
 
