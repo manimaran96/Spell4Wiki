@@ -39,10 +39,14 @@ class EndlessRecyclerView : RecyclerView {
                 val firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition()
                 if (!isLoading && loadMoreEnabled) {
                     if (visibleItemCount + firstVisibleItemPosition >= totalItemCount && firstVisibleItemPosition >= 0 && listener != null) {
-                        if (isLastPage || !isConnected(context))
-                            listener?.loadFail()
-                        else if (listener?.loadData() == true)
-                            addLoaded()
+                        recyclerView.post {
+                            if (!isLoading && loadMoreEnabled) {
+                                if (isLastPage || !isConnected(context))
+                                    listener?.loadFail()
+                                else if (listener?.loadData() == true)
+                                    addLoaded()
+                            }
+                        }
                     }
                 }
             }
