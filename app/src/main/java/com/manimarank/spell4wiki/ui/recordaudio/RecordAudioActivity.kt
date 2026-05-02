@@ -40,11 +40,13 @@ import com.manimarank.spell4wiki.data.prefs.PrefManager
 import com.manimarank.spell4wiki.data.prefs.ShowCasePref
 import com.manimarank.spell4wiki.data.prefs.ShowCasePref.isNotShowed
 import com.manimarank.spell4wiki.data.prefs.ShowCasePref.showed
+import com.manimarank.spell4wiki.databinding.ActivityRecordAudioPopUpBinding
 import com.manimarank.spell4wiki.record.ogg.WavToOggConverter
 import com.manimarank.spell4wiki.record.wav.WAVPlayer
 import com.manimarank.spell4wiki.record.wav.WAVRecorder
 import com.manimarank.spell4wiki.ui.common.BaseActivity
 import com.manimarank.spell4wiki.ui.recordaudio.WikiDataUtils.getUploadName
+import com.manimarank.spell4wiki.utils.ApiErrorUtils
 import com.manimarank.spell4wiki.utils.DateUtils.DF_YYYY_MM_DD
 import com.manimarank.spell4wiki.utils.DateUtils.getDateToString
 import com.manimarank.spell4wiki.utils.EdgeToEdgeUtils.setupStatusBarHandling
@@ -55,22 +57,19 @@ import com.manimarank.spell4wiki.utils.GeneralUtils.showAppSettingsPageSnackBar
 import com.manimarank.spell4wiki.utils.NetworkUtils.isConnected
 import com.manimarank.spell4wiki.utils.Print.error
 import com.manimarank.spell4wiki.utils.Print.log
+import com.manimarank.spell4wiki.utils.SdcUtils
 import com.manimarank.spell4wiki.utils.ToastUtils.showLong
 import com.manimarank.spell4wiki.utils.WikiLicense.getLicenseTemplateInWiki
 import com.manimarank.spell4wiki.utils.WikiLicense.licenseNameId
-import com.manimarank.spell4wiki.utils.SdcUtils
 import com.manimarank.spell4wiki.utils.constants.AppConstants
 import com.manimarank.spell4wiki.utils.constants.AppConstants.MAX_RETRIES_FOR_CSRF_TOKEN
 import com.manimarank.spell4wiki.utils.constants.AppConstants.MAX_RETRIES_FOR_FORCE_LOGIN
 import com.manimarank.spell4wiki.utils.constants.AppConstants.RC_LICENCE_CHANGE
 import com.manimarank.spell4wiki.utils.extensions.showLicenseChooseDialog
-import com.manimarank.spell4wiki.databinding.ActivityRecordAudioPopUpBinding
-import okhttp3.MediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import okhttp3.ResponseBody
-import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -430,21 +429,15 @@ class RecordAudioActivity : BaseActivity() {
                             }
                         } catch (e: Exception) {
                             e.printStackTrace()
-                            uploadFailed("""${getString(R.string.something_went_wrong)}
-                                    ${e.message}
-                                    """.trimIndent())
+                            uploadFailed(ApiErrorUtils.getErrorMessage(applicationContext, e))
                         }
                     } else {
-                        uploadFailed("""${getString(R.string.invalid_response)}
-                            Response code : ${response.code()}
-                            """.trimIndent())
+                        uploadFailed(ApiErrorUtils.getErrorMessage(applicationContext, response))
                     }
                 }
 
                 override fun onFailure(call: Call<WikiToken?>, t: Throwable) {
-                    uploadFailed("""${getString(R.string.something_went_wrong)}
-                            ${t.message}
-                            """.trimIndent())
+                    uploadFailed(ApiErrorUtils.getErrorMessage(applicationContext, t))
                     t.printStackTrace()
                 }
             })
@@ -503,9 +496,7 @@ class RecordAudioActivity : BaseActivity() {
                     }
                 } else {
                     error(TAG + "COMPLETE UPLOAD RES ISSUE " + response.code())
-                    completeUploadFinalProcess("""${getString(R.string.invalid_response)}
-                            Response code : ${response.code()}
-                            """.trimIndent())
+                    completeUploadFinalProcess(ApiErrorUtils.getErrorMessage(applicationContext, response))
                 }
             }
 
@@ -524,15 +515,13 @@ class RecordAudioActivity : BaseActivity() {
                         pref.csrfToken = null
                         uploadFailed(getString(R.string.invalid_csrf_try_again))
                     }
-                    else -> uploadFailed("""${getString(R.string.something_went_wrong_try_again)}
-                        $data
-                        """.trimIndent())
+                    else -> uploadFailed(if (data.isNullOrEmpty()) getString(R.string.something_went_wrong_try_again) else data)
                 }
             }
 
             override fun onFailure(call: Call<WikiUpload?>, t: Throwable) {
                 error(TAG + "COMPLETE UPLOAD FAIL - " + t.message)
-                completeUploadFinalProcess(getString(R.string.upload_failed))
+                completeUploadFinalProcess(ApiErrorUtils.getErrorMessage(applicationContext, t))
                 t.printStackTrace()
             }
         })
@@ -907,30 +896,24 @@ class RecordAudioActivity : BaseActivity() {
                             // Check if there's an error in the response
                             if (responseBody?.contains("\"error\"") == true) {
                                 error(TAG + "SDC UPDATE ERROR IN RESPONSE: $responseBody")
-                                try {
-                                    val json = JSONObject(responseBody)
-                                    val errorObj = json.optJSONObject("error")
-                                    val errorInfo = errorObj?.optString("info") ?: "Unknown SDC Error"
-                                    runOnUiThread { showLong("SDC Update Error: $errorInfo") }
-                                } catch (e: Exception) {
-                                    runOnUiThread { showLong("SDC Update Error: ${e.message}") }
-                                }
+                                val ext = ApiErrorUtils.extractWikiErrorFromJson(responseBody)
+                                runOnUiThread { showLong("SDC Update Error: " + (ext ?: getString(R.string.something_went_wrong))) }
                             }
                         } catch (e: Exception) {
                             error(TAG + "SDC UPDATE RESPONSE PARSE ERROR: ${e.message}")
                             e.printStackTrace()
-                            runOnUiThread { showLong("SDC Update Error: ${e.message}") }
+                            runOnUiThread { showLong("SDC Update Error: " + ApiErrorUtils.getErrorMessage(applicationContext, e)) }
                         }
                     } else {
                         error(TAG + "SDC UPDATE FAILED - Response code: ${response.code()}")
-                        runOnUiThread { showLong("SDC Update Failed (Code: ${response.code()})") }
+                        runOnUiThread { showLong("SDC Update Failed: " + ApiErrorUtils.getErrorMessage(applicationContext, response)) }
                     }
                 }
 
                 override fun onFailure(call: Call<ResponseBody?>, t: Throwable) {
                     error(TAG + "SDC UPDATE EXCEPTION: ${t.message}")
                     t.printStackTrace()
-                    runOnUiThread { showLong("SDC Update Failed: ${t.message}") }
+                    runOnUiThread { showLong("SDC Update Failed: " + ApiErrorUtils.getErrorMessage(applicationContext, t)) }
                 }
             })
         } catch (e: Exception) {

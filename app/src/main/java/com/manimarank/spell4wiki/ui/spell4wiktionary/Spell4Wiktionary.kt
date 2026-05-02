@@ -61,6 +61,7 @@ import com.manimarank.spell4wiki.utils.SnackBarUtils.showLong
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import com.manimarank.spell4wiki.utils.ApiErrorUtils
 import uk.co.samuelwall.materialtaptargetprompt.MaterialTapTargetPrompt
 import uk.co.samuelwall.materialtaptargetprompt.MaterialTapTargetSequence
 import uk.co.samuelwall.materialtaptargetprompt.extras.focals.RectanglePromptFocal
@@ -324,13 +325,13 @@ class Spell4Wiktionary : BaseActivity(), EndlessListener {
                             if (response.isSuccessful && response.body() != null && response.body()?.error == null) {
                                 processSearchResultAudio(response.body())
                             } else {
-                                val errorMsg = response.body()?.error?.info ?: getString(R.string.something_went_wrong)
+                                val errorMsg = response.body()?.error?.info ?: ApiErrorUtils.getErrorMessage(applicationContext, response)
                                 searchFailed(errorMsg)
                             }
                         } catch (e: Exception) {
                             Print.error("Error processing API response: ${e.message}")
                             e.printStackTrace()
-                            searchFailed(getString(R.string.something_went_wrong_try_again))
+                            searchFailed(ApiErrorUtils.getErrorMessage(applicationContext, e))
                         }
                     }
 
@@ -338,11 +339,11 @@ class Spell4Wiktionary : BaseActivity(), EndlessListener {
                         try {
                             Print.error("Network failure: ${t.message}")
                             t.printStackTrace()
-                            searchFailed(getString(R.string.something_went_wrong_try_again))
+                            searchFailed(ApiErrorUtils.getErrorMessage(applicationContext, t))
                         } catch (e: Exception) {
                             Print.error("Error in onFailure handler: ${e.message}")
                             e.printStackTrace()
-                            searchFailed(getString(R.string.something_went_wrong_try_again))
+                            searchFailed(ApiErrorUtils.getErrorMessage(applicationContext, e))
                         }
                     }
                 })

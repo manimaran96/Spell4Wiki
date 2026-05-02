@@ -26,6 +26,7 @@ import com.manimarank.spell4wiki.utils.constants.Urls
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import com.manimarank.spell4wiki.utils.ApiErrorUtils
 
 class LoginActivity : BaseActivity() {
 
@@ -123,16 +124,16 @@ class LoginActivity : BaseActivity() {
                         completeLogin(username, password, lgToken)
                     } catch (e: Exception) {
                         e.printStackTrace()
-                        showErrorMsg(getString(R.string.something_went_wrong))
+                        showErrorMsg(ApiErrorUtils.getErrorMessage(applicationContext, e))
                     }
                 } else {
-                    showErrorMsg(getString(R.string.something_went_wrong_try_again))
+                    showErrorMsg(ApiErrorUtils.getErrorMessage(applicationContext, response))
                 }
             }
 
             override fun onFailure(call: Call<WikiToken?>, t: Throwable) {
                 t.printStackTrace()
-                showErrorMsg(getString(R.string.something_went_wrong_try_again))
+                showErrorMsg(ApiErrorUtils.getErrorMessage(applicationContext, t))
             }
         })
     }
@@ -172,16 +173,16 @@ class LoginActivity : BaseActivity() {
                                 AppConstants.FAIL -> showErrorMsg(login.message)
                                 else -> showErrorMsg(getString(R.string.server_misbehaved))
                             }
-                        } else showErrorMsg(getString(R.string.something_went_wrong))
+                        } else showErrorMsg(ApiErrorUtils.getErrorMessage(applicationContext, response))
                     } catch (e: Exception) {
                         e.printStackTrace()
-                        showErrorMsg(getString(R.string.something_went_wrong))
+                        showErrorMsg(ApiErrorUtils.getErrorMessage(applicationContext, e))
                     }
-                } else showErrorMsg(getString(R.string.something_went_wrong))
+                } else showErrorMsg(ApiErrorUtils.getErrorMessage(applicationContext, response))
             }
 
             override fun onFailure(call: Call<WikiLogin?>, t: Throwable) {
-                showErrorMsg(getString(R.string.something_went_wrong_try_again))
+                showErrorMsg(ApiErrorUtils.getErrorMessage(applicationContext, t))
             }
         })
     }
@@ -196,7 +197,7 @@ class LoginActivity : BaseActivity() {
             setLoadingState(false)
         } catch (e: Exception) {
             e.printStackTrace()
-            showErrorMsg(getString(R.string.something_went_wrong))
+            showErrorMsg(ApiErrorUtils.getErrorMessage(applicationContext, e))
         }
     }
 
@@ -264,22 +265,22 @@ class LoginActivity : BaseActivity() {
                                 }
                             }
                         } else {
-                            showErrorMsg(getString(R.string.something_went_wrong))
+                            showErrorMsg(ApiErrorUtils.getErrorMessage(applicationContext, response))
                             resetToNormalLogin()
                         }
                     } catch (e: Exception) {
                         e.printStackTrace()
-                        showErrorMsg(getString(R.string.something_went_wrong))
+                        showErrorMsg(ApiErrorUtils.getErrorMessage(applicationContext, e))
                         resetToNormalLogin()
                     }
                 } else {
-                    showErrorMsg(getString(R.string.something_went_wrong))
+                    showErrorMsg(ApiErrorUtils.getErrorMessage(applicationContext, response))
                     resetToNormalLogin()
                 }
             }
 
             override fun onFailure(call: Call<WikiLogin?>, t: Throwable) {
-                showErrorMsg(getString(R.string.something_went_wrong_try_again))
+                showErrorMsg(ApiErrorUtils.getErrorMessage(applicationContext, t))
                 resetToNormalLogin()
             }
         })
