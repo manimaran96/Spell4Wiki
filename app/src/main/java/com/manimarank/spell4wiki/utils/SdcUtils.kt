@@ -1,10 +1,11 @@
 package com.manimarank.spell4wiki.utils
 
-import com.manimarank.spell4wiki.utils.DateUtils.DF_YYYY_MM_DD
-import com.manimarank.spell4wiki.utils.DateUtils.getDateToString
 import com.manimarank.spell4wiki.utils.WikiLicense.LicensePrefs
 import org.json.JSONArray
 import org.json.JSONObject
+import java.text.SimpleDateFormat
+import java.util.Locale
+import java.util.TimeZone
 
 /**
  * Utility class for building Structured Data on Commons (SDC) data
@@ -23,8 +24,7 @@ object SdcUtils {
      */
     fun buildSdcDataForAudioFile(
         username: String,
-        licensePref: String,
-        uploadDate: String = getDateToString(DF_YYYY_MM_DD)
+        licensePref: String
     ): String {
         val statementsJson = JSONObject()
 
@@ -47,12 +47,12 @@ object SdcUtils {
 
         // P571 - Inception (date created)
         statementsJson.put("P571", JSONArray().apply {
-            put(createTimeStatement("P571", uploadDate))
+            put(createTimeStatement("P571"))
         })
 
         // P1163 - Media type
         statementsJson.put("P1163", JSONArray().apply {
-            put(createStringStatement("P1163", "application/ogg", "string"))
+            put(createStringStatement("P1163", "audio/ogg", "string"))
         })
 
         // P7482 - Source of file (original creation by uploader - https://www.wikidata.org/wiki/Q66458942)
@@ -135,7 +135,8 @@ object SdcUtils {
      */
     fun getCopyrightStatusQId(licensePref: String): String {
         return when (licensePref) {
-            LicensePrefs.CC_0 -> "Q88088423"  // Copyrighted, dedicated to the public domain by copyright holder
+            LicensePrefs.CC_0 -> "Q88088423"   // Copyrighted, dedicated to the public domain by copyright holder
+            "PD" -> "Q19652"                   // Public domain
             else -> "Q50423863"                // Copyrighted
         }
     }
@@ -215,9 +216,12 @@ object SdcUtils {
      * Create a time-based statement
      * More details: https://www.wikidata.org/wiki/Property:P571
      */
-    private fun createTimeStatement(property: String, date: String): JSONObject {
-        // Convert date to Wikibase time format: +YYYY-MM-DDT00:00:00Z
-        val wikibaseTime = "+${date}T00:00:00Z"
+    private fun createTimeStatement(property: String): JSONObject {
+        // Convert date to Wikibase time format: +YYYY-MM-DDT00:00:00Z (as required by wikibase for precision 11) using precise current time (UTC)
+        val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH)
+        dateFormat.timeZone = TimeZone.getTimeZone("UTC")
+        val currentDateString = dateFormat.format(java.util.Date())
+        val wikibaseTime = "+${currentDateString}T00:00:00Z"
         
         val timeValue = JSONObject().apply {
             put("time", wikibaseTime)

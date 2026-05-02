@@ -70,6 +70,7 @@ import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import okhttp3.ResponseBody
+import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -881,8 +882,7 @@ class RecordAudioActivity : BaseActivity() {
             // Build SDC data using SdcUtils
             val sdcData = SdcUtils.buildSdcDataForAudioFile(
                 username = pref.name ?: "Unknown",
-                licensePref = pref.uploadAudioLicense ?: "CC0",
-                uploadDate = getDateToString(DF_YYYY_MM_DD)
+                licensePref = pref.uploadAudioLicense ?: "CC0"
             )
 
             log(TAG + "SDC DATA: $sdcData")
@@ -905,19 +905,30 @@ class RecordAudioActivity : BaseActivity() {
                             // Check if there's an error in the response
                             if (responseBody?.contains("\"error\"") == true) {
                                 error(TAG + "SDC UPDATE ERROR IN RESPONSE: $responseBody")
+                                try {
+                                    val json = JSONObject(responseBody)
+                                    val errorObj = json.optJSONObject("error")
+                                    val errorInfo = errorObj?.optString("info") ?: "Unknown SDC Error"
+                                    runOnUiThread { showLong("SDC Update Error: $errorInfo") }
+                                } catch (e: Exception) {
+                                    runOnUiThread { showLong("SDC Update Error: ${e.message}") }
+                                }
                             }
                         } catch (e: Exception) {
                             error(TAG + "SDC UPDATE RESPONSE PARSE ERROR: ${e.message}")
                             e.printStackTrace()
+                            runOnUiThread { showLong("SDC Update Error: ${e.message}") }
                         }
                     } else {
                         error(TAG + "SDC UPDATE FAILED - Response code: ${response.code()}")
+                        runOnUiThread { showLong("SDC Update Failed (Code: ${response.code()})") }
                     }
                 }
 
                 override fun onFailure(call: Call<ResponseBody?>, t: Throwable) {
                     error(TAG + "SDC UPDATE EXCEPTION: ${t.message}")
                     t.printStackTrace()
+                    runOnUiThread { showLong("SDC Update Failed: ${t.message}") }
                 }
             })
         } catch (e: Exception) {
