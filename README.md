@@ -48,7 +48,7 @@ There are plenty of words in the Wiktionary. But they do not have enough pronunc
 
 ## 🏆 What Spell4Wiki App Achieved?
 - 🌍 **250+ Languages Supported** across all 4 features
-- 🎙️ **40,000+ Audio Files** uploaded to Wikimedia Commons from contributors worldwide
+- 🎙️ **50,000+ Audio Files** uploaded to Wikimedia Commons from contributors worldwide
 - 📂 **Organized Contributions** - All audio files categorized under [Wikimedia Commons](https://commons.wikimedia.org/wiki/Category:Files_uploaded_by_spell4wiki)
 - 👥 **Global Community** of language enthusiasts and contributors
 - 🆓 **Free & Open Source** contribution to world's knowledge base

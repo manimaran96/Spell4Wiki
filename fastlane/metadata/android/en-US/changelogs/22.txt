@@ -1,0 +1,6 @@
+- Added Structured Data on Commons (SDC) support for audio uploads
+- New option to enable or disable SDC updates in recording and settings
+- Added back navigation support in web pages
+- Improved API error handling and app stability
+- Refined Record Audio popup layout and spacing
+- Performance improvements and other enhancements
