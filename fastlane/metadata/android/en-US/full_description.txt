@@ -12,7 +12,7 @@ Spell4Wiki is a mobile application to record and upload audio files for Wiktiona
 
 <b>What Spell4Wiki App Achieved:</b>
 • Supported 250+ Languages for all 4 features
-• Uploaded 40,000+ audio files to Wikimedia Commons from various language contributors
+• Uploaded 50,000+ audio files to Wikimedia Commons from various language contributors
 • All audio files are categorized under Wikimedia Commons
 
 <b>Purpose of this application</b>

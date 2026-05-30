@@ -113,7 +113,7 @@ class EndlessRecyclerAdapter(
             isLoaderVisible = true
             mItems.add("")
             try {
-                Handler().post { notifyItemInserted(mItems.size - 1) }
+                notifyItemInserted(mItems.size - 1)
             } catch (e: Exception) {
                 e.printStackTrace()
             }

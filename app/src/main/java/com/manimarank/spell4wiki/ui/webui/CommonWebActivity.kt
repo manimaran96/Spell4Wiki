@@ -122,7 +122,7 @@ class CommonWebActivity : BaseActivity() {
                 true
             }
             android.R.id.home -> {
-                finish()
+                onBackPressed()
                 true
             }
             else -> super.onOptionsItemSelected(item)
@@ -191,6 +191,14 @@ class CommonWebActivity : BaseActivity() {
             if (data != null && data.hasExtra(AppConstants.WORD)) {
                 updateList(data.getStringExtra(AppConstants.WORD))
             }
+        }
+    }
+
+    override fun onBackPressed() {
+        if (::fragment.isInitialized && fragment.isAdded && fragment.canGoBackward()) {
+            fragment.backwardWebPage()
+        } else {
+            super.onBackPressed()
         }
     }
 

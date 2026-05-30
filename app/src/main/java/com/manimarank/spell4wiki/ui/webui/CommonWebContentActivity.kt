@@ -198,9 +198,17 @@ class CommonWebContentActivity : BaseActivity() {
 
     override fun onOptionsItemSelected(menuItem: MenuItem): Boolean {
         if (menuItem.itemId == android.R.id.home) {
-            finish()
+            onBackPressed()
             return true
         }
         return super.onOptionsItemSelected(menuItem)
+    }
+
+    override fun onBackPressed() {
+        if (binding.webView.canGoBack()) {
+            binding.webView.goBack()
+        } else {
+            super.onBackPressed()
+        }
     }
 }

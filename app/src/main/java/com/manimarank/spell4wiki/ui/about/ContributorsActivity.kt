@@ -30,6 +30,7 @@ import com.manimarank.spell4wiki.databinding.ActivityContributorsBinding
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import com.manimarank.spell4wiki.utils.ApiErrorUtils
 import uk.co.samuelwall.materialtaptargetprompt.MaterialTapTargetSequence
 import java.util.*
 
@@ -119,13 +120,16 @@ class ContributorsActivity : BaseActivity() {
                         binding.loadingContributors.root.makeGone()
                         binding.layoutCoreContributors.makeVisible()
                         Handler(Looper.getMainLooper()).postDelayed({ callShowCaseUI() }, 1000)
+                    } else {
+                        binding.loadingContributors.root.makeGone()
+                        showLong(binding.recyclerViewCodeContributors, ApiErrorUtils.getErrorMessage(applicationContext, response))
                     }
                 }
 
                 override fun onFailure(call: Call<ContributorData?>, t: Throwable) {
                     t.printStackTrace()
                     binding.loadingContributors.root.makeGone()
-                    showLong(binding.recyclerViewCodeContributors, getString(R.string.something_went_wrong))
+                    showLong(binding.recyclerViewCodeContributors, ApiErrorUtils.getErrorMessage(applicationContext, t))
                 }
             })
         } else {
@@ -150,6 +154,8 @@ class ContributorsActivity : BaseActivity() {
                             codeContributorsList.add(cc)
                         }
                         binding.recyclerViewCodeContributors.adapter?.notifyDataSetChanged()
+                    } else {
+                        showLong(binding.recyclerViewCodeContributors, ApiErrorUtils.getErrorMessage(applicationContext, response))
                     }
                     binding.loadingContributors.root.makeGone()
                     binding.recyclerViewCodeContributors.makeVisible()
@@ -158,7 +164,7 @@ class ContributorsActivity : BaseActivity() {
                 override fun onFailure(call: Call<List<CodeContributors?>?>, t: Throwable) {
                     t.printStackTrace()
                     binding.loadingContributors.root.makeGone()
-                    showLong(binding.recyclerViewCodeContributors, getString(R.string.something_went_wrong))
+                    showLong(binding.recyclerViewCodeContributors, ApiErrorUtils.getErrorMessage(applicationContext, t))
                 }
             })
         } else {

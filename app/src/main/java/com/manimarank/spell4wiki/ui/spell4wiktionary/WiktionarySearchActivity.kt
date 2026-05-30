@@ -38,6 +38,7 @@ import com.manimarank.spell4wiki.utils.makeVisible
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import com.manimarank.spell4wiki.utils.ApiErrorUtils
 import uk.co.samuelwall.materialtaptargetprompt.MaterialTapTargetSequence
 import java.util.Locale
 
@@ -187,12 +188,12 @@ class WiktionarySearchActivity : BaseActivity(), EndlessListener {
                             if (response.isSuccessful && response.body() != null) {
                                 processSearchResult(response.body())
                             } else {
-                                searchFailed(getString(R.string.something_went_wrong))
+                                searchFailed(ApiErrorUtils.getErrorMessage(applicationContext, response))
                             }
                         } catch (e: Exception) {
                             Print.error("Error processing search response: ${e.message}")
                             e.printStackTrace()
-                            searchFailed(getString(R.string.something_went_wrong_try_again))
+                            searchFailed(ApiErrorUtils.getErrorMessage(applicationContext, e))
                         }
                     }
 
@@ -200,11 +201,11 @@ class WiktionarySearchActivity : BaseActivity(), EndlessListener {
                         try {
                             Print.error("Search network failure: ${t.message}")
                             t.printStackTrace()
-                            searchFailed(getString(R.string.something_went_wrong_try_again))
+                            searchFailed(ApiErrorUtils.getErrorMessage(applicationContext, t))
                         } catch (e: Exception) {
                             Print.error("Error in onFailure handler: ${e.message}")
                             e.printStackTrace()
-                            searchFailed(getString(R.string.something_went_wrong_try_again))
+                            searchFailed(ApiErrorUtils.getErrorMessage(applicationContext, e))
                         }
                     }
                 })

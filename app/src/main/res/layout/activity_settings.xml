@@ -204,6 +204,50 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/layoutSdcUpdateToggle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="@dimen/space8dp"
+            android:gravity="center_vertical">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:maxLines="1"
+                    android:text="@string/sdc_update_setting"
+                    android:textColor="@color/settings_label_text"
+                    android:textSize="@dimen/text_normal" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/txtSdcUpdateDescription"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/space2dp"
+                    android:gravity="center_vertical"
+                    android:maxLines="4"
+                    android:textColor="@color/settings_status_text"
+                    android:textSize="@dimen/text_semi_normal" />
+
+            </LinearLayout>
+
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/switchSdcUpdate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/space8dp"
+                android:checked="true" />
+
+        </LinearLayout>
+
+        <LinearLayout
             android:id="@+id/layoutRunFilter"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
