@@ -144,6 +144,28 @@ class WebViewFragment : Fragment() {
         }
         binding.webView.settings.domStorageEnabled = true
         binding.webView.webViewClient = object : WebViewClient() {
+            private fun isWikiHost(host: String?): Boolean {
+                if (host.isNullOrEmpty()) return true
+                return listOf("wiktionary.org", "wikipedia.org", "wikimedia.org", "wikidata.org")
+                    .any { host == it || host.endsWith(".$it") }
+            }
+
+            private fun handleUrl(targetUrl: String?): Boolean {
+                if (targetUrl.isNullOrEmpty()) return false
+                if (isWikiHost(Uri.parse(targetUrl).host)) return false
+                openUrlInBrowser(requireContext(), targetUrl)
+                return true
+            }
+
+            override fun shouldOverrideUrlLoading(view: WebView, request: WebResourceRequest): Boolean {
+                return handleUrl(request.url?.toString())
+            }
+
+            @Deprecated("Deprecated in Java")
+            override fun shouldOverrideUrlLoading(view: WebView, url: String?): Boolean {
+                return handleUrl(url)
+            }
+
             override fun onPageStarted(view: WebView, url: String, favicon: Bitmap?) {
                 super.onPageStarted(view, url, favicon)
                 isWebPageNotFound = false
